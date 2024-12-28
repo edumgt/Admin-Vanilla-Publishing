@@ -145,8 +145,8 @@ input[type="date"] {
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
 }
 
-#hamburgerButton {
-    margin-right: 1rem;
+.content{
+    margin-left:20px;
 }
 
 #floatingNav button {

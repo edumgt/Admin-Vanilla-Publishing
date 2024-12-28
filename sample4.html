@@ -28,6 +28,7 @@
             background: linear-gradient(90deg, #1a202c, #2d3748);
             flex-direction: column;
             padding: 0;
+
         }
 
         .gnb-menu ul {
@@ -107,25 +108,10 @@
             color: #fff;
         }
 
-        .app-brand {
 
-            align-items: center;
-            justify-content: space-between;
-            padding: 5px 5px 5px 5px;
-
-
-        }
-
-        .app-logo {
-            display: inline-flex;
-            /* 수평 정렬을 위한 인라인 플렉스 */
-            align-items: center;
-            /* 세로 중앙 정렬 */
-            text-decoration: none;
-            /* 링크 밑줄 제거 */
-        }
 
         .logo-text {
+            padding-left:10px;
             color: white;
             /* 텍스트 색상 */
             font-size: 1.5rem;
@@ -148,7 +134,7 @@
 
 <body class="main-layout">
 
-    <div class="gnb-menu bg-gray-900 fixed top-0 left-0 w-full z-50 shadow-md">
+    <div class="gnb-menu bg-gray-900 fixed top-0 left-0 bottom-0 w-full z-50 shadow-md">
 
         <ul class="flex justify-between items-center">
             <div class="app-brand">
@@ -181,7 +167,7 @@
 
 
     <div id="offCanvas"
-        class="fixed top-14 left-0 h-full w-64 bg-white text-gray-800 hidden transform -translate-x-full transition-transform duration-300 z-50 shadow-lg">
+        class="fixed top-14 h-full bg-white text-gray-800 hidden transform -translate-x-full transition-transform duration-300 z-50 shadow-lg">
         <div class="flex flex-col h-full">
             <ul class="flex-grow p-4 space-y-4">
                 <li><a href="#" class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium"><i
@@ -208,103 +194,101 @@
 
     <!-- content -->
 
-    <div class="relative border-gray-300">
-        <!-- Hamburger Button -->
-        <button id="hamburgerButton" class="absolute top-20 left-5 text-gray-600 hover:text-gray-800 text-2xl p-2">
-            <i class="fas fa-bars"></i>
-        </button>
 
-        <div id="content" style="margin-left:20px; ">
+    <div id="content" class="content">
+        
 
-            <div class="flex items-center mb-4">
-                <h2 class="text-lg font-semibold">에듀엠지티 기본 Grid Sample</h2>
-            </div>
+        <div class="flex items-center">
+            <button id="hamburgerButton" class="absolute top-20 left-5 text-gray-600 hover:text-gray-800 text-2xl ">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h2 class="text-lg font-semibold">에듀엠지티 기본 Grid Sample</h2>
+        </div>
 
-            <!-- Flex container for Total Rows, search fields, and buttons -->
-            <div class="flex flex-col lg:flex-row justify-between items-center p-2">
-                <div id="dataCount" class="text-sm text-gray-700 mb-2 lg:mb-0">Total :</div>
-                <div class="flex flex2 flex-col lg:flex-row items-center space-y-2 lg:space-y-0 lg:space-x-2">
-                    <div class="flex items-center space-x-2">
-                        <input type="text" id="groupCode" placeholder="Group Code"
-                            class="border border-gray-300 rounded p-2">
-                        <input type="text" id="codeName" placeholder="Code Name"
-                            class="border border-gray-300 rounded p-2">
-                        <input type="text" id="description" placeholder="Description"
-                            class="border border-gray-300 rounded p-2">
-                        <div class="relative">
-                            <input type="text" id="datePicker" class="border border-gray-300 rounded p-2 pl-10">
-                            <i
-                                class="fas fa-calendar-alt absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
-                        </div>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <button id="searchByDate"
-                            class="flex items-center space-x-2 px-4 py-1.5 text-white font-medium rounded bg-gray-800 hover:bg-gray-700">
-                            <i class="fas fa-search"></i>
-                            <span>검색</span>
-                        </button>
-                        <button id="resetSearch"
-                            class="flex items-center space-x-2 px-4 py-1.5 text-white font-medium rounded bg-gray-800 hover:bg-gray-700">
-                            <i class="fas fa-undo"></i>
-                            <span>검색 초기화</span>
-                        </button>
-                        <button id="newrow"
-                            class="flex items-center space-x-2 px-4 py-1.5 text-white font-medium rounded bg-gray-800 hover:bg-gray-700">
-                            <i class="fas fa-plus"></i>
-                            <span>신규</span>
-                        </button>
-                        <button id="delrow"
-                            class="flex items-center space-x-2 px-4 py-1.5 text-white font-medium rounded bg-gray-800 hover:bg-gray-700">
-                            <i class="fas fa-trash"></i>
-                            <span>삭제</span>
-                        </button>
-                        <button id="saverow"
-                            class="flex items-center space-x-2 px-4 py-1.5 text-white font-medium rounded bg-gray-800 hover:bg-gray-700">
-                            <i class="fas fa-save"></i>
-                            <span>저장</span>
-                        </button>
+        <!-- Flex container for Total Rows, search fields, and buttons -->
+        <div class="flex flex-col lg:flex-row justify-between items-center p-2">
+            <div id="dataCount" class="text-sm text-gray-700 mb-2 lg:mb-0">Total :</div>
+            <div class="flex flex2 flex-col lg:flex-row items-center space-y-2 lg:space-y-0 lg:space-x-2">
+                <div class="flex items-center space-x-2">
+                    <input type="text" id="groupCode" placeholder="Group Code"
+                        class="border border-gray-300 rounded p-2">
+                    <input type="text" id="codeName" placeholder="Code Name" class="border border-gray-300 rounded p-2">
+                    <input type="text" id="description" placeholder="Description"
+                        class="border border-gray-300 rounded p-2">
+                    <div class="relative">
+                        <input type="text" id="datePicker" class="border border-gray-300 rounded p-2 pl-10">
+                        <i
+                            class="fas fa-calendar-alt absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
                     </div>
                 </div>
+                <div class="flex items-center space-x-2">
+                    <button id="searchByDate"
+                        class="flex items-center space-x-2 px-4 py-1.5 text-white font-medium rounded bg-gray-800 hover:bg-gray-700">
+                        <i class="fas fa-search"></i>
+                        <span>검색</span>
+                    </button>
+                    <button id="resetSearch"
+                        class="flex items-center space-x-2 px-4 py-1.5 text-white font-medium rounded bg-gray-800 hover:bg-gray-700">
+                        <i class="fas fa-undo"></i>
+                        <span>검색 초기화</span>
+                    </button>
+                    <button id="newrow"
+                        class="flex items-center space-x-2 px-4 py-1.5 text-white font-medium rounded bg-gray-800 hover:bg-gray-700">
+                        <i class="fas fa-plus"></i>
+                        <span>신규</span>
+                    </button>
+                    <button id="delrow"
+                        class="flex items-center space-x-2 px-4 py-1.5 text-white font-medium rounded bg-gray-800 hover:bg-gray-700">
+                        <i class="fas fa-trash"></i>
+                        <span>삭제</span>
+                    </button>
+                    <button id="saverow"
+                        class="flex items-center space-x-2 px-4 py-1.5 text-white font-medium rounded bg-gray-800 hover:bg-gray-700">
+                        <i class="fas fa-save"></i>
+                        <span>저장</span>
+                    </button>
+                </div>
             </div>
-            <!-- The grid -->
-            <div id="grid"></div>
-
-
-
         </div>
+        <!-- The grid -->
+        <div id="grid"></div>
 
-        <!-- Gear Icon -->
-        <button id="gearIcon" class="fixed bottom-4 right-4 bg-gray-800 text-white rounded-full p-3 shadow-lg z-50">
-            <i class="fas fa-cog"></i>
-        </button>
 
-        <!-- Floating Navigation Menu -->
-        <div id="floatingNav"
-            class="fixed bottom-4 right-4 bg-gray-800 text-white rounded-lg shadow-lg p-4 z-50 hidden space-y-2">
-            <div class="flex justify-between items-center">
-                <h3 class="text-white font-semibold">Menu</h3>
-                <button id="closeFloatingNav" class="text-white text-lg">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <button
-                class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded flex items-center justify-center space-x-2">
-                <i class="fas fa-home"></i>
-                <span>Home</span>
-            </button>
-            <button
-                class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded flex items-center justify-center space-x-2">
-                <i class="fas fa-info-circle"></i>
-                <span>About</span>
-            </button>
-            <button
-                class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded flex items-center justify-center space-x-2">
-                <i class="fas fa-cogs"></i>
-                <span>Settings</span>
-            </button>
-        </div>
 
     </div>
+
+    <!-- Gear Icon -->
+    <button id="gearIcon" class="fixed bottom-4 right-4 bg-gray-800 text-white rounded-full p-3 shadow-lg z-50">
+        <i class="fas fa-cog"></i>
+    </button>
+
+    <!-- Floating Navigation Menu -->
+    <div id="floatingNav"
+        class="fixed bottom-4 right-4 bg-gray-800 text-white rounded-lg shadow-lg p-4 z-50 hidden space-y-2">
+        <div class="flex justify-between items-center">
+            <h3 class="text-white font-semibold">Menu</h3>
+            <button id="closeFloatingNav" class="text-white text-lg">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <button
+            class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded flex items-center justify-center space-x-2">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </button>
+        <button
+            class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded flex items-center justify-center space-x-2">
+            <i class="fas fa-info-circle"></i>
+            <span>About</span>
+        </button>
+        <button
+            class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded flex items-center justify-center space-x-2">
+            <i class="fas fa-cogs"></i>
+            <span>Settings</span>
+        </button>
+    </div>
+
+
 
 
 
