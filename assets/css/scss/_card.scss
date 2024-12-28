@@ -1,0 +1,21 @@
+/*-------------------------------------*/
+/*                Card                 */
+/*-------------------------------------*/
+
+.card {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+  background: var(--white-color);
+  box-shadow: 0 0.2rem 0.5rem 0 hsla(210, 30%, 20%, 0.1);
+  border-radius: var(--border-radius);
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.card-header {
+  padding: 1.5rem;
+}

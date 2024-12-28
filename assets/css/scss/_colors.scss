@@ -1,0 +1,125 @@
+/*-------------------------------------*/
+/*               Colors                */
+/*-------------------------------------*/
+
+:root {
+  --white-color: #ffffff;
+  --black-color: #000000;
+  --light-white-color: #f7f7f7;
+  --light-gray-color: #e5e5e5;
+
+  --primary-lightest-color: hsl(240, 100%, 95%);
+  --primary-lighter-color: hsl(240, 100%, 88%);
+  --primary-light-color: hsl(240, 100%, 78%);
+  --primary-color: hsl(240, 100%, 70%);
+  --primary-dark-color: hsl(240, 100%, 60%);
+  --primary-darker-color: hsl(240, 100%, 50%);
+  --primary-darkest-color: hsl(240, 100%, 40%);
+  --primary-hover-color: #5252ff;
+  --primary-shadow-color: #6666ff66;
+
+  --secondary-lightest-color: hsl(214, 14%, 90%);
+  --secondary-lighter-color: hsl(214, 14%, 80%);
+  --secondary-light-color: hsl(214, 14%, 65%);
+  --secondary-color: hsl(214, 14%, 52%);
+  --secondary-dark-color: hsl(214, 14%, 42%);
+  --secondary-darker-color: hsl(214, 14%, 32%);
+  --secondary-darkest-color: hsl(214, 14%, 22%);
+  --secondary-hover-color: hsl(215, 14%, 46%);
+  --secondary-shadow-color: hsla(214, 14%, 52%, 0.4);
+
+  --success-lightest-color: hsl(100, 65%, 92%);
+  --success-lighter-color: hsl(100, 65%, 80%);
+  --success-light-color: hsl(100, 65%, 70%);
+  --success-color: hsl(100, 65%, 60%);
+  --success-dark-color: hsl(100, 65%, 40%);
+  --success-darker-color: hsl(100, 65%, 26%);
+  --success-darkest-color: hsl(100, 65%, 16%);
+  --success-hover-color: hsl(100, 65%, 48%);
+  --success-shadow-color: hsla(100, 65%, 56%, 0.4);
+
+  --danger-lightest-color: hsl(8, 100%, 92%);
+  --danger-lighter-color: hsl(8, 100%, 82%);
+  --danger-light-color: hsl(8, 100%, 68%);
+  --danger-color: hsl(8, 100%, 56%);
+  --danger-dark-color: hsl(8, 100%, 46%);
+  --danger-darker-color: hsl(8, 100%, 36%);
+  --danger-darkest-color: hsl(8, 100%, 26%);
+  --danger-hover-color: hsl(8, 100%, 48%);
+  --danger-shadow-color: hsla(8, 100%, 56%, 0.4);
+
+  --warning-lightest-color: hsl(40, 100%, 92%);
+  --warning-lighter-color: hsl(40, 100%, 75%);
+  --warning-light-color: hsl(40, 100%, 60%);
+  --warning-color: hsl(40, 100%, 50%);
+  --warning-dark-color: hsl(40, 100%, 40%);
+  --warning-darker-color: hsl(40, 100%, 30%);
+  --warning-darkest-color: hsl(40, 100%, 20%);
+  --warning-hover-color: hsl(40, 100%, 46%);
+  --warning-shadow-color: hsla(40, 100%, 50%, 0.4);
+
+  --info-lightest-color: hsl(190, 100%, 92%);
+  --info-lighter-color: hsl(190, 100%, 75%);
+  --info-light-color: hsl(190, 100%, 62%);
+  --info-color: hsl(190, 100%, 50%);
+  --info-dark-color: hsl(190, 100%, 40%);
+  --info-darker-color: hsl(190, 100%, 30%);
+  --info-darkest-color: hsl(190, 100%, 20%);
+  --info-hover-color: hsl(190, 100%, 44%);
+  --info-shadow-color: hsla(190, 100%, 50%, 0.4);
+
+  --light-lightest-color: hsl(204, 7%, 96%);
+  --light-lighter-color: hsl(204, 7%, 93%);
+  --light-light-color: hsl(204, 7%, 90%);
+  --light-color: hsl(210, 6%, 87%);
+  --light-dark-color: hsl(204, 7%, 77%);
+  --light-darker-color: hsl(204, 7%, 67%);
+  --light-darkest-color: hsl(204, 7%, 57%);
+  --light-hover-color: hsl(204, 7%, 77%);
+  --light-shadow-color: hsla(204, 7%, 87%, 0.4);
+
+  --dark-lightest-color: hsl(240, 20%, 70%);
+  --dark-lighter-color: hsl(240, 20%, 55%);
+  --dark-light-color: hsl(240, 20%, 40%);
+  --dark-color: hsl(240, 20%, 20%);
+  --dark-dark-color: hsl(240, 20%, 15%);
+  --dark-darker-color: hsl(240, 20%, 10%);
+  --dark-darkest-color: hsl(240, 20%, 5%);
+  --dark-hover-color: hsl(240, 33%, 2%);
+  --dark-shadow-color: hsla(240, 20%, 20%, 0.4);
+
+  /* --body-color: hsl(212, 15%, 48%); */
+  --body-color: #3b4754;
+  --body-bg: #f5f5f9;
+
+  --border-color: #d9dee3;
+
+  --dropdown-divider-color: hsl(210, 8%, 90%);
+
+  --form-control-focus-border-color: hsla(240, 100%, 58%, 0.7);
+
+  --heading-color: hsl(210, 18%, 28%);
+  --heading-hover-color: hsl(210, 38%, 10%);
+  --heading-hover-bg-color: hsla(210, 29%, 19%, 0.06);
+
+  --link-color: #6666ff;
+  --link-hover-color: #5252ff;
+
+  --menu-sub-bg-color: hsl(215, 100%, 98%);
+
+  --scrollbar-color: hsl(240, 25%, 100%);
+  --scrollbar-hover-color: var(--black-color);
+
+  --text-muted-color: hsl(212, 8%, 68%);
+
+  --backdrop-dark-color: rgba(27, 27, 27, 0.7);
+}
+
+/* Color variables for dark theme */
+
+.dark-mode {
+  --white-color: #171717;
+  --black-color: #d4d4d4;
+  --light-white-color: #333;
+  --light-gray-color: #404040;
+}

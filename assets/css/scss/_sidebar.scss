@@ -1,0 +1,99 @@
+/*-------------------------------------*/
+/*              Sidebar                */
+/*-------------------------------------*/
+
+/*----- Class sidebar-hidden is used in body to toggle sidebar visibility -----*/
+/*----- <div class="sidebar-backdrop"></div> must be added before sidebar -----*/
+
+.sidebar {
+  z-index: 4;
+  width: 18rem;
+  height: 100vh;
+  background: var(--white-color);
+  box-shadow: 0.2rem 0 0.5rem 0 hsla(210, 30%, 20%, 0.1);
+  transition: 0.2s ease-in;
+}
+
+.sidebar .app-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 104%;
+  margin-top: 1rem;
+  padding: 0.7rem 0 0 1.5rem;
+  transition: 0.3s ease;
+}
+
+body.sidebar-hidden .sidebar .app-brand {
+  display: none;
+}
+
+.sidebar .app-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.sidebar .app-logo .logo-image {
+  height: 32px;
+  cursor: pointer;
+}
+
+.sidebar .app-logo .logo-text {
+  color: var(--heading-color);
+}
+
+.sidebar .sidebar-toggle {
+  color: var(--white-color);
+  background-color: var(--primary-color);
+  border-radius: 50%;
+}
+
+.sidebar .sidebar-toggle i {
+  width: 1.375rem;
+  height: 1.375rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar .sidebar-toggle i::after {
+  content: '';
+  position: absolute;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  box-shadow: 0 0 0 7px var(--body-bg);
+}
+
+body.sidebar-hidden .sidebar {
+  width: 0;
+  padding: 0;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: var(--sidebar-z-index);
+  }
+
+  .sidebar-backdrop {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: var(--sidebar-backdrop-z-index);
+    background: var(--backdrop-dark-color);
+    transition: 0.2s ease;
+  }
+
+  body.sidebar-hidden .sidebar-backdrop {
+    opacity: 0;
+    pointer-events: none;
+  }
+}

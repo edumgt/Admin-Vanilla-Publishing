@@ -1,0 +1,78 @@
+/*-------------------------------------*/
+/*              Dropdown               */
+/*-------------------------------------*/
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-toggle {
+  transform: none !important;
+  height: 100%;
+}
+
+.dropdown-menu {
+  position: absolute;
+  display: none;
+  overflow: hidden;
+  transform: translateY(2px);
+  padding: 0.5rem 0;
+  color: var(--body-color);
+  background-color: white;
+  box-shadow: 0 0.25rem 0.75rem 0.2rem rgba(34, 48, 62, 0.14);
+  border-radius: var(--border-radius);
+  z-index: var(--dropdown-z-index);
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-menu-end {
+  right: 0;
+  left: auto;
+}
+
+.dropdown-header {
+  padding: 1rem 1rem 1rem 1.5rem;
+}
+
+.dropdown-footer {
+  padding: 1rem 1.5rem 0.5rem 1.5rem;
+}
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  white-space: nowrap;
+  padding: 0.5rem 3rem 0.5rem 1.5rem;
+  cursor: pointer;
+  color: var(--heading-color);
+}
+
+.dropdown-item:hover {
+  color: var(--heading-color);
+  background-color: hsla(210, 29%, 19%, 0.06);
+}
+
+.dropdown-divider {
+  height: 0;
+  margin: 0.25rem 0;
+  overflow: hidden;
+  border-top: 1px solid var(--dropdown-divider-color);
+  opacity: 1;
+}
+
+.dropdown-scroll-container {
+  height: calc(100vh - 18rem);
+  overflow-x: hidden;
+  overflow-y: auto;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.dropdown-scroll-container:hover {
+  scrollbar-color: var(--scrollbar-color);
+}

@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Edit Panel</title>
+   <link rel="stylesheet" href="assets/css/core.css">
+   <link rel="stylesheet" href="assets/css/style.css">
+   <link rel="stylesheet" href="assets/vendor/boxicons-2.1.4/css/boxicons.min.css">
+</head>
+
+<body>
+   <div class="dash-container">
+      <div class="sidebar-backdrop"></div>
+      <aside class="sidebar">
+         <div class="app-brand">
+            <a href="#" class="app-logo">
+               <img src="assets/img/flask-logo.png" alt="Logo" class="logo-image">
+               <h6 class="logo-text">Flask</h6>
+            </a>
+            <a href="#" class="sidebar-toggle" data-toggle="sidebar">
+               <i class="bx bx-chevron-left fs-5"></i>
+            </a>
+         </div>
+         <div class="menu">
+            <div class="menu-item">
+               <a href="dashboard.html" class="menu-link">
+                  <i class="bx bx-home fs-6"></i>
+                  <span>Dashboard</span>
+               </a>
+            </div>
+            <div class="menu-header">
+               <small class="menu-header-text">Pages</small>
+            </div>
+            <div class="menu-item">
+               <a href="#" class="menu-link menu-toggle">
+                  <i class="bx bx-layout fs-6"></i>
+                  <span>Main Pages</span>
+               </a>
+               <div class="menu-sub">
+                  <div class="menu-item">
+                     <a href="index.html" target="_blank" class="menu-link">
+                        <span>Landing Page</span>
+                     </a>
+                  </div>
+                  <div class="menu-item">
+                     <a href="blank.html" target="_blank" class="menu-link">
+                        <span>Blank Page</span>
+                     </a>
+                  </div>
+               </div>
+            </div>
+            <div class="menu-item">
+               <a href="#" class="menu-link menu-toggle">
+                  <i class="bx bx-lock fs-6"></i>
+                  <span>Authentication</span>
+               </a>
+               <div class="menu-sub">
+                  <div class="menu-item">
+                     <a href="register.html" class="menu-link">
+                        <span>Register Page</span>
+                     </a>
+                  </div>
+                  <div class="menu-item">
+                     <a href="login.html" class="menu-link">
+                        <span>Login Page</span>
+                     </a>
+                  </div>
+               </div>
+            </div>
+            <div class="menu-item">
+               <a href="#" class="menu-link menu-toggle">
+                  <i class="bx bx-user fs-6"></i>
+                  <span>User</span>
+               </a>
+               <div class="menu-sub">
+                  <div class="menu-item">
+                     <a href="#" class="menu-link menu-toggle">
+                        <span>Account Settings</span>
+                     </a>
+                     <div class="menu-sub">
+                        <div class="menu-item">
+                           <a href="account-overview.html" class="menu-link">
+                              <span>Overview</span>
+                           </a>
+                        </div>
+                        <div class="menu-item">
+                           <a href="account.html" class="menu-link">
+                              <span>Account</span>
+                           </a>
+                        </div>
+                        <div class="menu-item">
+                           <a href="account-address.html" class="menu-link">
+                              <span>Address</span>
+                           </a>
+                        </div>
+                        <div class="menu-item">
+                           <a href="account-password.html" class="menu-link">
+                              <span>Passsword</span>
+                           </a>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="menu-item">
+               <a href="#" class="menu-link menu-toggle">
+                  <i class="bx bx-layout fs-6"></i>
+                  <span>Miscellaneous</span>
+               </a>
+               <div class="menu-sub">
+                  <div class="menu-item">
+                     <a href="not-authorized.html" target="_blank" class="menu-link">
+                        <span>Not Authorized</span>
+                     </a>
+                  </div>
+                  <div class="menu-item">
+                     <a href="not-found.html" target="_blank" class="menu-link">
+                        <span>Not found</span>
+                     </a>
+                  </div>
+                  <div class="menu-item">
+                     <a href="under-maintenance.html" target="_blank" class="menu-link">
+                        <span>Under Maintenance</span>
+                     </a>
+                  </div>
+               </div>
+            </div>
+            <div class="menu-header">
+               <small class="menu-header-text">Components</small>
+            </div>
+            <div class="menu-item">
+               <a href="#" class="menu-link menu-toggle">
+                  <i class="bx bx-rectangle fs-6"></i>
+                  <span>Simple</span>
+               </a>
+               <div class="menu-sub">
+                  <div class="menu-item">
+                     <a href="accordions.html" class="menu-link">
+                        <span>Accordions</span>
+                     </a>
+                  </div>
+                  <div class="menu-item">
+                     <a href="alerts.html" class="menu-link">
+                        <span>Alerts</span>
+                     </a>
+                  </div>
+                  <div class="menu-item">
+                     <a href="badges.html" class="menu-link">
+                        <span>Badges</span>
+                     </a>
+                  </div>
+                  <div class="menu-item">
+                     <a href="buttons.html" class="menu-link">
+                        <span>Buttons</span>
+                     </a>
+                  </div>
+                  <div class="menu-item">
+                     <a href="cards.html" class="menu-link">
+                        <span>Cards</span>
+                     </a>
+                  </div>
+                  <div class="menu-item">
+                     <a href="dropdowns.html" class="menu-link">
+                        <span>Dropdowns</span>
+                     </a>
+                  </div>
+                  <div class="menu-item">
+                     <a href="modals.html" class="menu-link">
+                        <span>Modals</span>
+                     </a>
+                  </div>
+                  <div class="menu-item">
+                     <a href="navs.html" class="menu-link">
+                        <span>Navs</span>
+                     </a>
+                  </div>
+                  <div class="menu-item">
+                     <a href="navbars.html" class="menu-link">
+                        <span>Navbars</span>
+                     </a>
+                  </div>
+                  <div class="menu-item">
+                     <a href="pagination.html" class="menu-link">
+                        <span>Pagination</span>
+                     </a>
+                  </div>
+                  <div class="menu-item">
+                     <a href="toasts.html" class="menu-link">
+                        <span>Toasts</span>
+                     </a>
+                  </div>
+                  <div class="menu-item">
+                     <a href="tooltips.html" class="menu-link">
+                        <span>Tooltips</span>
+                     </a>
+                  </div>
+               </div>
+            </div>
+            <div class="menu-item">
+               <a href="#" class="menu-link menu-toggle">
+                  <i class="bx bx-copy fs-6"></i>
+                  <span>Advance</span>
+               </a>
+               <div class="menu-sub">
+                  <div class="menu-item">
+                     <a href="index.html" class="menu-link">
+                        <span>Avatars</span>
+                     </a>
+                  </div>
+                  <div class="menu-item">
+                     <a href="color-palettes.html" class="menu-link">
+                        <span>Color Palettes</span>
+                     </a>
+                  </div>
+               </div>
+            </div>
+            <div class="menu-header">
+               <small class="menu-header-text">Forms & Tables</small>
+            </div>
+            <div class="menu-item open active">
+               <a href="#" class="menu-link menu-toggle">
+                  <i class="bx bx-detail fs-6"></i>
+                  <span>Form Layouts</span>
+               </a>
+               <div class="menu-sub">
+                  <div class="menu-item">
+                     <a href="#" class="menu-link">
+                        <span>Layout - 1</span>
+                     </a>
+                  </div>
+                  <div class="menu-item">
+                     <a href="#" class="menu-link">
+                        <span>Layout - 2</span>
+                     </a>
+                  </div>
+                  <div class="menu-item active">
+                     <a href="poe-list-dept.html" class="menu-link">
+                        <span>Panel of Examiners</span>
+                     </a>
+                  </div>
+               </div>
+            </div>
+            <div class="menu-item">
+               <a href="#" class="menu-link menu-toggle">
+                  <i class="bx bx-detail fs-6"></i>
+                  <span>Form Elements</span>
+               </a>
+               <div class="menu-sub">
+                  <div class="menu-item">
+                     <a href="#" class="menu-link">
+                        <span>Element - 1</span>
+                     </a>
+                  </div>
+                  <div class="menu-item">
+                     <a href="#" class="menu-link">
+                        <span>Element - 2</span>
+                     </a>
+                  </div>
+                  <div class="menu-item">
+                     <a href="#" class="menu-link">
+                        <span>Element - 3</span>
+                     </a>
+                  </div>
+               </div>
+            </div>
+            <div class="menu-item">
+               <a href="#" class="menu-link">
+                  <i class="bx bx-table fs-6"></i>
+                  <span>Tables</span>
+               </a>
+            </div>
+         </div>
+      </aside>
+      <main class="main-layout">
+         <nav class="navbar mx-6">
+            <div class="navbar-nav nav-left">
+               <div class="navbar-toggle" data-toggle="sidebar">
+                  <a href="#" class="nav-link">
+                     <i class="bx bx-menu bx-sm cursor-pointer"></i>
+                  </a>
+               </div>
+               <a href="#" class="nav-link search-button">
+                  <i class="bx bx-search bx-sm mt-1"></i>
+                  <span class="ms-3 d-none d-sm-block">Search (Ctrl +/)</span>
+               </a>
+            </div>
+            <div class="navbar-nav nav-right">
+               <div class="theme-toggle">
+                  <a href="#" class="nav-link">
+                     <i class="bx bx-moon fs-5 cursor-pointer"></i>
+                  </a>
+               </div>
+               <div class="dropdown">
+                  <div class="dropdown-toggle">
+                     <a href="#" class="nav-link">
+                        <i class="bx bx-grid-alt fs-6"></i>
+                     </a>
+                  </div>
+                  <div id="dropdown-menu-shortcuts" class="dropdown-menu dropdown-menu-end">
+                     <div class="dropdown-header border-bottom">
+                        <div class="d-flex align-items-center justify-content-between">
+                           <h6 class="fs-4">Shortcuts</h6>
+                           <a class="text-heading-link" href="#">
+                              <i class="bx bx-plus-circle fs-5"></i>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="dropdown-scroll-container">
+                        <div class="row row-bordered g-0">
+                           <a class="dropdown-shortcuts-item col">
+                              <div class="dropdown-shortcuts-icon">
+                                 <i class="bx bx-bell fs-6"></i>
+                              </div>
+                              <h6 class="fs-4">To Do</h6>
+                              <small>Reminders</small>
+                           </a>
+                           <a class="dropdown-shortcuts-item col">
+                              <div class="dropdown-shortcuts-icon">
+                                 <i class="bx bx-calendar fs-6"></i>
+                              </div>
+                              <h6 class="fs-4">Appointments</h6>
+                              <small>Calendar</small>
+                           </a>
+                        </div>
+                        <div class="row row-bordered g-0">
+                           <a class="dropdown-shortcuts-item col">
+                              <div class="dropdown-shortcuts-icon">
+                                 <i class="bx bx-cog fs-6"></i>
+                              </div>
+                              <h6 class="fs-4">Account Settings</h6>
+                              <small>Settings</small>
+                           </a>
+                           <a class="dropdown-shortcuts-item col">
+                              <div class="dropdown-shortcuts-icon">
+                                 <i class="bx bx-user fs-6"></i>
+                              </div>
+                              <h6 class="fs-4">Manage Users</h6>
+                              <small>Users</small>
+                           </a>
+                        </div>
+                        <div class="row row-bordered g-0">
+                           <a class="dropdown-shortcuts-item col">
+                              <div class="dropdown-shortcuts-icon">
+                                 <i class="bx bx-user-check fs-6"></i>
+                              </div>
+                              <h6 class="fs-4">Manage Roles</h6>
+                              <small>User Roles</small>
+                           </a>
+                           <a class="dropdown-shortcuts-item col">
+                              <div class="dropdown-shortcuts-icon">
+                                 <i class="bx bx-hourglass fs-6"></i>
+                              </div>
+                              <h6 class="fs-4">Approval Pending</h6>
+                              <small>Waiting</small>
+                           </a>
+                        </div>
+                        <div class="row row-bordered g-0">
+                           <a class="dropdown-shortcuts-item col">
+                              <div class="dropdown-shortcuts-icon">
+                                 <i class="bx bxs-report fs-6"></i>
+                              </div>
+                              <h6 class="fs-4">Reports</h6>
+                              <small>Edit Templates</small>
+                           </a>
+                           <a class="dropdown-shortcuts-item col">
+                              <div class="dropdown-shortcuts-icon">
+                                 <i class="bx bx-task fs-6"></i>
+                              </div>
+                              <h6 class="fs-4">Tasks</h6>
+                              <small>Scheduled Tasks</small>
+                           </a>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="dropdown">
+                  <div class="dropdown-toggle">
+                     <a href="#" class="nav-link">
+                        <div class="position-relative">
+                           <i class="bx bx-bell fs-6"></i>
+                           <span class="badge badge-dot bg-danger badge-notifications"></span>
+                        </div>
+                     </a>
+                  </div>
+                  <div id="dropdown-menu-notifications" class="dropdown-menu dropdown-menu-end">
+                     <div class="dropdown-header border-bottom">
+                        <div class="d-flex align-items-center justify-content-between">
+                           <h6 class="fs-4">Notifications</h6>
+                           <span class="badge bg-label-primary">10 New</span>
+                        </div>
+                     </div>
+                     <div class="dropdown-scroll-container">
+                        <div class="dropdown-notifications-item border-bottom">
+                           <div class="d-flex">
+                              <div class="flex-shrink-0 me-4">
+                                 <div class="avatar">
+                                    <img class="rounded-circle bg-primary-lightest"
+                                       src="assets/img/Avatars/Joginder Singh.png" alt="Avatar" width="40px">
+                                 </div>
+                              </div>
+                              <div class="overflow-hidden flex-grow-1">
+                                 <small class="fw-semibold mb-0">Joginder Singh</small>
+                                 <small class="d-block mb-1">Your request to add new resourced has been approved by
+                                    Hargun Chahal</small>
+                                 <small class="text-muted">1 min ago</small>
+                              </div>
+                              <div class="flex-shrink-0 ps-4">
+                                 <div class="d-flex flex-column align-items-center gap-2">
+                                    <a href="#" class="dropdown-notifications-read">
+                                       <span class="badge badge-dot"></span>
+                                    </a>
+                                    <a href="#" class="dropdown-notifications-archive">
+                                       <span class="bx bx-x fs-5"></span>
+                                    </a>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="dropdown-notifications-item border-bottom">
+                           <div class="d-flex">
+                              <div class="flex-shrink-0 me-4">
+                                 <div class="avatar">
+                                    <img class="rounded-circle bg-primary-lightest" src="assets/img/Avatars/Lalina.png"
+                                       alt="Avatar" width="40px">
+                                 </div>
+                              </div>
+                              <div class="overflow-hidden flex-grow-1">
+                                 <small class="fw-semibold mb-0">New Message</small>
+                                 <small class="d-block mb-1">This is to bring to your attention that something very bad
+                                    is
+                                    going to happen to me in the night
+                                 </small>
+                                 <small class="text-muted">2 Min ago</small>
+                              </div>
+                              <div class="flex-shrink-0 ps-4">
+                                 <div class="d-flex flex-column align-items-center gap-2">
+                                    <a href="#" class="dropdown-notifications-read">
+                                       <span class="badge badge-dot"></span>
+                                    </a>
+                                    <a href="#" class="dropdown-notifications-archive">
+                                       <span class="bx bx-x fs-5"></span>
+                                    </a>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="dropdown-notifications-item border-bottom mark-as-read">
+                           <div class="d-flex">
+                              <div class="flex-shrink-0 me-4">
+                                 <div class="avatar">
+                                    <img class="rounded-circle bg-primary-lightest"
+                                       src="assets/img/Avatars/Andrew Altman.png" alt="Avatar" width="40px">
+                                 </div>
+                              </div>
+                              <div class="overflow-hidden flex-grow-1">
+                                 <small class="fw-semibold mb-0">Hello</small>
+                                 <small class="d-block mb-1">Hello there, whats up dear
+                                 </small>
+                                 <small class="text-muted">10 min ago</small>
+                              </div>
+                              <div class="flex-shrink-0 ps-4">
+                                 <div class="d-flex flex-column align-items-center gap-2">
+                                    <a href="#" class="dropdown-notifications-read">
+                                       <span class="badge badge-dot"></span>
+                                    </a>
+                                    <a href="#" class="dropdown-notifications-archive">
+                                       <span class="bx bx-x fs-5"></span>
+                                    </a>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="dropdown-notifications-item border-bottom">
+                           <div class="d-flex">
+                              <div class="flex-shrink-0 me-4">
+                                 <div class="avatar">
+                                    <span class="avatar-initial rounded-circle bg-label-danger">NR</span>
+                                 </div>
+                              </div>
+                              <div class="overflow-hidden flex-grow-1">
+                                 <small class="fw-semibold mb-0">Nathu Ram</small>
+                                 <small class="d-block mb-1">Nathu Ram has sent a follow request</small>
+                                 <small class="text-muted">30 min ago</small>
+                              </div>
+                              <div class="flex-shrink-0 ps-4">
+                                 <div class="d-flex flex-column align-items-center gap-2">
+                                    <a href="#" class="dropdown-notifications-read">
+                                       <span class="badge badge-dot"></span>
+                                    </a>
+                                    <a href="#" class="dropdown-notifications-archive">
+                                       <span class="bx bx-x fs-5"></span>
+                                    </a>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="dropdown-notifications-item border-bottom">
+                           <div class="d-flex">
+                              <div class="flex-shrink-0 me-4">
+                                 <div class="avatar">
+                                    <img class="rounded-circle bg-primary-lightest"
+                                       src="assets/img/Avatars/Dollar Gill.png" alt="Avatar" width="40px">
+                                 </div>
+                              </div>
+                              <div class="overflow-hidden flex-grow-1">
+                                 <small class="fw-semibold mb-0">Dollar Gill</small>
+                                 <small class="d-block mb-1">You have a new message from Dollar Gill</small>
+                                 <small class="text-muted">45 min ago</small>
+                              </div>
+                              <div class="flex-shrink-0 ps-4">
+                                 <div class="d-flex flex-column align-items-center gap-2">
+                                    <a href="#" class="dropdown-notifications-read">
+                                       <span class="badge badge-dot"></span>
+                                    </a>
+                                    <a href="#" class="dropdown-notifications-archive">
+                                       <span class="bx bx-x fs-5"></span>
+                                    </a>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="dropdown-notifications-item border-bottom mark-as-read">
+                           <div class="d-flex">
+                              <div class="flex-shrink-0 me-4">
+                                 <div class="avatar">
+                                    <span class="avatar-initial rounded-circle bg-label-warning"><i
+                                          class="bx bx-bell fs-5"></i></span>
+                                 </div>
+                              </div>
+                              <div class="overflow-hidden flex-grow-1">
+                                 <small class="fw-semibold mb-0">Reminders</small>
+                                 <small class="d-block mb-1">There are some urgent reminders which need your immediate
+                                    attention</small>
+                                 <small class="text-muted">1 hr ago</small>
+                              </div>
+                              <div class="flex-shrink-0 ps-4">
+                                 <div class="d-flex flex-column align-items-center gap-2">
+                                    <a href="#" class="dropdown-notifications-read">
+                                       <span class="badge badge-dot"></span>
+                                    </a>
+                                    <a href="#" class="dropdown-notifications-archive">
+                                       <span class="bx bx-x fs-5"></span>
+                                    </a>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="dropdown-notifications-item border-bottom">
+                           <div class="d-flex">
+                              <div class="flex-shrink-0 me-4">
+                                 <div class="avatar">
+                                    <img class="rounded-circle bg-primary-lightest"
+                                       src="assets/img/Avatars/Hargun Chahal.png" alt="Avatar" width="40px">
+                                 </div>
+                              </div>
+                              <div class="overflow-hidden flex-grow-1">
+                                 <small class="fw-semibold mb-0">Request approved</small>
+                                 <small class="d-block mb-1">Your request to add new resourced has been approved by
+                                    Hargun Chahal</small>
+                                 <small class="text-muted">2 hr ago</small>
+                              </div>
+                              <div class="flex-shrink-0 ps-4">
+                                 <div class="d-flex flex-column align-items-center gap-2">
+                                    <a href="#" class="dropdown-notifications-read">
+                                       <span class="badge badge-dot"></span>
+                                    </a>
+                                    <a href="#" class="dropdown-notifications-archive">
+                                       <span class="bx bx-x fs-5"></span>
+                                    </a>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="dropdown-notifications-item border-bottom mark-as-read">
+                           <div class="d-flex">
+                              <div class="flex-shrink-0 me-4">
+                                 <div class="avatar">
+                                    <img class="rounded-circle bg-primary-lightest"
+                                       src="assets/img/Avatars/Harinder Singh.png" alt="Avatar" width="40px">
+                                 </div>
+                              </div>
+                              <div class="overflow-hidden flex-grow-1">
+                                 <small class="fw-semibold mb-0">Harinder Singh</small>
+                                 <small class="d-block mb-1">Invitation to participate in this year's annual day
+                                    celebration</small>
+                                 <small class="text-muted">3 hr ago</small>
+                              </div>
+                              <div class="flex-shrink-0 ps-4">
+                                 <div class="d-flex flex-column align-items-center gap-2">
+                                    <a href="#" class="dropdown-notifications-read">
+                                       <span class="badge badge-dot"></span>
+                                    </a>
+                                    <a href="#" class="dropdown-notifications-archive">
+                                       <span class="bx bx-x fs-5"></span>
+                                    </a>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="dropdown-notifications-item border-bottom">
+                           <div class="d-flex">
+                              <div class="flex-shrink-0 me-4">
+                                 <div class="avatar">
+                                    <img class="rounded-circle bg-primary-lightest"
+                                       src="assets/img/Avatars/Ruby Bajwa.png" alt="Avatar" width="40px">
+                                 </div>
+                              </div>
+                              <div class="overflow-hidden flex-grow-1">
+                                 <small class="fw-semibold mb-0">Ruby Bajwa</small>
+                                 <small class="d-block mb-1">You have a new message from Ruby Bajwa</small>
+                                 <small class="text-muted">2 days ago</small>
+                              </div>
+                              <div class="flex-shrink-0 ps-4">
+                                 <div class="d-flex flex-column align-items-center gap-2">
+                                    <a href="#" class="dropdown-notifications-read">
+                                       <span class="badge badge-dot"></span>
+                                    </a>
+                                    <a href="#" class="dropdown-notifications-archive">
+                                       <span class="bx bx-x fs-5"></span>
+                                    </a>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="dropdown-footer">
+                        <div class="row g-2">
+                           <div class="col-md-6 col-sm-12">
+                              <button class="btn btn-secondary w-100">Mark All as Read</button>
+                           </div>
+                           <div class="col-md-6 col-sm-12">
+                              <button class="btn btn-primary w-100">View All</button>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="dropdown">
+                  <a class="dropdown-toggle">
+                     <div class="avatar avatar-online">
+                        <img class="rounded-circle bg-primary-lightest" src="assets/img/Avatars/Dollar Gill.png"
+                           alt="Avatar" width="40px">
+                     </div>
+                  </a>
+                  <div id="dropdown-menu-account" class="dropdown-menu dropdown-menu-end">
+                     <a class="dropdown-item" href="account-overview.html">
+                        <div class="d-flex">
+                           <div class="me-3">
+                              <div class="avatar avatar-online">
+                                 <img class="rounded-circle bg-primary-lightest"
+                                    src="assets/img/Avatars/Dollar Gill.png" alt="Avatar" width="40px">
+                              </div>
+                           </div>
+                           <div class="">
+                              <h6 class="fs-4 mb-0">Dollar Gill</h6>
+                              <small class="text-muted">Admin</small>
+                           </div>
+                        </div>
+                     </a>
+                     <div class="dropdown-divider"></div>
+                     <a href="account.html" class="dropdown-item">
+                        <div class="d-flex align-items-cemter gap-3">
+                           <i class="bx bx-user fs-5"></i>
+                           <span>Profile</span>
+                        </div>
+                     </a>
+                     <a href="#" class="dropdown-item">
+                        <div class="d-flex align-items-cemter gap-3">
+                           <i class="bx bx-cog fs-5"></i>
+                           <span>Settings</span>
+                        </div>
+                     </a>
+                     <div class="dropdown-divider"></div>
+                     <a href="#" class="dropdown-item">
+                        <div class="d-flex align-items-cemter gap-3">
+                           <i class="bx bx-power-off fs-5"></i>
+                           <span>Logout</span>
+                        </div>
+                     </a>
+                  </div>
+               </div>
+            </div>
+            <div class="search-input-wrapper">
+               <span class="search-input-cover">
+                  <input type="text" placeholder="Search ......." class="form-control search-input ps-6 border-0">
+               </span>
+               <i class="bx bx-x bx-sm search-closer cursor-pointer"></i>
+            </div>
+         </nav>
+         <div class="dash-content">
+            <div class="mb-3">
+               <h5 class="text-muted">Panel of Examiners</h5>
+            </div>
+            <div class="card mb-6">
+               <div class="card-body">
+                  <div class="mb-5">
+                     <label for="student-name" class="form-label mb-2">Student Name</label>
+                     <input class="form-control" type="text" id="student-name" name="student-name" value="Andrew Altman"
+                        placeholder="Enter name of Student">
+                  </div>
+                  <div class="mb-5">
+                     <label for="regn-no" class="form-label mb-2">Registration No</label>
+                     <input class="form-control" type="text" id="regn-no" name="regn-no" value="09-UD-821"
+                        placeholder="Enter Registeration No">
+                  </div>
+                  <div class="mb-5">
+                     <label for="dept" class="form-label mb-2">Department</label>
+                     <input class="form-control" type="text" id="dept" name="dept" value="Computer Science"
+                        placeholder="Enter Department Name">
+                  </div>
+                  <div class="mb-3">
+                     <label for="pgbos-date" class="form-label mb-2">PGBOS Date</label>
+                     <input class="form-control" type="text" id="pgbos-date" name="pgbos-date" value="24-05-2024"
+                        placeholder="Enter PGBOS Date">
+                  </div>
+               </div>
+            </div>
+            <div class="row g-6">
+               <div class="col-12 col-md-6">
+                  <div class="card">
+                     <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                           <div class="w-80">
+                              <h6 class="text-secondary text-truncate">Examiner - 1</h6>
+                           </div>
+                           <div class="dropdown">
+                              <a href="#" class="dropdown-toggle text-body">
+                                 <i class="bx bx-dots-horizontal-rounded fs-4"></i>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-end">
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-edit fs-4"></i>
+                                       <span>Edit Examiner</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-plus-circle fs-4"></i>
+                                       <span>Add More ...........</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-trash fs-4"></i>
+                                       <span>Remove Examiner</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-divider"></div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-up-arrow-circle fs-4"></i>
+                                       <span>Move up</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-down-arrow-circle fs-4"></i>
+                                       <span>Move down</span>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="mb-2">
+                           <textarea class="form-control" id="examiner-1" name="examiner-1" rows="6"
+                              placeholder="Click on shortcut menu to search/add examiner"
+                              readonly>Dr. Amandeep Singh, Professor&#13;&#10;Department of Computer Science,&#13;&#10;Panjab University,&#13;&#10;Patiala(PB)-140001&#13;&#10;Email: aman@gmail.com&#13;&#10;Phone: 99912-34567</textarea>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-12 col-md-6">
+                  <div class="card">
+                     <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                           <div class="w-80">
+                              <h6 class="text-secondary text-truncate">Examiner - 2</h6>
+                           </div>
+                           <div class="dropdown">
+                              <a href="#" class="dropdown-toggle text-body">
+                                 <i class="bx bx-dots-horizontal-rounded fs-4"></i>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-end">
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-edit fs-4"></i>
+                                       <span>Edit Examiner</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-plus-circle fs-4"></i>
+                                       <span>Add More ...........</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-trash fs-4"></i>
+                                       <span>Remove Examiner</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-divider"></div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-up-arrow-circle fs-4"></i>
+                                       <span>Move up</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-down-arrow-circle fs-4"></i>
+                                       <span>Move down</span>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="mb-2">
+                           <textarea class="form-control" id="examiner-2" name="examiner-2" rows="6"
+                              placeholder="Click on shortcut menu to search/add examiner"
+                              readonly>Dr. Amandeep Singh, Professor&#13;&#10;Department of Computer Science,&#13;&#10;Panjab University,&#13;&#10;Patiala(PB)-140001&#13;&#10;Email: aman@gmail.com&#13;&#10;Phone: 99912-34567</textarea>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-12 col-md-6">
+                  <div class="card">
+                     <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                           <div class="w-80">
+                              <h6 class="text-secondary text-truncate">Examiner - 3</h6>
+                           </div>
+                           <div class="dropdown">
+                              <a href="#" class="dropdown-toggle text-body">
+                                 <i class="bx bx-dots-horizontal-rounded fs-4"></i>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-end">
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-edit fs-4"></i>
+                                       <span>Edit Examiner</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-plus-circle fs-4"></i>
+                                       <span>Add More ...........</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-trash fs-4"></i>
+                                       <span>Remove Examiner</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-divider"></div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-up-arrow-circle fs-4"></i>
+                                       <span>Move up</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-down-arrow-circle fs-4"></i>
+                                       <span>Move down</span>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="mb-2">
+                           <textarea class="form-control" id="examiner-3" name="examiner-3" rows="6"
+                              placeholder="Click on shortcut menu to search/add examiner"
+                              readonly>Dr. Amandeep Singh, Professor&#13;&#10;Department of Computer Science,&#13;&#10;Panjab University,&#13;&#10;Patiala(PB)-140001&#13;&#10;Email: aman@gmail.com&#13;&#10;Phone: 99912-34567</textarea>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-12 col-md-6">
+                  <div class="card">
+                     <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                           <div class="w-80">
+                              <h6 class="text-secondary text-truncate">Examiner - 4</h6>
+                           </div>
+                           <div class="dropdown">
+                              <a href="#" class="dropdown-toggle text-body">
+                                 <i class="bx bx-dots-horizontal-rounded fs-4"></i>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-end">
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-edit fs-4"></i>
+                                       <span>Edit Examiner</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-plus-circle fs-4"></i>
+                                       <span>Add More ...........</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-trash fs-4"></i>
+                                       <span>Remove Examiner</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-divider"></div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-up-arrow-circle fs-4"></i>
+                                       <span>Move up</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-down-arrow-circle fs-4"></i>
+                                       <span>Move down</span>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="mb-2">
+                           <textarea class="form-control" id="examiner-4" name="examiner-4" rows="6"
+                              placeholder="Click on shortcut menu to search/add examiner"
+                              readonly>Dr. Amandeep Singh, Professor&#13;&#10;Department of Computer Science,&#13;&#10;Panjab University,&#13;&#10;Patiala(PB)-140001&#13;&#10;Email: aman@gmail.com&#13;&#10;Phone: 99912-34567</textarea>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-12 col-md-6">
+                  <div class="card">
+                     <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                           <div class="w-80">
+                              <h6 class="text-secondary text-truncate">Examiner - 5</h6>
+                           </div>
+                           <div class="dropdown">
+                              <a href="#" class="dropdown-toggle text-body">
+                                 <i class="bx bx-dots-horizontal-rounded fs-4"></i>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-end">
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-edit fs-4"></i>
+                                       <span>Edit Examiner</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-plus-circle fs-4"></i>
+                                       <span>Add More ...........</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-trash fs-4"></i>
+                                       <span>Remove Examiner</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-divider"></div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-up-arrow-circle fs-4"></i>
+                                       <span>Move up</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-down-arrow-circle fs-4"></i>
+                                       <span>Move down</span>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="mb-2">
+                           <textarea class="form-control" id="examiner-5" name="examiner-5" rows="6"
+                              placeholder="Click on shortcut menu to search/add examiner"
+                              readonly>Dr. Amandeep Singh, Professor&#13;&#10;Department of Computer Science,&#13;&#10;Panjab University,&#13;&#10;Patiala(PB)-140001&#13;&#10;Email: aman@gmail.com&#13;&#10;Phone: 99912-34567</textarea>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-12 col-md-6">
+                  <div class="card">
+                     <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                           <div class="w-80">
+                              <h6 class="text-secondary text-truncate">Examiner - 6</h6>
+                           </div>
+                           <div class="dropdown">
+                              <a href="#" class="dropdown-toggle text-body">
+                                 <i class="bx bx-dots-horizontal-rounded fs-4"></i>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-end">
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-edit fs-4"></i>
+                                       <span>Edit Examiner</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-plus-circle fs-4"></i>
+                                       <span>Add More ...........</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-trash fs-4"></i>
+                                       <span>Remove Examiner</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-divider"></div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-up-arrow-circle fs-4"></i>
+                                       <span>Move up</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-down-arrow-circle fs-4"></i>
+                                       <span>Move down</span>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="mb-2">
+                           <textarea class="form-control" id="examiner-6" name="examiner-6" rows="6"
+                              placeholder="Click on shortcut menu to search/add examiner"
+                              readonly>Dr. Amandeep Singh, Professor&#13;&#10;Department of Computer Science,&#13;&#10;Panjab University,&#13;&#10;Patiala(PB)-140001&#13;&#10;Email: aman@gmail.com&#13;&#10;Phone: 99912-34567</textarea>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-12 col-md-6">
+                  <div class="card">
+                     <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                           <div class="w-80">
+                              <h6 class="text-secondary text-truncate">Examiner - 7</h6>
+                           </div>
+                           <div class="dropdown">
+                              <a href="#" class="dropdown-toggle text-body">
+                                 <i class="bx bx-dots-horizontal-rounded fs-4"></i>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-end">
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-edit fs-4"></i>
+                                       <span>Edit Examiner</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-plus-circle fs-4"></i>
+                                       <span>Add More ...........</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-trash fs-4"></i>
+                                       <span>Remove Examiner</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-divider"></div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-up-arrow-circle fs-4"></i>
+                                       <span>Move up</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-down-arrow-circle fs-4"></i>
+                                       <span>Move down</span>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="mb-2">
+                           <textarea class="form-control" id="examiner-7" name="examiner-7" rows="6"
+                              placeholder="Click on shortcut menu to search/add examiner"
+                              readonly>Dr. Amandeep Singh, Professor&#13;&#10;Department of Computer Science,&#13;&#10;Panjab University,&#13;&#10;Patiala(PB)-140001&#13;&#10;Email: aman@gmail.com&#13;&#10;Phone: 99912-34567</textarea>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-12 col-md-6">
+                  <div class="card">
+                     <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                           <div class="w-80">
+                              <h6 class="text-secondary text-truncate">Examiner - 8</h6>
+                           </div>
+                           <div class="dropdown">
+                              <a href="#" class="dropdown-toggle text-body">
+                                 <i class="bx bx-dots-horizontal-rounded fs-4"></i>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-end">
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-edit fs-4"></i>
+                                       <span>Edit Examiner</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-plus-circle fs-4"></i>
+                                       <span>Add More ...........</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-trash fs-4"></i>
+                                       <span>Remove Examiner</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-divider"></div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-up-arrow-circle fs-4"></i>
+                                       <span>Move up</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-down-arrow-circle fs-4"></i>
+                                       <span>Move down</span>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="mb-2">
+                           <textarea class="form-control" id="examiner-8" name="examiner-8" rows="6"
+                              placeholder="Click on shortcut menu to search/add examiner"
+                              readonly>Dr. Amandeep Singh, Professor&#13;&#10;Department of Computer Science,&#13;&#10;Panjab University,&#13;&#10;Patiala(PB)-140001&#13;&#10;Email: aman@gmail.com&#13;&#10;Phone: 99912-34567</textarea>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-12 col-md-6">
+                  <div class="card">
+                     <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                           <div class="w-80">
+                              <h6 class="text-secondary text-truncate">Examiner - 9</h6>
+                           </div>
+                           <div class="dropdown">
+                              <a href="#" class="dropdown-toggle text-body">
+                                 <i class="bx bx-dots-horizontal-rounded fs-4"></i>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-end">
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-edit fs-4"></i>
+                                       <span>Edit Examiner</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-plus-circle fs-4"></i>
+                                       <span>Add More ...........</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-trash fs-4"></i>
+                                       <span>Remove Examiner</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-divider"></div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-up-arrow-circle fs-4"></i>
+                                       <span>Move up</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-down-arrow-circle fs-4"></i>
+                                       <span>Move down</span>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="mb-2">
+                           <textarea class="form-control" id="examiner-9" name="examiner-9" rows="6"
+                              placeholder="Click on shortcut menu to search/add examiner"
+                              readonly>Dr. Amandeep Singh, Professor&#13;&#10;Department of Computer Science,&#13;&#10;Panjab University,&#13;&#10;Patiala(PB)-140001&#13;&#10;Email: aman@gmail.com&#13;&#10;Phone: 99912-34567</textarea>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-12 col-md-6">
+                  <div class="card">
+                     <div class="card-body">
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                           <div class="w-80">
+                              <h6 class="text-secondary text-truncate">Examiner - 10</h6>
+                           </div>
+                           <div class="dropdown">
+                              <a href="#" class="dropdown-toggle text-body">
+                                 <i class="bx bx-dots-horizontal-rounded fs-4"></i>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-end">
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-edit fs-4"></i>
+                                       <span>Edit Examiner</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-plus-circle fs-4"></i>
+                                       <span>Add More ...........</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-trash fs-4"></i>
+                                       <span>Remove Examiner</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-divider"></div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-up-arrow-circle fs-4"></i>
+                                       <span>Move up</span>
+                                    </div>
+                                 </div>
+                                 <div class="dropdown-item">
+                                    <div class="d-flex align-items-center gap-2">
+                                       <i class="bx bx-down-arrow-circle fs-4"></i>
+                                       <span>Move down</span>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="mb-2">
+                           <textarea class="form-control" id="examiner-10" name="examiner-10" rows="6"
+                              placeholder="Click on shortcut menu to search/add examiner"
+                              readonly>Dr. Amandeep Singh, Professor&#13;&#10;Department of Computer Science,&#13;&#10;Panjab University,&#13;&#10;Patiala(PB)-140001&#13;&#10;Email: aman@gmail.com&#13;&#10;Phone: 99912-34567</textarea>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="d-flex gap-2">
+                  <button class="btn btn-primary">Save</button>
+                  <button class="btn btn-secondary">Print</button>
+               </div>
+            </div>
+         </div>
+      </main>
+   </div>
+   <script src="assets/js/core.js"></script>
+   <script src="assets/js/script.js"></script>
+</body>
+
+</html>
