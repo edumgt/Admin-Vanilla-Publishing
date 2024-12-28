@@ -246,6 +246,7 @@
   overflow-y: auto;
   scrollbar-color: #817f7f transparent;
   scrollbar-width: thin;
+  margin-left:65px;
 }
 
 .main-layout:before {

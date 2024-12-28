@@ -1,12 +1,31 @@
 
       .sidebar {
-         z-index: 4;
+         position: fixed;
+         top: 0;
+         left: 0;
+         z-index: 1000;
          width: 230px;
-         height: 100vh;
+         height: 100%;
          background: var(--white-color);
          box-shadow: 0.2rem 0 0.5rem 0 hsla(210, 30%, 20%, 0.1);
-         transition: 0.2s ease-in;
+         transition: transform 0.6s ease;
+         transform: translateX(0%);
       }
+
+      /* .sidebar {
+         position: fixed;
+         top: 0;
+         left: 0;
+         width: 230px;
+         height: 100%;
+         background-color: #333; 
+         color: #fff;
+         z-index: 1000;
+         box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+         transform: translateX(-100%);
+         
+         transition: transform 0.3s ease;
+     } */
 
       .sidebar .app-brand {
          display: flex;
