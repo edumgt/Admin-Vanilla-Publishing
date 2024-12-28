@@ -9,29 +9,7 @@
   font-size: normal;
 }
 
-/*-------------------------------------*/
-/*             App Brand               */
-/*-------------------------------------*/
 
-.app-brand {
-  margin-bottom: 2rem;
-}
-
-.app-brand .app-brand-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-}
-
-.app-brand .app-brand-link .logo-image {
-  height: 35px;
-}
-
-.app-brand .app-brand-link .logo-text {
-  color: var(--heading-color);
-  font-weight: 600;
-}
 
 /*-------------------------------------*/
 /*                Body                 */

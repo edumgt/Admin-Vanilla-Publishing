@@ -324,18 +324,8 @@ function clearMenuSubItemActive(currentMenuSubItem) {
   });
 }
 
-const sidebarToggles = document.querySelectorAll('[data-toggle="sidebar"]');
-
-sidebarToggles.forEach((sidebarToggle) =>
-  sidebarToggle.addEventListener('click', (event) => {
-    body.classList.toggle('sidebar-hidden');
-    event.stopPropagation();
-  })
-);
-
 // Hide Sidebar when Sidebar Backdrop is clicked
 const sidebarBackdrop = document.querySelector('.sidebar-backdrop');
-
 sidebarBackdrop.addEventListener('click', () => {
   document.body.classList.add('sidebar-hidden');
 });
@@ -345,3 +335,21 @@ sidebarBackdrop.addEventListener('click', () => {
 document.addEventListener('click', (event) => {
   hideAllDropdowns(event);
 });
+
+const sidebarToggle = document.querySelector('.sidebar-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    const toggleIcon = sidebarToggle.querySelector('i');
+
+    sidebarToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('collapsed');
+
+        // 아이콘 변경
+        if (sidebar.classList.contains('collapsed')) {
+            toggleIcon.classList.replace('bx-chevron-left', 'bx-chevron-right');
+        } else {
+            toggleIcon.classList.replace('bx-chevron-right', 'bx-chevron-left');
+        }
+    });
+
+
+
