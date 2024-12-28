@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handsontable 게시판</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts/dist/apexcharts.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px; /* 화면 사이즈를 크게 조정 */
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .handsontable .htCore td, .handsontable .htCore th {
+            background-color: #f9f9f9; /* 테마 색상 적용 */
+            border-color: #ddd;
+        }
+        .handsontable .htCore th {
+            background-color: #f1f1f1; /* 헤더 색상 적용 */
+            font-weight: bold;
+        }
+        .grid-container {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Handsontable 게시판</h1>
+        <div class="grid-container">
+            <h2>항목별 데이터</h2>
+            <div id="hot1"></div>
+        </div>
+        <div class="grid-container">
+            <h2>합계</h2>
+            <div id="hot2"></div>
+        </div>
+        <div class="grid-container">
+            <h2>합계 추이</h2>
+            <div id="chart"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+        // 로컬 스토리지에서 데이터 가져오기
+        function getDataFromLocalStorage() {
+            const data = localStorage.getItem('handsontableData');
+            return data ? JSON.parse(data) : [];
+        }
+
+        // 로컬 스토리지에 데이터 저장하기
+        function saveDataToLocalStorage(data) {
+            localStorage.setItem('handsontableData', JSON.stringify(data));
+        }
+
+        // 합계 행 계산
+        function calculateSumRow(data) {
+            const sumRow = Array(12).fill(0);
+            data.forEach(row => {
+                row.slice(1).forEach((value, index) => {
+                    if (!isNaN(value)) {
+                        sumRow[index] += value;
+                    }
+                });
+            });
+            return sumRow;
+        }
+
+        // 차트 업데이트
+        function updateChart(data) {
+            const sumRow = calculateSumRow(data);
+            const series = data.map(row => ({
+                name: row[0],
+                data: row.slice(1)
+            }));
+            series.push({
+                name: '합계',
+                data: sumRow
+            });
+            chart.updateSeries(series);
+        }
+
+        const container1 = document.getElementById('hot1');
+        const hot1 = new Handsontable(container1, {
+            data: getDataFromLocalStorage(),
+            colHeaders: ['항목', '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            columns: [
+                { data: 'item', type: 'text' },
+                ...Array(12).fill({ type: 'numeric' })
+            ],
+            rowHeaders: true,
+            filters: true,
+            dropdownMenu: true,
+            contextMenu: true,
+            afterChange: function(changes, source) {
+                if (source !== 'loadData') {
+                    const data = hot1.getData();
+                    const sumRow = calculateSumRow(data);
+                    hot2.loadData([sumRow]);
+                    updateChart(data);
+                    saveDataToLocalStorage(data);
+                }
+            },
+            afterRemoveRow: function(index, amount) {
+                const data = hot1.getData();
+                const sumRow = calculateSumRow(data);
+                hot2.loadData([sumRow]);
+                updateChart(data);
+                saveDataToLocalStorage(data);
+            },
+            licenseKey: 'non-commercial-and-evaluation' // 무료 버전 사용 시 필요
+        });
+
+        const container2 = document.getElementById('hot2');
+        const hot2 = new Handsontable(container2, {
+            data: [calculateSumRow(getDataFromLocalStorage())],
+            colHeaders: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+            columns: Array(12).fill({ type: 'numeric', readOnly: true }),
+            rowHeaders: false,
+            licenseKey: 'non-commercial-and-evaluation' // 무료 버전 사용 시 필요
+        });
+
+        const chartOptions = {
+            chart: {
+                type: 'line',
+                height: 350
+            },
+            series: [],
+            xaxis: {
+                categories: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
+            },
+            colors: ['#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#FF8C33', '#33FFF5', '#8C33FF', '#FF3333', '#33FF8C', '#FF5733', '#33A1FF', '#FF33FF', '#33FF33']
+        };
+
+        const chart = new ApexCharts(document.querySelector("#chart"), chartOptions);
+        chart.render();
+
+        // 초기 차트 데이터 설정
+        updateChart(getDataFromLocalStorage());
+    </script>
+</body>
+</html>

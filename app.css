@@ -1,0 +1,266 @@
+:root {
+    --primary-color: #0058a3;
+    /* IKEA Blue */
+    --secondary-color: #ffcc00;
+    /* IKEA Yellow */
+    --text-color: #ffffff;
+    --border-color: #3b3b3f;
+}
+
+.tui-grid-header {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 2px solid var(--secondary-color);
+    border-radius: 10px 10px 0 0;
+    overflow: hidden;
+    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue";
+}
+
+.tui-grid-cell {
+    font-size: 15px;
+    color: #333;
+    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue";
+}
+
+
+.tui-grid-check-input,
+input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+}
+
+.tui-grid-cell.tui-grid-cell-row-header,
+.tui-grid-cell.tui-grid-cell-header {
+    background-color: #e8eaee;
+    color: #2c2c30;
+
+}
+
+/* 모든 행에 동일한 스타일 적용 */
+.tui-grid-row {
+    background-color: #fff !important;
+    /* 기본 배경색 */
+    border-bottom: 1px solid #8f8f8f !important;
+    /* 기본 테두리 색 */
+}
+
+/* 마지막 행에 추가 스타일 적용 */
+.tui-grid-row:last-child {
+    background-color: #fff !important;
+    /* 마지막 행의 배경색 */
+    border-bottom: 1px solid #8f8f8f !important;
+    /* 마지막 행의 테두리 색 */
+}
+
+.toast {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    min-width: 200px;
+    padding: 1rem;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #fff;
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast-success {
+    background-color: #38a169;
+}
+
+.toast-warning {
+    background-color: #dd6b20;
+}
+
+.toast-info {
+    background-color: #3182ce;
+}
+
+.toast-error {
+    background-color: #e53e3e;
+}
+
+#modal>div {
+    width: 90%;
+    height: 90%;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+#modal h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+#modal p {
+    flex-grow: 1;
+    overflow: auto;
+}
+
+#modal button {
+    align-self: flex-end;
+}
+
+#offCanvas {
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+}
+
+#hamburgerButton {
+    margin-right: 1rem;
+}
+
+#floatingNav button {
+    transition: transform 0.2s ease;
+}
+
+#floatingNav button:hover {
+    transform: scale(1.05);
+}
+
+#content {
+    padding: 90px 40px 10px 70px;
+    box-sizing: border-box;
+}
+
+.cursor-not-allowed {
+    cursor: not-allowed;
+}
+
+button {
+    font-size: 15px;
+}
+
+input[type="text"],
+input[type="date"] {
+    padding: 5px;
+    height: calc(1.5em + 6px);
+}
+
+@media (max-width: 1550px) {
+    .flex-col {
+        flex-direction: column;
+    }
+
+    .lg\:flex-row {
+        flex-direction: row;
+    }
+
+    .lg\:mb-0 {
+        margin-bottom: 0;
+    }
+
+    .lg\:space-y-0 {
+        margin-bottom: 0;
+    }
+
+    .lg\:space-x-2>*+* {
+        margin-left: 0.5rem;
+    }
+
+    .flex-col>div {
+        padding: 10px 0;
+    }
+}
+
+.relative .fa-calendar-alt {
+    pointer-events: none;
+}
+
+.collapsed {
+    width: 64px;
+
+}
+
+.collapsed .menu-text {
+    display: none;
+}
+
+.collapsed .menu-icon {
+    display: block;
+    font-size: 22px;
+    /* margin: 55px 0; */
+    text-align: center;
+}
+
+/* .collapsed #closeOffCanvas,
+.collapsed #expandOffCanvas,
+.collapsed #collapseOffCanvas {
+    display: block;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    margin-bottom: 10px;
+} */
+
+.expanded #expandOffCanvas {
+    display: none;
+}
+
+.collapsed #expandOffCanvas {
+    display: block;
+    position: absolute;
+    bottom: 130px;
+    right: 10px;
+    margin-top: 10px;
+
+
+}
+
+.expanded #collapseOffCanvas {
+    display: block;
+    position: absolute;
+    bottom: 120px;
+    right: 10px;
+    margin-top: 10px;
+
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.menu-item i {
+    margin-right: 10px;
+}
+
+.menu-item.collapsed i {
+    margin-right: 0;
+}
+
+.gnb-menu {
+    background-color: #333;
+    height: 64px;
+}
+
+.gnb-menu ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.gnb-menu li {
+    padding: 10px 0;
+}
+
+.gnb-menu a {
+    color: white;
+    text-decoration: none;
+    display: block;
+}
