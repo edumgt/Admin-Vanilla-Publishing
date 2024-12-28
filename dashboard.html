@@ -5,292 +5,30 @@
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Dashboard</title>
+   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+   <link rel="stylesheet" href="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css" />
+   <link rel="stylesheet" href="https://uicdn.toast.com/tui-grid/latest/tui-grid.css" />
+   <link rel="stylesheet" as="style" crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+
    <link rel="stylesheet" href="assets/css/core.css">
    <link rel="stylesheet" href="assets/css/style.css">
    <link rel="stylesheet" href="assets/vendor/boxicons-2.1.4/css/boxicons.min.css">
-   <style>
-      .sidebar {
-         z-index: 4;
-         width: 18rem;
-         height: 100vh;
-         background: var(--white-color);
-         box-shadow: 0.2rem 0 0.5rem 0 hsla(210, 30%, 20%, 0.1);
-         transition: 0.2s ease-in;
-      }
+   <link rel="stylesheet" href="assets/css/grid.css">
 
-      .sidebar .app-brand {
-         display: flex;
-         align-items: center;
-         justify-content: space-between;
-         width: 104%;
-         margin-top: 1rem;
-         padding: 0.7rem 0 0 1.1rem;
-         transition: 0.3s ease;
-      }
-
-      body.sidebar-hidden .sidebar .app-brand {
-         display: none;
-      }
-
-      .sidebar .app-logo {
-         display: flex;
-         align-items: center;
-         gap: 0.5rem;
-         text-decoration: none;
-      }
-
-      .sidebar .app-logo .logo-image {
-         height: 32px;
-         cursor: pointer;
-      }
-
-      .sidebar .app-logo .logo-text {
-         color: var(--heading-color);
-      }
-
-
-
-      body.sidebar-hidden .sidebar {
-         width: 0;
-         padding: 0;
-      }
-
-      @media (max-width: 768px) {
-         .sidebar {
-            position: absolute;
-            left: 0;
-            top: 0;
-            z-index: var(--sidebar-z-index);
-         }
-
-         .sidebar-backdrop {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            z-index: var(--sidebar-backdrop-z-index);
-            background: var(--backdrop-dark-color);
-            transition: 0.2s ease;
-         }
-
-         body.sidebar-hidden .sidebar-backdrop {
-            opacity: 0;
-            pointer-events: none;
-         }
-      }
-
-      /* Sidebar Toggle Styles */
-      .sidebar .sidebar-toggle {
-         color: var(--white-color);
-         background-color: var(--primary-color);
-         border-radius: 50%;
-         position: relative;
-         
-         z-index: 1000;
-      }
-
-      .sidebar .sidebar-toggle i {
-         width: 1.5rem;
-         height: 1.5rem;
-         display: flex;
-         align-items: center;
-         justify-content: center;
-         font-size: 1.5rem;
-         /* 아이콘 크기 */
-      }
-
-      .sidebar .sidebar-toggle i::after {
-         content: "";
-         position: absolute;
-         width: 1.5rem;
-         height: 1.5rem;
-         border-radius: 50%;
-         box-shadow: 0 0 0 7px var(--body-bg);
-      }
-
-      /* Collapsed Sidebar Styles */
-      .sidebar.collapsed {
-         width: 65px;
-         overflow: hidden;
-      }
-
-      .sidebar.collapsed .sidebar-toggle {
-         color: var(--white-color);
-         background-color: var(--primary-color);
-         border-radius: 50%;
-         position: absolute;
-         top:90px;
-         padding-left:5px;
-         z-index: 1000;
-      }
-
-      .sidebar.collapsed .sidebar-toggle i {
-         width: 1.5rem;
-         height: 1.5rem;
-         display: flex;
-         align-items: center;
-         justify-content: center;
-         font-size: 1.5rem;
-         /* 아이콘 크기 */
-      }
-
-      .sidebar.collapsed .sidebar-toggle i::after {
-         content: "";
-         position: absolute;
-         width: 1.5rem;
-         height: 1.5rem;
-         border-radius: 50%;
-         box-shadow: 0 0 0 8px var(--body-bg);
-      }
-
-      .sidebar.collapsed .menu-item span,
-      .sidebar.collapsed .app-brand h6,
-      .sidebar.collapsed .logo-text {
-         display: none;
-      }
-
-      .sidebar.collapsed .menu-item i {
-         margin: 0 auto;
-         /* 아이콘 중앙 정렬 */
-      }
-
-      .app-brand {
-         margin-bottom: 2rem;
-      }
-
-      .app-brand .app-brand-link {
-         display: flex;
-         align-items: center;
-         justify-content: center;
-         gap: 0.5rem;
-      }
-
-      .app-brand .app-brand-link .logo-image {
-         height: 35px;
-      }
-
-      .app-brand .app-brand-link .logo-text {
-         color: var(--heading-color);
-         font-weight: 600;
-      }
-
-      .menu {
-         position: relative;
-         overflow-y: auto;
-         scrollbar-width: thin;
-         height: calc(100vh - 100px);
-         scrollbar-color: transparent transparent;
-         margin-top:30px;
-      }
-
-      .sidebar.collapsed .menu {
-         position: relative;
-         overflow-y: auto;
-         scrollbar-width: thin;
-         height: calc(100vh - 100px);
-         scrollbar-color: transparent transparent;
-         margin-top:70px;
-      }
-
-      .menu:hover {
-         scrollbar-color: var(--scrollbar-color);
-      }
-
-      .menu-header {
-         margin: 0;
-         padding: 1rem 1.5rem;
-      }
-
-      .menu-header .menu-header-text {
-         font-size: 0.8rem;
-         font-weight: 400;
-         text-transform: uppercase;
-         white-space: nowrap;
-         color: var(--secondary-dark-color);
-      }
-
-      .menu-link {
-         display: flex;
-         align-items: center;
-         white-space: nowrap;
-         gap: 0.5rem;
-         font-size: 0.9rem;
-         padding: 0.5rem 0.5rem;
-         margin: 0 0.5rem 0 1rem;
-         color: var(--heading-color);
-         border-radius: var(--border-radius);
-      }
-
-      .menu-link:hover {
-         color: var(--heading-color);
-         background-color: hsla(210, 29%, 19%, 0.06);
-      }
-
-      .menu>.menu-item.active>.menu-link {
-         color: var(--primary-color);
-         background-color: var(--primary-lightest-color);
-      }
-
-      .menu-toggle::after {
-         position: absolute;
-         content: "\ea50";
-         right: 6%;
-         display: block;
-         font-family: "boxicons";
-         font-size: 1.375rem;
-         transform: translateY(5%);
-         transition: transform 0.2s ease-out;
-      }
-
-      .menu-item.open>.menu-toggle::after {
-         transform: rotate(90deg);
-      }
-
-      .menu-sub {
-         display: none;
-         position: relative;
-         transition: size 0.4s ease-in;
-      }
-
-      .menu-sub .menu-item:first-child {
-         margin-top: 0.3rem;
-      }
-
-      .menu-sub .menu-link {
-         padding-left: 2.5rem;
-      }
-
-      .menu-sub .menu-sub .menu-link {
-         padding-left: 3rem;
-      }
-
-      .menu-sub>.menu-item>.menu-link:before {
-         content: "";
-         position: absolute;
-         left: 2rem;
-         width: 0.375rem;
-         height: 0.375rem;
-         border-radius: 50%;
-         background-color: #a7acb2;
-      }
-
-      .menu-sub .menu-sub>.menu-item>.menu-link:before {
-         left: 2.5rem;
-      }
-
-      .menu-sub>.menu-item.active>.menu-link:before {
-         background-color: var(--primary-color) !important;
-      }
-
-      .menu-item.open>.menu-sub {
-         display: block;
-      }
-   </style>
+   <script type="text/javascript" src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.js"></script>
+   <script type="text/javascript" src="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.js"></script>
+   <script src="https://uicdn.toast.com/tui-grid/latest/tui-grid.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
 </head>
 
 <body>
    <div class="dash-container">
+      <!-- Toast Container -->
+      <div id="toast-container"></div>
+
       <div class="sidebar-backdrop"></div>
       <aside class="sidebar">
          <div class="app-brand">
@@ -298,7 +36,7 @@
                <img src="assets/img/flask-logo.png" alt="Logo" class="logo-image">
                <h6 class="logo-text">EDUMGT</h6>
             </a>
-            <a href="#" class="sidebar-toggle" data-toggle="sidebar">
+            <a href="#" class="sidebar-toggle" data-toggle="sidebar" id="sidebar">
                <i class="bx bx-chevron-left fs-5"></i>
             </a>
          </div>
@@ -442,8 +180,8 @@
                            <div class="d-flex">
                               <div class="flex-shrink-0 me-4">
                                  <div class="avatar">
-                                    <img class="rounded-circle bg-primary-lightest"
-                                       src="assets/img/Avatars/Joginder Singh.png" alt="Avatar" width="40px">
+                                    <img class="rounded-circle bg-primary-lightest" src="assets/img/Avatars/Lalina.png"
+                                       alt="Avatar" width="40px">
                                  </div>
                               </div>
                               <div class="overflow-hidden flex-grow-1">
@@ -546,8 +284,8 @@
                            <div class="d-flex">
                               <div class="flex-shrink-0 me-4">
                                  <div class="avatar">
-                                    <img class="rounded-circle bg-primary-lightest"
-                                       src="assets/img/Avatars/Dollar Gill.png" alt="Avatar" width="40px">
+                                    <img class="rounded-circle bg-primary-lightest" src="assets/img/Avatars/Lalina.png"
+                                       alt="Avatar" width="40px">
                                  </div>
                               </div>
                               <div class="overflow-hidden flex-grow-1">
@@ -686,8 +424,8 @@
                <div class="dropdown">
                   <a class="dropdown-toggle">
                      <div class="avatar avatar-online">
-                        <img class="rounded-circle bg-primary-lightest" src="assets/img/Avatars/Dollar Gill.png"
-                           alt="Avatar" width="40px">
+                        <img class="rounded-circle bg-primary-lightest" src="assets/img/Avatars/Lalina.png" alt="Avatar"
+                           width="40px">
                      </div>
                   </a>
                   <div id="dropdown-menu-account" class="dropdown-menu dropdown-menu-end">
@@ -695,8 +433,8 @@
                         <div class="d-flex">
                            <div class="me-3">
                               <div class="avatar avatar-online">
-                                 <img class="rounded-circle bg-primary-lightest"
-                                    src="assets/img/Avatars/Dollar Gill.png" alt="Avatar" width="40px">
+                                 <img class="rounded-circle bg-primary-lightest" src="assets/img/Avatars/Lalina.png"
+                                    alt="Avatar" width="40px">
                               </div>
                            </div>
                            <div class="">
@@ -722,7 +460,7 @@
                      <a href="#" class="dropdown-item">
                         <div class="d-flex align-items-cemter gap-3">
                            <i class="bx bx-power-off fs-5"></i>
-                           <span>Logout</span>
+                           <span id="memberIcon">Logout</span>
                         </div>
                      </a>
                   </div>
@@ -867,15 +605,93 @@
                </div>
             </div>
             <div class="card">
+               <div class="flex flex-col lg:flex-row justify-between items-center p-2">
+                  <div id="dataCount" class="text-sm text-gray-700 mb-2 lg:mb-0">Total : </div>
+                  <div class="flex flex2 flex-col lg:flex-row items-center space-y-2 lg:space-y-0 lg:space-x-2">
+                     <div class="flex items-center space-x-2">
+                        <input type="text" id="groupCode" placeholder="Group Code"
+                           class="border border-gray-300 rounded p-2">
+                        <input type="text" id="codeName" placeholder="Code Name"
+                           class="border border-gray-300 rounded p-2">
+                        <input type="text" id="description" placeholder="Description"
+                           class="border border-gray-300 rounded p-2">
+                        <div class="relative">
+                           <input type="text" id="datePicker" class="border border-gray-300 rounded p-2 pl-10">
+                           <i
+                              class="fas fa-calendar-alt absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+                        </div>
+                     </div>
 
-
-
+                     <div class="flex items-center space-x-2">
+                        <button id="searchByDate"
+                           class="flex items-center space-x-2 px-4 py-1.5 text-white font-medium rounded bg-gray-800 hover:bg-gray-700">
+                           <i class="fas fa-search"></i>
+                           <span>검색</span>
+                        </button>
+                        <button id="resetSearch"
+                           class="flex items-center space-x-2 px-4 py-1.5 text-white font-medium rounded bg-gray-800 hover:bg-gray-700">
+                           <i class="fas fa-undo"></i>
+                           <span>검색 초기화</span>
+                        </button>
+                        <button id="newrow"
+                           class="flex items-center space-x-2 px-4 py-1.5 text-white font-medium rounded bg-gray-800 hover:bg-gray-700">
+                           <i class="fas fa-plus"></i>
+                           <span>신규</span>
+                        </button>
+                        <button id="delrow"
+                           class="flex items-center space-x-2 px-4 py-1.5 text-white font-medium rounded bg-gray-800 hover:bg-gray-700">
+                           <i class="fas fa-trash"></i>
+                           <span>삭제</span>
+                        </button>
+                        <button id="saverow"
+                           class="flex items-center space-x-2 px-4 py-1.5 text-white font-medium rounded bg-gray-800 hover:bg-gray-700">
+                           <i class="fas fa-save"></i>
+                           <span>저장</span>
+                        </button>
+                     </div>
+                  </div>
+               </div>
+               
+               <div id="grid" ></div>
+               
             </div>
          </div>
       </main>
    </div>
+
+   <div id="modal"
+      class="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div class="bg-white rounded-lg shadow-lg p-6 w-1/3 relative">
+
+         <button id="closeModalTopRight" class="absolute top-2 right-2 text-gray-600 hover:text-gray-800 text-lg">
+            &times;
+         </button>
+         <h2 class="text-lg font-semibold mb-4">Edit Row Details</h2>
+         <form id="modalForm" class="space-y-4">
+
+         </form>
+         <div class="flex justify-end space-x-2 mt-4">
+            <button id="saveModal" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Save</button>
+            <button id="closeModal" class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700">Close</button>
+         </div>
+      </div>
+   </div>
+
+   <div id="logoutModal"
+      class="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div class="bg-white rounded-lg shadow-lg p-6 w-1/3 relative">
+         <h2 class="text-lg font-semibold mb-4">로그아웃 하시겠습니까?</h2>
+         <div class="flex justify-end space-x-2 mt-4">
+            <button id="confirmLogout" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+               onclick="window.location.href='login.html';">Logout</button>
+            <button id="cancelLogout" class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700">Cancel</button>
+         </div>
+      </div>
+   </div>
+
    <script src="assets/js/core.js"></script>
    <script src="assets/js/script.js"></script>
+   <script src="assets/js/grid.js"></script>
 
 </body>
 

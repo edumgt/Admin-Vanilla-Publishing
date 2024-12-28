@@ -7,6 +7,14 @@
     --border-color: #3b3b3f;
 }
 
+.main-layout {
+    height: 100vh;
+    width: 100%;
+    overflow-y: auto;
+    scrollbar-color: #817f7f transparent;
+    scrollbar-width: thin;
+  }
+
 .tui-grid-header {
     background-color: var(--primary-color);
     color: var(--text-color);
@@ -53,6 +61,8 @@ input[type="checkbox"] {
     border-bottom: 1px solid #8f8f8f !important;
     /* 마지막 행의 테두리 색 */
 }
+
+
 
 .toast {
     position: fixed;
@@ -117,6 +127,26 @@ input[type="checkbox"] {
     align-self: flex-end;
 }
 
+.relative .fa-calendar-alt {
+    pointer-events: none;
+}
+
+.cursor-not-allowed {
+    cursor: not-allowed;
+}
+
+button {
+    font-size: 15px;
+}
+
+input[type="text"],
+input[type="date"] {
+    padding: 5px;
+    height: calc(1.5em + 6px);
+}
+
+/* body */
+
 #offCanvas {
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
 }
@@ -138,19 +168,7 @@ input[type="checkbox"] {
     box-sizing: border-box;
 }
 
-.cursor-not-allowed {
-    cursor: not-allowed;
-}
 
-button {
-    font-size: 15px;
-}
-
-input[type="text"],
-input[type="date"] {
-    padding: 5px;
-    height: calc(1.5em + 6px);
-}
 
 @media (max-width: 1550px) {
     .flex-col {
@@ -178,9 +196,7 @@ input[type="date"] {
     }
 }
 
-.relative .fa-calendar-alt {
-    pointer-events: none;
-}
+
 
 .collapsed {
     width: 64px;
@@ -264,3 +280,18 @@ input[type="date"] {
     text-decoration: none;
     display: block;
 }
+
+@media (max-width: 1500px) {
+    .flex2 {
+       flex-wrap: wrap;
+    }
+    .flex2 > div {
+       width: 100%; /* 한 줄로 변경 */
+       margin-bottom: 0.5rem; /* 각 행 간격 추가 */
+    }
+    .flex2 > .flex-col {
+       flex-direction: row;
+       justify-content: space-between;
+    }
+ }
+ 

@@ -1,61 +1,6 @@
-document.addEventListener('DOMContentLoaded', function () {
-
-    const memberIcon = document.getElementById('memberIcon');
-    const logoutModal = document.getElementById('logoutModal');
-    const confirmLogout = document.getElementById('confirmLogout');
-    const cancelLogout = document.getElementById('cancelLogout');
-    let isLoggedIn = true;
-
-    memberIcon.addEventListener('click', function () {
-        if (isLoggedIn) {
-            logoutModal.classList.remove('hidden');
-        } else {
-            logoutModal.classList.remove('hidden');
-        }
-    });
 
 
-    confirmLogout.addEventListener('click', function () {
-        isLoggedIn = false;
-        memberIcon.innerHTML = '<i class="fas fa-user"></i>';
-        logoutModal.classList.add('hidden');
-    });
-
-    cancelLogout.addEventListener('click', function () {
-        logoutModal.classList.add('hidden');
-    });
-
-    const offCanvas = document.getElementById('offCanvas');
-    const hamburgerButton = document.getElementById('hamburgerButton');
-    // const closeOffCanvas = document.getElementById('closeOffCanvas');
-    const expandOffCanvas = document.getElementById('expandOffCanvas');
-    const collapseOffCanvas = document.getElementById('collapseOffCanvas');
-
-    hamburgerButton.addEventListener('click', function () {
-        offCanvas.classList.toggle('hidden');
-        offCanvas.classList.toggle('transform');
-        offCanvas.classList.toggle('-translate-x-full');
-        offCanvas.classList.add('expanded');
-        expandOffCanvas.classList.add('hidden');
-    });
-
-    // closeOffCanvas.addEventListener('click', function() {
-    //     offCanvas.classList.add('collapsed');
-    //     offCanvas.classList.remove('expanded');
-    // });
-
-    expandOffCanvas.addEventListener('click', function () {
-        offCanvas.classList.remove('collapsed');
-        offCanvas.classList.add('expanded');
-        expandOffCanvas.classList.add('hidden');
-    });
-
-    collapseOffCanvas.addEventListener('click', function () {
-        offCanvas.classList.add('collapsed');
-        offCanvas.classList.remove('expanded');
-        collapseOffCanvas.classList.add('hidden');
-
-    });
+    
 
     // UUID Generator Function
     function generateUUID() {
@@ -113,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateDataCount() {
         const allData = loadData();
         const dataCountElement = document.getElementById('dataCount');
-        dataCountElement.textContent = `Total Rows: ${allData.length}`;
+        dataCountElement.textContent = `Total : ${allData.length}`;
     }
 
     // Function to load data from localStorage
@@ -157,13 +102,13 @@ document.addEventListener('DOMContentLoaded', function () {
         editingEvent: 'click',
         scrollX: true,
         scrollY: true,
-        bodyHeight: 630,
+        bodyHeight: 600,
         pageOptions: {
             useClient: true,
             perPage: rowsPerPage
         },
-        rowHeight: 45,
-        minRowHeight: 45,
+        rowHeight: 42,
+        minRowHeight: 42,
         columns: [
             { header: 'Key', name: 'Key', width: 250, align: 'left', sortable: true, resizable: true, width: 100, minWidth: 80 }, // UUID column    
             { header: 'Group', name: 'tpCd', editor: 'text', validation: { required: true }, sortable: true, filter: 'text', resizable: true, width: 150 },
@@ -333,26 +278,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    document.getElementById('gearIcon').addEventListener('click', () => {
-        const floatingNav = document.getElementById('floatingNav');
-        floatingNav.classList.remove('hidden'); // Show the floating menu
-    });
-
-    document.getElementById('closeFloatingNav').addEventListener('click', () => {
-        const floatingNav = document.getElementById('floatingNav');
-        floatingNav.classList.add('hidden'); // Hide the floating menu
-    });
-
-
-    document.getElementById('hamburgerButton').addEventListener('click', () => {
-        const offCanvas = document.getElementById('offCanvas');
-        offCanvas.classList.remove('hidden', '-translate-x-full'); // Show the off-canvas menu
-    });
-
-    // document.getElementById('closeOffCanvas').addEventListener('click', () => {
-    //     const offCanvas = document.getElementById('offCanvas');
-    //     offCanvas.classList.add('-translate-x-full'); // Hide the off-canvas menu
-    // });
+    
 
 
     document.getElementById('saveModal').addEventListener('click', () => {
@@ -510,6 +436,89 @@ document.addEventListener('DOMContentLoaded', function () {
         lastRow.style.borderBottom = '1px solid #8f8f8f'; // 마지막 행의 테두리 색
     }
 
+    
 
-});
+    /* log out */
+
+    const memberIcon = document.getElementById('memberIcon');
+    const logoutModal = document.getElementById('logoutModal');
+    const confirmLogout = document.getElementById('confirmLogout');
+    const cancelLogout = document.getElementById('cancelLogout');
+    let isLoggedIn = true;
+
+    memberIcon.addEventListener('click', function () {
+        if (isLoggedIn) {
+            logoutModal.classList.remove('hidden');
+        } else {
+            logoutModal.classList.remove('hidden');
+        }
+    });
+
+
+    confirmLogout.addEventListener('click', function () {
+        isLoggedIn = false;
+        memberIcon.innerHTML = '<i class="fas fa-user"></i>';
+        logoutModal.classList.add('hidden');
+    });
+
+    cancelLogout.addEventListener('click', function () {
+        logoutModal.classList.add('hidden');
+    });
+
+    /* LNB */
+
+    const offCanvas = document.getElementById('offCanvas');
+    const hamburgerButton = document.getElementById('hamburgerButton');
+    // const closeOffCanvas = document.getElementById('closeOffCanvas');
+    const expandOffCanvas = document.getElementById('expandOffCanvas');
+    const collapseOffCanvas = document.getElementById('collapseOffCanvas');
+
+    hamburgerButton.addEventListener('click', function () {
+        offCanvas.classList.toggle('hidden');
+        offCanvas.classList.toggle('transform');
+        offCanvas.classList.toggle('-translate-x-full');
+        offCanvas.classList.add('expanded');
+        expandOffCanvas.classList.add('hidden');
+    });
+
+    // closeOffCanvas.addEventListener('click', function() {
+    //     offCanvas.classList.add('collapsed');
+    //     offCanvas.classList.remove('expanded');
+    // });
+
+    expandOffCanvas.addEventListener('click', function () {
+        offCanvas.classList.remove('collapsed');
+        offCanvas.classList.add('expanded');
+        expandOffCanvas.classList.add('hidden');
+    });
+
+    collapseOffCanvas.addEventListener('click', function () {
+        offCanvas.classList.add('collapsed');
+        offCanvas.classList.remove('expanded');
+        collapseOffCanvas.classList.add('hidden');
+
+    });
+
+    document.getElementById('gearIcon').addEventListener('click', () => {
+        const floatingNav = document.getElementById('floatingNav');
+        floatingNav.classList.remove('hidden'); // Show the floating menu
+    });
+
+    document.getElementById('closeFloatingNav').addEventListener('click', () => {
+        const floatingNav = document.getElementById('floatingNav');
+        floatingNav.classList.add('hidden'); // Hide the floating menu
+    });
+
+
+    document.getElementById('hamburgerButton').addEventListener('click', () => {
+        const offCanvas = document.getElementById('offCanvas');
+        offCanvas.classList.remove('hidden', '-translate-x-full'); // Show the off-canvas menu
+    });
+
+    // document.getElementById('closeOffCanvas').addEventListener('click', () => {
+    //     const offCanvas = document.getElementById('offCanvas');
+    //     offCanvas.classList.add('-translate-x-full'); // Hide the off-canvas menu
+    // });
+
+
 
