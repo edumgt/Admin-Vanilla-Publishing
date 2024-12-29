@@ -465,6 +465,8 @@ input[type="date"] {
     cursor: pointer;
     transition: transform 0.2s ease-in-out;
 }
+
 #languageSwitcher img:hover {
-    transform: scale(1.1); /* 마우스 호버 시 약간 확대 */
+    transform: scale(1.1);
+    /* 마우스 호버 시 약간 확대 */
 }
