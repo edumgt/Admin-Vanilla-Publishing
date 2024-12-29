@@ -515,10 +515,21 @@
         offCanvas.classList.remove('hidden', '-translate-x-full'); // Show the off-canvas menu
     });
 
-    // document.getElementById('closeOffCanvas').addEventListener('click', () => {
-    //     const offCanvas = document.getElementById('offCanvas');
-    //     offCanvas.classList.add('-translate-x-full'); // Hide the off-canvas menu
-    // });
+    
+        // 현재 페이지 URL 가져오기
+    const currentPage = window.location.pathname.split("/").pop();
 
+    // 모든 메뉴 링크 가져오기
+    const menuLinks = document.querySelectorAll(".gnb-item");
 
-
+    // 활성화 상태 설정
+    menuLinks.forEach((link) => {
+        if (link.getAttribute("href") === currentPage) {
+            link.classList.add("active");
+        } else {
+            link.classList.remove("active");
+        }
+    });
+    
+    
+    
