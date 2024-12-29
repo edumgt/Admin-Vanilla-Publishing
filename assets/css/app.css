@@ -8,8 +8,10 @@
 
 /* Variables */
 :root {
-    --primary-color: #0058a3; /* IKEA Blue */
-    --secondary-color: #ffcc00; /* IKEA Yellow */
+    --primary-color: #0058a3;
+    /* IKEA Blue */
+    --secondary-color: #ffcc00;
+    /* IKEA Yellow */
     --text-color: #ffffff;
     --border-color: #3b3b3f;
     --bg-light: #e8eaee;
@@ -295,7 +297,8 @@ input[type="date"] {
     height: 55px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     background: linear-gradient(90deg, #1a202c, #2d3748);
-    padding: 0.5rem 1rem 1rem 1rem; /* 내부 여백 */
+    padding: 0.5rem 1rem 1rem 1rem;
+    /* 내부 여백 */
     display: flex;
     flex-direction: column;
 }
@@ -312,43 +315,60 @@ input[type="date"] {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1rem; /* 글자 크기 */
-    font-weight: 600; /* 텍스트 굵기 */
-    text-transform: uppercase; /* 대문자 변환 */
-    color: #c7ced9; /* 기본 텍스트 색상 */
-    padding: 0.5rem 1rem; /* 내부 여백 */
-    border-radius: 0.375rem; /* 둥근 모서리 */
-    transition: all 0.3s ease; /* 부드러운 전환 */
+    font-size: 1rem;
+    /* 글자 크기 */
+    font-weight: 600;
+    /* 텍스트 굵기 */
+    text-transform: uppercase;
+    /* 대문자 변환 */
+    color: #c7ced9;
+    /* 기본 텍스트 색상 */
+    padding: 0.5rem 1rem;
+    /* 내부 여백 */
+    border-radius: 0.375rem;
+    /* 둥근 모서리 */
+    transition: all 0.3s ease;
+    /* 부드러운 전환 */
     position: relative;
     overflow: hidden;
 }
 
 /* 아이콘 스타일 */
 .gnb-item i {
-    font-size: 1rem; /* 아이콘 크기 */
-    margin-right: 0.5rem; /* 텍스트와 아이콘 간격 */
-    color: #718096; /* 기본 아이콘 색상 */
-    transition: color 0.3s ease; /* 색상 전환 */
+    font-size: 1rem;
+    /* 아이콘 크기 */
+    margin-right: 0.5rem;
+    /* 텍스트와 아이콘 간격 */
+    color: #718096;
+    /* 기본 아이콘 색상 */
+    transition: color 0.3s ease;
+    /* 색상 전환 */
 }
 
 /* 호버 효과 */
 .gnb-item:hover {
-    background-color: #edf2f7; /* 호버 시 배경색 */
-    color: #2d3748; /* 호버 시 텍스트 색상 */
+    background-color: #edf2f7;
+    /* 호버 시 배경색 */
+    color: #2d3748;
+    /* 호버 시 텍스트 색상 */
 }
 
 .gnb-item:hover i {
-    color: #2d3748; /* 호버 시 아이콘 색상 */
+    color: #2d3748;
+    /* 호버 시 아이콘 색상 */
 }
 
 /* 활성화된 메뉴 */
 .gnb-item.active {
-    background-color: #0058a3; /* 활성화된 배경색 */
-    color: #ffffff; /* 활성화된 텍스트 색상 */
+    background-color: #0058a3;
+    /* 활성화된 배경색 */
+    color: #ffffff;
+    /* 활성화된 텍스트 색상 */
 }
 
 .gnb-item.active i {
-    color: #ffffff; /* 활성화된 아이콘 색상 */
+    color: #ffffff;
+    /* 활성화된 아이콘 색상 */
 }
 
 /* 밑줄 애니메이션 */
@@ -365,18 +385,22 @@ input[type="date"] {
 }
 
 .gnb-item:hover::after {
-    width: 80%; /* 호버 시 밑줄 확장 */
+    width: 80%;
+    /* 호버 시 밑줄 확장 */
 }
 
 /* 탭 컨테이너 */
 .tabs {
     display: flex;
-    gap: 25px; /* 메뉴 간격 */
+    gap: 25px;
+    /* 메뉴 간격 */
 }
 
 .tabs li {
-    margin-bottom: 10px; /* 메뉴 항목 간 여백 */
-    line-height: calc(1.5rem - 3px); /* 메뉴의 높이 조정 */
+    margin-bottom: 10px;
+    /* 메뉴 항목 간 여백 */
+    line-height: calc(1.5rem - 3px);
+    /* 메뉴의 높이 조정 */
 }
 
 
@@ -386,7 +410,7 @@ input[type="date"] {
     font-size: 1.2rem;
     background: #2d3748;
     border-radius: 50%;
-    padding: 0.4rem ;
+    padding: 0.4rem;
     transition: background 0.3s ease;
 }
 
@@ -413,19 +437,24 @@ input[type="date"] {
 
 /* 메뉴 아이콘 기본 스타일 */
 .menu-icon {
-    transition: color 0.3s ease; /* 부드러운 색상 전환 */
+    transition: color 0.3s ease;
+    /* 부드러운 색상 전환 */
 }
 
 /* 마우스 포인터가 메뉴 아이콘에 올려질 때 색상 변경 */
 .menu-item:hover .menu-icon {
-    color: var(--primary-color); /* 아이콘 색상을 기본 색상으로 변경 */
+    color: var(--primary-color);
+    /* 아이콘 색상을 기본 색상으로 변경 */
 }
 
 .breadcrumb-container {
-    margin-top: -20px; /* 위로 배치 */
-}
-.breadcrumb {
-    font-size: 1.25rem; /* 글자 크기 증가 */
-    font-weight: bold; /* 굵게 설정 */
+    margin-top: -20px;
+    /* 위로 배치 */
 }
 
+.breadcrumb {
+    font-size: 1.25rem;
+    /* 글자 크기 증가 */
+    font-weight: bold;
+    /* 굵게 설정 */
+}
