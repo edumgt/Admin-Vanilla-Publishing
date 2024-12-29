@@ -421,4 +421,11 @@ input[type="date"] {
     color: var(--primary-color); /* 아이콘 색상을 기본 색상으로 변경 */
 }
 
+.breadcrumb-container {
+    margin-top: -20px; /* 위로 배치 */
+}
+.breadcrumb {
+    font-size: 1.25rem; /* 글자 크기 증가 */
+    font-weight: bold; /* 굵게 설정 */
+}
 
