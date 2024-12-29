@@ -1,7 +1,3 @@
-
-
-    
-
     // UUID Generator Function
     function generateUUID() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -17,8 +13,8 @@
     let rowsPerPage = 20; // Default rows per page
 
     // Fetch data from the server
-    fetch('https://your-backend-api.com/data')
-        //fetch('mock.json')
+    //fetch('https://your-backend-api.com/data')
+        fetch('mock.json')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
