@@ -458,3 +458,13 @@ input[type="date"] {
     font-weight: bold;
     /* 굵게 설정 */
 }
+
+#languageSwitcher img {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+#languageSwitcher img:hover {
+    transform: scale(1.1); /* 마우스 호버 시 약간 확대 */
+}
