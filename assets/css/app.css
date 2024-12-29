@@ -460,13 +460,15 @@ input[type="date"] {
 }
 
 #languageSwitcher img {
-    width: 32px;
-    height: 32px;
-    cursor: pointer;
+    width: 32px; /* 가로 크기 고정 */
+    height: 32px; /* 세로 크기 고정 */
+    object-fit: cover; /* 이미지 왜곡 방지 */
+    border-radius: 4px; /* 선택적으로 모서리를 둥글게 */
+    border: 1px solid #ccc; /* 선택적으로 테두리 추가 */
+    cursor: pointer; /* 클릭 가능하도록 포인터 */
     transition: transform 0.2s ease-in-out;
 }
 
 #languageSwitcher img:hover {
-    transform: scale(1.1);
-    /* 마우스 호버 시 약간 확대 */
+    transform: scale(1.1); /* 마우스 오버 시 약간 확대 */
 }
