@@ -296,19 +296,19 @@ languageSwitcher.addEventListener("click", function (event) {
 function getDataFromLocalStorage() {
 
     fetch('stati.json')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        localStorage.setItem('handsontableData', JSON.stringify(data));
-        console.log(localStorage.getItem('handsontableData'));
-    })
-    .catch(error => {
-        showToast('서버 데이타 로딩 중 오류 입니다.', 'error');
-    });
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            localStorage.setItem('handsontableData', JSON.stringify(data));
+            console.log(localStorage.getItem('handsontableData'));
+        })
+        .catch(error => {
+            showToast('서버 데이타 로딩 중 오류 입니다.', 'error');
+        });
 
     const data = localStorage.getItem('handsontableData');
     return data ? JSON.parse(data) : [];
@@ -350,7 +350,7 @@ const container1 = document.getElementById('hot1');
 const hot1 = new Handsontable(container1, {
     data: getDataFromLocalStorage(),
     colHeaders: ['item', '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-    
+
     columns: [
         { data: 0, type: 'text', allowFillHandle: true }, // Enable fill for the 'item' column
         ...Array(12).fill({ type: 'numeric' })
@@ -358,8 +358,8 @@ const hot1 = new Handsontable(container1, {
     fillHandle: {
         autoInsertRow: true
     },
-    colWidths: 110, 
-    rowHeights: 25, 
+    colWidths: 110,
+    rowHeights: 25,
 
     rowHeaders: true,
     filters: true,

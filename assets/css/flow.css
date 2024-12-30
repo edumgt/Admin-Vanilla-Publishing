@@ -489,16 +489,21 @@ input[type="date"] {
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.handsontable .htCore td, .handsontable .htCore th {
-    background-color: #f9f9f9; /* 테마 색상 적용 */
+.handsontable .htCore td,
+.handsontable .htCore th {
+    background-color: #f9f9f9;
+    /* 테마 색상 적용 */
     border-color: #ddd;
 }
+
 .handsontable .htCore th {
-    background-color: #f1f1f1; /* 헤더 색상 적용 */
+    background-color: #f1f1f1;
+    /* 헤더 색상 적용 */
     font-weight: bold;
 }
+
 .grid-container {
-    
+
     margin: 10px;
     background-color: #fefefe;
     padding: 30px;
@@ -509,7 +514,7 @@ input[type="date"] {
 
 
 /* Custom styles for a modern look */
-.handsontable .ht_master .htCore td, 
+.handsontable .ht_master .htCore td,
 .handsontable .ht_master .htCore th {
     background-color: #ffffff;
     border: 1px solid #e0e0e0;
@@ -517,14 +522,14 @@ input[type="date"] {
 
     font-size: 14px;
     text-align: center;
-    
+
 }
 
 .handsontable .ht_master .htCore th {
     background-color: #007BFF;
     color: white;
     font-weight: bold;
-    width:100px;
+    width: 100px;
 }
 
 .handsontable .ht_master .htCore td:hover {
@@ -563,6 +568,3 @@ input[type="date"] {
 .handsontable .ht_master .htCore .htDimmed {
     color: #999;
 }
-
-
-
