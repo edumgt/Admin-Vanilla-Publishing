@@ -141,16 +141,23 @@ document.getElementById('hamburgerButton').addEventListener('click', () => {
 // 현재 페이지 URL 가져오기
 const currentPage = window.location.pathname.split("/").pop();
 
-// 모든 메뉴 링크 가져오기
+// 모든 GNB 메뉴 링크 가져오기
 const menuLinks = document.querySelectorAll(".gnb-item");
 
-// 활성화 상태 설정
-menuLinks.forEach((link) => {
+// 모든 LNB 메뉴 링크 가져오기
+const menuLinks2 = document.querySelectorAll(".menu-item");
+
+// GNB의 1번 파일이 stati.html 의 경우 활성화 상태 설정
+menuLinks2.forEach((link) => {
     if (link.getAttribute("href") === currentPage) {
-        link.classList.add("active");
-    } else {
-        link.classList.remove("active");
-    }
+        menuLinks.forEach((link) => {
+            if (link.getAttribute("href") === "stati.html") {
+                link.classList.add("active");
+            } else {
+                link.classList.remove("active");
+            }
+        });
+    } 
 });
 
 const demoLinks = document.querySelectorAll('a[href="#"]');
@@ -295,7 +302,7 @@ languageSwitcher.addEventListener("click", function (event) {
 // 로컬 스토리지에서 데이터 가져오기
 function getDataFromLocalStorage() {
 
-    fetch('stati.json')
+    fetch('assets/mock/stati.json')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');

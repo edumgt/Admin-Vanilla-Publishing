@@ -14,7 +14,7 @@ let rowsPerPage = 15; // Default rows per page
 
 // Fetch data from the server
 //fetch('https://your-backend-api.com/data')
-    fetch('mock.json')
+    fetch('assets/mock/mock.json')
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');

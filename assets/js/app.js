@@ -15,7 +15,7 @@ let rowsPerPage = 20; // Default rows per page
 
 // Fetch data from the server
 //fetch('https://your-backend-api.com/data')
-fetch('mock.json')
+fetch('assets/mock/mock.json')
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -464,7 +464,6 @@ cancelLogout.addEventListener('click', function () {
 
 const offCanvas = document.getElementById('offCanvas');
 const hamburgerButton = document.getElementById('hamburgerButton');
-// const closeOffCanvas = document.getElementById('closeOffCanvas');
 const expandOffCanvas = document.getElementById('expandOffCanvas');
 const collapseOffCanvas = document.getElementById('collapseOffCanvas');
 
@@ -475,11 +474,6 @@ hamburgerButton.addEventListener('click', function () {
     offCanvas.classList.add('expanded');
     expandOffCanvas.classList.add('hidden');
 });
-
-// closeOffCanvas.addEventListener('click', function() {
-//     offCanvas.classList.add('collapsed');
-//     offCanvas.classList.remove('expanded');
-// });
 
 expandOffCanvas.addEventListener('click', function () {
     offCanvas.classList.remove('collapsed');
@@ -519,7 +513,9 @@ const menuLinks = document.querySelectorAll(".gnb-item");
 
 // 활성화 상태 설정
 menuLinks.forEach((link) => {
+    
     if (link.getAttribute("href") === currentPage) {
+        console.log(currentPage);
         link.classList.add("active");
     } else {
         link.classList.remove("active");
