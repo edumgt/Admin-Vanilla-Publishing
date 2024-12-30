@@ -489,14 +489,6 @@ input[type="date"] {
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.container {
-    max-width: 1200px; /* 화면 사이즈를 크게 조정 */
-    margin: 0 auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
 .handsontable .htCore td, .handsontable .htCore th {
     background-color: #f9f9f9; /* 테마 색상 적용 */
     border-color: #ddd;
@@ -506,5 +498,10 @@ input[type="date"] {
     font-weight: bold;
 }
 .grid-container {
-    margin-bottom: 20px;
+    
+    margin: 10px;
+    background-color: #fefefe;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
