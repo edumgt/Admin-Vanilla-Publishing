@@ -505,3 +505,64 @@ input[type="date"] {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+
+
+/* Custom styles for a modern look */
+.handsontable .ht_master .htCore td, 
+.handsontable .ht_master .htCore th {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    color: #333;
+
+    font-size: 14px;
+    text-align: center;
+    
+}
+
+.handsontable .ht_master .htCore th {
+    background-color: #007BFF;
+    color: white;
+    font-weight: bold;
+    width:100px;
+}
+
+.handsontable .ht_master .htCore td:hover {
+    background-color: #f1f1f1;
+}
+
+.handsontable .ht_master .htCore td.highlight {
+    background-color: #dff0d8;
+}
+
+.handsontable .ht_master .htCore td.invalid {
+    background-color: #f2dede;
+}
+
+.handsontable .ht_master .htCore .currentRow {
+    background-color: #e9ecef;
+}
+
+.handsontable .ht_master .htCore .currentCol {
+    background-color: #e9ecef;
+}
+
+.ht_clone_top .htCore th {
+    background-color: #007BFF;
+    color: white;
+}
+
+.handsontable .ht_master .htCore input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.handsontable .ht_master .htCore .htDimmed {
+    color: #999;
+}
+
+
+

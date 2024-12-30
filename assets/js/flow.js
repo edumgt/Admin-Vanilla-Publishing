@@ -9,16 +9,10 @@ function generateUUID() {
 }
 
 
-
 // Close modal
 document.getElementById('closeModal').addEventListener('click', () => {
     toggleModal(false);
 });
-
-
-
-
-
 
 document.getElementById('saveModal').addEventListener('click', () => {
     const modalForm = document.getElementById('modalForm');
@@ -72,18 +66,7 @@ function showToast(message, type = 'success') {
 }
 
 
-
-const rows = document.querySelectorAll('.tui-grid-rside-area .tui-grid-body-tbody tr');
-if (rows.length > 0) {
-    const lastRow = rows[rows.length - 1];
-    lastRow.style.backgroundColor = '#fff'; // 마지막 행의 배경색
-    lastRow.style.borderBottom = '1px solid #8f8f8f'; // 마지막 행의 테두리 색
-}
-
-
-
 /* log out */
-
 const memberIcon = document.getElementById('memberIcon');
 const logoutModal = document.getElementById('logoutModal');
 const confirmLogout = document.getElementById('confirmLogout');
@@ -306,19 +289,27 @@ languageSwitcher.addEventListener("click", function (event) {
     offCanvasItems[3].textContent = offCanvasLabels.menu;
     offCanvasItems[4].textContent = offCanvasLabels.settings;
 
-    // 버튼 텍스트 변경
-    // const buttonLabels = translations[lang].buttons;
-    // buttons[0].textContent = buttonLabels.search;
-    // buttons[1].textContent = buttonLabels.reset;
-    // buttons[2].textContent = buttonLabels.new;
-    // buttons[3].textContent = buttonLabels.delete;
-    // buttons[4].textContent = buttonLabels.save;
-
 });
 
 
 // 로컬 스토리지에서 데이터 가져오기
 function getDataFromLocalStorage() {
+
+    fetch('stati.json')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        localStorage.setItem('handsontableData', JSON.stringify(data));
+        console.log(localStorage.getItem('handsontableData'));
+    })
+    .catch(error => {
+        showToast('서버 데이타 로딩 중 오류 입니다.', 'error');
+    });
+
     const data = localStorage.getItem('handsontableData');
     return data ? JSON.parse(data) : [];
 }
@@ -358,11 +349,18 @@ function updateChart(data) {
 const container1 = document.getElementById('hot1');
 const hot1 = new Handsontable(container1, {
     data: getDataFromLocalStorage(),
-    colHeaders: ['항목', '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+    colHeaders: ['item', '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+    
     columns: [
-        { data: 'item', type: 'text' },
+        { data: 0, type: 'text', allowFillHandle: true }, // Enable fill for the 'item' column
         ...Array(12).fill({ type: 'numeric' })
     ],
+    fillHandle: {
+        autoInsertRow: true
+    },
+    colWidths: 110, 
+    rowHeights: 25, 
+
     rowHeaders: true,
     filters: true,
     dropdownMenu: true,
@@ -391,6 +389,8 @@ const hot2 = new Handsontable(container2, {
     data: [calculateSumRow(getDataFromLocalStorage())],
     colHeaders: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
     columns: Array(12).fill({ type: 'numeric', readOnly: true }),
+    colWidths: 110,
+
     rowHeaders: false,
     licenseKey: 'non-commercial-and-evaluation' // 무료 버전 사용 시 필요
 });
