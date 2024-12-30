@@ -114,3 +114,18 @@ themeToggle.addEventListener('click', () => {
     themeToggle.classList.add('bx-moon');
   }
 });
+
+
+/* LNB Click 에 대한 Active */
+//const sidebar = document.getElementById('sidebar');
+const menuLinks = sidebar.querySelectorAll('.menu-link');
+const currentFile = window.location.pathname.split('/').pop();
+
+menuLinks.forEach(link => {
+  const linkHref = link.getAttribute('href');
+  if (linkHref === currentFile) {
+    link.parentElement.classList.add('active');
+  } else {
+    link.parentElement.classList.remove('active');
+  }
+});

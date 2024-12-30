@@ -8,6 +8,12 @@
    <link rel="stylesheet" href="assets/css/core.css">
    <link rel="stylesheet" href="assets/css/style.css">
    <link rel="stylesheet" href="assets/vendor/boxicons-2.1.4/css/boxicons.min.css">
+   <link rel="stylesheet" href="assets/css/grid.css">
+
+   <script type="text/javascript" src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.js"></script>
+   <script type="text/javascript" src="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.js"></script>
+   <script src="https://uicdn.toast.com/tui-grid/latest/tui-grid.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
 
 </head>
 
@@ -18,9 +24,9 @@
          <div class="app-brand">
             <a href="#" class="app-logo">
                <img src="assets/img/flask-logo.png" alt="Logo" class="logo-image">
-               <h6 class="logo-text">Flask</h6>
+               <h6 class="logo-text">EDUMGT</h6>
             </a>
-            <a href="#" class="sidebar-toggle" data-toggle="sidebar">
+            <a href="#" class="sidebar-toggle" data-toggle="sidebar" id="sidebar">
                <i class="bx bx-chevron-left fs-5"></i>
             </a>
          </div>
@@ -31,245 +37,12 @@
                   <span>Dashboard</span>
                </a>
             </div>
-            <div class="menu-header">
-               <small class="menu-header-text">Pages</small>
-            </div>
+
+
             <div class="menu-item">
-               <a href="#" class="menu-link menu-toggle">
-                  <i class="bx bx-layout fs-6"></i>
-                  <span>Main Pages</span>
-               </a>
-               <div class="menu-sub">
-                  <div class="menu-item">
-                     <a href="index.html" target="_blank" class="menu-link">
-                        <span>Landing Page</span>
-                     </a>
-                  </div>
-                  <div class="menu-item">
-                     <a href="blank.html" target="_blank" class="menu-link">
-                        <span>Blank Page</span>
-                     </a>
-                  </div>
-               </div>
-            </div>
-            <div class="menu-item">
-               <a href="#" class="menu-link menu-toggle">
-                  <i class="bx bx-lock fs-6"></i>
-                  <span>Authentication</span>
-               </a>
-               <div class="menu-sub">
-                  <div class="menu-item">
-                     <a href="register.html" class="menu-link">
-                        <span>Register Page</span>
-                     </a>
-                  </div>
-                  <div class="menu-item">
-                     <a href="login.html" class="menu-link">
-                        <span>Login Page</span>
-                     </a>
-                  </div>
-               </div>
-            </div>
-            <div class="menu-item">
-               <a href="#" class="menu-link menu-toggle">
-                  <i class="bx bx-user fs-6"></i>
-                  <span>User</span>
-               </a>
-               <div class="menu-sub">
-                  <div class="menu-item">
-                     <a href="#" class="menu-link menu-toggle">
-                        <span>Account Settings</span>
-                     </a>
-                     <div class="menu-sub">
-                        <div class="menu-item">
-                           <a href="account-overview.html" class="menu-link">
-                              <span>Overview</span>
-                           </a>
-                        </div>
-                        <div class="menu-item">
-                           <a href="account.html" class="menu-link">
-                              <span>Account</span>
-                           </a>
-                        </div>
-                        <div class="menu-item">
-                           <a href="account-address.html" class="menu-link">
-                              <span>Address</span>
-                           </a>
-                        </div>
-                        <div class="menu-item">
-                           <a href="account-password.html" class="menu-link">
-                              <span>Passsword</span>
-                           </a>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <div class="menu-item">
-               <a href="#" class="menu-link menu-toggle">
-                  <i class="bx bx-layout fs-6"></i>
-                  <span>Miscellaneous</span>
-               </a>
-               <div class="menu-sub">
-                  <div class="menu-item">
-                     <a href="not-authorized.html" target="_blank" class="menu-link">
-                        <span>Not Authorized</span>
-                     </a>
-                  </div>
-                  <div class="menu-item">
-                     <a href="not-found.html" target="_blank" class="menu-link">
-                        <span>Not found</span>
-                     </a>
-                  </div>
-                  <div class="menu-item">
-                     <a href="under-maintenance.html" target="_blank" class="menu-link">
-                        <span>Under Maintenance</span>
-                     </a>
-                  </div>
-               </div>
-            </div>
-            <div class="menu-header">
-               <small class="menu-header-text">Components</small>
-            </div>
-            <div class="menu-item active open">
-               <a href="#" class="menu-link menu-toggle">
-                  <i class="bx bx-rectangle fs-6"></i>
-                  <span>Simple</span>
-               </a>
-               <div class="menu-sub">
-                  <div class="menu-item">
-                     <a href="accordions.html" class="menu-link">
-                        <span>Accordions</span>
-                     </a>
-                  </div>
-                  <div class="menu-item">
-                     <a href="alerts.html" class="menu-link">
-                        <span>Alerts</span>
-                     </a>
-                  </div>
-                  <div class="menu-item">
-                     <a href="badges.html" class="menu-link">
-                        <span>Badges</span>
-                     </a>
-                  </div>
-                  <div class="menu-item active">
-                     <a href="buttons.html" class="menu-link">
-                        <span>Buttons</span>
-                     </a>
-                  </div>
-                  <div class="menu-item">
-                     <a href="#" class="menu-link">
-                        <span>Cards</span>
-                     </a>
-                  </div>
-                  <div class="menu-item">
-                     <a href="#" class="menu-link">
-                        <span>Dropdowns</span>
-                     </a>
-                  </div>
-                  <div class="menu-item">
-                     <a href="#" class="menu-link">
-                        <span>Modals</span>
-                     </a>
-                  </div>
-                  <div class="menu-item">
-                     <a href="#" class="menu-link">
-                        <span>Navs</span>
-                     </a>
-                  </div>
-                  <div class="menu-item">
-                     <a href="#" class="menu-link">
-                        <span>Navbars</span>
-                     </a>
-                  </div>
-                  <div class="menu-item">
-                     <a href="#" class="menu-link">
-                        <span>Pagination</span>
-                     </a>
-                  </div>
-                  <div class="menu-item">
-                     <a href="#" class="menu-link">
-                        <span>Toasts</span>
-                     </a>
-                  </div>
-                  <div class="menu-item">
-                     <a href="#" class="menu-link">
-                        <span>Tooltips</span>
-                     </a>
-                  </div>
-               </div>
-            </div>
-            <div class="menu-item">
-               <a href="#" class="menu-link menu-toggle">
-                  <i class="bx bx-copy fs-6"></i>
-                  <span>Advance</span>
-               </a>
-               <div class="menu-sub">
-                  <div class="menu-item">
-                     <a href="index.html" class="menu-link">
-                        <span>Avatars</span>
-                     </a>
-                  </div>
-                  <div class="menu-item">
-                     <a href="color-palettes.html" class="menu-link">
-                        <span>Color Palettes</span>
-                     </a>
-                  </div>
-               </div>
-            </div>
-            <div class="menu-header">
-               <small class="menu-header-text">Forms & Tables</small>
-            </div>
-            <div class="menu-item">
-               <a href="#" class="menu-link menu-toggle">
-                  <i class="bx bx-detail fs-6"></i>
-                  <span>Form Layouts</span>
-               </a>
-               <div class="menu-sub">
-                  <div class="menu-item">
-                     <a href="#" class="menu-link">
-                        <span>Layout - 1</span>
-                     </a>
-                  </div>
-                  <div class="menu-item">
-                     <a href="#" class="menu-link">
-                        <span>Layout - 2</span>
-                     </a>
-                  </div>
-                  <div class="menu-item">
-                     <a href="#" class="menu-link">
-                        <span>Layout - 3</span>
-                     </a>
-                  </div>
-               </div>
-            </div>
-            <div class="menu-item">
-               <a href="#" class="menu-link menu-toggle">
-                  <i class="bx bx-detail fs-6"></i>
-                  <span>Form Elements</span>
-               </a>
-               <div class="menu-sub">
-                  <div class="menu-item">
-                     <a href="#" class="menu-link">
-                        <span>Element - 1</span>
-                     </a>
-                  </div>
-                  <div class="menu-item">
-                     <a href="#" class="menu-link">
-                        <span>Element - 2</span>
-                     </a>
-                  </div>
-                  <div class="menu-item">
-                     <a href="#" class="menu-link">
-                        <span>Element - 3</span>
-                     </a>
-                  </div>
-               </div>
-            </div>
-            <div class="menu-item">
-               <a href="#" class="menu-link">
+               <a href="buttons.html" class="menu-link">
                   <i class="bx bx-table fs-6"></i>
-                  <span>Tables</span>
+                  <span>Buttons</span>
                </a>
             </div>
          </div>
