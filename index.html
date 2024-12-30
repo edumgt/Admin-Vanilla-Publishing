@@ -5,17 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" as="style" crossorigin
-        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
-    <style>
-        body {
-            background-image: url('assets/img/bg.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/core.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/login.css">
 </head>
 
 <body class="bg-gray-100 bg-opacity-90">
@@ -31,29 +23,92 @@
                 <h5 class="text-xl font-medium text-gray-700">Welcome to EDUMGT Demo</h5>
                 <p class="text-gray-500">Please login to your account</p>
             </div>
-            <form action="#" method="post" class="space-y-4">
-                <div>
-                    <label for="login-id" class="block text-sm font-medium text-gray-700 mb-1">Login ID</label>
-                    <input id="login-id" type="text" name="login-id" class="w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300 focus:outline-none" placeholder="Enter your Login ID">
-                </div>
-                <div>
-                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                    <input id="password" type="password" name="password" class="w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300 focus:outline-none" placeholder="••••••••">
-                </div>
-                <div class="flex items-center">
-                    <input id="remember-me" type="checkbox" name="remember-me" class="h-4 w-4 text-blue-600 focus:ring focus:ring-blue-300">
-                    <label for="remember-me" class="ml-2 text-sm text-gray-700">Remember Me</label>
-                </div>
-                <div>
-                    <a href="system.html" class="block bg-blue-600 hover:bg-blue-700 text-white font-medium text-center py-2 rounded-lg">Login</a>
-                </div>
-            </form>
+            <div class="mb-6">
+                <ul class="flex justify-center space-x-4 mb-4">
+                    <li><button id="admin-tab" class="tab-button tab-active">Admin</button></li>
+                    <li><button id="manager-tab" class="tab-button tab-inactive">Manager</button></li>
+                    <li><button id="guest-tab" class="tab-button tab-inactive">Guest</button></li>
+                </ul>
+            </div>
+            <div id="admin-form" class="tab-content">
+                <form action="#" method="post" class="space-y-4">
+                    <div>
+                        <label for="admin-login-id" class="block text-sm font-medium text-gray-700 mb-1">Admin Login ID</label>
+                        <input id="admin-login-id" type="text" name="login-id" value="admin" class="w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300 focus:outline-none" placeholder="Enter your Admin Login ID">
+                    </div>
+                    <div>
+                        <label for="admin-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                        <input id="admin-password" type="password" name="password" value="1111" class="w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300 focus:outline-none" placeholder="••••••••">
+                    </div>
+                    <div class="flex items-center">
+                        <input id="admin-remember-me" type="checkbox" name="remember-me" class="h-4 w-4 text-blue-600 focus:ring focus:ring-blue-300">
+                        <label for="admin-remember-me" class="ml-2 text-sm text-gray-700">Remember Me</label>
+                    </div>
+                    <div>
+                        <a href="system.html" class="btn btn-primary w-100">Login</a>
+                    </div>
+                </form>
+            </div>
+            <div id="manager-form" class="hidden tab-content">
+                <form action="#" method="post" class="space-y-4">
+                    <div>
+                        <label for="manager-login-id" class="block text-sm font-medium text-gray-700 mb-1">Manager Login ID</label>
+                        <input id="manager-login-id" type="text" name="login-id" value="manager" class="w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300 focus:outline-none" placeholder="Enter your Manager Login ID">
+                    </div>
+                    <div>
+                        <label for="manager-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                        <input id="manager-password" type="password" name="password" value="1111"  class="w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300 focus:outline-none" placeholder="••••••••">
+                    </div>
+                    <div class="flex items-center">
+                        <input id="manager-remember-me" type="checkbox" name="remember-me" class="h-4 w-4 text-blue-600 focus:ring focus:ring-blue-300">
+                        <label for="manager-remember-me" class="ml-2 text-sm text-gray-700">Remember Me</label>
+                    </div>
+                    <div>
+                        <a href="dashboard.html" class="btn btn-primary w-100">Login</a>
+                    </div>
+                </form>
+            </div>
+            <div id="guest-form" class="hidden tab-content">
+                <form action="#" method="post" class="space-y-4">
+                    <div>
+                        <label for="guest-login-id" class="block text-sm font-medium text-gray-700 mb-1">Guest Login ID</label>
+                        <input id="guest-login-id" type="text" name="login-id" value="guest" class="w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300 focus:outline-none" placeholder="Enter your Guest Login ID">
+                    </div>
+                    <div>
+                        <label for="guest-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                        <input id="guest-password" type="password" name="password" value="1111" class="w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300 focus:outline-none" placeholder="••••••••">
+                    </div>
+                    <div class="flex items-center">
+                        <input id="guest-remember-me" type="checkbox" name="remember-me" class="h-4 w-4 text-blue-600 focus:ring focus:ring-blue-300">
+                        <label for="guest-remember-me" class="ml-2 text-sm text-gray-700">Remember Me</label>
+                    </div>
+                    <div>
+                        <a href="#" class="btn btn-primary w-100">Login</a>
+                    </div>
+                </form>
+            </div>
             <div class="mt-6 flex justify-between text-sm">
                 <a href="register.html" class="text-blue-600 hover:underline">Register</a>
                 <a href="#" class="text-blue-600 hover:underline">Forgot Password?</a>
             </div>
         </div>
     </div>
+    <script>
+        const tabs = document.querySelectorAll('button[id$="-tab"]');
+        const forms = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('tab-active'));
+                tabs.forEach(t => t.classList.add('tab-inactive'));
+                tab.classList.remove('tab-inactive');
+                tab.classList.add('tab-active');
+                
+                forms.forEach(form => form.classList.add('hidden'));
+                document.getElementById(tab.id.replace('-tab', '-form')).classList.remove('hidden');
+            });
+        });
+    </script>
 </body>
 
 </html>
