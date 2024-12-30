@@ -13,8 +13,8 @@ const currentDate = new Date().toLocaleDateString('ko-KR', options).replace(/[\.
 let rowsPerPage = 15; // Default rows per page
 
 // Fetch data from the server
-fetch('https://your-backend-api.com/data')
-    //fetch('mock.json')
+//fetch('https://your-backend-api.com/data')
+    fetch('mock.json')
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');

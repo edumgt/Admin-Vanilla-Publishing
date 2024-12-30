@@ -2,12 +2,10 @@
 <html>
 
 <head>
+    
+
     <link href="assets/css/app.css" rel="stylesheet">
 
-    <script type="text/javascript" src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.js"></script>
-    <script type="text/javascript" src="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.js"></script>
-    <script type="text/javascript" src="https://uicdn.toast.com/tui-grid/latest/tui-grid.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
 
 </head>
 
@@ -28,7 +26,7 @@
             <div class="tabs flex">
                 <!-- 시스템관리 -->
                 <li>
-                    <a href="sample4.html" class="gnb-item tab-link block flex items-center space-x-2 active">
+                    <a href="system.html" class="gnb-item tab-link block flex items-center space-x-2 active">
                         <i class="fas fa-cogs"></i>
                         <span>시스템관리</span>
                     </a>
@@ -56,7 +54,7 @@
                 </li>
                 <!-- 통계 -->
                 <li>
-                    <a href="#" class="gnb-item tab-link block flex items-center space-x-2">
+                    <a href="stati.html" class="gnb-item tab-link block flex items-center space-x-2">
                         <i class="fas fa-chart-bar"></i>
                         <span>통계</span>
                     </a>
@@ -88,7 +86,7 @@
             <ul class="flex-grow p-4 space-y-4">
                 <!-- 코드관리 -->
                 <li>
-                    <a href="sample4.html"
+                    <a href="system.html"
                         class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
                         <i class="fas fa-code menu-icon text-blue-400"></i>
                         <span class="menu-text">코드관리</span>
@@ -150,12 +148,148 @@
 
             <h2 class="breadcrumb-container">
                 <nav class="breadcrumb flex items-center space-x-2 text-gray-600">
-                    <a href="sample4.html" class="text-blue-500 hover:underline">시스템관리</a>
+                    <a href="system.html" class="text-blue-500 hover:underline">시스템관리</a>
                     <span>/</span>
                     <span>코드관리</span>
                 </nav>
             </h2>
 
+
+        </div>
+
+        
+
+        <div class="dash-content">
+            <div class="row g-6 mb-6">
+                <div class="col-sm-6 col-xl-3">
+                    <div class="card px-6 pt-4 pb-5">
+                        <div class="d-flex align-items-top justify-content-between mb-7">
+                            <div>
+                                <h5>Total</h5>
+                                <small>Users (This Month)</small>
+                            </div>
+                            <div class="dropdown">
+                                <a href="#" class="dropdown-toggle text-body">
+                                    <i class="bx bx-dots-horizontal-rounded fs-4"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <div class="px-6 pt-2 pb-3 mb-1 border-bottom">Filter</div>
+                                    <div class="dropdown-item">This Week</div>
+                                    <div class="dropdown-item">This Month</div>
+                                    <div class="dropdown-item">This Year</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="avatar me-4">
+                                <span class="avatar-initial rounded bg-label-danger">
+                                    <i class="bx bx-user fs-5"></i>
+                                </span>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <h4 class="me-2">30146</h4>
+                                <p class="text-success">(+30%)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="card px-6 pt-4 pb-5">
+                        <div class="d-flex align-items-top justify-content-between mb-7">
+                            <div>
+                                <h5>Registered</h5>
+                                <small>Users (This Month)</small>
+                            </div>
+                            <div class="dropdown">
+                                <a href="#" class="dropdown-toggle text-body">
+                                    <i class="bx bx-dots-horizontal-rounded fs-4"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <div class="px-6 pt-2 pb-3 mb-1 border-bottom">Filter</div>
+                                    <div class="dropdown-item">This Week</div>
+                                    <div class="dropdown-item">This Month</div>
+                                    <div class="dropdown-item">This Year</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="avatar me-4">
+                                <span class="avatar-initial rounded bg-label-success">
+                                    <i class="bx bx-user fs-5"></i>
+                                </span>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <h4 class="me-2">513</h4>
+                                <p class="text-danger">(-10%)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="card px-6 pt-4 pb-5">
+                        <div class="d-flex align-items-top justify-content-between mb-7">
+                            <div>
+                                <h5>Active</h5>
+                                <small>Users (This Month)</small>
+                            </div>
+                            <div class="dropdown">
+                                <a href="#" class="dropdown-toggle text-body">
+                                    <i class="bx bx-dots-horizontal-rounded fs-4"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <div class="px-6 pt-2 pb-3 mb-1 border-bottom">Filter</div>
+                                    <div class="dropdown-item">This Week</div>
+                                    <div class="dropdown-item">This Month</div>
+                                    <div class="dropdown-item">This Year</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="avatar me-4">
+                                <span class="avatar-initial rounded bg-label-primary">
+                                    <i class="bx bx-user fs-5"></i>
+                                </span>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <h4 class="me-2">20125</h4>
+                                <p class="text-success">(+20%)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="card px-6 pt-4 pb-5">
+                        <div class="d-flex align-items-top justify-content-between mb-7">
+                            <div>
+                                <h5>Pending</h5>
+                                <small>Users (This Month)</small>
+                            </div>
+                            <div class="dropdown">
+                                <a href="#" class="dropdown-toggle text-body">
+                                    <i class="bx bx-dots-horizontal-rounded fs-4"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <div class="px-6 pt-2 pb-3 mb-1 border-bottom">Filter</div>
+                                    <div class="dropdown-item">This Week</div>
+                                    <div class="dropdown-item">This Month</div>
+                                    <div class="dropdown-item">This Year</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="avatar me-4">
+                                <span class="avatar-initial rounded bg-label-warning">
+                                    <i class="bx bx-user fs-5"></i>
+                                </span>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <h4 class="me-2">123</h4>
+                                <p class="text-success">(+31%)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
 
@@ -207,8 +341,6 @@
         <!-- The grid -->
         <div id="grid"></div>
 
-
-
     </div>
 
     <!-- Gear Icon -->
@@ -235,11 +367,6 @@
         </div>
 
     </div>
-
-
-
-
-
 
 
     <div id="modal"
@@ -287,6 +414,10 @@
     </div>
 
 
+    <script type="text/javascript" src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.js"></script>
+    <script type="text/javascript" src="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.js"></script>
+    <script type="text/javascript" src="https://uicdn.toast.com/tui-grid/latest/tui-grid.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
     <script type="text/javascript" src="assets/js/app.js"></script>
 
 
