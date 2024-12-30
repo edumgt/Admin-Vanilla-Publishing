@@ -32,8 +32,9 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    scrollbar-color: #134139 transparent;
+    scrollbar-width: thin;
 }
-
 
 
 .tui-grid-header {
