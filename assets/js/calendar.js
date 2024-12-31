@@ -1,4 +1,4 @@
-// Calendar Initialization with Fullscreen View, Time Input, and Task Management
+// Calendar Initialization with Fullscreen View, Time Input, Date Range, and Task Management
 const calendar = (() => {
     const calendarContainer = document.getElementById('calendar');
     const monthNames = [
@@ -166,8 +166,8 @@ const calendar = (() => {
                     delete tasks[dateKey];
                 }
                 saveTasks();
-                renderCalendar(currentMonth, currentYear);
                 modal.remove();
+                renderCalendar(currentMonth, currentYear);
                 openTaskModal(day, month, year);
             };
             taskItem.appendChild(taskText);
@@ -175,24 +175,42 @@ const calendar = (() => {
             taskList.appendChild(taskItem);
         });
 
+        const fromDateInput = document.createElement('input');
+        fromDateInput.type = 'date';
+        fromDateInput.className = 'border w-full p-2 mb-4';
+        fromDateInput.value = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
+        const toDateInput = document.createElement('input');
+        toDateInput.type = 'date';
+        toDateInput.className = 'border w-full p-2 mb-4';
+        toDateInput.value = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
         const timeInput = document.createElement('input');
         timeInput.type = 'time';
         timeInput.className = 'border w-full p-2 mb-4';
 
-        const taskInput = document.createElement('input');
-        taskInput.type = 'text';
-        taskInput.className = 'border w-full p-2 mb-4';
-        taskInput.placeholder = 'Add a new task';
+        const taskTextarea = document.createElement('textarea');
+        taskTextarea.className = 'border w-full p-2 mb-4';
+        taskTextarea.placeholder = 'Add a detailed task (300+ characters supported)';
+        taskTextarea.rows = 5;
 
         const saveBtn = document.createElement('button');
         saveBtn.className = 'bg-blue-500 text-white py-2 px-4 rounded w-full';
         saveBtn.innerText = 'Save Task';
         saveBtn.onclick = () => {
-            const newTask = taskInput.value.trim();
+            const newTask = taskTextarea.value.trim();
             const time = timeInput.value.trim();
-            if (newTask && time) {
-                if (!tasks[dateKey]) tasks[dateKey] = [];
-                tasks[dateKey].push(`${time} - ${newTask}`);
+            const fromDate = new Date(fromDateInput.value);
+            const toDate = new Date(toDateInput.value);
+
+            if (newTask && time && fromDate <= toDate) {
+                let currentDate = fromDate;
+                while (currentDate <= toDate) {
+                    const dateKey = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
+                    if (!tasks[dateKey]) tasks[dateKey] = [];
+                    tasks[dateKey].push(`${time} - ${newTask}`);
+                    currentDate.setDate(currentDate.getDate() + 1);
+                }
                 saveTasks(); // Save to local storage
                 modal.remove();
                 renderCalendar(currentMonth, currentYear); // Refresh the calendar to show the new task
@@ -201,8 +219,10 @@ const calendar = (() => {
 
         modalContent.appendChild(modalHeader);
         modalContent.appendChild(taskList);
+        modalContent.appendChild(fromDateInput);
+        modalContent.appendChild(toDateInput);
         modalContent.appendChild(timeInput);
-        modalContent.appendChild(taskInput);
+        modalContent.appendChild(taskTextarea);
         modalContent.appendChild(saveBtn);
         modal.appendChild(modalContent);
         document.body.appendChild(modal);
