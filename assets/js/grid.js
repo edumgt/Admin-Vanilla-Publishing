@@ -434,30 +434,4 @@ if (rows.length > 0) {
     lastRow.style.borderBottom = '1px solid #8f8f8f'; // 마지막 행의 테두리 색
 }
 
-/* log out */
-
-const memberIcon = document.getElementById('memberIcon');
-const logoutModal = document.getElementById('logoutModal');
-const confirmLogout = document.getElementById('confirmLogout');
-const cancelLogout = document.getElementById('cancelLogout');
-let isLoggedIn = true;
-
-memberIcon.addEventListener('click', function () {
-    if (isLoggedIn) {
-        logoutModal.classList.remove('hidden');
-    } else {
-        logoutModal.classList.remove('hidden');
-    }
-});
-
-
-confirmLogout.addEventListener('click', function () {
-    isLoggedIn = false;
-    memberIcon.innerHTML = '<i class="fas fa-user"></i>';
-    logoutModal.classList.add('hidden');
-});
-
-cancelLogout.addEventListener('click', function () {
-    logoutModal.classList.add('hidden');
-});
 

@@ -330,57 +330,8 @@
                               </div>
                            </div>
                         </div>
-                        <div class="dropdown-notifications-item border-bottom mark-as-read">
-                           <div class="d-flex">
-                              <div class="flex-shrink-0 me-4">
-                                 <div class="avatar">
-                                    <img class="rounded-circle bg-primary-subtle"
-                                       src="assets/img/Avatars/Harinder Singh.png" alt="Avatar" width="40px">
-                                 </div>
-                              </div>
-                              <div class="overflow-hidden flex-grow-1">
-                                 <small class="fw-semibold mb-0">Harinder Singh</small>
-                                 <small class="d-block mb-1">Invitation to participate in this year's annual day
-                                    celebration</small>
-                                 <small class="text-muted">3 hr ago</small>
-                              </div>
-                              <div class="flex-shrink-0 ps-4">
-                                 <div class="d-flex flex-column align-items-center gap-2">
-                                    <a href="#" class="dropdown-notifications-read">
-                                       <span class="badge badge-dot"></span>
-                                    </a>
-                                    <a href="#" class="dropdown-notifications-archive">
-                                       <span class="bx bx-x fs-5"></span>
-                                    </a>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="dropdown-notifications-item border-bottom">
-                           <div class="d-flex">
-                              <div class="flex-shrink-0 me-4">
-                                 <div class="avatar">
-                                    <img class="rounded-circle bg-primary-subtle"
-                                       src="assets/img/Avatars/Ruby Bajwa.png" alt="Avatar" width="40px">
-                                 </div>
-                              </div>
-                              <div class="overflow-hidden flex-grow-1">
-                                 <small class="fw-semibold mb-0">Ruby Bajwa</small>
-                                 <small class="d-block mb-1">You have a new message from Ruby Bajwa</small>
-                                 <small class="text-muted">2 days ago</small>
-                              </div>
-                              <div class="flex-shrink-0 ps-4">
-                                 <div class="d-flex flex-column align-items-center gap-2">
-                                    <a href="#" class="dropdown-notifications-read">
-                                       <span class="badge badge-dot"></span>
-                                    </a>
-                                    <a href="#" class="dropdown-notifications-archive">
-                                       <span class="bx bx-x fs-5"></span>
-                                    </a>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
+                        
+                        
                      </div>
                      <div class="dropdown-footer">
                         <div class="row g-2">
@@ -430,12 +381,8 @@
                         </div>
                      </a>
                      <div class="dropdown-divider"></div>
-                     <a href="#" class="dropdown-item">
-                        <div class="d-flex align-items-cemter gap-3">
-                           <i class="bx bx-power-off fs-5"></i>
-                           <span>Logout</span>
-                        </div>
-                     </a>
+                     <div class="dropdown-divider"></div>
+                     <div id="dropdown-logout" class="dropdown-logout"></div>
                   </div>
                </div>
             </div>
@@ -554,13 +501,28 @@
          </div>
       </main>
    </div>
+
+   <div id="logoutModal"
+   class="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
+   <div class="bg-white rounded-lg shadow-lg p-6 w-1/3 relative">
+      <h2 class="text-lg font-semibold mb-4">로그아웃 하시겠습니까?</h2>
+      <div class="flex justify-end space-x-2 mt-4">
+         <button id="confirmLogout" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+            onclick="window.location.href='index.html';">Logout</button>
+         <button id="cancelLogout" class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700">Cancel</button>
+      </div>
+   </div>
+</div>
+
    <script type="text/javascript" src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.js"></script>
-   <script type="text/javascript" src="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.js"></script>
-   <script src="https://uicdn.toast.com/tui-grid/latest/tui-grid.js"></script>
+   <!-- <script type="text/javascript" src="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.js"></script>
+   <script src="https://uicdn.toast.com/tui-grid/latest/tui-grid.js"></script> -->
    <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
 
    <script src="assets/js/core.js"></script>
    <script src="assets/js/script.js"></script>
+      <!-- <script src="assets/js/grid.js"></script> -->
+      <script src="assets/js/logout.js"></script>
 </body>
 
 </html>
