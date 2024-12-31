@@ -1,0 +1,429 @@
+/* Import External CSS */
+
+@import url('../vendor/boxicons-2.1.4/css/boxicons.min.css');
+
+@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css');
+@import url('https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css');
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
+
+/* Variables */
+:root {
+    --primary-color: #0058a3;
+    /* IKEA Blue */
+    --secondary-color: #ffcc00;
+    /* IKEA Yellow */
+    --text-color: #ffffff;
+    --border-color: #3b3b3f;
+    --bg-light: #e8eaee;
+    --bg-dark: #2d3748;
+    --hover-bg: #4a5568;
+    --font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue";
+}
+
+/* General */
+body {
+    font-family: var(--font-family);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scrollbar-color: #134139 transparent;
+    scrollbar-width: thin;
+}
+
+
+.toast {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    min-width: 200px;
+    padding: 1rem;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #fff;
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast-success {
+    background-color: #38a169;
+}
+
+.toast-warning {
+    background-color: #dd6b20;
+}
+
+.toast-info {
+    background-color: #3182ce;
+}
+
+.toast-error {
+    background-color: #e53e3e;
+}
+
+#modal>div {
+    width: 90%;
+    height: 90%;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+#modal h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+#modal p {
+    flex-grow: 1;
+    overflow: auto;
+}
+
+#modal button {
+    align-self: flex-end;
+}
+
+.relative .fa-calendar-alt {
+    pointer-events: none;
+}
+
+.cursor-not-allowed {
+    cursor: not-allowed;
+}
+
+button {
+    font-size: 15px;
+}
+
+input[type="text"],
+input[type="date"] {
+    padding: 5px;
+    height: calc(1.5em + 6px);
+}
+
+/* body */
+
+#offCanvas {
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.content {
+    margin-left: 20px;
+}
+
+#floatingNav button {
+    transition: transform 0.2s ease;
+}
+
+#floatingNav button:hover {
+    transform: scale(1.05);
+}
+
+#content {
+    padding: 90px 40px 10px 70px;
+    box-sizing: border-box;
+}
+
+
+
+@media (max-width: 1550px) {
+    .flex-col {
+        flex-direction: column;
+    }
+
+    .lg\:flex-row {
+        flex-direction: row;
+    }
+
+    .lg\:mb-0 {
+        margin-bottom: 0;
+    }
+
+    .lg\:space-y-0 {
+        margin-bottom: 0;
+    }
+
+    .lg\:space-x-2>*+* {
+        margin-left: 0.5rem;
+    }
+
+    .flex-col>div {
+        padding: 10px 0;
+    }
+}
+
+.collapsed {
+    width: 64px;
+
+}
+
+.collapsed .menu-text {
+    display: none;
+}
+
+.collapsed .menu-icon {
+    display: block;
+    font-size: 22px;
+    /* margin: 55px 0; */
+    text-align: center;
+}
+
+.expanded #expandOffCanvas {
+    display: none;
+}
+
+.collapsed #expandOffCanvas {
+    display: block;
+    position: absolute;
+    bottom: 130px;
+    right: 10px;
+    margin-top: 10px;
+
+
+}
+
+.expanded #collapseOffCanvas {
+    display: block;
+    position: absolute;
+    bottom: 120px;
+    right: 10px;
+    margin-top: 10px;
+
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.menu-item i {
+    margin-right: 10px;
+}
+
+.menu-item.collapsed i {
+    margin-right: 0;
+}
+
+
+@media (max-width: 1500px) {
+    .flex2 {
+        flex-wrap: wrap;
+    }
+
+    .flex2>div {
+        width: 100%;
+        /* 한 줄로 변경 */
+        margin-bottom: 0.5rem;
+        /* 각 행 간격 추가 */
+    }
+
+    .flex2>.flex-col {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+
+
+/* GNB 메뉴 스타일 */
+.gnb-menu {
+    height: 55px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(90deg, #1a202c, #2d3748);
+    padding: 0.5rem 1rem 1rem 1rem;
+    /* 내부 여백 */
+    display: flex;
+    flex-direction: column;
+}
+
+/* 메뉴 리스트 */
+.gnb-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* 공통 메뉴 아이템 스타일 */
+.gnb-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    /* 글자 크기 */
+    font-weight: 600;
+    /* 텍스트 굵기 */
+    text-transform: uppercase;
+    /* 대문자 변환 */
+    color: #c7ced9;
+    /* 기본 텍스트 색상 */
+    padding: 0.5rem 1rem;
+    /* 내부 여백 */
+    border-radius: 0.375rem;
+    /* 둥근 모서리 */
+    transition: all 0.3s ease;
+    /* 부드러운 전환 */
+    position: relative;
+    overflow: hidden;
+}
+
+/* 아이콘 스타일 */
+.gnb-item i {
+    font-size: 1rem;
+    /* 아이콘 크기 */
+    margin-right: 0.5rem;
+    /* 텍스트와 아이콘 간격 */
+    color: #718096;
+    /* 기본 아이콘 색상 */
+    transition: color 0.3s ease;
+    /* 색상 전환 */
+}
+
+/* 호버 효과 */
+.gnb-item:hover {
+    background-color: #edf2f7;
+    /* 호버 시 배경색 */
+    color: #2d3748;
+    /* 호버 시 텍스트 색상 */
+}
+
+.gnb-item:hover i {
+    color: #2d3748;
+    /* 호버 시 아이콘 색상 */
+}
+
+/* 활성화된 메뉴 */
+.gnb-item.active {
+    background-color: #0058a3;
+    /* 활성화된 배경색 */
+    color: #ffffff;
+    /* 활성화된 텍스트 색상 */
+}
+
+.gnb-item.active i {
+    color: #ffffff;
+    /* 활성화된 아이콘 색상 */
+}
+
+/* 밑줄 애니메이션 */
+.gnb-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: #fff;
+    transition: all 0.3s ease-in-out;
+    transform: translateX(-50%);
+}
+
+.gnb-item:hover::after {
+    width: 80%;
+    /* 호버 시 밑줄 확장 */
+}
+
+/* 탭 컨테이너 */
+.tabs {
+    display: flex;
+    gap: 25px;
+    /* 메뉴 간격 */
+}
+
+.tabs li {
+    margin-bottom: 10px;
+    /* 메뉴 항목 간 여백 */
+    line-height: calc(1.5rem - 3px);
+    /* 메뉴의 높이 조정 */
+}
+
+
+
+/* 멤버 아이콘 스타일 */
+#memberIcon {
+    font-size: 1.2rem;
+    background: #2d3748;
+    border-radius: 50%;
+    padding: 0.4rem;
+    transition: background 0.3s ease;
+}
+
+#memberIcon:hover {
+    background: #4a5568;
+    color: #fff;
+}
+
+
+
+.logo-text {
+    padding-left: 10px;
+    color: white;
+    /* 텍스트 색상 */
+    font-size: 1.5rem;
+    /* 텍스트 크기 */
+    font-weight: bold;
+    /* 텍스트 두께 */
+    line-height: 1;
+    /* 텍스트 수직 중앙 정렬 */
+    white-space: nowrap;
+    /* 줄바꿈 방지 */
+}
+
+/* 메뉴 아이콘 기본 스타일 */
+.menu-icon {
+    transition: color 0.3s ease;
+    /* 부드러운 색상 전환 */
+}
+
+/* 마우스 포인터가 메뉴 아이콘에 올려질 때 색상 변경 */
+.menu-item:hover .menu-icon {
+    color: var(--primary-color);
+    /* 아이콘 색상을 기본 색상으로 변경 */
+}
+
+.breadcrumb-container {
+    margin-top: -20px;
+    /* 위로 배치 */
+}
+
+.breadcrumb {
+    font-size: 1.25rem;
+    /* 글자 크기 증가 */
+    font-weight: bold;
+    /* 굵게 설정 */
+}
+
+#languageSwitcher img {
+    width: 32px;
+    /* 가로 크기 고정 */
+    height: 32px;
+    /* 세로 크기 고정 */
+    object-fit: cover;
+    /* 이미지 왜곡 방지 */
+    border-radius: 4px;
+    /* 선택적으로 모서리를 둥글게 */
+    border: 1px solid #ccc;
+    /* 선택적으로 테두리 추가 */
+    cursor: pointer;
+    /* 클릭 가능하도록 포인터 */
+    transition: transform 0.2s ease-in-out;
+}
+
+#languageSwitcher img:hover {
+    transform: scale(1.1);
+    /* 마우스 오버 시 약간 확대 */
+}
+
+
