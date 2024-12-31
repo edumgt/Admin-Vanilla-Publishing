@@ -129,3 +129,42 @@ menuLinks.forEach(link => {
     link.parentElement.classList.remove('active');
   }
 });
+
+
+/* Manager - LNB */
+function createMenu(menuItemsLnb) {
+  const container = document.getElementById('menu-container');
+  const menuDiv = document.createElement('div');
+  menuDiv.className = 'menu';
+
+  menuItemsLnb.forEach(item => {
+      const menuItemDiv = document.createElement('div');
+      menuItemDiv.className = 'menu-item';
+      
+      const menuLink = document.createElement('a');
+      menuLink.href = item.href;
+      menuLink.className = 'menu-link';
+
+      const icon = document.createElement('i');
+      icon.className = item.icon;
+
+      const span = document.createElement('span');
+      span.textContent = item.text;
+
+      menuLink.appendChild(icon);
+      menuLink.appendChild(span);
+      menuItemDiv.appendChild(menuLink);
+      menuDiv.appendChild(menuItemDiv);
+  });
+
+  container.appendChild(menuDiv);
+}
+
+const menuItemsLnb = [
+  { href: 'dashboard.html', icon: 'bx bx-home fs-6', text: 'Dashboard' },
+  { href: 'buttons.html', icon: 'bx bx-table fs-6', text: 'Buttons' },
+  { href: 'accordions.html', icon: 'bx bx-table fs-6', text: 'Accordions' },
+  { href: 'account.html', icon: 'bx bx-table fs-6', text: 'Account' }
+];
+
+createMenu(menuItemsLnb);
