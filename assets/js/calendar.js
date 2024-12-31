@@ -1,4 +1,4 @@
-// Calendar Initialization with Fullscreen View, Time Input, Date Range, and Task Management
+// Calendar Initialization with Fullscreen View, Time Input, Date Range, Task Management, and Linked Tasks
 const calendar = (() => {
     const calendarContainer = document.getElementById('calendar');
     const monthNames = [
@@ -19,7 +19,12 @@ const calendar = (() => {
     const renderCalendar = (month, year) => {
         // Clear the existing calendar
         calendarContainer.innerHTML = '';
-        calendarContainer.className = 'w-full h-screen mx-auto p-4'; // Set full width and height
+        calendarContainer.className = 'w-full h-screen mx-auto p-4 relative'; // Set full width and height
+
+        // Create an SVG container for lines
+        const svgContainer = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svgContainer.setAttribute("class", "absolute top-0 left-0 w-full h-full pointer-events-none");
+        svgContainer.setAttribute("xmlns", "http://www.w3.org/2000/svg");
 
         // Header Section
         const header = document.createElement('div');
@@ -54,10 +59,11 @@ const calendar = (() => {
 
         // Dates Section
         const dates = document.createElement('div');
-        dates.className = 'grid grid-cols-7 text-center';
+        dates.className = 'grid grid-cols-7 text-center relative';
 
         const firstDay = new Date(year, month, 1).getDay();
         const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const dateElements = {}; // Track elements by date key for linking
 
         // Add blank days for previous month
         for (let i = 0; i < firstDay; i++) {
@@ -78,6 +84,8 @@ const calendar = (() => {
             dateDiv.innerHTML = `<div class="text-md font-medium absolute top-2 left-2">${day}</div>`;
 
             const dateKey = `${year}-${month + 1}-${day}`;
+            dateElements[dateKey] = dateDiv; // Store reference for linking
+
             if (tasks[dateKey]) {
                 const taskList = document.createElement('ul');
                 taskList.className = 'mt-4 text-left text-lg text-gray-800';
@@ -108,10 +116,47 @@ const calendar = (() => {
             dates.appendChild(dateDiv);
         }
 
+        // Link tasks between dates
+        Object.keys(tasks).forEach(dateKey => {
+            const [year, month, day] = dateKey.split('-').map(Number);
+            const taskList = tasks[dateKey];
+
+            taskList.forEach(task => {
+                const linkedDates = Object.keys(tasks).filter(key =>
+                    key !== dateKey && tasks[key].includes(task));
+
+                linkedDates.forEach(linkedKey => {
+                    const linkedElement = dateElements[linkedKey];
+                    const currentElement = dateElements[dateKey];
+                    if (linkedElement && currentElement) {
+                        const rect1 = currentElement.getBoundingClientRect();
+                        const rect2 = linkedElement.getBoundingClientRect();
+                        const x1 = rect1.left + rect1.width / 2;
+                        const y1 = rect1.top + rect1.height / 2;
+                        const x2 = rect2.left + rect2.width / 2;
+                        const y2 = rect2.top + rect2.height / 2;
+
+                        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                        line.setAttribute("x1", x1);
+                        line.setAttribute("y1", y1);
+                        line.setAttribute("x2", x2);
+                        line.setAttribute("y2", y2);
+                        line.setAttribute("stroke", "blue");
+                        line.setAttribute("stroke-width", "2");
+                        svgContainer.appendChild(line);
+                    } else {
+                        console.warn(`Missing date element for key: ${linkedKey} or ${dateKey}`);
+                    }
+                });
+            });
+        });
+
+
         // Append sections to the calendar container
         calendarContainer.appendChild(header);
         calendarContainer.appendChild(daysOfWeek);
         calendarContainer.appendChild(dates);
+        calendarContainer.appendChild(svgContainer); // Add lines
     };
 
     const changeMonth = (delta) => {
