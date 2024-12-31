@@ -43,12 +43,22 @@ function createMenu(menuItemsLnb) {
 }
 
 const menuItemsLnb = [
-  { href: 'dashboard.html', icon: 'bx bx-home fs-6', text: 'Dashboard' },
-  { href: 'buttons.html', icon: 'bx bx-table fs-6', text: 'Buttons' },
-  { href: 'accordions.html', icon: 'bx bx-table fs-6', text: 'Accordions' },
-  { href: 'account.html', icon: 'bx bx-table fs-6', text: 'Account' },
-  { href: 'account-address.html', icon: 'bx bx-table fs-6', text: 'Account-address' },
-  { href: 'alerts.html', icon: 'bx bx-table fs-6', text: 'Alerts' }
+  { href: 'dashboard.html', icon: 'fas fa-tachometer-alt', text: 'Dashboard' },
+  { href: 'buttons.html', icon: 'fas fa-square', text: 'Buttons' },
+  { href: 'accordions.html', icon: 'fas fa-bars', text: 'Accordions' },
+  { href: 'account.html', icon: 'fas fa-user', text: 'Account' },
+  { href: 'account-address.html', icon: 'fas fa-map-marked-alt', text: 'Account-address' },
+  { href: 'account-overview.html', icon: 'fas fa-eye', text: 'Account-overview' },
+  { href: 'account-password.html', icon: 'fas fa-key', text: 'Account-password' },
+  { href: 'alerts.html', icon: 'fas fa-bell', text: 'Alerts' },
+  { href: 'badges.html', icon: 'fas fa-certificate', text: 'Badges' },
+  { href: 'cards.html', icon: 'fas fa-id-card', text: 'Cards' },
+  { href: 'color-palettes.html', icon: 'fas fa-palette', text: 'Color-palettes' },
+  { href: 'dropdowns.html', icon: 'fas fa-caret-down', text: 'Dropdowns' },
+  { href: 'modals.html', icon: 'fas fa-window-maximize', text: 'Modals' },
+  { href: 'poe-edit-empty.html', icon: 'fas fa-edit', text: 'Poe-edit-empty' },
+  { href: 'poe-edit-filled.html', icon: 'fas fa-edit', text: 'Poe-edit-filled' },
+  { href: 'poe-view.html', icon: 'fas fa-eye', text: 'Poe-view' },
 ];
 
 createMenu(menuItemsLnb);

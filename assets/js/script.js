@@ -116,4 +116,13 @@ themeToggle.addEventListener('click', () => {
 });
 
 
+const appLogoContainer = document.getElementById('app-logo-container');
 
+const appLogoHtml = `
+        <a href="#" class="app-logo">
+            <img src="assets/img/flask-logo.png" alt="Logo" class="logo-image">
+            <h6 class="logo-text">EDUMGT</h6>
+        </a>
+    `;
+
+appLogoContainer.innerHTML = appLogoHtml;
