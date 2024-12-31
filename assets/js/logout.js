@@ -46,7 +46,8 @@ const menuItemsLnb = [
   { href: 'dashboard.html', icon: 'bx bx-home fs-6', text: 'Dashboard' },
   { href: 'buttons.html', icon: 'bx bx-table fs-6', text: 'Buttons' },
   { href: 'accordions.html', icon: 'bx bx-table fs-6', text: 'Accordions' },
-  { href: 'account.html', icon: 'bx bx-table fs-6', text: 'Account' }
+  { href: 'account.html', icon: 'bx bx-table fs-6', text: 'Account' },
+  { href: 'account-address.html', icon: 'bx bx-table fs-6', text: 'Account-address' }
 ];
 
 createMenu(menuItemsLnb);
