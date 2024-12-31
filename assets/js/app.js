@@ -488,15 +488,7 @@ collapseOffCanvas.addEventListener('click', function () {
 
 });
 
-document.getElementById('gearIcon').addEventListener('click', () => {
-    const floatingNav = document.getElementById('floatingNav');
-    floatingNav.classList.remove('hidden'); // Show the floating menu
-});
 
-document.getElementById('closeFloatingNav').addEventListener('click', () => {
-    const floatingNav = document.getElementById('floatingNav');
-    floatingNav.classList.add('hidden'); // Hide the floating menu
-});
 
 
 document.getElementById('hamburgerButton').addEventListener('click', () => {
@@ -668,3 +660,12 @@ languageSwitcher.addEventListener("click", function (event) {
 
 });
 
+document.getElementById('gearIcon').addEventListener('click', () => {
+    const floatingNav = document.getElementById('floatingNav');
+    floatingNav.classList.remove('hidden'); // Show the floating menu
+});
+
+document.getElementById('closeFloatingNav').addEventListener('click', () => {
+    const floatingNav = document.getElementById('floatingNav');
+    floatingNav.classList.add('hidden'); // Hide the floating menu
+});

@@ -121,15 +121,7 @@ collapseOffCanvas.addEventListener('click', function () {
 
 });
 
-document.getElementById('gearIcon').addEventListener('click', () => {
-    const floatingNav = document.getElementById('floatingNav');
-    floatingNav.classList.remove('hidden'); // Show the floating menu
-});
 
-document.getElementById('closeFloatingNav').addEventListener('click', () => {
-    const floatingNav = document.getElementById('floatingNav');
-    floatingNav.classList.add('hidden'); // Hide the floating menu
-});
 
 
 document.getElementById('hamburgerButton').addEventListener('click', () => {
@@ -419,3 +411,13 @@ chart.render();
 
 // 초기 차트 데이터 설정
 updateChart(getDataFromLocalStorage());
+
+document.getElementById('gearIcon').addEventListener('click', () => {
+    const floatingNav = document.getElementById('floatingNav');
+    floatingNav.classList.remove('hidden'); // Show the floating menu
+});
+
+document.getElementById('closeFloatingNav').addEventListener('click', () => {
+    const floatingNav = document.getElementById('floatingNav');
+    floatingNav.classList.add('hidden'); // Hide the floating menu
+});
