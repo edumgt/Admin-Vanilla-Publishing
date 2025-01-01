@@ -193,7 +193,8 @@ const calendar = (() => {
 
         const taskTextarea = document.createElement('textarea');
         taskTextarea.className = 'border w-full p-2 mb-4';
-        taskTextarea.placeholder = 'Add a detailed task (300+ characters supported)';
+        taskTextarea.style.marginTop = '10px';
+        taskTextarea.placeholder = 'Add a detailed task';
         taskTextarea.rows = 5;
 
         const saveBtn = document.createElement('button');
@@ -221,15 +222,22 @@ const calendar = (() => {
 
 
         const createTimeSelect = () => {
+
+            // Create the select element
             const timeSelect = document.createElement('select');
-            timeSelect.className = 'border w-full p-2 mb-4';
+
+            timeSelect.className = 'relative w-full pl-10 p-2 bg-white border border-gray-300 rounded time-select-icon';
+
+
+
             const times = [];
-            for (let hour = 0; hour < 24; hour++) {
+            for (let hour = 8; hour < 24; hour++) { // Start from 08:00
                 for (let minute = 0; minute < 60; minute += 30) {
                     const time = `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
                     times.push(time);
                 }
             }
+
             times.forEach(time => {
                 const option = document.createElement('option');
                 option.value = time;
@@ -240,13 +248,14 @@ const calendar = (() => {
         };
 
 
-        const timeSelect = createTimeSelect();
         modalContent.appendChild(modalHeader);
         modalContent.appendChild(taskList);
         modalContent.appendChild(fromDateInput);
         modalContent.appendChild(toDateInput);
 
+        const timeSelect = createTimeSelect();
         modalContent.appendChild(timeSelect);
+
         modalContent.appendChild(taskTextarea);
 
         modalContent.appendChild(saveBtn);
