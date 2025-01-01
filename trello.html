@@ -2,7 +2,77 @@
 <html>
 
 <head>
-    <link href="assets/css/calendar.css" rel="stylesheet">
+    <link href="assets/css/trello.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'PretendardVariable', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        #app {
+            display: flex;
+            height: 100vh;
+        }
+
+        #taskArea {
+            flex: 1;
+            padding: 20px;
+            background-color: #f8f9fa;
+            overflow-y: auto;
+            border-right: 2px solid #e2e8f0;
+        }
+
+        #ganttArea {
+            flex: 2;
+            padding: 20px;
+            background-color: #e9ecef;
+            overflow-y: auto;
+        }
+
+        .task-list li {
+            list-style: none;
+            background: white;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .gantt-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .gantt-table th,
+        .gantt-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .gantt-table th {
+            background-color: #f2f2f2;
+        }
+
+        .timeline {
+            display: flex;
+        }
+
+        .timeline div {
+            width: 24px;
+            height: 24px;
+            margin-right: 2px;
+            border: 1px solid #ddd;
+        }
+
+        .timeline .highlight {
+            background-color: #4299e1;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -80,7 +150,8 @@
                 </li>
 
                 <li>
-                    <a href="trello.html" class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
+                    <a href="trello.html"
+                        class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
                         <i class="fas fa-user-shield menu-icon text-blue-400"></i>
                         <span class="menu-text">프로젝트일정</span>
                     </a>
@@ -136,7 +207,34 @@
 
         </div>
 
-        <div id="calendar" class="w-full max-w-md mx-auto mt-5 border rounded shadow"></div>
+
+        <div id="app">
+            <div id="taskArea">
+                <h2>Work Breakdown Structure (WBS)</h2>
+                <form id="taskForm">
+                    <input type="text" id="taskName" placeholder="Task Name" required><br><br>
+                    <textarea id="taskDescription" placeholder="Task Description"></textarea><br><br>
+                    <input type="date" id="taskDeadline" required><br><br>
+                    <button type="submit">Add Task</button>
+                </form>
+                <ul id="taskList" class="task-list"></ul>
+            </div>
+            <div id="ganttArea">
+                <h2>Gantt Chart</h2>
+                <table class="gantt-table">
+                    <thead>
+                        <tr>
+                            <th>Task Name</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Timeline</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ganttTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
 
 
 
@@ -212,7 +310,101 @@
         </div>
     </div>
     <script type="text/javascript" src="assets/js/frame.js"></script>
-    <script type="text/javascript" src="assets/js/calendar.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const taskForm = document.getElementById("taskForm");
+            const taskList = document.getElementById("taskList");
+            const ganttTableBody = document.getElementById("ganttTableBody");
+
+            // Load tasks from localStorage
+            function loadTasks() {
+                return JSON.parse(localStorage.getItem("tasks")) || [];
+            }
+
+            // Save tasks to localStorage
+            function saveTasks(tasks) {
+                localStorage.setItem("tasks", JSON.stringify(tasks));
+            }
+
+            // Render tasks in the task list
+            function renderTaskList() {
+                const tasks = loadTasks();
+                taskList.innerHTML = "";
+                tasks.forEach((task, index) => {
+                    const li = document.createElement("li");
+                    li.innerHTML = `
+                        <strong>${task.name}</strong><br>
+                        <small>${task.description || "No description"}</small><br>
+                        <small>Deadline: ${task.deadline}</small><br>
+                        <button onclick="removeTask(${index})">Remove</button>
+                    `;
+                    taskList.appendChild(li);
+                });
+            }
+
+            // Render tasks in the Gantt chart
+            function renderGanttChart() {
+                const tasks = loadTasks();
+                ganttTableBody.innerHTML = "";
+                tasks.forEach((task) => {
+                    const startDate = new Date();
+                    const endDate = new Date(task.deadline);
+                    const totalWeeks = Math.ceil((endDate - startDate) / (7 * 24 * 60 * 60 * 1000));
+
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${task.name}</td>
+                        <td>${startDate.toLocaleDateString()}</td>
+                        <td>${endDate.toLocaleDateString()}</td>
+                        <td class="timeline"></td>
+                    `;
+                    const timelineCell = row.querySelector(".timeline");
+                    for (let i = 0; i < totalWeeks; i++) {
+                        const block = document.createElement("div");
+                        block.className = i === totalWeeks - 1 ? "highlight" : "";
+                        timelineCell.appendChild(block);
+                    }
+                    ganttTableBody.appendChild(row);
+                });
+            }
+
+            // Add a new task
+            taskForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+                const name = document.getElementById("taskName").value;
+                const description = document.getElementById("taskDescription").value;
+                const deadline = document.getElementById("taskDeadline").value;
+
+                if (!name || !deadline) {
+                    alert("Task Name and Deadline are required.");
+                    return;
+                }
+
+                const tasks = loadTasks();
+                tasks.push({ name, description, deadline });
+                saveTasks(tasks);
+
+                renderTaskList();
+                renderGanttChart();
+
+                taskForm.reset();
+            });
+
+            // Remove a task
+            window.removeTask = (index) => {
+                const tasks = loadTasks();
+                tasks.splice(index, 1);
+                saveTasks(tasks);
+
+                renderTaskList();
+                renderGanttChart();
+            };
+
+            // Initial render
+            renderTaskList();
+            renderGanttChart();
+        });
+    </script>
     <script type="text/javascript" src="assets/js/logo.js"></script>
 </body>
 
