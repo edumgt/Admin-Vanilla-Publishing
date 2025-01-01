@@ -7,6 +7,8 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
 
+
+
 /* Variables */
 :root {
     --primary-color: #0058a3;
@@ -21,6 +23,15 @@
     --font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue";
 }
 
+/* General */
+body {
+    font-family: var(--font-family);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scrollbar-color: #134139 transparent;
+    scrollbar-width: thin;
+}
 
 .toast {
     position: fixed;
