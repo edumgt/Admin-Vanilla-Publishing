@@ -91,18 +91,17 @@
             margin-bottom: 15px;
             border: 1px solid #ddd;
             border-radius: 8px;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
             font-size: 14px;
             outline: none;
-            transition: all 0.3s ease-in-out;
+            transition: border-color 0.3s ease-in-out;
         }
 
         #taskForm input[type="text"]:focus,
         #taskForm textarea:focus,
         #taskForm input[type="date"]:focus {
             border-color: #4299e1;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 0 5px rgba(66, 153, 225, 0.5);
         }
+
 
 
         #taskForm button {
@@ -266,7 +265,7 @@
 
         <div id="app">
             <div id="taskArea">
-                
+
                 <form id="taskForm">
                     <label for="taskName" style="font-weight: bold; margin-bottom: 5px; display: block;">Task
                         Name</label>
@@ -458,7 +457,7 @@
                 taskForm.reset();
             });
 
-            
+
             window.removeTask = (index) => {
                 const tasks = loadTasks();
                 tasks.splice(index, 1);
@@ -468,7 +467,7 @@
                 renderGanttChart();
             };
 
-            
+
             renderTaskList();
             renderGanttChart();
 
@@ -477,44 +476,44 @@
         });
 
         document.addEventListener("DOMContentLoaded", () => {
-    const splitter = document.getElementById("splitter");
-    const taskArea = document.getElementById("taskArea");
-    const ganttArea = document.getElementById("ganttArea");
+            const splitter = document.getElementById("splitter");
+            const taskArea = document.getElementById("taskArea");
+            const ganttArea = document.getElementById("ganttArea");
 
-    function createSplitter(splitter, panel1, panel2) {
-        let isDragging = false;
+            function createSplitter(splitter, panel1, panel2) {
+                let isDragging = false;
 
-        splitter.addEventListener("mousedown", () => {
-            isDragging = true;
-            document.body.style.cursor = "col-resize";
-        });
+                splitter.addEventListener("mousedown", () => {
+                    isDragging = true;
+                    document.body.style.cursor = "col-resize";
+                });
 
-        document.addEventListener("mousemove", (e) => {
-            if (!isDragging) return;
+                document.addEventListener("mousemove", (e) => {
+                    if (!isDragging) return;
 
-            const appRect = splitter.parentElement.getBoundingClientRect();
-            const splitterWidthWithMargin = splitter.offsetWidth + 20; // Account for splitter margin
-            const newPanel1Width = e.clientX - appRect.left - 10; // Adjust for left margin
-            const newPanel2Width = appRect.right - e.clientX - splitterWidthWithMargin + 10; // Adjust for right margin
+                    const appRect = splitter.parentElement.getBoundingClientRect();
+                    const splitterWidthWithMargin = splitter.offsetWidth + 20; // Account for splitter margin
+                    const newPanel1Width = e.clientX - appRect.left - 10; // Adjust for left margin
+                    const newPanel2Width = appRect.right - e.clientX - splitterWidthWithMargin + 10; // Adjust for right margin
 
-            // Ensure minimum widths
-            if (newPanel1Width > 200 && newPanel2Width > 200) {
-                panel1.style.flex = `0 0 ${newPanel1Width}px`;
-                splitter.style.flex = "0 0 5px"; // Maintain the splitter's width
-                panel2.style.flex = `0 0 ${newPanel2Width}px`;
+                    // Ensure minimum widths
+                    if (newPanel1Width > 200 && newPanel2Width > 200) {
+                        panel1.style.flex = `0 0 ${newPanel1Width}px`;
+                        splitter.style.flex = "0 0 5px"; // Maintain the splitter's width
+                        panel2.style.flex = `0 0 ${newPanel2Width}px`;
+                    }
+                });
+
+                document.addEventListener("mouseup", () => {
+                    if (isDragging) {
+                        isDragging = false;
+                        document.body.style.cursor = "default";
+                    }
+                });
             }
-        });
 
-        document.addEventListener("mouseup", () => {
-            if (isDragging) {
-                isDragging = false;
-                document.body.style.cursor = "default";
-            }
+            createSplitter(splitter, taskArea, ganttArea);
         });
-    }
-
-    createSplitter(splitter, taskArea, ganttArea);
-});
 
 
     </script>
