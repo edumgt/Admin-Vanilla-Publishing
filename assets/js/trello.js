@@ -1,198 +1,186 @@
-// Function to create the WBS Module
-function createWBSModule() {
-    const app = document.getElementById("app");
+document.addEventListener("DOMContentLoaded", () => {
+    const taskList = document.getElementById("taskList");
+    const ganttTableBody = document.getElementById("ganttTableBody");
 
-    // Create container
-    const wbsContainer = document.createElement("div");
-    wbsContainer.className = "wbs-container p-6 bg-gray-100 shadow rounded-lg space-y-4";
+    let tasks = {};
 
-    // Header
-    const header = document.createElement("h2");
-    header.textContent = "WBS (Work Breakdown Structure)";
-    header.className = "text-xl font-bold text-gray-800";
-    wbsContainer.appendChild(header);
-
-    // Task Input Form
-    const taskForm = document.createElement("form");
-    taskForm.id = "taskForm";
-    taskForm.className = "space-y-2";
-
-    // Task Name Input
-    const taskNameInput = document.createElement("input");
-    taskNameInput.type = "text";
-    taskNameInput.id = "taskName";
-    taskNameInput.placeholder = "Task Name";
-    taskNameInput.className = "border border-gray-300 rounded p-2 w-full";
-    taskForm.appendChild(taskNameInput);
-
-    // Task Description Input
-    const taskDescInput = document.createElement("textarea");
-    taskDescInput.id = "taskDescription";
-    taskDescInput.placeholder = "Task Description";
-    taskDescInput.className = "border border-gray-300 rounded p-2 w-full";
-    taskForm.appendChild(taskDescInput);
-
-    // Task Deadline Input
-    const taskDeadlineInput = document.createElement("input");
-    taskDeadlineInput.type = "date";
-    taskDeadlineInput.id = "taskDeadline";
-    taskDeadlineInput.className = "border border-gray-300 rounded p-2 w-full";
-    taskForm.appendChild(taskDeadlineInput);
-
-    // Add Task Button
-    const addTaskButton = document.createElement("button");
-    addTaskButton.type = "button";
-    addTaskButton.textContent = "Add Task";
-    addTaskButton.className = "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600";
-    taskForm.appendChild(addTaskButton);
-
-    wbsContainer.appendChild(taskForm);
-
-    // Task List
-    const taskList = document.createElement("ul");
-    taskList.id = "taskList";
-    taskList.className = "space-y-2";
-    wbsContainer.appendChild(taskList);
-
-    app.appendChild(wbsContainer);
-
-    // Event Listener for Adding Tasks
-    addTaskButton.addEventListener("click", () => {
-        const taskName = taskNameInput.value.trim();
-        const taskDescription = taskDescInput.value.trim();
-        const taskDeadline = taskDeadlineInput.value;
-
-        if (taskName && taskDeadline) {
-            // Create Task Item
-            const taskItem = document.createElement("li");
-            taskItem.className = "bg-white p-4 rounded shadow space-y-2";
-
-            // Task Details
-            const taskTitle = document.createElement("h3");
-            taskTitle.textContent = taskName;
-            taskTitle.className = "font-medium text-gray-800";
-            taskItem.appendChild(taskTitle);
-
-            const taskDesc = document.createElement("p");
-            taskDesc.textContent = taskDescription || "No description provided.";
-            taskDesc.className = "text-gray-600 text-sm";
-            taskItem.appendChild(taskDesc);
-
-            const taskDueDate = document.createElement("p");
-            taskDueDate.textContent = `Deadline: ${taskDeadline}`;
-            taskDueDate.className = "text-gray-500 text-sm";
-            taskItem.appendChild(taskDueDate);
-
-            // Remove Button
-            const removeButton = document.createElement("button");
-            removeButton.textContent = "Remove";
-            removeButton.className = "text-red-500 text-sm hover:underline";
-            removeButton.addEventListener("click", () => taskItem.remove());
-            taskItem.appendChild(removeButton);
-
-            // Append to Task List
-            taskList.appendChild(taskItem);
-
-            // Clear Inputs
-            taskNameInput.value = "";
-            taskDescInput.value = "";
-            taskDeadlineInput.value = "";
-        } else {
-            alert("Task Name and Deadline are required!");
-        }
-    });
-}
-
-// Initialize the WBS Module
-document.addEventListener("DOMContentLoaded", createWBSModule);
-
-function createGanttChart() {
-    const app = document.getElementById("app");
-
-    // Gantt Chart Container
-    const ganttContainer = document.createElement("div");
-    ganttContainer.className = "gantt-container p-6 bg-gray-100 shadow rounded-lg space-y-4 mt-6";
-
-    // Header
-    const header = document.createElement("h2");
-    header.textContent = "Gantt Chart (Weekly)";
-    header.className = "text-xl font-bold text-gray-800";
-    ganttContainer.appendChild(header);
-
-    // Chart Wrapper
-    const chartWrapper = document.createElement("div");
-    chartWrapper.className = "overflow-auto";
-    ganttContainer.appendChild(chartWrapper);
-
-    // Chart Table
-    const chartTable = document.createElement("table");
-    chartTable.className = "w-full border-collapse border border-gray-300 text-sm";
-    chartWrapper.appendChild(chartTable);
-
-    // Table Header
-    const chartHeader = document.createElement("thead");
-    const headerRow = document.createElement("tr");
-    ["Task Name", "Start Date", "End Date", "Timeline"].forEach((text) => {
-        const th = document.createElement("th");
-        th.textContent = text;
-        th.className = "border border-gray-300 p-2 bg-gray-200 text-left";
-        headerRow.appendChild(th);
-    });
-    chartHeader.appendChild(headerRow);
-    chartTable.appendChild(chartHeader);
-
-    // Table Body
-    const chartBody = document.createElement("tbody");
-    chartTable.appendChild(chartBody);
-
-    // Render Gantt Chart for Tasks
-    function renderGanttChart() {
-        chartBody.innerHTML = ""; // Clear previous data
-        const tasks = document.querySelectorAll("#taskList li");
-
-        tasks.forEach((task) => {
-            const taskName = task.querySelector("h3").textContent;
-            const deadlineText = task.querySelector("p:nth-child(3)").textContent;
-            const startDate = new Date();
-            const endDate = new Date(deadlineText.split(": ")[1]);
-
-            // Calculate weeks
-            const totalWeeks = Math.ceil((endDate - startDate) / (7 * 24 * 60 * 60 * 1000));
-            const timeline = document.createElement("div");
-            timeline.className = "flex items-center";
-
-            for (let i = 0; i < totalWeeks; i++) {
-                const weekBlock = document.createElement("div");
-                weekBlock.className = "w-6 h-6 border bg-gray-100";
-                if (i === totalWeeks - 1) weekBlock.classList.add("bg-blue-500");
-                timeline.appendChild(weekBlock);
+    // Fetch tasks from task.json
+    async function fetchTasks() {
+        try {
+            const response = await fetch("assets/mock/task.json");
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
             }
+            tasks = await response.json();
+            renderTaskList();
+            renderGanttChart();
+        } catch (error) {
+            console.error("Error fetching tasks:", error);
+        }
+    }
 
-            // Add to Table Row
-            const row = document.createElement("tr");
-            [taskName, startDate.toLocaleDateString(), endDate.toLocaleDateString()].forEach((text) => {
-                const td = document.createElement("td");
-                td.textContent = text;
-                td.className = "border border-gray-300 p-2";
-                row.appendChild(td);
+    // Render tasks in the task list
+    function renderTaskList() {
+        taskList.innerHTML = "";
+        tasks.forEach((task, index) => {
+            const li = document.createElement("li");
+            li.style.position = "relative";
+            li.draggable = true; // Make the task draggable
+            li.dataset.index = index; // Store the task index in a data attribute
+
+            li.innerHTML = `
+                <strong>${task.name}</strong><br>
+                <small>${task.description || "No description"}</small><br>
+                <small>Start Date: ${task.startDate}</small><br>
+                <small>End Date: ${task.endDate}</small>
+                <div class="drag-indicator"><i class="fas fa-arrows-alt"></i> Drag & Drop</div>
+            `;
+
+            const removeButton = document.createElement("button");
+            removeButton.textContent = "X";
+            removeButton.style.position = "absolute";
+            removeButton.style.top = "10px";
+            removeButton.style.right = "10px";
+            removeButton.style.backgroundColor = "transparent";
+            removeButton.style.border = "none";
+            removeButton.style.color = "red";
+            removeButton.style.fontWeight = "bold";
+            removeButton.style.cursor = "pointer";
+            removeButton.style.fontSize = "16px";
+
+            removeButton.addEventListener("click", () => {
+                removeTask(index);
             });
 
-            const timelineTd = document.createElement("td");
-            timelineTd.className = "border border-gray-300 p-2";
-            timelineTd.appendChild(timeline);
-            row.appendChild(timelineTd);
+            li.appendChild(removeButton);
+            taskList.appendChild(li);
+        });
 
-            chartBody.appendChild(row);
+        addDragAndDrop();
+    }
+
+    // Render tasks in the Gantt chart
+    function renderGanttChart() {
+        ganttTableBody.innerHTML = "";
+
+        tasks.forEach((task) => {
+            const startDate = new Date(task.startDate);
+            const endDate = new Date(task.endDate);
+            const totalDays = Math.ceil((endDate - startDate) / (24 * 60 * 60 * 1000)) + 1;
+
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${task.name}</td>
+                <td>${startDate.toLocaleDateString()}</td>
+                <td>${endDate.toLocaleDateString()}</td>
+                <td class="timeline-column"><div class="timeline"></div></td>
+            `;
+
+            const timelineCell = row.querySelector(".timeline");
+            for (let i = 0; i < totalDays; i++) {
+                const block = document.createElement("div");
+                block.style.backgroundColor = i === totalDays - 1 ? "#4299e1" : "#ddd";
+                block.style.width = "24px";
+                block.style.height = "24px";
+                block.style.border = "1px solid #ddd";
+                block.style.display = "inline-block";
+                timelineCell.appendChild(block);
+            }
+
+            ganttTableBody.appendChild(row);
         });
     }
 
-    app.appendChild(ganttContainer);
+    // Remove a task
+    function removeTask(index) {
+        tasks.splice(index, 1);
+        renderTaskList();
+        renderGanttChart();
+    }
 
-    // Update Gantt Chart on Task Addition
-    const addTaskButton = document.querySelector("#taskForm button");
-    addTaskButton.addEventListener("click", renderGanttChart);
-}
+    // Drag-and-drop functionality
+    function addDragAndDrop() {
+        const listItems = taskList.querySelectorAll("li");
 
-document.addEventListener("DOMContentLoaded", createGanttChart);
+        listItems.forEach((item) => {
+            item.addEventListener("dragstart", handleDragStart);
+            item.addEventListener("dragover", handleDragOver);
+            item.addEventListener("drop", handleDrop);
+            item.addEventListener("dragend", handleDragEnd);
+        });
+    }
+
+    let dragSourceIndex = null;
+
+    function handleDragStart(e) {
+        dragSourceIndex = +this.dataset.index;
+        this.style.opacity = "0.5";
+        e.dataTransfer.effectAllowed = "move";
+    }
+
+    function handleDragOver(e) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = "move";
+    }
+
+    function handleDrop(e) {
+        e.preventDefault();
+        const dragTargetIndex = +this.dataset.index;
+
+        if (dragSourceIndex !== null && dragTargetIndex !== dragSourceIndex) {
+            const [draggedItem] = tasks.splice(dragSourceIndex, 1);
+            tasks.splice(dragTargetIndex, 0, draggedItem);
+
+            renderTaskList();
+            renderGanttChart();
+        }
+    }
+
+    function handleDragEnd() {
+        this.style.opacity = "1";
+    }
+
+    // Fetch and render tasks on page load
+    fetchTasks();
+});
+document.addEventListener("DOMContentLoaded", () => {
+    const splitter = document.getElementById("splitter");
+    const taskArea = document.getElementById("taskArea");
+    const ganttArea = document.getElementById("ganttArea");
+
+    function createSplitter(splitter, panel1, panel2) {
+        let isDragging = false;
+
+        splitter.addEventListener("mousedown", () => {
+            isDragging = true;
+            document.body.style.cursor = "col-resize";
+        });
+
+        document.addEventListener("mousemove", (e) => {
+            if (!isDragging) return;
+
+            const appRect = splitter.parentElement.getBoundingClientRect();
+            const splitterWidthWithMargin = splitter.offsetWidth + 20; // Account for splitter margin
+            const newPanel1Width = e.clientX - appRect.left - 10; // Adjust for left margin
+            const newPanel2Width = appRect.right - e.clientX - splitterWidthWithMargin + 10; // Adjust for right margin
+
+            // Ensure minimum widths
+            if (newPanel1Width > 200 && newPanel2Width > 200) {
+                panel1.style.flex = `0 0 ${newPanel1Width}px`;
+                splitter.style.flex = "0 0 5px"; // Maintain the splitter's width
+                panel2.style.flex = `0 0 ${newPanel2Width}px`;
+            }
+        });
+
+        document.addEventListener("mouseup", () => {
+            if (isDragging) {
+                isDragging = false;
+                document.body.style.cursor = "default";
+            }
+        });
+    }
+
+    createSplitter(splitter, taskArea, ganttArea);
+});
 
 
