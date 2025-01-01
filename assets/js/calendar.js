@@ -1,4 +1,3 @@
-// Calendar Initialization with Fullscreen View, Time Input, Date Range, Task Management, and Linked Tasks
 const calendar = (() => {
     const calendarContainer = document.getElementById('calendar');
     const monthNames = [
@@ -10,23 +9,18 @@ const calendar = (() => {
     let currentMonth = today.getMonth();
     let currentYear = today.getFullYear();
 
-    const tasks = JSON.parse(localStorage.getItem('calendarTasks')) || {}; // Load tasks from local storage
+    const tasks = JSON.parse(localStorage.getItem('calendarTasks')) || {};
 
     const saveTasks = () => {
         localStorage.setItem('calendarTasks', JSON.stringify(tasks));
     };
 
     const renderCalendar = (month, year) => {
-        // Clear the existing calendar
+
+        console.log('Rendering calendar for:', monthNames[month], year);
         calendarContainer.innerHTML = '';
-        calendarContainer.className = 'w-full h-screen mx-auto p-4 relative'; // Set full width and height
+        calendarContainer.className = 'w-full h-screen mx-auto p-4 relative';
 
-        // Create an SVG container for lines
-        const svgContainer = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        svgContainer.setAttribute("class", "absolute top-0 left-0 w-full h-full pointer-events-none");
-        svgContainer.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-
-        // Header Section
         const header = document.createElement('div');
         header.className = 'calendar-header flex justify-between items-center py-2 bg-gray-100';
 
@@ -46,7 +40,6 @@ const calendar = (() => {
         header.appendChild(title);
         header.appendChild(nextBtn);
 
-        // Days of Week Section
         const daysOfWeek = document.createElement('div');
         daysOfWeek.className = 'grid grid-cols-7 bg-gray-200 text-center text-xs font-light';
         const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -57,34 +50,28 @@ const calendar = (() => {
             daysOfWeek.appendChild(dayDiv);
         });
 
-        // Dates Section
         const dates = document.createElement('div');
         dates.className = 'grid grid-cols-7 text-center relative';
 
         const firstDay = new Date(year, month, 1).getDay();
         const daysInMonth = new Date(year, month + 1, 0).getDate();
-        const dateElements = {}; // Track elements by date key for linking
+        const dateElements = {};
 
-        // Add blank days for previous month
         for (let i = 0; i < firstDay; i++) {
             const blank = document.createElement('div');
             blank.className = 'py-4';
             dates.appendChild(blank);
         }
 
-        // Add days of the current month
+
         for (let day = 1; day <= daysInMonth; day++) {
             const dateDiv = document.createElement('div');
             dateDiv.className = 'py-10 px-4 border cursor-pointer relative';
-
-            if (day === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
-                dateDiv.classList.add('bg-blue-500', 'text-white', 'rounded-lg');
-            }
-
             dateDiv.innerHTML = `<div class="text-md font-medium absolute top-2 left-2">${day}</div>`;
 
-            const dateKey = `${year}-${month + 1}-${day}`;
-            dateElements[dateKey] = dateDiv; // Store reference for linking
+            const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
+            dateElements[dateKey] = dateDiv;
 
             if (tasks[dateKey]) {
                 const taskList = document.createElement('ul');
@@ -96,7 +83,7 @@ const calendar = (() => {
                     taskText.innerText = `- ${task}`;
                     const deleteBtn = document.createElement('button');
                     deleteBtn.className = 'text-red-500 ml-4';
-                    deleteBtn.innerText = 'x';
+                    deleteBtn.innerText = 'X';
                     deleteBtn.onclick = () => {
                         tasks[dateKey].splice(index, 1);
                         if (tasks[dateKey].length === 0) {
@@ -112,51 +99,17 @@ const calendar = (() => {
                 dateDiv.appendChild(taskList);
             }
 
+            if (day === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+                dateDiv.classList.add('bg-gray-100');
+            }
+
             dateDiv.onclick = () => openTaskModal(day, month, year);
             dates.appendChild(dateDiv);
         }
-
-        // Link tasks between dates
-        Object.keys(tasks).forEach(dateKey => {
-            const [year, month, day] = dateKey.split('-').map(Number);
-            const taskList = tasks[dateKey];
-
-            taskList.forEach(task => {
-                const linkedDates = Object.keys(tasks).filter(key =>
-                    key !== dateKey && tasks[key].includes(task));
-
-                linkedDates.forEach(linkedKey => {
-                    const linkedElement = dateElements[linkedKey];
-                    const currentElement = dateElements[dateKey];
-                    if (linkedElement && currentElement) {
-                        const rect1 = currentElement.getBoundingClientRect();
-                        const rect2 = linkedElement.getBoundingClientRect();
-                        const x1 = rect1.left + rect1.width / 2;
-                        const y1 = rect1.top + rect1.height / 2;
-                        const x2 = rect2.left + rect2.width / 2;
-                        const y2 = rect2.top + rect2.height / 2;
-
-                        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-                        line.setAttribute("x1", x1);
-                        line.setAttribute("y1", y1);
-                        line.setAttribute("x2", x2);
-                        line.setAttribute("y2", y2);
-                        line.setAttribute("stroke", "blue");
-                        line.setAttribute("stroke-width", "2");
-                        svgContainer.appendChild(line);
-                    } else {
-                        console.warn(`Missing date element for key: ${linkedKey} or ${dateKey}`);
-                    }
-                });
-            });
-        });
-
-
-        // Append sections to the calendar container
         calendarContainer.appendChild(header);
         calendarContainer.appendChild(daysOfWeek);
         calendarContainer.appendChild(dates);
-        calendarContainer.appendChild(svgContainer); // Add lines
+
     };
 
     const changeMonth = (delta) => {
@@ -168,11 +121,14 @@ const calendar = (() => {
             currentMonth = 0;
             currentYear++;
         }
+        console.log('Changing to month:', monthNames[currentMonth], 'Year:', currentYear);
         renderCalendar(currentMonth, currentYear);
     };
 
     const openTaskModal = (day, month, year) => {
-        const dateKey = `${year}-${month + 1}-${day}`;
+
+        const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
         const existingTasks = tasks[dateKey] || [];
 
         const modal = document.createElement('div');
@@ -202,19 +158,23 @@ const calendar = (() => {
             taskItem.className = 'border-b py-2 flex justify-between items-center';
             const taskText = document.createElement('span');
             taskText.innerText = task;
+
             const deleteBtn = document.createElement('button');
-            deleteBtn.className = 'text-red-500 ml-4';
-            deleteBtn.innerText = 'x';
+            deleteBtn.className = 'text-red-500 ml-4 text-2xl font-bold';
+            deleteBtn.innerText = 'X';
             deleteBtn.onclick = () => {
                 tasks[dateKey].splice(index, 1);
                 if (tasks[dateKey].length === 0) {
                     delete tasks[dateKey];
                 }
                 saveTasks();
+                showToast('Task deleted successfully!');
                 modal.remove();
                 renderCalendar(currentMonth, currentYear);
                 openTaskModal(day, month, year);
             };
+
+
             taskItem.appendChild(taskText);
             taskItem.appendChild(deleteBtn);
             taskList.appendChild(taskItem);
@@ -230,9 +190,6 @@ const calendar = (() => {
         toDateInput.className = 'border w-full p-2 mb-4';
         toDateInput.value = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 
-        const timeInput = document.createElement('input');
-        timeInput.type = 'time';
-        timeInput.className = 'border w-full p-2 mb-4';
 
         const taskTextarea = document.createElement('textarea');
         taskTextarea.className = 'border w-full p-2 mb-4';
@@ -244,7 +201,7 @@ const calendar = (() => {
         saveBtn.innerText = 'Save Task';
         saveBtn.onclick = () => {
             const newTask = taskTextarea.value.trim();
-            const time = timeInput.value.trim();
+            const time = timeSelect.value;
             const fromDate = new Date(fromDateInput.value);
             const toDate = new Date(toDateInput.value);
 
@@ -256,21 +213,58 @@ const calendar = (() => {
                     tasks[dateKey].push(`${time} - ${newTask}`);
                     currentDate.setDate(currentDate.getDate() + 1);
                 }
-                saveTasks(); // Save to local storage
+                saveTasks();
                 modal.remove();
-                renderCalendar(currentMonth, currentYear); // Refresh the calendar to show the new task
+                renderCalendar(currentMonth, currentYear);
             }
         };
 
+
+        const createTimeSelect = () => {
+            const timeSelect = document.createElement('select');
+            timeSelect.className = 'border w-full p-2 mb-4';
+            const times = [];
+            for (let hour = 0; hour < 24; hour++) {
+                for (let minute = 0; minute < 60; minute += 30) {
+                    const time = `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+                    times.push(time);
+                }
+            }
+            times.forEach(time => {
+                const option = document.createElement('option');
+                option.value = time;
+                option.innerText = time;
+                timeSelect.appendChild(option);
+            });
+            return timeSelect;
+        };
+
+
+        const timeSelect = createTimeSelect();
         modalContent.appendChild(modalHeader);
         modalContent.appendChild(taskList);
         modalContent.appendChild(fromDateInput);
         modalContent.appendChild(toDateInput);
-        modalContent.appendChild(timeInput);
+
+        modalContent.appendChild(timeSelect);
         modalContent.appendChild(taskTextarea);
+
         modalContent.appendChild(saveBtn);
         modal.appendChild(modalContent);
         document.body.appendChild(modal);
+    };
+
+    const showToast = (message) => {
+        const toast = document.createElement('div');
+        toast.className = 'fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-sm py-2 px-4 rounded shadow-lg';
+        toast.innerText = message;
+
+        document.body.appendChild(toast);
+
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 300);
+        }, 2000);
     };
 
     return {
@@ -280,7 +274,6 @@ const calendar = (() => {
     };
 })();
 
-// Initialize the calendar
 window.onload = () => {
     calendar.init();
 };
