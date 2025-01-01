@@ -529,3 +529,29 @@ input[type="date"] {
 .timeline .highlight {
     background-color: #4299e1;
 }
+
+.task-list li {
+    position: relative;
+    background: white;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.task-list li button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    color: red;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+}
+
+.task-list li button:hover {
+    color: darkred;
+}

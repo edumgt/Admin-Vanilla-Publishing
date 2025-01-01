@@ -32,21 +32,15 @@
         #splitter {
 
             width: 5px;
-            background-color: #ddd;
+            background-color: #aaa;
             overflow-y: auto;
             cursor: col-resize;
+            
             margin: 20px 5px 20px 5px;
             /* z-index: 100; */
         }
 
-        .task-list li {
-            list-style: none;
-            background: white;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
+        
     </style>
 
 </head>
@@ -318,20 +312,40 @@
 
             // Render tasks in the task list
             function renderTaskList() {
-                const tasks = loadTasks();
-                taskList.innerHTML = "";
-                tasks.forEach((task, index) => {
-                    const li = document.createElement("li");
-                    li.innerHTML = `
-                <strong>${task.name}</strong><br>
-                <small>${task.description || "No description"}</small><br>
-                <small>Start Date: ${task.startDate}</small><br>
-                <small>End Date: ${task.endDate}</small><br>
-                <button onclick="removeTask(${index})">Remove</button>
-            `;
-                    taskList.appendChild(li);
-                });
-            }
+    const tasks = loadTasks();
+    taskList.innerHTML = "";
+    tasks.forEach((task, index) => {
+        const li = document.createElement("li");
+        li.style.position = "relative";
+
+        li.innerHTML = `
+            <strong>${task.name}</strong><br>
+            <small>${task.description || "No description"}</small><br>
+            <small>Start Date: ${task.startDate}</small><br>
+            <small>End Date: ${task.endDate}</small>
+        `;
+
+        const removeButton = document.createElement("button");
+        removeButton.textContent = "X";
+        removeButton.style.position = "absolute";
+        removeButton.style.top = "10px";
+        removeButton.style.right = "10px";
+        removeButton.style.backgroundColor = "transparent";
+        removeButton.style.border = "none";
+        removeButton.style.color = "red";
+        removeButton.style.fontWeight = "bold";
+        removeButton.style.cursor = "pointer";
+        removeButton.style.fontSize = "16px";
+
+        removeButton.addEventListener("click", () => {
+            removeTask(index);
+        });
+
+        li.appendChild(removeButton);
+        taskList.appendChild(li);
+    });
+}
+
 
             // Render tasks in the Gantt chart
             function renderGanttChart() {
