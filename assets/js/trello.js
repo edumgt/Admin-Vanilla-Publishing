@@ -3,8 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const ganttTableBody = document.getElementById("ganttTableBody");
 
     let tasks = {};
-
-    // Fetch tasks from task.json
     async function fetchTasks() {
         try {
             const response = await fetch("assets/mock/task.json");
@@ -19,14 +17,48 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Render tasks in the task list
+    //////////////////
+    // Add a new task
+    // Load tasks from localStorage
+    function loadTasks() {
+        console.log(JSON.parse(localStorage.getItem("tasks")) || {});
+        return JSON.parse(localStorage.getItem("tasks")) || {};
+    }
+
+    // Save tasks to localStorage
+    function saveTasks(tasks) {
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+
+    taskForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const name = document.getElementById("taskName").value;
+        const description = document.getElementById("taskDescription").value;
+        const startDate = document.getElementById("taskStartDate").value;
+        const endDate = document.getElementById("taskEndDate").value;
+
+        if (!name || !startDate || !endDate) {
+            alert("Please fill in all required fields.");
+            return;
+        }
+
+        tasks = loadTasks();
+        tasks.push({ name, description, startDate, endDate });
+        saveTasks(tasks);
+        
+        renderTaskList();
+        renderGanttChart();
+        taskForm.reset();
+    });
+    ///////////////////
+
     function renderTaskList() {
         taskList.innerHTML = "";
         tasks.forEach((task, index) => {
             const li = document.createElement("li");
             li.style.position = "relative";
-            li.draggable = true; // Make the task draggable
-            li.dataset.index = index; // Store the task index in a data attribute
+            li.draggable = true;
+            li.dataset.index = index;
 
             li.innerHTML = `
                 <strong>${task.name}</strong><br>
@@ -59,7 +91,6 @@ document.addEventListener("DOMContentLoaded", () => {
         addDragAndDrop();
     }
 
-    // Render tasks in the Gantt chart
     function renderGanttChart() {
         ganttTableBody.innerHTML = "";
 
@@ -91,14 +122,14 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Remove a task
+
     function removeTask(index) {
         tasks.splice(index, 1);
         renderTaskList();
         renderGanttChart();
     }
 
-    // Drag-and-drop functionality
+
     function addDragAndDrop() {
         const listItems = taskList.querySelectorAll("li");
 
@@ -140,7 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
         this.style.opacity = "1";
     }
 
-    // Fetch and render tasks on page load
+
     fetchTasks();
 });
 document.addEventListener("DOMContentLoaded", () => {
@@ -160,14 +191,13 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!isDragging) return;
 
             const appRect = splitter.parentElement.getBoundingClientRect();
-            const splitterWidthWithMargin = splitter.offsetWidth + 20; // Account for splitter margin
-            const newPanel1Width = e.clientX - appRect.left - 10; // Adjust for left margin
-            const newPanel2Width = appRect.right - e.clientX - splitterWidthWithMargin + 10; // Adjust for right margin
+            const splitterWidthWithMargin = splitter.offsetWidth + 20;
+            const newPanel1Width = e.clientX - appRect.left - 10;
+            const newPanel2Width = appRect.right - e.clientX - splitterWidthWithMargin + 10;
 
-            // Ensure minimum widths
             if (newPanel1Width > 200 && newPanel2Width > 200) {
                 panel1.style.flex = `0 0 ${newPanel1Width}px`;
-                splitter.style.flex = "0 0 5px"; // Maintain the splitter's width
+                splitter.style.flex = "0 0 5px";
                 panel2.style.flex = `0 0 ${newPanel2Width}px`;
             }
         });

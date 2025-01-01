@@ -1,24 +1,58 @@
-// UUID Generator Function
-function generateUUID() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-        const r = (Math.random() * 16) | 0,
-            v = c === 'x' ? r : (r & 0x3) | 0x8;
-        return v.toString(16);
-    });
+// Dynamically create modals
+function createModal(modalId, title, content, buttons) {
+    const modal = document.createElement('div');
+    modal.id = modalId;
+    modal.className = 'hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50';
+
+    const modalContent = `
+        <div class="bg-white rounded-lg shadow-lg p-6 w-1/3 relative">
+            <button class="absolute top-2 right-2 text-gray-600 hover:text-gray-800 text-lg" onclick="document.getElementById('${modalId}').classList.add('hidden');">&times;</button>
+            <h2 class="text-lg font-semibold mb-4">${title}</h2>
+            ${content}
+            <div class="flex justify-end space-x-2 mt-4">
+                ${buttons.map(btn => `<button class="${btn.class}" onclick="${btn.onClick}">${btn.label}</button>`).join('')}
+            </div>
+        </div>`;
+
+    modal.innerHTML = modalContent;
+    document.body.appendChild(modal);
 }
 
+// Create specific modals
+createModal(
+    'modal',
+    'Edit Row Details',
+    '<form id="modalForm" class="space-y-4"></form>',
+    [
+        { label: 'Save', class: 'bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600', onClick: 'saveModal()' },
+        { label: 'Close', class: 'bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700', onClick: "document.getElementById('modal').classList.add('hidden');" }
+    ]
+);
 
-// Close modal
-document.getElementById('closeModal').addEventListener('click', () => {
-    toggleModal(false);
-});
+createModal(
+    'logoutModal',
+    '로그아웃 하시겠습니까?',
+    '',
+    [
+        { label: 'Logout', class: 'bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600', onClick: "window.location.href='index.html';" },
+        { label: 'Cancel', class: 'bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700', onClick: "document.getElementById('logoutModal').classList.add('hidden');" }
+    ]
+);
 
-document.getElementById('saveModal').addEventListener('click', () => {
+createModal(
+    'demoModal',
+    '알림',
+    '<p>데모버젼에서는 지원하지 않습니다.</p>',
+    [
+        { label: '닫기', class: 'bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700', onClick: "document.getElementById('demoModal').classList.add('hidden');" }
+    ]
+);
+
+// Save modal action
+function saveModal() {
     const modalForm = document.getElementById('modalForm');
     const formData = new FormData(modalForm);
     const updatedData = {};
-
-    // Collect updated values from the form
     for (const [key, value] of formData.entries()) {
         updatedData[key] = value;
     }
@@ -29,26 +63,12 @@ document.getElementById('saveModal').addEventListener('click', () => {
         grid.setValue(currentRowKey, 'descCntn', updatedData.descCntn);
         grid.setValue(currentRowKey, 'useYn', updatedData.useYn);
     }
-
-    // Hide the modal and show a success toast
-    toggleModal(false);
+    document.getElementById('modal').classList.add('hidden');
     saveData(grid.getData());
     showToast('해당 건의 데이타를 저장하였습니다.', 'success');
-});
-
-// Add event listener for the top-right close button
-document.getElementById('closeModalTopRight').addEventListener('click', () => {
-    toggleModal(false);
-});
-
-// Add event listener for the bottom close button
-document.getElementById('closeModal').addEventListener('click', () => {
-    toggleModal(false);
-});
+}
 
 
-
-// Toast Functionality
 function showToast(message, type = 'success') {
     const toastContainer = document.getElementById('toast-container');
     const toast = document.createElement('div');
@@ -56,8 +76,6 @@ function showToast(message, type = 'success') {
     toast.innerText = message;
 
     toastContainer.appendChild(toast);
-
-    // Automatically remove the toast after 3 seconds
     setTimeout(() => {
         toast.classList.remove('show');
         setTimeout(() => toast.remove(), 300);
@@ -81,18 +99,8 @@ memberIcon.addEventListener('click', function () {
 });
 
 
-confirmLogout.addEventListener('click', function () {
-    isLoggedIn = false;
-    memberIcon.innerHTML = '<i class="fas fa-user"></i>';
-    logoutModal.classList.add('hidden');
-});
-
-cancelLogout.addEventListener('click', function () {
-    logoutModal.classList.add('hidden');
-});
 
 /* LNB */
-
 const offCanvas = document.getElementById('offCanvas');
 const hamburgerButton = document.getElementById('hamburgerButton');
 
@@ -125,14 +133,10 @@ document.getElementById('hamburgerButton').addEventListener('click', () => {
     offCanvas.classList.remove('hidden', '-translate-x-full'); // Show the off-canvas menu
 });
 
-
-// 현재 페이지 URL 가져오기
 const currentPage = window.location.pathname.split("/").pop();
 
-// 모든 GNB 메뉴 링크 가져오기
 const menuLinks = document.querySelectorAll(".gnb-item");
 
-// 모든 LNB 메뉴 링크 가져오기
 const menuLinks2 = document.querySelectorAll(".menu-item");
 
 // GNB의 1번 파일이 stati.html 의 경우 활성화 상태 설정
@@ -152,22 +156,14 @@ const demoLinks = document.querySelectorAll('a[href="#"]');
 const demoModal = document.getElementById('demoModal');
 const closeDemoModal = document.getElementById('closeDemoModal');
 
-// 링크 클릭 이벤트
 demoLinks.forEach(link => {
     link.addEventListener('click', function (event) {
-        event.preventDefault(); // 기본 동작 막기
+        event.preventDefault(); 
         demoModal.classList.remove('hidden');
     });
 });
 
-// 모달 닫기 버튼 클릭 이벤트
-closeDemoModal.addEventListener('click', function () {
-    demoModal.classList.add('hidden');
-});
-
-
 /* 다국어 */
-
 const translations = {
     en: {
         menu: "Menu",
@@ -259,15 +255,12 @@ const buttons = document.querySelectorAll("#content button span");
 const tabs = document.querySelectorAll(".tabs li a span");
 const offCanvasItems = document.querySelectorAll("#offCanvas .menu-item span");
 
-// 언어 변경 이벤트 핸들러
 languageSwitcher.addEventListener("click", function (event) {
     const lang = event.target.getAttribute("data-lang");
     if (!lang || !translations[lang]) return;
 
-    // Breadcrumb 텍스트 변경
     breadcrumb.textContent = translations[lang].breadcrumb;
 
-    // 탭 메뉴 텍스트 변경
     const tabLabels = translations[lang].tabs;
     tabs[0].textContent = tabLabels.system;
     tabs[1].textContent = tabLabels.organization;
@@ -276,7 +269,6 @@ languageSwitcher.addEventListener("click", function (event) {
     tabs[4].textContent = tabLabels.statistics;
     tabs[5].textContent = tabLabels.settings;
 
-    // OffCanvas 메뉴 텍스트 변경
     const offCanvasLabels = translations[lang].offCanvas;
     offCanvasItems[0].textContent = offCanvasLabels.code;
     offCanvasItems[1].textContent = offCanvasLabels.permissions;
@@ -288,12 +280,12 @@ languageSwitcher.addEventListener("click", function (event) {
 
 document.getElementById('gearIcon').addEventListener('click', () => {
     const floatingNav = document.getElementById('floatingNav');
-    floatingNav.classList.remove('hidden'); // Show the floating menu
+    floatingNav.classList.remove('hidden'); 
 });
 
 document.getElementById('closeFloatingNav').addEventListener('click', () => {
     const floatingNav = document.getElementById('floatingNav');
-    floatingNav.classList.add('hidden'); // Hide the floating menu
+    floatingNav.classList.add('hidden'); 
 });
 
 
