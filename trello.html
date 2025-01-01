@@ -20,9 +20,12 @@
         #taskArea {
             flex: 1;
             padding: 20px;
-            background-color: #f8f9fa;
+            background-color: #ffffff;
             overflow-y: auto;
-            border-right: 2px solid #e2e8f0;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 20px;
         }
 
         #ganttArea {
@@ -70,6 +73,52 @@
 
         .timeline .highlight {
             background-color: #4299e1;
+        }
+
+        /* Input and Textarea Styling */
+        #taskForm input[type="text"],
+        #taskForm textarea,
+        #taskForm input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease-in-out;
+        }
+
+        #taskForm input[type="text"]:focus,
+        #taskForm textarea:focus,
+        #taskForm input[type="date"]:focus {
+            border-color: #4299e1;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 0 5px rgba(66, 153, 225, 0.5);
+        }
+
+        /* Button Styling */
+        #taskForm button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4299e1;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        #taskForm button:hover {
+            background-color: #2b6cb0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Task Form Wrapper */
+        #taskForm {
+            margin-bottom: 20px;
         }
     </style>
 
@@ -212,13 +261,20 @@
             <div id="taskArea">
                 <h2>Work Breakdown Structure (WBS)</h2>
                 <form id="taskForm">
-                    <input type="text" id="taskName" placeholder="Task Name" required><br><br>
-                    <textarea id="taskDescription" placeholder="Task Description"></textarea><br><br>
-                    <input type="date" id="taskDeadline" required><br><br>
+                    <label for="taskName" style="font-weight: bold; margin-bottom: 5px; display: block;">Task Name</label>
+                    <input type="text" id="taskName" placeholder="Enter task name" required>
+    
+                    <label for="taskDescription" style="font-weight: bold; margin-bottom: 5px; display: block;">Task Description</label>
+                    <textarea id="taskDescription" placeholder="Enter task description"></textarea>
+    
+                    <label for="taskDeadline" style="font-weight: bold; margin-bottom: 5px; display: block;">Task Deadline</label>
+                    <input type="date" id="taskDeadline" required>
+    
                     <button type="submit">Add Task</button>
                 </form>
                 <ul id="taskList" class="task-list"></ul>
             </div>
+
             <div id="ganttArea">
                 <h2>Gantt Chart</h2>
                 <table class="gantt-table">
