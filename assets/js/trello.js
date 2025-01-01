@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+
     const taskList = document.getElementById("taskList");
     const ganttTableBody = document.getElementById("ganttTableBody");
 
@@ -17,15 +17,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    //////////////////
-    // Add a new task
-    // Load tasks from localStorage
+
     function loadTasks() {
         console.log(JSON.parse(localStorage.getItem("tasks")) || {});
         return JSON.parse(localStorage.getItem("tasks")) || {};
     }
 
-    // Save tasks to localStorage
+
     function saveTasks(tasks) {
         localStorage.setItem("tasks", JSON.stringify(tasks));
     }
@@ -173,8 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     fetchTasks();
-});
-document.addEventListener("DOMContentLoaded", () => {
+
     const splitter = document.getElementById("splitter");
     const taskArea = document.getElementById("taskArea");
     const ganttArea = document.getElementById("ganttArea");
@@ -211,6 +208,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     createSplitter(splitter, taskArea, ganttArea);
-});
+
 
 
