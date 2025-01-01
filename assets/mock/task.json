@@ -1,0 +1,20 @@
+[
+    {
+        "name": "Task 1",
+        "description": "Description for Task 1",
+        "startDate": "2023-01-01",
+        "endDate": "2023-01-07"
+    },
+    {
+        "name": "Task 2",
+        "description": "Description for Task 2",
+        "startDate": "2023-01-08",
+        "endDate": "2023-01-14"
+    },
+    {
+        "name": "Task 3",
+        "description": "Description for Task 3",
+        "startDate": "2023-01-15",
+        "endDate": "2023-01-21"
+    }
+]

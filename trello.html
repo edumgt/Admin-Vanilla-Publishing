@@ -260,185 +260,151 @@
     <script type="text/javascript" src="assets/js/frame.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const taskForm = document.getElementById("taskForm");
-            const taskList = document.getElementById("taskList");
-            const ganttTableBody = document.getElementById("ganttTableBody");
+    const taskList = document.getElementById("taskList");
+    const ganttTableBody = document.getElementById("ganttTableBody");
 
-            // Load tasks from localStorage
-            function loadTasks() {
-                return JSON.parse(localStorage.getItem("tasks")) || [];
+    let tasks = {};
+
+    // Fetch tasks from task.json
+    async function fetchTasks() {
+        try {
+            const response = await fetch("assets/mock/task.json");
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
             }
+            tasks = await response.json();
+            renderTaskList();
+            renderGanttChart();
+        } catch (error) {
+            console.error("Error fetching tasks:", error);
+        }
+    }
 
-            // Save tasks to localStorage
-            function saveTasks(tasks) {
-                localStorage.setItem("tasks", JSON.stringify(tasks));
-            }
+    // Render tasks in the task list
+    function renderTaskList() {
+        taskList.innerHTML = "";
+        tasks.forEach((task, index) => {
+            const li = document.createElement("li");
+            li.style.position = "relative";
+            li.draggable = true; // Make the task draggable
+            li.dataset.index = index; // Store the task index in a data attribute
 
-            function renderTaskList() {
-                const tasks = loadTasks();
-                taskList.innerHTML = "";
+            li.innerHTML = `
+                <strong>${task.name}</strong><br>
+                <small>${task.description || "No description"}</small><br>
+                <small>Start Date: ${task.startDate}</small><br>
+                <small>End Date: ${task.endDate}</small>
+                <div class="drag-indicator"><i class="fas fa-arrows-alt"></i> Drag & Drop</div>
+            `;
 
-                tasks.forEach((task, index) => {
-                    const li = document.createElement("li");
-                    li.style.position = "relative";
-                    li.draggable = true; // Make the task draggable
-                    li.dataset.index = index; // Store the task index in a data attribute
+            const removeButton = document.createElement("button");
+            removeButton.textContent = "X";
+            removeButton.style.position = "absolute";
+            removeButton.style.top = "10px";
+            removeButton.style.right = "10px";
+            removeButton.style.backgroundColor = "transparent";
+            removeButton.style.border = "none";
+            removeButton.style.color = "red";
+            removeButton.style.fontWeight = "bold";
+            removeButton.style.cursor = "pointer";
+            removeButton.style.fontSize = "16px";
 
-                    li.innerHTML = `
-            <strong>${task.name}</strong><br>
-            <small>${task.description || "No description"}</small><br>
-            <small>Start Date: ${task.startDate}</small><br>
-            <small>End Date: ${task.endDate}</small>
-            <div class="drag-indicator"><i class="fas fa-arrows-alt"></i> Drag & Drop</div>
-        `;
+            removeButton.addEventListener("click", () => {
+                removeTask(index);
+            });
 
-                    const removeButton = document.createElement("button");
-                    removeButton.textContent = "X";
-                    removeButton.style.position = "absolute";
-                    removeButton.style.top = "10px";
-                    removeButton.style.right = "10px";
-                    removeButton.style.backgroundColor = "transparent";
-                    removeButton.style.border = "none";
-                    removeButton.style.color = "red";
-                    removeButton.style.fontWeight = "bold";
-                    removeButton.style.cursor = "pointer";
-                    removeButton.style.fontSize = "16px";
+            li.appendChild(removeButton);
+            taskList.appendChild(li);
+        });
 
-                    removeButton.addEventListener("click", () => {
-                        removeTask(index);
-                    });
+        addDragAndDrop();
+    }
 
-                    li.appendChild(removeButton);
-                    taskList.appendChild(li);
-                });
+    // Render tasks in the Gantt chart
+    function renderGanttChart() {
+        ganttTableBody.innerHTML = "";
 
-                // Add drag-and-drop functionality
-                addDragAndDrop();
-            }
+        tasks.forEach((task) => {
+            const startDate = new Date(task.startDate);
+            const endDate = new Date(task.endDate);
+            const totalDays = Math.ceil((endDate - startDate) / (24 * 60 * 60 * 1000)) + 1;
 
-
-            function addDragAndDrop() {
-                const listItems = taskList.querySelectorAll("li");
-
-                listItems.forEach((item) => {
-                    item.addEventListener("dragstart", handleDragStart);
-                    item.addEventListener("dragover", handleDragOver);
-                    item.addEventListener("drop", handleDrop);
-                    item.addEventListener("dragend", handleDragEnd);
-                });
-            }
-
-            let dragSourceIndex = null;
-
-            function handleDragStart(e) {
-                dragSourceIndex = +this.dataset.index;
-                this.style.opacity = "0.5";
-                e.dataTransfer.effectAllowed = "move";
-            }
-
-            function handleDragOver(e) {
-                e.preventDefault(); // Allow dropping
-                e.dataTransfer.dropEffect = "move";
-            }
-
-            function handleDrop(e) {
-                e.preventDefault();
-                const dragTargetIndex = +this.dataset.index;
-
-                if (dragSourceIndex !== null && dragTargetIndex !== dragSourceIndex) {
-                    const tasks = loadTasks();
-                    const [draggedItem] = tasks.splice(dragSourceIndex, 1); // Remove the dragged item
-                    tasks.splice(dragTargetIndex, 0, draggedItem); // Insert it at the new position
-                    saveTasks(tasks); // Save the updated order
-
-                    renderTaskList(); // Re-render the task list
-                    renderGanttChart(); // Re-render the Gantt chart
-                }
-            }
-
-            function handleDragEnd() {
-                this.style.opacity = "1";
-            }
-
-
-
-
-
-            // Render tasks in the Gantt chart
-            function renderGanttChart() {
-                const tasks = loadTasks();
-                ganttTableBody.innerHTML = "";
-
-                tasks.forEach((task) => {
-                    const startDate = new Date(task.startDate);
-                    const endDate = new Date(task.endDate);
-                    const totalDays = Math.ceil((endDate - startDate) / (24 * 60 * 60 * 1000)) + 1;
-
-                    const row = document.createElement("tr");
-                    row.innerHTML = `
+            const row = document.createElement("tr");
+            row.innerHTML = `
                 <td>${task.name}</td>
                 <td>${startDate.toLocaleDateString()}</td>
                 <td>${endDate.toLocaleDateString()}</td>
                 <td class="timeline-column"><div class="timeline"></div></td>
             `;
 
-                    const timelineCell = row.querySelector(".timeline");
-                    for (let i = 0; i < totalDays; i++) {
-                        const block = document.createElement("div");
-                        block.style.backgroundColor = i === totalDays - 1 ? "#4299e1" : "#ddd";
-                        block.style.width = "24px";
-                        block.style.height = "24px";
-                        block.style.border = "1px solid #ddd";
-                        block.style.display = "inline-block";
-                        timelineCell.appendChild(block);
-                    }
-
-                    ganttTableBody.appendChild(row);
-                });
+            const timelineCell = row.querySelector(".timeline");
+            for (let i = 0; i < totalDays; i++) {
+                const block = document.createElement("div");
+                block.style.backgroundColor = i === totalDays - 1 ? "#4299e1" : "#ddd";
+                block.style.width = "24px";
+                block.style.height = "24px";
+                block.style.border = "1px solid #ddd";
+                block.style.display = "inline-block";
+                timelineCell.appendChild(block);
             }
 
-            // Add a new task
-            taskForm.addEventListener("submit", (e) => {
-                e.preventDefault();
-                const name = document.getElementById("taskName").value;
-                const description = document.getElementById("taskDescription").value;
-                const startDate = document.getElementById("taskStartDate").value;
-                const endDate = document.getElementById("taskEndDate").value;
+            ganttTableBody.appendChild(row);
+        });
+    }
 
-                if (!name || !startDate || !endDate) {
-                    alert("Task Name, Start Date, and End Date are required.");
-                    return;
-                }
+    // Remove a task
+    function removeTask(index) {
+        tasks.splice(index, 1);
+        renderTaskList();
+        renderGanttChart();
+    }
 
-                if (new Date(startDate) > new Date(endDate)) {
-                    alert("End Date must be after Start Date.");
-                    return;
-                }
+    // Drag-and-drop functionality
+    function addDragAndDrop() {
+        const listItems = taskList.querySelectorAll("li");
 
-                const tasks = loadTasks();
-                tasks.push({ name, description, startDate, endDate });
-                saveTasks(tasks);
+        listItems.forEach((item) => {
+            item.addEventListener("dragstart", handleDragStart);
+            item.addEventListener("dragover", handleDragOver);
+            item.addEventListener("drop", handleDrop);
+            item.addEventListener("dragend", handleDragEnd);
+        });
+    }
 
-                renderTaskList();
-                renderGanttChart();
+    let dragSourceIndex = null;
 
-                taskForm.reset();
-            });
+    function handleDragStart(e) {
+        dragSourceIndex = +this.dataset.index;
+        this.style.opacity = "0.5";
+        e.dataTransfer.effectAllowed = "move";
+    }
 
-            // Remove a task
-            window.removeTask = (index) => {
-                const tasks = loadTasks();
-                tasks.splice(index, 1);
-                saveTasks(tasks);
+    function handleDragOver(e) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = "move";
+    }
 
-                renderTaskList();
-                renderGanttChart();
-            };
+    function handleDrop(e) {
+        e.preventDefault();
+        const dragTargetIndex = +this.dataset.index;
 
-            // Initial rendering
+        if (dragSourceIndex !== null && dragTargetIndex !== dragSourceIndex) {
+            const [draggedItem] = tasks.splice(dragSourceIndex, 1);
+            tasks.splice(dragTargetIndex, 0, draggedItem);
+
             renderTaskList();
             renderGanttChart();
-        });
+        }
+    }
+
+    function handleDragEnd() {
+        this.style.opacity = "1";
+    }
+
+    // Fetch and render tasks on page load
+    fetchTasks();
+});
+
 
 
         document.addEventListener("DOMContentLoaded", () => {
