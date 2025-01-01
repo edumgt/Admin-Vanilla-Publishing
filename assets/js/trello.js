@@ -1,15 +1,22 @@
-
+document.addEventListener("DOMContentLoaded", () => {
     const taskList = document.getElementById("taskList");
     const ganttTableBody = document.getElementById("ganttTableBody");
+    const splitter = document.getElementById("splitter");
+    const taskArea = document.getElementById("taskArea");
+    const ganttArea = document.getElementById("ganttArea");
+    const taskForm = document.getElementById("taskForm");
 
-    let tasks = {};
+    let tasks = [];
+
     async function fetchTasks() {
         try {
             const response = await fetch("assets/mock/task.json");
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
-            tasks = await response.json();
+            const fetchedTasks = await response.json();
+            tasks = [...loadTasks(), ...fetchedTasks]; // Merge localStorage and fetched tasks
+            saveTasks(tasks); // Ensure tasks are stored locally
             renderTaskList();
             renderGanttChart();
         } catch (error) {
@@ -17,18 +24,17 @@
         }
     }
 
-
     function loadTasks() {
-        console.log(JSON.parse(localStorage.getItem("tasks")) || {});
-        return JSON.parse(localStorage.getItem("tasks")) || {};
+        return JSON.parse(localStorage.getItem("tasks")) || [];
     }
-
 
     function saveTasks(tasks) {
         localStorage.setItem("tasks", JSON.stringify(tasks));
     }
 
     taskForm.addEventListener("submit", (e) => {
+
+        
         e.preventDefault();
         const name = document.getElementById("taskName").value;
         const description = document.getElementById("taskDescription").value;
@@ -40,15 +46,13 @@
             return;
         }
 
-        tasks = loadTasks();
         tasks.push({ name, description, startDate, endDate });
         saveTasks(tasks);
-        
+
         renderTaskList();
         renderGanttChart();
         taskForm.reset();
     });
-    ///////////////////
 
     function renderTaskList() {
         taskList.innerHTML = "";
@@ -89,44 +93,64 @@
         addDragAndDrop();
     }
 
-    function renderGanttChart() {
-        ganttTableBody.innerHTML = "";
+    // Function to render the Gantt chart with tasks' timelines split
+function renderGanttChart() {
+    ganttTableBody.innerHTML = "";
 
-        tasks.forEach((task) => {
-            const startDate = new Date(task.startDate);
-            const endDate = new Date(task.endDate);
-            const totalDays = Math.ceil((endDate - startDate) / (24 * 60 * 60 * 1000)) + 1;
+    if (tasks.length === 0) return;
 
-            const row = document.createElement("tr");
-            row.innerHTML = `
-                <td>${task.name}</td>
-                <td>${startDate.toLocaleDateString()}</td>
-                <td>${endDate.toLocaleDateString()}</td>
-                <td class="timeline-column"><div class="timeline"></div></td>
-            `;
+    // Determine the overall start and end dates
+    const overallStartDate = new Date(Math.min(...tasks.map(task => new Date(task.startDate).getTime())));
+    const overallEndDate = new Date(Math.max(...tasks.map(task => new Date(task.endDate).getTime())));
 
-            const timelineCell = row.querySelector(".timeline");
-            for (let i = 0; i < totalDays; i++) {
-                const block = document.createElement("div");
-                block.style.backgroundColor = i === totalDays - 1 ? "#4299e1" : "#ddd";
-                block.style.width = "24px";
-                block.style.height = "24px";
-                block.style.border = "1px solid #ddd";
-                block.style.display = "inline-block";
-                timelineCell.appendChild(block);
+    const totalDays = Math.ceil((overallEndDate - overallStartDate) / (24 * 60 * 60 * 1000)) + 1;
+
+    tasks.forEach(task => {
+        const taskStartDate = new Date(task.startDate);
+        const taskEndDate = new Date(task.endDate);
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${task.name}</td>
+            <td>${taskStartDate.toLocaleDateString()}</td>
+            <td>${taskEndDate.toLocaleDateString()}</td>
+            <td class="timeline-column"><div class="timeline"></div></td>
+        `;
+
+        const timelineCell = row.querySelector(".timeline");
+
+        for (let i = 0; i < totalDays; i++) {
+            const currentDate = new Date(overallStartDate);
+            currentDate.setDate(overallStartDate.getDate() + i);
+
+            const block = document.createElement("div");
+            block.style.width = "24px";
+            block.style.height = "24px";
+            block.style.border = "1px solid #ddd";
+            block.style.display = "inline-block";
+
+            if (currentDate >= taskStartDate && currentDate <= taskEndDate) {
+                block.style.backgroundColor = "#4299e1";
+            } else {
+                block.style.backgroundColor = "#f2f2f2";
             }
 
-            ganttTableBody.appendChild(row);
-        });
-    }
+            timelineCell.appendChild(block);
+        }
+
+        ganttTableBody.appendChild(row);
+    });
+}
+
+
 
 
     function removeTask(index) {
         tasks.splice(index, 1);
+        saveTasks(tasks);
         renderTaskList();
         renderGanttChart();
     }
-
 
     function addDragAndDrop() {
         const listItems = taskList.querySelectorAll("li");
@@ -159,6 +183,7 @@
         if (dragSourceIndex !== null && dragTargetIndex !== dragSourceIndex) {
             const [draggedItem] = tasks.splice(dragSourceIndex, 1);
             tasks.splice(dragTargetIndex, 0, draggedItem);
+            saveTasks(tasks);
 
             renderTaskList();
             renderGanttChart();
@@ -168,13 +193,6 @@
     function handleDragEnd() {
         this.style.opacity = "1";
     }
-
-
-    fetchTasks();
-
-    const splitter = document.getElementById("splitter");
-    const taskArea = document.getElementById("taskArea");
-    const ganttArea = document.getElementById("ganttArea");
 
     function createSplitter(splitter, panel1, panel2) {
         let isDragging = false;
@@ -208,6 +226,5 @@
     }
 
     createSplitter(splitter, taskArea, ganttArea);
-
-
-
+    fetchTasks();
+});
