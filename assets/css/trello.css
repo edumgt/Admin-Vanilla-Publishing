@@ -517,14 +517,13 @@ input[type="date"] {
 .timeline {
     display: flex;
     background-color: #ffffff;
-    /* Ensure the background is white */
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
 }
 
 .timeline div {
-    width: 24px;
-    height: 24px;
     margin-right: 2px;
-    border: 1px solid #ddd;
 }
 
 .timeline .highlight {

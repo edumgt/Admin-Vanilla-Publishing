@@ -47,8 +47,6 @@
             border: 1px solid #ddd;
             border-radius: 5px;
         }
-
-        
     </style>
 
 </head>
@@ -190,21 +188,23 @@
             <div id="taskArea">
 
                 <form id="taskForm">
-                    <label for="taskName" style="font-weight: bold; margin-bottom: 5px; display: block;">Task
-                        Name</label>
+                    <label for="taskName" style="font-weight: bold; margin-bottom: 5px; display: block;">Task Name</label>
                     <input type="text" id="taskName" placeholder="Enter task name" required>
-
-                    <label for="taskDescription" style="font-weight: bold; margin-bottom: 5px; display: block;">Task
-                        Description</label>
+                
+                    <label for="taskDescription" style="font-weight: bold; margin-bottom: 5px; display: block;">Task Description</label>
                     <textarea id="taskDescription" placeholder="Enter task description"></textarea>
-
-                    <label for="taskDeadline" style="font-weight: bold; margin-bottom: 5px; display: block;">Task
-                        Deadline</label>
-                    <input type="date" id="taskDeadline" required>
-
+                
+                    <label for="taskStartDate" style="font-weight: bold; margin-bottom: 5px; display: block;">Start Date</label>
+                    <input type="date" id="taskStartDate" required>
+                
+                    <label for="taskEndDate" style="font-weight: bold; margin-bottom: 5px; display: block;">End Date</label>
+                    <input type="date" id="taskEndDate" required>
+                
                     <button type="submit">Add Task</button>
                 </form>
                 <ul id="taskList" class="task-list"></ul>
+                
+                
             </div>
 
             <div id="splitter"></div>
@@ -323,38 +323,42 @@
                 tasks.forEach((task, index) => {
                     const li = document.createElement("li");
                     li.innerHTML = `
-                        <strong>${task.name}</strong><br>
-                        <small>${task.description || "No description"}</small><br>
-                        <small>Deadline: ${task.deadline}</small><br>
-                        <button onclick="removeTask(${index})">Remove</button>
-                    `;
+                <strong>${task.name}</strong><br>
+                <small>${task.description || "No description"}</small><br>
+                <small>Start Date: ${task.startDate}</small><br>
+                <small>End Date: ${task.endDate}</small><br>
+                <button onclick="removeTask(${index})">Remove</button>
+            `;
                     taskList.appendChild(li);
                 });
             }
 
             // Render tasks in the Gantt chart
             function renderGanttChart() {
-                const tasks = loadTasks(); // Assume this function loads tasks from localStorage
-                const ganttTableBody = document.getElementById("ganttTableBody");
+                const tasks = loadTasks();
                 ganttTableBody.innerHTML = "";
 
                 tasks.forEach((task) => {
-                    const startDate = new Date();
-                    const endDate = new Date(task.deadline);
-                    const totalWeeks = Math.ceil((endDate - startDate) / (7 * 24 * 60 * 60 * 1000));
+                    const startDate = new Date(task.startDate);
+                    const endDate = new Date(task.endDate);
+                    const totalDays = Math.ceil((endDate - startDate) / (24 * 60 * 60 * 1000)) + 1;
 
                     const row = document.createElement("tr");
                     row.innerHTML = `
-            <td>${task.name}</td>
-            <td>${startDate.toLocaleDateString()}</td>
-            <td>${endDate.toLocaleDateString()}</td>
-            <td class="timeline-column"><div class="timeline"></div></td>
-        `;
-                    const timelineCell = row.querySelector(".timeline");
+                <td>${task.name}</td>
+                <td>${startDate.toLocaleDateString()}</td>
+                <td>${endDate.toLocaleDateString()}</td>
+                <td class="timeline-column"><div class="timeline"></div></td>
+            `;
 
-                    for (let i = 0; i < totalWeeks; i++) {
+                    const timelineCell = row.querySelector(".timeline");
+                    for (let i = 0; i < totalDays; i++) {
                         const block = document.createElement("div");
-                        block.className = i === totalWeeks - 1 ? "highlight" : "";
+                        block.style.backgroundColor = i === totalDays - 1 ? "#4299e1" : "#ddd";
+                        block.style.width = "24px";
+                        block.style.height = "24px";
+                        block.style.border = "1px solid #ddd";
+                        block.style.display = "inline-block";
                         timelineCell.appendChild(block);
                     }
 
@@ -362,21 +366,26 @@
                 });
             }
 
-
             // Add a new task
             taskForm.addEventListener("submit", (e) => {
                 e.preventDefault();
                 const name = document.getElementById("taskName").value;
                 const description = document.getElementById("taskDescription").value;
-                const deadline = document.getElementById("taskDeadline").value;
+                const startDate = document.getElementById("taskStartDate").value;
+                const endDate = document.getElementById("taskEndDate").value;
 
-                if (!name || !deadline) {
-                    alert("Task Name and Deadline are required.");
+                if (!name || !startDate || !endDate) {
+                    alert("Task Name, Start Date, and End Date are required.");
+                    return;
+                }
+
+                if (new Date(startDate) > new Date(endDate)) {
+                    alert("End Date must be after Start Date.");
                     return;
                 }
 
                 const tasks = loadTasks();
-                tasks.push({ name, description, deadline });
+                tasks.push({ name, description, startDate, endDate });
                 saveTasks(tasks);
 
                 renderTaskList();
@@ -385,7 +394,7 @@
                 taskForm.reset();
             });
 
-
+            // Remove a task
             window.removeTask = (index) => {
                 const tasks = loadTasks();
                 tasks.splice(index, 1);
@@ -395,13 +404,11 @@
                 renderGanttChart();
             };
 
-
+            // Initial rendering
             renderTaskList();
             renderGanttChart();
-
-
-
         });
+
 
         document.addEventListener("DOMContentLoaded", () => {
             const splitter = document.getElementById("splitter");
