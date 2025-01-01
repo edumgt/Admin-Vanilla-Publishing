@@ -39,9 +39,6 @@
             /* z-index: 100; */
         }
 
-
-
-
         .task-list li {
             list-style: none;
             background: white;
@@ -51,81 +48,7 @@
             border-radius: 5px;
         }
 
-        .gantt-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .gantt-table th,
-        .gantt-table td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        .gantt-table th {
-            background-color: #f2f2f2;
-        }
-
-        .timeline {
-            display: flex;
-        }
-
-        .timeline div {
-            width: 24px;
-            height: 24px;
-            margin-right: 2px;
-            border: 1px solid #ddd;
-        }
-
-        .timeline .highlight {
-            background-color: #4299e1;
-        }
-
-
-        #taskForm input[type="text"],
-        #taskForm textarea,
-        #taskForm input[type="date"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 14px;
-            outline: none;
-            transition: border-color 0.3s ease-in-out;
-        }
-
-        #taskForm input[type="text"]:focus,
-        #taskForm textarea:focus,
-        #taskForm input[type="date"]:focus {
-            border-color: #4299e1;
-        }
-
-
-
-        #taskForm button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #4299e1;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-        }
-
-        #taskForm button:hover {
-            background-color: #2b6cb0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-
-        #taskForm {
-            margin-bottom: 20px;
-        }
+        
     </style>
 
 </head>
@@ -287,14 +210,14 @@
             <div id="splitter"></div>
 
             <div id="ganttArea">
-                <h2>Gantt Chart</h2>
+
                 <table class="gantt-table">
                     <thead>
                         <tr>
                             <th>Task Name</th>
                             <th>Start Date</th>
                             <th>End Date</th>
-                            <th>Timeline</th>
+                            <th class="timeline-column">Timeline</th>
                         </tr>
                     </thead>
                     <tbody id="ganttTableBody"></tbody>
@@ -411,8 +334,10 @@
 
             // Render tasks in the Gantt chart
             function renderGanttChart() {
-                const tasks = loadTasks();
+                const tasks = loadTasks(); // Assume this function loads tasks from localStorage
+                const ganttTableBody = document.getElementById("ganttTableBody");
                 ganttTableBody.innerHTML = "";
+
                 tasks.forEach((task) => {
                     const startDate = new Date();
                     const endDate = new Date(task.deadline);
@@ -420,20 +345,23 @@
 
                     const row = document.createElement("tr");
                     row.innerHTML = `
-                        <td>${task.name}</td>
-                        <td>${startDate.toLocaleDateString()}</td>
-                        <td>${endDate.toLocaleDateString()}</td>
-                        <td class="timeline"></td>
-                    `;
+            <td>${task.name}</td>
+            <td>${startDate.toLocaleDateString()}</td>
+            <td>${endDate.toLocaleDateString()}</td>
+            <td class="timeline-column"><div class="timeline"></div></td>
+        `;
                     const timelineCell = row.querySelector(".timeline");
+
                     for (let i = 0; i < totalWeeks; i++) {
                         const block = document.createElement("div");
                         block.className = i === totalWeeks - 1 ? "highlight" : "";
                         timelineCell.appendChild(block);
                     }
+
                     ganttTableBody.appendChild(row);
                 });
             }
+
 
             // Add a new task
             taskForm.addEventListener("submit", (e) => {
