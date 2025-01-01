@@ -581,6 +581,31 @@ input[type="date"] {
     cursor: grabbing;
 }
 
+.task-list li .drag-indicator {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    font-size: 12px;
+    color: #888;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: bold;
+    background-color: #f2f2f2;
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+.task-list li .drag-indicator i {
+    font-size: 14px;
+    color: #4299e1;
+}
+
+
+.task-list li:active {
+    cursor: grabbing;
+}
+
 .task-list li.drag-over {
     background-color: #f2f2f2; /* Highlight drop target */
     border: 2px dashed #4299e1;

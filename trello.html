@@ -275,45 +275,47 @@
             }
 
             function renderTaskList() {
-                const tasks = loadTasks();
-                taskList.innerHTML = "";
+    const tasks = loadTasks();
+    taskList.innerHTML = "";
 
-                tasks.forEach((task, index) => {
-                    const li = document.createElement("li");
-                    li.style.position = "relative";
-                    li.draggable = true; // Make the task draggable
-                    li.dataset.index = index; // Store the task index in a data attribute
+    tasks.forEach((task, index) => {
+        const li = document.createElement("li");
+        li.style.position = "relative";
+        li.draggable = true; // Make the task draggable
+        li.dataset.index = index; // Store the task index in a data attribute
 
-                    li.innerHTML = `
+        li.innerHTML = `
             <strong>${task.name}</strong><br>
             <small>${task.description || "No description"}</small><br>
             <small>Start Date: ${task.startDate}</small><br>
             <small>End Date: ${task.endDate}</small>
+            <div class="drag-indicator"><i class="fas fa-arrows-alt"></i> Drag & Drop</div>
         `;
 
-                    const removeButton = document.createElement("button");
-                    removeButton.textContent = "X";
-                    removeButton.style.position = "absolute";
-                    removeButton.style.top = "10px";
-                    removeButton.style.right = "10px";
-                    removeButton.style.backgroundColor = "transparent";
-                    removeButton.style.border = "none";
-                    removeButton.style.color = "red";
-                    removeButton.style.fontWeight = "bold";
-                    removeButton.style.cursor = "pointer";
-                    removeButton.style.fontSize = "16px";
+        const removeButton = document.createElement("button");
+        removeButton.textContent = "X";
+        removeButton.style.position = "absolute";
+        removeButton.style.top = "10px";
+        removeButton.style.right = "10px";
+        removeButton.style.backgroundColor = "transparent";
+        removeButton.style.border = "none";
+        removeButton.style.color = "red";
+        removeButton.style.fontWeight = "bold";
+        removeButton.style.cursor = "pointer";
+        removeButton.style.fontSize = "16px";
 
-                    removeButton.addEventListener("click", () => {
-                        removeTask(index);
-                    });
+        removeButton.addEventListener("click", () => {
+            removeTask(index);
+        });
 
-                    li.appendChild(removeButton);
-                    taskList.appendChild(li);
-                });
+        li.appendChild(removeButton);
+        taskList.appendChild(li);
+    });
 
-                // Add drag-and-drop functionality
-                addDragAndDrop();
-            }
+    // Add drag-and-drop functionality
+    addDragAndDrop();
+}
+
 
             function addDragAndDrop() {
                 const listItems = taskList.querySelectorAll("li");
