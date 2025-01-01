@@ -9,11 +9,14 @@ const calendar = (() => {
     let currentMonth = today.getMonth();
     let currentYear = today.getFullYear();
 
-    const tasks = JSON.parse(localStorage.getItem('calendarTasks')) || {};
+    //const tasks = JSON.parse(localStorage.getItem('calendarTasks')) || {};
+    let tasks = {}; 
 
     const saveTasks = () => {
         localStorage.setItem('calendarTasks', JSON.stringify(tasks));
     };
+
+    
 
     const renderCalendar = (month, year) => {
 
@@ -225,6 +228,7 @@ const calendar = (() => {
             const timeSelect = document.createElement('select');
             timeSelect.className = 'relative w-full pl-10 p-2 bg-white border border-gray-300 rounded time-select-icon';
 
+
             const times = [];
             for (let hour = 8; hour < 24; hour++) { // Start from 08:00
                 for (let minute = 0; minute < 60; minute += 30) {
@@ -271,9 +275,25 @@ const calendar = (() => {
         }, 2000);
     };
 
+    const fetchTasks = async () => {
+        try {
+            const response = await fetch('assets/mock/calendar.json'); // Fetch from calendar.json
+            //console.log(response);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch tasks: ${response.statusText}`);
+            }
+            tasks = await response.json(); // Parse the JSON data
+        } catch (error) {
+            console.error('Error fetching tasks:', error);
+        }
+    };
+
+    
+    
     return {
-        init: () => {
-            renderCalendar(currentMonth, currentYear);
+        init: async () => {
+            await fetchTasks(); // Ensure tasks are fetched before rendering
+            renderCalendar(currentMonth, currentYear); // Render calendar only after data is fetched
         }
     };
 })();
