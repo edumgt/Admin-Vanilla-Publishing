@@ -573,7 +573,19 @@ input[type="date"] {
     margin: 10px 0;
     border: 1px solid #ddd;
     border-radius: 5px;
+    cursor: grab;
+    transition: background-color 0.2s ease;
 }
+
+.task-list li:active {
+    cursor: grabbing;
+}
+
+.task-list li.drag-over {
+    background-color: #f2f2f2; /* Highlight drop target */
+    border: 2px dashed #4299e1;
+}
+
 
 .task-list li button {
     position: absolute;

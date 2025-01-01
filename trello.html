@@ -142,23 +142,27 @@
             <div id="taskArea">
 
                 <form id="taskForm">
-                    <label for="taskName" style="font-weight: bold; margin-bottom: 5px; display: block;">Task Name</label>
+                    <label for="taskName" style="font-weight: bold; margin-bottom: 5px; display: block;">Task
+                        Name</label>
                     <input type="text" id="taskName" placeholder="Enter task name" required>
-                
-                    <label for="taskDescription" style="font-weight: bold; margin-bottom: 5px; display: block;">Task Description</label>
+
+                    <label for="taskDescription" style="font-weight: bold; margin-bottom: 5px; display: block;">Task
+                        Description</label>
                     <textarea id="taskDescription" placeholder="Enter task description"></textarea>
-                
-                    <label for="taskStartDate" style="font-weight: bold; margin-bottom: 5px; display: block;">Start Date</label>
+
+                    <label for="taskStartDate" style="font-weight: bold; margin-bottom: 5px; display: block;">Start
+                        Date</label>
                     <input type="date" id="taskStartDate" required>
-                
-                    <label for="taskEndDate" style="font-weight: bold; margin-bottom: 5px; display: block;">End Date</label>
+
+                    <label for="taskEndDate" style="font-weight: bold; margin-bottom: 5px; display: block;">End
+                        Date</label>
                     <input type="date" id="taskEndDate" required>
-                
+
                     <button type="submit">Add Task</button>
                 </form>
                 <ul id="taskList" class="task-list"></ul>
-                
-                
+
+
             </div>
 
             <div id="splitter"></div>
@@ -270,41 +274,92 @@
                 localStorage.setItem("tasks", JSON.stringify(tasks));
             }
 
-            // Render tasks in the task list
             function renderTaskList() {
-    const tasks = loadTasks();
-    taskList.innerHTML = "";
-    tasks.forEach((task, index) => {
-        const li = document.createElement("li");
-        li.style.position = "relative";
+                const tasks = loadTasks();
+                taskList.innerHTML = "";
 
-        li.innerHTML = `
+                tasks.forEach((task, index) => {
+                    const li = document.createElement("li");
+                    li.style.position = "relative";
+                    li.draggable = true; // Make the task draggable
+                    li.dataset.index = index; // Store the task index in a data attribute
+
+                    li.innerHTML = `
             <strong>${task.name}</strong><br>
             <small>${task.description || "No description"}</small><br>
             <small>Start Date: ${task.startDate}</small><br>
             <small>End Date: ${task.endDate}</small>
         `;
 
-        const removeButton = document.createElement("button");
-        removeButton.textContent = "X";
-        removeButton.style.position = "absolute";
-        removeButton.style.top = "10px";
-        removeButton.style.right = "10px";
-        removeButton.style.backgroundColor = "transparent";
-        removeButton.style.border = "none";
-        removeButton.style.color = "red";
-        removeButton.style.fontWeight = "bold";
-        removeButton.style.cursor = "pointer";
-        removeButton.style.fontSize = "16px";
+                    const removeButton = document.createElement("button");
+                    removeButton.textContent = "X";
+                    removeButton.style.position = "absolute";
+                    removeButton.style.top = "10px";
+                    removeButton.style.right = "10px";
+                    removeButton.style.backgroundColor = "transparent";
+                    removeButton.style.border = "none";
+                    removeButton.style.color = "red";
+                    removeButton.style.fontWeight = "bold";
+                    removeButton.style.cursor = "pointer";
+                    removeButton.style.fontSize = "16px";
 
-        removeButton.addEventListener("click", () => {
-            removeTask(index);
-        });
+                    removeButton.addEventListener("click", () => {
+                        removeTask(index);
+                    });
 
-        li.appendChild(removeButton);
-        taskList.appendChild(li);
-    });
-}
+                    li.appendChild(removeButton);
+                    taskList.appendChild(li);
+                });
+
+                // Add drag-and-drop functionality
+                addDragAndDrop();
+            }
+
+            function addDragAndDrop() {
+                const listItems = taskList.querySelectorAll("li");
+
+                listItems.forEach((item) => {
+                    item.addEventListener("dragstart", handleDragStart);
+                    item.addEventListener("dragover", handleDragOver);
+                    item.addEventListener("drop", handleDrop);
+                    item.addEventListener("dragend", handleDragEnd);
+                });
+            }
+
+            let dragSourceIndex = null;
+
+            function handleDragStart(e) {
+                dragSourceIndex = +this.dataset.index;
+                this.style.opacity = "0.5";
+                e.dataTransfer.effectAllowed = "move";
+            }
+
+            function handleDragOver(e) {
+                e.preventDefault(); // Allow dropping
+                e.dataTransfer.dropEffect = "move";
+            }
+
+            function handleDrop(e) {
+                e.preventDefault();
+                const dragTargetIndex = +this.dataset.index;
+
+                if (dragSourceIndex !== null && dragTargetIndex !== dragSourceIndex) {
+                    const tasks = loadTasks();
+                    const [draggedItem] = tasks.splice(dragSourceIndex, 1); // Remove the dragged item
+                    tasks.splice(dragTargetIndex, 0, draggedItem); // Insert it at the new position
+                    saveTasks(tasks); // Save the updated order
+
+                    renderTaskList(); // Re-render the task list
+                    renderGanttChart(); // Re-render the Gantt chart
+                }
+            }
+
+            function handleDragEnd() {
+                this.style.opacity = "1";
+            }
+
+
+
 
 
             // Render tasks in the Gantt chart
