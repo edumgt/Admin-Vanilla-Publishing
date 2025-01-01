@@ -448,6 +448,42 @@ input[type="date"] {
     /* Ensure the icon doesn't interfere with interactions */
 }
 
+#app {
+    display: flex;
+    height: 100vh;
+}
+
+#taskArea {
+    flex: 1;
+    padding: 20px;
+    background-color: #ffffff;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 20px 5px 20px 20px;
+}
+
+#ganttArea {
+    flex: 2;
+    padding: 20px;
+    background-color: #e9ecef;
+    overflow-y: auto;
+    border-radius: 10px;
+    margin: 20px 20px 20px 5px;
+}
+
+#splitter {
+
+    width: 5px;
+    background-color: #aaa;
+    overflow-y: auto;
+    cursor: col-resize;
+    
+    margin: 20px 5px 20px 5px;
+    /* z-index: 100; */
+}
+
 #taskForm input[type="text"],
 #taskForm textarea,
 #taskForm input[type="date"] {
