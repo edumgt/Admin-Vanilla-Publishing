@@ -1,21 +1,20 @@
 const canvas = document.getElementById('orgChartCanvas');
-    const ctx = canvas.getContext('2d');
-    const canvasWidth = canvas.width;
+const ctx = canvas.getContext('2d');
+const canvasWidth = canvas.width;
 
-    let savedOrgData = null;
-    let draggedNode = null;
-    let offsetX, offsetY;
+let savedOrgData = null;
+let draggedNode = null;
+let offsetX, offsetY;
 
-    // Fetch the organizational data from the JSON file
-    fetch('assets/mock/organi.json')
-        .then(response => response.json())
-        .then(data => {
-            savedOrgData = data;
-            savedOrgData.x = canvasWidth / 2 - 100; // Center the CEO card
-            savedOrgData.y = 50;
-            redraw(); // Draw the organizational chart
-        })
-        .catch(error => console.error('Error fetching the organizational data:', error));
+fetch('assets/mock/organi.json')
+    .then(response => response.json())
+    .then(data => {
+        savedOrgData = data;
+        savedOrgData.x = canvasWidth / 2 - 100;
+        savedOrgData.y = 50;
+        redraw();
+    })
+    .catch(error => console.error('Error fetching the organizational data:', error));
 
 function drawCard(ctx, node) {
     const width = 200, height = 120;
@@ -46,9 +45,6 @@ function drawCard(ctx, node) {
     ctx.fillRect(node.x, node.y + height / 3, width, height / 3);
     ctx.fillStyle = '#fff';
     ctx.fillRect(node.x, node.y + (2 * height / 3), width, height / 3);
-
-    // ctx.strokeStyle = '#000';
-    // ctx.stroke();
 
     ctx.shadowColor = 'transparent';
 
@@ -173,7 +169,7 @@ canvas.addEventListener('dblclick', (e) => {
                 }
             });
         } else if (y > clickedNode.y + 40 && y <= clickedNode.y + 80) {
-            // 조직명 수정
+
             const input = document.createElement('input');
             input.type = 'text';
             input.value = clickedNode.name;
@@ -240,7 +236,6 @@ canvas.addEventListener('mouseup', () => {
     draggedNode = null;
 });
 
-// 버튼 클릭 처리
 canvas.addEventListener('click', (e) => {
     const rect = canvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -254,7 +249,6 @@ canvas.addEventListener('click', (e) => {
         const newX = clickedNode.x + 30;
         const newY = clickedNode.y + height - 10;
 
-        // 삭제 버튼 클릭 시
         if (clickedNode.manager !== 'CEO' && x >= deleteX - 10 && x <= deleteX + 10 && y >= deleteY - 10 && y <= deleteY + 10) {
             const parentNode = findParentNode(savedOrgData, clickedNode);
             if (parentNode) {
@@ -264,7 +258,6 @@ canvas.addEventListener('click', (e) => {
             }
         }
 
-        // New 버튼 클릭 시
         if (x >= newX - 20 && x <= newX + 20 && y >= newY - 10 && y <= newY + 10) {
             const newChild = {
                 name: 'New Department',
