@@ -7,31 +7,8 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
 
+@import url('default.css');
 
-
-/* Variables */
-:root {
-    --primary-color: #0058a3;
-    /* IKEA Blue */
-    --secondary-color: #ffcc00;
-    /* IKEA Yellow */
-    --text-color: #ffffff;
-    --border-color: #3b3b3f;
-    --bg-light: #e8eaee;
-    --bg-dark: #2d3748;
-    --hover-bg: #4a5568;
-    --font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue";
-}
-
-/* General */
-body {
-    font-family: var(--font-family);
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    scrollbar-color: #134139 transparent;
-    scrollbar-width: thin;
-}
 
 .toast {
     position: fixed;
@@ -394,17 +371,7 @@ input[type="date"] {
     /* 아이콘 색상을 기본 색상으로 변경 */
 }
 
-.breadcrumb-container {
-    margin-top: -20px;
-    /* 위로 배치 */
-}
 
-.breadcrumb {
-    font-size: 1.25rem;
-    /* 글자 크기 증가 */
-    font-weight: bold;
-    /* 굵게 설정 */
-}
 
 #languageSwitcher img {
     width: 32px;

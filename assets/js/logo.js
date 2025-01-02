@@ -21,3 +21,5 @@ class AppBrand {
 document.addEventListener('DOMContentLoaded', () => {
     const appBrand = new AppBrand('logo', 'EDUMGT');
 });
+
+
