@@ -10,8 +10,8 @@ fetch('assets/mock/organi.json')
     .then(response => response.json())
     .then(data => {
         savedOrgData = data;
-        savedOrgData.x = canvasWidth / 2 - 100; // 기존 값 유지
-        savedOrgData.y = 10; // CEO 카드를 더 위쪽으로 조정
+        savedOrgData.x = canvasWidth / 2; // 기존 값 유지
+        savedOrgData.y = 0; // CEO 카드를 더 위쪽으로 조정
         redraw();
     })
     .catch(error => console.error('Error fetching the organizational data:', error));
