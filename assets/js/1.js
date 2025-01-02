@@ -49,7 +49,7 @@ function drawCard(ctx, node) {
     ctx.shadowColor = 'transparent';
 
     ctx.fillStyle = '#fff';
-    ctx.font = '16px Arial';
+    ctx.font = '15px Pretendard';
     ctx.textAlign = 'center';
 
     ctx.fillText(node.manager, node.x + width / 2, node.y + 22);
@@ -63,8 +63,8 @@ function drawCard(ctx, node) {
 
     ctx.fillStyle = '#222';
     ctx.strokeStyle = '#333';
-    ctx.strokeRect(node.x + 10, node.y + height - 30, 40, 20);
-    ctx.fillText('New', node.x + 30, node.y + height - 12);
+    ctx.strokeRect(node.x + 10, node.y + height - 30, 100, 20);
+    ctx.fillText('하위부서생성', node.x + 60, node.y + height - 12);
 }
 
 function drawOrgChart(ctx, node) {
