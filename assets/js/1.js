@@ -61,8 +61,8 @@ function drawCard(ctx, node) {
         ctx.fillText('x', node.x + width - 20, node.y + height - 10);
     }
 
-    ctx.fillStyle = '#000';
-    ctx.strokeStyle = '#000';
+    ctx.fillStyle = '#222';
+    ctx.strokeStyle = '#333';
     ctx.strokeRect(node.x + 10, node.y + height - 30, 40, 20);
     ctx.fillText('New', node.x + 30, node.y + height - 12);
 }
@@ -74,7 +74,8 @@ function drawOrgChart(ctx, node) {
         node.children.forEach(child => {
             ctx.beginPath();
             ctx.moveTo(node.x + 100, node.y + 120);
-            ctx.lineTo(child.x + 100, child.y);
+            ctx.bezierCurveTo(node.x + 100, node.y + 170, child.x + 100, child.y - 50, child.x + 100, child.y);
+            ctx.strokeStyle = '#ADD8E6';
             ctx.stroke();
             drawOrgChart(ctx, child);
         });
@@ -260,8 +261,8 @@ canvas.addEventListener('click', (e) => {
 
         if (x >= newX - 20 && x <= newX + 20 && y >= newY - 10 && y <= newY + 10) {
             const newChild = {
-                name: 'New Department',
-                manager: 'New Manager',
+                name: '부서: 더블클릭 수정',
+                manager: '매니저: 더블클릭 수정',
                 x: clickedNode.x + 50,
                 y: clickedNode.y + 120,
                 children: []
