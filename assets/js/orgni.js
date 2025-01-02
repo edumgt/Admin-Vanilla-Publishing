@@ -1,3 +1,4 @@
+// 글로벌 변수
 const canvas = document.getElementById('orgChartCanvas');
 const ctx = canvas.getContext('2d');
 const canvasWidth = canvas.width;
@@ -31,9 +32,6 @@ function drawOrgChart(ctx, node) {
         });
     }
 }
-
-
-
 
 function drawCard(ctx, node) {
     const width = 200, height = 120;
@@ -93,9 +91,16 @@ function drawCard(ctx, node) {
 
     ctx.fillStyle = '#fff'; // 흰색 텍스트
     ctx.fillText('하위부서생성', node.x + 60, node.y + height - 12);
+
+    // 돋보기 아이콘 (하위부서생성 버튼 오른쪽, 여백 10px)
+    ctx.fillStyle = '#000';
+    ctx.beginPath();
+    ctx.arc(node.x + 130, node.y + height - 20, 10, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.fillStyle = '#fff';
+    ctx.font = '10px Arial';
+    ctx.fillText('🔍', node.x + 130, node.y + height - 15);
 }
-
-
 
 function findNode(node, x, y) {
     const width = 200, height = 120;
@@ -158,15 +163,16 @@ canvas.addEventListener('dblclick', (e) => {
 
     const clickedNode = findNode(savedOrgData, x, y);
     if (clickedNode) {
+        const width = 200;
         if (y >= clickedNode.y && y <= clickedNode.y + 40) {
             const input = document.createElement('input');
             input.type = 'text';
             input.value = clickedNode.manager;
             input.className = 'input-style bg-white border border-gray-300 rounded';
             input.style.position = 'absolute';
-            input.style.left = `${Math.min(rect.left + clickedNode.x + 10, canvasWidth - 210)}px`;
-            input.style.top = `${rect.top + clickedNode.y + 10}px`;
-            input.style.width = '180px';
+            input.style.left = `${rect.left + clickedNode.x + (width / 2) - 50}px`;
+            input.style.top = `${rect.top + clickedNode.y + 5}px`;
+            input.style.width = '100px';
 
             document.body.appendChild(input);
 
@@ -185,15 +191,14 @@ canvas.addEventListener('dblclick', (e) => {
                 }
             });
         } else if (y > clickedNode.y + 40 && y <= clickedNode.y + 80) {
-
             const input = document.createElement('input');
             input.type = 'text';
             input.value = clickedNode.name;
             input.className = 'input-style bg-white border border-gray-300 rounded';
             input.style.position = 'absolute';
-            input.style.left = `${Math.min(rect.left + clickedNode.x + 10, canvasWidth - 210)}px`;
-            input.style.top = `${rect.top + clickedNode.y + 50}px`;
-            input.style.width = '180px';
+            input.style.left = `${rect.left + clickedNode.x + (width / 2) - 50}px`;
+            input.style.top = `${rect.top + clickedNode.y + 45}px`;
+            input.style.width = '100px';
 
             document.body.appendChild(input);
 
@@ -300,8 +305,36 @@ canvas.addEventListener('click', (e) => {
             redraw();
             saveData();
         }
+
+        // 돋보기 클릭 처리
+        if (x >= clickedNode.x + 130 && x <= clickedNode.x + 150 && y >= clickedNode.y + height - 30 && y <= clickedNode.y + height - 10) {
+            showModal(clickedNode, rect.left + clickedNode.x + 130, rect.top + clickedNode.y + height - 30);
+        }
     }
 });
 
+function showModal(node, left, top) {
+    const modal = document.createElement('div');
+    modal.style.position = 'absolute';
+    modal.style.left = `${left}px`;
+    modal.style.top = `${top}px`;
+    modal.style.backgroundColor = '#fff';
+    modal.style.padding = '20px';
+    modal.style.border = '1px solid #ccc';
+    modal.style.zIndex = 1000;
+    modal.innerHTML = `
+        <h2>${node.name}</h2>
+        <p><strong>부서장:</strong> ${node.manager}</p>
+        <p><strong>부서인원:</strong> ${node.members || 'N/A'}</p>
+        <p><strong>부서설명:</strong> ${node.description || 'N/A'}</p>
+        <div id="map" style="width: 300px; height: 200px; background-color: #eaeaea;">지도 표시</div>
+        <button id="closeModal">닫기</button>
+    `;
+    document.body.appendChild(modal);
 
-redraw();
+    document.getElementById('closeModal').addEventListener('click', () => {
+        document.body.removeChild(modal);
+    });
+
+    // 지도 렌더링 로직 추가 (예: Google Maps API 또는 OpenLayers 사용)
+}
