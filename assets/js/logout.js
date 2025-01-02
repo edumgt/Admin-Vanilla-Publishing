@@ -1,5 +1,3 @@
-/* LNB Click 에 대한 Active */
-//const sidebar = document.getElementById('sidebar');
 const menuLinks = sidebar.querySelectorAll('.menu-link');
 const currentFile = window.location.pathname.split('/').pop();
 
@@ -18,6 +16,7 @@ function createMenu(menuItemsLnb) {
   const container = document.getElementById('menu-container');
   const menuDiv = document.createElement('div');
   menuDiv.className = 'menu';
+  
 
   menuItemsLnb.forEach(item => {
     const menuItemDiv = document.createElement('div');

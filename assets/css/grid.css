@@ -50,39 +50,14 @@
          padding: 0;
       }
 
-      /* @media (max-width: 768px) {
-         .sidebar {
-            position: absolute;
-            left: 0;
-            top: 0;
-            z-index: var(--sidebar-z-index);
-         }
-
-         .sidebar-backdrop {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            z-index: var(--sidebar-backdrop-z-index);
-            background: var(--backdrop-dark-color);
-            transition: 0.2s ease;
-         }
-
-         body.sidebar-hidden .sidebar-backdrop {
-            opacity: 0;
-            pointer-events: none;
-         }
-      } */
-
-      /* Sidebar Toggle Styles */
+      
       .sidebar .sidebar-toggle {
          color: var(--white-color);
          background-color: var(--primary-color);
          border-radius: 50%;
          position: relative;
 
-         z-index: 1000;
+         
       }
 
       .sidebar .sidebar-toggle i {
