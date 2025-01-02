@@ -140,6 +140,9 @@
   --backdrop-dark-color: rgba(27, 27, 27, 0.7);
 }
 
+
+
+
 /* Color variables for dark theme */
 .dark-mode {
   --white-color: #171717;
@@ -4416,4 +4419,25 @@ small,
 
 .w-100 {
   width: 100%;
+}
+
+
+:root {
+
+  --text-color: #ffffff;
+  --border-color: #3b3b3f;
+  --bg-light: #e8eaee;
+  --bg-dark: #2d3748;
+  --hover-bg: #4a5568;
+  --font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue";
+}
+
+/* General */
+body {
+  font-family: var(--font-family);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scrollbar-color: #134139 transparent;
+  scrollbar-width: thin;
 }

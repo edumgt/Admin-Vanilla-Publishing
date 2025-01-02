@@ -184,12 +184,12 @@ function modalConfirm(message) {
       modal.classList.remove('show');
     }
 
-    function createBackdrop() {
-      const backdrop = document.createElement('div');
-      backdrop.id = 'modalConfirmBackdrop';
-      backdrop.className = 'modal-confirm-backdrop';
-      document.body.appendChild(backdrop);
-    }
+    // function createBackdrop() {
+    //   const backdrop = document.createElement('div');
+    //   backdrop.id = 'modalConfirmBackdrop';
+    //   backdrop.className = 'modal-confirm-backdrop';
+    //   document.body.appendChild(backdrop);
+    // }
 
     function removeBackdrop() {
       const backdrop = document.getElementById('modalConfirmBackdrop');
@@ -274,61 +274,6 @@ function clearNavItemActive(currentNavItem) {
   });
 }
 
-/////////////////// Sidebar ////////////////////
-
-// Sidebar Menu
-const menuItems = document.querySelectorAll('.menu>.menu-item');
-
-menuItems.forEach((menuItem) =>
-  menuItem.addEventListener('click', (event) => {
-    clearMenuItemOpenActive(menuItem);
-    menuItem.classList.add('active');
-    menuItem.classList.toggle('open');
-    event.stopPropagation();
-  })
-);
-
-// Sidebar Sub-Menu
-const menuSubItems = document.querySelectorAll('.menu-sub>.menu-item');
-
-menuSubItems.forEach((menuSubItem) =>
-  menuSubItem.addEventListener('click', (event) => {
-    clearMenuSubItemActive(menuSubItem);
-
-    const menuSubSub = menuSubItem.querySelectorAll('.menu-sub');
-
-    if (menuSubSub.length > 0) {
-      menuSubItem.classList.toggle('open');
-    } else {
-      menuSubItem.classList.add('active');
-    }
-
-    event.stopPropagation();
-  })
-);
-
-function clearMenuItemOpenActive(currentMenuItem) {
-  menuItems.forEach((menuItem) => {
-    if (menuItem !== currentMenuItem) {
-      menuItem.classList.remove('active');
-      menuItem.classList.remove('open');
-    }
-  });
-}
-
-function clearMenuSubItemActive(currentMenuSubItem) {
-  menuSubItems.forEach((menuSubItem) => {
-    if (menuSubItem !== currentMenuSubItem) {
-      menuSubItem.classList.remove('active');
-    }
-  });
-}
-
-// Hide Sidebar when Sidebar Backdrop is clicked
-const sidebarBackdrop = document.querySelector('.sidebar-backdrop');
-sidebarBackdrop.addEventListener('click', () => {
-  document.body.classList.add('sidebar-hidden');
-});
 
 //////////////////// Click on Empty Area ////////////////////
 
@@ -337,19 +282,19 @@ document.addEventListener('click', (event) => {
 });
 
 const sidebarToggle = document.querySelector('.sidebar-toggle');
-    const sidebar = document.querySelector('.sidebar');
-    const toggleIcon = sidebarToggle.querySelector('i');
+const sidebar = document.querySelector('.sidebar');
+const toggleIcon = sidebarToggle.querySelector('i');
 
-    sidebarToggle.addEventListener('click', () => {
-        sidebar.classList.toggle('collapsed');
+sidebarToggle.addEventListener('click', () => {
+  sidebar.classList.toggle('collapsed');
 
-        // 아이콘 변경
-        if (sidebar.classList.contains('collapsed')) {
-            toggleIcon.classList.replace('bx-chevron-left', 'bx-chevron-right');
-        } else {
-            toggleIcon.classList.replace('bx-chevron-right', 'bx-chevron-left');
-        }
-    });
+  // 아이콘 변경
+  if (sidebar.classList.contains('collapsed')) {
+    toggleIcon.classList.replace('bx-chevron-left', 'bx-chevron-right');
+  } else {
+    toggleIcon.classList.replace('bx-chevron-right', 'bx-chevron-left');
+  }
+});
 
 
 

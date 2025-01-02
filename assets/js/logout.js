@@ -20,23 +20,23 @@ function createMenu(menuItemsLnb) {
   menuDiv.className = 'menu';
 
   menuItemsLnb.forEach(item => {
-      const menuItemDiv = document.createElement('div');
-      menuItemDiv.className = 'menu-item';
-      
-      const menuLink = document.createElement('a');
-      menuLink.href = item.href;
-      menuLink.className = 'menu-link';
+    const menuItemDiv = document.createElement('div');
+    menuItemDiv.className = 'menu-item';
 
-      const icon = document.createElement('i');
-      icon.className = item.icon;
+    const menuLink = document.createElement('a');
+    menuLink.href = item.href;
+    menuLink.className = 'menu-link';
 
-      const span = document.createElement('span');
-      span.textContent = item.text;
+    const icon = document.createElement('i');
+    icon.className = item.icon;
 
-      menuLink.appendChild(icon);
-      menuLink.appendChild(span);
-      menuItemDiv.appendChild(menuLink);
-      menuDiv.appendChild(menuItemDiv);
+    const span = document.createElement('span');
+    span.textContent = item.text;
+
+    menuLink.appendChild(icon);
+    menuLink.appendChild(span);
+    menuItemDiv.appendChild(menuLink);
+    menuDiv.appendChild(menuItemDiv);
   });
 
   container.appendChild(menuDiv);
@@ -68,7 +68,7 @@ createMenu(menuItemsLnb);
 function createDropdownItem(href, iconClass, text, containerId, extraClass = '') {
   // Find the container element
   const container = document.getElementById(containerId);
-  
+
   // Create the anchor element
   const anchor = document.createElement('a');
   anchor.href = href;
@@ -110,21 +110,21 @@ const cancelLogout = document.getElementById('cancelLogout');
 let isLoggedIn = true;
 
 memberIcon.addEventListener('click', function () {
-    if (isLoggedIn) {
-        logoutModal.classList.remove('hidden');
-    } else {
-        logoutModal.classList.remove('hidden');
-    }
+  if (isLoggedIn) {
+    logoutModal.classList.remove('hidden');
+  } else {
+    logoutModal.classList.remove('hidden');
+  }
 });
 
 
 confirmLogout.addEventListener('click', function () {
-    isLoggedIn = false;
-    memberIcon.innerHTML = '<i class="fas fa-user"></i>';
-    logoutModal.classList.add('hidden');
+  isLoggedIn = false;
+  memberIcon.innerHTML = '<i class="fas fa-user"></i>';
+  logoutModal.classList.add('hidden');
 });
 
 cancelLogout.addEventListener('click', function () {
-    logoutModal.classList.add('hidden');
+  logoutModal.classList.add('hidden');
 });
 

@@ -1,9 +1,3 @@
-// Hide Sidebar by default on small screens
-if (window.innerWidth <= 768) {
-  document.body.classList.add('sidebar-hidden');
-}
-
-//////////////////// Dropdown ////////////////////
 
 // Dropdown Notifications Menu
 const notificationReads = document.querySelectorAll(

@@ -282,15 +282,9 @@
          display: block;
       }
 
-      :root {
-         --primary-color: #0058a3;
-         /* IKEA Blue */
-         --secondary-color: #ffcc00;
-         /* IKEA Yellow */
-         --text-color: #ffffff;
-         --border-color: #3b3b3f;
-      }
 
+      /* tui grid */
+      
       .tui-grid-header {
          background-color: var(--primary-color);
          color: var(--text-color);
