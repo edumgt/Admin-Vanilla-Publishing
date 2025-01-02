@@ -2,11 +2,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.getElementById('orgChartCanvas');
     const ctx = canvas.getContext('2d');
 
+    // Get the canvas width
+    const canvasWidth = canvas.width;
+
     // 로컬 스토리지에서 조직도 데이터 로드
     const savedOrgData = JSON.parse(localStorage.getItem('orgData')) || {
         name: 'Company',
         manager: 'CEO',
-        x: 400, y: 50,
+        x: canvasWidth / 2 - 100, y: 50, // Center the CEO card
         children: [
             {
                 name: 'Engineering',
@@ -58,11 +61,11 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fill();
 
         // 각 구역별 배경색 설정
-        ctx.fillStyle = '#ffadad'; // 책임자명 구역
+        ctx.fillStyle = '#0058a3'; // 책임자명 구역 (IKEA Blue)
         ctx.fillRect(node.x, node.y, width, height / 3);
-        ctx.fillStyle = '#ffd6a5'; // 조직명 구역
+        ctx.fillStyle = '#f7d117'; // 조직명 구역 (IKEA Yellow)
         ctx.fillRect(node.x, node.y + height / 3, width, height / 3);
-        ctx.fillStyle = '#caffbf'; // 삭제 버튼 및 New 버튼 구역
+        ctx.fillStyle = '#fff'; // 삭제 버튼 및 New 버튼 구역 (White)
         ctx.fillRect(node.x, node.y + (2 * height / 3), width, height / 3);
 
         // 카드 테두리 그리기
@@ -73,16 +76,23 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.shadowColor = 'transparent';
 
         // 텍스트 설정
-        ctx.fillStyle = '#000';
+        ctx.fillStyle = '#fff'; // 책임자명 텍스트 색상 (White)
         ctx.font = '16px Arial';
         ctx.textAlign = 'center';
 
         // 조직책임자명
         ctx.fillText(node.manager, node.x + width / 2, node.y + 22);
-        // 조직명
+
+        // 조직명 텍스트 색상 (Black)
+        ctx.fillStyle = '#000';
         ctx.fillText(node.name, node.x + width / 2, node.y + 60);
-        // 삭제 버튼
-        ctx.fillText('x', node.x + width - 20, node.y + height - 10);
+
+        // CEO 카드에는 삭제 버튼을 표시하지 않음
+        if (node.manager !== 'CEO') {
+            // 삭제 버튼
+            ctx.fillText('x', node.x + width - 20, node.y + height - 10);
+        }
+
         // New 버튼
         ctx.fillStyle = '#000';
         ctx.strokeStyle = '#000';
@@ -179,8 +189,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 input.type = 'text';
                 input.value = clickedNode.manager;
                 input.className = 'input-style bg-white border border-gray-300 rounded';
-                input.style.left = `${rect.left + clickedNode.x + 10}px`;
+                input.style.position = 'absolute';
+                input.style.left = `${Math.min(rect.left + clickedNode.x + 10, canvasWidth - 210)}px`;
                 input.style.top = `${rect.top + clickedNode.y + 10}px`;
+                input.style.width = '180px';
 
                 document.body.appendChild(input);
 
@@ -204,8 +216,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 input.type = 'text';
                 input.value = clickedNode.name;
                 input.className = 'input-style bg-white border border-gray-300 rounded';
-                input.style.left = `${rect.left + clickedNode.x + 10}px`;
+                input.style.position = 'absolute';
+                input.style.left = `${Math.min(rect.left + clickedNode.x + 10, canvasWidth - 210)}px`;
                 input.style.top = `${rect.top + clickedNode.y + 50}px`;
+                input.style.width = '180px';
 
                 document.body.appendChild(input);
 
@@ -233,6 +247,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const y = e.clientY - rect.top;
 
         draggedNode = findNode(savedOrgData, x, y);
+
+        // CEO 카드는 드래그할 수 없도록 함
+        if (draggedNode && draggedNode.manager === 'CEO') {
+            draggedNode = null;
+        }
+
         if (draggedNode) {
             offsetX = x - draggedNode.x;
             offsetY = y - draggedNode.y;
@@ -274,16 +294,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const newY = clickedNode.y + height - 10;
 
             // 삭제 버튼 클릭 시
-            if (x >= deleteX - 10 && x <= deleteX + 10 && y >= deleteY - 10 && y <= deleteY + 10) {
-                if (clickedNode === savedOrgData) {
-                    alert('Cannot delete the root node.');
-                } else {
-                    const parentNode = findParentNode(savedOrgData, clickedNode);
-                    if (parentNode) {
-                        deleteNode(parentNode, clickedNode);
-                        redraw();
-                        saveData();
-                    }
+            if (clickedNode.manager !== 'CEO' && x >= deleteX - 10 && x <= deleteX + 10 && y >= deleteY - 10 && y <= deleteY + 10) {
+                const parentNode = findParentNode(savedOrgData, clickedNode);
+                if (parentNode) {
+                    deleteNode(parentNode, clickedNode);
+                    redraw();
+                    saveData();
                 }
             }
 
