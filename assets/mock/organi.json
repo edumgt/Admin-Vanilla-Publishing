@@ -1,0 +1,60 @@
+{
+    "name": "김사장",
+    "manager": "CEO",
+    "x": 318,
+    "y": 0,
+    "children": [
+        {
+            "name": "최이사",
+            "manager": "CTO",
+            "x": 93,
+            "y": 185,
+            "children": [
+                {
+                    "name": "New Department",
+                    "manager": "부장",
+                    "x": 91,
+                    "y": 367,
+                    "children": [
+                        {
+                            "name": "New Department",
+                            "manager": "New Manager",
+                            "x": 95,
+                            "y": 548,
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "name": "Mr. Park",
+                    "manager": "New Manager",
+                    "x": 330,
+                    "y": 378,
+                    "children": []
+                }
+            ]
+        },
+        {
+            "name": "New Department",
+            "manager": "New Manager",
+            "x": 349,
+            "y": 186,
+            "children": [
+                {
+                    "name": "New Department",
+                    "manager": "Assist.",
+                    "x": 630,
+                    "y": 387,
+                    "children": []
+                }
+            ]
+        },
+        {
+            "name": "New Department",
+            "manager": "New Manager",
+            "x": 624,
+            "y": 191,
+            "children": []
+        }
+    ]
+}
