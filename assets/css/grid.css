@@ -92,7 +92,7 @@
          position: absolute;
          top: 90px;
          padding-left: 5px;
-         z-index: 1000;
+         
       }
 
       .sidebar.collapsed .sidebar-toggle i {
@@ -268,13 +268,13 @@
          border-bottom: 2px solid var(--secondary-color);
          border-radius: 10px 10px 0 0;
          overflow: hidden;
-         font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue";
+         /* font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue"; */
       }
 
       .tui-grid-cell {
          font-size: 15px;
          color: #333;
-         font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue";
+         /* font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue"; */
       }
 
 
