@@ -10,11 +10,30 @@ fetch('assets/mock/organi.json')
     .then(response => response.json())
     .then(data => {
         savedOrgData = data;
-        savedOrgData.x = canvasWidth / 2 - 100;
-        savedOrgData.y = 50;
+        savedOrgData.x = canvasWidth / 2 - 100; // 기존 값 유지
+        savedOrgData.y = 10; // CEO 카드를 더 위쪽으로 조정
         redraw();
     })
     .catch(error => console.error('Error fetching the organizational data:', error));
+
+function drawOrgChart(ctx, node) {
+    drawCard(ctx, node);
+
+    if (node.children && node.children.length > 0) {
+        node.children.forEach(child => {
+            ctx.beginPath();
+            ctx.moveTo(node.x + 100, node.y + 120);
+            ctx.bezierCurveTo(node.x + 100, node.y + 170, child.x + 100, child.y - 50, child.x + 100, child.y);
+            ctx.strokeStyle = '#FFA500';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            drawOrgChart(ctx, child);
+        });
+    }
+}
+
+
+
 
 function drawCard(ctx, node) {
     const width = 200, height = 120;
@@ -25,6 +44,7 @@ function drawCard(ctx, node) {
     ctx.shadowOffsetX = 5;
     ctx.shadowOffsetY = 5;
 
+    // 카드 배경
     ctx.fillStyle = '#fff';
     ctx.beginPath();
     ctx.moveTo(node.x + borderRadius, node.y);
@@ -39,6 +59,7 @@ function drawCard(ctx, node) {
     ctx.closePath();
     ctx.fill();
 
+    // 카드 상단, 중단, 하단 색상
     ctx.fillStyle = '#0058a3';
     ctx.fillRect(node.x, node.y, width, height / 3);
     ctx.fillStyle = '#f7d117';
@@ -48,39 +69,33 @@ function drawCard(ctx, node) {
 
     ctx.shadowColor = 'transparent';
 
+    // 텍스트 설정
     ctx.fillStyle = '#fff';
     ctx.font = '15px Pretendard';
     ctx.textAlign = 'center';
 
+    // 관리자 이름
     ctx.fillText(node.manager, node.x + width / 2, node.y + 22);
 
+    // 부서 이름
     ctx.fillStyle = '#000';
     ctx.fillText(node.name, node.x + width / 2, node.y + 60);
 
+    // 삭제 버튼 (x 표시)
     if (node.manager !== 'CEO') {
+        ctx.fillStyle = '#000';
         ctx.fillText('x', node.x + width - 20, node.y + height - 10);
     }
 
-    ctx.fillStyle = '#222';
-    ctx.strokeStyle = '#333';
-    ctx.strokeRect(node.x + 10, node.y + height - 30, 100, 20);
+    // 하위부서생성 버튼
+    ctx.fillStyle = '#333'; // 짙은 회색 배경
+    ctx.fillRect(node.x + 10, node.y + height - 30, 100, 20);
+
+    ctx.fillStyle = '#fff'; // 흰색 텍스트
     ctx.fillText('하위부서생성', node.x + 60, node.y + height - 12);
 }
 
-function drawOrgChart(ctx, node) {
-    drawCard(ctx, node);
 
-    if (node.children && node.children.length > 0) {
-        node.children.forEach(child => {
-            ctx.beginPath();
-            ctx.moveTo(node.x + 100, node.y + 120);
-            ctx.bezierCurveTo(node.x + 100, node.y + 170, child.x + 100, child.y - 50, child.x + 100, child.y);
-            ctx.strokeStyle = '#ADD8E6';
-            ctx.stroke();
-            drawOrgChart(ctx, child);
-        });
-    }
-}
 
 function findNode(node, x, y) {
     const width = 200, height = 120;
@@ -247,10 +262,20 @@ canvas.addEventListener('click', (e) => {
         const width = 200, height = 120;
         const deleteX = clickedNode.x + width - 20;
         const deleteY = clickedNode.y + height - 10;
-        const newX = clickedNode.x + 30;
-        const newY = clickedNode.y + height - 10;
 
-        if (clickedNode.manager !== 'CEO' && x >= deleteX - 10 && x <= deleteX + 10 && y >= deleteY - 10 && y <= deleteY + 10) {
+        const buttonXStart = clickedNode.x + 10; // 하위부서생성 버튼 시작 x 좌표
+        const buttonXEnd = buttonXStart + 100; // 버튼 끝 x 좌표
+        const buttonYStart = clickedNode.y + height - 30; // 버튼 시작 y 좌표
+        const buttonYEnd = buttonYStart + 20; // 버튼 끝 y 좌표
+
+        // 삭제 버튼 클릭 처리
+        if (
+            clickedNode.manager !== 'CEO' &&
+            x >= deleteX - 10 &&
+            x <= deleteX + 10 &&
+            y >= deleteY - 10 &&
+            y <= deleteY + 10
+        ) {
             const parentNode = findParentNode(savedOrgData, clickedNode);
             if (parentNode) {
                 deleteNode(parentNode, clickedNode);
@@ -259,19 +284,24 @@ canvas.addEventListener('click', (e) => {
             }
         }
 
-        if (x >= newX - 20 && x <= newX + 20 && y >= newY - 10 && y <= newY + 10) {
+        // 하위부서생성 버튼 클릭 처리
+        if (x >= buttonXStart && x <= buttonXEnd && y >= buttonYStart && y <= buttonYEnd) {
             const newChild = {
                 name: '부서: 더블클릭 수정',
                 manager: '매니저: 더블클릭 수정',
-                x: clickedNode.x + 50,
-                y: clickedNode.y + 120,
+                x: clickedNode.x + 50, // 새 노드의 초기 x 위치
+                y: clickedNode.y + 150, // 새 노드의 초기 y 위치
                 children: []
             };
+            if (!clickedNode.children) {
+                clickedNode.children = [];
+            }
             clickedNode.children.push(newChild);
             redraw();
             saveData();
         }
     }
 });
+
 
 redraw();

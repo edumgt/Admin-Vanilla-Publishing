@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <link href="assets/css/trello.css" rel="stylesheet">
+    <link href="assets/css/flow.css" rel="stylesheet">
 </head>
+
 <body>
     <div class="gnb-menu bg-gray-900 fixed top-0 left-0 bottom-0 w-full z-50 shadow-md">
         <ul class="flex justify-between items-center">
@@ -134,51 +136,10 @@
 
         </div>
 
-
-        <div id="app">
-            <div id="taskArea">
-
-                <form id="taskForm">
-                    <label for="taskName" style="font-weight: bold; margin-bottom: 5px; display: block;">Task
-                        Name</label>
-                    <input type="text" id="taskName" placeholder="Enter task name" required>
-
-                    <label for="taskDescription" style="font-weight: bold; margin-bottom: 5px; display: block;">Task
-                        Description</label>
-                    <textarea id="taskDescription" placeholder="Enter task description"></textarea>
-
-                    <label for="taskStartDate" style="font-weight: bold; margin-bottom: 5px; display: block;">Start
-                        Date</label>
-                    <input type="date" id="taskStartDate" required>
-
-                    <label for="taskEndDate" style="font-weight: bold; margin-bottom: 5px; display: block;">End
-                        Date</label>
-                    <input type="date" id="taskEndDate" required>
-
-                    <button type="submit">Add Task</button>
-                </form>
-                <ul id="taskList" class="task-list"></ul>
-
-
-            </div>
-
-            <div id="splitter"></div>
-
-            <div id="ganttArea">
-
-                <table class="gantt-table">
-                    <thead>
-                        <tr>
-                            <th>Task Name</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th class="timeline-column">Timeline</th>
-                        </tr>
-                    </thead>
-                    <tbody id="ganttTableBody"></tbody>
-                </table>
-            </div>
+        <div class="grid-container">
+            <canvas id="orgChartCanvas" width="1400" height="900"></canvas>
         </div>
+
     </div>
 
 
@@ -206,7 +167,7 @@
 
     </div>
     <script type="text/javascript" src="assets/js/frame.js"></script>
-    <script type="text/javascript" src="assets/js/trello.js"></script>
+    <script type="text/javascript" src="assets/js/orgni.js"></script>
     <script type="text/javascript" src="assets/js/logo.js"></script>
 </body>
 
