@@ -12,25 +12,27 @@
   <div class="container mx-auto p-4">
     <h1 class="text-3xl font-bold mb-4">Attendance Management</h1>
 
-    <div class="mb-4">
-      <label for="departmentSelect" class="block text-sm font-medium text-gray-700">Department:</label>
-      <select id="departmentSelect" onchange="updateEmployeeSelect()" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-        <!-- Department options will be inserted here -->
-      </select>
-    </div>
+    <div class="flex items-center mb-4">
+      <div class="mr-4">
+        <label for="departmentSelect" class="block text-sm font-medium text-gray-700">Department:</label>
+        <select id="departmentSelect" onchange="updateEmployeeSelect()" class="mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+          <!-- Department options will be inserted here -->
+        </select>
+      </div>
 
-    <div class="mb-4">
-      <label for="employeeSelect" class="block text-sm font-medium text-gray-700">Employee:</label>
-      <select id="employeeSelect" onchange="showAttendance()" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-        <!-- Employee options will be inserted here -->
-      </select>
+      <div class="mr-4">
+        <label for="employeeSelect" class="block text-sm font-medium text-gray-700">Employee:</label>
+        <select id="employeeSelect" onchange="showAttendance()" class="mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+          <!-- Employee options will be inserted here -->
+        </select>
+      </div>
     </div>
 
     <div class="table-container overflow-x-auto">
       <table id="attendanceTable" class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-        <thead class="bg-gray-50">
+        <thead class="bg-gray-800 text-white">
           <tr id="dateRow">
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Employee Name</th>
+            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Employee Name</th>
             <!-- Dates will be inserted here -->
           </tr>
         </thead>
@@ -72,24 +74,16 @@
         this.data = data;
       }
 
-      getMonthlyAttendance(employeeId, year, month) {
+      getAttendance(employeeId) {
         if (employeeId === "ALL") {
-          return this.data.map(employee => ({
-            ...employee,
-            attendance: employee.attendance.filter(record => record.date.startsWith(`${year}-${month < 10 ? `0${month}` : month}`))
-          }));
+          return this.data;
         } else {
           const employee = this.data.find(emp => emp.employeeId === employeeId);
           if (!employee) {
             console.log(`Employee with ID ${employeeId} not found.`);
             return [];
           }
-
-          const monthStr = month < 10 ? `0${month}` : `${month}`;
-          return [{
-            ...employee,
-            attendance: employee.attendance.filter(record => record.date.startsWith(`${year}-${monthStr}`))
-          }];
+          return [employee];
         }
       }
     }
@@ -133,25 +127,28 @@
 
     function showAttendance() {
       const employeeId = document.getElementById('employeeSelect').value;
-      const today = new Date();
-      const year = today.getFullYear();
-      const month = today.getMonth() + 1; // Months are zero-based in JavaScript
-      const currentDate = today.getDate();
-      const lastDay = getLastDayOfMonth(year, month);
+      const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
 
-      const employeesAttendance = manager.getMonthlyAttendance(employeeId, year, month);
+      const employeesAttendance = manager.getAttendance(employeeId);
       const dateRow = document.getElementById('dateRow');
       const attendanceBody = document.getElementById('attendanceBody');
-      dateRow.innerHTML = '<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Employee Name</th>'; // Clear previous dates
+      dateRow.innerHTML = '<th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Employee Name</th>'; // Clear previous dates
       attendanceBody.innerHTML = ''; // Clear previous content
 
       // Insert dates in the header
-      for (let day = 1; day <= lastDay; day++) {
+      const allDates = new Set();
+      employeesAttendance.forEach(employee => {
+        employee.attendance.forEach(record => {
+          allDates.add(record.date);
+        });
+      });
+      const sortedDates = Array.from(allDates).sort();
+      sortedDates.forEach(dateStr => {
         const dateCell = document.createElement('th');
-        dateCell.className = `px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider ${day === currentDate ? 'bg-yellow-200' : ''}`;
-        dateCell.textContent = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`;
+        dateCell.className = `px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${dateStr === today ? 'text-blue-600 font-bold' : ''}`;
+        dateCell.textContent = dateStr;
         dateRow.appendChild(dateCell);
-      }
+      });
 
       // Insert attendance data for each employee
       employeesAttendance.forEach(employee => {
@@ -159,23 +156,23 @@
         employeeNameCell.className = 'px-6 py-4 whitespace-nowrap';
         employeeNameCell.textContent = employee.name;
         const row = document.createElement('tr');
+        row.className = 'hover:bg-gray-100';
         row.appendChild(employeeNameCell);
 
-        for (let day = 1; day <= lastDay; day++) {
-          const dateStr = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`;
+        sortedDates.forEach(dateStr => {
           const record = employee.attendance.find(rec => rec.date === dateStr);
           const attendanceCell = document.createElement('td');
-          attendanceCell.className = `px-6 py-4 whitespace-nowrap ${day === currentDate ? 'bg-yellow-200' : ''}`;
+          attendanceCell.className = `px-6 py-4 whitespace-nowrap ${dateStr === today ? 'text-blue-600 font-bold' : ''}`;
           if (record) {
             attendanceCell.innerHTML = `
               <div>Check-In: <span class="${record.checkIn > '09:00' ? 'text-red-500' : ''}">${record.checkIn}</span></div>
               <div>Check-Out: <span class="${record.checkOut > '18:00' ? 'text-orange-500' : ''}">${record.checkOut}</span></div>
             `;
           } else {
-            attendanceCell.innerHTML = 'N/A';
+            attendanceCell.innerHTML = '-';
           }
           row.appendChild(attendanceCell);
-        }
+        });
 
         attendanceBody.appendChild(row);
       });
