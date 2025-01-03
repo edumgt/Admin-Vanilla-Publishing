@@ -170,12 +170,15 @@
     // Populate department select box
     function populateDepartmentSelect() {
       const departmentSelect = document.getElementById('departmentSelect');
-      const departments = [...new Set(attendanceData.map(employee => employee.department))]; // Use Set to remove duplicates
+      const departments = [...new Set(attendanceData.map(employee => employee.department))]; 
+      
 
       departments.forEach(department => {
         const option = document.createElement('option');
         option.value = department;
         option.text = department;
+        console.log(option.value);
+
         departmentSelect.appendChild(option);
       });
 
@@ -364,7 +367,7 @@
         attendanceData = JSON.parse(storedData);
       }
       if (attendanceData.length > 0) {
-        populateDepartmentSelect();
+        //populateDepartmentSelect();
         updateEmployeeSelect();
       }
     };
