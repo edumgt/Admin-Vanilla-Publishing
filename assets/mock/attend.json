@@ -1,0 +1,24 @@
+[
+    {
+      "department": "Engineering",
+      "title": "Software Engineer",
+      "name": "John Doe",
+      "employeeId": "E1234",
+      "attendance": [
+        { "date": "2025-01-01", "checkIn": "09:00", "checkOut": "18:00" },
+        { "date": "2025-01-02", "checkIn": "09:15", "checkOut": "18:05" },
+        { "date": "2025-01-03", "checkIn": "09:10", "checkOut": "18:10" }
+      ]
+    },
+    {
+      "department": "HR",
+      "title": "HR Manager",
+      "name": "Jane Smith",
+      "employeeId": "H5678",
+      "attendance": [
+        { "date": "2025-01-01", "checkIn": "08:45", "checkOut": "17:45" },
+        { "date": "2025-01-02", "checkIn": "09:00", "checkOut": "18:00" },
+        { "date": "2025-01-03", "checkIn": "09:05", "checkOut": "18:15" }
+      ]
+    }
+  ]

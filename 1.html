@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
   <!-- Tailwind CSS -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
+
 <body class="bg-gray-100 text-gray-900">
 
   <div class="container mx-auto p-4">
@@ -15,16 +17,25 @@
     <div class="flex items-center mb-4">
       <div class="mr-4">
         <label for="departmentSelect" class="block text-sm font-medium text-gray-700">Department:</label>
-        <select id="departmentSelect" onchange="updateEmployeeSelect()" class="mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+        <select id="departmentSelect" onchange="updateEmployeeSelect()"
+          class="mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
           <!-- Department options will be inserted here -->
         </select>
       </div>
 
       <div class="mr-4">
         <label for="employeeSelect" class="block text-sm font-medium text-gray-700">Employee:</label>
-        <select id="employeeSelect" onchange="showAttendance()" class="mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+        <select id="employeeSelect" onchange="showAttendance()"
+          class="mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
           <!-- Employee options will be inserted here -->
         </select>
+      </div>
+
+      <div>
+        <label for="monthSelect" class="block text-sm font-medium text-gray-700">Month:</label>
+        <input type="month" id="monthSelect"
+          class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+          value="2025-01" onchange="showAttendance()">
       </div>
     </div>
 
@@ -44,65 +55,65 @@
   </div>
 
   <script>
-    const attendanceData = [
-      {
-        department: "Engineering",
-        title: "Software Engineer",
-        name: "John Doe",
-        employeeId: "E1234",
-        attendance: [
-          { date: "2025-01-01", checkIn: "09:00", checkOut: "18:00" },
-          { date: "2025-01-02", checkIn: "09:15", checkOut: "18:05" },
-          { date: "2025-01-03", checkIn: "09:10", checkOut: "18:10" }
-        ]
-      },
-      {
-        department: "HR",
-        title: "HR Manager",
-        name: "Jane Smith",
-        employeeId: "H5678",
-        attendance: [
-          { date: "2025-01-01", checkIn: "08:45", checkOut: "17:45" },
-          { date: "2025-01-02", checkIn: "09:00", checkOut: "18:00" },
-          { date: "2025-01-03", checkIn: "09:05", checkOut: "18:15" }
-        ]
-      }
-    ];
+    let attendanceData = [];
 
     class AttendanceManager {
       constructor(data) {
         this.data = data;
       }
 
-      getAttendance(employeeId) {
+      getMonthlyAttendance(employeeId, year, month) {
+        const monthStr = month < 10 ? `${month}` : `${month}`; //yyyy-mm 주의
+        console.log(monthStr);
+
         if (employeeId === "ALL") {
-          return this.data;
+          return this.data.map(employee => ({
+            ...employee,
+            attendance: employee.attendance.filter(record => record.date.startsWith(`${year}-${monthStr}`))
+          }));
         } else {
           const employee = this.data.find(emp => emp.employeeId === employeeId);
           if (!employee) {
             console.log(`Employee with ID ${employeeId} not found.`);
             return [];
           }
-          return [employee];
+
+          return [{
+            ...employee,
+            attendance: employee.attendance.filter(record => record.date.startsWith(`${year}-${monthStr}`))
+          }];
         }
       }
     }
 
-    const manager = new AttendanceManager(attendanceData);
+    let manager;
+
+    // Fetch the JSON data
+    fetch('assets/mock/attend.json')
+      .then(response => response.json())
+      .then(data => {
+        attendanceData = data;
+        manager = new AttendanceManager(attendanceData);
+        populateDepartmentSelect();
+        updateEmployeeSelect();
+      })
+      .catch(error => console.error('Error fetching attendance data:', error));
 
     // Populate department select box
-    const departmentSelect = document.getElementById('departmentSelect');
-    const departments = [...new Set(attendanceData.map(employee => employee.department))];
-    departments.forEach(department => {
-      const option = document.createElement('option');
-      option.value = department;
-      option.text = department;
-      departmentSelect.appendChild(option);
-    });
+    function populateDepartmentSelect() {
+      const departmentSelect = document.getElementById('departmentSelect');
+      const departments = [...new Set(attendanceData.map(employee => employee.department))];
+      departments.forEach(department => {
+        const option = document.createElement('option');
+        option.value = department;
+        option.text = department;
+        departmentSelect.appendChild(option);
+      });
+    }
 
     // Populate employee select box based on department
     function updateEmployeeSelect() {
-      const selectedDepartment = departmentSelect.value;
+      const selectedDepartment = document.getElementById('departmentSelect').value;
       const employeeSelect = document.getElementById('employeeSelect');
       employeeSelect.innerHTML = ''; // Clear previous options
 
@@ -127,28 +138,25 @@
 
     function showAttendance() {
       const employeeId = document.getElementById('employeeSelect').value;
+      const selectedMonth = document.getElementById('monthSelect').value;
+      const [year, month] = selectedMonth.split('-');
+      const lastDay = getLastDayOfMonth(year, month);
       const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
 
-      const employeesAttendance = manager.getAttendance(employeeId);
+      const employeesAttendance = manager.getMonthlyAttendance(employeeId, year, month);
       const dateRow = document.getElementById('dateRow');
       const attendanceBody = document.getElementById('attendanceBody');
       dateRow.innerHTML = '<th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Employee Name</th>'; // Clear previous dates
       attendanceBody.innerHTML = ''; // Clear previous content
 
       // Insert dates in the header
-      const allDates = new Set();
-      employeesAttendance.forEach(employee => {
-        employee.attendance.forEach(record => {
-          allDates.add(record.date);
-        });
-      });
-      const sortedDates = Array.from(allDates).sort();
-      sortedDates.forEach(dateStr => {
+      for (let day = 1; day <= lastDay; day++) {
+        const dateStr = `${year}-${month}-${day.toString().padStart(2, '0')}`;
         const dateCell = document.createElement('th');
         dateCell.className = `px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${dateStr === today ? 'text-blue-600 font-bold' : ''}`;
         dateCell.textContent = dateStr;
         dateRow.appendChild(dateCell);
-      });
+      }
 
       // Insert attendance data for each employee
       employeesAttendance.forEach(employee => {
@@ -159,8 +167,11 @@
         row.className = 'hover:bg-gray-100';
         row.appendChild(employeeNameCell);
 
-        sortedDates.forEach(dateStr => {
+        for (let day = 1; day <= lastDay; day++) {
+          const dateStr = `${year}-${month}-${day.toString().padStart(2, '0')}`;
+
           const record = employee.attendance.find(rec => rec.date === dateStr);
+
           const attendanceCell = document.createElement('td');
           attendanceCell.className = `px-6 py-4 whitespace-nowrap ${dateStr === today ? 'text-blue-600 font-bold' : ''}`;
           if (record) {
@@ -172,7 +183,7 @@
             attendanceCell.innerHTML = '-';
           }
           row.appendChild(attendanceCell);
-        });
+        }
 
         attendanceBody.appendChild(row);
       });
@@ -180,9 +191,13 @@
 
     // Automatically populate employee select box and show attendance on load
     window.onload = () => {
-      updateEmployeeSelect();
+      if (attendanceData.length > 0) {
+        populateDepartmentSelect();
+        updateEmployeeSelect();
+      }
     };
   </script>
 
 </body>
+
 </html>
