@@ -7,7 +7,28 @@
       "attendance": [
         { "date": "2025-01-01", "checkIn": "09:00", "checkOut": "18:00" },
         { "date": "2025-01-02", "checkIn": "09:15", "checkOut": "18:05" },
-        { "date": "2025-01-03", "checkIn": "09:10", "checkOut": "18:10" }
+        { "date": "2025-01-03", "checkIn": "09:10", "checkOut": "18:10" },
+        { "date": "2025-01-13", "checkIn": "09:10", "checkOut": "18:10" },
+        { "date": "2025-01-23", "checkIn": "09:10", "checkOut": "18:10" },
+        { "date": "2025-02-03", "checkIn": "09:10", "checkOut": "18:10" },
+        { "date": "2025-02-13", "checkIn": "09:10", "checkOut": "18:10" },
+        { "date": "2025-02-23", "checkIn": "09:10", "checkOut": "18:10" }
+      ]
+    },
+    {
+      "department": "Engineering",
+      "title": "AA",
+      "name": "당나귀",
+      "employeeId": "E1235",
+      "attendance": [
+        { "date": "2025-01-11", "checkIn": "09:00", "checkOut": "18:00" },
+        { "date": "2025-01-12", "checkIn": "08:15", "checkOut": "18:05" },
+        { "date": "2025-01-13", "checkIn": "09:10", "checkOut": "18:20" },
+        { "date": "2025-01-14", "checkIn": "09:10", "checkOut": "18:10" },
+        { "date": "2025-01-23", "checkIn": "09:10", "checkOut": "18:10" },
+        { "date": "2025-02-03", "checkIn": "09:10", "checkOut": "18:10" },
+        { "date": "2025-02-13", "checkIn": "09:10", "checkOut": "18:10" },
+        { "date": "2025-02-23", "checkIn": "09:10", "checkOut": "18:12" }
       ]
     },
     {
