@@ -135,19 +135,7 @@ document.getElementById('hamburgerButton').addEventListener('click', () => {
 
 const currentPage = window.location.pathname.split("/").pop();
 
-// 모든 메뉴 링크 가져오기
-const menuLinks = document.querySelectorAll(".gnb-item");
 
-// 활성화 상태 설정
-menuLinks.forEach((link) => {
-    
-    if (link.getAttribute("href") === currentPage) {
-        console.log(currentPage);
-        link.classList.add("active");
-    } else {
-        link.classList.remove("active");
-    }
-});
 
 const demoLinks = document.querySelectorAll('a[href="#"]');
 const demoModal = document.getElementById('demoModal');

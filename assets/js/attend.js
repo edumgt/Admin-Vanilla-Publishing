@@ -1,109 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Attendance Management</title>
-  <!-- Tailwind CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <style>
-    .ikea-blue-bg {
-      background-color: #0058a3; /* IKEA blue */
-    }
+const menuLinks = document.querySelectorAll(".gnb-item");
 
-    .ikea-yellow-border {
-      border-color: #ffcc00; /* IKEA yellow */
-    }
+const menuLinks2 = document.querySelectorAll(".menu-item");
 
-    .scrollbar-yellow::-webkit-scrollbar {
-      width: 12px;
-    }
-
-    .scrollbar-yellow::-webkit-scrollbar-track {
-      background: #f1f1f1;
-    }
-
-    .scrollbar-yellow::-webkit-scrollbar-thumb {
-      background-color: #ffcc00; /* IKEA yellow */
-      border-radius: 10px;
-      border: 3px solid #f1f1f1;
-    }
-
-    .scrollbar-yellow::-webkit-scrollbar-thumb:hover {
-      background-color: #ffb700; /* Darker yellow on hover */
-    }
-
-    .sortable:hover {
-      cursor: pointer;
-    }
-
-    .editable {
-      cursor: pointer;
-    }
-
-    .editable:hover {
-      background-color: #f1f1f1;
-    }
-
-    .today-bg {
-      background-color: #e0f7ff; /* Light blue background */
-    }
-
-    .today-text {
-      color: #ff6600; /* Orange text color */
-    }
-  </style>
-</head>
-
-<body class="bg-gray-100 text-gray-900">
-
-  <div class="container mx-auto p-4">
-    <h1 class="text-3xl font-bold mb-4">Attendance Management</h1>
-
-    <div class="flex items-center mb-4">
-      <div class="mr-4">
-        <label for="departmentSelect" class="block text-sm font-medium text-gray-700">Department:</label>
-        <select id="departmentSelect" onchange="updateEmployeeSelect()"
-          class="mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-          <!-- Department options will be inserted here -->
-        </select>
-      </div>
-
-      <div class="mr-4">
-        <label for="employeeSelect" class="block text-sm font-medium text-gray-700">Employee:</label>
-        <select id="employeeSelect" onchange="showAttendance()"
-          class="mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-          <!-- Employee options will be inserted here -->
-        </select>
-      </div>
-
-      <div>
-        <label for="monthSelect" class="block text-sm font-medium text-gray-700">Month:</label>
-        <input type="month" id="monthSelect"
-          class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-          value="2025-01" onchange="showAttendance()">
-      </div>
-    </div>
-
-    <div class="table-container overflow-x-auto scrollbar-yellow">
-      <table id="attendanceTable" class="min-w-full bg-white shadow-md rounded-lg overflow-hidden text-sm">
-        <thead class="ikea-blue-bg text-white">
-          <tr id="dateRow">
-            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sortable" onclick="sortTableByName()">
-              Employee Name <span id="sortIcon">▲</span>
-            </th>
-            <!-- Dates will be inserted here -->
-          </tr>
-        </thead>
-        <tbody id="attendanceBody" class="divide-y ikea-yellow-border">
-          <!-- Attendance records will be inserted here -->
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <script>
+// GNB의 1번 파일이 stati.html 의 경우 활성화 상태 설정
+menuLinks2.forEach((link) => {
+    if (link.getAttribute("href") === currentPage) {
+        menuLinks.forEach((link) => {
+            if (link.getAttribute("href") === "orgni.html") {
+                link.classList.add("active");
+            } else {
+                link.classList.remove("active");
+            }
+        });
+    } 
+});
+    
     let attendanceData = [];
     let sortDirection = 'asc';
     let manager;
@@ -145,7 +57,7 @@
       }
 
       getMonthlyAttendanceByDepartment(department, year, month) {
-        const monthStr = month < 10 ? `0${month}` : `${month}`;
+        const monthStr = month < 10 ? `${month}` : `${month}`;
 
         return this.data
           .filter(employee => employee.department === department)
@@ -170,8 +82,8 @@
     // Populate department select box
     function populateDepartmentSelect() {
       const departmentSelect = document.getElementById('departmentSelect');
-      const departments = [...new Set(attendanceData.map(employee => employee.department))]; 
-      
+      const departments = [...new Set(attendanceData.map(employee => employee.department))];
+
 
       departments.forEach(department => {
         const option = document.createElement('option');
@@ -371,8 +283,3 @@
         updateEmployeeSelect();
       }
     };
-  </script>
-
-</body>
-
-</html>

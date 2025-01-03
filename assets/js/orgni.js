@@ -1,3 +1,17 @@
+// 모든 메뉴 링크 가져오기
+const menuLinks = document.querySelectorAll(".gnb-item");
+
+// 활성화 상태 설정
+menuLinks.forEach((link) => {
+    
+    if (link.getAttribute("href") === currentPage) {
+        console.log(currentPage);
+        link.classList.add("active");
+    } else {
+        link.classList.remove("active");
+    }
+});
+
 // 글로벌 변수
 const canvas = document.getElementById('orgChartCanvas');
 const ctx = canvas.getContext('2d');

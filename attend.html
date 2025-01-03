@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="assets/css/flow.css" rel="stylesheet">
+  <link href="assets/css/attend.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="gnb-menu bg-gray-900 fixed top-0 left-0 bottom-0 w-full z-50 shadow-md">
+    <ul class="flex justify-between items-center">
+      <div id="logo"></div>
+      <div class="tabs flex">
+        <li>
+          <a href="system.html" class="gnb-item tab-link block flex items-center space-x-2">
+            <i class="fas fa-cogs"></i>
+            <span>시스템관리</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="orgni.html" class="gnb-item tab-link block flex items-center space-x-2">
+            <i class="fas fa-users"></i>
+            <span>조직관리</span>
+          </a>
+        </li>
+        <!-- 업무관리 -->
+        <li>
+          <a href="#" class="gnb-item tab-link block flex items-center space-x-2">
+            <i class="fas fa-briefcase"></i>
+            <span>업무관리</span>
+          </a>
+        </li>
+        <!-- 일정관리 -->
+        <li>
+          <a href="calendar.html" class="gnb-item tab-link block flex items-center space-x-2">
+            <i class="fas fa-calendar-alt"></i>
+            <span>일정관리</span>
+          </a>
+        </li>
+        <!-- 통계 -->
+        <li>
+          <a href="stati.html" class="gnb-item tab-link block flex items-center space-x-2">
+            <i class="fas fa-chart-bar"></i>
+            <span>통계</span>
+          </a>
+        </li>
+        <!-- 설정관리 -->
+        <li>
+          <a href="config.html" class="gnb-item tab-link block flex items-center space-x-2">
+            <i class="fas fa-tools"></i>
+            <span>설정관리</span>
+          </a>
+        </li>
+      </div>
+
+      <!-- 멤버 아이콘 -->
+      <button id="memberIcon" class="text-gray-200 hover:text-white text-2xl p-2">
+        <i class="fas fa-user"></i>
+      </button>
+    </ul>
+  </div>
+
+
+  <!-- Toast Container -->
+  <div id="toast-container"></div>
+
+
+  <div id="offCanvas"
+    class="fixed top-14 h-full bg-white text-gray-800 hidden transform -translate-x-full transition-transform duration-300 z-50 shadow-lg">
+    <div class="flex flex-col h-full">
+      <ul class="flex-grow p-4 space-y-4">
+
+        <li>
+          <a href="organi.html" class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
+            <i class="fas fa-code menu-icon text-blue-400"></i>
+            <span class="menu-text">조직도구성</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="attend.html" class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
+            <i class="fas fa-user-shield menu-icon text-blue-400"></i>
+            <span class="menu-text">근태관리</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="#" class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
+            <i class="fas fa-clipboard-list menu-icon text-blue-400"></i>
+            <span class="menu-text">생산일정</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="#" class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
+            <i class="fas fa-bars menu-icon text-blue-400"></i>
+            <span class="menu-text">회의일정</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="#" class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
+            <i class="fas fa-cogs menu-icon text-blue-400"></i>
+            <span class="menu-text">이벤트</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="flex flex-col space-y-4 pb-4">
+        <button id="expandOffCanvas" class="text-gray-800 hover:text-blue-500 text-xl">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+        <button id="collapseOffCanvas" class="text-gray-800 hover:text-blue-500 text-xl">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="content" class="content">
+    <div class="flex items-center">
+      <button id="hamburgerButton" class="absolute top-20 left-5 text-gray-600 hover:text-gray-800 text-2xl ">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <h2 class="breadcrumb-container">
+        <nav class="breadcrumb">
+          <a href="organi.html" class="text-blue-500 hover:underline">조직관리</a>
+          <span>&nbsp;/&nbsp;</span>
+          <span>근태관리</span>
+        </nav>
+      </h2>
+
+
+    </div>
+
+
+
+    <div class="flex items-center mb-4">
+      <div class="mr-4">
+        <label for="departmentSelect" class="block text-sm font-medium text-gray-700">Department:</label>
+        <select id="departmentSelect" onchange="updateEmployeeSelect()"
+          class="mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+          <!-- Department options will be inserted here -->
+        </select>
+      </div>
+
+      <div class="mr-4">
+        <label for="employeeSelect" class="block text-sm font-medium text-gray-700">Employee:</label>
+        <select id="employeeSelect" onchange="showAttendance()"
+          class="mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+          <!-- Employee options will be inserted here -->
+        </select>
+      </div>
+
+      <div>
+        <label for="monthSelect" class="block text-sm font-medium text-gray-700">Month:</label>
+        <input type="month" id="monthSelect"
+          class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+          value="2025-01" onchange="showAttendance()">
+      </div>
+    </div>
+
+    <div class="table-container overflow-x-auto scrollbar-yellow">
+      <table id="attendanceTable" class="min-w-full bg-white shadow-md rounded-lg overflow-hidden text-sm">
+        <thead class="ikea-blue-bg text-white">
+          <tr id="dateRow">
+            <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sortable"
+              onclick="sortTableByName()">
+              Employee Name <span id="sortIcon">▲</span>
+            </th>
+            <!-- Dates will be inserted here -->
+          </tr>
+        </thead>
+        <tbody id="attendanceBody" class="divide-y ikea-yellow-border">
+          <!-- Attendance records will be inserted here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <button id="gearIcon" class="fixed bottom-4 right-4 bg-gray-800 text-white rounded-full p-3 shadow-lg z-50">
+    <i class="fas fa-globe"></i>
+</button>
+
+
+<div id="floatingNav"
+    class="fixed bottom-4 right-4 bg-gray-800 text-white rounded-lg shadow-lg p-4 z-50 hidden space-y-4">
+    <div class="flex justify-between items-center">
+        <h3 class="text-white font-semibold">Language</h3>
+        <button id="closeFloatingNav" class="text-white text-lg">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    <div id="languageSwitcher" class="flex space-x-2">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg" alt="English"
+            data-lang="en" class="w-8 h-8 cursor-pointer">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="한국어"
+            data-lang="ko" class="w-8 h-8 cursor-pointer">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本語" data-lang="ja"
+            class="w-6 h-6 cursor-pointer">
+    </div>
+
+</div>
+<script type="text/javascript" src="assets/js/orgframe.js"></script>
+<script type="text/javascript" src="assets/js/attend.js"></script>
+<script type="text/javascript" src="assets/js/logo.js"></script>
+</body>
+
+</html>
