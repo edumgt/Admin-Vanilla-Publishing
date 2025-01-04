@@ -102,18 +102,22 @@ memberIcon.addEventListener('click', function () {
 
 /* LNB */
 const offCanvas = document.getElementById('offCanvas');
-const hamburgerButton = document.getElementById('hamburgerButton');
+offCanvas.classList.remove('hidden', '-translate-x-full'); // Show the off-canvas menu
+offCanvas.classList.add('collapsed');
+offCanvas.classList.remove('expanded');
+
+//const hamburgerButton = document.getElementById('hamburgerButton');
 
 const expandOffCanvas = document.getElementById('expandOffCanvas');
 const collapseOffCanvas = document.getElementById('collapseOffCanvas');
 
-hamburgerButton.addEventListener('click', function () {
-    offCanvas.classList.toggle('hidden');
-    offCanvas.classList.toggle('transform');
-    offCanvas.classList.toggle('-translate-x-full');
-    offCanvas.classList.add('expanded');
-    expandOffCanvas.classList.add('hidden');
-});
+// hamburgerButton.addEventListener('click', function () {
+//     offCanvas.classList.toggle('hidden');
+//     offCanvas.classList.toggle('transform');
+//     offCanvas.classList.toggle('-translate-x-full');
+//     offCanvas.classList.add('expanded');
+//     expandOffCanvas.classList.add('hidden');
+// });
 
 expandOffCanvas.addEventListener('click', function () {
     offCanvas.classList.remove('collapsed');
@@ -128,10 +132,10 @@ collapseOffCanvas.addEventListener('click', function () {
 
 });
 
-document.getElementById('hamburgerButton').addEventListener('click', () => {
-    const offCanvas = document.getElementById('offCanvas');
-    offCanvas.classList.remove('hidden', '-translate-x-full'); // Show the off-canvas menu
-});
+// document.getElementById('hamburgerButton').addEventListener('click', () => {
+//     const offCanvas = document.getElementById('offCanvas');
+//     offCanvas.classList.remove('hidden', '-translate-x-full'); // Show the off-canvas menu
+// });
 
 const currentPage = window.location.pathname.split("/").pop();
 
