@@ -381,33 +381,4 @@ input[type="checkbox"] {
    pointer-events: none;
 }
 
-.cursor-not-allowed {
-   cursor: not-allowed;
-}
 
-
-
-input[type="text"],
-input[type="date"] {
-   padding: 5px;
-   height: calc(1.5em + 6px);
-}
-
-
-@media (max-width: 1500px) {
-   .flex2 {
-      flex-wrap: wrap;
-   }
-
-   .flex2>div {
-      width: 100%;
-      /* 한 줄로 변경 */
-      margin-bottom: 0.5rem;
-      /* 각 행 간격 추가 */
-   }
-
-   .flex2>.flex-col {
-      flex-direction: row;
-      justify-content: space-between;
-   }
-}

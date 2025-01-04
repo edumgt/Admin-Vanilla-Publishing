@@ -136,16 +136,6 @@ input[type="checkbox"] {
     pointer-events: none;
 }
 
-.cursor-not-allowed {
-    cursor: not-allowed;
-}
-
-
-input[type="text"],
-input[type="date"] {
-    padding: 5px;
-    height: calc(1.5em + 6px);
-}
 
 
 
