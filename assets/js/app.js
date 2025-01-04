@@ -1,5 +1,4 @@
 
-// UUID Generator Function
 function generateUUID() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
         const r = (Math.random() * 16) | 0,
@@ -472,15 +471,6 @@ const expandOffCanvas = document.getElementById('expandOffCanvas');
 
 const collapseOffCanvas = document.getElementById('collapseOffCanvas');
 
-
-// hamburgerButton.addEventListener('click', function () {
-//     offCanvas.classList.toggle('hidden');
-//     offCanvas.classList.toggle('transform');
-//     offCanvas.classList.toggle('-translate-x-full');
-//     offCanvas.classList.add('expanded');
-//     expandOffCanvas.classList.add('hidden');
-// });
-
 expandOffCanvas.addEventListener('click', function () {
     offCanvas.classList.remove('collapsed');
     offCanvas.classList.add('expanded');
@@ -493,15 +483,6 @@ collapseOffCanvas.addEventListener('click', function () {
     collapseOffCanvas.classList.add('hidden');
 
 });
-
-
-
-
-// document.getElementById('hamburgerButton').addEventListener('click', () => {
-//     const offCanvas = document.getElementById('offCanvas');
-//     offCanvas.classList.remove('hidden', '-translate-x-full'); // Show the off-canvas menu
-// });
-
 
 // 현재 페이지 URL 가져오기
 const currentPage = window.location.pathname.split("/").pop();

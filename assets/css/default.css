@@ -15,12 +15,30 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    scrollbar-color: #134139 transparent;
+    scrollbar-color: #f1a815 transparent;
     scrollbar-width: thin;
 }
 
+/* content */
+.content {
+    margin-left: 20px;
+}
+
+#floatingNav button {
+    transition: transform 0.2s ease;
+}
+
+#floatingNav button:hover {
+    transform: scale(1.05);
+}
+
+#content {
+    padding: 75px 40px 10px 70px;
+    box-sizing: border-box;
+}
+
 .breadcrumb {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: bold;
 }
 
@@ -212,4 +230,50 @@ body {
     transform: scale(1.05);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s, box-shadow 0.3s;
+}
+
+
+
+@media (max-width: 1550px) {
+    .flex-col {
+        flex-direction: column;
+    }
+
+    .lg\:flex-row {
+        flex-direction: row;
+    }
+
+    .lg\:mb-0 {
+        margin-bottom: 0;
+    }
+
+    .lg\:space-y-0 {
+        margin-bottom: 0;
+    }
+
+    .lg\:space-x-2>*+* {
+        margin-left: 0.5rem;
+    }
+
+    .flex-col>div {
+        padding: 10px 0;
+    }
+}
+
+@media (max-width: 1500px) {
+    .flex2 {
+        flex-wrap: wrap;
+    }
+
+    .flex2>div {
+        width: 100%;
+        /* 한 줄로 변경 */
+        margin-bottom: 0.5rem;
+        /* 각 행 간격 추가 */
+    }
+
+    .flex2>.flex-col {
+        flex-direction: row;
+        justify-content: space-between;
+    }
 }

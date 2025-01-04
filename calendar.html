@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <link href="assets/css/calendar.css" rel="stylesheet">
 </head>
+
 <body>
     <div class="gnb-menu fixed top-0 left-0 bottom-0 w-full z-50">
         <ul class="flex justify-between items-center">
@@ -64,46 +66,47 @@
     <div id="toast-container"></div>
 
 
-    <div id="offCanvas"
-        class="fixed top-14 h-full bg-gray-100 z-50 shadow-sm">
+    <div id="offCanvas" class="fixed top-14 h-full bg-gray-100 z-50 shadow-sm">
         <div class="flex flex-col h-full">
             <ul class="flex-grow p-4 space-y-4">
 
                 <li>
                     <a href="calendar.html"
                         class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
-                        <i class="fas fa-code menu-icon text-blue-400"></i>
+                        <i class="fas fa-calendar-alt menu-icon text-blue-400"></i>
                         <span class="menu-text">업무일정</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="trello.html" class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
-                        <i class="fas fa-user-shield menu-icon text-blue-400"></i>
+                    <a href="trello.html"
+                        class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
+                        <i class="fas fa-tasks menu-icon text-blue-400"></i>
                         <span class="menu-text">프로젝트일정</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="#" class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
-                        <i class="fas fa-clipboard-list menu-icon text-blue-400"></i>
+                        <i class="fas fa-industry menu-icon text-blue-400"></i>
                         <span class="menu-text">생산일정</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="#" class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
-                        <i class="fas fa-bars menu-icon text-blue-400"></i>
+                        <i class="fas fa-handshake menu-icon text-blue-400"></i>
                         <span class="menu-text">회의일정</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="#" class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
-                        <i class="fas fa-cogs menu-icon text-blue-400"></i>
+                        <i class="fas fa-calendar-check menu-icon text-blue-400"></i>
                         <span class="menu-text">이벤트</span>
                     </a>
                 </li>
+
             </ul>
 
             <div class="flex flex-col space-y-4 pb-4">
@@ -118,21 +121,10 @@
     </div>
 
     <div id="content" class="content">
-        <div class="flex items-center">
-            <!-- <button id="hamburgerButton" class="absolute top-20 left-5 text-gray-600 hover:text-gray-800 text-2xl ">
-                <i class="fas fa-bars"></i>
-            </button> -->
+        <nav class="breadcrumb">
+            업무일정
+        </nav>
 
-            <h2 class="breadcrumb-container">
-                <nav class="breadcrumb flex items-center space-x-2 text-gray-600">
-                    <a href="calendar.html" class="text-blue-500 hover:underline">일정관리</a>
-                    <span>/</span>
-                    <span>프로젝트일정</span>
-                </nav>
-            </h2>
-
-
-        </div>
 
         <div id="calendar" class="w-full max-w-md mx-auto mt-5 border rounded shadow"></div>
 
@@ -166,7 +158,7 @@
     </div>
 
 
-    
+
     <script type="text/javascript" src="assets/js/frame.js"></script>
     <script type="text/javascript" src="assets/js/calendar.js"></script>
     <script type="text/javascript" src="assets/js/logo.js"></script>
