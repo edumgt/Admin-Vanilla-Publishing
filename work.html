@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="assets/css/trello.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="gnb-menu fixed top-0 left-0 bottom-0 w-full z-50">
+        <ul class="flex justify-between items-center">
+            <div id="logo"></div>
+            <div class="tabs flex">
+                <li>
+                    <a href="system.html" class="gnb-item tab-link block flex items-center space-x-2">
+                        <i class="fas fa-cogs"></i>
+                        <span>시스템관리</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="orgni.html" class="gnb-item tab-link block flex items-center space-x-2">
+                        <i class="fas fa-users"></i>
+                        <span>조직관리</span>
+                    </a>
+                </li>
+                <!-- 업무관리 -->
+                <li>
+                    <a href="work.html" class="gnb-item tab-link block flex items-center space-x-2">
+                        <i class="fas fa-briefcase"></i>
+                        <span>업무관리</span>
+                    </a>
+                </li>
+                <!-- 일정관리 -->
+                <li>
+                    <a href="calendar.html" class="gnb-item tab-link block flex items-center space-x-2">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>일정관리</span>
+                    </a>
+                </li>
+                <!-- 통계 -->
+                <li>
+                    <a href="stati.html" class="gnb-item tab-link block flex items-center space-x-2">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>통계</span>
+                    </a>
+                </li>
+                <!-- 설정관리 -->
+                <li>
+                    <a href="config.html" class="gnb-item tab-link block flex items-center space-x-2">
+                        <i class="fas fa-tools"></i>
+                        <span>설정관리</span>
+                    </a>
+                </li>
+            </div>
+
+            <!-- 멤버 아이콘 -->
+            <button id="memberIcon" class="text-gray-200 hover:text-white text-2xl p-2">
+                <i class="fas fa-user"></i>
+            </button>
+        </ul>
+    </div>
+
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
+
+    <div id="offCanvas" class="fixed top-14 h-full bg-gray-100 z-50 shadow-sm">
+        <div class="flex flex-col h-full">
+            <ul class="flex-grow p-4 space-y-4">
+
+                <li>
+                    <a href="calendar.html"
+                        class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
+                        <i class="fas fa-calendar-alt menu-icon text-blue-400"></i>
+                        <span class="menu-text">업무일정</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="trello.html"
+                        class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
+                        <i class="fas fa-tasks menu-icon text-blue-400"></i>
+                        <span class="menu-text">프로젝트일정</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
+                        <i class="fas fa-industry menu-icon text-blue-400"></i>
+                        <span class="menu-text">생산일정</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
+                        <i class="fas fa-handshake menu-icon text-blue-400"></i>
+                        <span class="menu-text">회의일정</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
+                        <i class="fas fa-calendar-check menu-icon text-blue-400"></i>
+                        <span class="menu-text">이벤트</span>
+                    </a>
+                </li>
+
+            </ul>
+
+            <div class="flex flex-col space-y-4 pb-4">
+                <button id="expandOffCanvas" class="text-gray-800 hover:text-blue-500 text-xl">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <button id="collapseOffCanvas" class="text-gray-800 hover:text-blue-500 text-xl">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="content" class="content">
+        <nav class="breadcrumb">
+            예약관리
+        </nav>
+
+        <div id="hotel-container"></div>
+    </div>
+
+
+    <button id="gearIcon" class="fixed bottom-4 right-4 bg-gray-800 text-white rounded-full p-3 shadow-lg z-50">
+        <i class="fas fa-globe"></i>
+    </button>
+
+
+    <div id="floatingNav"
+        class="fixed bottom-4 right-4 bg-gray-800 text-white rounded-lg shadow-lg p-4 z-50 hidden space-y-4">
+        <div class="flex justify-between items-center">
+            <h3 class="text-white font-semibold">Language</h3>
+            <button id="closeFloatingNav" class="text-white text-lg">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div id="languageSwitcher" class="flex space-x-2">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg" alt="English"
+                data-lang="en" class="w-8 h-8 cursor-pointer">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="한국어"
+                data-lang="ko" class="w-8 h-8 cursor-pointer">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本語" data-lang="ja"
+                class="w-6 h-6 cursor-pointer">
+        </div>
+
+    </div>
+    <script type="text/javascript" src="assets/js/frame.js"></script>
+    <script>
+        
+const hotel = {
+    floors: 10,
+    roomsPerFloor: 20,
+    reservations: JSON.parse(localStorage.getItem('hotelReservations')) || {} // Format: { '1-1': { guestName: 'John Doe', checkInDate: '2025-01-04', checkOutDate: '2025-01-05', cost: 100 } }
+};
+
+// Function to initialize the UI
+document.addEventListener('DOMContentLoaded', () => {
+    const controlPanel = document.createElement('div');
+    controlPanel.id = 'control-panel';
+
+    const tabContainer = document.createElement('div');
+    tabContainer.id = 'tab-container';
+    tabContainer.style.display = 'flex';
+    tabContainer.style.gap = '5px';
+
+    for (let i = 1; i <= hotel.floors; i++) {
+        const tabButton = document.createElement('button');
+        tabButton.className = 'tab-button';
+        tabButton.innerText = `Floor ${i}`;
+        tabButton.addEventListener('click', () => {
+            const selectedDate = document.getElementById('date-select').value;
+            renderFloor(i, selectedDate);
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active-tab'));
+            tabButton.classList.add('active-tab');
+        });
+        if (i === 1) tabButton.classList.add('active-tab'); // Default active tab for Floor 1
+        tabContainer.appendChild(tabButton);
+    }
+
+    const dateInput = document.createElement('input');
+    dateInput.type = 'date';
+    dateInput.id = 'date-select';
+    dateInput.addEventListener('change', () => {
+        const activeTab = document.querySelector('.tab-button.active-tab');
+        if (activeTab) {
+            const selectedFloor = parseInt(activeTab.innerText.split(' ')[1]);
+            renderFloor(selectedFloor, dateInput.value);
+        }
+    });
+
+    controlPanel.appendChild(tabContainer);
+    controlPanel.appendChild(dateInput);
+    controlPanel.appendChild(dateInput);
+    const breadcrumb = document.querySelector('.breadcrumb');
+if (breadcrumb) {
+    breadcrumb.insertAdjacentElement('afterend', controlPanel);
+}
+
+    renderFloor(1); // Initial render for the first floor
+});
+
+function renderFloor(floor, date = new Date().toISOString().split('T')[0]) {
+    const hotelContainer = document.getElementById('hotel-container');
+    hotelContainer.innerHTML = '';
+
+    const floorDiv = document.createElement('div');
+    floorDiv.className = 'floor';
+    floorDiv.innerHTML = ``;
+
+    for (let room = 1; room <= hotel.roomsPerFloor; room++) {
+        const roomId = `${floor}-${room}`;
+        const roomDiv = document.createElement('div');
+        roomDiv.className = 'room';
+
+        const roomTitle = document.createElement('div');
+        roomTitle.className = 'room-title';
+        roomTitle.innerText = roomId;
+        roomDiv.appendChild(roomTitle);
+
+        const roomInfo = document.createElement('div');
+        roomInfo.className = 'room-info';
+        const reservation = hotel.reservations[roomId];
+        if (reservation && reservation.checkInDate <= date && reservation.checkOutDate >= date) {
+            roomInfo.innerHTML = `
+                <p>Guest: ${reservation.guestName}</p>
+                <p>Check-In: ${reservation.checkInDate}</p>
+                <p>Check-Out: ${reservation.checkOutDate}</p>
+                <p>Arrival Time: ${reservation.arrivalTime || 'N/A'}</p>
+                <p>Departure Time: ${reservation.departureTime || 'N/A'}</p>
+                <p>Cost: $${reservation.cost}</p>
+            `;
+        } else {
+            roomInfo.innerText = 'No Reservation';
+        }
+        roomDiv.appendChild(roomInfo);
+
+        roomDiv.addEventListener('click', () => manageReservation(floor, room));
+        floorDiv.appendChild(roomDiv);
+    }
+
+    hotelContainer.appendChild(floorDiv);
+}
+
+// Function to manage reservations
+function manageReservation(floor, room) {
+    const roomId = `${floor}-${room}`;
+    const reservation = hotel.reservations[roomId];
+
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <h2>Manage Reservation for Room ${roomId}</h2>
+            <label>Guest Name:</label>
+            <input type="text" id="guestName" value="${reservation ? reservation.guestName : ''}" />
+            <label>Check-In Date (YYYY-MM-DD):</label>
+            <input type="date" id="checkInDate" value="${reservation ? reservation.checkInDate : ''}" />
+            <label>Check-Out Date (YYYY-MM-DD):</label>
+            <input type="date" id="checkOutDate" value="${reservation ? reservation.checkOutDate : ''}" />
+            <label>Arrival Time (HH:MM):</label>
+            <input type="time" id="arrivalTime" value="${reservation ? reservation.arrivalTime || '00:00' : '00:00'}" />
+            <label>Departure Time (HH:MM):</label>
+            <input type="time" id="departureTime" value="${reservation ? reservation.departureTime || '00:00' : '00:00'}" />
+            <label>Cost:</label>
+            <input type="number" id="cost" value="${reservation ? reservation.cost : ''}" />
+            <button id="saveReservation">Save</button>
+            <button id="cancelReservation">Cancel</button>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    document.getElementById('saveReservation').addEventListener('click', () => {
+        const guestName = document.getElementById('guestName').value;
+        const checkInDate = document.getElementById('checkInDate').value;
+        const checkOutDate = document.getElementById('checkOutDate').value;
+        const cost = document.getElementById('cost').value;
+
+        if (!guestName || !checkInDate || !checkOutDate || !cost) {
+            alert('All fields are required.');
+            return;
+        }
+
+        if (!isValidDate(checkInDate) || !isValidDate(checkOutDate)) {
+            alert('Invalid date format. Please use YYYY-MM-DD.');
+            return;
+        }
+
+        hotel.reservations[roomId] = { guestName, checkInDate, checkOutDate, arrivalTime: document.getElementById('arrivalTime').value, departureTime: document.getElementById('departureTime').value, cost: parseFloat(cost) };
+        localStorage.setItem('hotelReservations', JSON.stringify(hotel.reservations));
+        alert(`Reservation for room ${roomId} saved.`);
+        document.body.removeChild(modal);
+        renderFloor(floor); // Refresh to update UI
+    });
+
+    document.getElementById('cancelReservation').addEventListener('click', () => {
+        document.body.removeChild(modal);
+    });
+}
+
+// Helper function to validate date
+function isValidDate(date) {
+    const regex = /^\d{4}-\d{2}-\d{2}$/;
+    return regex.test(date) && !isNaN(new Date(date).getTime());
+}
+
+// Basic styles
+const style = document.createElement('style');
+style.innerText = `
+    #control-panel {
+        margin: 10px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        background-color: #f9f9f9;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    #hotel-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        height: 100vh;
+        overflow: hidden;
+    }
+    .floor {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 10px;
+        width: calc(100vw - 200px); /* Ensure no horizontal scroll */
+        height: calc(100vh - 200px); /* Adjust for control panel and other margins */
+        border: 1px solid #ccc;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+    .room {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        background-color: #0058a3; /* IKEA Blue */
+        color: #ffcc00; /* IKEA Yellow */
+        border: 1px solid #ddd;
+        box-sizing: border-box;
+        position: relative;
+        border-radius: 5px;
+    }
+    .room-title {
+        flex: 0 0 15%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        font-size: 1.2em;
+        background-color: #004080;
+        color: #ffcc00;
+        border-bottom: 1px solid #ddd;
+    }
+    .room-info {
+        flex: 1;
+        background-color: #ffffff;
+        color: #000000;
+        padding: 10px;
+        overflow: auto;
+    }
+    .badge {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background-color: #ffcc00;
+        color: #000;
+        padding: 2px 5px;
+        border-radius: 3px;
+        font-size: 12px;
+        cursor: pointer;
+    }
+    .badge:hover {
+        background-color: #ffa500;
+    }
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .modal-content {
+        background: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        width: 400px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .modal-content label {
+        display: block;
+        margin: 10px 0 5px;
+    }
+    .modal-content input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
+    .modal-content button {
+        margin-top: 10px;
+        padding: 10px 20px;
+        border: none;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+        border-radius: 3px;
+    }
+    .modal-content button:hover {
+        background-color: #0056b3;
+    }
+`;
+document.head.appendChild(style);
+
+// Add container to the DOM
+const container = document.createElement('div');
+container.id = 'hotel-container';
+document.body.appendChild(container);
+
+
+
+    </script>
+    <script type="text/javascript" src="assets/js/logo.js"></script>
+</body>
+
+</html>
