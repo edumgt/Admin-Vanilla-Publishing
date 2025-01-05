@@ -5,7 +5,17 @@ const hotel = {
 };
 
 // Function to initialize the UI
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const response = await fetch('assets/mock/hotel.json'); // Replace with your JSON file URL
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        hotel.reservations = await response.json();
+    } catch (error) {
+        console.error('Failed to fetch reservation data:', error);
+        hotel.reservations = {}; // Fallback to empty reservations
+    }
     const controlPanel = document.createElement('div');
     controlPanel.id = 'control-panel';
 
@@ -158,32 +168,32 @@ function isValidDate(date) {
 // Basic styles
 const style = document.createElement('style');
 style.innerText = `
-    #control-panel {
-        margin: 10px;
-        display: flex;
-        gap: 10px;
-        align-items: center;
-        background-color: #f9f9f9;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
     #hotel-container {
         display: flex;
         flex-direction: column;
         gap: 10px;
-        height: 100vh;
         overflow: hidden;
+        width:100%;
     }
+
+    #control-panel {
+        margin-bottom:15px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        background-color: #f9f9f9;
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width:100%;
+    }
+    
     .floor {
         display: grid;
         grid-template-columns: repeat(5, 1fr);
         gap: 10px;
-        width: calc(100vw - 200px); /* Ensure no horizontal scroll */
         height: calc(100vh - 200px); /* Adjust for control panel and other margins */
-        border: 1px solid #ccc;
-        padding: 10px;
-        box-sizing: border-box;
+        
     }
     .room {
         display: flex;
