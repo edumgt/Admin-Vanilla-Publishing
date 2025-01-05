@@ -53,9 +53,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     controlPanel.appendChild(dateInput);
     controlPanel.appendChild(dateInput);
     const breadcrumb = document.querySelector('.breadcrumb');
-if (breadcrumb) {
-    breadcrumb.insertAdjacentElement('afterend', controlPanel);
-}
+    if (breadcrumb) {
+        breadcrumb.insertAdjacentElement('afterend', controlPanel);
+    }
 
     renderFloor(1); // Initial render for the first floor
 });
@@ -148,11 +148,13 @@ function manageReservation(floor, room) {
         }
 
         hotel.reservations[roomId] = { guestName, checkInDate, checkOutDate, arrivalTime: document.getElementById('arrivalTime').value, departureTime: document.getElementById('departureTime').value, cost: parseFloat(cost) };
-        localStorage.setItem('hotelReservations', JSON.stringify(hotel.reservations));
-        alert(`Reservation for room ${roomId} saved.`);
+        // Updated data would typically be sent to a server here, if needed
+        showToast(`Reservation for room ${roomId} saved.`);
         document.body.removeChild(modal);
         renderFloor(floor); // Refresh to update UI
     });
+
+
 
     document.getElementById('cancelReservation').addEventListener('click', () => {
         document.body.removeChild(modal);
@@ -164,6 +166,8 @@ function isValidDate(date) {
     const regex = /^\d{4}-\d{2}-\d{2}$/;
     return regex.test(date) && !isNaN(new Date(date).getTime());
 }
+
+
 
 // Basic styles
 const style = document.createElement('style');
