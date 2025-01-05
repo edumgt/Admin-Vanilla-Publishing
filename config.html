@@ -3,7 +3,19 @@
 
 <head>
     <link href="assets/css/trello.css" rel="stylesheet">
-    <link href="assets/css/work.css" rel="stylesheet">
+    <style>
+        #log-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: nowrap;
+            /* 한 줄에 유지 */
+        }
+
+        .log-panel {
+            border: 1px solid #ddd;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -77,36 +89,35 @@
                         <span class="menu-text">예약관리</span>
                     </a>
                 </li>
-                
+
                 <li>
-                    <a href="#"
-                        class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
+                    <a href="#" class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
                         <i class="fas fa-users-cog menu-icon text-blue-400"></i> <!-- 회의실 관리 -->
                         <span class="menu-text">회의실관리</span>
                     </a>
                 </li>
-                
+
                 <li>
                     <a href="#" class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
                         <i class="fas fa-sitemap menu-icon text-blue-400"></i> <!-- 결재 라인 -->
                         <span class="menu-text">결재라인</span>
                     </a>
                 </li>
-                
+
                 <li>
                     <a href="#" class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
                         <i class="fas fa-file-signature menu-icon text-blue-400"></i> <!-- 결재/보고 -->
                         <span class="menu-text">결재/보고</span>
                     </a>
                 </li>
-                
+
                 <li>
                     <a href="#" class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
                         <i class="fas fa-exclamation-circle menu-icon text-blue-400"></i> <!-- 반려 확인 -->
                         <span class="menu-text">반려확인</span>
                     </a>
                 </li>
-                
+
 
             </ul>
 
@@ -123,10 +134,10 @@
 
     <div id="content" class="content">
         <nav class="breadcrumb">
-            예약관리
+            시스템로그
         </nav>
 
-        <div id="hotel-container"></div>
+        <div id="log-container"></div>
     </div>
 
 
@@ -154,7 +165,8 @@
 
     </div>
     <script type="text/javascript" src="assets/js/workframe.js"></script>
-    <script type="text/javascript" src="assets/js/work.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="text/javascript" src="assets/js/cpulog.js"></script>
     <script type="text/javascript" src="assets/js/logo.js"></script>
 </body>
 

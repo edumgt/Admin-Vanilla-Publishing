@@ -133,7 +133,7 @@ const menuLinks2 = document.querySelectorAll(".menu-item");
 menuLinks2.forEach((link) => {
     if (link.getAttribute("href") === currentPage) {
         menuLinks.forEach((link) => {
-            if (link.getAttribute("href") === "calendar.html") {
+            if (link.getAttribute("href") === "work.html") {
                 link.classList.add("active");
             } else {
                 link.classList.remove("active");
