@@ -38,9 +38,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         tabContainer.appendChild(tabButton);
     }
 
+
+
     const dateInput = document.createElement('input');
     dateInput.type = 'date';
     dateInput.id = 'date-select';
+
+
+    // 기본 날짜를 오늘 날짜로 설정
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.value = today;
+
     dateInput.addEventListener('change', () => {
         const activeTab = document.querySelector('.tab-button.active-tab');
         if (activeTab) {
@@ -66,7 +74,6 @@ function renderFloor(floor, date = new Date().toISOString().split('T')[0]) {
 
     const floorDiv = document.createElement('div');
     floorDiv.className = 'floor';
-    floorDiv.innerHTML = ``;
 
     for (let room = 1; room <= hotel.roomsPerFloor; room++) {
         const roomId = `${floor}-${room}`;
@@ -76,36 +83,77 @@ function renderFloor(floor, date = new Date().toISOString().split('T')[0]) {
         const roomTitle = document.createElement('div');
         roomTitle.className = 'room-title';
         roomTitle.innerText = roomId;
+
+        // "New" 뱃지 추가
+        const newBadge = document.createElement('span');
+        newBadge.className = 'badge';
+        newBadge.innerText = 'New';
+        newBadge.addEventListener('click', (event) => {
+            event.stopPropagation(); // 부모 클릭 이벤트 방지
+            manageReservation(floor, room); // 모달 실행
+        });
+        roomTitle.appendChild(newBadge);
+
         roomDiv.appendChild(roomTitle);
 
         const roomInfo = document.createElement('div');
         roomInfo.className = 'room-info';
-        const reservation = hotel.reservations[roomId];
-        if (reservation && reservation.checkInDate <= date && reservation.checkOutDate >= date) {
-            roomInfo.innerHTML = `
-                <p>Guest: ${reservation.guestName}</p>
-                <p>Check-In: ${reservation.checkInDate}</p>
-                <p>Check-Out: ${reservation.checkOutDate}</p>
-                <p>Arrival Time: ${reservation.arrivalTime || 'N/A'}</p>
-                <p>Departure Time: ${reservation.departureTime || 'N/A'}</p>
-                <p>Cost: $${reservation.cost}</p>
-            `;
+
+        // 예약 데이터 확인
+        const reservations = hotel.reservations[roomId] || [];
+
+        // 날짜와 겹치는 예약 필터링
+        const overlappingReservations = reservations.filter(reservation => {
+            return (
+                reservation.checkInDate <= date &&
+                reservation.checkOutDate >= date
+            );
+        });
+
+        if (overlappingReservations.length > 0) {
+            overlappingReservations.forEach((reservation, index) => {
+                const reservationDiv = document.createElement('div');
+                reservationDiv.innerHTML = `
+                    <p>Guest: ${reservation.guestName}</p>
+                    <p>Check-In: ${reservation.checkInDate}</p>
+                    <p>Check-Out: ${reservation.checkOutDate}</p>
+                    <p>Arrival Time: ${reservation.arrivalTime || 'N/A'}</p>
+                    <p>Departure Time: ${reservation.departureTime || 'N/A'}</p>
+                    <p>Cost: $${reservation.cost}</p>
+                `;
+
+                // "X" 버튼 추가
+                const deleteButton = document.createElement('span');
+                deleteButton.innerText = 'X';
+                deleteButton.className = 'delete-button';
+                deleteButton.addEventListener('click', () => {
+                    // 예약 삭제
+                    reservations.splice(index, 1); // 해당 예약 제거
+                    hotel.reservations[roomId] = reservations; // 업데이트
+                    showToast(`The reservation for ${reservation.guestName} has been cancelled.`);
+                    renderFloor(floor, date); // UI 갱신
+                });
+
+                reservationDiv.appendChild(deleteButton);
+                reservationDiv.classList.add('reservation-item');
+                roomInfo.appendChild(reservationDiv);
+            });
         } else {
             roomInfo.innerText = 'No Reservation';
         }
+
         roomDiv.appendChild(roomInfo);
 
-        roomDiv.addEventListener('click', () => manageReservation(floor, room));
         floorDiv.appendChild(roomDiv);
     }
 
     hotelContainer.appendChild(floorDiv);
 }
 
-// Function to manage reservations
+
 function manageReservation(floor, room) {
     const roomId = `${floor}-${room}`;
-    const reservation = hotel.reservations[roomId];
+    const reservations = hotel.reservations[roomId] || []; // 배열이 없을 경우 빈 배열로 설정
 
     const modal = document.createElement('div');
     modal.className = 'modal';
@@ -113,17 +161,17 @@ function manageReservation(floor, room) {
         <div class="modal-content">
             <h2>Manage Reservation for Room ${roomId}</h2>
             <label>Guest Name:</label>
-            <input type="text" id="guestName" value="${reservation ? reservation.guestName : ''}" />
+            <input type="text" id="guestName" value="" />
             <label>Check-In Date (YYYY-MM-DD):</label>
-            <input type="date" id="checkInDate" value="${reservation ? reservation.checkInDate : ''}" />
+            <input type="date" id="checkInDate" />
             <label>Check-Out Date (YYYY-MM-DD):</label>
-            <input type="date" id="checkOutDate" value="${reservation ? reservation.checkOutDate : ''}" />
+            <input type="date" id="checkOutDate" />
             <label>Arrival Time (HH:MM):</label>
-            <input type="time" id="arrivalTime" value="${reservation ? reservation.arrivalTime || '00:00' : '00:00'}" />
+            <input type="time" id="arrivalTime" value="00:00" />
             <label>Departure Time (HH:MM):</label>
-            <input type="time" id="departureTime" value="${reservation ? reservation.departureTime || '00:00' : '00:00'}" />
+            <input type="time" id="departureTime" value="00:00" />
             <label>Cost:</label>
-            <input type="number" id="cost" value="${reservation ? reservation.cost : ''}" />
+            <input type="number" id="cost" value="" />
             <button id="saveReservation">Save</button>
             <button id="cancelReservation">Cancel</button>
         </div>
@@ -135,9 +183,11 @@ function manageReservation(floor, room) {
         const guestName = document.getElementById('guestName').value;
         const checkInDate = document.getElementById('checkInDate').value;
         const checkOutDate = document.getElementById('checkOutDate').value;
-        const cost = document.getElementById('cost').value;
+        const arrivalTime = document.getElementById('arrivalTime').value;
+        const departureTime = document.getElementById('departureTime').value;
+        const cost = parseFloat(document.getElementById('cost').value);
 
-        if (!guestName || !checkInDate || !checkOutDate || !cost) {
+        if (!guestName || !checkInDate || !checkOutDate || isNaN(cost)) {
             alert('All fields are required.');
             return;
         }
@@ -147,19 +197,43 @@ function manageReservation(floor, room) {
             return;
         }
 
-        hotel.reservations[roomId] = { guestName, checkInDate, checkOutDate, arrivalTime: document.getElementById('arrivalTime').value, departureTime: document.getElementById('departureTime').value, cost: parseFloat(cost) };
-        // Updated data would typically be sent to a server here, if needed
+        // 겹치는 예약 필터링
+        const overlappingReservations = reservations.filter(reservation => {
+            return (
+                reservation.checkInDate <= checkOutDate &&
+                reservation.checkOutDate >= checkInDate
+            );
+        });
+
+        if (overlappingReservations.length > 0) {
+            alert('The selected dates overlap with an existing reservation.');
+            return;
+        }
+
+        // 새 예약 추가
+        const newReservation = {
+            guestName,
+            checkInDate,
+            checkOutDate,
+            arrivalTime,
+            departureTime,
+            cost,
+        };
+
+        reservations.push(newReservation); // 배열에 추가
+        hotel.reservations[roomId] = reservations; // 업데이트
+
+        // 업데이트 후 UI 렌더링
         showToast(`Reservation for room ${roomId} saved.`);
         document.body.removeChild(modal);
-        renderFloor(floor); // Refresh to update UI
+        renderFloor(floor);
     });
-
-
 
     document.getElementById('cancelReservation').addEventListener('click', () => {
         document.body.removeChild(modal);
     });
 }
+
 
 // Helper function to validate date
 function isValidDate(date) {
@@ -172,119 +246,7 @@ function isValidDate(date) {
 // Basic styles
 const style = document.createElement('style');
 style.innerText = `
-    #hotel-container {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        overflow: hidden;
-        width:100%;
-    }
-
-    #control-panel {
-        margin-bottom:15px;
-        display: flex;
-        gap: 10px;
-        align-items: center;
-        background-color: #f9f9f9;
-        padding: 15px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        width:100%;
-    }
     
-    .floor {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 10px;
-        height: calc(100vh - 200px); /* Adjust for control panel and other margins */
-        
-    }
-    .room {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        height: 100%;
-        cursor: pointer;
-        background-color: #0058a3; /* IKEA Blue */
-        color: #ffcc00; /* IKEA Yellow */
-        border: 1px solid #ddd;
-        box-sizing: border-box;
-        position: relative;
-        border-radius: 5px;
-    }
-    .room-title {
-        flex: 0 0 15%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-weight: bold;
-        font-size: 1.2em;
-        background-color: #004080;
-        color: #ffcc00;
-        border-bottom: 1px solid #ddd;
-    }
-    .room-info {
-        flex: 1;
-        background-color: #ffffff;
-        color: #000000;
-        padding: 10px;
-        overflow: auto;
-    }
-    .badge {
-        position: absolute;
-        top: 5px;
-        right: 5px;
-        background-color: #ffcc00;
-        color: #000;
-        padding: 2px 5px;
-        border-radius: 3px;
-        font-size: 12px;
-        cursor: pointer;
-    }
-    .badge:hover {
-        background-color: #ffa500;
-    }
-    .modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .modal-content {
-        background: #fff;
-        padding: 20px;
-        border-radius: 5px;
-        width: 400px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-    .modal-content label {
-        display: block;
-        margin: 10px 0 5px;
-    }
-    .modal-content input {
-        width: 100%;
-        padding: 8px;
-        margin-bottom: 10px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-    }
-    .modal-content button {
-        margin-top: 10px;
-        padding: 10px 20px;
-        border: none;
-        background-color: #007bff;
-        color: #fff;
-        cursor: pointer;
-        border-radius: 3px;
-    }
-    .modal-content button:hover {
-        background-color: #0056b3;
-    }
 `;
 document.head.appendChild(style);
 
