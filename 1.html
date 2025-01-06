@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <!-- Tailwind CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
+
 <body class="bg-gray-100 p-6">
     <h1 class="text-3xl font-bold mb-6">Room Booking System</h1>
 
@@ -60,9 +62,12 @@
 
     <!-- Modal for Meeting Notes -->
     <div id="meeting-notes-modal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden">
-        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl h-3/4">
             <h2 id="notes-modal-title" class="text-2xl font-bold mb-4">Meeting Notes</h2>
-            <textarea id="meeting-notes" class="w-full h-96 border border-gray-300 rounded-md shadow-sm p-2"></textarea>
+            <div class="flex w-full h-full">
+                <textarea id="meeting-notes" class="w-1/2 h-full border border-gray-300 rounded-md shadow-sm p-2"></textarea>
+                <div id="meeting-notes-preview" class="w-1/2 h-full border border-gray-300 rounded-md shadow-sm p-2 overflow-auto"></div>
+            </div>
             <div class="flex justify-end space-x-4 mt-4">
                 <button type="button" onclick="saveMeetingNotes()" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Save</button>
                 <button type="button" onclick="closeNotesModal()" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600">Cancel</button>
@@ -80,6 +85,9 @@
             </div>
         </div>
     </div>
+
+    <!-- StackEdit CDN -->
+    <script src="https://unpkg.com/stackedit-js@1.0.7/docs/lib/stackedit.min.js"></script>
 
     <script>
         // Example room data
@@ -238,6 +246,24 @@
             document.getElementById('meeting-notes').value = booking.notes || '';
             document.getElementById('meeting-notes-modal').dataset.bookingIndex = bookingIndex;
             document.getElementById('meeting-notes-modal').classList.remove('hidden');
+
+            // Initialize StackEdit
+            const stackedit = new Stackedit();
+            stackedit.openFile({
+                content: {
+                    text: document.getElementById('meeting-notes').value,
+                },
+            });
+
+            // Listen to StackEdit events
+            stackedit.on('fileChange', (file) => {
+                document.getElementById('meeting-notes').value = file.content.text;
+                document.getElementById('meeting-notes-preview').innerHTML = file.content.html;
+            });
+
+            stackedit.on('close', () => {
+                saveMeetingNotes();
+            });
         }
 
         // Function to close the meeting notes modal
@@ -259,7 +285,7 @@
         }
 
         // Function to handle form submission
-        document.getElementById('booking-form').addEventListener('submit', function(event) {
+        document.getElementById('booking-form').addEventListener('submit', function (event) {
             event.preventDefault();
             const roomName = document.getElementById('room-name').value;
             const date = document.getElementById('date').value;
@@ -277,8 +303,8 @@
                 room.bookings.some(booking =>
                     booking.title === title && booking.date === date &&
                     ((startTime >= booking.startTime && startTime < booking.endTime) ||
-                    (endTime > booking.startTime && endTime <= booking.endTime) ||
-                    (startTime <= booking.startTime && endTime >= booking.endTime))
+                        (endTime > booking.startTime && endTime <= booking.endTime) ||
+                        (startTime <= booking.startTime && endTime >= booking.endTime))
                 )
             );
 
@@ -300,10 +326,10 @@
         });
 
         // Add event listener to load data from local storage when page loads
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             displayRooms();
         });
-
     </script>
 </body>
+
 </html>
