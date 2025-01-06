@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Booking System</title>
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-6">
+    <h1 class="text-3xl font-bold mb-6">Room Booking System</h1>
+
+    <!-- Date Search -->
+    <div class="mb-6">
+        <label for="search-date" class="block text-sm font-medium text-gray-700">Select Date:</label>
+        <input type="date" id="search-date" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+        <button onclick="filterByDate()" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Search</button>
+    </div>
+
+    <div id="rooms-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+    <!-- Modal for Adding/Updating Booking -->
+    <div id="booking-modal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+            <h2 id="modal-title" class="text-2xl font-bold mb-4"></h2>
+            <form id="booking-form" class="space-y-4">
+                <input type="hidden" id="room-name" name="roomName">
+                <input type="hidden" id="time-slot" name="timeSlot">
+                <div>
+                    <label for="date" class="block text-sm font-medium text-gray-700">Date:</label>
+                    <input type="date" id="date" name="date" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
+                </div>
+                <div>
+                    <label for="startTime" class="block text-sm font-medium text-gray-700">Start Time:</label>
+                    <select id="startTime" name="startTime" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
+                        <!-- Options will be populated by JavaScript -->
+                    </select>
+                </div>
+                <div>
+                    <label for="endTime" class="block text-sm font-medium text-gray-700">End Time:</label>
+                    <select id="endTime" name="endTime" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
+                        <!-- Options will be populated by JavaScript -->
+                    </select>
+                </div>
+                <div>
+                    <label for="meeting-title" class="block text-sm font-medium text-gray-700">Meeting Title:</label>
+                    <input type="text" id="meeting-title" name="meetingTitle" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" placeholder="Enter meeting title" required>
+                </div>
+                <div>
+                    <label for="meeting-description" class="block text-sm font-medium text-gray-700">Meeting Description:</label>
+                    <textarea id="meeting-description" name="meetingDescription" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" placeholder="Enter meeting description" required></textarea>
+                </div>
+                <div class="flex justify-end space-x-4">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Save</button>
+                    <button type="button" onclick="closeModal()" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Warning Modal -->
+    <div id="warning-modal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+            <h2 class="text-2xl font-bold mb-4">Warning</h2>
+            <p>A meeting is already scheduled for this time.</p>
+            <div class="flex justify-end mt-4">
+                <button onclick="closeWarningModal()" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Example room data
+        const roomsData = {
+            rooms: [
+                { name: "Meeting Room #1", seats: 5, bookings: [] },
+                { name: "Meeting Room #2", seats: 8, bookings: [] },
+                { name: "Meeting Room #3", seats: 20, bookings: [] },
+                { name: "Meeting Room #4", seats: 20, bookings: [] },
+                { name: "Meeting Room #5", seats: 20, bookings: [] }
+            ]
+        };
+
+        // Save example data to local storage
+        if (!localStorage.getItem('roomBookings')) {
+            localStorage.setItem('roomBookings', JSON.stringify(roomsData));
+        }
+
+        // Function to fetch bookings from local storage
+        function fetchBookings() {
+            const bookings = localStorage.getItem('roomBookings');
+            return bookings ? JSON.parse(bookings) : { rooms: [] };
+        }
+
+        // Function to save bookings to local storage
+        function saveBookings(data) {
+            localStorage.setItem('roomBookings', JSON.stringify(data));
+        }
+
+        // Function to display rooms
+        function displayRooms(dateFilter = null) {
+            const container = document.getElementById('rooms-container');
+            container.innerHTML = '';
+
+            const data = fetchBookings();
+            data.rooms.forEach(room => {
+                const card = document.createElement('div');
+                card.className = 'bg-white p-6 rounded-lg shadow-lg';
+                card.innerHTML = `
+                    <h2 class="text-xl font-bold mb-4">${room.name}</h2>
+                    <p class="text-sm mb-4">Seats: ${room.seats}</p>
+                    <div id="timeslots-${room.name}">
+                        ${generateTimeslots(room, dateFilter)}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Function to generate timeslots
+        function generateTimeslots(room, dateFilter = null) {
+            let timeslots = '';
+            let hour = 8;
+            while (hour < 20) {
+                const startTime = `${hour.toString().padStart(2, '0')}:00`;
+                let endTime = `${(hour + 1).toString().padStart(2, '0')}:00`;
+                let booking = room.bookings.find(b => b.date === dateFilter && b.startTime === startTime);
+
+                // Check if the booking spans multiple hours
+                if (booking) {
+                    endTime = booking.endTime;
+                    hour = parseInt(booking.endTime.split(':')[0]);
+
+                    timeslots += `
+                        <div class="flex justify-between py-2 border-b border-gray-200">
+                            <span>${startTime} - ${endTime} (${booking.title})</span>
+                            <button onclick="openModal('${room.name}', 'Update', ${room.bookings.indexOf(booking)})" class="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600">Update</button>
+                        </div>
+                    `;
+                } else {
+                    timeslots += `
+                        <div class="flex justify-between py-2 border-b border-gray-200">
+                            <span>${startTime} - ${endTime}</span>
+                            <button onclick="openModal('${room.name}', 'New', '${startTime}')" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Add</button>
+                        </div>
+                    `;
+                    hour++;
+                }
+            }
+            return timeslots;
+        }
+
+        // Function to filter rooms by date
+        function filterByDate() {
+            const selectedDate = document.getElementById('search-date').value;
+            displayRooms(selectedDate);
+        }
+
+        // Function to open the modal
+        function openModal(roomName, action, timeSlotOrIndex) {
+            document.getElementById('modal-title').textContent = `${action} Booking for ${roomName}`;
+            document.getElementById('room-name').value = roomName;
+            document.getElementById('booking-form').dataset.action = action;
+            if (action === 'Update') {
+                const data = fetchBookings();
+                const booking = data.rooms.find(room => room.name === roomName).bookings[timeSlotOrIndex];
+                document.getElementById('date').value = booking.date;
+                document.getElementById('startTime').value = booking.startTime;
+                document.getElementById('endTime').value = booking.endTime;
+                document.getElementById('meeting-title').value = booking.title || '';
+                document.getElementById('meeting-description').value = booking.description || '';
+                document.getElementById('booking-form').dataset.bookingIndex = timeSlotOrIndex;
+            } else {
+                document.getElementById('booking-form').reset();
+                const date = document.getElementById('search-date').value;
+                document.getElementById('date').value = date;
+                document.getElementById('startTime').value = timeSlotOrIndex;
+                document.getElementById('endTime').value = `${parseInt(timeSlotOrIndex.split(':')[0]) + 1}:00`;
+                document.getElementById('booking-form').dataset.bookingIndex = '';
+                populateTimeOptions();
+            }
+            document.getElementById('booking-modal').classList.remove('hidden');
+        }
+
+        // Function to populate time options in the modal
+        function populateTimeOptions() {
+            const startTimeSelect = document.getElementById('startTime');
+            const endTimeSelect = document.getElementById('endTime');
+            startTimeSelect.innerHTML = '';
+            endTimeSelect.innerHTML = '';
+
+            for (let hour = 8; hour < 20; hour++) {
+                const timeOption = document.createElement('option');
+                timeOption.value = `${hour.toString().padStart(2, '0')}:00`;
+                timeOption.textContent = `${hour.toString().padStart(2, '0')}:00`;
+                startTimeSelect.appendChild(timeOption);
+
+                const endTimeOption = document.createElement('option');
+                endTimeOption.value = `${(hour + 1).toString().padStart(2, '0')}:00`;
+                endTimeOption.textContent = `${(hour + 1).toString().padStart(2, '0')}:00`;
+                endTimeSelect.appendChild(endTimeOption);
+            }
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            document.getElementById('booking-modal').classList.add('hidden');
+        }
+
+        // Function to close the warning modal
+        function closeWarningModal() {
+            document.getElementById('warning-modal').classList.add('hidden');
+        }
+
+        // Function to handle form submission
+        document.getElementById('booking-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const roomName = document.getElementById('room-name').value;
+            const date = document.getElementById('date').value;
+            const startTime = document.getElementById('startTime').value;
+            const endTime = document.getElementById('endTime').value;
+            const title = document.getElementById('meeting-title').value;
+            const description = document.getElementById('meeting-description').value;
+            const action = event.target.dataset.action;
+            const bookingIndex = event.target.dataset.bookingIndex;
+
+            const data = fetchBookings();
+
+            // Check for booking conflict
+            const conflictingBooking = data.rooms.some(room =>
+                room.bookings.some(booking =>
+                    booking.title === title && booking.date === date &&
+                    ((startTime >= booking.startTime && startTime < booking.endTime) ||
+                    (endTime > booking.startTime && endTime <= booking.endTime) ||
+                    (startTime <= booking.startTime && endTime >= booking.endTime))
+                )
+            );
+
+            if (conflictingBooking) {
+                document.getElementById('warning-modal').classList.remove('hidden');
+                return;
+            }
+
+            const room = data.rooms.find(room => room.name === roomName);
+            if (action === 'New') {
+                room.bookings.push({ date, startTime, endTime, title, description });
+            } else if (action === 'Update') {
+                room.bookings[bookingIndex] = { date, startTime, endTime, title, description };
+            }
+
+            saveBookings(data);
+            closeModal();
+            displayRooms(date);
+        });
+
+        // Add event listener to load data from local storage when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            displayRooms();
+        });
+
+    </script>
+</body>
+</html>
