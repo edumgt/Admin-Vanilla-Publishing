@@ -58,6 +58,18 @@
         </div>
     </div>
 
+    <!-- Modal for Meeting Notes -->
+    <div id="meeting-notes-modal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl">
+            <h2 id="notes-modal-title" class="text-2xl font-bold mb-4">Meeting Notes</h2>
+            <textarea id="meeting-notes" class="w-full h-96 border border-gray-300 rounded-md shadow-sm p-2"></textarea>
+            <div class="flex justify-end space-x-4 mt-4">
+                <button type="button" onclick="saveMeetingNotes()" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Save</button>
+                <button type="button" onclick="closeNotesModal()" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Warning Modal -->
     <div id="warning-modal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden">
         <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
@@ -103,14 +115,16 @@
             container.innerHTML = '';
 
             const data = fetchBookings();
+            const currentTime = new Date().toISOString().slice(0, 16); // Current time in YYYY-MM-DDTHH:MM format
+
             data.rooms.forEach(room => {
                 const card = document.createElement('div');
-                card.className = 'bg-white p-6 rounded-lg shadow-lg';
+                card.className = 'bg-white p-4 rounded-lg shadow-lg text-sm'; // Small text
                 card.innerHTML = `
-                    <h2 class="text-xl font-bold mb-4">${room.name}</h2>
-                    <p class="text-sm mb-4">Seats: ${room.seats}</p>
+                    <h2 class="text-xl font-bold mb-2">${room.name}</h2>
+                    <p class="text-sm mb-2">Seats: ${room.seats}</p>
                     <div id="timeslots-${room.name}">
-                        ${generateTimeslots(room, dateFilter)}
+                        ${generateTimeslots(room, dateFilter, currentTime)}
                     </div>
                 `;
                 container.appendChild(card);
@@ -118,7 +132,7 @@
         }
 
         // Function to generate timeslots
-        function generateTimeslots(room, dateFilter = null) {
+        function generateTimeslots(room, dateFilter = null, currentTime) {
             let timeslots = '';
             let hour = 8;
             while (hour < 20) {
@@ -131,15 +145,19 @@
                     endTime = booking.endTime;
                     hour = parseInt(booking.endTime.split(':')[0]);
 
+                    const isPastMeeting = new Date(`${dateFilter}T${endTime}`).getTime() < new Date(currentTime).getTime();
+                    const buttonLabel = isPastMeeting ? '회의록' : 'Update';
+                    const buttonClass = isPastMeeting ? 'bg-green-500 hover:bg-green-600' : 'bg-yellow-500 hover:bg-yellow-600';
+
                     timeslots += `
-                        <div class="flex justify-between py-2 border-b border-gray-200">
+                        <div class="flex justify-between py-1 border-b border-gray-200">
                             <span>${startTime} - ${endTime} (${booking.title})</span>
-                            <button onclick="openModal('${room.name}', 'Update', ${room.bookings.indexOf(booking)})" class="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600">Update</button>
+                            <button onclick="${isPastMeeting ? `openNotesModal(${room.bookings.indexOf(booking)})` : `openModal('${room.name}', 'Update', ${room.bookings.indexOf(booking)})`}" class="${buttonClass} text-white px-4 py-2 rounded-md">${buttonLabel}</button>
                         </div>
                     `;
                 } else {
                     timeslots += `
-                        <div class="flex justify-between py-2 border-b border-gray-200">
+                        <div class="flex justify-between py-1 border-b border-gray-200">
                             <span>${startTime} - ${endTime}</span>
                             <button onclick="openModal('${room.name}', 'New', '${startTime}')" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Add</button>
                         </div>
@@ -210,6 +228,34 @@
         // Function to close the warning modal
         function closeWarningModal() {
             document.getElementById('warning-modal').classList.add('hidden');
+        }
+
+        // Function to open the meeting notes modal
+        function openNotesModal(bookingIndex) {
+            const data = fetchBookings();
+            const booking = data.rooms.flatMap(room => room.bookings)[bookingIndex];
+            document.getElementById('notes-modal-title').textContent = `Meeting Notes for ${booking.title}`;
+            document.getElementById('meeting-notes').value = booking.notes || '';
+            document.getElementById('meeting-notes-modal').dataset.bookingIndex = bookingIndex;
+            document.getElementById('meeting-notes-modal').classList.remove('hidden');
+        }
+
+        // Function to close the meeting notes modal
+        function closeNotesModal() {
+            document.getElementById('meeting-notes-modal').classList.add('hidden');
+        }
+
+        // Function to save meeting notes
+        function saveMeetingNotes() {
+            const bookingIndex = document.getElementById('meeting-notes-modal').dataset.bookingIndex;
+            const notes = document.getElementById('meeting-notes').value;
+
+            const data = fetchBookings();
+            const booking = data.rooms.flatMap(room => room.bookings)[bookingIndex];
+            booking.notes = notes;
+
+            saveBookings(data);
+            closeNotesModal();
         }
 
         // Function to handle form submission
