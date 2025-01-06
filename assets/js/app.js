@@ -539,7 +539,7 @@ const translations = {
             menu: "Menu Management",
             settings: "Settings Management",
         },
-        breadcrumb: "System Management > Code Management",
+        breadcrumb: "Code Management",
         buttons: {
             search: "Search",
             reset: "Reset Search",
@@ -566,7 +566,7 @@ const translations = {
             menu: "메뉴관리",
             settings: "설정관리",
         },
-        breadcrumb: "시스템관리 > 코드관리",
+        breadcrumb: "코드관리",
         buttons: {
             search: "검색",
             reset: "검색 초기화",
@@ -593,7 +593,7 @@ const translations = {
             menu: "メニュー管理",
             settings: "設定管理",
         },
-        breadcrumb: "システム管理 > コード管理",
+        breadcrumb: "コード管理",
         buttons: {
             search: "検索",
             reset: "検索をリセット",

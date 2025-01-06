@@ -194,7 +194,7 @@ const translations = {
             menu: "Sales Statistics",
             settings: "Performance",
         },
-        breadcrumb: "Statistics > Member Statistics",
+        breadcrumb: "Member Statistics",
         buttons: {
             search: "Search",
             reset: "Reset Search",
@@ -221,7 +221,7 @@ const translations = {
             menu: "판매통계",
             settings: "실적",
         },
-        breadcrumb: "통계 > 회원통계",
+        breadcrumb: "회원통계",
         buttons: {
             search: "검색",
             reset: "검색 초기화",
@@ -248,7 +248,7 @@ const translations = {
             menu: "販売統計",
             settings: "業績",
         },
-        breadcrumb: "統計 > 会員統計",
+        breadcrumb: "会員統計",
         buttons: {
             search: "検索",
             reset: "検索をリセット",
