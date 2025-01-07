@@ -1,0 +1,14 @@
+{
+    "waitingList": [
+      { "id": 1, "name": "홍길동", "departmentId": 1 },
+      { "id": 2, "name": "김철수", "departmentId": 2 },
+      { "id": 3, "name": "이영희", "departmentId": 3 },
+      { "id": 4, "name": "박민수", "departmentId": 4 },
+      { "id": 5, "name": "최지우", "departmentId": 5 },
+      { "id": 6, "name": "장민호", "departmentId": 6 },
+      { "id": 7, "name": "김민정", "departmentId": 7 },
+      { "id": 8, "name": "이진수", "departmentId": 8 },
+      { "id": 9, "name": "박영수", "departmentId": 9 },
+      { "id": 10, "name": "정예진", "departmentId": 10 }
+    ]
+  }
