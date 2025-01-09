@@ -1,0 +1,86 @@
+{
+    "lectures": [
+      {
+        "date": "2025-01-01",
+        "schedule": [
+          {
+            "time": "09:00 - 10:00",
+            "course": "English 101",
+            "instructor": "John Doe",
+            "students": [
+              {
+                "name": "Alice",
+                "university": "A University",
+                "year": "2",
+                "major": "Literature"
+              },
+              {
+                "name": "Bob",
+                "university": "B University",
+                "year": "1",
+                "major": "History"
+              }
+            ]
+          },
+          {
+            "time": "10:00 - 11:00",
+            "course": "English 102",
+            "instructor": "Jane Smith",
+            "students": [
+              {
+                "name": "Charlie",
+                "university": "C University",
+                "year": "3",
+                "major": "Philosophy"
+              },
+              {
+                "name": "David",
+                "university": "D University",
+                "year": "4",
+                "major": "Linguistics"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "date": "2025-01-02",
+        "schedule": [
+          {
+            "time": "09:00 - 10:00",
+            "course": "Math 101",
+            "instructor": "Eve Johnson",
+            "students": [ {
+                "name": "Charlie",
+                "university": "C University",
+                "year": "3",
+                "major": "Philosophy"
+              },
+              {
+                "name": "David",
+                "university": "D University",
+                "year": "4",
+                "major": "Linguistics"
+              }]
+          },
+          {
+            "time": "10:00 - 11:00",
+            "course": "Math 102",
+            "instructor": "Mike Brown",
+            "students": [ {
+                "name": "Charlie",
+                "university": "C University",
+                "year": "3",
+                "major": "Philosophy"
+              },
+              {
+                "name": "David",
+                "university": "D University",
+                "year": "4",
+                "major": "Linguistics"
+              }]
+          }
+        ]
+      }
+    ]
+  }

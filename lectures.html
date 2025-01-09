@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture Schedule</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .custom-drag-icon {
+            @apply absolute top-1 right-1 cursor-grab text-xs font-bold py-1 px-2 rounded-full shadow-lg;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            color: #ffffff;
+        }
+
+        .dragging {
+            @apply opacity-50;
+        }
+
+        .new-button {
+            @apply bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded cursor-pointer;
+        }
+
+        .day-header {
+            background-color: #0058A3; /* IKEA Blue */
+            color: #FFFFFF; /* White text */
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 h-screen flex justify-center items-center">
+    <div class="calendar bg-white shadow-lg rounded-lg w-full max-w-7xl h-full flex flex-col">
+        <div class="header bg-blue-500 text-white p-4 flex justify-between items-center">
+            <button id="prevMonth" class="bg-blue-700 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Previous Month</button>
+            <h2 id="monthYear" class="text-xl font-bold"></h2>
+            <button id="nextMonth" class="bg-blue-700 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Next Month</button>
+        </div>
+        <div class="days grid grid-cols-7">
+            <div class="day-header text-center">Sun</div>
+            <div class="day-header text-center">Mon</div>
+            <div class="day-header text-center">Tue</div>
+            <div class="day-header text-center">Wed</div>
+            <div class="day-header text-center">Thu</div>
+            <div class="day-header text-center">Fri</div>
+            <div class="day-header text-center">Sat</div>
+        </div>
+        <div class="dates grid grid-cols-7 flex-grow" id="dates"></div>
+    </div>
+
+    <!-- Add Lecture Modal -->
+    <div id="modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-1/2 max-h-full overflow-y-auto">
+            <h3 class="text-xl font-bold mb-4">Add Lecture</h3>
+            <form id="lectureForm" class="space-y-4">
+                <div>
+                    <label class="block mb-2">Time:</label>
+                    <input type="time" id="time" class="block w-full p-2 border rounded">
+                </div>
+                <div>
+                    <label class="block mb-2">Course:</label>
+                    <input type="text" id="course" placeholder="Course Name" class="block w-full p-2 border rounded">
+                </div>
+                <div>
+                    <label class="block mb-2">Instructor:</label>
+                    <input type="text" id="instructor" placeholder="Instructor Name" class="block w-full p-2 border rounded">
+                </div>
+                
+                <h4 class="text-lg font-bold mb-2">Add Students</h4>
+                <div id="studentsContainer" class="space-y-4">
+                    <div class="student-entry">
+                        <label class="block mb-1">Student Name:</label>
+                        <input type="text" class="student-name block w-full mb-2 p-2 border rounded">
+                        <label class="block mb-1">University:</label>
+                        <input type="text" class="student-university block w-full mb-2 p-2 border rounded">
+                        <label class="block mb-1">Year:</label>
+                        <input type="number" class="student-year block w-full mb-2 p-2 border rounded">
+                        <label class="block mb-1">Major:</label>
+                        <input type="text" class="student-major block w-full mb-2 p-2 border rounded">
+                    </div>
+                </div>
+                <button type="button" id="addStudentBtn" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-4">+ Add Another Student</button>
+                
+                <div class="flex justify-end space-x-4">
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add Lecture</button>
+                    <button type="button" id="closeModal" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Student List Modal -->
+    <div id="modalSt" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-1/2 max-h-full overflow-y-auto">
+            <h3 class="text-xl font-bold mb-4">Student List</h3>
+            <ul id="studentList" class="list-disc pl-5"></ul>
+            <div class="flex justify-end mt-4">
+                <button id="closeModal2" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
