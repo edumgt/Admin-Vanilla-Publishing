@@ -255,12 +255,6 @@ function initNew() {
 
 initNew();
 
-// Close modal
-document.getElementById('closeModal').addEventListener('click', () => {
-    toggleModal(false);
-});
-
-
 new Pikaday({
     field: document.getElementById('datePicker'),
     format: 'YYYY-MM-DD',

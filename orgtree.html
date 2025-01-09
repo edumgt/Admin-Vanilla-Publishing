@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <link href="assets/css/app.css" rel="stylesheet">
 </head>
+
 <body class="main-layout">
     <div class="gnb-menu fixed top-0 left-0 bottom-0 w-full z-50">
         <ul class="flex justify-between items-center">
@@ -65,8 +67,7 @@
     <div id="toast-container"></div>
 
 
-    <div id="offCanvas"
-        class="fixed top-14 h-full bg-gray-100 z-50 shadow-sm">
+    <div id="offCanvas" class="fixed top-14 h-full bg-gray-100 z-50 shadow-sm">
         <div class="flex flex-col h-full">
             <ul class="flex-grow p-4 space-y-4">
                 <!-- 코드관리 -->
@@ -79,7 +80,8 @@
                 </li>
                 <!-- 권한관리 -->
                 <li>
-                    <a href="orgtree.html" class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
+                    <a href="orgtree.html"
+                        class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
                         <i class="fas fa-user-shield menu-icon text-blue-400"></i>
                         <span class="menu-text">권한관리</span>
                     </a>
@@ -120,57 +122,20 @@
 
     <div id="content" class="content">
         <nav class="breadcrumb">
-            코드관리
+            권한관리
         </nav>
 
-        
-        <div class="flex flex-col lg:flex-row justify-between items-center p-2">
-            <div id="dataCount" class="text-sm text-gray-700 mb-2 lg:mb-0">Total :</div>
-            <div class="flex flex2 flex-col lg:flex-row items-center space-y-2 lg:space-y-0 lg:space-x-2">
-                <div class="flex items-center space-x-2">
-                    <input type="text" id="groupCode" placeholder="Group Code"
-                        class="border border-gray-300 rounded p-2">
-                    <input type="text" id="codeName" placeholder="Code Name" class="border border-gray-300 rounded p-2">
-                    <input type="text" id="description" placeholder="Description"
-                        class="border border-gray-300 rounded p-2">
-                    <div class="relative">
-                        <input type="text" id="datePicker" class="border border-gray-300 rounded p-2 pl-10">
-                        <i
-                            class="fas fa-calendar-alt absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <button id="searchByDate"
-                        class="flex items-center space-x-2 px-4 py-1.5 text-white font-medium rounded bg-gray-800 hover:bg-gray-700">
-                        <i class="fas fa-search"></i>
-                        <span>검색</span>
-                    </button>
-                    <button id="resetSearch"
-                        class="flex items-center space-x-2 px-4 py-1.5 text-white font-medium rounded bg-gray-800 hover:bg-gray-700">
-                        <i class="fas fa-undo"></i>
-                        <span>검색 초기화</span>
-                    </button>
-                    <button id="newrow"
-                        class="flex items-center space-x-2 px-4 py-1.5 text-white font-medium rounded bg-gray-800 hover:bg-gray-700">
-                        <i class="fas fa-plus"></i>
-                        <span>신규</span>
-                    </button>
-                    <button id="delrow"
-                        class="flex items-center space-x-2 px-4 py-1.5 text-white font-medium rounded bg-gray-800 hover:bg-gray-700">
-                        <i class="fas fa-trash"></i>
-                        <span>삭제</span>
-                    </button>
-                    <button id="saverow"
-                        class="flex items-center space-x-2 px-4 py-1.5 text-white font-medium rounded bg-gray-800 hover:bg-gray-700">
-                        <i class="fas fa-save"></i>
-                        <span>저장</span>
-                    </button>
-                </div>
+        <div class="flex h-screen">
+            <!-- Left Panel: Organization Chart -->
+            <div id="org-chart" class="w-1/3 bg-white p-4 overflow-y-auto border-r border-gray-300">
+                <h1 class="text-2xl font-bold text-blue-600 mb-4">조직도</h1>
+            </div>
+
+            <!-- Right Panel: Permissions -->
+            <div id="permissions" class="w-2/3 bg-gray-50 p-4 overflow-y-auto">
+                <h1 class="text-2xl font-bold text-blue-600 mb-4">권한 설정</h1>
             </div>
         </div>
-        <!-- The grid -->
-        <div id="grid"></div>
-
 
 
     </div>
@@ -245,15 +210,9 @@
         </div>
     </div>
 
-
-    <script type="text/javascript" src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.js"></script>
-    <script type="text/javascript" src="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.js"></script>
-    <script type="text/javascript" src="https://uicdn.toast.com/tui-grid/latest/tui-grid.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
-    <script type="text/javascript" src="assets/js/app.js"></script>
+    <script type="text/javascript" src="assets/js/orgtree.js"></script>
+    <script type="text/javascript" src="assets/js/orgtree2.js"></script>
     <script type="text/javascript" src="assets/js/logo.js"></script>
-    
-
 
 
 </body>
