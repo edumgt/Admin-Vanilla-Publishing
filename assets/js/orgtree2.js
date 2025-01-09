@@ -16,30 +16,52 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   function createTreeNode(name, children = [], depth = 0) {
-    const node = document.createElement("div");
-    node.style.marginLeft = `${depth * 20}px`;
-    node.style.padding = "5px";
-    node.style.border = "1px solid #ddd";
-    node.style.marginBottom = "5px";
-    node.style.cursor = "pointer";
-    node.textContent = name;
+    const container = document.createElement("div");
+    container.style.marginLeft = `${depth * 20}px`;
+    container.style.padding = "5px";
+    container.style.border = "1px solid #ddd";
+    container.style.marginBottom = "5px";
+    container.style.cursor = "pointer";
+    container.style.display = "flex";
+    container.style.alignItems = "center";
+
+    const toggleButton = document.createElement("span");
+    toggleButton.textContent = children.length > 0 ? "+" : "";
+    toggleButton.style.marginRight = "10px";
+    toggleButton.style.cursor = "pointer";
+
+    const label = document.createElement("span");
+    label.textContent = name;
 
     const childrenContainer = document.createElement("div");
     childrenContainer.style.display = "none";
+    childrenContainer.style.marginLeft = "20px";
 
-    node.addEventListener("click", (e) => {
+    toggleButton.addEventListener("click", (e) => {
       e.stopPropagation();
-      childrenContainer.style.display = childrenContainer.style.display === "none" ? "block" : "none";
-      updatePermissionsTitle(name);
+      if (childrenContainer.style.display === "none") {
+        childrenContainer.style.display = "block";
+        toggleButton.textContent = "-";
+      } else {
+        childrenContainer.style.display = "none";
+        toggleButton.textContent = "+";
+      }
     });
+
+    container.appendChild(toggleButton);
+    container.appendChild(label);
+    container.appendChild(childrenContainer);
 
     children.forEach((child) => {
       const childNode = createTreeNode(child.name, child.children || [], depth + 1);
       childrenContainer.appendChild(childNode);
     });
 
-    node.appendChild(childrenContainer);
-    return node;
+    label.addEventListener("click", () => {
+      updatePermissionsTitle(name);
+    });
+
+    return container;
   }
 
   function renderOrgChart(data) {
