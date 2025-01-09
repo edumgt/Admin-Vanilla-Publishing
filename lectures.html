@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lecture Schedule</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="assets/css/trello.css" rel="stylesheet">
     <style>
         .custom-drag-icon {
             @apply absolute top-1 right-1 cursor-grab text-xs font-bold py-1 px-2 rounded-full shadow-lg;
@@ -21,87 +19,251 @@
         }
 
         .day-header {
-            background-color: #0058A3; /* IKEA Blue */
-            color: #FFFFFF; /* White text */
+            background-color: #0058A3;
+            /* IKEA Blue */
+            color: #FFFFFF;
+            /* White text */
             font-weight: bold;
             text-transform: uppercase;
             padding: 10px;
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 3px 3px 3px 3px;
+            
         }
     </style>
 </head>
-<body class="bg-gray-100 h-screen flex justify-center items-center">
-    <div class="calendar bg-white shadow-lg rounded-lg w-full max-w-7xl h-full flex flex-col">
-        <div class="header bg-blue-500 text-white p-4 flex justify-between items-center">
-            <button id="prevMonth" class="bg-blue-700 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Previous Month</button>
-            <h2 id="monthYear" class="text-xl font-bold"></h2>
-            <button id="nextMonth" class="bg-blue-700 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Next Month</button>
-        </div>
-        <div class="days grid grid-cols-7">
-            <div class="day-header text-center">Sun</div>
-            <div class="day-header text-center">Mon</div>
-            <div class="day-header text-center">Tue</div>
-            <div class="day-header text-center">Wed</div>
-            <div class="day-header text-center">Thu</div>
-            <div class="day-header text-center">Fri</div>
-            <div class="day-header text-center">Sat</div>
-        </div>
-        <div class="dates grid grid-cols-7 flex-grow" id="dates"></div>
+
+<body>
+    <div class="gnb-menu fixed top-0 left-0 bottom-0 w-full z-50">
+        <ul class="flex justify-between items-center">
+            <div id="logo"></div>
+            <div class="tabs flex">
+                <li>
+                    <a href="system.html" class="gnb-item tab-link block flex items-center space-x-2">
+                        <i class="fas fa-cogs"></i>
+                        <span>시스템관리</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="orgni.html" class="gnb-item tab-link block flex items-center space-x-2">
+                        <i class="fas fa-users"></i>
+                        <span>조직관리</span>
+                    </a>
+                </li>
+                <!-- 업무관리 -->
+                <li>
+                    <a href="work.html" class="gnb-item tab-link block flex items-center space-x-2">
+                        <i class="fas fa-briefcase"></i>
+                        <span>업무관리</span>
+                    </a>
+                </li>
+                <!-- 일정관리 -->
+                <li>
+                    <a href="calendar.html" class="gnb-item tab-link block flex items-center space-x-2">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>일정관리</span>
+                    </a>
+                </li>
+                <!-- 통계 -->
+                <li>
+                    <a href="stati.html" class="gnb-item tab-link block flex items-center space-x-2">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>통계</span>
+                    </a>
+                </li>
+                <!-- 설정관리 -->
+                <li>
+                    <a href="config.html" class="gnb-item tab-link block flex items-center space-x-2">
+                        <i class="fas fa-tools"></i>
+                        <span>설정관리</span>
+                    </a>
+                </li>
+            </div>
+
+            <!-- 멤버 아이콘 -->
+            <button id="memberIcon" class="text-gray-200 hover:text-white text-2xl p-2">
+                <i class="fas fa-user"></i>
+            </button>
+        </ul>
     </div>
 
-    <!-- Add Lecture Modal -->
-    <div id="modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
-        <div class="bg-white p-8 rounded-lg shadow-lg w-1/2 max-h-full overflow-y-auto">
-            <h3 class="text-xl font-bold mb-4">Add Lecture</h3>
-            <form id="lectureForm" class="space-y-4">
-                <div>
-                    <label class="block mb-2">Time:</label>
-                    <input type="time" id="time" class="block w-full p-2 border rounded">
-                </div>
-                <div>
-                    <label class="block mb-2">Course:</label>
-                    <input type="text" id="course" placeholder="Course Name" class="block w-full p-2 border rounded">
-                </div>
-                <div>
-                    <label class="block mb-2">Instructor:</label>
-                    <input type="text" id="instructor" placeholder="Instructor Name" class="block w-full p-2 border rounded">
-                </div>
-                
-                <h4 class="text-lg font-bold mb-2">Add Students</h4>
-                <div id="studentsContainer" class="space-y-4">
-                    <div class="student-entry">
-                        <label class="block mb-1">Student Name:</label>
-                        <input type="text" class="student-name block w-full mb-2 p-2 border rounded">
-                        <label class="block mb-1">University:</label>
-                        <input type="text" class="student-university block w-full mb-2 p-2 border rounded">
-                        <label class="block mb-1">Year:</label>
-                        <input type="number" class="student-year block w-full mb-2 p-2 border rounded">
-                        <label class="block mb-1">Major:</label>
-                        <input type="text" class="student-major block w-full mb-2 p-2 border rounded">
-                    </div>
-                </div>
-                <button type="button" id="addStudentBtn" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-4">+ Add Another Student</button>
-                
-                <div class="flex justify-end space-x-4">
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add Lecture</button>
-                    <button type="button" id="closeModal" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Close</button>
-                </div>
-            </form>
-        </div>
-    </div>
 
-    <!-- Student List Modal -->
-    <div id="modalSt" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
-        <div class="bg-white p-8 rounded-lg shadow-lg w-1/2 max-h-full overflow-y-auto">
-            <h3 class="text-xl font-bold mb-4">Student List</h3>
-            <ul id="studentList" class="list-disc pl-5"></ul>
-            <div class="flex justify-end mt-4">
-                <button id="closeModal2" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Close</button>
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
+
+    <div id="offCanvas" class="fixed top-14 h-full bg-gray-100 z-50 shadow-sm">
+        <div class="flex flex-col h-full">
+            <ul class="flex-grow p-4 space-y-4">
+
+                <li>
+                    <a href="work.html"
+                        class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
+                        <i class="fas fa-calendar-alt menu-icon text-blue-400"></i>
+                        <span class="menu-text">예약관리</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="meeting.html"
+                        class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
+                        <i class="fas fa-users-cog menu-icon text-blue-400"></i> <!-- 회의실 관리 -->
+                        <span class="menu-text">회의실관리</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="hospital.html"
+                        class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
+                        <i class="fas fa-sitemap menu-icon text-blue-400"></i>
+                        <span class="menu-text">병원예약</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="lectures.html"
+                        class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
+                        <i class="fas fa-file-signature menu-icon text-blue-400"></i> <!-- 결재/보고 -->
+                        <span class="menu-text">강의일정</span>
+                    </a>
+                </li>
+
+                
+
+
+            </ul>
+
+            <div class="flex flex-col space-y-4 pb-4">
+                <button id="expandOffCanvas" class="text-gray-800 hover:text-blue-500 text-xl">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <button id="collapseOffCanvas" class="text-gray-800 hover:text-blue-500 text-xl">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
             </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <div id="content" class="content">
+        <nav class="breadcrumb">
+            강의일정
+        </nav>
+
+
+
+
+        <div class="calendar bg-white shadow-lg rounded-lg w-full h-full flex flex-col">
+            <div class="header text-white p-4 flex justify-between items-center">
+                <button id="prevMonth"
+                    class="bg-blue-700 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Previous Month</button>
+                <h2 id="monthYear" class="text-xl font-bold text-gray-600"></h2>
+                <button id="nextMonth" class="bg-blue-700 hover:bg-blue-600 font-bold py-2 px-4 rounded">Next
+                    Month</button>
+            </div>
+            <div class="days grid grid-cols-7">
+                <div class="day-header text-center">Sun</div>
+                <div class="day-header text-center">Mon</div>
+                <div class="day-header text-center">Tue</div>
+                <div class="day-header text-center">Wed</div>
+                <div class="day-header text-center">Thu</div>
+                <div class="day-header text-center">Fri</div>
+                <div class="day-header text-center">Sat</div>
+            </div>
+            <div class="dates grid grid-cols-7 flex-grow" id="dates"></div>
+        </div>
+
+
+
+        <!-- Add Lecture Modal -->
+        <div id="modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
+            <div class="bg-white rounded-md shadow-md overflow-y-auto">
+                <h3 class="text-xl font-bold mb-4">Add Lecture</h3>
+                <form id="lectureForm" class="space-y-4">
+                    <div>
+                        <label class="block mb-2">Time:</label>
+                        <input type="time" id="time" class="block w-full p-2 border rounded">
+                    </div>
+                    <div>
+                        <label class="block mb-2">Course:</label>
+                        <input type="text" id="course" placeholder="Course Name"
+                            class="block w-full p-2 border rounded">
+                    </div>
+                    <div>
+                        <label class="block mb-2">Instructor:</label>
+                        <input type="text" id="instructor" placeholder="Instructor Name"
+                            class="block w-full p-2 border rounded">
+                    </div>
+
+                    <h4 class="text-lg font-bold mb-2">Add Students</h4>
+                    <div id="studentsContainer" class="space-y-4">
+                        <div class="student-entry">
+                            <label class="block mb-1">Student Name:</label>
+                            <input type="text" class="student-name block w-full mb-2 p-2 border rounded">
+                            <label class="block mb-1">University:</label>
+                            <input type="text" class="student-university block w-full mb-2 p-2 border rounded">
+                            <label class="block mb-1">Year:</label>
+                            <input type="number" class="student-year block w-full mb-2 p-2 border rounded">
+                            <label class="block mb-1">Major:</label>
+                            <input type="text" class="student-major block w-full mb-2 p-2 border rounded">
+                        </div>
+                    </div>
+                    <button type="button" id="addStudentBtn"
+                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-4">+ Add
+                        Another Student</button>
+
+                    <div class="flex justify-end space-x-4">
+                        <button type="submit"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add
+                            Lecture</button>
+                        <button type="button" id="closeModal"
+                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Student List Modal -->
+        <div id="modalSt" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
+            <div class="bg-white p-8 rounded-lg shadow-lg w-1/2 max-h-full overflow-y-auto">
+                <h3 class="text-xl font-bold mb-4">Student List</h3>
+                <ul id="studentList" class="list-disc pl-5"></ul>
+                <div class="flex justify-end mt-4">
+                    <button id="closeModal2"
+                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Close</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <button id="gearIcon" class="fixed bottom-4 right-4 bg-gray-800 text-white rounded-full p-3 shadow-lg z-50">
+        <i class="fas fa-globe"></i>
+    </button>
+
+
+    <div id="floatingNav"
+        class="fixed bottom-4 right-4 bg-gray-800 text-white rounded-lg shadow-lg p-4 z-50 hidden space-y-4">
+        <div class="flex justify-between items-center">
+            <h3 class="text-white font-semibold">Language</h3>
+            <button id="closeFloatingNav" class="text-white text-lg">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div id="languageSwitcher" class="flex space-x-2">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg" alt="English"
+                data-lang="en" class="w-8 h-8 cursor-pointer">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="한국어"
+                data-lang="ko" class="w-8 h-8 cursor-pointer">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本語" data-lang="ja"
+                class="w-6 h-6 cursor-pointer">
+        </div>
+
+    </div>
+
+    <script type="text/javascript" src="assets/js/workframe.js"></script>
+    <script type="text/javascript" src="assets/js/lectures.js"></script>
+    <script type="text/javascript" src="assets/js/logo.js"></script>
 </body>
+
 </html>
