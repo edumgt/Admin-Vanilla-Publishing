@@ -268,10 +268,10 @@ languageSwitcher.addEventListener("click", function (event) {
 
 });
 
-document.getElementById('closeFloatingNav').addEventListener('click', () => {
-    const floatingNav = document.getElementById('floatingNav');
-    floatingNav.classList.add('hidden'); 
-});
+// document.getElementById('closeFloatingNav').addEventListener('click', () => {
+//     const floatingNav = document.getElementById('floatingNav');
+//     floatingNav.classList.add('hidden'); 
+// });
 
 /* gearIcon */
 // const button = document.createElement('button');

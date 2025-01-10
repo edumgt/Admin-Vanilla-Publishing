@@ -236,15 +236,15 @@ languageSwitcher.addEventListener("click", function (event) {
 
 });
 
-document.getElementById('closeFloatingNav').addEventListener('click', () => {
-  const floatingNav = document.getElementById('floatingNav');
-  floatingNav.classList.add('hidden'); // Hide the floating menu
-});
+// document.getElementById('closeFloatingNav').addEventListener('click', () => {
+//   const floatingNav = document.getElementById('floatingNav');
+//   floatingNav.classList.add('hidden'); // Hide the floating menu
+// });
 
-document.getElementById('closeFloatingNav').addEventListener('click', () => {
-  const floatingNav = document.getElementById('floatingNav');
-  floatingNav.classList.add('hidden'); // Hide the floating menu
-});
+// document.getElementById('closeFloatingNav').addEventListener('click', () => {
+//   const floatingNav = document.getElementById('floatingNav');
+//   floatingNav.classList.add('hidden'); // Hide the floating menu
+// });
 
 
 

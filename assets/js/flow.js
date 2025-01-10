@@ -416,10 +416,10 @@ chart.render();
 // 초기 차트 데이터 설정
 updateChart(getDataFromLocalStorage());
 
-document.getElementById('closeFloatingNav').addEventListener('click', () => {
-    const floatingNav = document.getElementById('floatingNav');
-    floatingNav.classList.add('hidden'); // Hide the floating menu
-});
+// document.getElementById('closeFloatingNav').addEventListener('click', () => {
+//     const floatingNav = document.getElementById('floatingNav');
+//     floatingNav.classList.add('hidden'); // Hide the floating menu
+// });
 
 /* gearIcon */
 // const button = document.createElement('button');

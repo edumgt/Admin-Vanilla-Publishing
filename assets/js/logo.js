@@ -34,3 +34,10 @@ document.getElementById('gearIcon').addEventListener('click', () => {
     const floatingNav = document.getElementById('floatingNav');
     floatingNav.classList.remove('hidden');
 });
+
+
+/* floaingNav */
+document.getElementById('closeFloatingNav').addEventListener('click', () => {
+    const floatingNav = document.getElementById('floatingNav');
+    floatingNav.classList.add('hidden'); // Hide the floating menu
+});

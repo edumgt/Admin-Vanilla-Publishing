@@ -102,22 +102,12 @@ memberIcon.addEventListener('click', function () {
 
 /* LNB */
 const offCanvas = document.getElementById('offCanvas');
-offCanvas.classList.remove('hidden', '-translate-x-full'); // Show the off-canvas menu
+offCanvas.classList.remove('hidden', '-translate-x-full'); 
 offCanvas.classList.add('collapsed');
 offCanvas.classList.remove('expanded');
 
-//const hamburgerButton = document.getElementById('hamburgerButton');
-
 const expandOffCanvas = document.getElementById('expandOffCanvas');
 const collapseOffCanvas = document.getElementById('collapseOffCanvas');
-
-// hamburgerButton.addEventListener('click', function () {
-//     offCanvas.classList.toggle('hidden');
-//     offCanvas.classList.toggle('transform');
-//     offCanvas.classList.toggle('-translate-x-full');
-//     offCanvas.classList.add('expanded');
-//     expandOffCanvas.classList.add('hidden');
-// });
 
 expandOffCanvas.addEventListener('click', function () {
     offCanvas.classList.remove('collapsed');
@@ -132,14 +122,8 @@ collapseOffCanvas.addEventListener('click', function () {
 
 });
 
-// document.getElementById('hamburgerButton').addEventListener('click', () => {
-//     const offCanvas = document.getElementById('offCanvas');
-//     offCanvas.classList.remove('hidden', '-translate-x-full'); // Show the off-canvas menu
-// });
 
 const currentPage = window.location.pathname.split("/").pop();
-
-
 
 const demoLinks = document.querySelectorAll('a[href="#"]');
 const demoModal = document.getElementById('demoModal');
@@ -267,15 +251,15 @@ languageSwitcher.addEventListener("click", function (event) {
 
 });
 
-document.getElementById('closeFloatingNav').addEventListener('click', () => {
-    const floatingNav = document.getElementById('floatingNav');
-    floatingNav.classList.add('hidden'); // Hide the floating menu
-});
+// document.getElementById('closeFloatingNav').addEventListener('click', () => {
+//     const floatingNav = document.getElementById('floatingNav');
+//     floatingNav.classList.add('hidden'); // Hide the floating menu
+// });
 
-document.getElementById('closeFloatingNav').addEventListener('click', () => {
-    const floatingNav = document.getElementById('floatingNav');
-    floatingNav.classList.add('hidden'); 
-});
+// document.getElementById('closeFloatingNav').addEventListener('click', () => {
+//     const floatingNav = document.getElementById('floatingNav');
+//     floatingNav.classList.add('hidden'); 
+// });
 
 
 
