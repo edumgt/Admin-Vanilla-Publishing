@@ -1,28 +1,3 @@
-// function generateUUID() {
-//   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-//     const r = (Math.random() * 16) | 0,
-//       v = c === 'x' ? r : (r & 0x3) | 0x8;
-//     return v.toString(16);
-//   });
-// }
-
-// Toast Functionality
-// function showToast(message, type = 'success') {
-//   const toastContainer = document.getElementById('toast-container');
-//   const toast = document.createElement('div');
-//   toast.className = `toast toast-${type} show`;
-//   toast.innerText = message;
-
-//   toastContainer.appendChild(toast);
-
-//   // Automatically remove the toast after 3 seconds
-//   setTimeout(() => {
-//     toast.classList.remove('show');
-//     setTimeout(() => toast.remove(), 300);
-//   }, 3000);
-// }
-
-
 /* log out */
 const memberIcon = document.getElementById('memberIcon');
 const logoutModal = document.getElementById('logoutModal');
@@ -49,40 +24,22 @@ cancelLogout.addEventListener('click', function () {
   logoutModal.classList.add('hidden');
 });
 
-/* LNB */
-// const offCanvas = document.getElementById('offCanvas');
-// offCanvas.classList.remove('hidden', '-translate-x-full');
-// offCanvas.classList.add('collapsed');
-// offCanvas.classList.remove('expanded');
 
-
-// const expandOffCanvas = document.getElementById('expandOffCanvas');
-// const collapseOffCanvas = document.getElementById('collapseOffCanvas');
-// expandOffCanvas.addEventListener('click', function () {
-//   offCanvas.classList.remove('collapsed');
-//   offCanvas.classList.add('expanded');
-//   expandOffCanvas.classList.add('hidden');
-// });
-// collapseOffCanvas.addEventListener('click', function () {
-//   offCanvas.classList.add('collapsed');
-//   offCanvas.classList.remove('expanded');
-//   collapseOffCanvas.classList.add('hidden');
-// });
-
-// 현재 페이지 URL 가져오기
 const currentPage = window.location.pathname.split("/").pop();
 
-// 모든 메뉴 링크 가져오기
 const menuLinks = document.querySelectorAll(".gnb-item");
 
-// 활성화 상태 설정
-menuLinks.forEach((link) => {
+const menuLinks2 = document.querySelectorAll(".menu-item");
 
+menuLinks2.forEach((link) => {
   if (link.getAttribute("href") === currentPage) {
-    console.log(currentPage);
-    link.classList.add("active");
-  } else {
-    link.classList.remove("active");
+    menuLinks.forEach((link) => {
+      if (link.getAttribute("href") === "system.html") {
+        link.classList.add("active");
+      } else {
+        link.classList.remove("active");
+      }
+    });
   }
 });
 
@@ -105,7 +62,6 @@ closeDemoModal.addEventListener('click', function () {
 
 
 /* 다국어 */
-
 const translations = {
   en: {
     menu: "Menu",
@@ -231,16 +187,3 @@ languageSwitcher.addEventListener("click", function (event) {
   buttons[4].textContent = buttonLabels.save;
 
 });
-
-// document.getElementById('closeFloatingNav').addEventListener('click', () => {
-//   const floatingNav = document.getElementById('floatingNav');
-//   floatingNav.classList.add('hidden'); // Hide the floating menu
-// });
-
-// document.getElementById('closeFloatingNav').addEventListener('click', () => {
-//   const floatingNav = document.getElementById('floatingNav');
-//   floatingNav.classList.add('hidden'); // Hide the floating menu
-// });
-
-
-

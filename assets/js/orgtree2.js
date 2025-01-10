@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   permissionsTitle.style.marginBottom = "1rem";
   permissionsContainer.appendChild(permissionsTitle);
 
+  let selectedNode = null; // To track the selected node
+
   async function fetchData(url) {
     const response = await fetch(url);
     if (!response.ok) throw new Error(`Failed to fetch ${url}`);
@@ -25,6 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const toggleButton = document.createElement("span");
     toggleButton.textContent = children.length > 0 ? "+" : "";
+    toggleButton.style.fontSize = "30px";
     toggleButton.style.marginRight = "10px";
     toggleButton.style.cursor = "pointer";
 
@@ -56,6 +59,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     label.addEventListener("click", () => {
+      if (selectedNode) {
+        // Reset styles for previously selected node
+        selectedNode.style.backgroundColor = "";
+        selectedNode.style.color = "";
+      }
+      // Apply styles to the currently selected node
+      container.style.backgroundColor = "#8f8f8f";
+      container.style.color = "white";
+      selectedNode = container; // Update the selected node
       updatePermissionsTitle(name);
     });
 

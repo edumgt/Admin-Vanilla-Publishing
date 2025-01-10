@@ -242,8 +242,6 @@ input[type="date"] {
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
-
-
 @media (max-width: 1550px) {
     .flex-col {
         flex-direction: column;
