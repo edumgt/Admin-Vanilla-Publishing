@@ -60,14 +60,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     label.addEventListener("click", () => {
       if (selectedNode) {
-        // Reset styles for previously selected node
         selectedNode.style.backgroundColor = "";
         selectedNode.style.color = "";
       }
-      // Apply styles to the currently selected node
-      container.style.backgroundColor = "#8f8f8f";
-      container.style.color = "white";
-      selectedNode = container; // Update the selected node
+      container.style.backgroundColor = "#0058a3";
+      container.style.color = "#ffcc00";
+      selectedNode = container;
       updatePermissionsTitle(name);
     });
 

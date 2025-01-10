@@ -23,8 +23,6 @@
     grid-template-columns: repeat(5, 1fr);
     gap: 10px;
     height: calc(100vh - 200px);
-    /* Adjust for control panel and other margins */
-
 }
 
 .room {
@@ -34,9 +32,7 @@
     height: 100%;
     cursor: pointer;
     background-color: #0058a3;
-    /* IKEA Blue */
     color: #ffcc00;
-    /* IKEA Yellow */
     border: 1px solid #ddd;
     box-sizing: border-box;
     position: relative;
