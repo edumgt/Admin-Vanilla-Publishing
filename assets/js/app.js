@@ -460,23 +460,20 @@ offCanvas.classList.remove('hidden', '-translate-x-full'); // Show the off-canva
 offCanvas.classList.add('collapsed');
 offCanvas.classList.remove('expanded');
 
-//const hamburgerButton = document.getElementById('hamburgerButton');
-const expandOffCanvas = document.getElementById('expandOffCanvas');
 
-const collapseOffCanvas = document.getElementById('collapseOffCanvas');
+// const expandOffCanvas = document.getElementById('expandOffCanvas');
+// const collapseOffCanvas = document.getElementById('collapseOffCanvas');
+// expandOffCanvas.addEventListener('click', function () {
+//     offCanvas.classList.remove('collapsed');
+//     offCanvas.classList.add('expanded');
+//     expandOffCanvas.classList.add('hidden');
+// });
+// collapseOffCanvas.addEventListener('click', function () {
+//     offCanvas.classList.add('collapsed');
+//     offCanvas.classList.remove('expanded');
+//     collapseOffCanvas.classList.add('hidden');
 
-expandOffCanvas.addEventListener('click', function () {
-    offCanvas.classList.remove('collapsed');
-    offCanvas.classList.add('expanded');
-    expandOffCanvas.classList.add('hidden');
-});
-
-collapseOffCanvas.addEventListener('click', function () {
-    offCanvas.classList.add('collapsed');
-    offCanvas.classList.remove('expanded');
-    collapseOffCanvas.classList.add('hidden');
-
-});
+// });
 
 // 현재 페이지 URL 가져오기
 const currentPage = window.location.pathname.split("/").pop();

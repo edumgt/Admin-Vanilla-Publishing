@@ -5,281 +5,280 @@ const menuLinks2 = document.querySelectorAll(".menu-item");
 
 // GNB의 1번 파일이 stati.html 의 경우 활성화 상태 설정
 menuLinks2.forEach((link) => {
-    if (link.getAttribute("href") === currentPage) {
-        menuLinks.forEach((link) => {
-            if (link.getAttribute("href") === "orgni.html") {
-                link.classList.add("active");
-            } else {
-                link.classList.remove("active");
-            }
-        });
-    } 
-});
-    
-    let attendanceData = [];
-    let sortDirection = 'asc';
-    let manager;
-
-    class AttendanceManager {
-      constructor(data) {
-        this.data = data;
-      }
-
-      getMonthlyAttendance(employeeId, year, month) {
-        const monthStr = month < 10 ? `${month}` : `${month}`;
-
-        if (employeeId === "ALL") {
-          return this.data.map(employee => ({
-            ...employee,
-            attendance: employee.attendance.filter(record => record.date.startsWith(`${year}-${monthStr}`))
-          }));
-        } else {
-          const employee = this.data.find(emp => emp.employeeId === employeeId);
-          if (!employee) {
-            console.log(`Employee with ID ${employeeId} not found.`);
-            return [];
-          }
-
-          return [{
-            ...employee,
-            attendance: employee.attendance.filter(record => record.date.startsWith(`${year}-${monthStr}`))
-          }];
-        }
-      }
-
-      getMonthlyAttendanceAllDepartments(year, month) {
-        const monthStr = month < 10 ? `${month}` : `${month}`;
-
-        return this.data.map(employee => ({
-          ...employee,
-          attendance: employee.attendance.filter(record => record.date.startsWith(`${year}-${monthStr}`))
-        }));
-      }
-
-      getMonthlyAttendanceByDepartment(department, year, month) {
-        const monthStr = month < 10 ? `${month}` : `${month}`;
-
-        return this.data
-          .filter(employee => employee.department === department)
-          .map(employee => ({
-            ...employee,
-            attendance: employee.attendance.filter(record => record.date.startsWith(`${year}-${monthStr}`))
-          }));
-      }
-    }
-
-    // Fetch the JSON data
-    fetch('assets/mock/attend.json')
-      .then(response => response.json())
-      .then(data => {
-        attendanceData = data;
-        manager = new AttendanceManager(attendanceData);
-        populateDepartmentSelect();
-        updateEmployeeSelect();
-      })
-      .catch(error => console.error('Error fetching attendance data:', error));
-
-    // Populate department select box
-    function populateDepartmentSelect() {
-      const departmentSelect = document.getElementById('departmentSelect');
-      const departments = [...new Set(attendanceData.map(employee => employee.department))];
-
-
-      departments.forEach(department => {
-        const option = document.createElement('option');
-        option.value = department;
-        option.text = department;
-        console.log(option.value);
-
-        departmentSelect.appendChild(option);
-      });
-
-      if (departments.length > 0) {
-        departmentSelect.value = departments[0]; // Set the first department as the default selection
-      }
-    }
-
-    // Populate employee select box based on department
-    function updateEmployeeSelect() {
-      const selectedDepartment = document.getElementById('departmentSelect').value;
-      const employeeSelect = document.getElementById('employeeSelect');
-      employeeSelect.innerHTML = ''; // Clear previous options
-
-      // Add "ALL" option for the employee select
-      const optionAll = document.createElement('option');
-      optionAll.value = "ALL";
-      optionAll.text = "ALL";
-      employeeSelect.appendChild(optionAll);
-
-      const employeesInDepartment = attendanceData.filter(employee => employee.department === selectedDepartment);
-
-      employeesInDepartment.forEach(employee => {
-        const option = document.createElement('option');
-        option.value = employee.employeeId;
-        option.text = `${employee.name} (${employee.employeeId})`;
-        employeeSelect.appendChild(option);
-      });
-
-      if (employeesInDepartment.length > 0) {
-        employeeSelect.value = "ALL"; // Set "ALL" as the default selection
-      }
-
-      showAttendance();
-    }
-
-    function getLastDayOfMonth(year, month) {
-      return new Date(year, month, 0).getDate();
-    }
-
-    function showAttendance() {
-      const employeeId = document.getElementById('employeeSelect').value;
-      const selectedMonth = document.getElementById('monthSelect').value;
-      const [year, month] = selectedMonth.split('-');
-      const lastDay = getLastDayOfMonth(year, month);
-      const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
-
-      let employeesAttendance;
-      const selectedDepartment = document.getElementById('departmentSelect').value;
-
-      // Ensure manager is initialized before calling its methods
-      if (!manager) {
-        console.error('Manager is not initialized.');
-        return;
-      }
-
-      if (employeeId === "ALL") {
-        employeesAttendance = manager.getMonthlyAttendanceByDepartment(selectedDepartment, year, month);
+  if (link.getAttribute("href") === currentPage) {
+    menuLinks.forEach((link) => {
+      if (link.getAttribute("href") === "orgni.html") {
+        link.classList.add("active");
       } else {
-        employeesAttendance = manager.getMonthlyAttendance(employeeId, year, month);
+        link.classList.remove("active");
+      }
+    });
+  }
+});
+
+let attendanceData = [];
+let sortDirection = 'asc';
+let manager;
+
+class AttendanceManager {
+  constructor(data) {
+    this.data = data;
+  }
+
+  getMonthlyAttendance(employeeId, year, month) {
+    const monthStr = month < 10 ? `${month}` : `${month}`;
+
+    if (employeeId === "ALL") {
+      return this.data.map(employee => ({
+        ...employee,
+        attendance: employee.attendance.filter(record => record.date.startsWith(`${year}-${monthStr}`))
+      }));
+    } else {
+      const employee = this.data.find(emp => emp.employeeId === employeeId);
+      if (!employee) {
+        console.log(`Employee with ID ${employeeId} not found.`);
+        return [];
       }
 
-      const dateRow = document.getElementById('dateRow');
-      const attendanceBody = document.getElementById('attendanceBody');
-      dateRow.innerHTML = '<th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sortable" onclick="sortTableByName()">Employee Name <span id="sortIcon">▲</span></th>'; // Clear previous dates
-      attendanceBody.innerHTML = ''; // Clear previous content
+      return [{
+        ...employee,
+        attendance: employee.attendance.filter(record => record.date.startsWith(`${year}-${monthStr}`))
+      }];
+    }
+  }
 
-      // Insert dates in the header
-      for (let day = 1; day <= lastDay; day++) {
-        const dateStr = `${year}-${month}-${day.toString().padStart(2, '0')}`;
-        const date = new Date(year, month - 1, day);
-        const isWeekend = date.getDay() === 0 || date.getDay() === 6; // Check if the day is Saturday or Sunday
-        const isSaturday = date.getDay() === 6; // Check if the day is Saturday
+  getMonthlyAttendanceAllDepartments(year, month) {
+    const monthStr = month < 10 ? `${month}` : `${month}`;
 
-        const dateCell = document.createElement('th');
-        dateCell.className = `px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ikea-blue-bg ${dateStr === today ? 'today-bg today-text' : isSaturday ? 'text-black' : isWeekend ? 'text-red-600' : ''}`;
-        dateCell.textContent = dateStr;
-        dateRow.appendChild(dateCell);
-      }
+    return this.data.map(employee => ({
+      ...employee,
+      attendance: employee.attendance.filter(record => record.date.startsWith(`${year}-${monthStr}`))
+    }));
+  }
 
-      // Insert attendance data for each employee
-      employeesAttendance.forEach(employee => {
-        const employeeNameCell = document.createElement('td');
-        employeeNameCell.className = 'px-6 py-4 whitespace-nowrap ikea-yellow-border bg-white';
+  getMonthlyAttendanceByDepartment(department, year, month) {
+    const monthStr = month < 10 ? `${month}` : `${month}`;
 
-        // Calculate the number of check-ins
-        const checkIns = employee.attendance.length;
-        const checkInPercentage = ((checkIns / lastDay) * 100).toFixed(2); // Calculate percentage with 2 decimal places
+    return this.data
+      .filter(employee => employee.department === department)
+      .map(employee => ({
+        ...employee,
+        attendance: employee.attendance.filter(record => record.date.startsWith(`${year}-${monthStr}`))
+      }));
+  }
+}
 
-        employeeNameCell.innerHTML = `${employee.name} (${checkIns}/${lastDay}, ${checkInPercentage}%)`; // Display name with check-in info
+// Fetch the JSON data
+fetch('assets/mock/attend.json')
+  .then(response => response.json())
+  .then(data => {
+    attendanceData = data;
+    manager = new AttendanceManager(attendanceData);
+    populateDepartmentSelect();
+    updateEmployeeSelect();
+  })
+  .catch(error => console.error('Error fetching attendance data:', error));
 
-        const row = document.createElement('tr');
-        row.className = 'hover:bg-gray-100';
-        row.appendChild(employeeNameCell);
+// Populate department select box
+function populateDepartmentSelect() {
+  const departmentSelect = document.getElementById('departmentSelect');
+  const departments = [...new Set(attendanceData.map(employee => employee.department))];
 
-        for (let day = 1; day <= lastDay; day++) {
-          const dateStr = `${year}-${month}-${day.toString().padStart(2, '0')}`;
 
-          const record = employee.attendance.find(rec => rec.date === dateStr);
+  departments.forEach(department => {
+    const option = document.createElement('option');
+    option.value = department;
+    option.text = department;
+    console.log(option.value);
 
-          const attendanceCell = document.createElement('td');
-          attendanceCell.className = `px-6 py-4 whitespace-nowrap text-sm ikea-yellow-border bg-white editable ${dateStr === today ? 'text-orange-600 font-bold' : ''}`;
-          if (record) {
-            attendanceCell.innerHTML = `
+    departmentSelect.appendChild(option);
+  });
+
+  if (departments.length > 0) {
+    departmentSelect.value = departments[0]; 
+  }
+}
+
+function updateEmployeeSelect() {
+  const selectedDepartment = document.getElementById('departmentSelect').value;
+  const employeeSelect = document.getElementById('employeeSelect');
+  employeeSelect.innerHTML = ''; // Clear previous options
+
+  // Add "ALL" option for the employee select
+  const optionAll = document.createElement('option');
+  optionAll.value = "ALL";
+  optionAll.text = "ALL";
+  employeeSelect.appendChild(optionAll);
+
+  const employeesInDepartment = attendanceData.filter(employee => employee.department === selectedDepartment);
+
+  employeesInDepartment.forEach(employee => {
+    const option = document.createElement('option');
+    option.value = employee.employeeId;
+    option.text = `${employee.name} (${employee.employeeId})`;
+    employeeSelect.appendChild(option);
+  });
+
+  if (employeesInDepartment.length > 0) {
+    employeeSelect.value = "ALL"; // Set "ALL" as the default selection
+  }
+
+  showAttendance();
+}
+
+function getLastDayOfMonth(year, month) {
+  return new Date(year, month, 0).getDate();
+}
+
+function showAttendance() {
+  const employeeId = document.getElementById('employeeSelect').value;
+  const selectedMonth = document.getElementById('monthSelect').value;
+  const [year, month] = selectedMonth.split('-');
+  const lastDay = getLastDayOfMonth(year, month);
+  const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+
+  let employeesAttendance;
+  const selectedDepartment = document.getElementById('departmentSelect').value;
+
+  // Ensure manager is initialized before calling its methods
+  if (!manager) {
+    console.error('Manager is not initialized.');
+    return;
+  }
+
+  if (employeeId === "ALL") {
+    employeesAttendance = manager.getMonthlyAttendanceByDepartment(selectedDepartment, year, month);
+  } else {
+    employeesAttendance = manager.getMonthlyAttendance(employeeId, year, month);
+  }
+
+  const dateRow = document.getElementById('dateRow');
+  const attendanceBody = document.getElementById('attendanceBody');
+  dateRow.innerHTML = '<th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sortable" onclick="sortTableByName()">Employee Name <span id="sortIcon">▲</span></th>'; // Clear previous dates
+  attendanceBody.innerHTML = ''; // Clear previous content
+
+  // Insert dates in the header
+  for (let day = 1; day <= lastDay; day++) {
+    const dateStr = `${year}-${month}-${day.toString().padStart(2, '0')}`;
+    const date = new Date(year, month - 1, day);
+    const isWeekend = date.getDay() === 0 || date.getDay() === 6; // Check if the day is Saturday or Sunday
+    const isSaturday = date.getDay() === 6; // Check if the day is Saturday
+
+    const dateCell = document.createElement('th');
+    dateCell.className = `px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ikea-blue-bg ${dateStr === today ? 'today-bg today-text' : isSaturday ? 'text-black' : isWeekend ? 'text-red-600' : ''}`;
+    dateCell.textContent = dateStr;
+    dateRow.appendChild(dateCell);
+  }
+
+  // Insert attendance data for each employee
+  employeesAttendance.forEach(employee => {
+    const employeeNameCell = document.createElement('td');
+    employeeNameCell.className = 'px-6 py-4 whitespace-nowrap ikea-yellow-border bg-white';
+
+    // Calculate the number of check-ins
+    const checkIns = employee.attendance.length;
+    const checkInPercentage = ((checkIns / lastDay) * 100).toFixed(2); // Calculate percentage with 2 decimal places
+
+    employeeNameCell.innerHTML = `${employee.name} (${checkIns}/${lastDay}, ${checkInPercentage}%)`; // Display name with check-in info
+
+    const row = document.createElement('tr');
+    row.className = 'hover:bg-gray-100';
+    row.appendChild(employeeNameCell);
+
+    for (let day = 1; day <= lastDay; day++) {
+      const dateStr = `${year}-${month}-${day.toString().padStart(2, '0')}`;
+
+      const record = employee.attendance.find(rec => rec.date === dateStr);
+
+      const attendanceCell = document.createElement('td');
+      attendanceCell.className = `px-6 py-4 whitespace-nowrap text-sm ikea-yellow-border bg-white editable ${dateStr === today ? 'text-orange-600 font-bold' : ''}`;
+      if (record) {
+        attendanceCell.innerHTML = `
               <div>Check-In: <span class="${record.checkIn > '09:00' ? 'text-red-500' : ''}">${record.checkIn}</span></div>
               <div>Check-Out: <span class="${record.checkOut > '18:00' ? 'text-orange-500' : ''}">${record.checkOut}</span></div>
             `;
-          } else {
-            attendanceCell.innerHTML = '-';
-            attendanceCell.ondblclick = () => makeEditable(attendanceCell, employee.employeeId, dateStr);
-          }
-          row.appendChild(attendanceCell);
-        }
-
-        attendanceBody.appendChild(row);
-      });
+      } else {
+        attendanceCell.innerHTML = '-';
+        attendanceCell.ondblclick = () => makeEditable(attendanceCell, employee.employeeId, dateStr);
+      }
+      row.appendChild(attendanceCell);
     }
 
-    function makeEditable(cell, employeeId, dateStr) {
-      cell.innerHTML = `
+    attendanceBody.appendChild(row);
+  });
+}
+
+function makeEditable(cell, employeeId, dateStr) {
+  cell.innerHTML = `
         <div>
           Check-In: <input type="time" id="checkInInput" class="border rounded px-2 py-1">
           Check-Out: <input type="time" id="checkOutInput" class="border rounded px-2 py-1">
           <button onclick="saveAttendance('${employeeId}', '${dateStr}')">Save</button>
         </div>
       `;
+}
+
+function saveAttendance(employeeId, dateStr) {
+  const checkInInput = document.getElementById('checkInInput').value;
+  const checkOutInput = document.getElementById('checkOutInput').value;
+
+  if (checkInInput && checkOutInput) {
+    let employee = attendanceData.find(emp => emp.employeeId === employeeId);
+    if (!employee) {
+      console.error(`Employee with ID ${employeeId} not found.`);
+      return;
     }
 
-    function saveAttendance(employeeId, dateStr) {
-      const checkInInput = document.getElementById('checkInInput').value;
-      const checkOutInput = document.getElementById('checkOutInput').value;
-
-      if (checkInInput && checkOutInput) {
-        let employee = attendanceData.find(emp => emp.employeeId === employeeId);
-        if (!employee) {
-          console.error(`Employee with ID ${employeeId} not found.`);
-          return;
-        }
-
-        const recordIndex = employee.attendance.findIndex(rec => rec.date === dateStr);
-        if (recordIndex === -1) {
-          employee.attendance.push({ date: dateStr, checkIn: checkInInput, checkOut: checkOutInput });
-        } else {
-          employee.attendance[recordIndex] = { date: dateStr, checkIn: checkInInput, checkOut: checkOutInput };
-        }
-
-        localStorage.setItem('attendanceData', JSON.stringify(attendanceData));
-        showAttendance();
-      } else {
-        alert('Please enter both Check-In and Check-Out times.');
-      }
+    const recordIndex = employee.attendance.findIndex(rec => rec.date === dateStr);
+    if (recordIndex === -1) {
+      employee.attendance.push({ date: dateStr, checkIn: checkInInput, checkOut: checkOutInput });
+    } else {
+      employee.attendance[recordIndex] = { date: dateStr, checkIn: checkInInput, checkOut: checkOutInput };
     }
 
-    function sortTableByName() {
-      const table = document.getElementById('attendanceTable');
-      const tbody = table.tBodies[0];
-      const rows = Array.from(tbody.rows);
+    localStorage.setItem('attendanceData', JSON.stringify(attendanceData));
+    showAttendance();
+  } else {
+    alert('Please enter both Check-In and Check-Out times.');
+  }
+}
 
-      // Toggle sort direction
-      sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+function sortTableByName() {
+  const table = document.getElementById('attendanceTable');
+  const tbody = table.tBodies[0];
+  const rows = Array.from(tbody.rows);
 
-      // Sort rows based on employee name
-      rows.sort((a, b) => {
-        const nameA = a.cells[0].textContent.trim().toLowerCase();
-        const nameB = b.cells[0].textContent.trim().toLowerCase();
+  // Toggle sort direction
+  sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
 
-        if (sortDirection === 'asc') {
-          return nameA.localeCompare(nameB);
-        } else {
-          return nameB.localeCompare(nameA);
-        }
-      });
+  // Sort rows based on employee name
+  rows.sort((a, b) => {
+    const nameA = a.cells[0].textContent.trim().toLowerCase();
+    const nameB = b.cells[0].textContent.trim().toLowerCase();
 
-      // Update sort icon
-      const sortIcon = document.getElementById('sortIcon');
-      sortIcon.textContent = sortDirection === 'asc' ? '▲' : '▼';
-
-      // Append sorted rows to tbody
-      rows.forEach(row => tbody.appendChild(row));
+    if (sortDirection === 'asc') {
+      return nameA.localeCompare(nameB);
+    } else {
+      return nameB.localeCompare(nameA);
     }
+  });
 
-    // Automatically populate employee select box and show attendance on load
-    window.onload = () => {
-      const storedData = localStorage.getItem('attendanceData');
-      if (storedData) {
-        attendanceData = JSON.parse(storedData);
-      }
-      if (attendanceData.length > 0) {
-        //populateDepartmentSelect();
-        updateEmployeeSelect();
-      }
-    };
+  // Update sort icon
+  const sortIcon = document.getElementById('sortIcon');
+  sortIcon.textContent = sortDirection === 'asc' ? '▲' : '▼';
+
+  // Append sorted rows to tbody
+  rows.forEach(row => tbody.appendChild(row));
+}
+
+// Automatically populate employee select box and show attendance on load
+window.onload = () => {
+  const storedData = localStorage.getItem('attendanceData');
+  if (storedData) {
+    attendanceData = JSON.parse(storedData);
+  }
+  if (attendanceData.length > 0) {
+    //populateDepartmentSelect();
+    updateEmployeeSelect();
+  }
+};

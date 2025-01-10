@@ -56,22 +56,18 @@ offCanvas.classList.add('collapsed');
 offCanvas.classList.remove('expanded');
 
 
-const expandOffCanvas = document.getElementById('expandOffCanvas');
-
-const collapseOffCanvas = document.getElementById('collapseOffCanvas');
-
-expandOffCanvas.addEventListener('click', function () {
-  offCanvas.classList.remove('collapsed');
-  offCanvas.classList.add('expanded');
-  expandOffCanvas.classList.add('hidden');
-});
-
-collapseOffCanvas.addEventListener('click', function () {
-  offCanvas.classList.add('collapsed');
-  offCanvas.classList.remove('expanded');
-  collapseOffCanvas.classList.add('hidden');
-
-});
+// const expandOffCanvas = document.getElementById('expandOffCanvas');
+// const collapseOffCanvas = document.getElementById('collapseOffCanvas');
+// expandOffCanvas.addEventListener('click', function () {
+//   offCanvas.classList.remove('collapsed');
+//   offCanvas.classList.add('expanded');
+//   expandOffCanvas.classList.add('hidden');
+// });
+// collapseOffCanvas.addEventListener('click', function () {
+//   offCanvas.classList.add('collapsed');
+//   offCanvas.classList.remove('expanded');
+//   collapseOffCanvas.classList.add('hidden');
+// });
 
 // 현재 페이지 URL 가져오기
 const currentPage = window.location.pathname.split("/").pop();

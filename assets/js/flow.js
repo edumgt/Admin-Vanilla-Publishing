@@ -95,35 +95,22 @@ cancelLogout.addEventListener('click', function () {
 /* LNB */
 
 const offCanvas = document.getElementById('offCanvas');
-offCanvas.classList.remove('hidden', '-translate-x-full'); // Show the off-canvas menu
+offCanvas.classList.remove('hidden', '-translate-x-full'); 
 offCanvas.classList.add('collapsed');
 offCanvas.classList.remove('expanded');
 
-//const hamburgerButton = document.getElementById('hamburgerButton');
-
-const expandOffCanvas = document.getElementById('expandOffCanvas');
-const collapseOffCanvas = document.getElementById('collapseOffCanvas');
-
-// hamburgerButton.addEventListener('click', function () {
-//     offCanvas.classList.toggle('hidden');
-//     offCanvas.classList.toggle('transform');
-//     offCanvas.classList.toggle('-translate-x-full');
+// const expandOffCanvas = document.getElementById('expandOffCanvas');
+// const collapseOffCanvas = document.getElementById('collapseOffCanvas');
+// expandOffCanvas.addEventListener('click', function () {
+//     offCanvas.classList.remove('collapsed');
 //     offCanvas.classList.add('expanded');
 //     expandOffCanvas.classList.add('hidden');
 // });
-
-expandOffCanvas.addEventListener('click', function () {
-    offCanvas.classList.remove('collapsed');
-    offCanvas.classList.add('expanded');
-    expandOffCanvas.classList.add('hidden');
-});
-
-collapseOffCanvas.addEventListener('click', function () {
-    offCanvas.classList.add('collapsed');
-    offCanvas.classList.remove('expanded');
-    collapseOffCanvas.classList.add('hidden');
-
-});
+// collapseOffCanvas.addEventListener('click', function () {
+//     offCanvas.classList.add('collapsed');
+//     offCanvas.classList.remove('expanded');
+//     collapseOffCanvas.classList.add('hidden');
+// });
 
 
 

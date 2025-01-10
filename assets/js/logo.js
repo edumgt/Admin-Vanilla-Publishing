@@ -31,6 +31,7 @@ icon.className = 'fas fa-globe';
 button.appendChild(icon);
 document.getElementById('buttonContainer').appendChild(button);
 document.getElementById('gearIcon').addEventListener('click', () => {
+    console.log("$$$");
     const floatingNav = document.getElementById('floatingNav');
     floatingNav.classList.remove('hidden');
 });
@@ -40,4 +41,18 @@ document.getElementById('gearIcon').addEventListener('click', () => {
 document.getElementById('closeFloatingNav').addEventListener('click', () => {
     const floatingNav = document.getElementById('floatingNav');
     floatingNav.classList.add('hidden'); // Hide the floating menu
+});
+
+/* LNB Left Menu */
+const expandOffCanvas = document.getElementById('expandOffCanvas');
+const collapseOffCanvas = document.getElementById('collapseOffCanvas');
+expandOffCanvas.addEventListener('click', function () {
+    offCanvas.classList.remove('collapsed');
+    offCanvas.classList.add('expanded');
+    expandOffCanvas.classList.add('hidden');
+});
+collapseOffCanvas.addEventListener('click', function () {
+    offCanvas.classList.add('collapsed');
+    offCanvas.classList.remove('expanded');
+    collapseOffCanvas.classList.add('hidden');
 });
