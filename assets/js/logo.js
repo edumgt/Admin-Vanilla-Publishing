@@ -62,3 +62,16 @@ collapseOffCanvas.addEventListener('click', function () {
     collapseOffCanvas.classList.add('hidden');
 });
 
+
+function showToast(message, type = 'success') {
+    const toastContainer = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type} show`;
+    toast.innerText = message;
+
+    toastContainer.appendChild(toast);
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}

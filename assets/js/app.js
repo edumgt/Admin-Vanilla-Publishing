@@ -340,20 +340,20 @@ function toggleModal(show, rowData = {}, rowKey = null) {
 }
 
 // Toast Functionality
-function showToast(message, type = 'success') {
-    const toastContainer = document.getElementById('toast-container');
-    const toast = document.createElement('div');
-    toast.className = `toast toast-${type} show`;
-    toast.innerText = message;
+// function showToast(message, type = 'success') {
+//     const toastContainer = document.getElementById('toast-container');
+//     const toast = document.createElement('div');
+//     toast.className = `toast toast-${type} show`;
+//     toast.innerText = message;
 
-    toastContainer.appendChild(toast);
+//     toastContainer.appendChild(toast);
 
-    // Automatically remove the toast after 3 seconds
-    setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => toast.remove(), 300);
-    }, 3000);
-}
+//     // Automatically remove the toast after 3 seconds
+//     setTimeout(() => {
+//         toast.classList.remove('show');
+//         setTimeout(() => toast.remove(), 300);
+//     }, 3000);
+// }
 
 document.getElementById('searchByDate').addEventListener('click', function () {
 
