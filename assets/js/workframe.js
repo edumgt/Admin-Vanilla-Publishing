@@ -102,7 +102,7 @@ memberIcon.addEventListener('click', function () {
 
 /* LNB */
 const offCanvas = document.getElementById('offCanvas');
-offCanvas.classList.remove('hidden', '-translate-x-full'); 
+offCanvas.classList.remove('hidden', '-translate-x-full');
 offCanvas.classList.add('collapsed');
 offCanvas.classList.remove('expanded');
 
@@ -139,7 +139,7 @@ menuLinks2.forEach((link) => {
                 link.classList.remove("active");
             }
         });
-    } 
+    }
 });
 
 const demoLinks = document.querySelectorAll('a[href="#"]');
@@ -148,7 +148,7 @@ const closeDemoModal = document.getElementById('closeDemoModal');
 
 demoLinks.forEach(link => {
     link.addEventListener('click', function (event) {
-        event.preventDefault(); 
+        event.preventDefault();
         demoModal.classList.remove('hidden');
     });
 });
@@ -264,19 +264,28 @@ languageSwitcher.addEventListener("click", function (event) {
     offCanvasItems[1].textContent = offCanvasLabels.permissions;
     offCanvasItems[2].textContent = offCanvasLabels.logs;
     offCanvasItems[3].textContent = offCanvasLabels.menu;
-    offCanvasItems[4].textContent = offCanvasLabels.settings;
+    //offCanvasItems[4].textContent = offCanvasLabels.settings;
 
-});
-
-document.getElementById('gearIcon').addEventListener('click', () => {
-    const floatingNav = document.getElementById('floatingNav');
-    floatingNav.classList.remove('hidden'); 
 });
 
 document.getElementById('closeFloatingNav').addEventListener('click', () => {
     const floatingNav = document.getElementById('floatingNav');
-    floatingNav.classList.add('hidden'); 
+    floatingNav.classList.add('hidden');
 });
+
+/* gearIcon */
+const button = document.createElement('button');
+button.id = 'gearIcon';
+button.className = 'fixed bottom-4 right-4 bg-gray-800 text-white rounded-full p-3 shadow-lg z-50';
+const icon = document.createElement('i');
+icon.className = 'fas fa-globe';
+button.appendChild(icon);
+document.getElementById('buttonContainer').appendChild(button);
+document.getElementById('gearIcon').addEventListener('click', () => {
+    const floatingNav = document.getElementById('floatingNav');
+    floatingNav.classList.remove('hidden');
+});
+
 
 
 

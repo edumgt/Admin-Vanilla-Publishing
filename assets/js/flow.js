@@ -290,7 +290,7 @@ languageSwitcher.addEventListener("click", function (event) {
     offCanvasItems[1].textContent = offCanvasLabels.permissions;
     offCanvasItems[2].textContent = offCanvasLabels.logs;
     offCanvasItems[3].textContent = offCanvasLabels.menu;
-    offCanvasItems[4].textContent = offCanvasLabels.settings;
+    //offCanvasItems[4].textContent = offCanvasLabels.settings;
 
 });
 
@@ -416,12 +416,22 @@ chart.render();
 // 초기 차트 데이터 설정
 updateChart(getDataFromLocalStorage());
 
-document.getElementById('gearIcon').addEventListener('click', () => {
-    const floatingNav = document.getElementById('floatingNav');
-    floatingNav.classList.remove('hidden'); // Show the floating menu
-});
-
 document.getElementById('closeFloatingNav').addEventListener('click', () => {
     const floatingNav = document.getElementById('floatingNav');
     floatingNav.classList.add('hidden'); // Hide the floating menu
 });
+
+/* gearIcon */
+const button = document.createElement('button');
+button.id = 'gearIcon';
+button.className = 'fixed bottom-4 right-4 bg-gray-800 text-white rounded-full p-3 shadow-lg z-50';
+const icon = document.createElement('i');
+icon.className = 'fas fa-globe';
+button.appendChild(icon);
+document.getElementById('buttonContainer').appendChild(button);
+document.getElementById('gearIcon').addEventListener('click', () => {
+    const floatingNav = document.getElementById('floatingNav');
+    floatingNav.classList.remove('hidden');
+});
+
+
