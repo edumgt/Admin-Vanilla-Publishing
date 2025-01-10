@@ -94,10 +94,10 @@ cancelLogout.addEventListener('click', function () {
 
 /* LNB */
 
-const offCanvas = document.getElementById('offCanvas');
-offCanvas.classList.remove('hidden', '-translate-x-full'); 
-offCanvas.classList.add('collapsed');
-offCanvas.classList.remove('expanded');
+// const offCanvas = document.getElementById('offCanvas');
+// offCanvas.classList.remove('hidden', '-translate-x-full'); 
+// offCanvas.classList.add('collapsed');
+// offCanvas.classList.remove('expanded');
 
 // const expandOffCanvas = document.getElementById('expandOffCanvas');
 // const collapseOffCanvas = document.getElementById('collapseOffCanvas');

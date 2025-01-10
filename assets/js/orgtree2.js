@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  // Get existing containers from HTML
   const orgContainer = document.getElementById("org-chart");
   const permissionsContainer = document.getElementById("permissions");
   const permissionsTitle = document.createElement("h1");
@@ -8,7 +7,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   permissionsTitle.style.marginBottom = "1rem";
   permissionsContainer.appendChild(permissionsTitle);
 
-  // Fetch JSON data and render
   async function fetchData(url) {
     const response = await fetch(url);
     if (!response.ok) throw new Error(`Failed to fetch ${url}`);
