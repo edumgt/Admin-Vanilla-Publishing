@@ -1,12 +1,4 @@
 
-// function generateUUID() {
-//     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-//         const r = (Math.random() * 16) | 0,
-//             v = c === 'x' ? r : (r & 0x3) | 0x8;
-//         return v.toString(16);
-//     });
-// }
-
 const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
 const currentDate = new Date().toLocaleDateString('ko-KR', options).replace(/[\.]/g, '-').replace(/[\s]/g, '').substring(0, 10);
 

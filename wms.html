@@ -3,6 +3,14 @@
 
 <head>
     <link href="assets/css/app.css" rel="stylesheet">
+    <style>
+        .active-tab {
+            background-color: #2563eb;
+            color: #facc15 !important;
+            font-weight: 600;
+            font-size: 15px;
+        }
+    </style>
 </head>
 
 <body class="main-layout">
@@ -86,16 +94,18 @@
                         <span class="menu-text">권한관리</span>
                     </a>
                 </li>
-                
+
                 <li>
-                    <a href="document.html" class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
+                    <a href="document.html"
+                        class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
                         <i class="fas fa-clipboard-list menu-icon text-blue-400"></i>
                         <span class="menu-text">문서관리</span>
                     </a>
                 </li>
-                
+                <!-- 메뉴관리 -->
                 <li>
-                    <a href="wms.html" class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
+                    <a href="wms.html"
+                        class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
                         <i class="fas fa-bars menu-icon text-blue-400"></i>
                         <span class="menu-text">재고관리</span>
                     </a>
@@ -122,18 +132,12 @@
 
     <div id="content" class="content">
         <nav class="breadcrumb">
-            권한관리
+            코드관리
         </nav>
 
-        <div id="app " class="flex h-screen">
-
-
-            <div id="org-chart" class="w-1/3 bg-white p-4 overflow-y-auto border-r border-gray-300"></div>
-
-
-            <div id="permissions" class="w-2/3 bg-gray-50 p-4 overflow-y-auto"></div>
+        <div class="p-4">
+        <div id="root" class="bg-white shadow-lg rounded-lg w-full max-w-6xl h-full overflow-auto"></div>
         </div>
-
 
     </div>
 
@@ -205,9 +209,15 @@
         </div>
     </div>
 
+    <script type="text/javascript" src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.js"></script>
+    <script type="text/javascript" src="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.js"></script>
+    <script type="text/javascript" src="https://uicdn.toast.com/tui-grid/latest/tui-grid.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
     <script type="text/javascript" src="assets/js/logo.js"></script>
     <script type="text/javascript" src="assets/js/orgtree.js"></script>
-    <script type="text/javascript" src="assets/js/orgtree2.js"></script>
+    <script type="text/javascript" src="assets/js/wms.js"></script>
 
 </body>
+
 </html>
