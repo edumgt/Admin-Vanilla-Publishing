@@ -1,0 +1,26 @@
+.custom-drag-icon {
+    @apply absolute top-1 right-1 cursor-grab text-xs font-bold py-1 px-2 rounded-full shadow-lg;
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    color: #ffffff;
+}
+
+.dragging {
+    @apply opacity-50;
+}
+
+.new-button {
+    @apply bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded cursor-pointer;
+}
+
+.day-header {
+    background-color: #0058A3;
+    /* IKEA Blue */
+    color: #FFFFFF;
+    /* White text */
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 10px;
+    border-radius: 8px;
+    margin: 3px 3px 3px 3px;
+
+}

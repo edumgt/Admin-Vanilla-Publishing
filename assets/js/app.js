@@ -138,11 +138,6 @@ const grid = new tui.Grid({
 });
 
 
-
-//tui.Grid.applyTheme('striped');
-
-
-// Initial update of data count
 updateDataCount();
 
 // Delete row functionality
@@ -331,21 +326,6 @@ function toggleModal(show, rowData = {}, rowKey = null) {
     }
 }
 
-// Toast Functionality
-// function showToast(message, type = 'success') {
-//     const toastContainer = document.getElementById('toast-container');
-//     const toast = document.createElement('div');
-//     toast.className = `toast toast-${type} show`;
-//     toast.innerText = message;
-
-//     toastContainer.appendChild(toast);
-
-//     // Automatically remove the toast after 3 seconds
-//     setTimeout(() => {
-//         toast.classList.remove('show');
-//         setTimeout(() => toast.remove(), 300);
-//     }, 3000);
-// }
 
 document.getElementById('searchByDate').addEventListener('click', function () {
 
@@ -444,28 +424,6 @@ confirmLogout.addEventListener('click', function () {
 cancelLogout.addEventListener('click', function () {
     logoutModal.classList.add('hidden');
 });
-
-/* LNB */
-
-// const offCanvas = document.getElementById('offCanvas');
-// offCanvas.classList.remove('hidden', '-translate-x-full'); // Show the off-canvas menu
-// offCanvas.classList.add('collapsed');
-// offCanvas.classList.remove('expanded');
-
-
-// const expandOffCanvas = document.getElementById('expandOffCanvas');
-// const collapseOffCanvas = document.getElementById('collapseOffCanvas');
-// expandOffCanvas.addEventListener('click', function () {
-//     offCanvas.classList.remove('collapsed');
-//     offCanvas.classList.add('expanded');
-//     expandOffCanvas.classList.add('hidden');
-// });
-// collapseOffCanvas.addEventListener('click', function () {
-//     offCanvas.classList.add('collapsed');
-//     offCanvas.classList.remove('expanded');
-//     collapseOffCanvas.classList.add('hidden');
-
-// });
 
 // 현재 페이지 URL 가져오기
 const currentPage = window.location.pathname.split("/").pop();

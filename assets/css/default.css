@@ -54,7 +54,7 @@ input[type="date"] {
 
 /* OffCanvas - LNB */
 .menu-text {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
 }
 
@@ -124,7 +124,7 @@ input[type="date"] {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
     text-transform: uppercase;
     color: #c7ced9;
@@ -136,7 +136,7 @@ input[type="date"] {
 }
 
 .gnb-item i {
-    font-size: 1.1rem;
+    font-size: 1rem;
     margin-right: 0.5rem;
     color: #718096;
     transition: color 0.3s ease;

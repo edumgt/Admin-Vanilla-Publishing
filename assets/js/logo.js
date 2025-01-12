@@ -6,6 +6,46 @@ function generateUUID() {
     });
   }
 
+// 공통 모달 HTML을 JavaScript로 렌더링하기
+function renderDemoModal(containerId) {
+    const container = document.getElementById(containerId);
+
+    if (!container) {
+        console.error(`Container with ID \"${containerId}\" not found.`);
+        return;
+    }
+
+    const modalHtml = `
+        <div id="demoModal"
+            class="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white rounded-lg shadow-lg p-6 w-1/3 text-center relative">
+                <h2 class="text-lg font-semibold mb-4">알림</h2>
+                <p>데모버젼에서는 지원하지 않습니다.</p>
+                <div class="flex justify-center mt-4">
+                    <button id="closeDemoModal"
+                        class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700">닫기</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    container.innerHTML = modalHtml;
+
+    // 닫기 버튼 이벤트 등록
+    const closeModalButton = document.getElementById("closeDemoModal");
+    const modal = document.getElementById("demoModal");
+
+    if (closeModalButton && modal) {
+        closeModalButton.addEventListener("click", () => {
+            modal.classList.add("hidden");
+        });
+    }
+}
+
+// 예시: ID가 'modal-container'인 요소에 모달 렌더링
+renderDemoModal("modal-container");
+
+
   const tabsData = [
     { href: "system.html", icon: "fas fa-cogs", label: "시스템관리" },
     { href: "orgni.html", icon: "fas fa-users", label: "조직관리" },

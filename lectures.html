@@ -3,34 +3,7 @@
 
 <head>
     <link href="assets/css/trello.css" rel="stylesheet">
-    <style>
-        .custom-drag-icon {
-            @apply absolute top-1 right-1 cursor-grab text-xs font-bold py-1 px-2 rounded-full shadow-lg;
-            background: linear-gradient(to right, #ff7e5f, #feb47b);
-            color: #ffffff;
-        }
-
-        .dragging {
-            @apply opacity-50;
-        }
-
-        .new-button {
-            @apply bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded cursor-pointer;
-        }
-
-        .day-header {
-            background-color: #0058A3;
-            /* IKEA Blue */
-            color: #FFFFFF;
-            /* White text */
-            font-weight: bold;
-            text-transform: uppercase;
-            padding: 10px;
-            border-radius: 8px;
-            margin: 3px 3px 3px 3px;
-
-        }
-    </style>
+    <link href="assets/css/lectures.css" rel="stylesheet">
 </head>
 
 <body>
@@ -86,10 +59,6 @@
                         <span class="menu-text">강의일정</span>
                     </a>
                 </li>
-
-
-
-
             </ul>
 
             <div class="flex flex-col space-y-4 pb-4">
@@ -107,9 +76,6 @@
         <nav class="breadcrumb">
             강의일정
         </nav>
-
-
-
 
         <div class="calendar bg-white shadow-lg rounded-lg w-full h-full flex flex-col">
             <div class="header text-white p-4 flex justify-between items-center">
@@ -131,9 +97,6 @@
             <div class="dates grid grid-cols-7 flex-grow" id="dates"></div>
         </div>
 
-
-
-        <!-- Add Lecture Modal -->
         <div id="modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
             <div class="bg-white rounded-md shadow-md overflow-y-auto">
                 <h3 class="text-xl font-bold mb-4">Add Lecture</h3>
@@ -216,10 +179,12 @@
         </div>
 
     </div>
+    <div id="modal-container"></div>
+
     <script type="text/javascript" src="assets/js/logo.js"></script>
     <script type="text/javascript" src="assets/js/workframe.js"></script>
     <script type="text/javascript" src="assets/js/lectures.js"></script>
-    
+
 </body>
 
 </html>

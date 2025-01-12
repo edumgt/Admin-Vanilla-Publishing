@@ -1,34 +1,19 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <link href="assets/css/app.css" rel="stylesheet">
-    <style>
-        
-    </style>
 </head>
-
 <body class="main-layout">
     <div class="gnb-menu fixed top-0 left-0 bottom-0 w-full z-50">
         <ul class="flex justify-between items-center">
             <div id="logo"></div>
-            
             <div id="tabs-container"></div>
-
-            
-
-            
             <button id="memberIcon" class="text-gray-200 hover:text-white text-2xl p-2">
                 <i class="fas fa-user"></i>
             </button>
         </ul>
     </div>
-
-
-    <!-- Toast Container -->
     <div id="toast-container"></div>
-
-
     <div id="offCanvas" class="fixed top-14 h-full bg-gray-100 z-50 shadow-sm">
         <div class="flex flex-col h-full">
             <ul class="flex-grow p-4 space-y-4">
@@ -90,7 +75,7 @@
         </nav>
 
         <div class="p-4">
-        <div id="root" class="bg-white shadow-lg rounded-lg w-full max-w-6xl h-full overflow-auto"></div>
+        <div id="root" class="bg-white shadow-lg rounded-lg w-full h-full overflow-auto"></div>
         </div>
 
     </div>
@@ -119,7 +104,7 @@
     </div>
 
 
-    <div id="modal"
+    <!-- <div id="modal"
         class="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div class="bg-white rounded-lg shadow-lg p-6 w-1/3 relative">
 
@@ -136,7 +121,7 @@
                     class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700">Close</button>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <div id="logoutModal"
         class="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -151,7 +136,8 @@
         </div>
     </div>
 
-    <div id="demoModal"
+    <div id="modal-container"></div>
+    <!-- <div id="demoModal"
         class="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div class="bg-white rounded-lg shadow-lg p-6 w-1/3 text-center relative">
             <h2 class="text-lg font-semibold mb-4">알림</h2>
@@ -161,7 +147,7 @@
                     class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700">닫기</button>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <script type="text/javascript" src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.js"></script>
     <script type="text/javascript" src="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.js"></script>
