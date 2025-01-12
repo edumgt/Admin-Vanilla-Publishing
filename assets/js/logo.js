@@ -6,6 +6,51 @@ function generateUUID() {
     });
   }
 
+  const tabsData = [
+    { href: "system.html", icon: "fas fa-cogs", label: "시스템관리" },
+    { href: "orgni.html", icon: "fas fa-users", label: "조직관리" },
+    { href: "work.html", icon: "fas fa-briefcase", label: "업무관리" },
+    { href: "calendar.html", icon: "fas fa-calendar-alt", label: "일정관리" },
+    { href: "stati.html", icon: "fas fa-chart-bar", label: "통계" },
+    { href: "config.html", icon: "fas fa-tools", label: "설정관리" },
+];
+
+function renderTabs(containerId) {
+    const container = document.getElementById(containerId);
+
+    if (!container) {
+        console.error(`Container with ID \"${containerId}\" not found.`);
+        return;
+    }
+
+    const tabsDiv = document.createElement("div");
+    tabsDiv.className = "tabs flex";
+
+    tabsData.forEach(tab => {
+        const li = document.createElement("li");
+
+        const anchor = document.createElement("a");
+        anchor.href = tab.href;
+        anchor.className = "gnb-item tab-link block flex items-center space-x-2";
+
+        const icon = document.createElement("i");
+        icon.className = tab.icon;
+
+        const span = document.createElement("span");
+        span.textContent = tab.label;
+
+        anchor.appendChild(icon);
+        anchor.appendChild(span);
+        li.appendChild(anchor);
+        tabsDiv.appendChild(li);
+    });
+
+    container.appendChild(tabsDiv);
+}
+
+// 예시: ID가 'tabs-container'인 요소에 탭 렌더링
+renderTabs("tabs-container");
+
 class AppBrand {
     constructor(containerId, brandName, logoHref = "#") {
         this.container = document.getElementById(containerId);
