@@ -62,7 +62,8 @@
   --primary-darkest-color: hsl(226, 51%, 38%);
 
 
-  --primary-hover-color: #5252ff;
+  --primary-hover-color: #070718;
+  
   --primary-shadow-color: #6666ff66;
   --secondary-lightest-color: hsl(214, 14%, 90%);
   --secondary-lighter-color: hsl(214, 14%, 80%);
@@ -185,7 +186,7 @@ a:focus-visible {
 body {
   color: var(--body-color);
   background: var(--body-bg);
-  font-size: 0.9375rem;
+  font-size: 1rem;
   font-weight: 400;
   line-height: 1.375;
   font-family: var(--font-family);
@@ -2660,9 +2661,12 @@ button:not(:disabled),
   --nav-link-hover-bg-color: hsl(220, 9%, 84%);
   --nav-link-disabled-color: hsl(210, 18%, 80%);
   --nav-link-disabled-bg-color: hsl(220, 8%, 96%);
-  --nav-link-active-color: var(--white-color);
-  --nav-link-active-bg-color: var(--primary-color);
+
+  --nav-link-active-color: #ffcc00;
+  --nav-link-active-bg-color: #0058a3;
+
   --nav-link-active-hover-bg-color: var(--primary-hover-color);
+  
   display: flex;
   list-style: none;
 }

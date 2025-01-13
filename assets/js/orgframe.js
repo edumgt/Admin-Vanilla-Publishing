@@ -89,25 +89,6 @@ memberIcon.addEventListener('click', function () {
 
 
 
-/* LNB */
-// const offCanvas = document.getElementById('offCanvas');
-// offCanvas.classList.remove('hidden', '-translate-x-full'); 
-// offCanvas.classList.add('collapsed');
-// offCanvas.classList.remove('expanded');
-
-// const expandOffCanvas = document.getElementById('expandOffCanvas');
-// const collapseOffCanvas = document.getElementById('collapseOffCanvas');
-// expandOffCanvas.addEventListener('click', function () {
-//     offCanvas.classList.remove('collapsed');
-//     offCanvas.classList.add('expanded');
-//     expandOffCanvas.classList.add('hidden');
-// });
-// collapseOffCanvas.addEventListener('click', function () {
-//     offCanvas.classList.add('collapsed');
-//     offCanvas.classList.remove('expanded');
-//     collapseOffCanvas.classList.add('hidden');
-// });
-
 
 const currentPage = window.location.pathname.split("/").pop();
 
