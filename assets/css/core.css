@@ -14,6 +14,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  
 }
 
 :root {
@@ -30,6 +31,7 @@
   --dropdown-z-index: 998;
   --modal-backdrop-z-index: 999;
   --modal-z-index: 1000;
+  
 }
 
 /* Breakpoints */
@@ -53,10 +55,13 @@
   --primary-lightest-color: hsl(240, 100%, 95%);
   --primary-lighter-color: hsl(240, 100%, 88%);
   --primary-light-color: hsl(240, 100%, 78%);
-  --primary-color: hsl(240, 100%, 70%);
-  --primary-dark-color: hsl(240, 100%, 60%);
-  --primary-darker-color: hsl(240, 100%, 50%);
-  --primary-darkest-color: hsl(240, 100%, 40%);
+
+  --primary-color: hsl(226, 51%, 38%);
+  --primary-dark-color: hsl(226, 51%, 38%);
+  --primary-darker-color: hsl(226, 51%, 38%);
+  --primary-darkest-color: hsl(226, 51%, 38%);
+
+
   --primary-hover-color: #5252ff;
   --primary-shadow-color: #6666ff66;
   --secondary-lightest-color: hsl(214, 14%, 90%);
@@ -138,6 +143,8 @@
   --scrollbar-hover-color: var(--black-color);
   --text-muted-color: hsl(212, 8%, 68%);
   --backdrop-dark-color: rgba(27, 27, 27, 0.7);
+
+  --font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue";
 }
 
 
@@ -181,6 +188,7 @@ body {
   font-size: 0.9375rem;
   font-weight: 400;
   line-height: 1.375;
+  font-family: var(--font-family);
 }
 
 /*-------------------------------------*/
