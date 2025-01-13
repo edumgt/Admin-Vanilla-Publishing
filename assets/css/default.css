@@ -301,3 +301,7 @@ input[type="date"] {
 .fs-4 {
     font-size: 1rem;
 }
+
+.flex-1{
+    font-size: 14px;
+}

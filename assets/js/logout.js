@@ -43,15 +43,15 @@ function createMenu(menuItemsLnb) {
 }
 
 const menuItemsLnb = [
-  { href: 'dashboard.html', icon: 'fas fa-tachometer-alt', text: 'Dashboard' },
+
+
   { href: 'account.html', icon: 'fas fa-user', text: 'Account' },
   { href: 'account-address.html', icon: 'fas fa-map-marked-alt', text: 'Account-address' },
   { href: 'account-overview.html', icon: 'fas fa-eye', text: 'Account-overview' },
   { href: 'account-password.html', icon: 'fas fa-key', text: 'Account-password' },
 
-  { href: 'buttons.html', icon: 'fas fa-square', text: 'Buttons' },
+  { href: 'dashboard.html', icon: 'fas fa-tachometer-alt', text: 'Dashboard' },
   { href: 'accordions.html', icon: 'fas fa-bars', text: 'Accordions' },
-
   { href: 'alerts.html', icon: 'fas fa-bell', text: 'Alerts' },
   { href: 'cards.html', icon: 'fas fa-id-card', text: 'Cards' },
 
