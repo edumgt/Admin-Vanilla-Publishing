@@ -399,13 +399,11 @@ if (rows.length > 0) {
 
 
 /* log out */
-
 const memberIcon = document.getElementById('memberIcon');
 const logoutModal = document.getElementById('logoutModal');
 const confirmLogout = document.getElementById('confirmLogout');
 const cancelLogout = document.getElementById('cancelLogout');
 let isLoggedIn = true;
-
 memberIcon.addEventListener('click', function () {
     if (isLoggedIn) {
         logoutModal.classList.remove('hidden');
@@ -413,14 +411,11 @@ memberIcon.addEventListener('click', function () {
         logoutModal.classList.remove('hidden');
     }
 });
-
-
 confirmLogout.addEventListener('click', function () {
     isLoggedIn = false;
     memberIcon.innerHTML = '<i class="fas fa-user"></i>';
     logoutModal.classList.add('hidden');
 });
-
 cancelLogout.addEventListener('click', function () {
     logoutModal.classList.add('hidden');
 });
