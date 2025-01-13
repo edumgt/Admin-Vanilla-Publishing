@@ -100,8 +100,8 @@ function createDropdownItem(href, iconClass, text, containerId, extraClass = '')
 // Example usage
 createDropdownItem('#', 'bx bx-power-off fs-5', 'Logout', 'dropdown-logout', 'dropdown-logout');
 
-/* log out */
 
+/* log out */
 const memberIcon = document.getElementById('memberIcon');
 const logoutModal = document.getElementById('logoutModal');
 const confirmLogout = document.getElementById('confirmLogout');
