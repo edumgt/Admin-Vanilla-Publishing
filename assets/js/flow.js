@@ -1,15 +1,3 @@
-
-// UUID Generator Function
-// function generateUUID() {
-//     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-//         const r = (Math.random() * 16) | 0,
-//             v = c === 'x' ? r : (r & 0x3) | 0x8;
-//         return v.toString(16);
-//     });
-// }
-
-
-// Close modal
 document.getElementById('closeModal').addEventListener('click', () => {
     toggleModal(false);
 });
@@ -49,22 +37,6 @@ document.getElementById('closeModal').addEventListener('click', () => {
 
 
 
-// Toast Functionality
-// function showToast(message, type = 'success') {
-//     const toastContainer = document.getElementById('toast-container');
-//     const toast = document.createElement('div');
-//     toast.className = `toast toast-${type} show`;
-//     toast.innerText = message;
-
-//     toastContainer.appendChild(toast);
-
-//     // Automatically remove the toast after 3 seconds
-//     setTimeout(() => {
-//         toast.classList.remove('show');
-//         setTimeout(() => toast.remove(), 300);
-//     }, 3000);
-// }
-
 
 /* log out */
 const memberIcon = document.getElementById('memberIcon');
@@ -92,33 +64,7 @@ cancelLogout.addEventListener('click', function () {
     logoutModal.classList.add('hidden');
 });
 
-/* LNB */
 
-// const offCanvas = document.getElementById('offCanvas');
-// offCanvas.classList.remove('hidden', '-translate-x-full'); 
-// offCanvas.classList.add('collapsed');
-// offCanvas.classList.remove('expanded');
-
-// const expandOffCanvas = document.getElementById('expandOffCanvas');
-// const collapseOffCanvas = document.getElementById('collapseOffCanvas');
-// expandOffCanvas.addEventListener('click', function () {
-//     offCanvas.classList.remove('collapsed');
-//     offCanvas.classList.add('expanded');
-//     expandOffCanvas.classList.add('hidden');
-// });
-// collapseOffCanvas.addEventListener('click', function () {
-//     offCanvas.classList.add('collapsed');
-//     offCanvas.classList.remove('expanded');
-//     collapseOffCanvas.classList.add('hidden');
-// });
-
-
-
-
-// document.getElementById('hamburgerButton').addEventListener('click', () => {
-//     const offCanvas = document.getElementById('offCanvas');
-//     offCanvas.classList.remove('hidden', '-translate-x-full'); // Show the off-canvas menu
-// });
 
 
 // 현재 페이지 URL 가져오기
@@ -400,25 +346,8 @@ const chartOptions = {
 const chart = new ApexCharts(document.querySelector("#chart"), chartOptions);
 chart.render();
 
-// 초기 차트 데이터 설정
+
 updateChart(getDataFromLocalStorage());
 
-// document.getElementById('closeFloatingNav').addEventListener('click', () => {
-//     const floatingNav = document.getElementById('floatingNav');
-//     floatingNav.classList.add('hidden'); // Hide the floating menu
-// });
-
-/* gearIcon */
-// const button = document.createElement('button');
-// button.id = 'gearIcon';
-// button.className = 'fixed bottom-4 right-4 bg-gray-800 text-white rounded-full p-3 shadow-lg z-50';
-// const icon = document.createElement('i');
-// icon.className = 'fas fa-globe';
-// button.appendChild(icon);
-// document.getElementById('buttonContainer').appendChild(button);
-// document.getElementById('gearIcon').addEventListener('click', () => {
-//     const floatingNav = document.getElementById('floatingNav');
-//     floatingNav.classList.remove('hidden');
-// });
 
 
