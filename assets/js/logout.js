@@ -43,18 +43,18 @@ function createMenu(menuItemsLnb) {
 
 const menuItemsLnb = [
   { href: 'dashboard.html', icon: 'fas fa-tachometer-alt', text: 'Dashboard' },
-  { href: 'buttons.html', icon: 'fas fa-square', text: 'Buttons' },
-  { href: 'accordions.html', icon: 'fas fa-bars', text: 'Accordions' },
   { href: 'account.html', icon: 'fas fa-user', text: 'Account' },
   { href: 'account-address.html', icon: 'fas fa-map-marked-alt', text: 'Account-address' },
   { href: 'account-overview.html', icon: 'fas fa-eye', text: 'Account-overview' },
   { href: 'account-password.html', icon: 'fas fa-key', text: 'Account-password' },
+
+  { href: 'buttons.html', icon: 'fas fa-square', text: 'Buttons' },
+  { href: 'accordions.html', icon: 'fas fa-bars', text: 'Accordions' },
+
   { href: 'alerts.html', icon: 'fas fa-bell', text: 'Alerts' },
   { href: 'cards.html', icon: 'fas fa-id-card', text: 'Cards' },
   { href: 'dropdowns.html', icon: 'fas fa-caret-down', text: 'Dropdowns' },
-  { href: 'poe-edit-empty.html', icon: 'fas fa-edit', text: 'Poe-edit-empty' },
-  { href: 'poe-edit-filled.html', icon: 'fas fa-edit', text: 'Poe-edit-filled' },
-  { href: 'poe-view.html', icon: 'fas fa-eye', text: 'Poe-view' },
+
 ];
 
 createMenu(menuItemsLnb);
