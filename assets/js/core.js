@@ -44,7 +44,6 @@ alertDismissButtons.forEach((alertDismissButton) =>
 );
 
 //////////////////// Dropdown ////////////////////
-
 const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
 
 dropdownToggles.forEach((dropdownToggle) =>

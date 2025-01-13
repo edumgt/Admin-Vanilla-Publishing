@@ -297,3 +297,7 @@ input[type="date"] {
     font-weight: 600;
     font-size: 15px;
 }
+
+.fs-4 {
+    font-size: 1rem;
+}

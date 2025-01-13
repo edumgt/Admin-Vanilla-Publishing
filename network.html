@@ -3,6 +3,67 @@
 
 <head>
     <link href="assets/css/trello.css" rel="stylesheet">
+    <style>
+        .dropdown {
+            position: absolute;
+            top: 15px;
+            right: 70px;
+
+        }
+
+        .dropdown-toggle::after {
+            display: none;
+        }
+
+        .dropdown-toggle {
+            color: #ffcc00;
+            font-size: 1.4rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 30px;
+            right: 90px;
+            display: none;
+            overflow: hidden;
+            color: #313029;
+            background-color: white;
+            box-shadow: 0 0.25rem 0.75rem 0.2rem rgba(34, 48, 62, 0.14);
+            z-index: 50;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+
+        .dropdown-menu-end {
+            right: 0;
+            left: auto;
+        }
+
+        .dropdown-item {
+            display: block;
+            width: 100%;
+            white-space: nowrap;
+            padding: 0.5rem 3rem 0.5rem 1.5rem;
+            cursor: pointer;
+        }
+
+        .dropdown-shortcuts-item {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+
+        }
+
+
+    </style>
 
 </head>
 
@@ -12,8 +73,93 @@
             <div id="logo"></div>
             <div id="tabs-container"></div>
 
-            <!-- 멤버 아이콘 -->
-            <button id="memberIcon" class="text-gray-200 hover:text-white text-2xl p-2">
+
+            <div class="dropdown">
+                <div class="dropdown-toggle">
+
+                    <i class="fas fa-bars"></i>
+
+                </div>
+                <div id="dropdown-menu-shortcuts" class="dropdown-menu dropdown-menu-end">
+                    <div class="dropdown-header border-bottom">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <h6 class="fs-6">Shortcuts</h6>
+
+                        </div>
+                    </div>
+                    <div class="dropdown-scroll-container">
+                        <div class="row row-bordered g-0">
+                            <a class="dropdown-shortcuts-item col">
+                                <div class="dropdown-shortcuts-icon">
+                                    <i class="bx bx-bell fs-6"></i>
+                                </div>
+                                <h6 class="fs-6">To Do</h6>
+                                <small>Reminders</small>
+                            </a>
+                            <a class="dropdown-shortcuts-item col">
+                                <div class="dropdown-shortcuts-icon">
+                                    <i class="bx bx-calendar fs-6"></i>
+                                </div>
+                                <h6 class="fs-6">Appointments</h6>
+                                <small>Calendar</small>
+                            </a>
+                        </div>
+                        <div class="row row-bordered g-0">
+                            <a class="dropdown-shortcuts-item col">
+                                <div class="dropdown-shortcuts-icon">
+                                    <i class="bx bx-cog fs-6"></i>
+                                </div>
+                                <h6 class="fs-6">Account Settings</h6>
+                                <small>Settings</small>
+                            </a>
+                            <a class="dropdown-shortcuts-item col">
+                                <div class="dropdown-shortcuts-icon">
+                                    <i class="bx bx-user fs-6"></i>
+                                </div>
+                                <h6 class="fs-6">Manage Users</h6>
+                                <small>Users</small>
+                            </a>
+                        </div>
+                        <div class="row row-bordered g-0">
+                            <a class="dropdown-shortcuts-item col">
+                                <div class="dropdown-shortcuts-icon">
+                                    <i class="bx bx-user-check fs-6"></i>
+                                </div>
+                                <h6 class="fs-6">Manage Roles</h6>
+                                <small>User Roles</small>
+                            </a>
+                            <a class="dropdown-shortcuts-item col">
+                                <div class="dropdown-shortcuts-icon">
+                                    <i class="bx bx-hourglass fs-6"></i>
+                                </div>
+                                <h6 class="fs-6">Approval Pending</h6>
+                                <small>Waiting</small>
+                            </a>
+                        </div>
+                        <div class="row row-bordered g-0">
+                            <a class="dropdown-shortcuts-item col">
+                                <div class="dropdown-shortcuts-icon">
+                                    <i class="bx bxs-report fs-6"></i>
+                                </div>
+                                <h6 class="fs-6">Reports</h6>
+                                <small>Edit Templates</small>
+                            </a>
+                            <a class="dropdown-shortcuts-item col">
+                                <div class="dropdown-shortcuts-icon">
+                                    <i class="bx bx-task fs-6"></i>
+                                </div>
+                                <h6 class="fs-6">Tasks</h6>
+                                <small>Scheduled Tasks</small>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <button id="memberIcon" class="text-gray-200 hover:text-white p-2">
                 <i class="fas fa-user"></i>
             </button>
         </ul>
@@ -98,6 +244,36 @@
     <div id="modal-container"></div>
     <script type="text/javascript" src="assets/js/logo.js"></script>
     <script type="text/javascript" src="assets/js/configframe.js"></script>
+
+    <script>
+
+        //////////////////// Dropdown ////////////////////
+        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+
+        dropdownToggles.forEach((dropdownToggle) =>
+            dropdownToggle.addEventListener('click', (event) => {
+                const dropdown = dropdownToggle.closest('.dropdown');
+                const dropdownMenu = dropdown.querySelector('.dropdown-menu');
+                hideAllDropdowns(event);
+                dropdownMenu.classList.toggle('show');
+                event.stopPropagation();
+            })
+        );
+
+        function hideAllDropdowns(event) {
+            const dropdownMenus = document.querySelectorAll('.dropdown-menu');
+
+            dropdownMenus.forEach((dropdownMenu) => {
+                if (dropdownMenu.classList.contains('show')) {
+                    const dropdown = dropdownMenu.closest('.dropdown');
+                    const dropdownToggle = dropdown.querySelector('.dropdown-toggle');
+                    if (event.currentTarget !== dropdownToggle) {
+                        dropdownMenu.classList.remove('show');
+                    }
+                }
+            });
+        }
+    </script>
 
 
 </body>
