@@ -3,7 +3,8 @@
 
 <head>
     <link href="assets/css/trello.css" rel="stylesheet">
-    <style>
+    <link href="assets/css/dropdown.css" rel="stylesheet">
+    <!-- <style>
         .dropdown {
             position: absolute;
             top: 15px;
@@ -63,7 +64,7 @@
         }
 
 
-    </style>
+    </style> -->
 
 </head>
 
@@ -73,8 +74,10 @@
             <div id="logo"></div>
             <div id="tabs-container"></div>
 
+            <div id="dropdown-container"></div>
 
-            <div class="dropdown">
+
+            <!-- <div class="dropdown">
                 <div class="dropdown-toggle">
 
                     <i class="fas fa-bars"></i>
@@ -154,7 +157,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
 
 
@@ -245,35 +248,9 @@
     <script type="text/javascript" src="assets/js/logo.js"></script>
     <script type="text/javascript" src="assets/js/configframe.js"></script>
 
-    <script>
+    <script type="text/javascript" src="assets/js/dropdown.js"></script>
 
-        //////////////////// Dropdown ////////////////////
-        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-
-        dropdownToggles.forEach((dropdownToggle) =>
-            dropdownToggle.addEventListener('click', (event) => {
-                const dropdown = dropdownToggle.closest('.dropdown');
-                const dropdownMenu = dropdown.querySelector('.dropdown-menu');
-                hideAllDropdowns(event);
-                dropdownMenu.classList.toggle('show');
-                event.stopPropagation();
-            })
-        );
-
-        function hideAllDropdowns(event) {
-            const dropdownMenus = document.querySelectorAll('.dropdown-menu');
-
-            dropdownMenus.forEach((dropdownMenu) => {
-                if (dropdownMenu.classList.contains('show')) {
-                    const dropdown = dropdownMenu.closest('.dropdown');
-                    const dropdownToggle = dropdown.querySelector('.dropdown-toggle');
-                    if (event.currentTarget !== dropdownToggle) {
-                        dropdownMenu.classList.remove('show');
-                    }
-                }
-            });
-        }
-    </script>
+    
 
 
 </body>

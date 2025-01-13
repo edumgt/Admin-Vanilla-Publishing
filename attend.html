@@ -4,6 +4,7 @@
 <head>
   <link href="assets/css/flow.css" rel="stylesheet">
   <link href="assets/css/attend.css" rel="stylesheet">
+  <link href="assets/css/dropdown.css" rel="stylesheet">
 </head>
 
 <body>
@@ -11,7 +12,8 @@
     <ul class="flex justify-between items-center">
       <div id="logo"></div>
       <div id="tabs-container"></div>
-      <button id="memberIcon" class="text-gray-200 hover:text-white text-2xl p-2">
+      <div id="dropdown-container"></div>
+      <button id="memberIcon" class="text-gray-200 hover:text-white p-2">
         <i class="fas fa-user"></i>
       </button>
     </ul>
@@ -81,9 +83,9 @@
 
     <div class="flex items-center mb-4">
       <div class="mr-4">
-        <label for="departmentSelect" class="block text-sm font-medium text-gray-700">Department:</label>
+        <label for="departmentSelect" class="block text-sm font-medium text-gray-700 ">Department:</label>
         <select id="departmentSelect" onchange="updateEmployeeSelect()"
-          class="mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+          class="mt-1 block pl-3 pr-10 py-2 text-base sm:text-sm rounded-md">
           <!-- Department options will be inserted here -->
         </select>
       </div>
@@ -91,7 +93,7 @@
       <div class="mr-4">
         <label for="employeeSelect" class="block text-sm font-medium text-gray-700">Employee:</label>
         <select id="employeeSelect" onchange="showAttendance()"
-          class="mt-1 block pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+          class="mt-1 block pl-3 pr-10 py-2 text-base sm:text-sm rounded-md">
           <!-- Employee options will be inserted here -->
         </select>
       </div>
@@ -99,7 +101,7 @@
       <div>
         <label for="monthSelect" class="block text-sm font-medium text-gray-700">Month:</label>
         <input type="month" id="monthSelect"
-          class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+          class="mt-1 block w-full pl-3 pr-10 py-2 text-base sm:text-sm rounded-md"
           value="2025-01" onchange="showAttendance()">
       </div>
     </div>
@@ -130,6 +132,7 @@
   <script type="text/javascript" src="assets/js/logo.js"></script>
   <script type="text/javascript" src="assets/js/orgframe.js"></script>
   <script type="text/javascript" src="assets/js/attend.js"></script>
+  <script type="text/javascript" src="assets/js/dropdown.js"></script>
   
 </body>
 
