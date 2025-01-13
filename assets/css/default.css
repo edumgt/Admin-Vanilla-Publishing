@@ -1,3 +1,10 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  
 /* Variables */
 :root {
     --text-color: #ffffff;
@@ -12,9 +19,9 @@
 /* General */
 body {
     font-family: var(--font-family);
-    margin: 0;
+    /* margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    box-sizing: border-box; */
     scrollbar-color: #f1a815 transparent;
     scrollbar-width: thin;
 }
