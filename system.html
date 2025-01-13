@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <link href="assets/css/app.css" rel="stylesheet">
 </head>
+
 <body class="main-layout">
     <div class="gnb-menu fixed top-0 left-0 bottom-0 w-full z-50">
         <ul class="flex justify-between items-center">
@@ -21,8 +23,7 @@
     <div id="toast-container"></div>
 
 
-    <div id="offCanvas"
-        class="fixed top-14 h-full bg-gray-100 z-50 shadow-sm">
+    <div id="offCanvas" class="fixed top-14 h-full bg-gray-100 z-50 shadow-sm">
         <div class="flex flex-col h-full">
             <ul class="flex-grow p-4 space-y-4">
                 <!-- 코드관리 -->
@@ -35,21 +36,24 @@
                 </li>
                 <!-- 권한관리 -->
                 <li>
-                    <a href="orgtree.html" class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
+                    <a href="orgtree.html"
+                        class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
                         <i class="fas fa-user-shield menu-icon text-blue-400"></i>
                         <span class="menu-text">권한관리</span>
                     </a>
                 </li>
-                
+
                 <li>
-                    <a href="document.html" class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
+                    <a href="document.html"
+                        class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
                         <i class="fas fa-clipboard-list menu-icon text-blue-400"></i>
                         <span class="menu-text">문서관리</span>
                     </a>
                 </li>
-                
+
                 <li>
-                    <a href="wms.html" class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
+                    <a href="wms.html"
+                        class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
                         <i class="fas fa-bars menu-icon text-blue-400"></i>
                         <span class="menu-text">재고관리</span>
                     </a>
@@ -79,7 +83,7 @@
             코드관리
         </nav>
 
-        
+
         <div class="flex flex-col lg:flex-row justify-between items-center p-2">
             <div id="dataCount" class="text-sm text-gray-700 mb-2 lg:mb-0">Total :</div>
             <div class="flex flex2 flex-col lg:flex-row items-center space-y-2 lg:space-y-0 lg:space-x-2">
@@ -132,27 +136,9 @@
     </div>
 
     <!-- Gear Icon -->
-<div id="buttonContainer"></div>
+    <div id="buttonContainer"></div>
 
-    <!-- Floating Navigation Menu -->
-    <div id="floatingNav"
-        class="fixed bottom-4 right-4 bg-gray-800 text-white rounded-lg shadow-lg p-4 z-50 hidden space-y-4">
-        <div class="flex justify-between items-center">
-            <h3 class="text-white font-semibold">Language</h3>
-            <button id="closeFloatingNav" class="text-white text-lg">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div id="languageSwitcher" class="flex space-x-2">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg" alt="English"
-                data-lang="en" class="w-8 h-8 cursor-pointer">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="한국어"
-                data-lang="ko" class="w-8 h-8 cursor-pointer">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本語" data-lang="ja"
-                class="w-6 h-6 cursor-pointer">
-        </div>
-
-    </div>
+    <div id="appContainer"></div>
 
 
     <div id="modal"
@@ -206,8 +192,8 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
     <script type="text/javascript" src="assets/js/logo.js"></script>
     <script type="text/javascript" src="assets/js/app.js"></script>
-    
-    
+
+
 
 
 
