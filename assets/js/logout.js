@@ -28,6 +28,7 @@ function createMenu(menuItemsLnb) {
 
     const icon = document.createElement('i');
     icon.className = item.icon;
+    icon.classList.add("icon_big");
 
     const span = document.createElement('span');
     span.textContent = item.text;
@@ -53,7 +54,7 @@ const menuItemsLnb = [
 
   { href: 'alerts.html', icon: 'fas fa-bell', text: 'Alerts' },
   { href: 'cards.html', icon: 'fas fa-id-card', text: 'Cards' },
-  { href: 'dropdowns.html', icon: 'fas fa-caret-down', text: 'Dropdowns' },
+
 
 ];
 

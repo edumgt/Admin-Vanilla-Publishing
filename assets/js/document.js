@@ -64,14 +64,6 @@ function previewDocument(doc) {
     viewer.appendChild(iframe);
 }
 
-// function showToast(message) {
-//     toast.textContent = message;
-//     toast.classList.remove('hidden');
-//     setTimeout(() => {
-//         toast.classList.add('hidden');
-//     }, 3000);
-// }
-
 function requestPermission() {
     showToast('Permission requested!');
 }

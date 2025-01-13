@@ -184,13 +184,6 @@ function modalConfirm(message) {
       modal.classList.remove('show');
     }
 
-    // function createBackdrop() {
-    //   const backdrop = document.createElement('div');
-    //   backdrop.id = 'modalConfirmBackdrop';
-    //   backdrop.className = 'modal-confirm-backdrop';
-    //   document.body.appendChild(backdrop);
-    // }
-
     function removeBackdrop() {
       const backdrop = document.getElementById('modalConfirmBackdrop');
       if (backdrop) {
@@ -297,4 +290,15 @@ sidebarToggle.addEventListener('click', () => {
 });
 
 
+function showToast(message, type = 'success') {
+  const toastContainer = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  toast.className = `toast toast-${type} show`;
+  toast.innerText = message;
 
+  toastContainer.appendChild(toast);
+  setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}

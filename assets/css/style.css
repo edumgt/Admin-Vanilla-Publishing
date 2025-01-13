@@ -1,18 +1,3 @@
-* {
-  /* font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue"; */
-  font-family: var(--font-family);
-}
-
-:root {
-  font-size: normal;
-}
-
-
-
-/*-------------------------------------*/
-/*                Body                 */
-/*-------------------------------------*/
-
 .landing-body {
   color: var(--body-color);
   background: hsl(256, 86%, 92%);
