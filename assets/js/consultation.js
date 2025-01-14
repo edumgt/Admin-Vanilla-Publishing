@@ -1,0 +1,250 @@
+// 상담 상태를 시각화하기 위한 상태 박스 설정
+const statusBoxes = [
+    { status: "inProgress", label: "In Progress", className: "inProgress", bgColor: "#3b82f6" },
+    { status: "pending", label: "Pending", className: "pending", bgColor: "#fbbf24" },
+    { status: "risk", label: "Risk", className: "risk", bgColor: "#ef4444" },
+    { status: "success", label: "Success", className: "success", bgColor: "#10b981" },
+    { status: "fail", label: "Fail", className: "fail", bgColor: "#6b7280" }
+];
+
+// 컨설턴트 목록 데이터
+const consultants = [
+    { id: 1, name: "Alice Johnson", position: "Senior Consultant" },
+    { id: 2, name: "Bob Smith", position: "Junior Consultant" },
+    { id: 3, name: "Charlie Brown", position: "Lead Consultant" }
+];
+
+// 상담 데이터 가져오기 함수
+function fetchConsultations() {
+    return JSON.parse(localStorage.getItem('consultations')) || [];
+}
+
+// 상담 데이터 저장 함수
+function saveConsultations(consultations) {
+    localStorage.setItem('consultations', JSON.stringify(consultations));
+}
+
+// 새로운 상담 일지 추가 함수
+function addConsultation(customerName, log, solution) {
+    const consultations = fetchConsultations();
+    const newConsultation = {
+        id: consultations.length ? consultations[consultations.length - 1].id + 1 : 1,
+        customerName: customerName,
+        date: new Date().toISOString().split('T')[0],
+        log: log,
+        solution: solution,
+        status: "pending", // 초기 상태 설정
+        consultant: null,
+        reasons: {} // 각 상태별 Reason을 저장할 객체
+    };
+    consultations.push(newConsultation);
+    saveConsultations(consultations);
+    renderProcessFlow();
+}
+
+// 모달 팝업 관리 변수
+let selectedStatusBox = null;
+let selectedConsultationId = null;
+let selectedStatus = null;
+
+// 모달 팝업 열기 함수
+function openModal(statusBox, consultationId, status) {
+    selectedStatusBox = statusBox;
+    selectedConsultationId = consultationId;
+    selectedStatus = status;
+    document.getElementById('reasonModal').style.display = 'flex';
+}
+
+// 모달 팝업 닫기 함수
+function closeModal() {
+    selectedStatusBox = null;
+    selectedConsultationId = null;
+    selectedStatus = null;
+    document.getElementById('reasonModal').style.display = 'none';
+    document.getElementById('reasonInput').value = ''; // 입력 필드 초기화
+}
+
+// 모달 팝업 저장 함수
+function saveReason() {
+    const reason = document.getElementById('reasonInput').value.trim();
+    if (reason && selectedStatusBox && selectedConsultationId && selectedStatus) {
+        const consultations = fetchConsultations();
+        const consultation = consultations.find(c => c.id == selectedConsultationId);
+        
+        if (!consultation.reasons) {
+            consultation.reasons = {};
+        }
+
+        const now = new Date().toISOString();
+        consultation.reasons[selectedStatus] = {
+            text: reason,
+            date: now
+        };
+
+        selectedStatusBox.style.backgroundColor = statusBoxes.find(box => box.status === selectedStatus).bgColor;
+        selectedStatusBox.style.color = 'white';
+        selectedStatusBox.querySelector('div').innerHTML = `
+            ${reason.length > 10 ? reason.substring(0, 10) + '...' : reason}
+            <small>${new Date(now).toLocaleString()}</small>
+        `;
+        selectedStatusBox.setAttribute('data-tooltip', reason); // 툴팁 설정
+
+        saveConsultations(consultations);
+        closeModal();
+    }
+}
+
+// 정렬 함수
+function sortConsultations(consultations, sortBy) {
+    return consultations.sort((a, b) => {
+        if (sortBy === "customerName") {
+            return a.customerName.localeCompare(b.customerName);
+        } else if (sortBy === "date") {
+            return new Date(a.date) - new Date(b.date);
+        } else if (sortBy === "consultant") {
+            if (a.consultant && b.consultant) {
+                return a.consultant.name.localeCompare(b.consultant.name);
+            } else if (a.consultant) {
+                return -1;
+            } else if (b.consultant) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+    });
+}
+
+function renderProcessFlow() {
+    const sortBy = document.getElementById('sortOptions').value;
+    let consultations = fetchConsultations();
+    consultations = sortConsultations(consultations, sortBy);
+
+    const processFlow = document.getElementById('processFlow');
+    processFlow.innerHTML = ''; // 기존 내용을 초기화
+
+    consultations.forEach(consultation => {
+        if (!consultation.reasons) {
+            consultation.reasons = {};
+        }
+        
+        const statusBoxesHtml = statusBoxes.map(box => {
+            const reason = consultation.reasons[box.status];
+            return `
+                <div class="status-box ${box.className}" 
+                     onclick="openModal(this, ${consultation.id}, '${box.status}')" 
+                     style="background-color: ${reason && reason.text ? box.bgColor : 'transparent'}; 
+                            color: ${reason && reason.text ? 'white' : 'black'};">
+                    <div>
+                        ${reason && reason.text 
+                            ? (reason.text.length > 10 
+                                ? reason.text.substring(0, 10) + '...' 
+                                : reason.text) 
+                            : box.label}
+                        ${reason && reason.text 
+                            ? `<small>${new Date(reason.date).toLocaleString()}</small>` 
+                            : ''}
+                    </div>
+                    ${reason && reason.text 
+                        ? `<span class="tooltip">${reason.text}</span>` 
+                        : ''}
+                </div>
+            `;
+        }).join('');
+        
+        const processItem = document.createElement('div');
+        processItem.className = 'process-item bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full flex';
+        processItem.innerHTML = `
+            <div class="w-2/3 flex items-center droppable" data-id="${consultation.id}">
+                <div class="bg-blue-500 text-white rounded-full h-8 w-8 flex items-center justify-center mr-4">
+                    ${consultation.id}
+                </div>
+                <div>
+                    <p class="text-gray-700 text-base"><strong>Customer Name:</strong> ${consultation.customerName}</p>
+                    <p class="text-gray-700 text-base"><strong>Date:</strong> ${consultation.date}</p>
+                    <p class="text-gray-700 text-base"><strong>Log:</strong> ${consultation.log}</p>
+                    <p class="text-gray-700 text-base"><strong>Solution:</strong> ${consultation.solution}</p>
+                    ${consultation.consultant ? `<p class="text-gray-700 text-base"><strong>Consultant:</strong> ${consultation.consultant.name}</p>` : ''}
+                </div>
+            </div>
+            <div class="w-1/3 flex flex-wrap">
+                ${statusBoxesHtml}
+            </div>
+        `;
+        processFlow.appendChild(processItem);
+    });
+
+    // 드래그 앤 드롭 이벤트 설정
+    const droppables = document.querySelectorAll('.droppable');
+    droppables.forEach(droppable => {
+        droppable.addEventListener('dragover', event => event.preventDefault());
+        droppable.addEventListener('drop', handleDrop);
+    });
+}
+
+// 컨설턴트 목록 렌더링 함수
+function renderConsultants() {
+    const consultantList = document.getElementById('consultantList');
+    consultantList.innerHTML = ''; // 기존 내용을 초기화
+
+    consultants.forEach(consultant => {
+        const consultantItem = document.createElement('div');
+        consultantItem.className = 'consultant-item bg-white shadow-md rounded-full p-2 m-2 draggable text-center';
+        consultantItem.draggable = true;
+        consultantItem.dataset.id = consultant.id;
+        consultantItem.innerHTML = `
+            <p class="text-gray-700 text-sm font-bold">${consultant.name}</p>
+            <p class="text-gray-500 text-xs">${consultant.position}</p>
+        `;
+        consultantItem.addEventListener('dragstart', handleDragStart);
+        consultantList.appendChild(consultantItem);
+    });
+}
+
+// 드래그 시작 이벤트 핸들러
+function handleDragStart(event) {
+    event.dataTransfer.setData('text/plain', event.target.dataset.id);
+}
+
+// 드롭 이벤트 핸들러
+function handleDrop(event) {
+    const consultantId = event.dataTransfer.getData('text/plain');
+    const consultationId = event.currentTarget.dataset.id;
+
+    const consultations = fetchConsultations();
+    const consultant = consultants.find(c => c.id == consultantId);
+    const consultation = consultations.find(c => c.id == consultationId);
+
+    if (consultant && consultation) {
+        consultation.consultant = consultant;
+        consultation.status = 'inProgress';
+        saveConsultations(consultations);
+    }
+
+    renderProcessFlow();
+}
+
+// 폼 제출 이벤트 핸들러
+document.getElementById('consultationForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const customerName = document.getElementById('customerName').value;
+    const log = document.getElementById('log').value;
+    const solution = document.getElementById('solution').value;
+    addConsultation(customerName, log, solution);
+    this.reset(); // 폼 초기화
+});
+
+// 모달 닫기 이벤트 핸들러
+document.getElementById('closeModal').addEventListener('click', closeModal);
+
+// 모달 저장 이벤트 핸들러
+document.getElementById('saveReason').addEventListener('click', saveReason);
+
+// 정렬 옵션 변경 이벤트 핸들러
+document.getElementById('sortOptions').addEventListener('change', renderProcessFlow);
+
+// 페이지 로드 시 저장된 상담 일지 및 컨설턴트 렌더링
+document.addEventListener('DOMContentLoaded', () => {
+    renderConsultants();
+    renderProcessFlow();
+});
