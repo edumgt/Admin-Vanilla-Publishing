@@ -1,0 +1,109 @@
+.draggable {
+    cursor: grab;
+}
+
+.droppable {
+    border: 2px dashed #ccc;
+}
+
+.status-box {
+    border: 2px solid;
+    padding: 10px;
+    text-align: center;
+    margin: 10px;
+    width: 120px;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    /* 글자 크기 작게 */
+    cursor: pointer;
+    position: relative;
+    /* 툴팁을 위한 위치 설정 */
+}
+
+.status-box .tooltip {
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 8px;
+    padding: 8px 12px;
+    background-color: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    border-radius: 4px;
+    white-space: nowrap;
+    z-index: 10;
+    font-size: 0.8rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: opacity 0.3s;
+}
+
+.status-box:hover .tooltip {
+    display: block;
+    opacity: 1;
+}
+
+.status-box small {
+    font-size: 0.7rem;
+    color: #666;
+}
+
+.inProgress {
+    border-color: #3b82f6;
+    /* blue */
+}
+
+.pending {
+    border-color: #fbbf24;
+    /* yellow */
+}
+
+.risk {
+    border-color: #ef4444;
+    /* red */
+}
+
+.success {
+    border-color: #10b981;
+    /* green */
+}
+
+.fail {
+    border-color: #6b7280;
+    /* gray */
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    width: 600px;
+    /* 가로 크기 600px */
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}

@@ -4,6 +4,7 @@
 <head>
     <link href="assets/css/trello.css" rel="stylesheet">
     <link href="assets/css/dropdown.css" rel="stylesheet">
+    <link href="assets/css/network.css" rel="stylesheet">
     
 
 </head>
@@ -28,7 +29,7 @@
     <div id="toast-container"></div>
 
 
-    <div id="offCanvas" class="fixed top-14 h-full bg-gray-100 z-50 shadow-sm">
+    <div id="offCanvas" class="fixed top-14 h-full bg-gray-100 z-50 shadow-sm border-r">
         <div class="flex flex-col h-full">
             <ul class="flex-grow p-4 space-y-4">
 
@@ -42,7 +43,7 @@
                 <li>
                     <a href="network.html" class="menu-item block text-gray-800 hover:text-blue-500 text-center ">
                         <i class="fas fa-network-wired menu-icon text-blue-400"></i>
-                        <span class="menu-text">네트웍구성</span>
+                        <span class="menu-text">컨설팅지정</span>
                     </a>
                 </li>
 
@@ -84,10 +85,76 @@
 
     <div id="content" class="content">
         <nav class="breadcrumb">
-            네트웍구성
+            컨설팅 지정
         </nav>
 
-        <div id="test"></div>
+        <div class="flex w-full">
+            <!-- 좌측 25% 영역 -->
+            <div class="w-1/4 border-t border-gray-200">
+                
+                <form id="consultationForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="customerName">Customer Name:</label>
+                        <input
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="customerName" type="text" placeholder="Customer Name" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="log">Log:</label>
+                        <textarea
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="log" placeholder="Describe the consultation..." required></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="solution">Solution:</label>
+                        <textarea
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="solution" placeholder="Proposed solution..." required></textarea>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <button
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                            type="submit">Add Consultation</button>
+                    </div>
+                </form>
+    
+                <div id="consultantList" class="bg-gray-200 p-4 overflow-x-auto flex flex-wrap">
+                    <!-- 컨설턴트 목록이 이곳에 표시됩니다. -->
+                </div>
+            </div>
+    
+            <!-- 우측 75% 영역 -->
+            <div class="w-3/4 p-4">
+                <h1 class="font-bold mb-4">Consultation Process</h1>
+                <div class="flex justify-between items-center mb-4">
+                    <label for="sortOptions" class="block text-gray-700 text-sm font-bold">Sort by:</label>
+                    <select id="sortOptions"
+                        class="shadow border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <option value="customerName">Customer Name</option>
+                        <option value="date">Date</option>
+                        <option value="consultant">Consultant</option>
+                    </select>
+                </div>
+                <div id="processFlow" class="mt-8 flex flex-wrap">
+                    <!-- 프로세스 플로우가 이곳에 표시됩니다. -->
+                </div>
+            </div>
+        </div>
+    
+        <!-- 모달 팝업 -->
+        <div id="reasonModal" class="modal">
+            <div class="modal-content">
+                <span id="closeModal" class="close">&times;</span>
+                <h2 class="text-xl font-bold mb-4">Enter Reason</h2>
+                <textarea id="reasonInput"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    placeholder="Enter reason..."></textarea>
+                <div class="flex items-center justify-between mt-4">
+                    <button id="saveReason"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Save</button>
+                </div>
+            </div>
+        </div>
 
 
     </div>
@@ -101,6 +168,7 @@
     <script type="text/javascript" src="assets/js/logo.js"></script>
     <script type="text/javascript" src="assets/js/configframe.js"></script>
     <script type="text/javascript" src="assets/js/dropdown.js"></script>
+    <script src="assets/js/consultation.js"></script>
 
 </body>
 
