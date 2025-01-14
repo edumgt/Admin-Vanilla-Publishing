@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consultation Process</title>
-    <script defer src="assets/js/consultation.js"></script>
+
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         .draggable {
             cursor: grab;
         }
+
         .droppable {
             border: 2px dashed #ccc;
         }
+
         .status-box {
             border: 2px solid;
             padding: 10px;
@@ -24,10 +27,13 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 0.9rem; /* 글자 크기 작게 */
+            font-size: 0.9rem;
+            /* 글자 크기 작게 */
             cursor: pointer;
-            position: relative; /* 툴팁을 위한 위치 설정 */
+            position: relative;
+            /* 툴팁을 위한 위치 설정 */
         }
+
         .status-box .tooltip {
             display: none;
             position: absolute;
@@ -45,29 +51,42 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             transition: opacity 0.3s;
         }
+
         .status-box:hover .tooltip {
             display: block;
             opacity: 1;
         }
+
         .status-box small {
             font-size: 0.7rem;
             color: #666;
         }
+
         .inProgress {
-            border-color: #3b82f6; /* blue */
+            border-color: #3b82f6;
+            /* blue */
         }
+
         .pending {
-            border-color: #fbbf24; /* yellow */
+            border-color: #fbbf24;
+            /* yellow */
         }
+
         .risk {
-            border-color: #ef4444; /* red */
+            border-color: #ef4444;
+            /* red */
         }
+
         .success {
-            border-color: #10b981; /* green */
+            border-color: #10b981;
+            /* green */
         }
+
         .fail {
-            border-color: #6b7280; /* gray */
+            border-color: #6b7280;
+            /* gray */
         }
+
         .modal {
             display: none;
             position: fixed;
@@ -81,13 +100,16 @@
             align-items: center;
             justify-content: center;
         }
+
         .modal-content {
             background-color: #fff;
             padding: 20px;
             border-radius: 5px;
-            width: 600px; /* 가로 크기 600px */
+            width: 600px;
+            /* 가로 크기 600px */
             position: relative;
         }
+
         .close {
             position: absolute;
             top: 10px;
@@ -97,6 +119,7 @@
         }
     </style>
 </head>
+
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
 
     <div class="container mx-auto p-4 flex h-screen">
@@ -106,18 +129,26 @@
             <form id="consultationForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="customerName">Customer Name:</label>
-                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="customerName" type="text" placeholder="Customer Name" required>
+                    <input
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="customerName" type="text" placeholder="Customer Name" required>
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="log">Log:</label>
-                    <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="log" placeholder="Describe the consultation..." required></textarea>
+                    <textarea
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="log" placeholder="Describe the consultation..." required></textarea>
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="solution">Solution:</label>
-                    <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="solution" placeholder="Proposed solution..." required></textarea>
+                    <textarea
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="solution" placeholder="Proposed solution..." required></textarea>
                 </div>
                 <div class="flex items-center justify-between">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Add Consultation</button>
+                    <button
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        type="submit">Add Consultation</button>
                 </div>
             </form>
 
@@ -131,7 +162,8 @@
             <h1 class="text-3xl font-bold mb-4">Consultation Process</h1>
             <div class="flex justify-between items-center mb-4">
                 <label for="sortOptions" class="block text-gray-700 text-sm font-bold">Sort by:</label>
-                <select id="sortOptions" class="shadow border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <select id="sortOptions"
+                    class="shadow border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     <option value="customerName">Customer Name</option>
                     <option value="date">Date</option>
                     <option value="consultant">Consultant</option>
@@ -148,12 +180,18 @@
         <div class="modal-content">
             <span id="closeModal" class="close">&times;</span>
             <h2 class="text-xl font-bold mb-4">Enter Reason</h2>
-            <textarea id="reasonInput" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter reason..."></textarea>
+            <textarea id="reasonInput"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                placeholder="Enter reason..."></textarea>
             <div class="flex items-center justify-between mt-4">
-                <button id="saveReason" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Save</button>
+                <button id="saveReason"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Save</button>
             </div>
         </div>
     </div>
 
+    <script src="assets/js/consultation.js"></script>
+
 </body>
+
 </html>
