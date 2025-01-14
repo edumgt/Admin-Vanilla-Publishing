@@ -215,3 +215,53 @@ function showToast(message, type = 'success') {
     }, 3000);
 }
 
+// Dynamically create modals
+function createModal(modalId, title, content, buttons) {
+    const modal = document.createElement('div');
+    modal.id = modalId;
+    modal.className = 'hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50';
+
+    const modalContent = `
+        <div class="bg-white rounded-lg shadow-lg p-6 w-1/3 relative">
+            <button class="absolute top-2 right-2 text-gray-600 hover:text-gray-800 text-lg" onclick="document.getElementById('${modalId}').classList.add('hidden');">&times;</button>
+            <h2 class="text-lg font-semibold mb-4">${title}</h2>
+            ${content}
+            <div class="flex justify-end space-x-2 mt-4">
+                ${buttons.map(btn => `<button class="${btn.class}" onclick="${btn.onClick}">${btn.label}</button>`).join('')}
+            </div>
+        </div>`;
+
+    modal.innerHTML = modalContent;
+    document.body.appendChild(modal);
+}
+
+// Create specific modals
+createModal(
+    'modal',
+    'Edit Row Details',
+    '<form id="modalForm" class="space-y-4"></form>',
+    [
+        { label: 'Save', class: 'bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600', onClick: 'saveModal()' },
+        { label: 'Close', class: 'bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700', onClick: "document.getElementById('modal').classList.add('hidden');" }
+    ]
+);
+
+createModal(
+    'logoutModal',
+    '로그아웃 하시겠습니까?',
+    '',
+    [
+        { label: 'Logout', class: 'bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600', onClick: "window.location.href='index.html';" },
+        { label: 'Cancel', class: 'bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700', onClick: "document.getElementById('logoutModal').classList.add('hidden');" }
+    ]
+);
+
+createModal(
+    'demoModal',
+    '알림',
+    '<p>데모버젼에서는 지원하지 않습니다.</p>',
+    [
+        { label: '닫기', class: 'bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700', onClick: "document.getElementById('demoModal').classList.add('hidden');" }
+    ]
+);
+

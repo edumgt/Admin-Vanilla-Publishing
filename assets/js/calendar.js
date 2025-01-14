@@ -36,7 +36,7 @@ const calendar = (() => {
         nextBtn.onclick = () => changeMonth(1);
 
         const title = document.createElement('div');
-        title.className = 'calendar-title text-lg font-medium';
+        title.className = 'calendar-title text-lg ';
         title.innerText = `${monthNames[month]} ${year}`;
 
         header.appendChild(prevBtn);
@@ -70,7 +70,7 @@ const calendar = (() => {
         for (let day = 1; day <= daysInMonth; day++) {
             const dateDiv = document.createElement('div');
             dateDiv.className = 'py-10 px-4 border cursor-pointer relative';
-            dateDiv.innerHTML = `<div class="text-md font-medium absolute top-2 left-2">${day}</div>`;
+            dateDiv.innerHTML = `<div class="text-md  absolute top-2 left-2">${day}</div>`;
 
             const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 

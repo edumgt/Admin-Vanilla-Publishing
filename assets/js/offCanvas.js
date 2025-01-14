@@ -22,7 +22,7 @@ class OffCanvas {
         this.menuItems.forEach((item) => {
             const li = document.createElement('li');
             li.innerHTML = `
-                <a href="${item.link}" class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
+                <a href="${item.link}" class="menu-item block text-gray-800 hover:text-blue-500 text-center ">
                     <i class="${item.icon} menu-icon text-blue-400"></i>
                     <span class="menu-text">${item.text}</span>
                 </a>

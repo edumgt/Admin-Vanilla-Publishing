@@ -154,7 +154,7 @@ function showAttendance() {
 
   const dateRow = document.getElementById('dateRow');
   const attendanceBody = document.getElementById('attendanceBody');
-  dateRow.innerHTML = '<th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sortable" onclick="sortTableByName()">Employee Name <span id="sortIcon">▲</span></th>'; // Clear previous dates
+  dateRow.innerHTML = '<th class="px-6 py-3 text-left text-xs  uppercase tracking-wider sortable" onclick="sortTableByName()">Employee Name <span id="sortIcon">▲</span></th>'; // Clear previous dates
   attendanceBody.innerHTML = ''; // Clear previous content
 
   // Insert dates in the header
@@ -165,7 +165,7 @@ function showAttendance() {
     const isSaturday = date.getDay() === 6; // Check if the day is Saturday
 
     const dateCell = document.createElement('th');
-    dateCell.className = `px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ikea-blue-bg ${dateStr === today ? 'today-bg today-text' : isSaturday ? 'text-black' : isWeekend ? 'text-red-600' : ''}`;
+    dateCell.className = `px-6 py-3 text-left text-xs  uppercase tracking-wider ikea-blue-bg ${dateStr === today ? 'today-bg today-text' : isSaturday ? 'text-black' : isWeekend ? 'text-red-600' : ''}`;
     dateCell.textContent = dateStr;
     dateRow.appendChild(dateCell);
   }

@@ -71,7 +71,7 @@ function saveData(data) {
 class BadgeRenderer {
     constructor(props) {
         const el = document.createElement('span');
-        el.className = 'px-3 py-1 text-sm font-medium text-white bg-blue-500 rounded cursor-pointer hover:bg-blue-600';
+        el.className = 'px-3 py-1 text-sm  text-white bg-blue-500 rounded cursor-pointer hover:bg-blue-600';
         el.textContent = 'View';
         el.style.display = 'inline-block';
         el.style.textAlign = 'center';
@@ -328,7 +328,7 @@ function toggleModal(show, rowData = {}, rowKey = null) {
             formGroup.className = 'flex flex-col';
 
             const label = document.createElement('label');
-            label.className = 'text-sm font-medium text-gray-700';
+            label.className = 'text-sm  text-gray-700';
             label.textContent = key;
 
             const input = document.createElement('input');

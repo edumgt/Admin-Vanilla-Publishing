@@ -31,7 +31,7 @@
 
                 <li>
                     <a href="work.html"
-                        class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
+                        class="menu-item block text-gray-800 hover:text-blue-500 text-center ">
                         <i class="fas fa-calendar-alt menu-icon text-blue-400"></i>
                         <span class="menu-text">예약관리</span>
                     </a>
@@ -39,7 +39,7 @@
 
                 <li>
                     <a href="meeting.html"
-                        class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
+                        class="menu-item block text-gray-800 hover:text-blue-500 text-center ">
                         <i class="fas fa-users-cog menu-icon text-blue-400"></i> <!-- 회의실 관리 -->
                         <span class="menu-text">회의실관리</span>
                     </a>
@@ -47,7 +47,7 @@
 
                 <li>
                     <a href="hospital.html"
-                        class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
+                        class="menu-item block text-gray-800 hover:text-blue-500 text-center ">
                         <i class="fas fa-sitemap menu-icon text-blue-400"></i>
                         <span class="menu-text">병원예약</span>
                     </a>
@@ -55,7 +55,7 @@
 
                 <li>
                     <a href="lectures.html"
-                        class="menu-item block text-gray-800 hover:text-blue-500 text-center font-medium">
+                        class="menu-item block text-gray-800 hover:text-blue-500 text-center ">
                         <i class="fas fa-file-signature menu-icon text-blue-400"></i> <!-- 결재/보고 -->
                         <span class="menu-text">강의일정</span>
                     </a>
@@ -81,8 +81,6 @@
         </nav>
 
         <div class="mb-6 d-flex align-items-center">
-            <label for="search-date" class="block text-sm font-medium text-gray-700">Select Date:</label>
-            &nbsp;
             <input type="date" id="search-date" class="mt-1 block  border border-gray-300 rounded-md shadow-sm p-2">
             &nbsp;
             <button onclick="filterByDate()"
@@ -99,33 +97,33 @@
                     <input type="hidden" id="room-name" name="roomName">
                     <input type="hidden" id="time-slot" name="timeSlot">
                     <div>
-                        <label for="date" class="block text-sm font-medium text-gray-700">Date:</label>
+                        <label for="date" class="block text-sm  text-gray-700">Date:</label>
                         <input type="date" id="date" name="date"
                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
                     </div>
                     <div>
-                        <label for="startTime" class="block text-sm font-medium text-gray-700">Start Time:</label>
+                        <label for="startTime" class="block text-sm  text-gray-700">Start Time:</label>
                         <select id="startTime" name="startTime"
                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
                             <!-- Options will be populated by JavaScript -->
                         </select>
                     </div>
                     <div>
-                        <label for="endTime" class="block text-sm font-medium text-gray-700">End Time:</label>
+                        <label for="endTime" class="block text-sm  text-gray-700">End Time:</label>
                         <select id="endTime" name="endTime"
                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
                             <!-- Options will be populated by JavaScript -->
                         </select>
                     </div>
                     <div>
-                        <label for="meeting-title" class="block text-sm font-medium text-gray-700">Meeting
+                        <label for="meeting-title" class="block text-sm  text-gray-700">Meeting
                             Title:</label>
                         <input type="text" id="meeting-title" name="meetingTitle"
                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
                             placeholder="Enter meeting title" required>
                     </div>
                     <div>
-                        <label for="meeting-description" class="block text-sm font-medium text-gray-700">Meeting
+                        <label for="meeting-description" class="block text-sm  text-gray-700">Meeting
                             Description:</label>
                         <textarea id="meeting-description" name="meetingDescription"
                             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
