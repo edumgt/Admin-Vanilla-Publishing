@@ -10,7 +10,7 @@ function createModal(modalId, title, content, buttons) {
             <h2 class="text-lg font-semibold mb-4">${title}</h2>
             ${content}
             <div class="flex justify-end space-x-2 mt-4">
-                ${buttons.map(btn => `<button class="${btn.class}" onclick="${btn.onClick}">${btn.label}</button>`).join('')}
+                ${buttons.map(btn => `<button id="closeDemoModal" class="${btn.class}" onclick="${btn.onClick}">${btn.label}</button>`).join('')}
             </div>
         </div>`;
 

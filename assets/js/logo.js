@@ -1,3 +1,55 @@
+// Dynamically create modals
+function createModal(modalId, title, content, buttons) {
+    console.log(modalId);
+
+    const modal = document.createElement('div');
+    modal.id = modalId;
+    modal.className = 'hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50';
+
+    const modalContent = `
+        <div class="bg-white rounded-lg shadow-lg p-6 w-1/3 relative">
+            <button class="absolute top-2 right-2 text-gray-600 hover:text-gray-800 text-lg" onclick="document.getElementById('${modalId}').classList.add('hidden');">&times;</button>
+            <h2 class="text-lg font-semibold mb-4">${title}</h2>
+            ${content}
+            <div class="flex justify-end space-x-2 mt-4">
+                ${buttons.map(btn => `<button id="closeDemoModal" class="${btn.class}" onclick="${btn.onClick}">${btn.label}</button>`).join('')}
+            </div>
+        </div>`;
+
+    modal.innerHTML = modalContent;
+    document.body.appendChild(modal);
+}
+
+// Create specific modals
+createModal(
+    'modal',
+    'Edit Row Details',
+    '<form id="modalForm" class="space-y-4"></form>',
+    [
+        { label: 'Save', class: 'bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600', onClick: 'saveModal()' },
+        { label: 'Close', class: 'bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700', onClick: "document.getElementById('modal').classList.add('hidden');" }
+    ]
+);
+
+createModal(
+    'logoutModal',
+    '로그아웃 하시겠습니까?',
+    '',
+    [
+        { label: 'Logout', class: 'bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600', onClick: "window.location.href='index.html';" },
+        { label: 'Cancel', class: 'bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700', onClick: "document.getElementById('logoutModal').classList.add('hidden');" }
+    ]
+);
+
+createModal(
+    'demoModal',
+    '알림',
+    '<p>데모버젼에서는 지원하지 않습니다.</p>',
+    [
+        { label: '닫기', class: 'bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700', onClick: "document.getElementById('demoModal').classList.add('hidden');" }
+    ]
+);
+
 function generateUUID() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
       const r = (Math.random() * 16) | 0,
@@ -53,43 +105,39 @@ renderFloatingNav('appContainer');
 
 
 // 공통 모달 HTML을 JavaScript로 렌더링하기
-function renderDemoModal(containerId) {
-    const container = document.getElementById(containerId);
+// function renderDemoModal(containerId) {
+//     const container = document.getElementById(containerId);
 
-    if (!container) {
-        console.error(`Container with ID \"${containerId}\" not found.`);
-        return;
-    }
+//     if (!container) {
+//         console.error(`Container with ID \"${containerId}\" not found.`);
+//         return;
+//     }
+//     const modalHtml = `
+//         <div id="demoModal"
+//             class="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
+//             <div class="bg-white rounded-lg shadow-lg p-6 w-1/3 text-center relative">
+//                 <h2 class="text-lg font-semibold mb-4">알림</h2>
+//                 <p>데모버젼에서는 지원하지 않습니다.</p>
+//                 <div class="flex justify-center mt-4">
+//                     <button id="closeDemoModal"
+//                         class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700">닫기</button>
+//                 </div>
+//             </div>
+//         </div>
+//     `;
 
-    const modalHtml = `
-        <div id="demoModal"
-            class="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div class="bg-white rounded-lg shadow-lg p-6 w-1/3 text-center relative">
-                <h2 class="text-lg font-semibold mb-4">알림</h2>
-                <p>데모버젼에서는 지원하지 않습니다.</p>
-                <div class="flex justify-center mt-4">
-                    <button id="closeDemoModal"
-                        class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700">닫기</button>
-                </div>
-            </div>
-        </div>
-    `;
+//     container.innerHTML = modalHtml;
+//     const closeModalButton = document.getElementById("closeDemoModal");
+//     const modal = document.getElementById("demoModal");
 
-    container.innerHTML = modalHtml;
-
-    // 닫기 버튼 이벤트 등록
-    const closeModalButton = document.getElementById("closeDemoModal");
-    const modal = document.getElementById("demoModal");
-
-    if (closeModalButton && modal) {
-        closeModalButton.addEventListener("click", () => {
-            modal.classList.add("hidden");
-        });
-    }
-}
-
+//     if (closeModalButton && modal) {
+//         closeModalButton.addEventListener("click", () => {
+//             modal.classList.add("hidden");
+//         });
+//     }
+// }
 // 예시: ID가 'modal-container'인 요소에 모달 렌더링
-renderDemoModal("modal-container");
+//renderDemoModal("modal-container");
 
 
   const tabsData = [
@@ -215,53 +263,5 @@ function showToast(message, type = 'success') {
     }, 3000);
 }
 
-// Dynamically create modals
-function createModal(modalId, title, content, buttons) {
-    const modal = document.createElement('div');
-    modal.id = modalId;
-    modal.className = 'hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50';
 
-    const modalContent = `
-        <div class="bg-white rounded-lg shadow-lg p-6 w-1/3 relative">
-            <button class="absolute top-2 right-2 text-gray-600 hover:text-gray-800 text-lg" onclick="document.getElementById('${modalId}').classList.add('hidden');">&times;</button>
-            <h2 class="text-lg font-semibold mb-4">${title}</h2>
-            ${content}
-            <div class="flex justify-end space-x-2 mt-4">
-                ${buttons.map(btn => `<button class="${btn.class}" onclick="${btn.onClick}">${btn.label}</button>`).join('')}
-            </div>
-        </div>`;
-
-    modal.innerHTML = modalContent;
-    document.body.appendChild(modal);
-}
-
-// Create specific modals
-createModal(
-    'modal',
-    'Edit Row Details',
-    '<form id="modalForm" class="space-y-4"></form>',
-    [
-        { label: 'Save', class: 'bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600', onClick: 'saveModal()' },
-        { label: 'Close', class: 'bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700', onClick: "document.getElementById('modal').classList.add('hidden');" }
-    ]
-);
-
-createModal(
-    'logoutModal',
-    '로그아웃 하시겠습니까?',
-    '',
-    [
-        { label: 'Logout', class: 'bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600', onClick: "window.location.href='index.html';" },
-        { label: 'Cancel', class: 'bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700', onClick: "document.getElementById('logoutModal').classList.add('hidden');" }
-    ]
-);
-
-createModal(
-    'demoModal',
-    '알림',
-    '<p>데모버젼에서는 지원하지 않습니다.</p>',
-    [
-        { label: '닫기', class: 'bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700', onClick: "document.getElementById('demoModal').classList.add('hidden');" }
-    ]
-);
 

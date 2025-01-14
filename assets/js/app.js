@@ -401,8 +401,8 @@ if (rows.length > 0) {
 /* log out */
 const memberIcon = document.getElementById('memberIcon');
 const logoutModal = document.getElementById('logoutModal');
-const confirmLogout = document.getElementById('confirmLogout');
-const cancelLogout = document.getElementById('cancelLogout');
+// const confirmLogout = document.getElementById('confirmLogout');
+// const cancelLogout = document.getElementById('cancelLogout');
 let isLoggedIn = true;
 memberIcon.addEventListener('click', function () {
     if (isLoggedIn) {
@@ -411,14 +411,15 @@ memberIcon.addEventListener('click', function () {
         logoutModal.classList.remove('hidden');
     }
 });
-confirmLogout.addEventListener('click', function () {
-    isLoggedIn = false;
-    memberIcon.innerHTML = '<i class="fas fa-user"></i>';
-    logoutModal.classList.add('hidden');
-});
-cancelLogout.addEventListener('click', function () {
-    logoutModal.classList.add('hidden');
-});
+
+// confirmLogout.addEventListener('click', function () {
+//     isLoggedIn = false;
+//     memberIcon.innerHTML = '<i class="fas fa-user"></i>';
+//     logoutModal.classList.add('hidden');
+// });
+// cancelLogout.addEventListener('click', function () {
+//     logoutModal.classList.add('hidden');
+// });
 
 // 현재 페이지 URL 가져오기
 const currentPage = window.location.pathname.split("/").pop();
