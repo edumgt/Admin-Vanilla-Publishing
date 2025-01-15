@@ -489,13 +489,13 @@ const translations = {
             settings: "설정관리",
         },
         offCanvas: {
-            code: "코드관리",
+            code: "입출고관리",
             permissions: "권한관리",
             logs: "로그관리",
             menu: "메뉴관리",
             settings: "설정관리",
         },
-        breadcrumb: "코드관리",
+        breadcrumb: "입출고관리",
         buttons: {
             search: "검색",
             reset: "검색 초기화",

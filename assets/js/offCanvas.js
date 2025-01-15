@@ -77,7 +77,7 @@ class OffCanvas {
 const offCanvas = new OffCanvas({
     id: 'offCanvas',
     menuItems: [
-        { link: '#', icon: 'fas fa-home', text: '코드관리' },
+        { link: '#', icon: 'fas fa-home', text: '입출고관리' },
         { link: '#', icon: 'fas fa-info-circle', text: '권한관리' },
         { link: '#', icon: 'fas fa-cogs', text: '로그관리' },
         { link: '#', icon: 'fas fa-envelope', text: '메뉴관리' },
