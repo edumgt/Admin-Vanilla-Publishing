@@ -69,7 +69,8 @@ const columnDefs = [
     {
         headerName: 'Actions',
         field: 'actions',
-        cellClass: 'custom-cell', headerClass: 'custom-header',
+        
+        headerClass: 'custom-header',
         cellRenderer: function(params) {
             const button = document.createElement('button');
             button.textContent = '수정 이력 보기';
