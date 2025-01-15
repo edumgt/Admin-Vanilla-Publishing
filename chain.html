@@ -4,6 +4,7 @@
 <head>
     <link href="assets/css/flow.css" rel="stylesheet">
     <link href="assets/css/dropdown.css" rel="stylesheet">
+    <link href="assets/css/chain.css" rel="stylesheet">
 </head>
 
 <body>
@@ -75,26 +76,21 @@
 
     <div id="content" class="content">
         <nav class="breadcrumb">
-            매출통계
+            체인운영
         </nav>
 
-
-        <div class="grid-container">
-            <h2>항목별 데이터</h2>
-            <div id="hot1"></div>
-        </div>
-        <div class="grid-container">
-            <h2>합계</h2>
-            <div id="hot2"></div>
-        </div>
-        <div class="grid-container">
-            <h2>합계 추이</h2>
-            <div id="chart"></div>
+        <div id="myGrid" class="custom-grid"></div>
+        <div id="charts">
+            <div id="lineChart"></div>
+            <div id="pieChart"></div>
         </div>
 
-
-
-
+        <!-- 수정 이력 모달 -->
+        <div id="historyModal">
+            <h2>수정 이력</h2>
+            <pre id="historyContent"></pre>
+            <button id="closeHistoryBtn">닫기</button>
+        </div>
 
     </div>
 
@@ -138,11 +134,16 @@
 
     <!-- <div id="modal-container"></div> -->
 
-    <script src="https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script type="text/javascript" src="assets/js/logo.js"></script>
     <script type="text/javascript" src="assets/js/flow.js"></script>
+    <script type="text/javascript" src="assets/js/chain.js"></script>
     <script type="text/javascript" src="assets/js/dropdown.js"></script>
+
+
 
 </body>
 
