@@ -412,14 +412,6 @@ memberIcon.addEventListener('click', function () {
     }
 });
 
-// confirmLogout.addEventListener('click', function () {
-//     isLoggedIn = false;
-//     memberIcon.innerHTML = '<i class="fas fa-user"></i>';
-//     logoutModal.classList.add('hidden');
-// });
-// cancelLogout.addEventListener('click', function () {
-//     logoutModal.classList.add('hidden');
-// });
 
 // 현재 페이지 URL 가져오기
 const currentPage = window.location.pathname.split("/").pop();

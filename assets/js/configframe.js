@@ -68,9 +68,6 @@ function saveModal() {
     showToast('해당 건의 데이타를 저장하였습니다.', 'success');
 }
 
-
-
-
 /* log out */
 const memberIcon = document.getElementById('memberIcon');
 const logoutModal = document.getElementById('logoutModal');

@@ -52,11 +52,11 @@ createModal(
 
 function generateUUID() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-      const r = (Math.random() * 16) | 0,
-        v = c === 'x' ? r : (r & 0x3) | 0x8;
-      return v.toString(16);
+        const r = (Math.random() * 16) | 0,
+            v = c === 'x' ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
     });
-  }
+}
 
 function renderFloatingNav(containerId) {
     const container = document.getElementById(containerId);
@@ -104,43 +104,7 @@ function renderFloatingNav(containerId) {
 renderFloatingNav('appContainer');
 
 
-// 공통 모달 HTML을 JavaScript로 렌더링하기
-// function renderDemoModal(containerId) {
-//     const container = document.getElementById(containerId);
-
-//     if (!container) {
-//         console.error(`Container with ID \"${containerId}\" not found.`);
-//         return;
-//     }
-//     const modalHtml = `
-//         <div id="demoModal"
-//             class="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
-//             <div class="bg-white rounded-lg shadow-lg p-6 w-1/3 text-center relative">
-//                 <h2 class="text-lg font-semibold mb-4">알림</h2>
-//                 <p>데모버젼에서는 지원하지 않습니다.</p>
-//                 <div class="flex justify-center mt-4">
-//                     <button id="closeDemoModal"
-//                         class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700">닫기</button>
-//                 </div>
-//             </div>
-//         </div>
-//     `;
-
-//     container.innerHTML = modalHtml;
-//     const closeModalButton = document.getElementById("closeDemoModal");
-//     const modal = document.getElementById("demoModal");
-
-//     if (closeModalButton && modal) {
-//         closeModalButton.addEventListener("click", () => {
-//             modal.classList.add("hidden");
-//         });
-//     }
-// }
-// 예시: ID가 'modal-container'인 요소에 모달 렌더링
-//renderDemoModal("modal-container");
-
-
-  const tabsData = [
+const tabsData = [
     { href: "system.html", icon: "fas fa-cogs", label: "시스템관리" },
     { href: "orgni.html", icon: "fas fa-users", label: "조직관리" },
     { href: "work.html", icon: "fas fa-briefcase", label: "업무관리" },
@@ -165,7 +129,7 @@ function renderTabs(containerId) {
 
         const anchor = document.createElement("a");
         anchor.href = tab.href;
-        anchor.className = "gnb-item tab-link block flex items-center space-x-2";
+        anchor.className = "gnb-item tab-link flex ";
 
         const icon = document.createElement("i");
         icon.className = tab.icon;
@@ -182,7 +146,6 @@ function renderTabs(containerId) {
     container.appendChild(tabsDiv);
 }
 
-// 예시: ID가 'tabs-container'인 요소에 탭 렌더링
 renderTabs("tabs-container");
 
 class AppBrand {
@@ -212,13 +175,12 @@ document.addEventListener('DOMContentLoaded', () => {
 /* gearIcon */
 const button = document.createElement('button');
 button.id = 'gearIcon';
-button.className = 'fixed bottom-4 right-4 bg-gray-800 text-white rounded-full p-3 shadow-lg z-50';
+button.className = 'fixed bottom-4 right-4 bg-gray-700 text-white rounded-full p-3 z-50';
 const icon = document.createElement('i');
 icon.className = 'fas fa-globe';
 button.appendChild(icon);
 document.getElementById('buttonContainer').appendChild(button);
 document.getElementById('gearIcon').addEventListener('click', () => {
-    console.log("$$$");
     const floatingNav = document.getElementById('floatingNav');
     floatingNav.classList.remove('hidden');
 });
@@ -262,6 +224,3 @@ function showToast(message, type = 'success') {
         setTimeout(() => toast.remove(), 300);
     }, 3000);
 }
-
-
-
