@@ -89,7 +89,7 @@ function populateDepartmentSelect() {
     const option = document.createElement('option');
     option.value = department;
     option.text = department;
-    console.log(option.value);
+    //console.log(option.value);
 
     departmentSelect.appendChild(option);
   });

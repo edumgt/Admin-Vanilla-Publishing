@@ -1,17 +1,16 @@
 /* log out */
-const memberIcon = document.getElementById('memberIcon');
-const logoutModal = document.getElementById('logoutModal');
+// const memberIcon = document.getElementById('memberIcon');
+// const logoutModal = document.getElementById('logoutModal');
 // const confirmLogout = document.getElementById('confirmLogout');
 // const cancelLogout = document.getElementById('cancelLogout');
-let isLoggedIn = true;
-
-memberIcon.addEventListener('click', function () {
-  if (isLoggedIn) {
-    logoutModal.classList.remove('hidden');
-  } else {
-    logoutModal.classList.remove('hidden');
-  }
-});
+// let isLoggedIn = true;
+// memberIcon.addEventListener('click', function () {
+//   if (isLoggedIn) {
+//     logoutModal.classList.remove('hidden');
+//   } else {
+//     logoutModal.classList.remove('hidden');
+//   }
+// });
 
 
 // confirmLogout.addEventListener('click', function () {

@@ -411,14 +411,14 @@ if (rows.length > 0) {
 //         logoutModal.classList.remove('hidden');
 //     }
 // });
-// confirmLogout.addEventListener('click', function () {
-//     isLoggedIn = false;
-//     memberIcon.innerHTML = '<i class="fas fa-user"></i>';
-//     logoutModal.classList.add('hidden');
-//   });
-//   cancelLogout.addEventListener('click', function () {
-//     logoutModal.classList.add('hidden');
-//   });
+confirmLogout.addEventListener('click', function () {
+    isLoggedIn = false;
+    memberIcon.innerHTML = '<i class="fas fa-user"></i>';
+    logoutModal.classList.add('hidden');
+  });
+  cancelLogout.addEventListener('click', function () {
+    logoutModal.classList.add('hidden');
+  });
 
 
 // 현재 페이지 URL 가져오기
