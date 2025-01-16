@@ -119,7 +119,7 @@ const menuConfigurations = {
     ],
 
     'document.html': [
-        { href: 'system.html', text: '입출고관리' },
+        { href: 'system.html', text: '코드관리' },
         { href: 'orgtree.html', text: '권한관리' },
         { href: 'document.html', text: '문서관리' },
         { href: 'wms.html', text: 'WMS' },
@@ -176,7 +176,7 @@ const menuConfigurations = {
     ],
 
     'orgtree.html': [
-        { href: 'system.html', text: '입출고관리' },
+        { href: 'system.html', text: '코드관리' },
         { href: 'orgtree.html', text: '권한관리' },
         { href: 'document.html', text: '문서관리' },
         { href: 'wms.html', text: 'WMS' },
@@ -193,7 +193,7 @@ const menuConfigurations = {
     ],
 
     'system.html': [
-        { href: 'system.html', text: '입출고관리' },
+        { href: 'system.html', text: '코드관리' },
         { href: 'orgtree.html', text: '권한관리' },
         { href: 'document.html', text: '문서관리' },
         { href: 'wms.html', text: 'WMS' },
@@ -209,7 +209,7 @@ const menuConfigurations = {
     ],
 
     'wms.html': [
-        { href: 'system.html', text: '입출고관리' },
+        { href: 'system.html', text: '코드관리' },
         { href: 'orgtree.html', text: '권한관리' },
         { href: 'document.html', text: '문서관리' },
         { href: 'wms.html', text: 'WMS' },
