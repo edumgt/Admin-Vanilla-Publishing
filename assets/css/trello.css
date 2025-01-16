@@ -85,7 +85,8 @@
 #taskForm input[type="text"]:focus,
 #taskForm textarea:focus,
 #taskForm input[type="date"]:focus {
-    border-color: #4299e1;
+
+    border-color: #0058a3;
 }
 
 
@@ -93,7 +94,9 @@
 #taskForm button {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #4299e1;
+
+    background-color: #0058a3;
+
     color: white;
     border: none;
     border-radius: 8px;
@@ -148,7 +151,7 @@
 }
 
 .timeline .highlight {
-    background-color: #4299e1;
+    background-color: #0058a3;
 }
 
 .task-list li {

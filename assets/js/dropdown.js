@@ -135,3 +135,17 @@ function hideAllDropdowns(event) {
         }
     });
 }
+
+/* Demo Modal Popup */
+const demoLinks = document.querySelectorAll('a[href="#"]');
+const demoModal = document.getElementById('demoModal');
+const closeDemoModal = document.getElementById('closeDemoModal');
+demoLinks.forEach(link => {
+  link.addEventListener('click', function (event) {
+    event.preventDefault(); 
+    demoModal.classList.remove('hidden');
+  });
+});
+closeDemoModal.addEventListener('click', function () {
+  demoModal.classList.add('hidden');
+});

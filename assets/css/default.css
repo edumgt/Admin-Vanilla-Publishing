@@ -464,3 +464,12 @@ input[type="date"] {
 .relative .fa-calendar-alt {
   pointer-events: none;
 }
+
+input[type="button"] {
+  background-color: #0058a3;
+  color: white;
+  border: none;
+  /* padding: 10px;
+  border-bottom-right-radius: 10px; */
+  cursor: pointer;
+}

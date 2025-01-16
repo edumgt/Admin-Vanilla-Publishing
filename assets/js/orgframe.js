@@ -21,16 +21,15 @@ function saveModal() {
 
 const currentPage = window.location.pathname.split("/").pop();
 
-const demoLinks = document.querySelectorAll('a[href="#"]');
-const demoModal = document.getElementById('demoModal');
-const closeDemoModal = document.getElementById('closeDemoModal');
-
-demoLinks.forEach(link => {
-    link.addEventListener('click', function (event) {
-        event.preventDefault(); 
-        demoModal.classList.remove('hidden');
-    });
-});
+// const demoLinks = document.querySelectorAll('a[href="#"]');
+// const demoModal = document.getElementById('demoModal');
+// const closeDemoModal = document.getElementById('closeDemoModal');
+// demoLinks.forEach(link => {
+//     link.addEventListener('click', function (event) {
+//         event.preventDefault(); 
+//         demoModal.classList.remove('hidden');
+//     });
+// });
 
 /* 다국어 */
 const translations = {
