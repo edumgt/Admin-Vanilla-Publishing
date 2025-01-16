@@ -240,7 +240,7 @@ const menuItems = (menuConfigurations[currentFileName] || defaultMenuItems).map(
 // Render the offCanvas menu
 renderOffCanvasMenu(menuItems);
 
-// Dynamically create modals
+/* Dynamically create modals */
 function createModal(modalId, title, content, buttons) {
     console.log(modalId);
 
