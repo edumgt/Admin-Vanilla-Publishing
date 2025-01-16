@@ -1,3 +1,188 @@
+//////////////////////////////////////////
+function renderOffCanvasMenu(menuItems) {
+    const offCanvas = document.createElement('div');
+    offCanvas.id = 'offCanvas';
+    offCanvas.className = 'fixed top-14 h-full bg-gray-100 z-50 border-r';
+
+    const flexContainer = document.createElement('div');
+    flexContainer.className = 'flex flex-col h-full';
+
+    const ul = document.createElement('ul');
+    ul.className = 'flex-grow p-4 space-y-4';
+
+    menuItems.forEach(item => {
+        const li = document.createElement('li');
+
+        const a = document.createElement('a');
+        a.href = item.href;
+        a.className = 'menu-item block text-gray-800 hover:text-blue-500 text-center';
+
+        const icon = document.createElement('i');
+        icon.className = `fas ${item.icon} menu-icon text-blue-400`;
+
+        const span = document.createElement('span');
+        span.className = 'menu-text';
+        span.textContent = item.text;
+
+        a.appendChild(icon);
+        a.appendChild(span);
+        li.appendChild(a);
+        ul.appendChild(li);
+    });
+
+    const buttonsContainer = document.createElement('div');
+    buttonsContainer.className = 'flex flex-col space-y-4 pb-4';
+
+    const expandButton = document.createElement('button');
+    expandButton.id = 'expandOffCanvas';
+    expandButton.className = 'text-gray-800 hover:text-blue-500 text-xl';
+    expandButton.innerHTML = '<i class="fas fa-chevron-right"></i>';
+
+    const collapseButton = document.createElement('button');
+    collapseButton.id = 'collapseOffCanvas';
+    collapseButton.className = 'text-gray-800 hover:text-blue-500 text-xl';
+    collapseButton.innerHTML = '<i class="fas fa-chevron-left"></i>';
+
+    buttonsContainer.appendChild(expandButton);
+    buttonsContainer.appendChild(collapseButton);
+
+    flexContainer.appendChild(ul);
+    flexContainer.appendChild(buttonsContainer);
+    offCanvas.appendChild(flexContainer);
+
+    document.getElementById('offCanvasContainer').appendChild(offCanvas);
+}
+
+// Determine the current HTML file name
+const currentFileName = window.location.pathname.split('/').pop();
+
+// Define menu configurations based on the file name
+const menuConfigurations = {
+    'config.html': [
+        { href: 'config.html', text: '시스템로그', icon: 'fa-clipboard-list' },
+        { href: 'network.html', text: '컨설팅지정', icon: 'fa-network-wired' },
+        { href: '#', text: 'VM현황', icon: 'fa-server' },
+        { href: '#', text: 'DB관리', icon: 'fa-database' },
+        { href: '#', text: '방화벽', icon: 'fa-shield-alt' }
+    ],
+    'network.html': [
+        { href: 'config.html', text: '시스템로그', icon: 'fa-clipboard-list' },
+        { href: 'network.html', text: '컨설팅지정', icon: 'fa-network-wired' },
+        { href: '#', text: 'VM현황', icon: 'fa-server' },
+        { href: '#', text: 'DB관리', icon: 'fa-database' },
+        { href: '#', text: '방화벽', icon: 'fa-shield-alt' }
+    ],
+
+    'attend.html': [
+        { href: 'orgni.html', text: '조직도구성', icon: 'fa-sitemap' },
+        { href: 'attend.html', text: '근태관리', icon: 'fa-user-clock' },
+        { href: '#', text: '생산일정', icon: 'fa-server' },
+        { href: '#', text: '회의일정', icon: 'fa-database' },
+        { href: '#', text: '이벤트', icon: 'fa-shield-alt' }
+    ],
+    'orgni.html': [
+        { href: 'orgni.html', text: '조직도구성', icon: 'fa-sitemap' },
+        { href: 'attend.html', text: '근태관리', icon: 'fa-user-clock' },
+        { href: '#', text: '생산일정', icon: 'fa-server' },
+        { href: '#', text: '회의일정', icon: 'fa-database' },
+        { href: '#', text: '이벤트', icon: 'fa-shield-alt' }
+    ],
+
+
+    'calendar.html': [
+        { href: 'calendar.html', text: '업무일정', icon: 'fa-calendar-alt' },
+        { href: 'trello.html', text: '프로젝트일정', icon: 'fa-tasks' },
+        { href: '#', text: '생산일정', icon: 'fa-server' },
+        { href: '#', text: '회의일정', icon: 'fa-database' },
+        { href: '#', text: '이벤트', icon: 'fa-shield-alt' }
+    ],
+    'trello.html': [
+        { href: 'calendar.html', text: '업무일정', icon: 'fa-calendar-alt' },
+        { href: 'trello.html', text: '프로젝트일정', icon: 'fa-tasks' },
+        { href: '#', text: '생산일정', icon: 'fa-server' },
+        { href: '#', text: '회의일정', icon: 'fa-database' },
+        { href: '#', text: '이벤트', icon: 'fa-shield-alt' }
+    ],
+
+    'trello.html': [
+        { href: 'calendar.html', text: '업무일정', icon: 'fa-calendar-alt' },
+        { href: 'trello.html', text: '프로젝트일정', icon: 'fa-tasks' },
+        { href: '#', text: '생산일정', icon: 'fa-server' },
+        { href: '#', text: '회의일정', icon: 'fa-database' },
+        { href: '#', text: '이벤트', icon: 'fa-shield-alt' }
+    ],
+
+
+
+    'work.html': [
+        { href: 'work.html', text: '예약관리', icon: 'fa-calendar-alt' },
+        { href: 'meeting.html', text: '회의실관리', icon: 'fa-tasks' },
+        { href: 'hospital.html', text: '병원예약', icon: 'fa-server' },
+        { href: 'lectures.html', text: '강의일정', icon: 'fa-database' },
+        { href: '#', text: '이벤트', icon: 'fa-shield-alt' }
+    ],
+    'meeting.html': [
+        { href: 'work.html', text: '예약관리', icon: 'fa-calendar-alt' },
+        { href: 'meeting.html', text: '회의실관리', icon: 'fa-tasks' },
+        { href: 'hospital.html', text: '병원예약', icon: 'fa-server' },
+        { href: 'lectures.html', text: '강의일정', icon: 'fa-database' },
+        { href: '#', text: '이벤트', icon: 'fa-shield-alt' }
+    ],
+    'hospital.html': [
+        { href: 'work.html', text: '예약관리', icon: 'fa-calendar-alt' },
+        { href: 'meeting.html', text: '회의실관리', icon: 'fa-tasks' },
+        { href: 'hospital.html', text: '병원예약', icon: 'fa-server' },
+        { href: 'lectures.html', text: '강의일정', icon: 'fa-database' },
+        { href: '#', text: '이벤트', icon: 'fa-shield-alt' }
+    ],
+    'lectures.html': [
+        { href: 'work.html', text: '예약관리', icon: 'fa-calendar-alt' },
+        { href: 'meeting.html', text: '회의실관리', icon: 'fa-tasks' },
+        { href: 'hospital.html', text: '병원예약', icon: 'fa-server' },
+        { href: 'lectures.html', text: '강의일정', icon: 'fa-database' },
+        { href: '#', text: '이벤트', icon: 'fa-shield-alt' }
+    ],
+
+
+    'stati.html': [
+        { href: 'stati.html', text: '회원통계', icon: 'fa-calendar-alt' },
+        { href: 'flow.html', text: '매출통계', icon: 'fa-tasks' },
+        { href: 'chain.html', text: '체인운영', icon: 'fa-server' },
+        { href: '#', text: '판매통계', icon: 'fa-database' },
+        { href: '#', text: '실적', icon: 'fa-shield-alt' }
+    ],
+    'flow.html': [
+        { href: 'stati.html', text: '회원통계', icon: 'fa-calendar-alt' },
+        { href: 'flow.html', text: '매출통계', icon: 'fa-tasks' },
+        { href: 'chain.html', text: '체인운영', icon: 'fa-server' },
+        { href: '#', text: '판매통계', icon: 'fa-database' },
+        { href: '#', text: '실적', icon: 'fa-shield-alt' }
+    ],
+    'chain.html': [
+        { href: 'stati.html', text: '회원통계', icon: 'fa-calendar-alt' },
+        { href: 'flow.html', text: '매출통계', icon: 'fa-tasks' },
+        { href: 'chain.html', text: '체인운영', icon: 'fa-server' },
+        { href: '#', text: '판매통계', icon: 'fa-database' },
+        { href: '#', text: '실적', icon: 'fa-shield-alt' }
+    ],
+
+
+
+    // Add more configurations as needed
+};
+
+// Default menu configuration if the file name doesn't match any key
+const defaultMenuItems = [];
+
+// Select the appropriate menu configuration based on the current file name
+const menuItems = menuConfigurations[currentFileName] || defaultMenuItems;
+
+// Render the offCanvas menu
+renderOffCanvasMenu(menuItems);
+/////////////////////////////////////////////////////////////////////////
+
+
+
 // Dynamically create modals
 function createModal(modalId, title, content, buttons) {
     console.log(modalId);
