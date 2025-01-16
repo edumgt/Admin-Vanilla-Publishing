@@ -1,4 +1,3 @@
-//////////////////////////////////////////
 function renderOffCanvasMenu(menuItems) {
     const offCanvas = document.createElement('div');
     offCanvas.id = 'offCanvas';
@@ -56,130 +55,196 @@ function renderOffCanvasMenu(menuItems) {
 // Determine the current HTML file name
 const currentFileName = window.location.pathname.split('/').pop();
 
+// Define a mapping of text to icon classes
+const iconMapping = {
+    '시스템로그': 'fa-clipboard-list',
+    '컨설팅지정': 'fa-network-wired',
+    'VM현황': 'fa-server',
+    'DB관리': 'fa-database',
+    '방화벽': 'fa-shield-alt',
+    '조직도구성': 'fa-sitemap',
+    '근태관리': 'fa-user-clock',
+    '생산일정': 'fa-calendar-alt', // Changed to calendar-alt for scheduling
+    '회의일정': 'fa-calendar-alt', // Changed to calendar-alt for scheduling
+    '이벤트': 'fa-calendar-alt', // Changed to calendar-alt for events
+    '업무일정': 'fa-calendar-alt',
+    '프로젝트일정': 'fa-tasks',
+    '예약관리': 'fa-calendar-alt',
+    '회의실관리': 'fa-door-open', // Changed to door-open for room management
+    '병원예약': 'fa-hospital', // Changed to hospital for hospital reservations
+    '강의일정': 'fa-chalkboard-teacher', // Changed to chalkboard-teacher for lectures
+    '회원통계': 'fa-chart-bar', // Changed to chart-bar for statistics
+    '매출통계': 'fa-chart-line', // Changed to chart-line for sales
+    '체인운영': 'fa-store', // Changed to store for chain operations
+    '판매통계': 'fa-chart-pie', // Changed to chart-pie for sales statistics
+    '실적': 'fa-chart-area', // Changed to chart-area for performance
+    '입출고관리': 'fa-warehouse', // Changed to warehouse for inventory management
+    '권한관리': 'fa-user-shield', // Changed to user-shield for permissions
+    '문서관리': 'fa-file-alt', // Changed to file-alt for document management
+    'WMS': 'fa-cubes' // Changed to cubes for warehouse management system
+};
+
 // Define menu configurations based on the file name
 const menuConfigurations = {
-    'config.html': [
-        { href: 'config.html', text: '시스템로그', icon: 'fa-clipboard-list' },
-        { href: 'network.html', text: '컨설팅지정', icon: 'fa-network-wired' },
-        { href: '#', text: 'VM현황', icon: 'fa-server' },
-        { href: '#', text: 'DB관리', icon: 'fa-database' },
-        { href: '#', text: '방화벽', icon: 'fa-shield-alt' }
-    ],
-    'network.html': [
-        { href: 'config.html', text: '시스템로그', icon: 'fa-clipboard-list' },
-        { href: 'network.html', text: '컨설팅지정', icon: 'fa-network-wired' },
-        { href: '#', text: 'VM현황', icon: 'fa-server' },
-        { href: '#', text: 'DB관리', icon: 'fa-database' },
-        { href: '#', text: '방화벽', icon: 'fa-shield-alt' }
-    ],
-
     'attend.html': [
-        { href: 'orgni.html', text: '조직도구성', icon: 'fa-sitemap' },
-        { href: 'attend.html', text: '근태관리', icon: 'fa-user-clock' },
-        { href: '#', text: '생산일정', icon: 'fa-server' },
-        { href: '#', text: '회의일정', icon: 'fa-database' },
-        { href: '#', text: '이벤트', icon: 'fa-shield-alt' }
+        { href: 'orgni.html', text: '조직도구성' },
+        { href: 'attend.html', text: '근태관리' },
+        { href: '#', text: '생산일정' },
+        { href: '#', text: '회의일정' },
+        { href: '#', text: '이벤트' }
     ],
-    'orgni.html': [
-        { href: 'orgni.html', text: '조직도구성', icon: 'fa-sitemap' },
-        { href: 'attend.html', text: '근태관리', icon: 'fa-user-clock' },
-        { href: '#', text: '생산일정', icon: 'fa-server' },
-        { href: '#', text: '회의일정', icon: 'fa-database' },
-        { href: '#', text: '이벤트', icon: 'fa-shield-alt' }
-    ],
-
 
     'calendar.html': [
-        { href: 'calendar.html', text: '업무일정', icon: 'fa-calendar-alt' },
-        { href: 'trello.html', text: '프로젝트일정', icon: 'fa-tasks' },
-        { href: '#', text: '생산일정', icon: 'fa-server' },
-        { href: '#', text: '회의일정', icon: 'fa-database' },
-        { href: '#', text: '이벤트', icon: 'fa-shield-alt' }
+        { href: 'calendar.html', text: '업무일정' },
+        { href: 'trello.html', text: '프로젝트일정' },
+        { href: '#', text: '생산일정' },
+        { href: '#', text: '회의일정' },
+        { href: '#', text: '이벤트' }
     ],
+
+    'chain.html': [
+        { href: 'stati.html', text: '회원통계' },
+        { href: 'flow.html', text: '매출통계' },
+        { href: 'chain.html', text: '체인운영' },
+        { href: '#', text: '판매통계' },
+        { href: '#', text: '실적' }
+    ],
+
+    'config.html': [
+        { href: 'config.html', text: '시스템로그' },
+        { href: 'network.html', text: '컨설팅지정' },
+        { href: '#', text: 'VM현황' },
+        { href: '#', text: 'DB관리' },
+        { href: '#', text: '방화벽' }
+    ],
+
+    'document.html': [
+        { href: 'system.html', text: '입출고관리' },
+        { href: 'orgtree.html', text: '권한관리' },
+        { href: 'document.html', text: '문서관리' },
+        { href: 'wms.html', text: 'WMS' },
+        { href: '#', text: '설정관리' }
+    ],
+
+    'flow.html': [
+        { href: 'stati.html', text: '회원통계' },
+        { href: 'flow.html', text: '매출통계' },
+        { href: 'chain.html', text: '체인운영' },
+        { href: '#', text: '판매통계' },
+        { href: '#', text: '실적' }
+    ],
+    
+    'hospital.html': [
+        { href: 'work.html', text: '예약관리' },
+        { href: 'meeting.html', text: '회의실관리' },
+        { href: 'hospital.html', text: '병원예약' },
+        { href: 'lectures.html', text: '강의일정' },
+        { href: '#', text: '이벤트' }
+    ],
+
+    'lectures.html': [
+        { href: 'work.html', text: '예약관리' },
+        { href: 'meeting.html', text: '회의실관리' },
+        { href: 'hospital.html', text: '병원예약' },
+        { href: 'lectures.html', text: '강의일정' },
+        { href: '#', text: '이벤트' }
+    ],
+
+    'meeting.html': [
+        { href: 'work.html', text: '예약관리' },
+        { href: 'meeting.html', text: '회의실관리' },
+        { href: 'hospital.html', text: '병원예약' },
+        { href: 'lectures.html', text: '강의일정' },
+        { href: '#', text: '이벤트' }
+    ],
+
+
+    'network.html': [
+        { href: 'config.html', text: '시스템로그' },
+        { href: 'network.html', text: '컨설팅지정' },
+        { href: '#', text: 'VM현황' },
+        { href: '#', text: 'DB관리' },
+        { href: '#', text: '방화벽' }
+    ],
+
+    'orgni.html': [
+        { href: 'orgni.html', text: '조직도구성' },
+        { href: 'attend.html', text: '근태관리' },
+        { href: '#', text: '생산일정' },
+        { href: '#', text: '회의일정' },
+        { href: '#', text: '이벤트' }
+    ],
+
+    'orgtree.html': [
+        { href: 'system.html', text: '입출고관리' },
+        { href: 'orgtree.html', text: '권한관리' },
+        { href: 'document.html', text: '문서관리' },
+        { href: 'wms.html', text: 'WMS' },
+        { href: '#', text: '설정관리' }
+    ],
+
+    
+    'stati.html': [
+        { href: 'stati.html', text: '회원통계' },
+        { href: 'flow.html', text: '매출통계' },
+        { href: 'chain.html', text: '체인운영' },
+        { href: '#', text: '판매통계' },
+        { href: '#', text: '실적' }
+    ],
+
+    'system.html': [
+        { href: 'system.html', text: '입출고관리' },
+        { href: 'orgtree.html', text: '권한관리' },
+        { href: 'document.html', text: '문서관리' },
+        { href: 'wms.html', text: 'WMS' },
+        { href: '#', text: '설정관리' }
+    ],
+    
     'trello.html': [
-        { href: 'calendar.html', text: '업무일정', icon: 'fa-calendar-alt' },
-        { href: 'trello.html', text: '프로젝트일정', icon: 'fa-tasks' },
-        { href: '#', text: '생산일정', icon: 'fa-server' },
-        { href: '#', text: '회의일정', icon: 'fa-database' },
-        { href: '#', text: '이벤트', icon: 'fa-shield-alt' }
+        { href: 'calendar.html', text: '업무일정' },
+        { href: 'trello.html', text: '프로젝트일정' },
+        { href: '#', text: '생산일정' },
+        { href: '#', text: '회의일정' },
+        { href: '#', text: '이벤트' }
     ],
 
-    'trello.html': [
-        { href: 'calendar.html', text: '업무일정', icon: 'fa-calendar-alt' },
-        { href: 'trello.html', text: '프로젝트일정', icon: 'fa-tasks' },
-        { href: '#', text: '생산일정', icon: 'fa-server' },
-        { href: '#', text: '회의일정', icon: 'fa-database' },
-        { href: '#', text: '이벤트', icon: 'fa-shield-alt' }
+    'wms.html': [
+        { href: 'system.html', text: '입출고관리' },
+        { href: 'orgtree.html', text: '권한관리' },
+        { href: 'document.html', text: '문서관리' },
+        { href: 'wms.html', text: 'WMS' },
+        { href: '#', text: '설정관리' }
     ],
-
-
 
     'work.html': [
-        { href: 'work.html', text: '예약관리', icon: 'fa-calendar-alt' },
-        { href: 'meeting.html', text: '회의실관리', icon: 'fa-tasks' },
-        { href: 'hospital.html', text: '병원예약', icon: 'fa-server' },
-        { href: 'lectures.html', text: '강의일정', icon: 'fa-database' },
-        { href: '#', text: '이벤트', icon: 'fa-shield-alt' }
-    ],
-    'meeting.html': [
-        { href: 'work.html', text: '예약관리', icon: 'fa-calendar-alt' },
-        { href: 'meeting.html', text: '회의실관리', icon: 'fa-tasks' },
-        { href: 'hospital.html', text: '병원예약', icon: 'fa-server' },
-        { href: 'lectures.html', text: '강의일정', icon: 'fa-database' },
-        { href: '#', text: '이벤트', icon: 'fa-shield-alt' }
-    ],
-    'hospital.html': [
-        { href: 'work.html', text: '예약관리', icon: 'fa-calendar-alt' },
-        { href: 'meeting.html', text: '회의실관리', icon: 'fa-tasks' },
-        { href: 'hospital.html', text: '병원예약', icon: 'fa-server' },
-        { href: 'lectures.html', text: '강의일정', icon: 'fa-database' },
-        { href: '#', text: '이벤트', icon: 'fa-shield-alt' }
-    ],
-    'lectures.html': [
-        { href: 'work.html', text: '예약관리', icon: 'fa-calendar-alt' },
-        { href: 'meeting.html', text: '회의실관리', icon: 'fa-tasks' },
-        { href: 'hospital.html', text: '병원예약', icon: 'fa-server' },
-        { href: 'lectures.html', text: '강의일정', icon: 'fa-database' },
-        { href: '#', text: '이벤트', icon: 'fa-shield-alt' }
+        { href: 'work.html', text: '예약관리' },
+        { href: 'meeting.html', text: '회의실관리' },
+        { href: 'hospital.html', text: '병원예약' },
+        { href: 'lectures.html', text: '강의일정' },
+        { href: '#', text: '이벤트' }
     ],
 
 
-    'stati.html': [
-        { href: 'stati.html', text: '회원통계', icon: 'fa-calendar-alt' },
-        { href: 'flow.html', text: '매출통계', icon: 'fa-tasks' },
-        { href: 'chain.html', text: '체인운영', icon: 'fa-server' },
-        { href: '#', text: '판매통계', icon: 'fa-database' },
-        { href: '#', text: '실적', icon: 'fa-shield-alt' }
-    ],
-    'flow.html': [
-        { href: 'stati.html', text: '회원통계', icon: 'fa-calendar-alt' },
-        { href: 'flow.html', text: '매출통계', icon: 'fa-tasks' },
-        { href: 'chain.html', text: '체인운영', icon: 'fa-server' },
-        { href: '#', text: '판매통계', icon: 'fa-database' },
-        { href: '#', text: '실적', icon: 'fa-shield-alt' }
-    ],
-    'chain.html': [
-        { href: 'stati.html', text: '회원통계', icon: 'fa-calendar-alt' },
-        { href: 'flow.html', text: '매출통계', icon: 'fa-tasks' },
-        { href: 'chain.html', text: '체인운영', icon: 'fa-server' },
-        { href: '#', text: '판매통계', icon: 'fa-database' },
-        { href: '#', text: '실적', icon: 'fa-shield-alt' }
-    ],
-
-
-
-    // Add more configurations as needed
+    
 };
 
 // Default menu configuration if the file name doesn't match any key
-const defaultMenuItems = [];
+const defaultMenuItems = [
+    { href: 'config.html', text: '시스템로그' },
+    { href: 'network.html', text: '컨설팅지정' },
+    { href: '#', text: 'VM현황' },
+    { href: '#', text: 'DB관리' },
+    { href: '#', text: '방화벽' }
+];
 
 // Select the appropriate menu configuration based on the current file name
-const menuItems = menuConfigurations[currentFileName] || defaultMenuItems;
+const menuItems = (menuConfigurations[currentFileName] || defaultMenuItems).map(item => ({
+    ...item,
+    icon: iconMapping[item.text]
+}));
 
 // Render the offCanvas menu
 renderOffCanvasMenu(menuItems);
-/////////////////////////////////////////////////////////////////////////
 
 
 
