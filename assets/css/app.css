@@ -41,15 +41,6 @@ input[type="checkbox"] {
     color: #2c2c30;
 }
 
-.tui-grid-row {
-    background-color: #fff !important;
-    border-bottom: 1px solid #8f8f8f !important;
-}
-
-.tui-grid-row:last-child {
-    background-color: #fff !important;
-    border-bottom: 1px solid #8f8f8f !important;
-}
 
 #modal>div {
     width: 90%;

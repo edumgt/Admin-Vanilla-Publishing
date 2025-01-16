@@ -28,6 +28,7 @@
     max-height: 400px;
     background-color: white;
     border: 1px solid #ccc;
+
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -35,8 +36,9 @@
 }
 
 .chat-bot-header {
-    background-color: #007bff;
+    background-color: #0058a3;
     color: white;
+
     padding: 10px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -62,7 +64,7 @@
 }
 
 .chat-bot-input button {
-    background-color: #007bff;
+    background-color: #0058a3;
     color: white;
     border: none;
     padding: 10px;

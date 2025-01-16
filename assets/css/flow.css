@@ -48,21 +48,6 @@ input[type="checkbox"] {
 
 }
 
-/* 모든 행에 동일한 스타일 적용 */
-.tui-grid-row {
-    background-color: #fff !important;
-    /* 기본 배경색 */
-    border-bottom: 1px solid #8f8f8f !important;
-    /* 기본 테두리 색 */
-}
-
-/* 마지막 행에 추가 스타일 적용 */
-.tui-grid-row:last-child {
-    background-color: #fff !important;
-    /* 마지막 행의 배경색 */
-    border-bottom: 1px solid #8f8f8f !important;
-    /* 마지막 행의 테두리 색 */
-}
 
 
 #modal>div {
@@ -162,7 +147,7 @@ input[type="checkbox"] {
 }
 
 .ht_clone_top .htCore th {
-    background-color: #007BFF;
+    background-color: #0058a3;
     color: white;
 }
 
