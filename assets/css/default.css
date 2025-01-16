@@ -14,6 +14,7 @@
   --font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue";
   --primary-color: #0058a3;
   --primary-lightest-color: hsl(240, 100%, 95%);
+  --scrollbar-color: hsl(240, 25%, 100%);
 }
 
 /* General */
