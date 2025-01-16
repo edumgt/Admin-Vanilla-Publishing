@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="assets/css/trello.css" rel="stylesheet">
+    <link href="assets/css/timeline.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="gnb-menu fixed top-0 left-0 w-full z-50">
+        <ul class="flex justify-between items-center">
+            <div id="logo"></div>
+            <div id="tabs-container"></div>
+
+            <div id="dropdown-container"></div>
+            <button id="memberIcon">
+                <i class="fas fa-user"></i>
+            </button>
+        </ul>
+    </div>
+
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
+    <div id="offCanvasContainer"></div>
+
+    <div id="content" class="content">
+        <nav class="breadcrumb">
+            생산일정
+        </nav>
+
+
+        <div class="header">
+            <div class="carousel-btn" id="prev-btn">&lt; Prev 5 days</div>
+            <div id="current-date" class="text-center text-2xl font-bold">Today</div>
+            <div class="carousel-btn" id="next-btn">Next 5 days &gt;</div>
+        </div>
+        <div class="timeline-header" id="timeline-header"></div>
+        <div class="timeline" id="timeline-content"></div>
+
+        <div class="popup" id="popup">
+            <input type="text" id="event-title" placeholder="Event Title">
+            <input type="datetime-local" id="event-start">
+            <input type="datetime-local" id="event-end">
+            <div class="error" id="date-error">Start date cannot be later than end date.</div>
+            <div class="btn" id="save-event">Save</div>
+            <div class="btn" id="close-popup">Close</div>
+        </div>
+    </div>
+
+
+    <div id="buttonContainer"></div>
+
+
+    <div id="appContainer"></div>
+
+    <script type="text/javascript" src="assets/js/logo.js"></script>
+    <script type="text/javascript" src="assets/js/frame.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uuid@8.3.2/dist/umd/uuidv4.min.js"></script>
+    <script type="text/javascript" src="assets/js/timeline.js"></script>
+    <script type="text/javascript" src="assets/js/dropdown.js"></script>
+
+</body>
+
+</html>

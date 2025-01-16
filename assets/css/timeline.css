@@ -1,0 +1,91 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.timeline-header {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 10px 0;
+    margin-bottom: 10px;
+}
+.timeline-header .day {
+    flex: 1;
+    text-align: center;
+    border-right: 1px solid #ddd;
+}
+.timeline-header .day:last-child {
+    border-right: none;
+}
+.timeline-header .today {
+    background-color: red;
+    color: white;
+}
+.timeline {
+    position: relative;
+    border: 1px solid #ddd;
+    overflow: hidden;
+    height: 560px; /* Set height to 8 events */
+    background-size: 100% 70px; /* Set the background size to the height of one row */
+    background-image: linear-gradient(to bottom, #ddd 1px, transparent 1px); /* Create the horizontal grid lines */
+}
+.event {
+    position: absolute;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: grab;
+    margin: 5px 0;
+}
+.event:active {
+    cursor: grabbing;
+}
+.carousel-btn {
+    cursor: pointer;
+    background: #007bff;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin: 0 5px;
+}
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+.popup.active {
+    display: block;
+}
+.popup input {
+    display: block;
+    margin-bottom: 10px;
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+.popup .btn {
+    cursor: pointer;
+    background: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-top: 10px;
+    text-align: center;
+}
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+    display: none;
+}

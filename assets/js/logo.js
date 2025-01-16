@@ -65,11 +65,12 @@ const iconMapping = {
     '방화벽': 'fa-shield-alt',
     '조직도구성': 'fa-sitemap',
     '근태관리': 'fa-user-clock',
-    '생산일정': 'fa-calendar-alt', // Changed to calendar-alt for scheduling
+    
     '회의일정': 'fa-calendar-alt', // Changed to calendar-alt for scheduling
     '이벤트': 'fa-calendar-alt', // Changed to calendar-alt for events
     '업무일정': 'fa-calendar-alt',
     '프로젝트일정': 'fa-tasks',
+    '생산일정': 'fa-tasks',
     '예약관리': 'fa-calendar-alt',
     '회의실관리': 'fa-door-open', // Changed to door-open for room management
     '병원예약': 'fa-hospital', // Changed to hospital for hospital reservations
@@ -98,7 +99,7 @@ const menuConfigurations = {
     'calendar.html': [
         { href: 'calendar.html', text: '업무일정' },
         { href: 'trello.html', text: '프로젝트일정' },
-        { href: '#', text: '생산일정' },
+        { href: 'timeline.html', text: '생산일정' },
         { href: '#', text: '회의일정' },
         { href: '#', text: '이벤트' }
     ],
@@ -201,10 +202,18 @@ const menuConfigurations = {
         { href: '#', text: '설정관리' }
     ],
 
+    'timeline.html': [
+        { href: 'calendar.html', text: '업무일정' },
+        { href: 'trello.html', text: '프로젝트일정' },
+        { href: 'timeline.html', text: '생산일정' },
+        { href: '#', text: '회의일정' },
+        { href: '#', text: '이벤트' }
+    ],
+
     'trello.html': [
         { href: 'calendar.html', text: '업무일정' },
         { href: 'trello.html', text: '프로젝트일정' },
-        { href: '#', text: '생산일정' },
+        { href: 'timeline.html', text: '생산일정' },
         { href: '#', text: '회의일정' },
         { href: '#', text: '이벤트' }
     ],
