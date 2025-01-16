@@ -293,8 +293,12 @@ input[type="date"] {
 }
 
 .active-tab {
-  background-color: #2563eb;
-  color: #facc15 !important;
+
+  background-color: #0058a3 !important;
+  /* IKEA 블루 톤 */
+  color: #ffc72c !important;
+  /* IKEA 옐로우 톤 */
+
   font-weight: 600;
   font-size: 15px;
 }
@@ -344,7 +348,7 @@ input[type="date"] {
   background-color: white;
   box-shadow: 0 0.25rem 0.75rem 0.2rem rgba(34, 48, 62, 0.14);
   z-index: 50;
-  width:200px;
+  width: 200px;
 }
 
 .dropdown-menu.show {
@@ -372,4 +376,43 @@ input[type="date"] {
   justify-content: center;
   padding: 1rem;
 
+}
+
+.toast {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  min-width: 200px;
+  padding: 1rem;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #fff;
+  z-index: 1000;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast-success {
+  background-color: #38a169;
+}
+
+.toast-warning {
+  background-color: #dd6b20;
+}
+
+.toast-info {
+  background-color: #0058a3;
+  /* IKEA 블루 톤 */
+  color: #ffc72c;
+  /* IKEA 옐로우 톤 */
+}
+
+.toast-error {
+  background-color: #e53e3e;
 }

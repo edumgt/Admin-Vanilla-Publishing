@@ -31,8 +31,12 @@
     width: 100%;
     height: 100%;
     cursor: pointer;
+
     background-color: #0058a3;
-    color: #ffcc00;
+    /* IKEA 블루 톤 */
+    color: #ffc72c;
+    /* IKEA 옐로우 톤 */
+
     border: 1px solid #ddd;
     box-sizing: border-box;
     position: relative;

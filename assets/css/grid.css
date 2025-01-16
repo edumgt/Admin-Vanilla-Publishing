@@ -314,47 +314,6 @@ input[type="checkbox"] {
 }
 
 
-
-
-/* toast */
-
-.toast {
-   position: fixed;
-   top: 45px;
-   left: 50%;
-   transform: translate(-50%, -50%);
-   min-width: 300px;
-   padding: 1rem;
-   border-radius: 5px;
-   font-size: 14px;
-   color: #fff;
-   z-index: 1000;
-   opacity: 0;
-   transition: opacity 0.3s, transform 0.3s;
-}
-
-.toast.show {
-   opacity: 1;
-   transform: translate(-50%, -50%);
-}
-
-
-.toast-success {
-   background-color: #38a169;
-}
-
-.toast-warning {
-   background-color: #dd6b20;
-}
-
-.toast-info {
-   background-color: #3182ce;
-}
-
-.toast-error {
-   background-color: #e53e3e;
-}
-
 #modal>div {
    width: 90%;
    height: 90%;
