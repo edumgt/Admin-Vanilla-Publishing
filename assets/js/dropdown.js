@@ -11,15 +11,6 @@ memberIcon.addEventListener('click', function () {
         logoutModal.classList.remove('hidden');
     }
 });
-// confirmLogout.addEventListener('click', function () {
-//     isLoggedIn = false;
-//     memberIcon.innerHTML = '<i class="fas fa-user"></i>';
-//     logoutModal.classList.add('hidden');
-// });
-// cancelLogout.addEventListener('click', function () {
-//     logoutModal.classList.add('hidden');
-// });
-
 
 function renderDropdown(containerId) {
     const container = document.getElementById(containerId);

@@ -133,7 +133,7 @@ const menuConfigurations = {
         { href: '#', text: '판매통계' },
         { href: '#', text: '실적' }
     ],
-    
+
     'hospital.html': [
         { href: 'work.html', text: '예약관리' },
         { href: 'meeting.html', text: '회의실관리' },
@@ -183,7 +183,7 @@ const menuConfigurations = {
         { href: '#', text: '설정관리' }
     ],
 
-    
+
     'stati.html': [
         { href: 'stati.html', text: '회원통계' },
         { href: 'flow.html', text: '매출통계' },
@@ -199,7 +199,7 @@ const menuConfigurations = {
         { href: 'wms.html', text: 'WMS' },
         { href: '#', text: '설정관리' }
     ],
-    
+
     'trello.html': [
         { href: 'calendar.html', text: '업무일정' },
         { href: 'trello.html', text: '프로젝트일정' },
@@ -225,17 +225,11 @@ const menuConfigurations = {
     ],
 
 
-    
+
 };
 
 // Default menu configuration if the file name doesn't match any key
-const defaultMenuItems = [
-    { href: 'config.html', text: '시스템로그' },
-    { href: 'network.html', text: '컨설팅지정' },
-    { href: '#', text: 'VM현황' },
-    { href: '#', text: 'DB관리' },
-    { href: '#', text: '방화벽' }
-];
+const defaultMenuItems = [];
 
 // Select the appropriate menu configuration based on the current file name
 const menuItems = (menuConfigurations[currentFileName] || defaultMenuItems).map(item => ({
@@ -245,8 +239,6 @@ const menuItems = (menuConfigurations[currentFileName] || defaultMenuItems).map(
 
 // Render the offCanvas menu
 renderOffCanvasMenu(menuItems);
-
-
 
 // Dynamically create modals
 function createModal(modalId, title, content, buttons) {

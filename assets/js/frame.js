@@ -69,55 +69,7 @@ function saveModal() {
 }
 
 
-// function showToast(message, type = 'success') {
-//     const toastContainer = document.getElementById('toast-container');
-//     const toast = document.createElement('div');
-//     toast.className = `toast toast-${type} show`;
-//     toast.innerText = message;
 
-//     toastContainer.appendChild(toast);
-//     setTimeout(() => {
-//         toast.classList.remove('show');
-//         setTimeout(() => toast.remove(), 300);
-//     }, 3000);
-// }
-
-
-/* log out */
-// const memberIcon = document.getElementById('memberIcon');
-// const logoutModal = document.getElementById('logoutModal');
-// const confirmLogout = document.getElementById('confirmLogout');
-// const cancelLogout = document.getElementById('cancelLogout');
-// let isLoggedIn = true;
-// memberIcon.addEventListener('click', function () {
-//     if (isLoggedIn) {
-//         logoutModal.classList.remove('hidden');
-//     } else {
-//         logoutModal.classList.remove('hidden');
-//     }
-// });
-
-
-
-/* LNB */
-// const offCanvas = document.getElementById('offCanvas');
-// offCanvas.classList.remove('hidden', '-translate-x-full'); 
-// offCanvas.classList.add('collapsed');
-// offCanvas.classList.remove('expanded');
-
-
-// const expandOffCanvas = document.getElementById('expandOffCanvas');
-// const collapseOffCanvas = document.getElementById('collapseOffCanvas');
-// expandOffCanvas.addEventListener('click', function () {
-//     offCanvas.classList.remove('collapsed');
-//     offCanvas.classList.add('expanded');
-//     expandOffCanvas.classList.add('hidden');
-// });
-// collapseOffCanvas.addEventListener('click', function () {
-//     offCanvas.classList.add('collapsed');
-//     offCanvas.classList.remove('expanded');
-//     collapseOffCanvas.classList.add('hidden');
-// });
 
 const currentPage = window.location.pathname.split("/").pop();
 
