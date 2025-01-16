@@ -59,6 +59,7 @@ const currentFileName = window.location.pathname.split('/').pop();
 const iconMapping = {
     '시스템로그': 'fa-clipboard-list',
     '컨설팅지정': 'fa-network-wired',
+    '코드관리': 'fa-server',
     'VM현황': 'fa-server',
     'DB관리': 'fa-database',
     '방화벽': 'fa-shield-alt',
