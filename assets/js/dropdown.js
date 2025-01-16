@@ -1,4 +1,6 @@
 const memberIcon = document.getElementById('memberIcon');
+memberIcon.classList.add("text-gray-200","hover:text-white","p-2");
+
 const logoutModal = document.getElementById('logoutModal');
 
 let isLoggedIn = true;
