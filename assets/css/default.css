@@ -387,7 +387,7 @@ input[type="date"] {
   min-width: 200px;
   padding: 1rem;
   border-radius: 5px;
-  font-size: 14px;
+  font-size: 1rem;
   color: #fff;
   z-index: 1000;
   opacity: 0;
@@ -419,12 +419,41 @@ input[type="date"] {
   background-color: #e53e3e;
 }
 
-/* 모든 행에 동일한 스타일 적용 */
+
+/* tui grid */
+.tui-grid-cell.tui-grid-cell-row-header,
+.tui-grid-cell.tui-grid-cell-header {
+  background-color: #e8eaee;
+  color: #2c2c30;
+}
+
 .tui-grid-row {
   background-color: #fff !important;
-  /* 기본 배경색 */
   border-bottom: 1px solid #0058a3 !important;
-  /* 기본 테두리 색 */
+}
+
+.tui-grid-header {
+  background-color: #0058a3 !important;
+  color: #ffc72c !important;
+  font-weight: bold;
+  text-align: center;
+  border-bottom: 2px solid var(--secondary-color);
+  border-radius: 10px 10px 0 0;
+  overflow: hidden;
+  font-family: var(--font-family);
+}
+
+.tui-grid-cell {
+  font-size: 15px;
+  color: #333;
+  font-family: var(--font-family);
+}
+
+
+.tui-grid-check-input,
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
 }
 
 /* 마지막 행에 추가 스타일 적용 */
@@ -434,6 +463,21 @@ input[type="date"] {
   border-bottom: 1px solid #8f8f8f !important;
   /* 마지막 행의 테두리 색 */
 }
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+
 
 #modal>div {
   width: 90%;
@@ -467,10 +511,9 @@ input[type="date"] {
 }
 
 input[type="button"] {
-  background-color: #0058a3;
-  color: white;
-  border: none;
-  /* padding: 10px;
-  border-bottom-right-radius: 10px; */
-  cursor: pointer;
+  background-color: #0058a3 !important;
+  color: #ffc72c !important;
+  border: none !important;
+  cursor: pointer !important;
 }
+

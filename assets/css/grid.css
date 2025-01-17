@@ -262,40 +262,7 @@ body.sidebar-hidden .sidebar {
  }
 
 
-/* tui grid */
 
-.tui-grid-header {
-   background-color: var(--primary-color);
-   color: var(--text-color);
-   font-weight: bold;
-   text-align: center;
-   border-bottom: 2px solid var(--secondary-color);
-   border-radius: 10px 10px 0 0;
-   overflow: hidden;
-   font-family: var(--font-family);
-   /* font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue"; */
-}
-
-.tui-grid-cell {
-   font-size: 15px;
-   color: #333;
-   font-family: var(--font-family);
-   /* font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue"; */
-}
-
-
-.tui-grid-check-input,
-input[type="checkbox"] {
-   width: 18px;
-   height: 18px;
-}
-
-.tui-grid-cell.tui-grid-cell-row-header,
-.tui-grid-cell.tui-grid-cell-header {
-   background-color: #e8eaee;
-   color: #2c2c30;
-
-}
 
 
 /* 

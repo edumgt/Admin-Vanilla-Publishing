@@ -12,69 +12,6 @@
 
 @import url('default.css');
 
-.tui-grid-header {
-    background-color: var(--primary-color);
-    color: var(--text-color);
-    font-weight: bold;
-    text-align: center;
-    border-bottom: 2px solid var(--secondary-color);
-    border-radius: 10px 10px 0 0;
-    overflow: hidden;
-    font-family: var(--font-family);
-}
-
-.tui-grid-cell {
-    font-size: 15px;
-    color: #333;
-    font-family: var(--font-family);
-}
-
-.tui-grid-check-input,
-input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-}
-
-.tui-grid-cell.tui-grid-cell-row-header,
-.tui-grid-cell.tui-grid-cell-header {
-    background-color: #e8eaee;
-    color: #2c2c30;
-}
-
-/* 
-#modal>div {
-    width: 90%;
-    height: 90%;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    overflow: auto;
-}
-
-#modal h2 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-}
-
-#modal p {
-    flex-grow: 1;
-    overflow: auto;
-}
-
-#modal button {
-    align-self: flex-end;
-}
-
-.relative .fa-calendar-alt {
-    pointer-events: none;
-} */
-
-
-
 
 
 

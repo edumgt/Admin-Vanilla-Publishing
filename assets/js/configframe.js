@@ -1,21 +1,21 @@
-function saveModal() {
-    const modalForm = document.getElementById('modalForm');
-    const formData = new FormData(modalForm);
-    const updatedData = {};
-    for (const [key, value] of formData.entries()) {
-        updatedData[key] = value;
-    }
+// function saveModal() {
+//     const modalForm = document.getElementById('modalForm');
+//     const formData = new FormData(modalForm);
+//     const updatedData = {};
+//     for (const [key, value] of formData.entries()) {
+//         updatedData[key] = value;
+//     }
 
-    if (currentRowKey !== null) {
-        grid.setValue(currentRowKey, 'tpCd', updatedData.tpCd);
-        grid.setValue(currentRowKey, 'tpNm', updatedData.tpNm);
-        grid.setValue(currentRowKey, 'descCntn', updatedData.descCntn);
-        grid.setValue(currentRowKey, 'useYn', updatedData.useYn);
-    }
-    document.getElementById('modal').classList.add('hidden');
-    saveData(grid.getData());
-    showToast('해당 건의 데이타를 저장하였습니다.', 'success');
-}
+//     if (currentRowKey !== null) {
+//         grid.setValue(currentRowKey, 'tpCd', updatedData.tpCd);
+//         grid.setValue(currentRowKey, 'tpNm', updatedData.tpNm);
+//         grid.setValue(currentRowKey, 'descCntn', updatedData.descCntn);
+//         grid.setValue(currentRowKey, 'useYn', updatedData.useYn);
+//     }
+//     document.getElementById('modal').classList.add('hidden');
+//     saveData(grid.getData());
+//     showToast('해당 건의 데이타를 저장하였습니다.', 'success');
+// }
 
 
 const currentPage = window.location.pathname.split("/").pop();

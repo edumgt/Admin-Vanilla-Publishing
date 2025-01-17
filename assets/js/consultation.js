@@ -52,8 +52,10 @@ function openModal(statusBox, consultationId, status) {
     selectedStatusBox = statusBox;
     selectedConsultationId = consultationId;
     selectedStatus = status;
-    document.getElementById('reasonModal').style.display = 'flex';
+    document.getElementById('reasonModal').style.display = 'block';
+    //document.getElementById('reasonModal').style.display = 'flex';
 }
+
 
 // 모달 팝업 닫기 함수
 function closeModal() {
