@@ -52,8 +52,7 @@ function openModal(statusBox, consultationId, status) {
     selectedStatusBox = statusBox;
     selectedConsultationId = consultationId;
     selectedStatus = status;
-    document.getElementById('reasonModal').style.display = 'block';
-    //document.getElementById('reasonModal').style.display = 'flex';
+    document.getElementById('modal').style.display = 'flex';
 }
 
 
@@ -62,7 +61,7 @@ function closeModal() {
     selectedStatusBox = null;
     selectedConsultationId = null;
     selectedStatus = null;
-    document.getElementById('reasonModal').style.display = 'none';
+    document.getElementById('modal').style.display = 'none';
     document.getElementById('reasonInput').value = ''; // 입력 필드 초기화
 }
 

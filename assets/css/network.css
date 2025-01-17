@@ -77,10 +77,10 @@
     /* gray */
 }
 
-.modal {
+/* .modal {
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 9999;
     left: 0;
     top: 0;
     width: 100%;
@@ -89,15 +89,16 @@
     background-color: rgba(0, 0, 0, 0.4);
     align-items: center;
     justify-content: center;
-}
+}*/
 
 .modal-content {
     background-color: #fff;
     padding: 20px;
     border-radius: 5px;
-    width: 600px;
-    /* 가로 크기 600px */
-    position: relative;
+    width: 600px !important;
+    height: 400px !important;
+    display: flex;
+    flex-direction: column;
 }
 
 .close {
