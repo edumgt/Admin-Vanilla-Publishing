@@ -517,3 +517,6 @@ input[type="button"] {
   cursor: pointer !important;
 }
 
+.bg-blue-500{
+  background-color: #0058a3 !important;
+}

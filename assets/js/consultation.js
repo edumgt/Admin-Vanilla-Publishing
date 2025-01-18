@@ -122,7 +122,7 @@ function renderProcessFlow() {
     consultations = sortConsultations(consultations, sortBy);
 
     const processFlow = document.getElementById('processFlow');
-    processFlow.innerHTML = ''; // 기존 내용을 초기화
+    processFlow.innerHTML = ''; 
 
     consultations.forEach(consultation => {
         if (!consultation.reasons) {
@@ -154,7 +154,7 @@ function renderProcessFlow() {
         }).join('');
         
         const processItem = document.createElement('div');
-        processItem.className = 'process-item bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full flex';
+        processItem.className = 'border-t border-gray-100 process-item bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full flex';
         processItem.innerHTML = `
             <div class="w-2/3 flex items-center droppable" data-id="${consultation.id}">
                 <div class="bg-blue-500 text-white rounded-full h-8 w-8 flex items-center justify-center mr-4">

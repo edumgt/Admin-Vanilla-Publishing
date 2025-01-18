@@ -3,9 +3,9 @@
 
 <head>
     <link href="assets/css/trello.css" rel="stylesheet">
-    
+
     <link href="assets/css/network.css" rel="stylesheet">
-    
+
 
 </head>
 
@@ -29,7 +29,7 @@
     <div id="toast-container"></div>
 
 
-    
+
 
     <div id="offCanvasContainer"></div>
 
@@ -39,47 +39,43 @@
         </nav>
 
         <div class="flex w-full">
-            <!-- 좌측 25% 영역 -->
-            <div class="w-1/4 border-t border-gray-200">
-                
+            
+            <div class="w-1/4 border-t border-gray-100">
+
                 <form id="consultationForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                     <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="customerName">Customer Name:</label>
-                        <input
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="customerName">Customer
+                            Name:</label>
+                        <input class=" appearance-none border rounded w-full py-2 px-3 text-gray-700   "
                             id="customerName" type="text" placeholder="Customer Name" required>
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="log">Log:</label>
-                        <textarea
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        <textarea class=" appearance-none border rounded w-full py-2 px-3 text-gray-700   "
                             id="log" placeholder="Describe the consultation..." required></textarea>
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="solution">Solution:</label>
-                        <textarea
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        <textarea class=" appearance-none border rounded w-full py-2 px-3 text-gray-700   "
                             id="solution" placeholder="Proposed solution..." required></textarea>
                     </div>
                     <div class="flex items-center justify-between">
-                        <button
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded  "
                             type="submit">Add Consultation</button>
                     </div>
                 </form>
-    
+
                 <div id="consultantList" class="bg-gray-200 p-4 overflow-x-auto flex flex-wrap">
-                    <!-- 컨설턴트 목록이 이곳에 표시됩니다. -->
+                    
                 </div>
             </div>
-    
-            <!-- 우측 75% 영역 -->
+
+            
             <div class="w-3/4 p-4 border-b border-gray-100">
-                
+
                 <div class="flex justify-between items-center mb-4 ">
                     <label for="sortOptions" class="block text-gray-700 text-sm font-bold">&nbsp;</label>
-                    <select id="sortOptions"
-                        class="shadow border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <select id="sortOptions" class="border rounded py-2 px-3 text-gray-700   ">
                         <option value="customerName">Customer Name</option>
                         <option value="date">Date</option>
                         <option value="consultant">Consultant</option>
@@ -90,18 +86,19 @@
                 </div>
             </div>
         </div>
-    
+
         <!-- 모달 팝업 -->
-        <div id="modal" class="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div id="modal"
+            class="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div class="modal-content">
                 <span id="closeModal" class="close">&times;</span>
                 <h2 class="text-xl font-bold mb-4">Enter Reason</h2>
                 <textarea id="reasonInput"
-                    class="shadow appearance-none border rounded w-full h-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    class=" appearance-none border rounded w-full h-full py-2 px-3 text-gray-700   "
                     placeholder="Enter reason..."></textarea>
                 <div class="flex items-center justify-between mt-4">
                     <button id="saveReason"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Save</button>
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded  ">Save</button>
                 </div>
             </div>
         </div>

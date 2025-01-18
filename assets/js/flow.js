@@ -1,39 +1,39 @@
-document.getElementById('closeModal').addEventListener('click', () => {
-    toggleModal(false);
-});
+// document.getElementById('closeModal').addEventListener('click', () => {
+//     toggleModal(false);
+// });
 
-document.getElementById('saveModal').addEventListener('click', () => {
-    const modalForm = document.getElementById('modalForm');
-    const formData = new FormData(modalForm);
-    const updatedData = {};
+// document.getElementById('saveModal').addEventListener('click', () => {
+//     const modalForm = document.getElementById('modalForm');
+//     const formData = new FormData(modalForm);
+//     const updatedData = {};
 
-    // Collect updated values from the form
-    for (const [key, value] of formData.entries()) {
-        updatedData[key] = value;
-    }
+//     // Collect updated values from the form
+//     for (const [key, value] of formData.entries()) {
+//         updatedData[key] = value;
+//     }
 
-    if (currentRowKey !== null) {
-        grid.setValue(currentRowKey, 'tpCd', updatedData.tpCd);
-        grid.setValue(currentRowKey, 'tpNm', updatedData.tpNm);
-        grid.setValue(currentRowKey, 'descCntn', updatedData.descCntn);
-        grid.setValue(currentRowKey, 'useYn', updatedData.useYn);
-    }
+//     if (currentRowKey !== null) {
+//         grid.setValue(currentRowKey, 'tpCd', updatedData.tpCd);
+//         grid.setValue(currentRowKey, 'tpNm', updatedData.tpNm);
+//         grid.setValue(currentRowKey, 'descCntn', updatedData.descCntn);
+//         grid.setValue(currentRowKey, 'useYn', updatedData.useYn);
+//     }
 
-    // Hide the modal and show a success toast
-    toggleModal(false);
-    saveData(grid.getData());
-    showToast('해당 건의 데이타를 저장하였습니다.', 'success');
-});
+//     // Hide the modal and show a success toast
+//     toggleModal(false);
+//     saveData(grid.getData());
+//     showToast('해당 건의 데이타를 저장하였습니다.', 'success');
+// });
 
-// Add event listener for the top-right close button
-document.getElementById('closeModalTopRight').addEventListener('click', () => {
-    toggleModal(false);
-});
 
-// Add event listener for the bottom close button
-document.getElementById('closeModal').addEventListener('click', () => {
-    toggleModal(false);
-});
+// document.getElementById('closeModalTopRight').addEventListener('click', () => {
+//     toggleModal(false);
+// });
+
+
+// document.getElementById('closeModal').addEventListener('click', () => {
+//     toggleModal(false);
+// });
 
 
 // 현재 페이지 URL 가져오기
@@ -253,14 +253,14 @@ const hot1 = new Handsontable(container1, {
     colHeaders: ['item', '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
 
     columns: [
-        { data: 0, type: 'text', allowFillHandle: true }, // Enable fill for the 'item' column
+        { data: 0, type: 'text', allowFillHandle: true }, 
         ...Array(12).fill({ type: 'numeric' })
     ],
     fillHandle: {
         autoInsertRow: true
     },
-    colWidths: 110,
-    rowHeights: 25,
+    colWidths: 100,
+    rowHeights: 30,
 
     rowHeaders: true,
     filters: true,
