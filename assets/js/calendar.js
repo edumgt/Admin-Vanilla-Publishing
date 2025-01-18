@@ -20,7 +20,7 @@ const calendar = (() => {
 
     const renderCalendar = (month, year) => {
 
-        console.log('Rendering calendar for:', monthNames[month], year);
+        //console.log('Rendering calendar for:', monthNames[month], year);
         calendarContainer.innerHTML = '';
         calendarContainer.className = 'w-full h-screen mx-auto p-4 relative';
 
@@ -124,7 +124,7 @@ const calendar = (() => {
             currentMonth = 0;
             currentYear++;
         }
-        console.log('Changing to month:', monthNames[currentMonth], 'Year:', currentYear);
+        //console.log('Changing to month:', monthNames[currentMonth], 'Year:', currentYear);
         renderCalendar(currentMonth, currentYear);
     };
 
@@ -135,7 +135,7 @@ const calendar = (() => {
         const existingTasks = tasks[dateKey] || [];
 
         const modal = document.createElement('div');
-        modal.className = 'task-modal fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center';
+        modal.className = 'z-50 task-modal fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center';
 
         const modalContent = document.createElement('div');
         modalContent.className = 'bg-white rounded-lg p-6 w-96';
