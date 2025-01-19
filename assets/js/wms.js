@@ -22,8 +22,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         localStorage.setItem(key, JSON.stringify(data));
     }
 
-    const inboundData = await loadData(STORAGE_KEY_INBOUND, "assets/mock/inbound.json");
-    const outboundData = await loadData(STORAGE_KEY_OUTBOUND, "assets/mock/outbound.json");
+    const inboundData = await loadData(STORAGE_KEY_INBOUND, "assets/mock/inbound_books.json");
+    const outboundData = await loadData(STORAGE_KEY_OUTBOUND, "assets/mock/outbound_books.json");
 
     const root = document.getElementById('root');
 
@@ -72,7 +72,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             document.getElementById(tab.id).classList.add('active-tab');
 
-            // Simulate loading delay
             setTimeout(() => {
                 hideLoading(section);
                 section.classList.remove('hidden');
@@ -84,7 +83,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 } else if (tab.id === 'tab-dashboard') {
                     populateDashboard(section);
                 }
-            }, 500); // Simulated delay for loading effect
+            }, 500);
         });
     });
 
@@ -103,6 +102,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         const grid = new tui.Grid({
             el: document.getElementById(`${sectionId}-grid`),
             data: data,
+            pageOptions: {
+                useClient: true,
+                perPage: 15  // ✅ Pagination: 15 rows per page
+            },
             columns: [
                 { header: 'ID', name: 'id', width: 150, align: 'center', editor: false },
                 { header: '날짜', name: 'date', align: 'center', editor: 'text', sortable: true, filter: 'text' },
