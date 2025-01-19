@@ -1,4 +1,3 @@
-// log-container에 데이터 시각화 패널 추가
 const logContainer = document.getElementById('log-container');
 
 let cpuChartInstance = null; // CPU 차트 인스턴스 저장
@@ -8,10 +7,10 @@ let diskChartInstance = null; // Disk 차트 인스턴스 저장
 function createChart(panelId, canvasId, chartLabel, data, color, titleText) {
     const panel = document.createElement('div');
     panel.id = panelId;
-    panel.className = 'log-panel bg-white p-4 rounded-lg';
-    panel.style.flex = '1 1 calc(33.3333% - 20px)';
-    panel.style.maxWidth = 'calc(33.3333% - 20px)';
-    panel.style.margin = '10px';
+    panel.className = 'log-panel bg-white rounded-lg';
+    panel.style.flex = '1 1 calc(33.3333% - 10px)';
+    panel.style.maxWidth = 'calc(33.3333% - 10px)';
+    panel.style.margin = '0px';
     panel.style.position = 'relative';
 
     const canvas = document.createElement('canvas');
