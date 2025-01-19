@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const permissionsContainer = document.getElementById("permissions");
   const permissionsTitle = document.createElement("h1");
   permissionsTitle.id = "permissions-title";
-  permissionsTitle.style.fontSize = "1.5rem";
+  permissionsTitle.style.fontSize = "1.2rem";
   permissionsTitle.style.marginBottom = "1rem";
   permissionsContainer.appendChild(permissionsTitle);
 
@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       const unitTitle = document.createElement("h2");
       unitTitle.textContent = unit.name;
-      unitTitle.style.fontSize = "1.25rem";
+      unitTitle.style.fontSize = "1.1rem";
       unitTitle.style.marginBottom = "0.5rem";
 
       const actionsRow = document.createElement("div");
