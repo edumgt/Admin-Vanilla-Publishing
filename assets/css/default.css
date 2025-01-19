@@ -515,3 +515,7 @@ input[type="button"] {
 .bg-blue-500{
   background-color: #0058a3 !important;
 }
+
+.shadow-lg{
+  box-shadow: 2px rgba(0, 0, 0, 0.5) !important;
+}
