@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
 
             addGridToolbar(section, grid, STORAGE_KEY_OUTBOUND);
-        }, 1500); // Slight delay to ensure element exists
+        }, 2000); // Slight delay to ensure element exists
     }
 
     function addGridToolbar(section, grid, storageKey) {

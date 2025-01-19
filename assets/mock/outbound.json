@@ -1,6 +1,122 @@
 [
-    { "id": 1, "date": "2025-01-05", "title": "The Great Gatsby", "quantity": 10 },
-    { "id": 2, "date": "2025-01-06", "title": "To Kill a Mockingbird", "quantity": 15 },
-    { "id": 3, "date": "2025-01-07", "title": "1984", "quantity": 5 },
-    { "id": 4, "date": "2025-01-08", "title": "Pride and Prejudice", "quantity": 20 }
+    {
+        "id": "c1655f88-8206-4e31-ae2c-a75ac05ca069",
+        "date": "2025-01-01",
+        "title": "The Great Gatsby",
+        "quantity": 36
+    },
+    {
+        "id": "5fc30cbf-7cfa-4141-88ed-68aaed9d5561",
+        "date": "2025-01-02",
+        "title": "To Kill a Mockingbird",
+        "quantity": 24
+    },
+    {
+        "id": "f6114592-7a33-45dc-80b3-97dabf622c1d",
+        "date": "2025-01-03",
+        "title": "1984",
+        "quantity": 11
+    },
+    {
+        "id": "f3761280-bee4-430a-84bc-15d5b9600452",
+        "date": "2025-01-04",
+        "title": "Pride and Prejudice",
+        "quantity": 46
+    },
+    {
+        "id": "4a08f216-6a64-4b7f-b031-43d4bf018ec0",
+        "date": "2025-01-05",
+        "title": "The Catcher in the Rye",
+        "quantity": 35
+    },
+    {
+        "id": "4aa86cb9-182d-4b49-a5ef-667b17b7adf2",
+        "date": "2025-01-06",
+        "title": "Moby-Dick",
+        "quantity": 48
+    },
+    {
+        "id": "82452da9-87c2-4671-9b9e-93a31173674d",
+        "date": "2025-01-07",
+        "title": "War and Peace",
+        "quantity": 12
+    },
+    {
+        "id": "050226d8-3771-413b-889a-0cf0a48de178",
+        "date": "2025-01-08",
+        "title": "The Hobbit",
+        "quantity": 10
+    },
+    {
+        "id": "faba2c64-5f22-4a1b-8387-e31e10e74966",
+        "date": "2025-01-09",
+        "title": "Crime and Punishment",
+        "quantity": 48
+    },
+    {
+        "id": "5931ea96-9630-44ad-a18c-be4fc63fac51",
+        "date": "2025-01-10",
+        "title": "Harry Potter and the Sorcerer's Stone",
+        "quantity": 41
+    },
+    {
+        "id": "e76d177f-1409-4f5f-83e0-c31874f4e6c0",
+        "date": "2025-01-11",
+        "title": "Brave New World",
+        "quantity": 11
+    },
+    {
+        "id": "7db3faa9-a91c-497f-886d-4415a08c78ae",
+        "date": "2025-01-12",
+        "title": "Jane Eyre",
+        "quantity": 30
+    },
+    {
+        "id": "b7a792a3-9b14-4c94-add7-8c40a8318014",
+        "date": "2025-01-13",
+        "title": "The Lord of the Rings",
+        "quantity": 42
+    },
+    {
+        "id": "88632b4f-207c-46ba-a9ff-1181c178c330",
+        "date": "2025-01-14",
+        "title": "Fahrenheit 451",
+        "quantity": 11
+    },
+    {
+        "id": "c895c4af-8121-4b70-b11c-1006fa16d3f0",
+        "date": "2025-01-15",
+        "title": "The Grapes of Wrath",
+        "quantity": 25
+    },
+    {
+        "id": "e0588320-4d2c-46ba-86a4-ae4ea0385393",
+        "date": "2025-01-16",
+        "title": "Animal Farm",
+        "quantity": 26
+    },
+    {
+        "id": "194f1486-9cf6-4b49-9bb7-cf4a3360a812",
+        "date": "2025-01-17",
+        "title": "Gone with the Wind",
+        "quantity": 46
+    },
+    {
+        "id": "30fd9151-544b-423e-b9ba-06872a0fd20e",
+        "date": "2025-01-18",
+        "title": "Wuthering Heights",
+        "quantity": 16
+    },
+    {
+        "id": "42068746-2e0e-4501-b05d-5a81263a7f99",
+        "date": "2025-01-19",
+        "title": "Frankenstein",
+        "quantity": 39
+    },
+    {
+        "id": "1db74c2d-94df-4095-a602-2400339f6503",
+        "date": "2025-01-20",
+        "title": "Dracula",
+        "quantity": 21
+    }
 ]
