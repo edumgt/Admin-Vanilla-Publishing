@@ -25,9 +25,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const inboundData = await loadData(STORAGE_KEY_INBOUND, "assets/mock/inbound.json");
     const outboundData = await loadData(STORAGE_KEY_OUTBOUND, "assets/mock/outbound.json");
 
-    console.log("Inbound Data Loaded:", inboundData);
-    console.log("Outbound Data Loaded:", outboundData);
-
     const root = document.getElementById('root');
 
     const tabs = [
@@ -64,57 +61,73 @@ document.addEventListener('DOMContentLoaded', async () => {
     populateDashboard(sections['tab-dashboard']);
 
     tabs.forEach(tab => {
-        document.getElementById(tab.id).addEventListener('click', () => {
+        document.getElementById(tab.id).addEventListener('click', async () => {
             tabs.forEach(t => {
                 sections[t.id].classList.add('hidden');
                 document.getElementById(t.id).classList.remove('active-tab');
             });
-            sections[tab.id].classList.remove('hidden');
+
+            const section = sections[tab.id];
+            showLoading(section);
+
             document.getElementById(tab.id).classList.add('active-tab');
+
+            // Simulate loading delay
+            setTimeout(() => {
+                hideLoading(section);
+                section.classList.remove('hidden');
+
+                if (tab.id === 'tab-inbound') {
+                    populateInbound(section);
+                } else if (tab.id === 'tab-outbound') {
+                    populateOutbound(section);
+                } else if (tab.id === 'tab-dashboard') {
+                    populateDashboard(section);
+                }
+            }, 500); // Simulated delay for loading effect
         });
     });
 
-    function populateInbound(section) {
-        section.innerHTML = `<div id="inbound-grid"></div>`;
+    function showLoading(section) {
+        section.innerHTML = `<div class="text-center text-lg font-semibold">Loading...</div>`;
+    }
+
+    function hideLoading(section) {
+        section.innerHTML = "";
+    }
+
+    function createGrid(sectionId, data, storageKey) {
+        const section = document.getElementById(sectionId);
+        section.innerHTML = `<div id="${sectionId}-grid"></div>`;
 
         const grid = new tui.Grid({
-            el: document.getElementById('inbound-grid'),
-            data: inboundData,
+            el: document.getElementById(`${sectionId}-grid`),
+            data: data,
             columns: [
-                { header: 'ID', name: 'id', width: 50, align: 'center', editor: 'text' },
-                { header: '날짜', name: 'date', align: 'center', editor: 'text' },
-                { header: '도서명', name: 'title', align: 'center', editor: 'text' },
-                { header: '수량', name: 'quantity', align: 'center', editor: 'text' }
+                { header: 'ID', name: 'id', width: 150, align: 'center', editor: false },
+                { header: '날짜', name: 'date', align: 'center', editor: 'text', sortable: true, filter: 'text' },
+                { header: '도서명', name: 'title', align: 'center', editor: 'text', sortable: true, filter: 'select' },
+                { header: '수량', name: 'quantity', align: 'center', editor: 'text', sortable: true, filter: 'number' }
             ],
             rowHeaders: ['checkbox'],
             copyOptions: { useFormattedValue: true },
             editable: true
         });
 
-        addGridToolbar(section, grid, STORAGE_KEY_INBOUND);
+        grid.on('afterChange', () => {
+            const updatedData = grid.getData();
+            saveDataToStorage(storageKey, updatedData);
+        });
+
+        addGridToolbar(section, grid, storageKey);
+    }
+
+    function populateInbound(section) {
+        createGrid(section.id, inboundData, STORAGE_KEY_INBOUND);
     }
 
     function populateOutbound(section) {
-        console.log("Initializing Outbound Grid...");
-        section.innerHTML = `<div id="outbound-grid"></div>`; 
-
-        setTimeout(() => {
-            const grid = new tui.Grid({
-                el: document.getElementById('outbound-grid'),
-                data: outboundData,
-                columns: [
-                    { header: 'ID', name: 'id', width: 50, align: 'center', editor: 'text' },
-                    { header: '날짜', name: 'date', align: 'center', editor: 'text' },
-                    { header: '도서명', name: 'title', align: 'center', editor: 'text' },
-                    { header: '수량', name: 'quantity', align: 'center', editor: 'text' }
-                ],
-                rowHeaders: ['checkbox'],
-                copyOptions: { useFormattedValue: true },
-                editable: true
-            });
-
-            addGridToolbar(section, grid, STORAGE_KEY_OUTBOUND);
-        }, 2000); // Slight delay to ensure element exists
+        createGrid(section.id, outboundData, STORAGE_KEY_OUTBOUND);
     }
 
     function addGridToolbar(section, grid, storageKey) {
@@ -125,7 +138,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         addButton.className = 'bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600';
         addButton.innerText = '추가';
         addButton.addEventListener('click', () => {
-            const newItem = { id: grid.getRowCount() + 1, date: '', title: '', quantity: 0 };
+            const newItem = { id: crypto.randomUUID(), date: '', title: '', quantity: 0 };
             grid.appendRow(newItem);
             const updatedData = [...grid.getData(), newItem];
             saveDataToStorage(storageKey, updatedData);
