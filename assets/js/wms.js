@@ -1,6 +1,5 @@
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 샘플 데이터 생성
     const generateSampleData = (action, count = 20) => {
         const titles = [
             "The Great Gatsby", "To Kill a Mockingbird", "1984", "Pride and Prejudice",
@@ -20,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return sampleData;
     };
 
-    // 2024년 월별 출고 데이터 생성
     const generateMonthlyOutboundData = () => {
         const months = Array.from({ length: 12 }, (_, i) => `${i + 1}월`);
         return months.map(month => ({
@@ -29,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }));
     };
 
-    // 데이터 초기화
     const data = {
         inbound: generateSampleData("입고"),
         outbound: generateSampleData("출고"),
@@ -94,10 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Populate Inbound
     function populateInbound(section) {
-        section.innerHTML = `
-          <h2 class="text-xl font-bold mb-4">입고 관리</h2>
-          <div id="inbound-grid" class="mt-4"></div>
-        `;
+        section.innerHTML = `<div id="inbound-grid"></div>`;
 
         const grid = new tui.Grid({
             el: document.getElementById('inbound-grid'),
@@ -118,10 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Populate Outbound
     function populateOutbound(section) {
-        section.innerHTML = `
-          <h2 class="text-xl font-bold mb-4">출고 관리</h2>
-          <div id="outbound-grid" class="mt-4"></div>
-        `;
+        section.innerHTML = `<div id="outbound-grid"></div>`;
 
         const grid = new tui.Grid({
             el: document.getElementById('outbound-grid'),
@@ -169,11 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Populate Dashboard
     function populateDashboard(section) {
-        section.innerHTML = `
-          <h2 class="text-xl font-bold mb-4">대시보드</h2>
-          <div id="stock-chart" class="mb-8"></div>
-          <div id="monthly-outbound-chart"></div>
-        `;
+        section.innerHTML = `<div id="stock-chart" class="mb-8"></div><div id="monthly-outbound-chart"></div>`;
 
         // 도서 재고 파이 차트
         const pieOptions = {
