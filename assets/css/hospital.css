@@ -2,9 +2,7 @@
     display: none;
 }
 
-.dragging {
-    opacity: 0.5;
-}
+
 
 .drag-handle {
     display: inline-block;
