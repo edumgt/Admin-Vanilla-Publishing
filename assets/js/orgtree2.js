@@ -7,12 +7,23 @@ document.addEventListener("DOMContentLoaded", async () => {
   permissionsTitle.style.marginBottom = "1rem";
   permissionsContainer.appendChild(permissionsTitle);
 
-  let selectedNode = null; // To track the selected node
+  let selectedNode = null; // Track selected node
+  let selectedName = ""; // Track selected department/team name
+  let permissions = []; // Declare permissions globally
 
   async function fetchData(url) {
     const response = await fetch(url);
     if (!response.ok) throw new Error(`Failed to fetch ${url}`);
     return await response.json();
+  }
+
+  function savePermissionsToStorage(data) {
+    localStorage.setItem("permissionsData", JSON.stringify(data));
+  }
+
+  function loadPermissionsFromStorage() {
+    const savedData = localStorage.getItem("permissionsData");
+    return savedData ? JSON.parse(savedData) : {};
   }
 
   function createTreeNode(name, children = [], depth = 0) {
@@ -66,7 +77,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       container.style.backgroundColor = "#0058a3";
       container.style.color = "#ffcc00";
       selectedNode = container;
+      selectedName = name;
       updatePermissionsTitle(name);
+      renderPermissions(name);
     });
 
     return container;
@@ -83,14 +96,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  function renderPermissions(data) {
+  function renderPermissions(name) {
     permissionsContainer.innerHTML = "";
     permissionsContainer.appendChild(permissionsTitle);
+
+    const permissionsData = loadPermissionsFromStorage();
+    const unitPermissions = permissionsData[name] || {};
 
     const container = document.createElement("div");
     container.id = "permissions-container";
 
-    data.forEach((unit) => {
+    if (!permissions || permissions.length === 0) {
+      console.error("Permissions data is empty or undefined.");
+      return;
+    }
+
+    permissions.forEach((unit) => {
       const unitDiv = document.createElement("div");
       unitDiv.style.marginBottom = "1rem";
 
@@ -107,6 +128,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         const actionDiv = document.createElement("div");
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
+        checkbox.checked = unitPermissions[unit.name]?.includes(action) || false;
+        checkbox.addEventListener("change", () => updatePermissions(name, unit.name, action, checkbox.checked));
+
         const label = document.createElement("label");
         label.textContent = action;
 
@@ -123,16 +147,37 @@ document.addEventListener("DOMContentLoaded", async () => {
     permissionsContainer.appendChild(container);
   }
 
+  function updatePermissions(name, unit, action, isChecked) {
+    let permissionsData = loadPermissionsFromStorage();
+
+    if (!permissionsData[name]) {
+      permissionsData[name] = {};
+    }
+
+    if (!permissionsData[name][unit]) {
+      permissionsData[name][unit] = [];
+    }
+
+    if (isChecked) {
+      if (!permissionsData[name][unit].includes(action)) {
+        permissionsData[name][unit].push(action);
+      }
+    } else {
+      permissionsData[name][unit] = permissionsData[name][unit].filter((a) => a !== action);
+    }
+
+    savePermissionsToStorage(permissionsData);
+  }
+
   function updatePermissionsTitle(name) {
     permissionsTitle.textContent = `권한 설정: ${name}`;
   }
 
   try {
     const organization = await fetchData("assets/mock/org.json");
-    const permissions = await fetchData("assets/mock/per.json");
+    permissions = await fetchData("assets/mock/per.json"); // Assign to global variable
 
     renderOrgChart(organization);
-    renderPermissions(permissions);
   } catch (error) {
     console.error("Error loading data:", error);
   }
