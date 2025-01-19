@@ -1,0 +1,6 @@
+[
+    { "id": 1, "date": "2025-01-01", "title": "The Great Gatsby", "quantity": 30 },
+    { "id": 2, "date": "2025-01-02", "title": "To Kill a Mockingbird", "quantity": 25 },
+    { "id": 3, "date": "2025-01-03", "title": "1984", "quantity": 40 },
+    { "id": 4, "date": "2025-01-04", "title": "Pride and Prejudice", "quantity": 35 }
+]

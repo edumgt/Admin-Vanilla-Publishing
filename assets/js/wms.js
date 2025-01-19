@@ -1,47 +1,35 @@
+document.addEventListener('DOMContentLoaded', async () => {
+    const STORAGE_KEY_INBOUND = "inboundData";
+    const STORAGE_KEY_OUTBOUND = "outboundData";
 
-document.addEventListener('DOMContentLoaded', () => {
-    const generateSampleData = (action, count = 20) => {
-        const titles = [
-            "The Great Gatsby", "To Kill a Mockingbird", "1984", "Pride and Prejudice",
-            "The Catcher in the Rye", "Moby-Dick", "War and Peace", "The Hobbit",
-            "Crime and Punishment", "Harry Potter and the Sorcerer's Stone"
-        ];
-        const sampleData = [];
-        for (let i = 0; i < count; i++) {
-            sampleData.push({
-                id: i + 1,
-                date: `2025-01-${String(i % 31 + 1).padStart(2, '0')}`,
-                action: action,
-                title: titles[i % titles.length],
-                quantity: Math.floor(Math.random() * 100) + 1
-            });
+    async function fetchJson(url) {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`Failed to fetch ${url}`);
+        return await response.json();
+    }
+
+    async function loadData(key, url) {
+        const storedData = localStorage.getItem(key);
+        if (storedData) {
+            return JSON.parse(storedData);
         }
-        return sampleData;
-    };
+        const fetchedData = await fetchJson(url);
+        localStorage.setItem(key, JSON.stringify(fetchedData));
+        return fetchedData;
+    }
 
-    const generateMonthlyOutboundData = () => {
-        const months = Array.from({ length: 12 }, (_, i) => `${i + 1}월`);
-        return months.map(month => ({
-            month: month,
-            quantity: Math.floor(Math.random() * 500) + 50
-        }));
-    };
+    function saveDataToStorage(key, data) {
+        localStorage.setItem(key, JSON.stringify(data));
+    }
 
-    const data = {
-        inbound: generateSampleData("입고"),
-        outbound: generateSampleData("출고"),
-        stock: [
-            { title: "The Great Gatsby", quantity: 50 },
-            { title: "To Kill a Mockingbird", quantity: 30 },
-            { title: "1984", quantity: 20 }
-        ],
-        monthlyOutbound: generateMonthlyOutboundData()
-    };
+    const inboundData = await loadData(STORAGE_KEY_INBOUND, "assets/mock/inbound.json");
+    const outboundData = await loadData(STORAGE_KEY_OUTBOUND, "assets/mock/outbound.json");
 
-    // Root Container
+    console.log("Inbound Data Loaded:", inboundData);
+    console.log("Outbound Data Loaded:", outboundData);
+
     const root = document.getElementById('root');
 
-    // Tabs
     const tabs = [
         { id: 'tab-inbound', name: '입고 관리' },
         { id: 'tab-outbound', name: '출고 관리' },
@@ -68,16 +56,13 @@ document.addEventListener('DOMContentLoaded', () => {
         sections[tab.id] = section;
     });
 
-    // 기본 탭
     sections['tab-inbound'].classList.remove('hidden');
     document.getElementById('tab-inbound').classList.add('active-tab');
 
-    // Populate Sections
     populateInbound(sections['tab-inbound']);
     populateOutbound(sections['tab-outbound']);
     populateDashboard(sections['tab-dashboard']);
 
-    // Tab Switching
     tabs.forEach(tab => {
         document.getElementById(tab.id).addEventListener('click', () => {
             tabs.forEach(t => {
@@ -89,13 +74,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Populate Inbound
     function populateInbound(section) {
         section.innerHTML = `<div id="inbound-grid"></div>`;
 
         const grid = new tui.Grid({
             el: document.getElementById('inbound-grid'),
-            data: data.inbound,
+            data: inboundData,
             columns: [
                 { header: 'ID', name: 'id', width: 50, align: 'center', editor: 'text' },
                 { header: '날짜', name: 'date', align: 'center', editor: 'text' },
@@ -107,32 +91,33 @@ document.addEventListener('DOMContentLoaded', () => {
             editable: true
         });
 
-        addGridToolbar(section, grid, 'inbound');
+        addGridToolbar(section, grid, STORAGE_KEY_INBOUND);
     }
 
-    // Populate Outbound
     function populateOutbound(section) {
-        section.innerHTML = `<div id="outbound-grid"></div>`;
+        console.log("Initializing Outbound Grid...");
+        section.innerHTML = `<div id="outbound-grid"></div>`; 
 
-        const grid = new tui.Grid({
-            el: document.getElementById('outbound-grid'),
-            data: data.outbound,
-            columns: [
-                { header: 'ID', name: 'id', width: 50, align: 'center', editor: 'text' },
-                { header: '날짜', name: 'date', align: 'center', editor: 'text' },
-                { header: '도서명', name: 'title', align: 'center', editor: 'text' },
-                { header: '수량', name: 'quantity', align: 'center', editor: 'text' }
-            ],
-            rowHeaders: ['checkbox'],
-            copyOptions: { useFormattedValue: true },
-            editable: true
-        });
+        setTimeout(() => {
+            const grid = new tui.Grid({
+                el: document.getElementById('outbound-grid'),
+                data: outboundData,
+                columns: [
+                    { header: 'ID', name: 'id', width: 50, align: 'center', editor: 'text' },
+                    { header: '날짜', name: 'date', align: 'center', editor: 'text' },
+                    { header: '도서명', name: 'title', align: 'center', editor: 'text' },
+                    { header: '수량', name: 'quantity', align: 'center', editor: 'text' }
+                ],
+                rowHeaders: ['checkbox'],
+                copyOptions: { useFormattedValue: true },
+                editable: true
+            });
 
-        addGridToolbar(section, grid, 'outbound');
+            addGridToolbar(section, grid, STORAGE_KEY_OUTBOUND);
+        }, 1500); // Slight delay to ensure element exists
     }
 
-    // Add Toolbar for CRUD Operations
-    function addGridToolbar(section, grid, type) {
+    function addGridToolbar(section, grid, storageKey) {
         const toolbar = document.createElement('div');
         toolbar.className = 'flex justify-end gap-2 mt-4';
 
@@ -140,7 +125,10 @@ document.addEventListener('DOMContentLoaded', () => {
         addButton.className = 'bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600';
         addButton.innerText = '추가';
         addButton.addEventListener('click', () => {
-            grid.appendRow({ id: grid.getRowCount() + 1, date: '', title: '', quantity: 0 });
+            const newItem = { id: grid.getRowCount() + 1, date: '', title: '', quantity: 0 };
+            grid.appendRow(newItem);
+            const updatedData = [...grid.getData(), newItem];
+            saveDataToStorage(storageKey, updatedData);
         });
 
         const deleteButton = document.createElement('button');
@@ -148,9 +136,9 @@ document.addEventListener('DOMContentLoaded', () => {
         deleteButton.innerText = '삭제';
         deleteButton.addEventListener('click', () => {
             const checkedRows = grid.getCheckedRows();
-            const idsToDelete = checkedRows.map(row => row.id);
+            const updatedData = grid.getData().filter(row => !checkedRows.some(checked => checked.id === row.id));
             grid.removeCheckedRows();
-            data[type] = data[type].filter(row => !idsToDelete.includes(row.id));
+            saveDataToStorage(storageKey, updatedData);
         });
 
         toolbar.appendChild(addButton);
@@ -158,46 +146,29 @@ document.addEventListener('DOMContentLoaded', () => {
         section.appendChild(toolbar);
     }
 
-    // Populate Dashboard
     function populateDashboard(section) {
         section.innerHTML = `<div id="stock-chart" class="mb-8"></div><div id="monthly-outbound-chart"></div>`;
 
-        // 도서 재고 파이 차트
         const pieOptions = {
-            chart: {
-                type: 'pie',
-                height: 350
-            },
-            series: data.stock.map(item => item.quantity),
-            labels: data.stock.map(item => item.title),
-            title: {
-                text: '도서 재고 현황',
-                align: 'center'
-            },
-            colors: ['#3b82f6', '#10b981', '#f43f5e', '#fbbf24', '#8b5cf6']
+            chart: { type: 'pie', height: 350 },
+            series: [50, 30, 20],
+            labels: ["The Great Gatsby", "To Kill a Mockingbird", "1984"],
+            title: { text: '도서 재고 현황', align: 'center' }
         };
 
         const pieChart = new ApexCharts(document.querySelector("#stock-chart"), pieOptions);
         pieChart.render();
 
-        // 월별 출고 추이 라인 차트
+        const monthlyOutbound = Array.from({ length: 12 }, (_, i) => ({
+            month: `${i + 1}월`,
+            quantity: Math.floor(Math.random() * 500) + 50
+        }));
+
         const lineOptions = {
-            chart: {
-                type: 'line',
-                height: 350
-            },
-            series: [{
-                name: '월별 출고량',
-                data: data.monthlyOutbound.map(item => item.quantity)
-            }],
-            xaxis: {
-                categories: data.monthlyOutbound.map(item => item.month)
-            },
-            title: {
-                text: '2024년 월별 출고 추이',
-                align: 'center'
-            },
-            colors: ['#2563eb']
+            chart: { type: 'line', height: 350 },
+            series: [{ name: '월별 출고량', data: monthlyOutbound.map(item => item.quantity) }],
+            xaxis: { categories: monthlyOutbound.map(item => item.month) },
+            title: { text: '2024년 월별 출고 추이', align: 'center' }
         };
 
         const lineChart = new ApexCharts(document.querySelector("#monthly-outbound-chart"), lineOptions);
