@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     taskForm.addEventListener("submit", (e) => {
 
-        
+
         e.preventDefault();
         const name = document.getElementById("taskName").value;
         const description = document.getElementById("taskDescription").value;
@@ -94,53 +94,53 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Function to render the Gantt chart with tasks' timelines split
-function renderGanttChart() {
-    ganttTableBody.innerHTML = "";
+    function renderGanttChart() {
+        ganttTableBody.innerHTML = "";
 
-    if (tasks.length === 0) return;
+        if (tasks.length === 0) return;
 
-    // Determine the overall start and end dates
-    const overallStartDate = new Date(Math.min(...tasks.map(task => new Date(task.startDate).getTime())));
-    const overallEndDate = new Date(Math.max(...tasks.map(task => new Date(task.endDate).getTime())));
+        // Determine the overall start and end dates
+        const overallStartDate = new Date(Math.min(...tasks.map(task => new Date(task.startDate).getTime())));
+        const overallEndDate = new Date(Math.max(...tasks.map(task => new Date(task.endDate).getTime())));
 
-    const totalDays = Math.ceil((overallEndDate - overallStartDate) / (24 * 60 * 60 * 1000)) + 1;
+        const totalDays = Math.ceil((overallEndDate - overallStartDate) / (24 * 60 * 60 * 1000)) + 1;
 
-    tasks.forEach(task => {
-        const taskStartDate = new Date(task.startDate);
-        const taskEndDate = new Date(task.endDate);
+        tasks.forEach(task => {
+            const taskStartDate = new Date(task.startDate);
+            const taskEndDate = new Date(task.endDate);
 
-        const row = document.createElement("tr");
-        row.innerHTML = `
+            const row = document.createElement("tr");
+            row.innerHTML = `
             <td>${task.name}</td>
             <td>${taskStartDate.toLocaleDateString()}</td>
             <td>${taskEndDate.toLocaleDateString()}</td>
             <td class="timeline-column"><div class="timeline"></div></td>
         `;
 
-        const timelineCell = row.querySelector(".timeline");
+            const timelineCell = row.querySelector(".timeline");
 
-        for (let i = 0; i < totalDays; i++) {
-            const currentDate = new Date(overallStartDate);
-            currentDate.setDate(overallStartDate.getDate() + i);
+            for (let i = 0; i < totalDays; i++) {
+                const currentDate = new Date(overallStartDate);
+                currentDate.setDate(overallStartDate.getDate() + i);
 
-            const block = document.createElement("div");
-            block.style.width = "24px";
-            block.style.height = "24px";
-            block.style.border = "1px solid #ddd";
-            block.style.display = "inline-block";
+                const block = document.createElement("div");
+                block.style.width = "24px";
+                block.style.height = "24px";
+                block.style.border = "1px solid #ddd";
+                block.style.display = "inline-block";
 
-            if (currentDate >= taskStartDate && currentDate <= taskEndDate) {
-                block.style.backgroundColor = "#4299e1";
-            } else {
-                block.style.backgroundColor = "#f2f2f2";
+                if (currentDate >= taskStartDate && currentDate <= taskEndDate) {
+                    block.style.backgroundColor = "#4299e1";
+                } else {
+                    block.style.backgroundColor = "#f2f2f2";
+                }
+
+                timelineCell.appendChild(block);
             }
 
-            timelineCell.appendChild(block);
-        }
-
-        ganttTableBody.appendChild(row);
-    });
-}
+            ganttTableBody.appendChild(row);
+        });
+    }
 
 
 

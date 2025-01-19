@@ -19,10 +19,8 @@ const calendar = (() => {
     
 
     const renderCalendar = (month, year) => {
-
-        //console.log('Rendering calendar for:', monthNames[month], year);
         calendarContainer.innerHTML = '';
-        calendarContainer.className = 'w-full h-screen mx-auto p-4 relative';
+        calendarContainer.className = 'w-full h-screen';
 
         const header = document.createElement('div');
         header.className = 'calendar-header flex justify-between items-center py-2 bg-gray-100';
@@ -44,7 +42,7 @@ const calendar = (() => {
         header.appendChild(nextBtn);
 
         const daysOfWeek = document.createElement('div');
-        daysOfWeek.className = 'grid grid-cols-7 bg-gray-200 text-center text-xs font-light';
+        daysOfWeek.className = 'grid grid-cols-7 bg-blue-200 text-center  font-light';
         const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         dayNames.forEach(day => {
             const dayDiv = document.createElement('div');
