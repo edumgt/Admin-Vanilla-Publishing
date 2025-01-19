@@ -144,8 +144,7 @@ const menuConfigurations = {
         { href: 'system.html', text: '코드관리' },
         { href: 'orgtree.html', text: '권한관리' },
         { href: 'document.html', text: '문서관리' },
-        { href: 'wms.html', text: 'WMS' },
-        { href: '#', text: '설정관리' }
+        { href: 'wms.html', text: 'WMS' }
     ],
 
     'flow.html': [
@@ -201,8 +200,7 @@ const menuConfigurations = {
         { href: 'system.html', text: '코드관리' },
         { href: 'orgtree.html', text: '권한관리' },
         { href: 'document.html', text: '문서관리' },
-        { href: 'wms.html', text: 'WMS' },
-        { href: '#', text: '설정관리' }
+        { href: 'wms.html', text: 'WMS' }
     ],
 
 
@@ -218,8 +216,7 @@ const menuConfigurations = {
         { href: 'system.html', text: '코드관리' },
         { href: 'orgtree.html', text: '권한관리' },
         { href: 'document.html', text: '문서관리' },
-        { href: 'wms.html', text: 'WMS' },
-        { href: '#', text: '설정관리' }
+        { href: 'wms.html', text: 'WMS' }
     ],
 
     'timeline.html': [
@@ -242,8 +239,7 @@ const menuConfigurations = {
         { href: 'system.html', text: '코드관리' },
         { href: 'orgtree.html', text: '권한관리' },
         { href: 'document.html', text: '문서관리' },
-        { href: 'wms.html', text: 'WMS' },
-        { href: '#', text: '설정관리' }
+        { href: 'wms.html', text: 'WMS' }
     ],
 
     'work.html': [
@@ -258,16 +254,14 @@ const menuConfigurations = {
 
 };
 
-// Default menu configuration if the file name doesn't match any key
 const defaultMenuItems = [];
 
-// Select the appropriate menu configuration based on the current file name
 const menuItems = (menuConfigurations[currentFileName] || defaultMenuItems).map(item => ({
     ...item,
     icon: iconMapping[item.text]
 }));
 
-// Render the offCanvas menu
+
 renderOffCanvasMenu(menuItems);
 
 /* Dynamically create modals */
