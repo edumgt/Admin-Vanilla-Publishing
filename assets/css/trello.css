@@ -220,8 +220,8 @@
     padding: 0.5rem 1rem;
     border-radius: 0.375rem;
     cursor: pointer;
-    font-weight: 400;
-    border: 1px solid #3182ce;
+    font-weight: 400; 
+    border: 1px solid #0058a3 !important;
 }
 
 

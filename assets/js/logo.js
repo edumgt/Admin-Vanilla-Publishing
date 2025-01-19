@@ -274,7 +274,7 @@ function createModal(modalId, title, content, buttons) {
 
     const modalContent = `
         <div class="bg-white rounded-lg shadow-lg p-6 w-1/3 relative">
-            <button class="absolute top-2 right-2 text-gray-600 hover:text-gray-800 text-lg" onclick="document.getElementById('${modalId}').classList.add('hidden');">&times;</button>
+            <button class="close" onclick="document.getElementById('${modalId}').classList.add('hidden');">&times;</button>
             <h2 class="text-lg font-semibold mb-4">${title}</h2>
             ${content}
             <div class="flex justify-end space-x-2 mt-4">
@@ -289,7 +289,7 @@ function createModal(modalId, title, content, buttons) {
 // Create specific modals
 createModal(
     'modal',
-    'Edit Row Details',
+    '상세정보',
     '<form id="modalForm" class="space-y-4"></form>',
     [
         { label: 'Save', class: 'bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600', onClick: 'saveModal()' },
