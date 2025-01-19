@@ -384,7 +384,7 @@ input[type="date"] {
   position: fixed;
   top: 1rem;
   right: 1rem;
-  min-width: 200px;
+  min-width: 250px;
   padding: 1rem;
   border-radius: 5px;
   font-size: 1rem;
@@ -410,9 +410,7 @@ input[type="date"] {
 
 .toast-info {
   background-color: #0058a3;
-  /* IKEA 블루 톤 */
   color: #ffc72c;
-  /* IKEA 옐로우 톤 */
 }
 
 .toast-error {
@@ -456,12 +454,9 @@ input[type="checkbox"] {
   height: 18px;
 }
 
-/* 마지막 행에 추가 스타일 적용 */
 .tui-grid-row:last-child {
   background-color: #fff !important;
-  /* 마지막 행의 배경색 */
   border-bottom: 1px solid #8f8f8f !important;
-  /* 마지막 행의 테두리 색 */
 }
 
 .modal {
