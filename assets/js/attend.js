@@ -190,7 +190,7 @@ function showAttendance() {
               <div>Check-Out: <span class="${record.checkOut > '18:00' ? 'text-orange-500' : ''}">${record.checkOut}</span></div>
             `;
       } else {
-        attendanceCell.innerHTML = '-';
+        attendanceCell.innerHTML = '--';
         attendanceCell.ondblclick = () => makeEditable(attendanceCell, employee.employeeId, dateStr);
       }
       row.appendChild(attendanceCell);
@@ -203,8 +203,8 @@ function showAttendance() {
 function makeEditable(cell, employeeId, dateStr) {
   cell.innerHTML = `
         <div>
-          Check-In: <input type="time" id="checkInInput" class="border rounded px-2 py-1"><br>
-          Check-Out: <input type="time" id="checkOutInput" class="border rounded px-2 py-1">
+          Check-In:&nbsp;&nbsp;&nbsp;<input type="time" id="checkInInput" class="border rounded px-2 py-1"><br>
+          Check-Out:<input type="time" id="checkOutInput" class="border rounded px-2 py-1">
           <button class="text-white px-2 py-1 rounded bg-gray-800 hover:bg-gray-700" onclick="saveAttendance('${employeeId}', '${dateStr}')">Save</button>
         </div>
       `;
