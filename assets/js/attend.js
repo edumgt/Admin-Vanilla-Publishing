@@ -165,7 +165,7 @@ function showAttendance() {
     const isSaturday = date.getDay() === 6; // Check if the day is Saturday
 
     const dateCell = document.createElement('th');
-    dateCell.className = `px-6 py-3 text-left text-xs  uppercase tracking-wider ikea-blue-bg ${dateStr === today ? 'today-bg today-text' : isSaturday ? 'text-black' : isWeekend ? 'text-red-600' : ''}`;
+    dateCell.className = `px-6 py-3 text-left text-xs  uppercase tracking-wider bg-blue-500 ${dateStr === today ? 'today-bg today-text' : isSaturday ? 'text-black' : isWeekend ? 'text-red-600' : ''}`;
     dateCell.textContent = dateStr;
     dateRow.appendChild(dateCell);
   }
