@@ -120,7 +120,7 @@ input[type="date"] {
 /* GNB Menu */
 .gnb-menu {
   height: var(--gnb-height);
-  background: linear-gradient(90deg, #1a202c, var(--bg-dark));
+  background:var(--bg-dark);
   padding: var(--gnb-item-padding);
   display: flex;
   flex-direction: column;

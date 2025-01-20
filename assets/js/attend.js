@@ -130,7 +130,7 @@ function showAttendance() {
   const selectedMonth = document.getElementById('monthSelect').value;
   const [year, month] = selectedMonth.split('-');
   const lastDay = getLastDayOfMonth(year, month);
-  const today = new Date().toISOString().split('T')[0]; 
+  const today = new Date().toISOString().split('T')[0]; // 오늘 날짜 (YYYY-MM-DD)
 
   let employeesAttendance;
   const selectedDepartment = document.getElementById('departmentSelect').value;
@@ -148,10 +148,12 @@ function showAttendance() {
 
   const dateRow = document.getElementById('dateRow');
   const attendanceBody = document.getElementById('attendanceBody');
-  dateRow.innerHTML = '<th class="px-3 py-2 text-left text-xs  uppercase tracking-wider sortable" onclick="sortTableByName()">Employee Name <span id="sortIcon">▲</span></th>'; // Clear previous dates
+  dateRow.innerHTML = '<th class="px-3 py-2 text-left text-xs uppercase tracking-wider sortable" onclick="sortTableByName()">Employee Name <span id="sortIcon">▲</span></th>'; // 이전 날짜 초기화
   attendanceBody.innerHTML = ''; 
 
- 
+  let todayColumnIndex = -1; // 오늘 날짜 열의 인덱스
+
+  // 날짜 헤더 생성
   for (let day = 1; day <= lastDay; day++) {
     const dateStr = `${year}-${month}-${day.toString().padStart(2, '0')}`;
     const date = new Date(year, month - 1, day);
@@ -161,6 +163,11 @@ function showAttendance() {
     const dateCell = document.createElement('th');
     dateCell.className = `px-3 py-2 text-xs uppercase tracking-wider bg-gray-500 ${dateStr === today ? 'today-bg today-text' : isSaturday ? 'text-black' : isWeekend ? 'text-red-300' : ''}`;
     dateCell.textContent = dateStr;
+
+    if (dateStr === today) {
+      todayColumnIndex = day; // 오늘 날짜의 인덱스 저장
+    }
+
     dateRow.appendChild(dateCell);
   }
 
@@ -179,11 +186,11 @@ function showAttendance() {
 
     for (let day = 1; day <= lastDay; day++) {
       const dateStr = `${year}-${month}-${day.toString().padStart(2, '0')}`;
-
       const record = employee.attendance.find(rec => rec.date === dateStr);
 
       const attendanceCell = document.createElement('td');
       attendanceCell.className = `px-3 py-2 whitespace-nowrap text-xs ikea-yellow-border bg-white editable ${dateStr === today ? 'text-orange-600 font-bold' : ''}`;
+      
       if (record) {
         attendanceCell.innerHTML = `
               <div>Check-In: <span class="${record.checkIn > '09:00' ? 'text-red-500' : ''}">${record.checkIn}</span></div>
@@ -193,12 +200,24 @@ function showAttendance() {
         attendanceCell.innerHTML = '--';
         attendanceCell.ondblclick = () => makeEditable(attendanceCell, employee.employeeId, dateStr);
       }
+      
       row.appendChild(attendanceCell);
     }
 
     attendanceBody.appendChild(row);
   });
+
+  // 오늘 날짜가 있는 열로 자동 스크롤
+  if (todayColumnIndex !== -1) {
+    setTimeout(() => {
+      const todayCell = dateRow.children[todayColumnIndex];
+      if (todayCell) {
+        todayCell.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+      }
+    }, 500); // 0.5초 후 실행하여 테이블 렌더링이 완료된 후 스크롤
+  }
 }
+
 
 function makeEditable(cell, employeeId, dateStr) {
   cell.innerHTML = `
