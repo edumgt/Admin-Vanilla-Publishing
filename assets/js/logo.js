@@ -85,14 +85,14 @@ const iconMapping = {
     '방화벽': 'fa-shield-alt',
     '조직도구성': 'fa-sitemap',
     '근태관리': 'fa-user-clock',
-    
-    '회의일정': 'fa-calendar-alt', // Changed to calendar-alt for scheduling
+    '인센티브': 'fa-tasks',
+    '회의일정': 'fa-calendar-alt', 
     '이벤트': 'fa-calendar-alt', // Changed to calendar-alt for events
     '업무일정': 'fa-calendar-alt',
     '프로젝트일정': 'fa-tasks',
     '생산일정': 'fa-tasks',
     '예약관리': 'fa-calendar-alt',
-    '회의실관리': 'fa-door-open', // Changed to door-open for room management
+    '회의실관리': 'fa-door-open', 
     '병원예약': 'fa-hospital', // Changed to hospital for hospital reservations
     '강의일정': 'fa-chalkboard-teacher', // Changed to chalkboard-teacher for lectures
     '회원통계': 'fa-chart-bar', // Changed to chart-bar for statistics
@@ -103,15 +103,15 @@ const iconMapping = {
     '입출고관리': 'fa-warehouse', // Changed to warehouse for inventory management
     '권한관리': 'fa-user-shield', // Changed to user-shield for permissions
     '문서관리': 'fa-file-alt', // Changed to file-alt for document management
-    'WMS': 'fa-cubes' // Changed to cubes for warehouse management system
+    'WMS': 'fa-cubes' 
 };
 
-// Define menu configurations based on the file name
+
 const menuConfigurations = {
     'attend.html': [
         { href: 'orgni.html', text: '조직도구성' },
         { href: 'attend.html', text: '근태관리' },
-        { href: '#', text: '생산일정' },
+        { href: 'total.html', text: '인센티브' },
         { href: '#', text: '회의일정' },
         { href: '#', text: '이벤트' }
     ],
@@ -191,7 +191,7 @@ const menuConfigurations = {
     'orgni.html': [
         { href: 'orgni.html', text: '조직도구성' },
         { href: 'attend.html', text: '근태관리' },
-        { href: '#', text: '생산일정' },
+        { href: 'total.html', text: '인센티브' },
         { href: '#', text: '회의일정' },
         { href: '#', text: '이벤트' }
     ],
@@ -223,6 +223,14 @@ const menuConfigurations = {
         { href: 'calendar.html', text: '업무일정' },
         { href: 'trello.html', text: '프로젝트일정' },
         { href: 'timeline.html', text: '생산일정' },
+        { href: '#', text: '회의일정' },
+        { href: '#', text: '이벤트' }
+    ],
+
+    'total.html': [
+        { href: 'orgni.html', text: '조직도구성' },
+        { href: 'attend.html', text: '근태관리' },
+        { href: 'total.html', text: '인센티브' },
         { href: '#', text: '회의일정' },
         { href: '#', text: '이벤트' }
     ],
