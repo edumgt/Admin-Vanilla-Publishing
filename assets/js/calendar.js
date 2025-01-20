@@ -224,7 +224,7 @@ const calendar = (() => {
 
         const createTimeSelect = () => {
             const timeSelect = document.createElement('select');
-            timeSelect.className = 'relative w-full pl-10 p-2 bg-white border border-gray-300 rounded time-select-icon';
+            timeSelect.className = 'relative w-full pl-10 p-2 bg-white border border-gray-300 rounded ';
 
 
             const times = [];

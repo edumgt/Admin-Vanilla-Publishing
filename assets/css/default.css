@@ -529,3 +529,25 @@ input[type="button"] {
   font-size: 1.8rem;
   cursor: pointer;
 }
+
+/* calendar , trello */
+.time-select-icon {
+  position: relative;
+}
+
+.time-select-icon::before {
+  content: '\f017';
+  /* Unicode for Font Awesome clock icon */
+  font-family: 'Font Awesome 5 Free';
+  /* Ensure Font Awesome is included */
+  font-weight: 900;
+  position: absolute;
+  left: 10px;
+  /* Adjust for padding */
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6b7280;
+  /* Gray color */
+  pointer-events: none;
+  /* Ensure the icon doesn't interfere with interactions */
+}
