@@ -1,10 +1,4 @@
-.draggable {
-    cursor: grab;
-}
 
-.droppable {
-    border: 2px dashed #ccc;
-}
 
 .status-box {
     border: 2px solid;
@@ -18,10 +12,8 @@
     align-items: center;
     justify-content: center;
     font-size: 0.9rem;
-    /* 글자 크기 작게 */
     cursor: pointer;
     position: relative;
-    /* 툴팁을 위한 위치 설정 */
 }
 
 .status-box .tooltip {

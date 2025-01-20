@@ -551,3 +551,12 @@ input[type="button"] {
   pointer-events: none;
   /* Ensure the icon doesn't interfere with interactions */
 }
+
+/* drag and drop */
+.draggable {
+  cursor: grab;
+}
+
+.droppable {
+  border: 2px dashed #ccc;
+}
