@@ -22,8 +22,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         localStorage.setItem(key, JSON.stringify(data));
     }
 
-    const inboundData = await loadData(STORAGE_KEY_INBOUND, "assets/mock/inbound_books.json");
-    const outboundData = await loadData(STORAGE_KEY_OUTBOUND, "assets/mock/outbound_books.json");
+    const inboundData = await loadData(STORAGE_KEY_INBOUND, "assets/mock/inbound.json");
+    const outboundData = await loadData(STORAGE_KEY_OUTBOUND, "assets/mock/outbound.json");
 
     const root = document.getElementById('root');
 
