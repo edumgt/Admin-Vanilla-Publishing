@@ -1,6 +1,5 @@
 .ikea-yellow-border {
   border-color: #ffcc00;
-  /* IKEA yellow */
 }
 
 .scrollbar-yellow::-webkit-scrollbar {
@@ -13,14 +12,12 @@
 
 .scrollbar-yellow::-webkit-scrollbar-thumb {
   background-color: #ffcc00;
-  /* IKEA yellow */
   border-radius: 10px;
   border: 3px solid #f1f1f1;
 }
 
 .scrollbar-yellow::-webkit-scrollbar-thumb:hover {
   background-color: #ffb700;
-  /* Darker yellow on hover */
 }
 
 .sortable:hover {

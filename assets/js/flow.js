@@ -1,41 +1,3 @@
-// document.getElementById('closeModal').addEventListener('click', () => {
-//     toggleModal(false);
-// });
-
-// document.getElementById('saveModal').addEventListener('click', () => {
-//     const modalForm = document.getElementById('modalForm');
-//     const formData = new FormData(modalForm);
-//     const updatedData = {};
-
-//     // Collect updated values from the form
-//     for (const [key, value] of formData.entries()) {
-//         updatedData[key] = value;
-//     }
-
-//     if (currentRowKey !== null) {
-//         grid.setValue(currentRowKey, 'tpCd', updatedData.tpCd);
-//         grid.setValue(currentRowKey, 'tpNm', updatedData.tpNm);
-//         grid.setValue(currentRowKey, 'descCntn', updatedData.descCntn);
-//         grid.setValue(currentRowKey, 'useYn', updatedData.useYn);
-//     }
-
-//     // Hide the modal and show a success toast
-//     toggleModal(false);
-//     saveData(grid.getData());
-//     showToast('해당 건의 데이타를 저장하였습니다.', 'success');
-// });
-
-
-// document.getElementById('closeModalTopRight').addEventListener('click', () => {
-//     toggleModal(false);
-// });
-
-
-// document.getElementById('closeModal').addEventListener('click', () => {
-//     toggleModal(false);
-// });
-
-
 // 현재 페이지 URL 가져오기
 const currentPage = window.location.pathname.split("/").pop();
 
@@ -57,19 +19,6 @@ menuLinks2.forEach((link) => {
         });
     } 
 });
-
-// const demoLinks = document.querySelectorAll('a[href="#"]');
-// const demoModal = document.getElementById('demoModal');
-// const closeDemoModal = document.getElementById('closeDemoModal');
-// demoLinks.forEach(link => {
-//     link.addEventListener('click', function (event) {
-//         event.preventDefault(); // 기본 동작 막기
-//         demoModal.classList.remove('hidden');
-//     });
-// });
-// closeDemoModal.addEventListener('click', function () {
-//     demoModal.classList.add('hidden');
-// });
 
 
 /* 다국어 */

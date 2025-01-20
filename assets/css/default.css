@@ -16,7 +16,7 @@
   --primary-color: #0058a3;
   --primary-lightest-color: hsl(240, 100%, 95%);
   --scrollbar-color: hsl(240, 25%, 100%);
-  --scrollbar-thumb-color: #f1a815;
+  --scrollbar-thumb-color: #ffcc00;
   --gnb-height: 55px;
   --gnb-item-color: #c7ced9;
   --gnb-item-font-size: 1rem;
@@ -299,7 +299,7 @@ input[type="date"] {
 
 .active-tab {
   background-color: var(--primary-color) !important;
-  color: #ffc72c !important;
+  color: #ffcc00 !important;
   font-weight: 600;
   font-size: 15px;
 }
@@ -406,7 +406,7 @@ input[type="date"] {
 
 .toast-info {
   background-color: var(--primary-color);
-  color: #ffc72c;
+  color: #ffcc00;
 }
 
 .toast-error {
@@ -427,7 +427,7 @@ input[type="date"] {
 
 .tui-grid-header {
   background-color: var(--primary-color) !important;
-  color: #ffc72c !important;
+  color: #ffcc00 !important;
   font-weight: bold;
   text-align: center;
   border-bottom: 2px solid var(--secondary-color);
@@ -501,7 +501,7 @@ input[type="checkbox"] {
 
 input[type="button"] {
   background-color: var(--primary-color) !important;
-  color: #ffc72c !important;
+  color: #ffcc00 !important;
   border: none !important;
   cursor: pointer !important;
 }
@@ -568,4 +568,29 @@ input[type="button"] {
 
 .hidden {
   display: none;
+}
+
+/* status */
+.inProgress {
+  border-color: var(--primary-color);
+}
+
+.pending {
+  border-color: #ffcc00;
+  /* yellow */
+}
+
+.risk {
+  border-color: #ef4444;
+  /* red */
+}
+
+.success {
+  border-color: #10b981;
+  /* green */
+}
+
+.fail {
+  border-color: #6b7280;
+  /* gray */
 }

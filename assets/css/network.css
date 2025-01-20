@@ -44,30 +44,7 @@
     color: #666;
 }
 
-.inProgress {
-    border-color: #3b82f6;
-    /* blue */
-}
 
-.pending {
-    border-color: #fbbf24;
-    /* yellow */
-}
-
-.risk {
-    border-color: #ef4444;
-    /* red */
-}
-
-.success {
-    border-color: #10b981;
-    /* green */
-}
-
-.fail {
-    border-color: #6b7280;
-    /* gray */
-}
 
 .modal-content {
     background-color: #fff;
