@@ -3,7 +3,6 @@ const menuLinks = document.querySelectorAll(".gnb-item");
 
 const menuLinks2 = document.querySelectorAll(".menu-item");
 
-// GNB의 1번 파일이 stati.html 의 경우 활성화 상태 설정
 menuLinks2.forEach((link) => {
   if (link.getAttribute("href") === currentPage) {
     menuLinks.forEach((link) => {
@@ -68,7 +67,6 @@ class AttendanceManager {
   }
 }
 
-// Fetch the JSON data
 fetch('assets/mock/attend.json')
   .then(response => response.json())
   .then(data => {
@@ -79,7 +77,6 @@ fetch('assets/mock/attend.json')
   })
   .catch(error => console.error('Error fetching attendance data:', error));
 
-// Populate department select box
 function populateDepartmentSelect() {
   const departmentSelect = document.getElementById('departmentSelect');
   const departments = [...new Set(attendanceData.map(employee => employee.department))];
@@ -89,7 +86,6 @@ function populateDepartmentSelect() {
     const option = document.createElement('option');
     option.value = department;
     option.text = department;
-    //console.log(option.value);
 
     departmentSelect.appendChild(option);
   });
@@ -102,9 +98,8 @@ function populateDepartmentSelect() {
 function updateEmployeeSelect() {
   const selectedDepartment = document.getElementById('departmentSelect').value;
   const employeeSelect = document.getElementById('employeeSelect');
-  employeeSelect.innerHTML = ''; // Clear previous options
+  employeeSelect.innerHTML = ''; 
 
-  // Add "ALL" option for the employee select
   const optionAll = document.createElement('option');
   optionAll.value = "ALL";
   optionAll.text = "ALL";
@@ -120,7 +115,7 @@ function updateEmployeeSelect() {
   });
 
   if (employeesInDepartment.length > 0) {
-    employeeSelect.value = "ALL"; // Set "ALL" as the default selection
+    employeeSelect.value = "ALL"; 
   }
 
   showAttendance();
@@ -135,12 +130,11 @@ function showAttendance() {
   const selectedMonth = document.getElementById('monthSelect').value;
   const [year, month] = selectedMonth.split('-');
   const lastDay = getLastDayOfMonth(year, month);
-  const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+  const today = new Date().toISOString().split('T')[0]; 
 
   let employeesAttendance;
   const selectedDepartment = document.getElementById('departmentSelect').value;
 
-  // Ensure manager is initialized before calling its methods
   if (!manager) {
     console.error('Manager is not initialized.');
     return;
@@ -154,32 +148,30 @@ function showAttendance() {
 
   const dateRow = document.getElementById('dateRow');
   const attendanceBody = document.getElementById('attendanceBody');
-  dateRow.innerHTML = '<th class="px-6 py-3 text-left text-xs  uppercase tracking-wider sortable" onclick="sortTableByName()">Employee Name <span id="sortIcon">▲</span></th>'; // Clear previous dates
-  attendanceBody.innerHTML = ''; // Clear previous content
+  dateRow.innerHTML = '<th class="px-3 py-2 text-left text-xs  uppercase tracking-wider sortable" onclick="sortTableByName()">Employee Name <span id="sortIcon">▲</span></th>'; // Clear previous dates
+  attendanceBody.innerHTML = ''; 
 
-  // Insert dates in the header
+ 
   for (let day = 1; day <= lastDay; day++) {
     const dateStr = `${year}-${month}-${day.toString().padStart(2, '0')}`;
     const date = new Date(year, month - 1, day);
-    const isWeekend = date.getDay() === 0 || date.getDay() === 6; // Check if the day is Saturday or Sunday
-    const isSaturday = date.getDay() === 6; // Check if the day is Saturday
+    const isWeekend = date.getDay() === 0 || date.getDay() === 6; 
+    const isSaturday = date.getDay() === 6; 
 
     const dateCell = document.createElement('th');
-    dateCell.className = `px-6 py-3 text-left text-xs  uppercase tracking-wider bg-blue-500 ${dateStr === today ? 'today-bg today-text' : isSaturday ? 'text-black' : isWeekend ? 'text-red-600' : ''}`;
+    dateCell.className = `px-3 py-2 text-xs uppercase tracking-wider bg-gray-500 ${dateStr === today ? 'today-bg today-text' : isSaturday ? 'text-black' : isWeekend ? 'text-red-300' : ''}`;
     dateCell.textContent = dateStr;
     dateRow.appendChild(dateCell);
   }
 
-  // Insert attendance data for each employee
   employeesAttendance.forEach(employee => {
     const employeeNameCell = document.createElement('td');
-    employeeNameCell.className = 'px-6 py-4 whitespace-nowrap ikea-yellow-border bg-white';
+    employeeNameCell.className = 'px-3 py-2 whitespace-nowrap ikea-yellow-border bg-white';
 
-    // Calculate the number of check-ins
     const checkIns = employee.attendance.length;
-    const checkInPercentage = ((checkIns / lastDay) * 100).toFixed(2); // Calculate percentage with 2 decimal places
+    const checkInPercentage = ((checkIns / lastDay) * 100).toFixed(2); 
 
-    employeeNameCell.innerHTML = `${employee.name} (${checkIns}/${lastDay}, ${checkInPercentage}%)`; // Display name with check-in info
+    employeeNameCell.innerHTML = `${employee.name} (${checkIns}/${lastDay}, ${checkInPercentage}%)`; 
 
     const row = document.createElement('tr');
     row.className = 'hover:bg-gray-100';
@@ -191,7 +183,7 @@ function showAttendance() {
       const record = employee.attendance.find(rec => rec.date === dateStr);
 
       const attendanceCell = document.createElement('td');
-      attendanceCell.className = `px-6 py-4 whitespace-nowrap text-sm ikea-yellow-border bg-white editable ${dateStr === today ? 'text-orange-600 font-bold' : ''}`;
+      attendanceCell.className = `px-3 py-2 whitespace-nowrap text-xs ikea-yellow-border bg-white editable ${dateStr === today ? 'text-orange-600 font-bold' : ''}`;
       if (record) {
         attendanceCell.innerHTML = `
               <div>Check-In: <span class="${record.checkIn > '09:00' ? 'text-red-500' : ''}">${record.checkIn}</span></div>
@@ -211,9 +203,9 @@ function showAttendance() {
 function makeEditable(cell, employeeId, dateStr) {
   cell.innerHTML = `
         <div>
-          Check-In: <input type="time" id="checkInInput" class="border rounded px-2 py-1">
+          Check-In: <input type="time" id="checkInInput" class="border rounded px-2 py-1"><br>
           Check-Out: <input type="time" id="checkOutInput" class="border rounded px-2 py-1">
-          <button onclick="saveAttendance('${employeeId}', '${dateStr}')">Save</button>
+          <button class="text-white px-2 py-1 rounded bg-gray-800 hover:bg-gray-700" onclick="saveAttendance('${employeeId}', '${dateStr}')">Save</button>
         </div>
       `;
 }
@@ -248,10 +240,8 @@ function sortTableByName() {
   const tbody = table.tBodies[0];
   const rows = Array.from(tbody.rows);
 
-  // Toggle sort direction
   sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
 
-  // Sort rows based on employee name
   rows.sort((a, b) => {
     const nameA = a.cells[0].textContent.trim().toLowerCase();
     const nameB = b.cells[0].textContent.trim().toLowerCase();
@@ -263,22 +253,18 @@ function sortTableByName() {
     }
   });
 
-  // Update sort icon
   const sortIcon = document.getElementById('sortIcon');
   sortIcon.textContent = sortDirection === 'asc' ? '▲' : '▼';
 
-  // Append sorted rows to tbody
   rows.forEach(row => tbody.appendChild(row));
 }
 
-// Automatically populate employee select box and show attendance on load
 window.onload = () => {
   const storedData = localStorage.getItem('attendanceData');
   if (storedData) {
     attendanceData = JSON.parse(storedData);
   }
   if (attendanceData.length > 0) {
-    //populateDepartmentSelect();
     updateEmployeeSelect();
   }
 };
