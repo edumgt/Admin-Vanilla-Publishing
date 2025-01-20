@@ -18,13 +18,11 @@
 .handsontable .htCore td,
 .handsontable .htCore th {
     background-color: #f9f9f9;
-    /* 테마 색상 적용 */
     border-color: #ddd;
 }
 
 .handsontable .htCore th {
     background-color: #f1f1f1;
-    /* 헤더 색상 적용 */
     font-weight: bold;
 }
 
