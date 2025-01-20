@@ -129,8 +129,8 @@ input[type="date"] {
 /* GNB Item */
 .gnb-item {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  /* align-items: left;
+  justify-content: left; */
   font-size: var(--gnb-item-font-size);
   font-weight: var(--gnb-item-font-weight);
   text-transform: uppercase;
@@ -144,7 +144,7 @@ input[type="date"] {
 
 .gnb-item i {
   font-size: 1rem;
-  margin-right: 0.5rem;
+  margin-right: 0.6rem;
   color: #718096;
   transition: color 0.3s ease;
 }
