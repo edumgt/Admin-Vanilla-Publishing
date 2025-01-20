@@ -594,3 +594,21 @@ input[type="button"] {
   border-color: #6b7280;
   /* gray */
 }
+
+/* badge */
+.badge {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  background-color: #0056b3;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-size: 12px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.badge:hover {
+  background-color:#003693;
+}

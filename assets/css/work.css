@@ -63,22 +63,7 @@
     overflow: auto;
 }
 
-.badge {
-    position: absolute;
-    top: 5px;
-    left: 10px;
-    background-color: green;
-    color: white;
-    padding: 3px 8px;
-    border-radius: 3px;
-    font-size: 12px;
-    cursor: pointer;
-    z-index: 10;
-}
 
-.badge:hover {
-    background-color: darkgreen;
-}
 
 .modal-content {
     background: #fff;
