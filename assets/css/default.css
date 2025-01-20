@@ -560,3 +560,16 @@ input[type="button"] {
 .droppable {
   border: 2px dashed #ccc;
 }
+
+/* grid */
+.grid-container {
+  margin: 10px 0px 10px 0px;
+  background-color: #fefefe;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+.hidden {
+  display: none;
+}

@@ -5,9 +5,7 @@ body {
     background-attachment: fixed;
 }
 
-.hidden {
-    display: none;
-}
+
 
 .tab-active {
     background: linear-gradient(to right, #4f46e5, #3b82f6);

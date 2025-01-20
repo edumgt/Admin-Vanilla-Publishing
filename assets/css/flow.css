@@ -26,13 +26,7 @@
     font-weight: bold;
 }
 
-.grid-container {
-    margin: 10px 0px 10px 0px;
-    background-color: #fefefe;
-    padding: 20px;
-    border-radius: 6px;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
-}
+
 
 /* Custom styles for a modern look */
 .handsontable .ht_master .htCore td,

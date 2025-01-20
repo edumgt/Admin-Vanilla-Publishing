@@ -1,45 +1,51 @@
 .ikea-blue-bg {
-    background-color: #0058a3; /* IKEA blue */
-  }
+  background-color: #0058a3;
+  /* IKEA blue */
+}
 
-  .ikea-yellow-border {
-    border-color: #ffcc00; /* IKEA yellow */
-  }
+.ikea-yellow-border {
+  border-color: #ffcc00;
+  /* IKEA yellow */
+}
 
-  .scrollbar-yellow::-webkit-scrollbar {
-    width: 12px;
-  }
+.scrollbar-yellow::-webkit-scrollbar {
+  width: 12px;
+}
 
-  .scrollbar-yellow::-webkit-scrollbar-track {
-    background: #f1f1f1;
-  }
+.scrollbar-yellow::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
 
-  .scrollbar-yellow::-webkit-scrollbar-thumb {
-    background-color: #ffcc00; /* IKEA yellow */
-    border-radius: 10px;
-    border: 3px solid #f1f1f1;
-  }
+.scrollbar-yellow::-webkit-scrollbar-thumb {
+  background-color: #ffcc00;
+  /* IKEA yellow */
+  border-radius: 10px;
+  border: 3px solid #f1f1f1;
+}
 
-  .scrollbar-yellow::-webkit-scrollbar-thumb:hover {
-    background-color: #ffb700; /* Darker yellow on hover */
-  }
+.scrollbar-yellow::-webkit-scrollbar-thumb:hover {
+  background-color: #ffb700;
+  /* Darker yellow on hover */
+}
 
-  .sortable:hover {
-    cursor: pointer;
-  }
+.sortable:hover {
+  cursor: pointer;
+}
 
-  .editable {
-    cursor: pointer;
-  }
+.editable {
+  cursor: pointer;
+}
 
-  .editable:hover {
-    background-color: #f1f1f1;
-  }
+.editable:hover {
+  background-color: #f1f1f1;
+}
 
-  .today-bg {
-    background-color: #e0f7ff; /* Light blue background */
-  }
+.today-bg {
+  background-color: #e0f7ff;
+  /* Light blue background */
+}
 
-  .today-text {
-    color: #ff6600; /* Orange text color */
-  }
+.today-text {
+  color: #ff6600;
+  /* Orange text color */
+}
