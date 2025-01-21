@@ -1,7 +1,3 @@
-.ikea-yellow-border {
-  border-color: #ffcc00;
-}
-
 .scrollbar-yellow::-webkit-scrollbar {
   width: 12px;
 }
@@ -12,13 +8,13 @@
 
 .scrollbar-yellow::-webkit-scrollbar-thumb {
   background-color: #ffcc00;
-  border-radius: 10px;
+  border-radius: 6px;
   border: 3px solid #f1f1f1;
 }
 
-.scrollbar-yellow::-webkit-scrollbar-thumb:hover {
+/* .scrollbar-yellow::-webkit-scrollbar-thumb:hover {
   background-color: #ffb700;
-}
+} */
 
 .sortable:hover {
   cursor: pointer;
@@ -34,10 +30,8 @@
 
 .today-bg {
   background-color: #e0f7ff;
-  /* Light blue background */
 }
 
 .today-text {
   color: #ff6600;
-  /* Orange text color */
 }

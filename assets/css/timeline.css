@@ -36,7 +36,7 @@
     position: absolute;
     color: white;
     padding: 5px 10px;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: grab;
     margin: 5px 0;
 }
@@ -48,7 +48,7 @@
     background: #0058a3;
     color: white;
     padding: 5px 10px;
-    border-radius: 5px;
+    border-radius: 6px;
     margin: 0 5px;
 }
 .popup {
@@ -72,14 +72,14 @@
     width: calc(100% - 20px);
     padding: 10px;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 6px;
 }
 .popup .btn {
     cursor: pointer;
     background: #0058a3;
     color: white;
     padding: 10px 20px;
-    border-radius: 5px;
+    border-radius: 6px;
     margin-top: 10px;
     text-align: center;
 }

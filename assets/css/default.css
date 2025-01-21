@@ -120,7 +120,7 @@ input[type="date"] {
 /* GNB Menu */
 .gnb-menu {
   height: var(--gnb-height);
-  background:var(--bg-dark);
+  background: var(--bg-dark);
   padding: var(--gnb-item-padding);
   display: flex;
   flex-direction: column;
@@ -382,7 +382,7 @@ input[type="date"] {
   right: 1rem;
   min-width: 250px;
   padding: 1rem;
-  border-radius: 5px;
+  border-radius: 6px;
   font-size: 1rem;
   color: #fff;
   z-index: 1000;
@@ -610,5 +610,9 @@ input[type="button"] {
 }
 
 .badge:hover {
-  background-color:#003693;
+  background-color: #003693;
+}
+
+.ikea-yellow-border {
+  border-color: #ffcc00;
 }

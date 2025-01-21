@@ -23,7 +23,7 @@
     background-color: #ffffff;
     overflow-y: auto;
     
-    border-radius: 5px;
+    border-radius: 6px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin: 0px 5px 10px 0px;
 }
@@ -33,7 +33,7 @@
     padding: 15px;
     background-color: #e9ecef;
     overflow-y: auto;
-    border-radius: 5px;
+    border-radius: 6px;
     margin: 0px 0px 10px 5px;
 }
 
@@ -73,10 +73,8 @@
 #taskForm button {
     display: inline-block;
     padding: 10px 20px;
-
     background-color: #0058a3;
-
-    color: white;
+    color: #ffcc00;
     border: none;
     border-radius: 8px;
     font-size: 14px;
@@ -86,7 +84,7 @@
 }
 
 #taskForm button:hover {
-    background-color: #2b6cb0;
+    background-color: #004080;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -121,7 +119,7 @@
     display: flex;
     background-color: #ffffff;
     padding: 5px;
-    border-radius: 5px;
+    border-radius: 6px;
     border: 1px solid #ddd;
 }
 
@@ -139,7 +137,7 @@
     padding: 10px;
     margin: 10px 0;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: grab;
     transition: background-color 0.2s ease;
 }
