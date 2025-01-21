@@ -1,7 +1,6 @@
 let grid;
 let rawData;
 
-// 데이터 fetch 후 local storage에 저장
 window.onload = function() {
     fetchDataAndInitialize();
     document.getElementById('sidoSelect').addEventListener('change', function() {
@@ -12,7 +11,7 @@ window.onload = function() {
 };
 
 function fetchDataAndInitialize() {
-    fetch('data.json')
+    fetch('assets/mock/citydata.json')
         .then(response => response.json())
         .then(data => {
             rawData = data;
@@ -62,9 +61,6 @@ function initializeGrid(data) {
         bodyHeight: 380
     });
 
-
-
-    // Grid의 수정 발생 시 local storage에 반영
     grid.on('editingFinish', updateLocalStorage);
     grid.on('check', handleSelectionChange);
     grid.on('uncheck', handleSelectionChange);
