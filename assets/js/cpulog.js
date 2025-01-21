@@ -7,7 +7,7 @@ let diskChartInstance = null; // Disk 차트 인스턴스 저장
 function createChart(panelId, canvasId, chartLabel, data, color, titleText) {
     const panel = document.createElement('div');
     panel.id = panelId;
-    panel.className = 'log-panel bg-white rounded-lg';
+    panel.className = 'normal-ddd-border  bg-white rounded-lg';
     panel.style.flex = '1 1 calc(33.3333% - 10px)';
     panel.style.maxWidth = 'calc(33.3333% - 10px)';
     panel.style.margin = '0px';

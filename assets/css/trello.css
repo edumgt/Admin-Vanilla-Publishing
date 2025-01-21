@@ -208,9 +208,5 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: nowrap;
-    /* 한 줄에 유지 */
 }
 
-.log-panel {
-    border: 1px solid #ddd;
-}
