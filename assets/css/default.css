@@ -1,8 +1,10 @@
-/* Reset and box-sizing */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-weight: 500;
 }
 
 /* CSS Variables */
@@ -31,11 +33,7 @@ body {
   scrollbar-width: thin;
 }
 
-input[type="text"],
-input[type="date"] {
-  padding: 5px;
-  height: calc(1.5em + 6px);
-}
+
 
 .content {
   margin-left: 20px;
@@ -124,6 +122,7 @@ input[type="date"] {
   padding: var(--gnb-item-padding);
   display: flex;
   flex-direction: column;
+  z-index: 49;
 }
 
 /* GNB Item */
@@ -501,12 +500,7 @@ input[type="checkbox"] {
   pointer-events: none;
 }
 
-input[type="button"] {
-  background-color: var(--primary-color) !important;
-  color: #ffcc00 !important;
-  border: none !important;
-  cursor: pointer !important;
-}
+
 
 .bg-blue-500 {
   background-color: var(--primary-color) !important;
@@ -621,4 +615,54 @@ input[type="button"] {
 
 .normal-ddd-border {
   border: 1px solid #ddd;
+}
+
+/* default html component */
+input[type="button"] {
+  background-color: var(--primary-color) !important;
+  color: #ffcc00 !important;
+  border: none !important;
+  cursor: pointer !important;
+  border-radius: 3px;
+  height: calc(1.5em + 6px);
+  padding: 3px 6px 3px 6px;
+}
+
+select {
+  width: 150px;
+  padding: 3px;
+  font-size: 1rem;
+  border: 1px solid var(--primary-color) !important;
+  border-radius: 3px;
+  background-color: white;
+  color: #333;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  height: calc(1.5em + 6px);
+}
+
+input[type="text"],
+input[type="time"],
+input[type="number"],
+input[type="month"],
+input[type="date"] {
+  border: 1px solid var(--primary-color) !important;
+  padding: 1px 6px 1px 6px;
+  height: calc(1.5em + 6px);
+  border-radius: 3px;
+}
+
+textarea {
+  
+  padding: 3px;
+  font-size: 1rem;
+  border: 1px solid var(--primary-color) !important;
+  border-radius: 3px;
+  background-color: white;
+  color: #333;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
 }

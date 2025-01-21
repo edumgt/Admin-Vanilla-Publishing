@@ -162,7 +162,7 @@ const calendar = (() => {
 
             const deleteBtn = document.createElement('button');
             deleteBtn.className = 'text-red-500 ml-4 text-2xl font-bold';
-            deleteBtn.innerText = 'X';
+            deleteBtn.innerText = 'x';
             deleteBtn.onclick = () => {
                 tasks[dateKey].splice(index, 1);
                 if (tasks[dateKey].length === 0) {
@@ -224,7 +224,7 @@ const calendar = (() => {
 
         const createTimeSelect = () => {
             const timeSelect = document.createElement('select');
-            timeSelect.className = 'relative w-full pl-10 p-2 bg-white border border-gray-300 rounded ';
+            timeSelect.className = 'w-full';
 
 
             const times = [];

@@ -1,34 +1,36 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>행정구역 정보</title>
     <link href="assets/css/app.css" rel="stylesheet">
-    <style>
-        #gridContainer {
-            
-            width: 100%;
-        }
-        #panelContainer {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-        .panel {
-            flex: 1;
-            margin: 0 10px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            background-color: #f9f9f9;
-        }
-        #comparisonPanel {
-            flex: 1.5; /* 가운데 패널을 더 넓게 */
-        }
-    </style>
+    <link href="assets/css/city.css" rel="stylesheet">
+
 </head>
-<body class="bg-gray-100 p-4">
-    <div class="container mx-auto">
-        <h1 class="text-2xl font-bold mb-4">행정구역 정보 검색</h1>
+
+<body>
+    <div class="gnb-menu fixed top-0 left-0 w-full">
+        <ul class="flex justify-between items-center">
+            <div id="logo"></div>
+            <div id="tabs-container"></div>
+
+            <div id="dropdown-container"></div>
+            <button id="memberIcon">
+                <i class="fas fa-user"></i>
+            </button>
+        </ul>
+    </div>
+
+
+    <div id="toast-container"></div>
+    <div id="offCanvasContainer"></div>
+
+    <div id="content" class="content">
+        <nav class="breadcrumb">
+            행정구역정보
+        </nav>
+
+
+
         <div class="mb-4">
             <label for="sidoSelect" class="mr-2">시도:</label>
             <select id="sidoSelect" class="mr-4"></select>
@@ -51,11 +53,18 @@
                 <div id="detailContentRight"></div>
             </div>
         </div>
+
     </div>
 
-    <!-- TUI Grid and dependencies -->
-    <script src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.js"></script>
-    <script src="https://uicdn.toast.com/tui.grid/latest/tui-grid.js"></script>
-    <script src="assets/js/citydata.js"></script>
+    <div id="buttonContainer"></div>
+    <div id="appContainer"></div>
+
+    <script type="text/javascript" src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.js"></script>
+    <script type="text/javascript" src="https://uicdn.toast.com/tui-grid/latest/tui-grid.js"></script>
+    <script type="text/javascript" src="assets/js/logo.js"></script>
+    <script type="text/javascript" src="assets/js/workframe.js"></script>
+    <script type="text/javascript" src="assets/js/citydata.js"></script>
+    <script type="text/javascript" src="assets/js/dropdown.js"></script>
 </body>
+
 </html>

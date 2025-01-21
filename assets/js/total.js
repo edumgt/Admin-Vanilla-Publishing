@@ -3,15 +3,15 @@ const menuLinks = document.querySelectorAll(".gnb-item");
 const menuLinks2 = document.querySelectorAll(".menu-item");
 
 menuLinks2.forEach((link) => {
-  if (link.getAttribute("href") === currentPage) {
-    menuLinks.forEach((link) => {
-      if (link.getAttribute("href") === "orgni.html") {
-        link.classList.add("active");
-      } else {
-        link.classList.remove("active");
-      }
-    });
-  }
+    if (link.getAttribute("href") === currentPage) {
+        menuLinks.forEach((link) => {
+            if (link.getAttribute("href") === "orgni.html") {
+                link.classList.add("active");
+            } else {
+                link.classList.remove("active");
+            }
+        });
+    }
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -27,7 +27,7 @@ function setupGrid(teams) {
         team: "총 합계",
         name: "",
     };
-    
+
     // ✅ summary 값을 직접 계산할 배열
     const totalSummary = Array(12).fill(0);
 
@@ -112,20 +112,19 @@ function setupGrid(teams) {
         rowHeaders: ["rowNum"]
     });
 
-    // ✅ "팀별 합계" 행을 스타일링 (굵게 표시)
+
     grid.on("onGridMounted", () => {
         grid.getData().forEach((row, index) => {
             if (row.name === "합계") {
-                grid.addRowClassName(index, "summary-row"); // CSS 클래스로 스타일 적용
+                grid.addRowClassName(index, "summary-row");
             }
         });
     });
 
-    // ✅ summary 행이 스크롤에 따라 고정되도록 처리
+
     fixSummaryRow(grid);
 }
 
-// ✅ summary 행이 스크롤 시 고정되도록 조정하는 함수
 function fixSummaryRow(grid) {
     const gridContainer = document.getElementById("grid").querySelector(".tui-grid-container");
     const summaryContainer = document.querySelector(".tui-grid-summary-area");
@@ -137,13 +136,11 @@ function fixSummaryRow(grid) {
     }
 }
 
-// ✅ 금액 포맷 함수 (천 단위 쉼표 추가)
 function formatCurrency({ value }) {
     return value ? value.toLocaleString() + " 원" : "-";
 }
 
-// ✅ Summary 값 포맷 함수 (천 단위 쉼표 추가)
-function summaryFormatter( summary ) {
-    const total = Number(summary?.sum || 0); // ✅ sum이 NaN일 경우 0 처리
+function summaryFormatter(summary) {
+    const total = Number(summary?.sum || 0); 
     return `<strong>${total.toLocaleString()} 원</strong>`;
 }

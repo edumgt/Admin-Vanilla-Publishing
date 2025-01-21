@@ -82,28 +82,29 @@ const iconMapping = {
     '코드관리': 'fa-server',
     'VM현황': 'fa-server',
     'DB관리': 'fa-database',
+    '행정구역정보': 'fa-database',
     '방화벽': 'fa-shield-alt',
     '조직도구성': 'fa-sitemap',
     '근태관리': 'fa-user-clock',
     '인센티브': 'fa-tasks',
-    '회의일정': 'fa-calendar-alt', 
-    '이벤트': 'fa-calendar-alt', 
+    '회의일정': 'fa-calendar-alt',
+    '이벤트': 'fa-calendar-alt',
     '업무일정': 'fa-calendar-alt',
     '프로젝트일정': 'fa-tasks',
     '생산일정': 'fa-tasks',
     '예약관리': 'fa-calendar-alt',
-    '회의실관리': 'fa-door-open', 
-    '병원예약': 'fa-hospital', 
-    '강의일정': 'fa-chalkboard-teacher', 
-    '회원통계': 'fa-chart-bar', 
-    '매출통계': 'fa-chart-line', 
-    '체인운영': 'fa-store', 
-    '판매통계': 'fa-chart-pie', 
-    '실적': 'fa-chart-area', 
-    '입출고관리': 'fa-warehouse', 
-    '권한관리': 'fa-user-shield', 
-    '문서관리': 'fa-file-alt', 
-    'WMS': 'fa-cubes' 
+    '회의실관리': 'fa-door-open',
+    '병원예약': 'fa-hospital',
+    '강의일정': 'fa-chalkboard-teacher',
+    '회원통계': 'fa-chart-bar',
+    '매출통계': 'fa-chart-line',
+    '체인운영': 'fa-store',
+    '판매통계': 'fa-chart-pie',
+    '실적': 'fa-chart-area',
+    '입출고관리': 'fa-warehouse',
+    '권한관리': 'fa-user-shield',
+    '문서관리': 'fa-file-alt',
+    'WMS': 'fa-cubes'
 };
 
 
@@ -130,6 +131,14 @@ const menuConfigurations = {
         { href: 'chain.html', text: '체인운영' },
         { href: '#', text: '판매통계' },
         { href: '#', text: '실적' }
+    ],
+
+    'city.html': [
+        { href: 'work.html', text: '예약관리' },
+        { href: 'meeting.html', text: '회의실관리' },
+        { href: 'hospital.html', text: '병원예약' },
+        { href: 'lectures.html', text: '강의일정' },
+        { href: 'city.html', text: '행정구역정보' }
     ],
 
     'config.html': [
@@ -160,7 +169,7 @@ const menuConfigurations = {
         { href: 'meeting.html', text: '회의실관리' },
         { href: 'hospital.html', text: '병원예약' },
         { href: 'lectures.html', text: '강의일정' },
-        { href: '#', text: '이벤트' }
+        { href: 'city.html', text: '행정구역정보' }
     ],
 
     'lectures.html': [
@@ -168,7 +177,7 @@ const menuConfigurations = {
         { href: 'meeting.html', text: '회의실관리' },
         { href: 'hospital.html', text: '병원예약' },
         { href: 'lectures.html', text: '강의일정' },
-        { href: '#', text: '이벤트' }
+        { href: 'city.html', text: '행정구역정보' }
     ],
 
     'meeting.html': [
@@ -176,7 +185,7 @@ const menuConfigurations = {
         { href: 'meeting.html', text: '회의실관리' },
         { href: 'hospital.html', text: '병원예약' },
         { href: 'lectures.html', text: '강의일정' },
-        { href: '#', text: '이벤트' }
+        { href: 'city.html', text: '행정구역정보' }
     ],
 
 
@@ -255,7 +264,7 @@ const menuConfigurations = {
         { href: 'meeting.html', text: '회의실관리' },
         { href: 'hospital.html', text: '병원예약' },
         { href: 'lectures.html', text: '강의일정' },
-        { href: '#', text: '이벤트' }
+        { href: 'city.html', text: '행정구역정보' }
     ],
 
 

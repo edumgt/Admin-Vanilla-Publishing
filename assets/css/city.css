@@ -1,0 +1,19 @@
+#gridContainer {
+   
+    width: 100%;
+}
+#panelContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.panel {
+    flex: 1;
+    margin: 0 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+}
+#comparisonPanel {
+    flex: 1.5; /* 가운데 패널을 더 넓게 */
+}
