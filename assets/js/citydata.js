@@ -1,9 +1,9 @@
 let grid;
 let rawData;
 
-window.onload = function() {
+window.onload = function () {
     fetchDataAndInitialize();
-    document.getElementById('sidoSelect').addEventListener('change', function() {
+    document.getElementById('sidoSelect').addEventListener('change', function () {
         const selectedSido = this.value;
         populateGunguSelect(selectedSido);
     });
@@ -153,7 +153,7 @@ function displayDetailPanels(selectedRows) {
     const detailPanelRight = document.getElementById('detailPanelRight');
     const detailContentLeft = document.getElementById('detailContentLeft');
     const detailContentRight = document.getElementById('detailContentRight');
-    
+
     if (selectedRows.length > 0) {
         detailPanelLeft.style.display = 'block';
         detailContentLeft.innerHTML = `
@@ -220,7 +220,7 @@ function displayDetailPanels(selectedRows) {
 function displayComparisonPanel(selectedRows) {
     const comparisonPanel = document.getElementById('comparisonPanel');
     const comparisonContent = document.getElementById('comparisonContent');
-    
+
     if (selectedRows.length === 2) {
         const [row1, row2] = selectedRows;
         const distance = calculateDistance(row1.위도, row1.경도, row2.위도, row2.경도);
@@ -253,7 +253,7 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
     const R = 6371; // 지구의 반지름 (km)
     const dLat = toRadians(lat2 - lat1);
     const dLon = toRadians(lon2 - lon1);
-    const a = 
+    const a =
         Math.sin(dLat / 2) * Math.sin(dLat / 2) +
         Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
         Math.sin(dLon / 2) * Math.sin(dLon / 2);
