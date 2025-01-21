@@ -87,22 +87,22 @@ const iconMapping = {
     '근태관리': 'fa-user-clock',
     '인센티브': 'fa-tasks',
     '회의일정': 'fa-calendar-alt', 
-    '이벤트': 'fa-calendar-alt', // Changed to calendar-alt for events
+    '이벤트': 'fa-calendar-alt', 
     '업무일정': 'fa-calendar-alt',
     '프로젝트일정': 'fa-tasks',
     '생산일정': 'fa-tasks',
     '예약관리': 'fa-calendar-alt',
     '회의실관리': 'fa-door-open', 
-    '병원예약': 'fa-hospital', // Changed to hospital for hospital reservations
-    '강의일정': 'fa-chalkboard-teacher', // Changed to chalkboard-teacher for lectures
-    '회원통계': 'fa-chart-bar', // Changed to chart-bar for statistics
-    '매출통계': 'fa-chart-line', // Changed to chart-line for sales
-    '체인운영': 'fa-store', // Changed to store for chain operations
-    '판매통계': 'fa-chart-pie', // Changed to chart-pie for sales statistics
-    '실적': 'fa-chart-area', // Changed to chart-area for performance
-    '입출고관리': 'fa-warehouse', // Changed to warehouse for inventory management
-    '권한관리': 'fa-user-shield', // Changed to user-shield for permissions
-    '문서관리': 'fa-file-alt', // Changed to file-alt for document management
+    '병원예약': 'fa-hospital', 
+    '강의일정': 'fa-chalkboard-teacher', 
+    '회원통계': 'fa-chart-bar', 
+    '매출통계': 'fa-chart-line', 
+    '체인운영': 'fa-store', 
+    '판매통계': 'fa-chart-pie', 
+    '실적': 'fa-chart-area', 
+    '입출고관리': 'fa-warehouse', 
+    '권한관리': 'fa-user-shield', 
+    '문서관리': 'fa-file-alt', 
     'WMS': 'fa-cubes' 
 };
 
