@@ -36,9 +36,11 @@
     color: #ffcc00;
 
     border: 1px solid #ddd;
+    border-radius: 6px;
+
     box-sizing: border-box;
     position: relative;
-    border-radius: 6px;
+    
 }
 
 .room-title {

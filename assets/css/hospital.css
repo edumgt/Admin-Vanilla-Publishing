@@ -21,8 +21,9 @@
     background-color: white;
     border: 1px solid #ccc;
 
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+
     display: flex;
     flex-direction: column;
 }
@@ -32,8 +33,8 @@
     color: white;
 
     padding: 10px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
     text-align: center;
 }
 
