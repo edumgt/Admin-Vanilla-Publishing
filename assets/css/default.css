@@ -245,7 +245,7 @@ input[type="date"] {
 /* Card Hover Effect */
 .card:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
@@ -345,7 +345,7 @@ input[type="date"] {
   color: #313029;
   background-color: white;
   /* box-shadow: 0 0.25rem 0.75rem 0.2rem rgba(34, 48, 62, 0.14); */
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
   transition: transform 0.3s, box-shadow 0.3s;
 
   z-index: 50;
