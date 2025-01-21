@@ -160,23 +160,23 @@ function displayDetailPanels(selectedRows) {
             <div>
                 <h3>${selectedRows[0].읍면동}</h3>
                 <p><i class="fas fa-envelope"></i> 우편번호: ${selectedRows[0].우편번호}</p>
-<p><i class="fas fa-map-marker-alt"></i> 위도: ${selectedRows[0].위도}</p>
-<p><i class="fas fa-map-marker-alt"></i> 경도: ${selectedRows[0].경도}</p>
-<p><i class="fas fa-prescription-bottle-alt"></i> 약국수: ${selectedRows[0].약국수}</p>
-<p><i class="fas fa-hospital"></i> 병의원수: ${selectedRows[0].병의원수}</p>
-<p><i class="fas fa-school"></i> 학교수: ${selectedRows[0].학교수}</p>
-<p><i class="fas fa-parking"></i> 주차장수: ${selectedRows[0].주차장수}</p>
-<p><i class="fas fa-users"></i> 주민수: ${selectedRows[0].주민수}</p>
-<p><i class="fas fa-store"></i> 상점수: ${selectedRows[0].상점수}</p>
-<p><i class="fas fa-tree"></i> 공원수: ${selectedRows[0].공원수}</p>
-<p><i class="fas fa-book"></i> 도서관수: ${selectedRows[0].도서관수}</p>
-<p><i class="fas fa-bus"></i> 버스정류장수: ${selectedRows[0].버스정류장수}</p>
-<p><i class="fas fa-subway"></i> 지하철역수: ${selectedRows[0].지하철역수}</p>
-<p><i class="fas fa-utensils"></i> 음식점수: ${selectedRows[0].음식점수}</p>
-<p><i class="fas fa-dumbbell"></i> 체육시설수: ${selectedRows[0].체육시설수}</p>
-<p><i class="fas fa-theater-masks"></i> 문화시설수: ${selectedRows[0].문화시설수}</p>
-<p><i class="fas fa-landmark"></i> 관광명소수: ${selectedRows[0].관광명소수}</p>
-<p><i class="fas fa-home"></i> 주택수: ${selectedRows[0].주택수}</p>
+                <p><i class="fas fa-map-marker-alt"></i> 위도: ${selectedRows[0].위도}</p>
+                <p><i class="fas fa-map-marker-alt"></i> 경도: ${selectedRows[0].경도}</p>
+                <p><i class="fas fa-prescription-bottle-alt"></i> 약국수: ${selectedRows[0].약국수}</p>
+                <p><i class="fas fa-hospital"></i> 병의원수: ${selectedRows[0].병의원수}</p>
+                <p><i class="fas fa-school"></i> 학교수: ${selectedRows[0].학교수}</p>
+                <p><i class="fas fa-parking"></i> 주차장수: ${selectedRows[0].주차장수}</p>
+                <p><i class="fas fa-users"></i> 주민수: ${selectedRows[0].주민수}</p>
+                <p><i class="fas fa-store"></i> 상점수: ${selectedRows[0].상점수}</p>
+                <p><i class="fas fa-tree"></i> 공원수: ${selectedRows[0].공원수}</p>
+                <p><i class="fas fa-book"></i> 도서관수: ${selectedRows[0].도서관수}</p>
+                <p><i class="fas fa-bus"></i> 버스정류장수: ${selectedRows[0].버스정류장수}</p>
+                <p><i class="fas fa-subway"></i> 지하철역수: ${selectedRows[0].지하철역수}</p>
+                <p><i class="fas fa-utensils"></i> 음식점수: ${selectedRows[0].음식점수}</p>
+                <p><i class="fas fa-dumbbell"></i> 체육시설수: ${selectedRows[0].체육시설수}</p>
+                <p><i class="fas fa-theater-masks"></i> 문화시설수: ${selectedRows[0].문화시설수}</p>
+                <p><i class="fas fa-landmark"></i> 관광명소수: ${selectedRows[0].관광명소수}</p>
+                <p><i class="fas fa-home"></i> 주택수: ${selectedRows[0].주택수}</p>
                 <p>입력일자: ${selectedRows[0].입력일자}</p>
                 <p>수정일자: ${selectedRows[0].수정일자}</p>
             </div>
@@ -187,23 +187,23 @@ function displayDetailPanels(selectedRows) {
                 <div>
                     <h3>${selectedRows[1].읍면동}</h3>
                     <p>우편번호: ${selectedRows[1].우편번호}</p>
-                    <p>위도: ${selectedRows[1].위도}</p>
-                    <p>경도: ${selectedRows[1].경도}</p>
-                    <p>약국수: ${selectedRows[1].약국수}</p>
-                    <p>병의원수: ${selectedRows[1].병의원수}</p>
-                    <p>학교수: ${selectedRows[1].학교수}</p>
-                    <p>주차장수: ${selectedRows[1].주차장수}</p>
-                    <p>주민수: ${selectedRows[1].주민수}</p>
-                    <p>상점수: ${selectedRows[1].상점수}</p>
-                    <p>공원수: ${selectedRows[1].공원수}</p>
-                    <p>도서관수: ${selectedRows[1].도서관수}</p>
-                    <p>버스정류장수: ${selectedRows[1].버스정류장수}</p>
-                    <p>지하철역수: ${selectedRows[1].지하철역수}</p>
-                    <p>음식점수: ${selectedRows[1].음식점수}</p>
-                    <p>체육시설수: ${selectedRows[1].체육시설수}</p>
-                    <p>문화시설수: ${selectedRows[1].문화시설수}</p>
-                    <p>관광명소수: ${selectedRows[1].관광명소수}</p>
-                    <p>주택수: ${selectedRows[1].주택수}</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 위도: ${selectedRows[1].위도}</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 경도: ${selectedRows[1].경도}</p>
+                    <p><i class="fas fa-prescription-bottle-alt"></i> 약국수: ${selectedRows[1].약국수}</p>
+                    <p><i class="fas fa-hospital"></i> 병의원수: ${selectedRows[1].병의원수}</p>
+                    <p><i class="fas fa-school"></i> 학교수: ${selectedRows[1].학교수}</p>
+                    <p><i class="fas fa-parking"></i> 주차장수: ${selectedRows[1].주차장수}</p>
+                    <p><i class="fas fa-users"></i> 주민수: ${selectedRows[1].주민수}</p>
+                    <p><i class="fas fa-store"></i> 상점수: ${selectedRows[1].상점수}</p>
+                    <p><i class="fas fa-tree"></i> 공원수: ${selectedRows[1].공원수}</p>
+                    <p><i class="fas fa-book"></i> 도서관수: ${selectedRows[1].도서관수}</p>
+                    <p><i class="fas fa-bus"></i> 버스정류장수: ${selectedRows[1].버스정류장수}</p>
+                    <p><i class="fas fa-subway"></i> 지하철역수: ${selectedRows[1].지하철역수}</p>
+                    <p><i class="fas fa-utensils"></i> 음식점수: ${selectedRows[1].음식점수}</p>
+                    <p><i class="fas fa-dumbbell"></i> 체육시설수: ${selectedRows[1].체육시설수}</p>
+                    <p><i class="fas fa-theater-masks"></i> 문화시설수: ${selectedRows[1].문화시설수}</p>
+                    <p><i class="fas fa-landmark"></i> 관광명소수: ${selectedRows[1].관광명소수}</p>
+                    <p><i class="fas fa-home"></i> 주택수: ${selectedRows[1].주택수}</p>
                     <p>입력일자: ${selectedRows[1].입력일자}</p>
                     <p>수정일자: ${selectedRows[1].수정일자}</p>
                 </div>
