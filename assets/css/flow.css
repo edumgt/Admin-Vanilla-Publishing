@@ -7,26 +7,33 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
 
 /* Import Handsontable CSS */
-@import url('https://cdn.jsdelivr.net/npm/handsontable/dist/handsontable.full.min.css');
+@import url('../vendor/handsontable/css/handsontable.full.min.css');
 
 /* Import ApexCharts CSS */
 @import url('https://cdn.jsdelivr.net/npm/apexcharts/dist/apexcharts.css');
 
 @import url('default.css');
 
+.ht-wrapper 
+.handsontable 
+.htRowHeaders 
+.htColumnHeaders {
+    z-index:10 !important;
+}
+
 
 .handsontable .htCore td,
 .handsontable .htCore th {
     background-color: #f9f9f9;
     border-color: #ddd;
+    z-index:10 !important;
 }
 
 .handsontable .htCore th {
     background-color: #f1f1f1;
     font-weight: bold;
+    z-index:10 !important;
 }
-
-
 
 /* Custom styles for a modern look */
 .handsontable .ht_master .htCore td,
@@ -34,10 +41,9 @@
     background-color: #ffffff;
     border: 1px solid #e0e0e0;
     color: #333;
-
     font-size: 14px;
     text-align: center;
-
+    z-index:10 !important;
 }
 
 .handsontable .ht_master .htCore th {
@@ -45,6 +51,7 @@
     color: white;
     font-weight: bold;
     width: 100px;
+    z-index:10 !important
 }
 
 .handsontable .ht_master .htCore td:hover {
