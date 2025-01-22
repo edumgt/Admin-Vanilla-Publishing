@@ -104,7 +104,8 @@ const iconMapping = {
     '입출고관리': 'fa-warehouse',
     '권한관리': 'fa-user-shield',
     '문서관리': 'fa-file-alt',
-    'WMS': 'fa-cubes'
+    'WMS': 'fa-cubes',
+    '서베이': 'fa-cubes'
 };
 
 
@@ -144,9 +145,7 @@ const menuConfigurations = {
     'config.html': [
         { href: 'config.html', text: '시스템로그' },
         { href: 'network.html', text: '컨설팅지정' },
-        { href: '#', text: 'VM현황' },
-        { href: '#', text: 'DB관리' },
-        { href: '#', text: '방화벽' }
+        { href: 'survey.html', text: '서베이' }
     ],
 
     'document.html': [
@@ -192,9 +191,7 @@ const menuConfigurations = {
     'network.html': [
         { href: 'config.html', text: '시스템로그' },
         { href: 'network.html', text: '컨설팅지정' },
-        { href: '#', text: 'VM현황' },
-        { href: '#', text: 'DB관리' },
-        { href: '#', text: '방화벽' }
+        { href: 'survey.html', text: '서베이' }
     ],
 
     'orgni.html': [
@@ -219,6 +216,12 @@ const menuConfigurations = {
         { href: 'chain.html', text: '체인운영' },
         { href: '#', text: '판매통계' },
         { href: '#', text: '실적' }
+    ],
+
+    'survey.html': [
+        { href: 'config.html', text: '시스템로그' },
+        { href: 'network.html', text: '컨설팅지정' },
+        { href: 'survey.html', text: '서베이' }
     ],
 
     'system.html': [
