@@ -28,11 +28,11 @@ function setupGrid(teams) {
         name: "",
     };
 
-    // ✅ summary 값을 직접 계산할 배열
+    
     const totalSummary = Array(12).fill(0);
 
     teams.forEach(team => {
-        let teamTotals = Array(12).fill(0); // 팀별 합계 저장
+        let teamTotals = Array(12).fill(0); 
 
         team.members.forEach(member => {
             const memberData = {
@@ -43,13 +43,13 @@ function setupGrid(teams) {
             member.sales.forEach((monthSales, idx) => {
                 memberData[`month${idx + 1}`] = monthSales;
                 teamTotals[idx] += monthSales;
-                totalSummary[idx] += monthSales; // ✅ 전체 총합 계산
+                totalSummary[idx] += monthSales; 
             });
 
             rowData.push(memberData);
         });
 
-        // ✅ "팀별 합계" 행 추가 (summary에 포함되지 않음)
+        
         const teamSummaryRow = {
             team: `${team.name} 합계`,
             name: "합계",
@@ -58,7 +58,7 @@ function setupGrid(teams) {
         rowData.push(teamSummaryRow);
     });
 
-    // ✅ "총 합계" 행을 summaryRow로 생성 (별도 추가)
+
     Object.assign(summaryRow, Object.fromEntries(totalSummary.map((total, idx) => [`month${idx + 1}`, total])));
 
     const grid = new tui.Grid({
@@ -66,17 +66,17 @@ function setupGrid(teams) {
         data: rowData,
         scrollX: true,
         scrollY: true,
-        // bodyHeight: 'fitToParent', 
+        
         columnOptions: {
-            resizable: true // ✅ 셀 너비 조정 가능하도록 설정
+            resizable: true 
         },
         summary: {
-            height: 50, // ✅ summary 행 크기 조정
+            height: 50, 
             position: "bottom",
             columnContent: {
                 team: {
                     template() {
-                        return "<strong>총 합계</strong>"; // ✅ Summary 행에 타이틀 추가
+                        return "<strong>총 합계</strong>"; 
                     }
                 },
                 month1: { sum: true, template: summaryFormatter },
