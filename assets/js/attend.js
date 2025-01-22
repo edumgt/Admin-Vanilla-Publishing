@@ -161,7 +161,7 @@ function showAttendance() {
     const isSaturday = date.getDay() === 6; 
 
     const dateCell = document.createElement('th');
-    dateCell.className = `px-3 py-2 text-xs uppercase tracking-wider bg-gray-500 ${dateStr === today ? 'today-bg today-text' : isSaturday ? 'text-black' : isWeekend ? 'text-red-300' : ''}`;
+    dateCell.className = `px-3 py-2 text-xs uppercase tracking-wider bg-gray-500 ${dateStr === today ? 'bg-blue-500' : isSaturday ? 'text-black' : isWeekend ? 'text-red-300' : ''}`;
     dateCell.textContent = dateStr;
 
     if (dateStr === today) {
@@ -222,9 +222,9 @@ function showAttendance() {
 function makeEditable(cell, employeeId, dateStr) {
   cell.innerHTML = `
         <div>
-          Check-In:&nbsp;&nbsp;&nbsp;<input type="time" id="checkInInput" class="border rounded px-2 py-1"><br>
-          Check-Out:<input type="time" id="checkOutInput" class="border rounded px-2 py-1">
-          <button class="text-white px-2 py-1 rounded bg-gray-800 hover:bg-gray-700" onclick="saveAttendance('${employeeId}', '${dateStr}')">Save</button>
+          Check-In:&nbsp;&nbsp;&nbsp;<input type="time" id="checkInInput" class="border rounded px-3 py-1"><br>
+          Check-Out:<input type="time" id="checkOutInput" class="border rounded px-3 py-1">
+          <button class="text-white px-3 py-1 rounded bg-gray-800 hover:bg-gray-700" onclick="saveAttendance('${employeeId}', '${dateStr}')">Save</button>
         </div>
       `;
 }

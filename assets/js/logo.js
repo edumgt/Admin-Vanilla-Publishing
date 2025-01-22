@@ -309,8 +309,8 @@ createModal(
     '상세정보',
     '<form id="modalForm" class="space-y-4"></form>',
     [
-        { label: 'Save', class: 'bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600', onClick: 'saveModal()' },
-        { label: 'Close', class: 'bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700', onClick: "document.getElementById('modal').classList.add('hidden');" }
+        { label: 'Save', class: 'bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600', onClick: 'saveModal()' },
+        { label: 'Close', class: 'bg-gray-800 text-white px-3 py-1 rounded hover:bg-gray-700', onClick: "document.getElementById('modal').classList.add('hidden');" }
     ]
 );
 
@@ -319,8 +319,8 @@ createModal(
     '로그아웃 하시겠습니까?',
     '',
     [
-        { label: 'Logout', class: 'bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600', onClick: "window.location.href='index.html';" },
-        { label: 'Cancel', class: 'bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700', onClick: "document.getElementById('logoutModal').classList.add('hidden');" }
+        { label: 'Logout', class: 'bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600', onClick: "window.location.href='index.html';" },
+        { label: 'Cancel', class: 'bg-gray-800 text-white px-3 py-1 rounded hover:bg-gray-700', onClick: "document.getElementById('logoutModal').classList.add('hidden');" }
     ]
 );
 
@@ -329,7 +329,7 @@ createModal(
     '알림',
     '<p>데모버젼에서는 지원하지 않습니다.</p>',
     [
-        { label: '닫기', class: 'bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700', onClick: "document.getElementById('demoModal').classList.add('hidden');" }
+        { label: '닫기', class: 'bg-gray-800 text-white px-3 py-1 rounded hover:bg-gray-700', onClick: "document.getElementById('demoModal').classList.add('hidden');" }
     ]
 );
 

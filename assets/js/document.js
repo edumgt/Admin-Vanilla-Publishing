@@ -33,8 +33,8 @@ async function loadDocumentList() {
                     <span class="flex-1">${doc.uploadDate}</span>
                     <span class="flex-1">${doc.uploader}</span>
                     <span class="flex-1 flex gap-2">
-                        <button class="px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded ${doc.permissions === 'none' ? 'opacity-50 cursor-not-allowed' : ''}" onclick="editDocument(${index})" ${doc.permissions === 'none' ? 'disabled' : ''}>Edit</button>
-                        <button class="px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded ${doc.permissions === 'none' ? 'opacity-50 cursor-not-allowed' : ''}" onclick="deleteDocument(${index})" ${doc.permissions === 'none' ? 'disabled' : ''}>Delete</button>
+                        <button class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded ${doc.permissions === 'none' ? 'opacity-50 cursor-not-allowed' : ''}" onclick="editDocument(${index})" ${doc.permissions === 'none' ? 'disabled' : ''}>Edit</button>
+                        <button class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded ${doc.permissions === 'none' ? 'opacity-50 cursor-not-allowed' : ''}" onclick="deleteDocument(${index})" ${doc.permissions === 'none' ? 'disabled' : ''}>Delete</button>
                     </span>
                 `;
         item.addEventListener('click', () => previewDocument(doc));
@@ -48,7 +48,7 @@ function previewDocument(doc) {
     if (doc.permissions === 'none') {
         showToast('You do not have permission to view this document.');
         viewer.innerHTML = `
-                    <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mt-4" onclick="requestPermission()">Request Permission</button>
+                    <button class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 mt-4" onclick="requestPermission()">Request Permission</button>
                 `;
         return;
     }

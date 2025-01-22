@@ -1,11 +1,3 @@
-.scrollbar-yellow::-webkit-scrollbar {
-  width: 12px;
-}
-
-.scrollbar-yellow::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
 .sortable:hover {
   cursor: pointer;
 }
@@ -16,12 +8,4 @@
 
 .editable:hover {
   background-color: #f1f1f1;
-}
-
-.today-bg {
-  background-color: #e0f7ff;
-}
-
-.today-text {
-  color: #ff6600;
 }

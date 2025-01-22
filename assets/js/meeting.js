@@ -62,14 +62,14 @@ function generateTimeslots(room, dateFilter = null, currentTime) {
             timeslots += `
                     <div class="flex justify-between py-1 border-b border-gray-200">
                         <span>${startTime} - ${endTime} (${booking.title})</span>
-                        <button onclick="${isPastMeeting ? `openNotesModal(${room.bookings.indexOf(booking)})` : `openModal('${room.name}', 'Update', ${room.bookings.indexOf(booking)})`}" class="${buttonClass} text-white px-4 py-2 rounded-md">${buttonLabel}</button>
+                        <button onclick="${isPastMeeting ? `openNotesModal(${room.bookings.indexOf(booking)})` : `openModal('${room.name}', 'Update', ${room.bookings.indexOf(booking)})`}" class="${buttonClass} text-white px-3 py-1 rounded-md">${buttonLabel}</button>
                     </div>
                 `;
         } else {
             timeslots += `
                     <div class="flex justify-between py-1 border-b border-gray-200">
                         <span>${startTime} - ${endTime}</span>
-                        <button onclick="openModal('${room.name}', 'New', '${startTime}')" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Add</button>
+                        <button onclick="openModal('${room.name}', 'New', '${startTime}')" class="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600">Add</button>
                     </div>
                 `;
             hour++;
