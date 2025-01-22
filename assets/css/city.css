@@ -1,7 +1,3 @@
-#gridContainer {
-   
-    width: 100%;
-}
 #panelContainer {
     display: flex;
     justify-content: space-between;
