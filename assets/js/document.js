@@ -48,7 +48,7 @@ function previewDocument(doc) {
     if (doc.permissions === 'none') {
         showToast('You do not have permission to view this document.');
         viewer.innerHTML = `
-                    <button class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 mt-4" onclick="requestPermission()">Request Permission</button>
+                    <button class="px-3 py-1 bg-blue-500 text-white rounded  mt-4" onclick="requestPermission()">Request Permission</button>
                 `;
         return;
     }

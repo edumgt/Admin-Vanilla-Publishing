@@ -309,7 +309,7 @@ createModal(
     '상세정보',
     '<form id="modalForm" class="space-y-4"></form>',
     [
-        { label: 'Save', class: 'bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600', onClick: 'saveModal()' },
+        { label: 'Save', class: 'bg-blue-500 text-white px-3 py-1 rounded ', onClick: 'saveModal()' },
         { label: 'Close', class: 'bg-gray-800 text-white px-3 py-1 rounded hover:bg-gray-700', onClick: "document.getElementById('modal').classList.add('hidden');" }
     ]
 );

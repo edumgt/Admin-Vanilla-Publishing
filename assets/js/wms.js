@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             data: data,
             pageOptions: {
                 useClient: true,
-                perPage: 15  // ✅ Pagination: 15 rows per page
+                perPage: 15  
             },
             columns: [
                 { header: 'ID', name: 'id', width: 150, align: 'center', editor: false },
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         toolbar.className = 'flex justify-end gap-2 mt-4';
 
         const addButton = document.createElement('button');
-        addButton.className = 'bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600';
+        addButton.className = 'bg-blue-500 text-white px-3 py-1 rounded ';
         addButton.innerText = '추가';
         addButton.addEventListener('click', () => {
             const newItem = { id: crypto.randomUUID(), date: '', title: '', quantity: 0 };
@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         const deleteButton = document.createElement('button');
-        deleteButton.className = 'bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600';
+        deleteButton.className = 'bg-gray-500 text-white px-3 py-1 rounded';
         deleteButton.innerText = '삭제';
         deleteButton.addEventListener('click', () => {
             const checkedRows = grid.getCheckedRows();

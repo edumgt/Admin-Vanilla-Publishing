@@ -199,7 +199,7 @@ const calendar = (() => {
         taskTextarea.rows = 5;
 
         const saveBtn = document.createElement('button');
-        saveBtn.className = 'bg-blue-500 text-white py-2 px-4 rounded w-full';
+        saveBtn.className = 'bg-blue-500 text-white px-3 py-1 rounded w-full';
         saveBtn.innerText = 'Save Task';
         saveBtn.onclick = () => {
             const newTask = taskTextarea.value.trim();
@@ -262,7 +262,7 @@ const calendar = (() => {
 
     const showToast = (message) => {
         const toast = document.createElement('div');
-        toast.className = 'fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-sm py-2 px-4 rounded shadow-lg';
+        toast.className = 'fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-sm px-3 py-1 rounded shadow-lg';
         toast.innerText = message;
 
         document.body.appendChild(toast);

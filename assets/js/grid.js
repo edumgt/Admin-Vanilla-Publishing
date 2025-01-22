@@ -71,7 +71,7 @@ function saveData(data) {
 class BadgeRenderer {
     constructor(props) {
         const el = document.createElement('span');
-        el.className = 'px-3 py-1 text-sm  text-white bg-blue-500 rounded cursor-pointer hover:bg-blue-600';
+        el.className = 'px-3 py-1 text-sm  text-white bg-blue-500 rounded cursor-pointer ';
         el.textContent = 'View';
         el.style.display = 'inline-block';
         el.style.textAlign = 'center';
