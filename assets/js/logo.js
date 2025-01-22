@@ -350,11 +350,11 @@ function renderFloatingNav(containerId) {
 
     const floatingNav = document.createElement('div');
     floatingNav.id = 'floatingNav';
-    floatingNav.className = 'fixed bottom-4 right-4 bg-gray-800 text-white rounded-lg shadow-lg p-4 z-50 hidden space-y-4';
+    floatingNav.className = 'fixed bottom-4 right-4 bg-gray-800 text-white rounded-lg p-2 z-50 hidden space-y-4';
     floatingNav.innerHTML = `
         <div class="flex justify-between items-center">
-            <h3 class="text-white font-semibold">Language</h3>
-            <button id="closeFloatingNav" class="text-white text-lg">
+            <h3 class="text-white">Language</h3>
+            <button id="closeFloatingNav" class="text-white">
                 <i class="fas fa-times"></i>
             </button>
         </div>
@@ -367,19 +367,16 @@ function renderFloatingNav(containerId) {
 
     container.appendChild(floatingNav);
 
-    // Add event listener to close button
     const closeButton = floatingNav.querySelector('#closeFloatingNav');
     closeButton.addEventListener('click', () => {
         floatingNav.classList.add('hidden');
     });
 
-    // Add event listeners to language switcher images
     const languageSwitcher = floatingNav.querySelector('#languageSwitcher');
     languageSwitcher.addEventListener('click', (event) => {
         if (event.target.tagName === 'IMG') {
             const selectedLang = event.target.getAttribute('data-lang');
             console.log(`Selected language: ${selectedLang}`);
-            // Add your language switching logic here
         }
     });
 }

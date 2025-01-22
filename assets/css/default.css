@@ -122,14 +122,11 @@ body {
   padding: var(--gnb-item-padding);
   display: flex;
   flex-direction: column;
-  z-index: 49;
 }
 
 /* GNB Item */
 .gnb-item {
   display: flex;
-  /* align-items: left;
-  justify-content: left; */
   font-size: var(--gnb-item-font-size);
   font-weight: var(--gnb-item-font-weight);
   text-transform: uppercase;
