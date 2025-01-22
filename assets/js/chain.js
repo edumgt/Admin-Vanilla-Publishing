@@ -96,11 +96,11 @@ const gridOptions = {
         sortable: true,
         filter: true,
         resizable: true,
-        flex: 1, // 균등하게 열 너비 분배
-        editable: true, // 모든 셀을 편집 가능하게 설정
+        flex: 1, 
+        editable: true, 
     },
-    pagination: true, // 페이징 활성화
-    paginationPageSize: 10, // 페이지 크기 설정
+    pagination: true, 
+    paginationPageSize: 10, 
     paginationPageSizeSelector: [10, 20, 50, 100],
     animateRows: true,
     getDataPath: function(data) {
@@ -120,14 +120,14 @@ const gridOptions = {
         groupContracted: '<i class="fas fa-plus-square"></i>'
     },
     onCellValueChanged: function(event) {
-        // 셀이 수정될 때마다 로컬 스토리지에 데이터 저장
+        
         const updatedData = [];
         event.api.forEachNode(function(node) {
             updatedData.push(node.data);
         });
         saveDataToLocalStorage(updatedData);
 
-        // 수정 이력을 로컬 스토리지에 저장
+        
         const history = {
             timestamp: new Date().toISOString(),
             originalValue: event.oldValue,
@@ -142,26 +142,21 @@ const gridOptions = {
             params.api.sizeColumnsToFit();
         });
     },
-    rowHeight: 40, // 행 높이 설정
+    rowHeight: 40, 
     headerHeight: 40,
     onRowClicked: onRowClicked,
 };
 
-// AG Grid를 HTML에 렌더링
 document.addEventListener('DOMContentLoaded', function () {
     const eGridDiv = document.querySelector('#myGrid');
     new agGrid.createGrid(eGridDiv, gridOptions);
     saveDataToLocalStorage(gridOptions.rowData);
 
-    // 수정 이력 모달 닫기 버튼 클릭 이벤트
+    
     document.getElementById('closeHistoryBtn').addEventListener('click', function() {
         document.getElementById('historyModal').style.display = 'none';
     });
 
-    // Split(['#lineChart', '#pieChart'], {
-    //     sizes: [50, 50],
-    //     minSize: 200
-    // });
 });
 
 const lineChartOptions = {

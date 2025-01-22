@@ -35,9 +35,14 @@ body {
 
 
 
-.content {
+
+/* main content */
+#content {
   margin-left: 20px;
+  padding: 75px 40px 10px 70px;
+  box-sizing: border-box;
 }
+
 
 #floatingNav button {
   transition: transform 0.2s ease;
@@ -47,11 +52,7 @@ body {
   transform: scale(1.05);
 }
 
-#content {
-  padding: 75px 40px 10px 70px;
-  box-sizing: border-box;
-}
-
+/* title */
 .breadcrumb {
   font-size: 1.2rem;
   font-weight: bold;
@@ -197,6 +198,7 @@ body {
   border-radius: 50%;
   padding: 0.4rem;
   transition: background 0.3s ease;
+  cursor: pointer;
 }
 
 #memberIcon:hover {
@@ -662,4 +664,16 @@ textarea {
   -webkit-appearance: none;
   -moz-appearance: none;
 
+}
+
+.sortable:hover {
+  cursor: pointer;
+}
+
+.editable {
+  cursor: pointer;
+}
+
+.editable:hover {
+  background-color: #f1f1f1;
 }
