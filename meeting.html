@@ -27,11 +27,10 @@
             회의실관리
         </nav>
 
-        <div class="mb-2 d-flex align-items-center">
-            <input type="date" id="search-date" class="block  border border-gray-300 rounded-md p-2">
-            &nbsp;
+        <div class="mb-2 d-flex align-items-center space-x-2">
+            <input type="date" id="search-date">
             <button onclick="filterByDate()"
-                class="bg-blue-500 text-white px-4 py-1 rounded-md ">Search</button>
+                class="bg-blue-500 text-white px-3 py-1 rounded">Search</button>
         </div>
 
         <div id="rooms-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
@@ -45,7 +44,7 @@
                     <input type="hidden" id="time-slot" name="timeSlot">
                     <div>
                         <label for="date" class="block text-sm  text-gray-700">Date:</label>
-                        <input type="date" id="date" name="date" class="mt-1 block w-full" required>
+                        <input type="date" id="date" name="date" class="mt-1 w-full" required>
                     </div>
                     <div>
                         <label for="startTime" class="block text-sm  text-gray-700">Start Time:</label>
@@ -75,9 +74,9 @@
                     </div>
                     <div class="flex justify-end space-x-4">
                         <button type="submit"
-                        class="bg-blue-500 text-white py-1 px-2 rounded">Save</button>
+                        class="bg-blue-500 text-white px-3 py-1 rounded">Save</button>
                         <button type="button" onclick="closeModal()"
-                        class="bg-gray-500 text-white py-1 px-2 rounded">Cancel</button>
+                        class="bg-gray-500 text-white px-3 py-1 rounded">Cancel</button>
                     </div>
                 </form>
             </div>
