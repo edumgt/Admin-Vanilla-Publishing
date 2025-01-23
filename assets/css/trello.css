@@ -43,39 +43,8 @@
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.3s ease-in-out;
 }
 
-#taskForm input[type="text"]:focus,
-#taskForm textarea:focus,
-#taskForm input[type="date"]:focus {
-
-    border-color: #0058a3;
-}
-
-
-
-#taskForm button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #0058a3;
-    color: #ffcc00;
-    border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-}
-
-#taskForm button:hover {
-    background-color: #004080;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
 
 
 #taskForm {

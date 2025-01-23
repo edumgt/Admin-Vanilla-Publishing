@@ -4,7 +4,7 @@
 <head>
     <link href="assets/css/trello.css" rel="stylesheet">
     <link href="assets/css/lectures.css" rel="stylesheet">
-    
+
 </head>
 
 <body>
@@ -25,7 +25,7 @@
     <div id="toast-container"></div>
 
 
-    
+
     <div id="offCanvasContainer"></div>
 
     <div id="content">
@@ -35,8 +35,8 @@
 
         <div class="calendar bg-white shadow-md rounded-lg w-full h-full flex flex-col">
             <div class="header text-white p-4 flex justify-between items-center">
-                <button id="prevMonth"
-                    class="bg-blue-500  text-white font-bold px-3 py-1 rounded">Previous Month</button>
+                <button id="prevMonth" class="bg-blue-500  text-white font-bold px-3 py-1 rounded">Previous
+                    Month</button>
                 <h2 id="monthYear" class="text-xl font-bold text-gray-600"></h2>
                 <button id="nextMonth" class="bg-blue-500  font-bold px-3 py-1 rounded">Next
                     Month</button>
@@ -85,29 +85,26 @@
                             <input type="text" class="student-major block w-full mb-2 p-2 border rounded">
                         </div>
                     </div>
-                    <button type="button" id="addStudentBtn"
-                        class="bg-green-500 hover:bg-green-700 text-white font-bold px-3 py-1 rounded mb-4">+ Add
+                    <button type="button" id="addStudentBtn" class="bg-blue-500 text-white px-3 py-1 rounded">+ Add
                         Another Student</button>
 
                     <div class="flex justify-end space-x-4">
-                        <button type="submit"
-                        class="bg-blue-500 text-white py-1 px-2 rounded">Add
+                        <button type="submit" class="bg-blue-500 text-white px-3 py-1  rounded">Add
                             Lecture</button>
                         <button type="button" id="closeModal"
-                        class="bg-gray-500 text-white py-1 px-2 rounded">Close</button>
+                            class="bg-gray-500 text-white px-3 py-1  rounded">Close</button>
                     </div>
                 </form>
             </div>
         </div>
 
         <!-- Student List Modal -->
-        <div id="modalSt" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
+        <div id="modalSt" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden z-50">
             <div class="bg-white p-8 rounded-lg shadow-sm w-1/2 max-h-full overflow-y-auto">
                 <h3 class="text-xl font-bold mb-4">Student List</h3>
                 <ul id="studentList" class="list-disc pl-5"></ul>
                 <div class="flex justify-end mt-4">
-                    <button id="closeModal2"
-                        class="bg-red-500 hover:bg-red-700 text-white font-bold px-3 py-1 rounded">Close</button>
+                    <button id="closeModal2" class="bg-gray-500 text-white px-3 py-1 rounded">Close</button>
                 </div>
             </div>
         </div>
@@ -118,7 +115,7 @@
 
 
     <div id="appContainer"></div>
-    
+
 
     <script type="text/javascript" src="assets/js/logo.js"></script>
     <script type="text/javascript" src="assets/js/workframe.js"></script>

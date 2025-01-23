@@ -677,6 +677,12 @@ textarea {
   -moz-appearance: none;
 }
 
+input[type="text"]:focus,
+textarea:focus,
+input[type="date"]:focus {
+    border-color: #ffcc00;
+}
+
 .sortable:hover {
   cursor: pointer;
 }
