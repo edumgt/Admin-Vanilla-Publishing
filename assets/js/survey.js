@@ -29,6 +29,7 @@ function fetchData() {
         .then(data => {
             localStorage.setItem('questions', JSON.stringify(data));
             displayQuestions(data);
+            displayQuestionsGrid(data);
         })
         .catch(error => console.error('Error fetching questions:', error));
 
@@ -53,6 +54,25 @@ function displayQuestions(questions) {
     const questionsList = document.getElementById('questionsList');
     questionsList.innerHTML = '<p class="mb-2">문항 목록</p>';
     questions.forEach(question => createQuestionBox(question, questionsList));
+}
+
+// 문항 목록 표시 함수
+function displayQuestionsGrid(questions) {
+    const questionsContainer = document.getElementById('questionsContainer');
+    questionsContainer.innerHTML = '<div id="questionsGrid"></div>';
+    questions.forEach(question => createQuestionBox(question, questionsList));
+
+    // const grid = new tui.Grid({
+    //     el: document.getElementById('questionsGrid'),
+    //     data: questions,
+    //     columns: [
+    //         { header: 'ID', name: 'id', width: 50 },
+    //         { header: '문항', name: 'text', width: 300 },
+    //         { header: '옵션', name: 'options', width: 400, formatter: 'listItemText' }
+    //     ],
+    //     rowHeaders: ['rowNum'],
+    //     bodyHeight: 400
+    // });
 }
 
 // 문항 추가 함수
