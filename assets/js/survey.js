@@ -60,19 +60,9 @@ function displayQuestions(questions) {
 function displayQuestionsGrid(questions) {
     const questionsContainer = document.getElementById('questionsContainer');
     questionsContainer.innerHTML = '<div id="questionsGrid"></div>';
-    questions.forEach(question => createQuestionBox(question, questionsList));
+    questions.forEach(question => createQuestionBox(question, questionsContainer));
 
-    // const grid = new tui.Grid({
-    //     el: document.getElementById('questionsGrid'),
-    //     data: questions,
-    //     columns: [
-    //         { header: 'ID', name: 'id', width: 50 },
-    //         { header: '문항', name: 'text', width: 300 },
-    //         { header: '옵션', name: 'options', width: 400, formatter: 'listItemText' }
-    //     ],
-    //     rowHeaders: ['rowNum'],
-    //     bodyHeight: 400
-    // });
+
 }
 
 // 문항 추가 함수
@@ -329,19 +319,19 @@ function displayReport(report) {
             labels: Object.keys(questionReport),
             datasets: [{
                 data: Object.values(questionReport),
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)'
-                ],
                 borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)'
+                    'rgba(75, 192, 192, 0.2)',  // Teal
+                    'rgba(54, 162, 235, 0.2)',  // Blue
+                    'rgba(255, 206, 86, 0.2)',  // Yellow
+                    'rgba(153, 102, 255, 0.2)', // Purple
+                    'rgba(255, 159, 64, 0.2)'   // Orange
+                ],
+                backgroundColor: [
+                    'rgba(75, 192, 192, 1)',    // Teal
+                    'rgba(54, 162, 235, 1)',    // Blue
+                    'rgba(255, 206, 86, 1)',    // Yellow
+                    'rgba(153, 102, 255, 1)',   // Purple
+                    'rgba(255, 159, 64, 1)'     // Orange
                 ],
                 borderWidth: 1
             }]
