@@ -1,6 +1,7 @@
 @import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css');
 @import url('../vendor/boxicons-2.1.4/css/boxicons.min.css');
-@import url('https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css');
+@import url('../vendor/tailwind/css/tailwind.min.css');
+/* @import url('https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css'); */
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
 @import url('https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css');
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
@@ -8,8 +9,8 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  font-weight: 500;
+  /* box-sizing: border-box;
+  font-weight: 500; */
 }
 
 /* CSS Variables */
@@ -129,11 +130,11 @@ body {
   display: flex;
   flex-direction: column;
 
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  z-index:49;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 49;
 
 }
 
@@ -517,13 +518,13 @@ input[type="checkbox"] {
   background-color: var(--primary-color) !important;
 }
 
-.shadow-lg {
+/* .shadow-lg {
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .shadow-md {
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
-}
+} */
 
 .dragging {
   opacity: 0.5;
@@ -665,7 +666,6 @@ input[type="date"] {
 }
 
 textarea {
-  
   padding: 3px;
   font-size: 1rem;
   border: 1px solid var(--primary-color) !important;
@@ -675,7 +675,6 @@ textarea {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-
 }
 
 .sortable:hover {

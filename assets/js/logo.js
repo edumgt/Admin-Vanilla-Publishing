@@ -293,7 +293,7 @@ function createModal(modalId, title, content, buttons) {
     modal.className = 'hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50';
 
     const modalContent = `
-        <div class="bg-white rounded-lg shadow-lg p-6 w-1/3 relative">
+        <div class="bg-white rounded-lg shadow-sm p-6 w-1/3 relative">
             <button class="close" onclick="document.getElementById('${modalId}').classList.add('hidden');">&times;</button>
             <h2 class="text-lg font-semibold mb-4">${title}</h2>
             ${content}

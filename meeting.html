@@ -9,7 +9,7 @@
 
 <body>
     <div class="gnb-menu">
-        <ul class="flex justify-between items-center">
+        <ul class="flex justify-between">
             <div id="logo"></div>
             <div id="tabs-container"></div>
 
@@ -38,7 +38,7 @@
 
 
         <div id="booking-modal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden z-50">
-            <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+            <div class="bg-white p-6 rounded-lg shadow-sm w-full max-w-md">
                 <h2 id="modal-title" class="text-2xl font-bold mb-4"></h2>
                 <form id="booking-form" class="space-y-4">
                     <input type="hidden" id="room-name" name="roomName">
@@ -86,7 +86,7 @@
         <!-- Modal for Meeting Notes -->
         <div id="meeting-notes-modal"
             class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden">
-            <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl h-3/4">
+            <div class="bg-white p-6 rounded-lg shadow-sm w-full max-w-4xl h-3/4">
                 <h2 id="notes-modal-title" class="text-2xl font-bold mb-4">Meeting Notes</h2>
                 <div class="flex w-full h-full">
                     <textarea id="meeting-notes"
@@ -105,7 +105,7 @@
 
         <!-- Warning Modal -->
         <div id="warning-modal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden">
-            <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+            <div class="bg-white p-6 rounded-lg shadow-sm w-full max-w-md">
                 <h2 class="text-2xl font-bold mb-4">Warning</h2>
                 <p>A meeting is already scheduled for this time.</p>
                 <div class="flex justify-end mt-4">
