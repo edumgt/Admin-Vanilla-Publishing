@@ -224,7 +224,7 @@ function makeEditable(cell, employeeId, dateStr) {
         <div>
           Check-In:&nbsp;&nbsp;&nbsp;<input type="time" id="checkInInput" class="border rounded px-3 py-1"><br>
           Check-Out:<input type="time" id="checkOutInput" class="border rounded px-3 py-1">
-          <button class="text-white px-3 py-1 rounded bg-gray-800 hover:bg-gray-700" onclick="saveAttendance('${employeeId}', '${dateStr}')">Save</button>
+          <button class="text-white px-3 py-1 rounded bg-gray-800 hover:bg-gray-700" onclick="saveAttendance('${employeeId}', '${dateStr}')">저장</button>
         </div>
       `;
 }

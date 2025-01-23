@@ -172,7 +172,7 @@ function manageReservation(floor, room) {
             <input type="time" id="departureTime" value="00:00" />
             <label>Cost:</label>
             <input type="number" id="cost" value="" />
-            <button id="saveReservation">Save</button>
+            <button id="saveReservation">저장</button>
             <button id="cancelReservation">Cancel</button>
         </div>
     `;

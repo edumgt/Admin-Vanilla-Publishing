@@ -348,7 +348,6 @@ document.getElementById('searchByDate').addEventListener('click', function () {
 
     grid.resetData(filteredData);
 
-    // Disable the Save button
     document.getElementById('saverow').disabled = true;
     document.getElementById('saverow').classList.add('bg-gray-400', 'cursor-not-allowed');
     document.getElementById('saverow').classList.remove('bg-gray-800', 'hover:bg-gray-700');
