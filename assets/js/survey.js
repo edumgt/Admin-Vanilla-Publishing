@@ -59,7 +59,7 @@ function displayQuestions(questions) {
 function addQuestion() {
     const questionInput = document.getElementById('questionInput');
     const questionText = questionInput.value.trim();
-    
+
     if (questionText === '') {
         showToast("문항을 입력하세요!");
         return;
@@ -336,7 +336,7 @@ function displayReport(report) {
                 },
                 tooltip: {
                     callbacks: {
-                        label: function(tooltipItem) {
+                        label: function (tooltipItem) {
                             return tooltipItem.label + ': ' + tooltipItem.raw;
                         }
                     }
@@ -361,3 +361,72 @@ const surveyContainer = document.getElementById('surveyContainer');
 surveyContainer.addEventListener('dragover', handleDragOver);
 surveyContainer.addEventListener('dragleave', handleDragLeave);
 surveyContainer.addEventListener('drop', handleDrop);
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementsByClassName("tablinks")[0].click();
+    fetchData();
+
+    // 모바일 보기 버튼 클릭 이벤트 추가
+    document.getElementById('mobileViewButton').addEventListener('click', () => {
+
+        startMobileSurvey();
+    });
+
+
+});
+
+// 모바일 설문 시작 함수
+function startMobileSurvey() {
+
+
+    const surveyForm = document.getElementById('surveyForm');
+    const questions = Array.from(surveyForm.getElementsByClassName('question-box'));
+
+    let currentQuestionIndex = 0;
+    const responses = {};
+
+    function showQuestion(index) {
+        const mobileSurveyContentInner = document.getElementById('mobileSurveyContentInner');
+        console.log(mobileSurveyContentInner);
+        mobileSurveyContentInner.innerHTML = '';
+        if (questions[index]) {
+            const questionClone = questions[index].cloneNode(true);
+            const nextButton = document.createElement('button');
+            nextButton.textContent = '다음';
+            nextButton.className = 'bg-blue-500 text-white p-2 rounded mt-2 w-full';
+            nextButton.addEventListener('click', () => {
+                const selectedOption = questionClone.querySelector('input[type="radio"]:checked');
+                if (selectedOption) {
+                    responses[`question-${questions[index].dataset.id}`] = selectedOption.value;
+                    nextQuestion();
+                } else {
+                    alert('답안을 선택하세요.');
+                }
+            });
+            questionClone.appendChild(nextButton);
+            mobileSurveyContentInner.appendChild(questionClone);
+        }
+    }
+
+    function nextQuestion() {
+        if (currentQuestionIndex < questions.length - 1) {
+            currentQuestionIndex++;
+            showQuestion(currentQuestionIndex);
+        } else {
+            showToast('모든 문항 답변을 완료했습니다.');
+            document.getElementById('mobileSurveyModal').classList.add('hidden');
+            saveResponses();
+        }
+    }
+
+    function saveResponses() {
+        const storedResponses = JSON.parse(localStorage.getItem('responses')) || [];
+        storedResponses.push(responses);
+        localStorage.setItem('responses', JSON.stringify(storedResponses));
+        showToast('설문에 답변하였습니다.');
+        generateReport(storedResponses);
+    }
+
+    showQuestion(currentQuestionIndex);
+    document.getElementById('mobileSurveyModal').classList.remove('hidden');
+}
