@@ -1,22 +1,14 @@
 @import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css');
 @import url('../vendor/boxicons-2.1.4/css/boxicons.min.css');
 @import url('../vendor/tailwind/css/tailwind.min.css');
-/* @import url('https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css'); */
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
 @import url('https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css');
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
 
-* {
-  margin: 0;
-  padding: 0;
-  /* box-sizing: border-box;
-  font-weight: 500; */
-}
-
 /* CSS Variables */
 :root {
   --text-color: #ffffff;
-  --border-color: #3b3b3f;
+  --border-color: #8a8a8a;
   --bg-light: #e8eaee;
   --bg-dark: #2d3748;
   --hover-bg: #4a5568;
@@ -66,7 +58,7 @@ body {
 
 /* OffCanvas - LNB */
 .menu-text {
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 600;
 }
 
@@ -353,11 +345,10 @@ body {
   right: 90px;
   display: none;
   overflow: hidden;
-  color: #313029;
+  color: #333;
   background-color: white;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s, box-shadow 0.3s;
-
   z-index: 50;
   width: 200px;
 }
@@ -486,7 +477,7 @@ input[type="checkbox"] {
   height: 90%;
   background-color: white;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
   padding: 1rem;
   display: flex;
   flex-direction: column;

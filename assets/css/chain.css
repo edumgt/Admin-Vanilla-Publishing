@@ -17,7 +17,7 @@
 .history-button {
     background-color: #0058a3;
     color: #ffcc00;
-    border: none;
+    /* border: none; */
     padding: 0px 5px 35px 5px;
     cursor: pointer;
     font-size: 0.8rem;
@@ -38,9 +38,9 @@
     transform: translate(-50%, -20%);
     background: white;
     padding: 1rem;
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
     z-index: 50;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
 }
 
 #historyModal pre {
