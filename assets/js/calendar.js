@@ -169,7 +169,7 @@ const calendar = (() => {
                     delete tasks[dateKey];
                 }
                 saveTasks();
-                showToast('Task deleted successfully!');
+                showToast('해당 업무를 삭제하였습니다.');
                 modal.remove();
                 renderCalendar(currentMonth, currentYear);
                 openTaskModal(day, month, year);
@@ -260,18 +260,6 @@ const calendar = (() => {
         document.body.appendChild(modal);
     };
 
-    const showToast = (message) => {
-        const toast = document.createElement('div');
-        toast.className = 'fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-sm px-3 py-1 rounded shadow-sm';
-        toast.innerText = message;
-
-        document.body.appendChild(toast);
-
-        setTimeout(() => {
-            toast.style.opacity = '0';
-            setTimeout(() => toast.remove(), 300);
-        }, 2000);
-    };
 
     const fetchTasks = async () => {
         try {

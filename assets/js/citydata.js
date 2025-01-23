@@ -121,7 +121,7 @@ function updateLocalStorage(event) {
     const rowData = grid.getRow(rowKey);
     const updatedData = JSON.parse(localStorage.getItem('adminData'));
 
-    // Find the specific item in the localStorage data and update it
+    
     for (const sido in updatedData) {
         for (const gungu in updatedData[sido]) {
             const item = updatedData[sido][gungu].find(item => item['읍면동'] === rowData['읍면동']);
@@ -138,7 +138,7 @@ function handleSelectionChange() {
     const selectedRows = grid.getCheckedRows();
 
     if (selectedRows.length > 2) {
-        alert('2개 까지 비교 가능 합니다.');
+        showToast('2개 까지 비교 가능 합니다.');
         const unselectIndex = selectedRows.length - 1;
         grid.uncheck(selectedRows[unselectIndex].rowKey);
         return;

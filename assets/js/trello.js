@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const endDate = document.getElementById("taskEndDate").value;
 
         if (!name || !startDate || !endDate) {
-            alert("Please fill in all required fields.");
+            showToast("정보를 모두 입력해주세요","error");
             return;
         }
 

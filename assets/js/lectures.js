@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (!time || !course || !instructor) {
-            alert('Please fill in all fields.');
+            showToast('정보를 모두 입력하세요');
             return;
         }
 

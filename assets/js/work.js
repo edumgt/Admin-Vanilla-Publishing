@@ -130,7 +130,8 @@ function renderFloor(floor, date = new Date().toISOString().split('T')[0]) {
                     // 예약 삭제
                     reservations.splice(index, 1); // 해당 예약 제거
                     hotel.reservations[roomId] = reservations; // 업데이트
-                    showToast(`The reservation for ${reservation.guestName} has been cancelled.`);
+                    
+                    showToast(`해당 예약건을 취소하였습니다.`);
                     renderFloor(floor, date); // UI 갱신
                 });
 
@@ -188,12 +189,12 @@ function manageReservation(floor, room) {
         const cost = parseFloat(document.getElementById('cost').value);
 
         if (!guestName || !checkInDate || !checkOutDate || isNaN(cost)) {
-            alert('All fields are required.');
+            showToast('정보를 모두 입력해주세요');
             return;
         }
 
         if (!isValidDate(checkInDate) || !isValidDate(checkOutDate)) {
-            alert('Invalid date format. Please use YYYY-MM-DD.');
+            showToast('날짜 양식을 맞춰 입력하세요');
             return;
         }
 
@@ -206,7 +207,7 @@ function manageReservation(floor, room) {
         });
 
         if (overlappingReservations.length > 0) {
-            alert('The selected dates overlap with an existing reservation.');
+            showToast('The selected dates overlap with an existing reservation.');
             return;
         }
 
@@ -224,7 +225,7 @@ function manageReservation(floor, room) {
         hotel.reservations[roomId] = reservations; // 업데이트
 
         // 업데이트 후 UI 렌더링
-        showToast(`Reservation for room ${roomId} saved.`);
+        showToast(`해당 예약건을 추가하였습니다.`);
         document.body.removeChild(modal);
         renderFloor(floor);
     });

@@ -46,7 +46,7 @@ function previewDocument(doc) {
     viewer.innerHTML = '';
 
     if (doc.permissions === 'none') {
-        showToast('You do not have permission to view this document.');
+        showToast('해당 문서에 대한 접근 권한이 없습니다.');
         viewer.innerHTML = `
                     <button class="px-3 py-1 bg-blue-500 text-white rounded  mt-4" onclick="requestPermission()">Request Permission</button>
                 `;
@@ -65,7 +65,7 @@ function previewDocument(doc) {
 }
 
 function requestPermission() {
-    showToast('Permission requested!');
+    showToast('접근 권한을 요청하였습니다.');
 }
 
 function openNewDocumentModal() {
@@ -99,7 +99,7 @@ function handleFileUpload(files) {
         progressBarInner.style.width = `${progress}%`;
         if (progress >= 100) {
             clearInterval(interval);
-            showToast('File uploaded successfully!');
+            showToast('파일을 업로드 하였습니다.');
             closeNewDocumentModal();
             progressBar.classList.add('hidden');
             progressBarInner.style.width = '0%';
