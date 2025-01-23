@@ -3,6 +3,14 @@
 
 <head>
     <link href="assets/css/trello.css" rel="stylesheet">
+    <style>
+        .dropdown-scroll-container {
+            height: calc(100vh - 30px);
+            overflow-x: hidden;
+            overflow-y: scroll;
+            scrollbar-width: thin;
+        }
+    </style>
 
 </head>
 
@@ -39,7 +47,7 @@
 
         <!-- 문항작성 탭 콘텐츠 -->
         <div id="QuestionCreation" class="tabcontent hidden">
-            
+
             <input type="text" id="questionInput" class="border p-2 mb-4 w-full" placeholder="Enter your question here">
             <div id="optionsInput" class="mb-4">
                 <input type="text" class="border p-2 mb-2 w-full" placeholder="Option 1">
@@ -48,37 +56,37 @@
                 <input type="text" class="border p-2 mb-2 w-full" placeholder="Option 4">
                 <input type="text" class="border p-2 mb-2 w-full" placeholder="Option 5">
             </div>
-            <button onclick="addQuestion()" class="bg-blue-500 text-white p-2 rounded">Add Question</button>
-            <div id="questionsContainer" class="mt-4"></div>
+            <button onclick="addQuestion()" class="bg-blue-500 text-white p-2 rounded">문항 추가</button>
+            <div id="questionsContainer"></div>
         </div>
 
         <!-- 설문지구성 탭 콘텐츠 -->
         <div id="SurveyBuilder" class="tabcontent hidden">
-            
+
             <div class="flex">
                 <div id="questionsList" class="border p-4 mb-4 w-1/3">
-                    <h3 class="text-lg font-bold mb-2">Available Questions</h3>
+                    <h3 class="mb-2">문항 목록</h3>
                 </div>
-                <div id="surveyContainer" class="drop-zone p-4 min-h-[200px] w-2/3">
-                    <h3 class="text-lg font-bold mb-2">Survey Questions</h3>
+                <div id="surveyContainer" class="drop-zone p-6 w-2/3 dropdown-scroll-container">
+                    <h3 class="mb-2">구성 설문지</h3>
                 </div>
             </div>
-            <button onclick="saveSurvey()" class="bg-green-500 text-white p-2 rounded">Save Survey</button>
+            <button onclick="saveSurvey()" class="bg-green-500 text-white p-2 rounded">설문지 저장</button>
         </div>
 
         <!-- 설문응답 탭 콘텐츠 -->
         <div id="SurveyResponse" class="tabcontent hidden">
-            
+
             <select id="surveySelect">
-                <option value="">Select a survey</option>
+                <option value="">설문지 선택</option>
             </select>
             <form id="surveyForm" class="mb-4"></form>
-            <button id="submitSurvey" class="bg-green-500 text-white p-2 rounded">Submit Survey</button>
+            <button id="submitSurvey" class="bg-green-500 text-white p-2 rounded">설문 제출</button>
         </div>
 
         <!-- 응답결과 탭 콘텐츠 -->
         <div id="ResponseResults" class="tabcontent hidden">
-            
+
             <div id="reportContainer"></div>
         </div>
 

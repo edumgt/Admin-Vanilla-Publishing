@@ -51,7 +51,7 @@ function fetchData() {
 // 문항 표시 함수
 function displayQuestions(questions) {
     const questionsList = document.getElementById('questionsList');
-    questionsList.innerHTML = '<h3 class="text-lg font-bold mb-2">Available Questions</h3>';
+    questionsList.innerHTML = '<p class="mb-2">문항 목록</p>';
     questions.forEach(question => createQuestionBox(question, questionsList));
 }
 
