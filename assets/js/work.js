@@ -84,13 +84,13 @@ function renderFloor(floor, date = new Date().toISOString().split('T')[0]) {
         roomTitle.className = 'room-title';
         roomTitle.innerText = roomId;
 
-        // "New" 뱃지 추가
+        
         const newBadge = document.createElement('span');
         newBadge.className = 'badge';
         newBadge.innerText = 'New';
         newBadge.addEventListener('click', (event) => {
-            event.stopPropagation(); // 부모 클릭 이벤트 방지
-            manageReservation(floor, room); // 모달 실행
+            event.stopPropagation(); 
+            manageReservation(floor, room); 
         });
         roomTitle.appendChild(newBadge);
 
@@ -99,10 +99,10 @@ function renderFloor(floor, date = new Date().toISOString().split('T')[0]) {
         const roomInfo = document.createElement('div');
         roomInfo.className = 'room-info';
 
-        // 예약 데이터 확인
+        
         const reservations = hotel.reservations[roomId] || [];
 
-        // 날짜와 겹치는 예약 필터링
+        
         const overlappingReservations = reservations.filter(reservation => {
             return (
                 reservation.checkInDate <= date &&

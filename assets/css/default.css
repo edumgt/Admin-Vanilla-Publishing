@@ -382,8 +382,8 @@ body {
 /* Toast */
 .toast {
   position: fixed;
-  top: 1rem;
-  right: 1rem;
+  top: 10px;
+  right: 10px;
   min-width: 250px;
   padding: 1rem;
   border-radius: 6px;
@@ -430,9 +430,9 @@ body {
 }
 
 .tui-grid-header {
-  background-color: var(--primary-color) !important;
+  background: var(--primary-color) !important;
   color: #ffcc00 !important;
-  font-weight: bold;
+  /* font-weight: bold; */
   text-align: center;
   border-bottom: 2px solid var(--secondary-color);
   border-radius: 10px 10px 0 0;
@@ -441,7 +441,7 @@ body {
 }
 
 .tui-grid-cell {
-  font-size: 15px;
+  /* font-size: 15px; */
   color: #333;
   font-family: var(--font-family);
 }
@@ -495,9 +495,9 @@ input[type="checkbox"] {
   overflow: auto;
 }
 
-#modal button {
+/* #modal button {
   align-self: flex-end;
-}
+} */
 
 .relative .fa-calendar-alt {
   pointer-events: none;
@@ -525,7 +525,7 @@ input[type="checkbox"] {
   position: absolute;
   top: 10px;
   right: 15px;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   cursor: pointer;
 }
 
