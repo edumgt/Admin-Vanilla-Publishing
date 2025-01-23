@@ -33,8 +33,8 @@ async function loadDocumentList() {
                     <span class="flex-1">${doc.uploadDate}</span>
                     <span class="flex-1">${doc.uploader}</span>
                     <span class="flex-1 flex gap-2">
-                        <button class="px-3 py-1 bg-blue-500 rounded ${doc.permissions === 'none' ? 'opacity-50 cursor-not-allowed' : ''}" onclick="editDocument(${index})" ${doc.permissions === 'none' ? 'disabled' : ''}>Edit</button>
-                        <button class="px-3 py-1 bg-blue-500 rounded ${doc.permissions === 'none' ? 'opacity-50 cursor-not-allowed' : ''}" onclick="deleteDocument(${index})" ${doc.permissions === 'none' ? 'disabled' : ''}>Delete</button>
+                        <button class="px-3 py-1 bg-blue-500 text-white rounded ${doc.permissions === 'none' ? 'opacity-50 cursor-not-allowed' : ''}" onclick="editDocument(${index})" ${doc.permissions === 'none' ? 'disabled' : ''}>Edit</button>
+                        <button class="px-3 py-1 bg-blue-500 text-white rounded ${doc.permissions === 'none' ? 'opacity-50 cursor-not-allowed' : ''}" onclick="deleteDocument(${index})" ${doc.permissions === 'none' ? 'disabled' : ''}>Delete</button>
                     </span>
                 `;
         item.addEventListener('click', () => previewDocument(doc));
