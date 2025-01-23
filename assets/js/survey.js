@@ -27,6 +27,7 @@ function fetchData() {
     fetch('assets/mock/questions.json')
         .then(response => response.json())
         .then(data => {
+            console.log(data);
             localStorage.setItem('questions', JSON.stringify(data));
             displayQuestions(data);
         })
@@ -50,6 +51,23 @@ function fetchData() {
 
 // 문항 표시 함수
 function displayQuestions(questions) {
+
+    // const questionsContainer = document.getElementById('questionsContainer');
+    // questionsContainer.innerHTML = '<div id="questionsGrid"></div>';
+
+    // const grid = new tui.Grid({
+    //     el: document.getElementById('questionsGrid'),
+    //     data: questions,
+    //     columns: [
+    //         { header: 'ID', name: 'id', width: 50 },
+    //         { header: '문항', name: 'text', width: 300 },
+    //         { header: '옵션', name: 'options', width: 400, formatter: 'listItemText' }
+    //     ],
+    //     rowHeaders: ['rowNum'],
+    //     bodyHeight: 400
+    // });
+
+
     const questionsList = document.getElementById('questionsList');
     questionsList.innerHTML = '<p class="mb-2">문항 목록</p>';
     questions.forEach(question => createQuestionBox(question, questionsList));
@@ -87,14 +105,35 @@ function addQuestion() {
 }
 
 // 문항 생성 함수
+
 function createQuestionBox(question, container) {
     const questionBox = document.createElement('div');
     questionBox.className = 'question-box border p-2 my-2 cursor-move';
     questionBox.draggable = true;
     questionBox.textContent = question.text;
     questionBox.dataset.id = question.id;
-    questionBox.addEventListener('dragstart', handleDragStart);
-    questionBox.addEventListener('dragend', handleDragEnd);
+
+    if (question.options && Array.isArray(question.options)) {
+        question.options.forEach(option => {
+            const label = document.createElement('label');
+            label.className = 'block';
+            const radio = document.createElement('input');
+            radio.type = 'radio';
+            radio.name = `question-${question.id}`;
+            radio.value = option;
+            label.appendChild(radio);
+            label.appendChild(document.createTextNode(option));
+            questionBox.appendChild(label);
+        });
+    }
+
+    if (isRemovable) {
+        const removeButton = document.createElement('button');
+        removeButton.className = 'absolute top-0 right-0 bg-red-500 text-white p-1 rounded';
+        removeButton.textContent = 'Remove';
+        removeButton.onclick = () => questionBox.remove();
+        questionBox.appendChild(removeButton);
+    }
 
     container.appendChild(questionBox);
 }

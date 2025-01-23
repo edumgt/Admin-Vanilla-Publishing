@@ -2,72 +2,8 @@
 <html>
 
 <head>
-    <link href="assets/css/trello.css" rel="stylesheet">
-    <style>
-        .dropdown-scroll-container {
-            height: calc(100vh - 30px);
-            overflow-x: hidden;
-            overflow-y: scroll;
-            scrollbar-width: thin;
-        }
-    </style>
-    <style>
-        /* 모달 팝업 스타일 */
-        #mobileSurveyModal {
-            /* display: none;  */
-            position: fixed;
-            inset: 0;
-            background-color: rgba(0, 0, 0, 0.75);
-            justify-content: center;
-            align-items: center;
-            z-index: 50;
-        }
-
-        /* 모바일 설문 컨텐츠 스타일 */
-        #mobileSurveyContent {
-            width: 400px;
-            height: 700px;
-            padding:10px;
-            background-color: white;
-            border-radius: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            position: relative;
-        }
-
-        /* 상단 바 스타일 */
-        #mobileSurveyContent::before {
-            content: '';
-            display: block;
-            width: 100%;
-            height: 40px;
-            background-color: #f1f1f1;
-            border-bottom: 1px solid #ccc;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-
-        /* 하단 바 스타일 */
-        #mobileSurveyContent::after {
-            content: '';
-            display: block;
-            width: 100%;
-            height: 40px;
-            background-color: #f1f1f1;
-            border-top: 1px solid #ccc;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-        }
-
-        /* 컨텐츠 내부 패딩 */
-        #mobileSurveyContent .content {
-            padding: 50px 20px 50px 20px;
-            height: calc(100% - 100px);
-            overflow-y: auto;
-        }
-    </style>
+    <link href="assets/css/app.css" rel="stylesheet">
+    <link href="assets/css/survey.css" rel="stylesheet">
 
 </head>
 
@@ -142,7 +78,7 @@
             <!-- 설문 제출 탭에 추가 -->
             <button id="mobileViewButton" class="bg-blue-500 text-white px-2 py-1  rounded">모바일 보기</button>
 
-            
+
             <form id="surveyForm" class="mb-4"></form>
             <button id="submitSurvey" class="bg-green-500 text-white px-2 py-1  rounded">설문 제출</button>
 
@@ -165,11 +101,14 @@
     <div id="mobileSurveyModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center hidden">
         <div id="mobileSurveyContent">
             <div class="content" id="mobileSurveyContentInner"></div>
-            
+
         </div>
     </div>
 
 
+    <script type="text/javascript" src="https://uicdn.toast.com/tui.code-snippet/latest/tui-code-snippet.js"></script>
+    <script type="text/javascript" src="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.js"></script>
+    <script type="text/javascript" src="https://uicdn.toast.com/tui-grid/latest/tui-grid.js"></script>
     <script type="text/javascript" src="assets/js/logo.js"></script>
     <script type="text/javascript" src="assets/js/configframe.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
