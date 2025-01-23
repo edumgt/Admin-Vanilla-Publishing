@@ -216,7 +216,7 @@ function displaySelectedSurvey() {
 
                 question.options.forEach(option => {
                     const label = document.createElement('label');
-                    label.className = 'block';
+                    label.className = 'block p-2';
                     const radio = document.createElement('input');
                     radio.type = 'radio';
                     radio.name = `question-${question.id}`;
