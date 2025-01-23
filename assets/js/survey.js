@@ -59,7 +59,9 @@ function displayQuestions(questions) {
 // 문항 목록 표시 함수
 function displayQuestionsGrid(questions) {
     const questionsContainer = document.getElementById('questionsContainer');
+    
     questionsContainer.innerHTML = '<div id="questionsGrid"></div>';
+    questionsContainer.classList.add("mt-4");
     questions.forEach(question => createQuestionBox(question, questionsContainer));
 
 
@@ -99,7 +101,7 @@ function addQuestion() {
 // 문항 생성 함수
 function createQuestionBox(question, container) {
     const questionBox = document.createElement('div');
-    questionBox.className = 'question-box border p-2 my-2 cursor-move';
+    questionBox.className = 'question-box border p-2 my-1 cursor-move';
     questionBox.draggable = true;
     questionBox.textContent = question.text;
     questionBox.dataset.id = question.id;
@@ -226,7 +228,7 @@ function displaySelectedSurvey() {
 
                 question.options.forEach(option => {
                     const label = document.createElement('label');
-                    label.className = 'block';
+                    label.className = 'block p-2';
                     const radio = document.createElement('input');
                     radio.type = 'radio';
                     radio.name = `question-${question.id}`;
@@ -410,7 +412,7 @@ function startMobileSurvey() {
                     responses[`question-${questions[index].dataset.id}`] = selectedOption.value;
                     nextQuestion();
                 } else {
-                    alert('답안을 선택하세요.');
+                    showToast('답안을 선택하세요.');
                 }
             });
             questionClone.appendChild(nextButton);
