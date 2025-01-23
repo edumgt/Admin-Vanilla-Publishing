@@ -688,3 +688,38 @@ textarea {
 .editable:hover {
   background-color: #f1f1f1;
 }
+
+/* city.html 용도 */
+#panelContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.panel {
+  flex: 1;
+  margin: 0 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+}
+
+#comparisonPanel {
+  flex: 1.5;
+  /* 가운데 패널을 더 넓게 */
+}
+
+/* total */
+.summary-row {
+  font-weight: bold;
+  background-color: #e1e1e1 !important;
+  background: #e1e1e1 !important;
+}
+
+.tui-grid-summary-area {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  background: #e1e1e1 !important;
+  background-color: #e1e1e1 !important;
+}
