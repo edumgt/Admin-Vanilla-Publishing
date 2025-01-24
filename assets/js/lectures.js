@@ -178,7 +178,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (!time || !course || !instructor) {
-            showToast('정보를 모두 입력하세요');
+            //showToast('정보를 모두 입력하세요');
+            showToast("required-input","warning","en");
             return;
         }
 

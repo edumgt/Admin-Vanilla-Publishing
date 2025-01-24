@@ -1,0 +1,18 @@
+{
+    "en": {
+        "well-done": "Well Done",
+        "process-error": "Process Error",
+        "required-input": "Required Input",
+        "surveyCompleted": "Survey completed successfully!",
+        "questionAdded": "Question added successfully!",
+        "questionRemoved": "Question removed successfully!"
+    },
+    "ko": {
+        "well-done":"작업을 완료하였습니다.",
+        "process-error":"처리중 오류가 발생하였습니다.",
+        "required-input": "입력부분에 모든 입력 필요 합니다.",
+        "surveyCompleted": "설문이 성공적으로 완료되었습니다!",
+        "questionAdded": "문항이 성공적으로 추가되었습니다!",
+        "questionRemoved": "문항이 성공적으로 제거되었습니다!"
+    }
+}

@@ -73,7 +73,8 @@ function addQuestion() {
     const questionText = questionInput.value.trim();
 
     if (questionText === '') {
-        showToast("문항을 입력하세요!");
+        //showToast("문항을 입력하세요!");
+        showToast("required-input","warning","en");
         return;
     }
 
@@ -258,7 +259,8 @@ document.getElementById('submitSurvey').addEventListener('click', () => {
     responses.push(results);
     localStorage.setItem('responses', JSON.stringify(responses));
 
-    showToast('설문에 답변하였습니다.');
+    //showToast('설문에 답변하였습니다.');
+    showToast('surveyCompleted', 'success', 'ko'); 
     generateReport(responses);
 });
 
@@ -435,10 +437,19 @@ function startMobileSurvey() {
         const storedResponses = JSON.parse(localStorage.getItem('responses')) || [];
         storedResponses.push(responses);
         localStorage.setItem('responses', JSON.stringify(storedResponses));
-        showToast('설문에 답변하였습니다.');
+        
+        //showToast('설문에 답변하였습니다.');
+        showToast('surveyCompleted', 'success', 'ko'); 
+        
         generateReport(storedResponses);
     }
 
     showQuestion(currentQuestionIndex);
     document.getElementById('mobileSurveyModal').classList.remove('hidden');
 }
+
+
+
+
+
+    

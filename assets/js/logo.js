@@ -14,7 +14,7 @@ function saveModal() {
     }
     document.getElementById('modal').classList.add('hidden');
     saveData(grid.getData());
-    showToast('해당 건의 데이타를 저장하였습니다.', 'success');
+    showToast('well-done', 'success','en');
 }
 
 
@@ -494,17 +494,48 @@ collapseOffCanvas.addEventListener('click', function () {
     collapseOffCanvas.classList.add('hidden');
 });
 
+function loadMessages() {
+    fetch('assets/mock/messages.json')
+        .then(response => response.json())
+        .then(data => {
+            localStorage.setItem('messages', JSON.stringify(data));
+        })
+        .catch(error => console.error('Error loading data:', error));
+}
+
+function getMsg(key, lang = 'en') {
+    const messages = JSON.parse(localStorage.getItem('messages'));
+    return messages[lang][key] || key;
+}
+
+
+loadMessages();
+
+    function showToast(messageKey, type = 'success', lang = 'en') {
+        const message = getMsg(messageKey, lang);
+        const toastContainer = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type} show`;
+        toast.innerText = message;
+
+        toastContainer.appendChild(toast);
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
 
 /* showToast */
-function showToast(message, type = 'success') {
-    const toastContainer = document.getElementById('toast-container');
-    const toast = document.createElement('div');
-    toast.className = `toast toast-${type} show`;
-    toast.innerText = message;
+// function showToast(message, type = 'success') {
+//     const toastContainer = document.getElementById('toast-container');
+//     const toast = document.createElement('div');
+//     toast.className = `toast toast-${type} show`;
+//     toast.innerText = message;
 
-    toastContainer.appendChild(toast);
-    setTimeout(() => {
-        toast.classList.remove('show');
-        setTimeout(() => toast.remove(), 300);
-    }, 3000);
-}
+//     toastContainer.appendChild(toast);
+//     setTimeout(() => {
+//         toast.classList.remove('show');
+//         setTimeout(() => toast.remove(), 300);
+//     }, 3000);
+// }
+

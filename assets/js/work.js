@@ -189,7 +189,7 @@ function manageReservation(floor, room) {
         const cost = parseFloat(document.getElementById('cost').value);
 
         if (!guestName || !checkInDate || !checkOutDate || isNaN(cost)) {
-            showToast('정보를 모두 입력해주세요');
+            showToast('required-input','warning','en');
             return;
         }
 
