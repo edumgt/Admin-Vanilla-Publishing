@@ -30,9 +30,9 @@ function displayRooms(dateFilter = null) {
 
     data.rooms.forEach(room => {
         const card = document.createElement('div');
-        card.className = 'bg-white p-4 rounded-md shadow-sm text-sm'; 
+        card.className = 'bg-white p-4 rounded-md shadow-md text-sm'; 
         card.innerHTML = `
-                <h2 class="text-xl font-bold mb-2">${room.name}</h2>
+                <h2 class="text-md font-bold mb-2">${room.name}</h2>
                 <p class="text-sm mb-2">Seats: ${room.seats}</p>
                 <div id="timeslots-${room.name}">
                     ${generateTimeslots(room, dateFilter, currentTime)}

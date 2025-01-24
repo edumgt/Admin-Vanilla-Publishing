@@ -1,28 +1,31 @@
 const hotel = {
     floors: 10,
     roomsPerFloor: 20,
-    reservations: JSON.parse(localStorage.getItem('hotelReservations')) || {} // Format: { '1-1': { guestName: 'John Doe', checkInDate: '2025-01-04', checkOutDate: '2025-01-05', cost: 100 } }
+    reservations: JSON.parse(localStorage.getItem('hotelReservations')) || {} 
+    
 };
 
-// Function to initialize the UI
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        const response = await fetch('assets/mock/hotel.json'); // Replace with your JSON file URL
+        const response = await fetch('assets/mock/hotel.json'); 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         hotel.reservations = await response.json();
     } catch (error) {
         console.error('Failed to fetch reservation data:', error);
-        hotel.reservations = {}; // Fallback to empty reservations
+        hotel.reservations = {}; 
     }
     const controlPanel = document.createElement('div');
     controlPanel.id = 'control-panel';
+    controlPanel.style.marginTop='10px';
 
     const tabContainer = document.createElement('div');
     tabContainer.id = 'tab-container';
     tabContainer.style.display = 'flex';
-    tabContainer.style.gap = '5px';
+    tabContainer.style.gap = '10px';
+    
+
 
     for (let i = 1; i <= hotel.floors; i++) {
         const tabButton = document.createElement('button');
@@ -34,18 +37,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active-tab'));
             tabButton.classList.add('active-tab');
         });
-        if (i === 1) tabButton.classList.add('active-tab'); // Default active tab for Floor 1
+        if (i === 1) tabButton.classList.add('active-tab'); 
         tabContainer.appendChild(tabButton);
     }
-
-
 
     const dateInput = document.createElement('input');
     dateInput.type = 'date';
     dateInput.id = 'date-select';
 
-
-    // 기본 날짜를 오늘 날짜로 설정
     const today = new Date().toISOString().split('T')[0];
     dateInput.value = today;
 
@@ -65,7 +64,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         breadcrumb.insertAdjacentElement('afterend', controlPanel);
     }
 
-    renderFloor(1); // Initial render for the first floor
+    renderFloor(1); 
 });
 
 function renderFloor(floor, date = new Date().toISOString().split('T')[0]) {
@@ -198,7 +197,6 @@ function manageReservation(floor, room) {
             return;
         }
 
-        // 겹치는 예약 필터링
         const overlappingReservations = reservations.filter(reservation => {
             return (
                 reservation.checkInDate <= checkOutDate &&
@@ -211,7 +209,6 @@ function manageReservation(floor, room) {
             return;
         }
 
-        // 새 예약 추가
         const newReservation = {
             guestName,
             checkInDate,
@@ -221,10 +218,9 @@ function manageReservation(floor, room) {
             cost,
         };
 
-        reservations.push(newReservation); // 배열에 추가
-        hotel.reservations[roomId] = reservations; // 업데이트
+        reservations.push(newReservation); 
+        hotel.reservations[roomId] = reservations; 
 
-        // 업데이트 후 UI 렌더링
         showToast(`해당 예약건을 추가하였습니다.`);
         document.body.removeChild(modal);
         renderFloor(floor);
@@ -242,14 +238,10 @@ function isValidDate(date) {
     return regex.test(date) && !isNaN(new Date(date).getTime());
 }
 
-
-
 // Basic styles
-const style = document.createElement('style');
-style.innerText = `
-    
-`;
-document.head.appendChild(style);
+// const style = document.createElement('style');
+// style.innerText = ``;
+// document.head.appendChild(style);
 
 // Add container to the DOM
 const container = document.createElement('div');

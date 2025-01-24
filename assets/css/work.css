@@ -4,6 +4,8 @@
     gap: 10px;
     overflow: hidden;
     width: 100%;
+    
+    
 }
 
 #control-panel {
@@ -19,6 +21,7 @@
 }
 
 .floor {
+    
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 10px;

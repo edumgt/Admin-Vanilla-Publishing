@@ -1,12 +1,9 @@
 @import url('https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css');
 @import url('https://uicdn.toast.com/tui-grid/latest/tui-grid.css');
-
-/* @import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css'); */
-
 @import url('../vendor/tailwind/css/tailwind.min.css');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
 @import url('https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css');
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
 
 /* CSS Variables */
 :root {
@@ -15,7 +12,7 @@
   --bg-light: #e8eaee;
   --bg-dark: #2d3748;
   --hover-bg: #4a5568;
-  --font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue";
+  --font-family: "Noto Sans", sans-serif;
   --primary-color: #0058a3;
   --primary-lightest-color: hsl(240, 100%, 95%);
   --scrollbar-color: hsl(240, 25%, 100%);
@@ -254,7 +251,7 @@ body {
   box-shadow: 0 0px 3x rgba(0, 0, 0, 0.3);
   border-radius: 0.5rem;
   padding: 1.5rem;
-  
+
   border: 1px solid #999;
   display: flex;
   justify-content: space-between;
@@ -531,11 +528,12 @@ input[type="checkbox"] {
 
 /* .shadow-lg {
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
-}
+}*/
 
+/* tailwind overload */
 .shadow-md {
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
-} */
+}
 
 .dragging {
   opacity: 0.5;
@@ -741,6 +739,12 @@ input[type="date"]:focus {
   background-color: #e1e1e1 !important;
 }
 
-/* #dropdown-container{
-  padding-bottom: 20px;
-} */
+/* calnedar */
+.day-header {
+  border: 1px solid #0058A3;
+  color: #0058A3;
+  text-transform: uppercase;
+  padding: 5px;
+  border-radius: 6px;
+  margin: 3px 5px 3px 5px;
+}

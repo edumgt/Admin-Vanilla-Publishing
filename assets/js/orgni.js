@@ -83,7 +83,7 @@ function drawCard(ctx, node) {
 
     // 텍스트 설정
     ctx.fillStyle = '#fff';
-    ctx.font = '15px Pretendard';
+    ctx.font = '15px Noto Sans';
     ctx.textAlign = 'center';
 
     // 관리자 이름

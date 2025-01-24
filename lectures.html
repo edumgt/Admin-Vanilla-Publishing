@@ -33,13 +33,11 @@
             강의일정
         </nav>
 
-        <div class="calendar bg-white shadow-md rounded-lg w-full h-full flex flex-col">
-            <div class="header text-white p-4 flex justify-between items-center">
-                <button id="prevMonth" class="bg-blue-500  text-white font-bold px-3 py-1 rounded">Previous
-                    Month</button>
-                <h2 id="monthYear" class="text-xl font-bold text-gray-600"></h2>
-                <button id="nextMonth" class="bg-blue-500  font-bold px-3 py-1 rounded">Next
-                    Month</button>
+        <div class="calendar bg-white shadow-md rounded-lg w-full h-full flex flex-col mt-4">
+            <div class="header text-white p-4 flex justify-between items-center bg-gray-100">
+                <button id="prevMonth" class="bg-blue-500  text-white font-bold px-3 py-1 rounded">&lt;</button>
+                <h2 id="monthYear" class="text-xl text-gray-600"></h2>
+                <button id="nextMonth" class="bg-blue-500  font-bold px-3 py-1 rounded">&gt;</button>
             </div>
             <div class="days grid grid-cols-7">
                 <div class="day-header text-center">Sun</div>

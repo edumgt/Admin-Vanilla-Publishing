@@ -10,43 +10,46 @@ const calendar = (() => {
     let currentYear = today.getFullYear();
 
     //const tasks = JSON.parse(localStorage.getItem('calendarTasks')) || {};
-    let tasks = {}; 
+    let tasks = {};
 
     const saveTasks = () => {
         localStorage.setItem('calendarTasks', JSON.stringify(tasks));
     };
 
-    
+
 
     const renderCalendar = (month, year) => {
         calendarContainer.innerHTML = '';
-        calendarContainer.className = 'w-full h-screen';
+        calendarContainer.className = 'w-full h-screen mt-4';
 
         const header = document.createElement('div');
         header.className = 'calendar-header flex justify-between items-center py-2 bg-gray-100';
 
-        const prevBtn = document.createElement('i');
-        prevBtn.className = 'bx bx-chevron-left text-lg cursor-pointer';
+        const prevBtn = document.createElement('button');
+        prevBtn.className = 'bg-blue-500  text-white font-bold px-3 py-1 rounded';
+        prevBtn.innerHTML = "&lt;";
         prevBtn.onclick = () => changeMonth(-1);
 
-        const nextBtn = document.createElement('i');
-        nextBtn.className = 'bx bx-chevron-right text-lg cursor-pointer';
+        const nextBtn = document.createElement('button');
+        nextBtn.className = 'bg-blue-500  text-white font-bold px-3 py-1 rounded';
+        nextBtn.innerHTML = "&gt;";
         nextBtn.onclick = () => changeMonth(1);
 
         const title = document.createElement('div');
-        title.className = 'calendar-title text-lg ';
-        title.innerText = `${monthNames[month]} ${year}`;
+        title.className = 'text-xl text-gray-600';
+        title.innerText = `${year}년 ${month + 1}월`;
+
 
         header.appendChild(prevBtn);
         header.appendChild(title);
         header.appendChild(nextBtn);
 
         const daysOfWeek = document.createElement('div');
-        daysOfWeek.className = 'grid grid-cols-7 bg-blue-200 text-center  font-light';
+        daysOfWeek.className = 'grid grid-cols-7 text-center';
         const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         dayNames.forEach(day => {
             const dayDiv = document.createElement('div');
-            dayDiv.className = 'py-2';
+            dayDiv.className = 'day-header';
             dayDiv.innerText = day;
             daysOfWeek.appendChild(dayDiv);
         });
@@ -274,8 +277,8 @@ const calendar = (() => {
         }
     };
 
-    
-    
+
+
     return {
         init: async () => {
             await fetchTasks(); // Ensure tasks are fetched before rendering
