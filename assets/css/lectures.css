@@ -1,12 +1,13 @@
 .custom-drag-icon {
-    background: linear-gradient(to right, #ff7e5f, #feb47b);
-    color: #ffffff;
+    background-color: #0058A3;
+    /* background: linear-gradient(to right, #ff7e5f, #feb47b); */
+    color: #ffffff; 
 }
 
 .new-button {
     font-size: 0.9rem;
     background-color: #0058A3;
-    color: #ffcc00;
+    color: #fff;
     padding: 2px;
     border-radius: 3px;
     margin: 2px 6px 2px 6px;

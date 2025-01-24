@@ -40,7 +40,7 @@
 
     box-sizing: border-box;
     position: relative;
-    
+
 }
 
 .room-title {
@@ -48,17 +48,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-weight: bold;
-    font-size: 1.2em;
-    background-color: #004080;
-    color: #ffcc00;
-    border-bottom: 1px solid #ddd;
+    /* font-weight: bold; */
+    padding: 5px 0px 5px 0px;
+    font-size: 1.1em;
+    /* background-color: #0058a3;
+    color: #fff; */
+    /* border-bottom: 1px solid #ddd; */
 }
 
 .room-info {
     flex: 1;
     background-color: #ffffff;
-    color: #000000;
+    color: #333;
     padding: 10px;
     overflow: auto;
 }
