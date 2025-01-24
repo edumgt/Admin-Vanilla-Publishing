@@ -216,12 +216,12 @@ body {
 
 /* Logo Text */
 .logo-text {
-  padding-left: 10px;
+  /* padding-left: 10px; */
   color: var(--text-color);
   font-size: 1.5rem;
   font-weight: bold;
-  line-height: 1;
-  white-space: nowrap;
+  /* line-height: 1; */
+  /* white-space: nowrap; */
 }
 
 /* Menu Icon */
@@ -723,3 +723,7 @@ input[type="date"]:focus {
   background: #e1e1e1 !important;
   background-color: #e1e1e1 !important;
 }
+
+/* #dropdown-container{
+  padding-bottom: 20px;
+} */
