@@ -495,6 +495,7 @@ collapseOffCanvas.addEventListener('click', function () {
 });
 
 
+/* showToast */
 function showToast(message, type = 'success') {
     const toastContainer = document.getElementById('toast-container');
     const toast = document.createElement('div');
