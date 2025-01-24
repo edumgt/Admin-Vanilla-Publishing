@@ -335,11 +335,17 @@ body {
 }
 
 .dropdown-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #ffcc00;
-  font-size: 1.4rem;
+  font-size: 1.475rem;
   cursor: pointer;
+  /* position: absolute; */
+  /* top: 0px; */
   background: none;
   border: none;
+  /* padding:0px 0px 25px 0px; */
 }
 
 .dropdown-menu {
@@ -674,7 +680,7 @@ textarea {
 input[type="text"]:focus,
 textarea:focus,
 input[type="date"]:focus {
-    border-color: #ffcc00;
+  border-color: #ffcc00;
 }
 
 .sortable:hover {

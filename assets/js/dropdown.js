@@ -98,6 +98,7 @@ function renderDropdown(containerId) {
     container.innerHTML = dropdownHTML;
 
     const dropdownToggle = container.querySelector('.dropdown-toggle');
+    
     const dropdownMenu = container.querySelector('.dropdown-menu');
 
     dropdownToggle.addEventListener('click', () => {
