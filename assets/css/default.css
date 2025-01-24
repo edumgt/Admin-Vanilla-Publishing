@@ -249,8 +249,19 @@ body {
 }
 
 /* Card Hover Effect */
+.card {
+  flex: 1 1 calc(25% - 1rem);
+  box-shadow: 0 0px 3x rgba(0, 0, 0, 0.3);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  
+  border: 1px solid #999;
+  display: flex;
+  justify-content: space-between;
+}
+
 .card:hover {
-  transform: scale(1.05);
+  /* transform: scale(1.05); */
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
   transition: transform 0.3s, box-shadow 0.3s;
 }
