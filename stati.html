@@ -2,9 +2,28 @@
 <html>
 
 <head>
-    
+
     <link href="assets/css/default.css" rel="stylesheet">
-    
+    <style>
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            margin: 10px 0px 10px 0px;
+
+        }
+
+        .card {
+            flex: 1 1 calc(25% - 1.5rem);
+            box-shadow: 0 0px 3x rgba(0, 0, 0, 0.3);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            /* background-color: white; */
+            border: 1px solid #999;
+        }
+    </style>
+
 
 </head>
 
@@ -25,7 +44,7 @@
     <div id="toast-container"></div>
 
 
-    
+
 
     <div id="offCanvasContainer"></div>
 
@@ -34,139 +53,141 @@
             회원통계
         </nav>
 
-        <div class="dash-content">
-            <div class="row g-6 mb-6">
-                <div class="col-sm-6 col-xl-3">
-                    <div class="card px-6 pt-4 pb-5">
-                        <div class="d-flex align-items-top justify-content-between mb-7">
-                            <div>
-                                <h5>Total</h5>
-                                <small>Users (This Month)</small>
-                            </div>
-                            <div class="dropdown">
-                                <a href="#" class="dropdown-toggle text-body">
-                                    <i class="bx bx-dots-horizontal-rounded fs-4"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <div class="px-6 pt-2 pb-3 mb-1 border-bottom">Filter</div>
-                                    <div class="dropdown-item">This Week</div>
-                                    <div class="dropdown-item">This Month</div>
-                                    <div class="dropdown-item">This Year</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <div class="avatar me-4">
-                                <span class="avatar-initial rounded bg-label-danger">
-                                    <i class="bx bx-user fs-5"></i>
-                                </span>
-                            </div>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <h4 class="me-2">30146</h4>
-                                <p class="text-success">(+30%)</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-xl-3">
-                    <div class="card px-6 pt-4 pb-5">
-                        <div class="d-flex align-items-top justify-content-between mb-7">
-                            <div>
-                                <h5>Registered</h5>
-                                <small>Users (This Month)</small>
-                            </div>
-                            <div class="dropdown">
-                                <a href="#" class="dropdown-toggle text-body">
-                                    <i class="bx bx-dots-horizontal-rounded fs-4"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <div class="px-6 pt-2 pb-3 mb-1 border-bottom">Filter</div>
-                                    <div class="dropdown-item">This Week</div>
-                                    <div class="dropdown-item">This Month</div>
-                                    <div class="dropdown-item">This Year</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <div class="avatar me-4">
-                                <span class="avatar-initial rounded bg-label-success">
-                                    <i class="bx bx-user fs-5"></i>
-                                </span>
-                            </div>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <h4 class="me-2">513</h4>
-                                <p class="text-danger">(-10%)</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-xl-3">
-                    <div class="card px-6 pt-4 pb-5">
-                        <div class="d-flex align-items-top justify-content-between mb-7">
-                            <div>
-                                <h5>Active</h5>
-                                <small>Users (This Month)</small>
-                            </div>
-                            <div class="dropdown">
-                                <a href="#" class="dropdown-toggle text-body">
-                                    <i class="bx bx-dots-horizontal-rounded fs-4"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <div class="px-6 pt-2 pb-3 mb-1 border-bottom">Filter</div>
-                                    <div class="dropdown-item">This Week</div>
-                                    <div class="dropdown-item">This Month</div>
-                                    <div class="dropdown-item">This Year</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <div class="avatar me-4">
-                                <span class="avatar-initial rounded bg-label-primary">
-                                    <i class="bx bx-user fs-5"></i>
-                                </span>
-                            </div>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <h4 class="me-2">20125</h4>
-                                <p class="text-success">(+20%)</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-xl-3">
-                    <div class="card px-6 pt-4 pb-5">
-                        <div class="d-flex align-items-top justify-content-between mb-7">
-                            <div>
-                                <h5>Pending</h5>
-                                <small>Users (This Month)</small>
-                            </div>
-                            <div class="dropdown">
-                                <a href="#" class="dropdown-toggle text-body">
-                                    <i class="bx bx-dots-horizontal-rounded fs-4"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <div class="px-6 pt-2 pb-3 mb-1 border-bottom">Filter</div>
-                                    <div class="dropdown-item">This Week</div>
-                                    <div class="dropdown-item">This Month</div>
-                                    <div class="dropdown-item">This Year</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <div class="avatar me-4">
-                                <span class="avatar-initial rounded bg-label-warning">
-                                    <i class="bx bx-user fs-5"></i>
-                                </span>
-                            </div>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <h4 class="me-2">123</h4>
-                                <p class="text-success">(+31%)</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
+
+
+        <div class="container">
+            <div class="card">
+
+                <div class="d-flex align-items-top justify-content-between mb-7">
+                    <div>
+                        <h5>Total</h5>
+                        <small>Users (This Month)</small>
+                    </div>
+                    <div class="dropdown">
+                        <a href="#" class="dropdown-toggle text-body">
+                            <i class="bx bx-dots-horizontal-rounded fs-4"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <div class="px-6 pt-2 pb-3 mb-1 border-bottom">Filter</div>
+                            <div class="dropdown-item">This Week</div>
+                            <div class="dropdown-item">This Month</div>
+                            <div class="dropdown-item">This Year</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="avatar me-4">
+                        <span class="avatar-initial rounded bg-label-danger">
+                            <i class="bx bx-user fs-5"></i>
+                        </span>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h4 class="me-2">30146</h4>
+                        <p class="text-success">(+30%)</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card">
+
+                <div class="d-flex align-items-top justify-content-between mb-7">
+                    <div>
+                        <h5>Registered</h5>
+                        <small>Users (This Month)</small>
+                    </div>
+                    <div class="dropdown">
+                        <a href="#" class="dropdown-toggle text-body">
+                            <i class="bx bx-dots-horizontal-rounded fs-4"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <div class="px-6 pt-2 pb-3 mb-1 border-bottom">Filter</div>
+                            <div class="dropdown-item">This Week</div>
+                            <div class="dropdown-item">This Month</div>
+                            <div class="dropdown-item">This Year</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="avatar me-4">
+                        <span class="avatar-initial rounded bg-label-success">
+                            <i class="bx bx-user fs-5"></i>
+                        </span>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h4 class="me-2">513</h4>
+                        <p class="text-danger">(-10%)</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card">
+
+                <div class="d-flex align-items-top justify-content-between mb-7">
+                    <div>
+                        <h5>Active</h5>
+                        <small>Users (This Month)</small>
+                    </div>
+                    <div class="dropdown">
+                        <a href="#" class="dropdown-toggle text-body">
+                            <i class="bx bx-dots-horizontal-rounded fs-4"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <div class="px-6 pt-2 pb-3 mb-1 border-bottom">Filter</div>
+                            <div class="dropdown-item">This Week</div>
+                            <div class="dropdown-item">This Month</div>
+                            <div class="dropdown-item">This Year</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="avatar me-4">
+                        <span class="avatar-initial rounded bg-label-primary">
+                            <i class="bx bx-user fs-5"></i>
+                        </span>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h4 class="me-2">20125</h4>
+                        <p class="text-success">(+20%)</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card">
+
+                <div class="d-flex align-items-top justify-content-between mb-7">
+                    <div>
+                        <h5>Pending</h5>
+                        <small>Users (This Month)</small>
+                    </div>
+                    <div class="dropdown">
+                        <a href="#" class="dropdown-toggle text-body">
+                            <i class="bx bx-dots-horizontal-rounded fs-4"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <div class="px-6 pt-2 pb-3 mb-1 border-bottom">Filter</div>
+                            <div class="dropdown-item">This Week</div>
+                            <div class="dropdown-item">This Month</div>
+                            <div class="dropdown-item">This Year</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="avatar me-4">
+                        <span class="avatar-initial rounded bg-label-warning">
+                            <i class="bx bx-user fs-5"></i>
+                        </span>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h4 class="me-2">123</h4>
+                        <p class="text-success">(+31%)</p>
+                    </div>
+                </div>
+
+            </div>
         </div>
+
+
 
 
         <div class="flex flex-col lg:flex-row justify-between items-center p-2">
@@ -186,27 +207,27 @@
                 </div>
                 <div class="flex items-center space-x-2">
                     <button id="searchByDate"
-                    class="flex items-center px-3 py-1 text-white rounded bg-gray-800 hover:bg-gray-700 space-x-2">
+                        class="flex items-center px-3 py-1 text-white rounded bg-gray-800 hover:bg-gray-700 space-x-2">
                         <i class="fas fa-search"></i>
                         <span>검색</span>
                     </button>
                     <button id="resetSearch"
-                    class="flex items-center px-3 py-1 text-white rounded bg-gray-800 hover:bg-gray-700 space-x-2">
+                        class="flex items-center px-3 py-1 text-white rounded bg-gray-800 hover:bg-gray-700 space-x-2">
                         <i class="fas fa-undo"></i>
                         <span>검색 초기화</span>
                     </button>
                     <button id="newrow"
-                    class="flex items-center px-3 py-1 text-white rounded bg-gray-800 hover:bg-gray-700 space-x-2">
+                        class="flex items-center px-3 py-1 text-white rounded bg-gray-800 hover:bg-gray-700 space-x-2">
                         <i class="fas fa-plus"></i>
                         <span>신규</span>
                     </button>
                     <button id="delrow"
-                    class="flex items-center px-3 py-1 text-white rounded bg-gray-800 hover:bg-gray-700 space-x-2">
+                        class="flex items-center px-3 py-1 text-white rounded bg-gray-800 hover:bg-gray-700 space-x-2">
                         <i class="fas fa-trash"></i>
                         <span>삭제</span>
                     </button>
                     <button id="saverow"
-                    class="flex items-center px-3 py-1 text-white rounded bg-gray-800 hover:bg-gray-700 space-x-2">
+                        class="flex items-center px-3 py-1 text-white rounded bg-gray-800 hover:bg-gray-700 space-x-2">
                         <i class="fas fa-save"></i>
                         <span>저장</span>
                     </button>
@@ -237,8 +258,7 @@
             </form>
             <div class="flex justify-end space-x-2 mt-4">
                 <button id="saveModal" class="bg-blue-500 text-white px-3 py-1 rounded ">저장</button>
-                <button id="closeModal"
-                    class="bg-gray-800 text-white px-3 py-1 rounded hover:bg-gray-700">닫기</button>
+                <button id="closeModal" class="bg-gray-800 text-white px-3 py-1 rounded hover:bg-gray-700">닫기</button>
             </div>
         </div>
     </div>
@@ -252,4 +272,5 @@
     <script type="text/javascript" src="assets/js/app.js"></script>
     <script type="text/javascript" src="assets/js/dropdown.js"></script>
 </body>
+
 </html>
