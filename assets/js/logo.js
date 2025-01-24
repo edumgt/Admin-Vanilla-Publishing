@@ -362,9 +362,9 @@ function renderFloatingNav(containerId) {
             </button>
         </div>
         <div id="languageSwitcher" class="flex space-x-2">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg" alt="English" data-lang="en" class="w-8 h-8 cursor-pointer">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" alt="한국어" data-lang="ko" class="w-8 h-8 cursor-pointer">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Flag_of_Japan.svg" alt="日本語" data-lang="ja" class="w-6 h-6 cursor-pointer">
+            <img src="assets/img/usa.svg" alt="English" data-lang="en" class="w-8 h-8 cursor-pointer">
+            <img src="assets/img/kor.svg" alt="한국어" data-lang="ko" class="w-8 h-8 cursor-pointer">
+            <img src="assets/img/jpn.svg" alt="日本語" data-lang="ja" class="w-6 h-6 cursor-pointer">
         </div>
     `;
 
