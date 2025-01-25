@@ -1,4 +1,7 @@
 
+const lang = localStorage.getItem('lang');
+console.log("requestPermission lang: " + lang);
+
 async function fetchDocuments() {
     const response = await fetch('assets/mock/documents.json');
     return await response.json();
@@ -46,9 +49,9 @@ function previewDocument(doc) {
     viewer.innerHTML = '';
 
     if (doc.permissions === 'none') {
-        showToast('해당 문서에 대한 접근 권한이 없습니다.');
+        showToast('not-allowed','warning',lang);
         viewer.innerHTML = `
-                    <button class="px-3 py-1 bg-blue-500 text-white rounded  mt-4" onclick="requestPermission()">Request Permission</button>
+                    <button class="px-3 py-1 bg-blue-500 text-white rounded  mt-4" onclick="requestPermission()">권한 요청</button>
                 `;
         return;
     }
@@ -65,7 +68,7 @@ function previewDocument(doc) {
 }
 
 function requestPermission() {
-    showToast('접근 권한을 요청하였습니다.');
+    showToast('request-permission','success',lang);
 }
 
 function openNewDocumentModal() {

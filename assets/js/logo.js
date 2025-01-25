@@ -1,3 +1,10 @@
+document.addEventListener('DOMContentLoaded', () => {
+    let lang = localStorage.getItem('lang') || 'ko'; // 기본값 'ko' 설정
+    localStorage.setItem('lang', lang); // 기본값을 설정 (필요한 경우)
+    console.log("init lang: " + lang);
+});
+
+
 function saveModal() {
     const modalForm = document.getElementById('modalForm');
     const formData = new FormData(modalForm);
@@ -514,6 +521,10 @@ function getMsg(key, lang = 'en') {
 loadMessages();
 
 function showToast(messageKey, type = 'success', lang = 'en') {
+    // console.log("messageKey:" + messageKey);
+    // console.log("type:" + type);
+    // console.log("lang:" + lang);
+
     const message = getMsg(messageKey, lang);
     const toastContainer = document.getElementById('toast-container');
     const toast = document.createElement('div');

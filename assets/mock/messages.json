@@ -1,18 +1,32 @@
 {
     "en": {
-        "well-done": "Well Done",
-        "process-error": "Process Error",
-        "required-input": "Required Input",
+        "well-done": "Task completed successfully.",
+        "process-error": "An error occurred during processing.",
+        "required-input": "All input fields are required.",
+        "request-permission": "Permission has been requested.",
+        "not-allowed": "You do not have permission to access this document.",
         "surveyCompleted": "Survey completed successfully!",
         "questionAdded": "Question added successfully!",
         "questionRemoved": "Question removed successfully!"
     },
     "ko": {
-        "well-done":"작업을 완료하였습니다.",
-        "process-error":"처리중 오류가 발생하였습니다.",
-        "required-input": "입력부분에 모든 입력 필요 합니다.",
+        "well-done": "작업을 완료하였습니다.",
+        "process-error": "처리 중 오류가 발생하였습니다.",
+        "required-input": "입력란의 모든 항목을 입력해야 합니다.",
+        "request-permission": "권한을 요청하였습니다.",
+        "not-allowed": "해당 문서에 대한 접근 권한이 없습니다.",
         "surveyCompleted": "설문이 성공적으로 완료되었습니다!",
         "questionAdded": "문항이 성공적으로 추가되었습니다!",
         "questionRemoved": "문항이 성공적으로 제거되었습니다!"
+    },
+    "ja": {
+        "well-done": "作業が正常に完了しました。",
+        "process-error": "処理中にエラーが発生しました。",
+        "required-input": "すべての入力項目を入力する必要があります。",
+        "request-permission": "権限を要求しました。",
+        "not-allowed": "この文書へのアクセス権がありません。",
+        "surveyCompleted": "アンケートが正常に完了しました！",
+        "questionAdded": "質問が正常に追加されました！",
+        "questionRemoved": "質問が正常に削除されました！"
     }
 }
