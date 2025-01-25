@@ -236,7 +236,7 @@ document.getElementById('consultationForm').addEventListener('submit', function(
 });
 
 // 모달 닫기 이벤트 핸들러
-document.getElementById('closeModal').addEventListener('click', closeModal);
+document.getElementById('closeModalTopRight').addEventListener('click', closeModal);
 
 // 모달 저장 이벤트 핸들러
 document.getElementById('saveReason').addEventListener('click', saveReason);

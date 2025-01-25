@@ -240,7 +240,7 @@ function modalConfirm(message) {
 
       buttonCancel = document.createElement('button');
       buttonCancel.className = 'btn btn-secondary';
-      buttonCancel.innerText = 'Cancel';
+      buttonCancel.innerText = '닫기';
       footerDiv.appendChild(buttonCancel);
     }
   });

@@ -38,7 +38,7 @@
         </nav>
 
         <div class="flex w-full mt-4">
-            
+
             <div class="w-1/4 border-t border-gray-100">
 
                 <form id="consultationForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -50,8 +50,8 @@
                     </div>
                     <div class="mb-4">
                         <label class="block text-sm  text-gray-700 mb-2" for="log">Log:</label>
-                        <textarea class=" appearance-none border rounded w-full py-2 px-3 text-gray-700   "
-                            id="log" placeholder="Describe the consultation..." required></textarea>
+                        <textarea class=" appearance-none border rounded w-full py-2 px-3 text-gray-700   " id="log"
+                            placeholder="Describe the consultation..." required></textarea>
                     </div>
                     <div class="mb-4">
                         <label class="block text-sm  text-gray-700 mb-2" for="solution">Solution:</label>
@@ -59,17 +59,16 @@
                             id="solution" placeholder="Proposed solution..." required></textarea>
                     </div>
                     <div class="flex items-center justify-between">
-                        <button class="bg-blue-500 text-white px-3 py-1 rounded"
-                            type="submit">Add Consultation</button>
+                        <button class="bg-blue-500 text-white px-3 py-1 rounded" type="submit">Add Consultation</button>
                     </div>
                 </form>
 
                 <div id="consultantList" class="bg-gray-200 p-4 overflow-x-auto flex flex-wrap">
-                    
+
                 </div>
             </div>
 
-            
+
             <div class="w-3/4 px-4">
 
                 <div class="flex justify-between items-center ">
@@ -81,23 +80,29 @@
                     </select>
                 </div>
                 <div id="processFlow" class="mt-2 flex flex-wrap ">
-                    
+
                 </div>
             </div>
         </div>
 
-        
+
         <div id="modal"
             class="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
+
             <div class="modal-content">
-                <span id="closeModal" class="close">&times;</span>
-                <h2 class="text-xl font-bold mb-4">Enter Reason</h2>
+
+                
+                <div class="mb-4">Enter Reason
+                </div>
                 <textarea id="reasonInput"
                     class=" appearance-none border rounded w-full h-full py-2 px-3 text-gray-700   "
-                    placeholder="Enter reason..."></textarea>
+                    placeholder="상태에 대한 내역을 입력하세요"></textarea>
                 <div class="flex items-center justify-between mt-4">
-                    <button id="saveReason"
-                        class="bg-blue-500 text-white px-3 py-1 rounded">저장</button>
+                    <button id="saveReason" class="bg-blue-500 text-white px-3 py-1 rounded">저장</button>
+                    <button id="closeModalTopRight"
+                    class="text-gray-600 hover:text-gray-800 text-lg">
+                    &times;
+                </button>
                 </div>
             </div>
         </div>

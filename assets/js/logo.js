@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-    let lang = localStorage.getItem('lang') || 'ko'; // 기본값 'ko' 설정
-    localStorage.setItem('lang', lang); // 기본값을 설정 (필요한 경우)
+    let lang = localStorage.getItem('lang') || 'ko'; 
+    localStorage.setItem('lang', lang); 
     console.log("init lang: " + lang);
 });
 
@@ -84,35 +84,38 @@ const currentFileName = window.location.pathname.split('/').pop();
 
 // Define a mapping of text to icon classes
 const iconMapping = {
-    '시스템로그': 'fa-clipboard-list',
-    '컨설팅지정': 'fa-network-wired',
-    '코드관리': 'fa-server',
-    'VM현황': 'fa-server',
-    'DB관리': 'fa-database',
-    '행정구역정보': 'fa-database',
-    '방화벽': 'fa-shield-alt',
-    '조직도구성': 'fa-sitemap',
-    '근태관리': 'fa-user-clock',
-    '인센티브': 'fa-tasks',
-    '회의일정': 'fa-calendar-alt',
-    '이벤트': 'fa-calendar-alt',
-    '업무일정': 'fa-calendar-alt',
-    '프로젝트일정': 'fa-tasks',
-    '생산일정': 'fa-tasks',
-    '예약관리': 'fa-calendar-alt',
-    '회의실관리': 'fa-door-open',
-    '병원예약': 'fa-hospital',
-    '강의일정': 'fa-chalkboard-teacher',
-    '회원통계': 'fa-chart-bar',
-    '매출통계': 'fa-chart-line',
-    '체인운영': 'fa-store',
-    '판매통계': 'fa-chart-pie',
-    '실적': 'fa-chart-area',
-    '입출고관리': 'fa-warehouse',
-    '권한관리': 'fa-user-shield',
-    '문서관리': 'fa-file-alt',
-    'WMS': 'fa-cubes',
-    '서베이': 'fa-cubes'
+    
+        "시스템로그": "fa-clipboard-list",
+        "컨설팅지정": "fa-network-wired",
+        "코드관리": "fa-server",
+        "VM현황": "fa-server",
+        "DB관리": "fa-database",
+        "행정구역정보": "fa-map-marked-alt",
+        "방화벽": "fa-shield-alt",
+        "조직도구성": "fa-sitemap",
+        "근태관리": "fa-user-clock",
+        "인센티브": "fa-gift",
+        "회의일정": "fa-calendar-check",
+        "이벤트": "fa-calendar-day",
+        "업무일정": "fa-calendar-alt",
+        "프로젝트일정": "fa-tasks",
+        "생산일정": "fa-industry",
+        "예약관리": "fa-calendar-plus",
+        "회의실관리": "fa-door-open",
+        "병원예약": "fa-hospital",
+        "강의일정": "fa-chalkboard-teacher",
+        "회원통계": "fa-user",
+        "매출통계": "fa-chart-line",
+        "체인운영": "fa-store-alt",
+        "판매통계": "fa-chart-pie",
+        "실적": "fa-chart-bar",
+        "입출고관리": "fa-warehouse",
+        "권한관리": "fa-user-shield",
+        "문서관리": "fa-file-alt",
+        "WMS": "fa-cubes",
+        "서베이": "fa-poll",
+    
+    
 };
 
 
@@ -311,7 +314,7 @@ createModal(
     '<form id="modalForm" class="space-y-4"></form>',
     [
         { label: 'Save', class: 'bg-blue-500 text-white px-3 py-1 rounded ', onClick: 'saveModal()' },
-        { label: 'Close', class: 'bg-gray-800 text-white px-3 py-1 rounded hover:bg-gray-700', onClick: "document.getElementById('modal').classList.add('hidden');" }
+        { label: '닫기', class: 'bg-gray-800 text-white px-3 py-1 rounded ', onClick: "document.getElementById('modal').classList.add('hidden');" }
     ]
 );
 
@@ -320,8 +323,8 @@ createModal(
     '로그아웃 하시겠습니까?',
     '',
     [
-        { label: 'Logout', class: 'bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600', onClick: "window.location.href='index.html';" },
-        { label: 'Cancel', class: 'bg-gray-800 text-white px-3 py-1 rounded hover:bg-gray-700', onClick: "document.getElementById('logoutModal').classList.add('hidden');" }
+        { label: 'Logout', class: 'bg-red-500 text-white px-3 py-1 rounded ', onClick: "window.location.href='index.html';" },
+        { label: '닫기', class: 'bg-gray-800 text-white px-3 py-1 rounded ', onClick: "document.getElementById('logoutModal').classList.add('hidden');" }
     ]
 );
 
@@ -330,7 +333,7 @@ createModal(
     '알림',
     '<p>데모버젼에서는 지원하지 않습니다.</p>',
     [
-        { label: '닫기', class: 'bg-gray-800 text-white px-3 py-1 rounded hover:bg-gray-700', onClick: "document.getElementById('demoModal').classList.add('hidden');" }
+        { label: '닫기', class: 'bg-gray-800 text-white px-3 py-1 rounded ', onClick: "document.getElementById('demoModal').classList.add('hidden');" }
     ]
 );
 

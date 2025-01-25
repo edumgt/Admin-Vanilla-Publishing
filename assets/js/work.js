@@ -1,30 +1,30 @@
 const hotel = {
     floors: 10,
     roomsPerFloor: 20,
-    reservations: JSON.parse(localStorage.getItem('hotelReservations')) || {} 
-    
+    reservations: JSON.parse(localStorage.getItem('hotelReservations')) || {}
+
 };
 
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        const response = await fetch('assets/mock/hotel.json'); 
+        const response = await fetch('assets/mock/hotel.json');
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         hotel.reservations = await response.json();
     } catch (error) {
         console.error('Failed to fetch reservation data:', error);
-        hotel.reservations = {}; 
+        hotel.reservations = {};
     }
     const controlPanel = document.createElement('div');
     controlPanel.id = 'control-panel';
-    controlPanel.style.marginTop='10px';
+    controlPanel.style.marginTop = '10px';
 
     const tabContainer = document.createElement('div');
     tabContainer.id = 'tab-container';
     tabContainer.style.display = 'flex';
     tabContainer.style.gap = '10px';
-    
+
 
 
     for (let i = 1; i <= hotel.floors; i++) {
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active-tab'));
             tabButton.classList.add('active-tab');
         });
-        if (i === 1) tabButton.classList.add('active-tab'); 
+        if (i === 1) tabButton.classList.add('active-tab');
         tabContainer.appendChild(tabButton);
     }
 
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         breadcrumb.insertAdjacentElement('afterend', controlPanel);
     }
 
-    renderFloor(1); 
+    renderFloor(1);
 });
 
 function renderFloor(floor, date = new Date().toISOString().split('T')[0]) {
@@ -83,13 +83,13 @@ function renderFloor(floor, date = new Date().toISOString().split('T')[0]) {
         roomTitle.className = 'room-title';
         roomTitle.innerText = roomId;
 
-        
+
         const newBadge = document.createElement('span');
         newBadge.className = 'badge';
         newBadge.innerText = 'New';
         newBadge.addEventListener('click', (event) => {
-            event.stopPropagation(); 
-            manageReservation(floor, room); 
+            event.stopPropagation();
+            manageReservation(floor, room);
         });
         roomTitle.appendChild(newBadge);
 
@@ -98,10 +98,10 @@ function renderFloor(floor, date = new Date().toISOString().split('T')[0]) {
         const roomInfo = document.createElement('div');
         roomInfo.className = 'room-info';
 
-        
+
         const reservations = hotel.reservations[roomId] || [];
 
-        
+
         const overlappingReservations = reservations.filter(reservation => {
             return (
                 reservation.checkInDate <= date &&
@@ -129,7 +129,7 @@ function renderFloor(floor, date = new Date().toISOString().split('T')[0]) {
                     // 예약 삭제
                     reservations.splice(index, 1); // 해당 예약 제거
                     hotel.reservations[roomId] = reservations; // 업데이트
-                    
+
                     showToast(`해당 예약건을 취소하였습니다.`);
                     renderFloor(floor, date); // UI 갱신
                 });
@@ -172,12 +172,14 @@ function manageReservation(floor, room) {
             <input type="time" id="departureTime" value="00:00" />
             <label>Cost:</label>
             <input type="number" id="cost" value="" />
-            <button id="saveReservation">저장</button>
-            <button id="cancelReservation">Cancel</button>
+            <button id="saveReservation" >저장</button>
+            <button id="cancelReservation" style="background-color:#999">닫기</button>
         </div>
     `;
 
     document.body.appendChild(modal);
+
+
 
     document.getElementById('saveReservation').addEventListener('click', () => {
         const guestName = document.getElementById('guestName').value;
@@ -188,7 +190,7 @@ function manageReservation(floor, room) {
         const cost = parseFloat(document.getElementById('cost').value);
 
         if (!guestName || !checkInDate || !checkOutDate || isNaN(cost)) {
-            showToast('required-input','warning','en');
+            showToast('required-input', 'warning', 'en');
             return;
         }
 
@@ -218,10 +220,10 @@ function manageReservation(floor, room) {
             cost,
         };
 
-        reservations.push(newReservation); 
-        hotel.reservations[roomId] = reservations; 
-
-        showToast(`해당 예약건을 추가하였습니다.`);
+        reservations.push(newReservation);
+        hotel.reservations[roomId] = reservations;
+        let lang = localStorage.getItem('lang') || 'ko'; 
+        showToast('well-done','success',lang);
         document.body.removeChild(modal);
         renderFloor(floor);
     });
@@ -238,12 +240,12 @@ function isValidDate(date) {
     return regex.test(date) && !isNaN(new Date(date).getTime());
 }
 
-// Basic styles
-// const style = document.createElement('style');
-// style.innerText = ``;
-// document.head.appendChild(style);
-
-// Add container to the DOM
 const container = document.createElement('div');
 container.id = 'hotel-container';
 document.body.appendChild(container);
+
+const sR = document.getElementById('saveReservation');
+sR.className = 'bg-blue-500 text-white px-3 py-1 rounded';
+
+const cR = document.getElementById('cancelReservation')
+cR.className = 'bg-gray-500 text-white px-3 py-1 rounded';
