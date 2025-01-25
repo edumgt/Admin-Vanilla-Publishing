@@ -3,13 +3,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   const permissionsContainer = document.getElementById("permissions");
   const permissionsTitle = document.createElement("h1");
   permissionsTitle.id = "permissions-title";
-  permissionsTitle.style.fontSize = "1.2rem";
+  permissionsTitle.style.fontSize = "1.0rem";
   permissionsTitle.style.marginBottom = "1rem";
   permissionsContainer.appendChild(permissionsTitle);
 
-  let selectedNode = null; // Track selected node
-  let selectedName = ""; // Track selected department/team name
-  let permissions = []; // Declare permissions globally
+  let selectedNode = null;
+  let selectedName = "";
+  let permissions = [];
 
   async function fetchData(url) {
     const response = await fetch(url);
@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       const unitTitle = document.createElement("h2");
       unitTitle.textContent = unit.name;
-      unitTitle.style.fontSize = "1.1rem";
+      unitTitle.style.fontSize = "1.0rem";
       unitTitle.style.marginBottom = "0.5rem";
 
       const actionsRow = document.createElement("div");

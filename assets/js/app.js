@@ -22,7 +22,7 @@ fetch('assets/mock/mock.json')
     })
     .catch(error => {
 
-        showToast('loading-error', 'error',lang);
+        showToast('loading-error', 'error', lang);
         // Load data from local storage if server data is unavailable
         const storedData = localStorage.getItem('gridData');
         if (storedData) {
@@ -77,12 +77,10 @@ class BadgeRenderer {
 
     render(props) {
         this.props = props;
-        // You can add any additional data binding logic here if needed
+
     }
 }
 
-
-// Initialize the grid
 const grid = new tui.Grid({
     el: document.getElementById('grid'),
     rowHeaders: ['rowNum', 'checkbox'],
@@ -124,16 +122,16 @@ const grid = new tui.Grid({
             align: 'center',
             text: 'V',
             renderer: {
-                type: BadgeRenderer // Use the custom renderer for the badge
+                type: BadgeRenderer
             },
             width: 60,
             resizable: false
         }
     ],
-    data: loadPageData(1, rowsPerPage), // Load initial page data
+    data: loadPageData(1, rowsPerPage),
     columnOptions: {
-        frozenCount: 2, // Freeze 3 left most columns and 
-        frozenBorderWidth: 2 // set the border width of frozen columns to be 2px.
+        frozenCount: 2,
+        frozenBorderWidth: 2
     },
     draggable: true
 });
@@ -141,7 +139,6 @@ const grid = new tui.Grid({
 
 updateDataCount();
 
-// Delete row functionality
 document.getElementById('delrow').addEventListener('click', function () {
     const chkArray = grid.getCheckedRowKeys();
     if (chkArray.length > 0) {
@@ -154,7 +151,6 @@ document.getElementById('delrow').addEventListener('click', function () {
     }
 });
 
-// Save row functionality
 document.getElementById('saverow').addEventListener('click', function () {
 
     const data = grid.getData();
@@ -192,7 +188,7 @@ document.getElementById('newrow').addEventListener('click', function () {
     const data = grid.getData();
     const hasEmptyRow = data.some(row => row.tpCd === '' || row.tpNm === '');
     if (hasEmptyRow) {
-        showToast('input-allowed', 'info',lang);
+        showToast('input-allowed', 'info', lang);
         return;
     }
 
@@ -253,9 +249,6 @@ new Pikaday({
         return `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`;
     }
 });
-
-
-
 
 document.getElementById('saveModal').addEventListener('click', () => {
     const modalForm = document.getElementById('modalForm');
@@ -404,7 +397,7 @@ const menuLinks = document.querySelectorAll(".gnb-item");
 
 // 활성화 상태 설정
 menuLinks.forEach((link) => {
-    
+
     if (link.getAttribute("href") === currentPage) {
         console.log(currentPage);
         link.classList.add("active");
@@ -431,8 +424,11 @@ const translations = {
             logs: "Logs",
             menu: "Menu",
             settings: "Settings",
+            stati: "Member Statistics",
+            flow: "Sales Statistics",
+            chain: "Chain Operation",
         },
-        breadcrumb: "Code",
+
         buttons: {
             search: "Search",
             reset: "Reset Search",
@@ -440,7 +436,7 @@ const translations = {
             delete: "Delete",
             save: "Save",
         },
-        
+
     },
     ko: {
         menu: "메뉴",
@@ -458,8 +454,11 @@ const translations = {
             logs: "로그관리",
             menu: "메뉴관리",
             settings: "설정관리",
+            stati: "회원통계",
+            flow: "매출통계",
+            chain: "체인운영",
         },
-        breadcrumb: "입출고관리",
+
         buttons: {
             search: "검색",
             reset: "검색 초기화",
@@ -467,7 +466,7 @@ const translations = {
             delete: "삭제",
             save: "저장",
         },
-        
+
     },
     ja: {
         menu: "メニュー",
@@ -485,8 +484,11 @@ const translations = {
             logs: "ログ管理",
             menu: "メニュー管理",
             settings: "設定管理",
+            stati: "会員統計",
+            flow: "売上統計",
+            chain: "チェーン運営",
         },
-        breadcrumb: "コード管理",
+
         buttons: {
             search: "検索",
             reset: "検索をリセット",
@@ -494,7 +496,7 @@ const translations = {
             delete: "削除",
             save: "保存",
         },
-        
+
     },
 };
 
@@ -505,14 +507,13 @@ const buttons = document.querySelectorAll("#content button span");
 const tabs = document.querySelectorAll(".tabs li a span");
 const offCanvasItems = document.querySelectorAll("#offCanvas .menu-item span");
 
-// 언어 변경 이벤트 핸들러
+
 languageSwitcher.addEventListener("click", function (event) {
     const lang = event.target.getAttribute("data-lang");
     localStorage.setItem('lang', lang);
     if (!lang || !translations[lang]) return;
 
-    // Breadcrumb 텍스트 변경
-    breadcrumb.textContent = translations[lang].breadcrumb;
+
 
     // 탭 메뉴 텍스트 변경
     const tabLabels = translations[lang].tabs;
@@ -529,7 +530,16 @@ languageSwitcher.addEventListener("click", function (event) {
     offCanvasItems[1].textContent = offCanvasLabels.permissions;
     offCanvasItems[2].textContent = offCanvasLabels.logs;
     offCanvasItems[3].textContent = offCanvasLabels.menu;
-    //offCanvasItems[4].textContent = offCanvasLabels.settings;
+
+    if (currentPage.includes("stati")) {
+        breadcrumb.textContent = offCanvasLabels.stati;
+    } else if (currentPage.includes("flow")) {
+        breadcrumb.textContent = offCanvasLabels.flow;
+    } else if (currentPage.includes("chain")) {
+        breadcrumb.textContent = offCanvasLabels.chain;
+    } else {
+        breadcrumb.textContent = offCanvasLabels.config;
+    }
 
     // 버튼 텍스트 변경
     const buttonLabels = translations[lang].buttons;
@@ -546,10 +556,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const appBrand = new AppBrand('logo', 'EDUMGT');
     const lang = localStorage.getItem('lang');
     console.log("lang: " + lang);
-  
-    // Breadcrumb 텍스트 변경
-    breadcrumb.textContent = translations[lang].breadcrumb;
-  
+
+
+
     // 탭 메뉴 텍스트 변경
     const tabLabels = translations[lang].tabs;
     tabs[0].textContent = tabLabels.system;
@@ -558,15 +567,24 @@ document.addEventListener('DOMContentLoaded', () => {
     tabs[3].textContent = tabLabels.schedule;
     tabs[4].textContent = tabLabels.statistics;
     tabs[5].textContent = tabLabels.settings;
-  
+
     // OffCanvas 메뉴 텍스트 변경
     const offCanvasLabels = translations[lang].offCanvas;
     offCanvasItems[0].textContent = offCanvasLabels.code;
     offCanvasItems[1].textContent = offCanvasLabels.permissions;
     offCanvasItems[2].textContent = offCanvasLabels.logs;
     offCanvasItems[3].textContent = offCanvasLabels.menu;
-    //offCanvasItems[4].textContent = offCanvasLabels.settings;
-  
+
+    if (currentPage.includes("stati")) {
+        breadcrumb.textContent = offCanvasLabels.stati;
+    } else if (currentPage.includes("flow")) {
+        breadcrumb.textContent = offCanvasLabels.flow;
+    } else if (currentPage.includes("chain")) {
+        breadcrumb.textContent = offCanvasLabels.chain;
+    } else {
+        breadcrumb.textContent = offCanvasLabels.config;
+    }
+
     // 버튼 텍스트 변경
     const buttonLabels = translations[lang].buttons;
     buttons[0].textContent = buttonLabels.search;
@@ -574,4 +592,4 @@ document.addEventListener('DOMContentLoaded', () => {
     buttons[2].textContent = buttonLabels.new;
     buttons[3].textContent = buttonLabels.delete;
     buttons[4].textContent = buttonLabels.save;
-  });
+});

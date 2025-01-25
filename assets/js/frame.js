@@ -1,9 +1,6 @@
 const currentPage = window.location.pathname.split("/").pop();
-
 const menuLinks = document.querySelectorAll(".gnb-item");
-
 const menuLinks2 = document.querySelectorAll(".menu-item");
-
 menuLinks2.forEach((link) => {
     if (link.getAttribute("href") === currentPage) {
         menuLinks.forEach((link) => {
@@ -30,13 +27,12 @@ const translations = {
             settings: "Settings",
         },
         offCanvas: {
-            code: "Member Statistics",
-            permissions: "Sales Statistics",
-            logs: "Production Statistics",
-            menu: "Sales Statistics",
-            settings: "Performance",
+            calendar: "Work Schedule",
+            trello: "Project Schedule",
+            timeline: "Production Schedule",
+
         },
-        breadcrumb: "Member Statistics",
+        
         buttons: {
             search: "Search",
             reset: "Reset Search",
@@ -57,13 +53,11 @@ const translations = {
             settings: "설정관리",
         },
         offCanvas: {
-            code: "회원통계",
-            permissions: "매출통계",
-            logs: "생산통계",
-            menu: "판매통계",
-            settings: "실적",
+            calendar: "업무일정",
+            trello: "프로젝트일정",
+            timeline: "생산일정",
         },
-        breadcrumb: "회원통계",
+        
         buttons: {
             search: "검색",
             reset: "검색 초기화",
@@ -84,13 +78,11 @@ const translations = {
             settings: "設定管理",
         },
         offCanvas: {
-            code: "会員統計",
-            permissions: "売上統計",
-            logs: "生産統計",
-            menu: "販売統計",
-            settings: "業績",
+            calendar: "業務日程",
+            trello: "プロジェクト日程",
+            timeline: "生産日程",
         },
-        breadcrumb: "会員統計",
+        
         buttons: {
             search: "検索",
             reset: "検索をリセット",
@@ -114,7 +106,7 @@ languageSwitcher.addEventListener("click", function (event) {
     localStorage.setItem('lang', lang);
     if (!lang || !translations[lang]) return;
 
-    breadcrumb.textContent = translations[lang].breadcrumb;
+    
 
     const tabLabels = translations[lang].tabs;
     tabs[0].textContent = tabLabels.system;
@@ -125,11 +117,18 @@ languageSwitcher.addEventListener("click", function (event) {
     tabs[5].textContent = tabLabels.settings;
 
     const offCanvasLabels = translations[lang].offCanvas;
-    offCanvasItems[0].textContent = offCanvasLabels.code;
-    offCanvasItems[1].textContent = offCanvasLabels.permissions;
-    offCanvasItems[2].textContent = offCanvasLabels.logs;
-    offCanvasItems[3].textContent = offCanvasLabels.menu;
-    //offCanvasItems[4].textContent = offCanvasLabels.settings;
+    offCanvasItems[0].textContent = offCanvasLabels.calendar;
+    offCanvasItems[1].textContent = offCanvasLabels.trello;
+    offCanvasItems[2].textContent = offCanvasLabels.timeline;
+    if (currentPage.includes("calendar")) {
+        breadcrumb.textContent = offCanvasLabels.calendar;
+    } else if (currentPage.includes("trello")) {
+        breadcrumb.textContent = offCanvasLabels.trello;
+    } else if (currentPage.includes("timeline")) {
+        breadcrumb.textContent = offCanvasLabels.timeline;
+    } else {
+        breadcrumb.textContent = offCanvasLabels.timeline;
+    }
 
 });
 
@@ -138,8 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const lang = localStorage.getItem('lang');
     console.log("lang: " + lang);
   
-    // Breadcrumb 텍스트 변경
-    breadcrumb.textContent = translations[lang].breadcrumb;
+    
   
     // 탭 메뉴 텍스트 변경
     const tabLabels = translations[lang].tabs;
@@ -150,21 +148,19 @@ document.addEventListener('DOMContentLoaded', () => {
     tabs[4].textContent = tabLabels.statistics;
     tabs[5].textContent = tabLabels.settings;
   
-    // OffCanvas 메뉴 텍스트 변경
     const offCanvasLabels = translations[lang].offCanvas;
-    offCanvasItems[0].textContent = offCanvasLabels.code;
-    offCanvasItems[1].textContent = offCanvasLabels.permissions;
-    offCanvasItems[2].textContent = offCanvasLabels.logs;
-    offCanvasItems[3].textContent = offCanvasLabels.menu;
-    //offCanvasItems[4].textContent = offCanvasLabels.settings;
-  
-    // 버튼 텍스트 변경
-    // const buttonLabels = translations[lang].buttons;
-    // buttons[0].textContent = buttonLabels.search;
-    // buttons[1].textContent = buttonLabels.reset;
-    // buttons[2].textContent = buttonLabels.new;
-    // buttons[3].textContent = buttonLabels.delete;
-    // buttons[4].textContent = buttonLabels.save;
+    offCanvasItems[0].textContent = offCanvasLabels.calendar;
+    offCanvasItems[1].textContent = offCanvasLabels.trello;
+    offCanvasItems[2].textContent = offCanvasLabels.timeline;
+    if (currentPage.includes("calendar")) {
+        breadcrumb.textContent = offCanvasLabels.calendar;
+    } else if (currentPage.includes("trello")) {
+        breadcrumb.textContent = offCanvasLabels.trello;
+    } else if (currentPage.includes("timeline")) {
+        breadcrumb.textContent = offCanvasLabels.timeline;
+    } else {
+        breadcrumb.textContent = offCanvasLabels.timeline;
+    }
   });
 
 

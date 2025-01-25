@@ -121,24 +121,21 @@ const menuConfigurations = {
         { href: 'orgni.html', text: '조직도구성' },
         { href: 'attend.html', text: '근태관리' },
         { href: 'total.html', text: '인센티브' },
-        { href: '#', text: '회의일정' },
-        { href: '#', text: '이벤트' }
+
     ],
 
     'calendar.html': [
         { href: 'calendar.html', text: '업무일정' },
         { href: 'trello.html', text: '프로젝트일정' },
         { href: 'timeline.html', text: '생산일정' },
-        { href: '#', text: '회의일정' },
-        { href: '#', text: '이벤트' }
+ 
     ],
 
     'chain.html': [
         { href: 'stati.html', text: '회원통계' },
         { href: 'flow.html', text: '매출통계' },
         { href: 'chain.html', text: '체인운영' },
-        { href: '#', text: '판매통계' },
-        { href: '#', text: '실적' }
+
     ],
 
     'city.html': [
@@ -166,8 +163,7 @@ const menuConfigurations = {
         { href: 'stati.html', text: '회원통계' },
         { href: 'flow.html', text: '매출통계' },
         { href: 'chain.html', text: '체인운영' },
-        { href: '#', text: '판매통계' },
-        { href: '#', text: '실적' }
+
     ],
 
     'hospital.html': [
@@ -205,8 +201,7 @@ const menuConfigurations = {
         { href: 'orgni.html', text: '조직도구성' },
         { href: 'attend.html', text: '근태관리' },
         { href: 'total.html', text: '인센티브' },
-        { href: '#', text: '회의일정' },
-        { href: '#', text: '이벤트' }
+
     ],
 
     'orgtree.html': [
@@ -221,8 +216,7 @@ const menuConfigurations = {
         { href: 'stati.html', text: '회원통계' },
         { href: 'flow.html', text: '매출통계' },
         { href: 'chain.html', text: '체인운영' },
-        { href: '#', text: '판매통계' },
-        { href: '#', text: '실적' }
+
     ],
 
     'survey.html': [
@@ -242,24 +236,21 @@ const menuConfigurations = {
         { href: 'calendar.html', text: '업무일정' },
         { href: 'trello.html', text: '프로젝트일정' },
         { href: 'timeline.html', text: '생산일정' },
-        { href: '#', text: '회의일정' },
-        { href: '#', text: '이벤트' }
+  
     ],
 
     'total.html': [
         { href: 'orgni.html', text: '조직도구성' },
         { href: 'attend.html', text: '근태관리' },
         { href: 'total.html', text: '인센티브' },
-        { href: '#', text: '회의일정' },
-        { href: '#', text: '이벤트' }
+
     ],
 
     'trello.html': [
         { href: 'calendar.html', text: '업무일정' },
         { href: 'trello.html', text: '프로젝트일정' },
         { href: 'timeline.html', text: '생산일정' },
-        { href: '#', text: '회의일정' },
-        { href: '#', text: '이벤트' }
+  
     ],
 
     'wms.html': [

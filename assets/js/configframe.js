@@ -1,9 +1,6 @@
 const currentPage = window.location.pathname.split("/").pop();
-
 const menuLinks = document.querySelectorAll(".gnb-item");
-
 const menuLinks2 = document.querySelectorAll(".menu-item");
-
 menuLinks2.forEach((link) => {
     if (link.getAttribute("href") === currentPage) {
         menuLinks.forEach((link) => {
@@ -13,10 +10,9 @@ menuLinks2.forEach((link) => {
                 link.classList.remove("active");
             }
         });
-    } 
+    }
 });
 
-/* 다국어 */
 const translations = {
     en: {
         menu: "Menu",
@@ -29,21 +25,12 @@ const translations = {
             settings: "Settings",
         },
         offCanvas: {
-            code: "Member Statistics",
-            permissions: "Sales Statistics",
-            logs: "Production Statistics",
-            menu: "Sales Statistics",
-            settings: "Performance",
+            config: "System log",
+            network: "Consultant",
+            survey: "Survey",
         },
-        breadcrumb: "Member Statistics",
-        buttons: {
-            search: "Search",
-            reset: "Reset Search",
-            new: "New",
-            delete: "Delete",
-            save: "Save",
-        },
-        
+
+
     },
     ko: {
         menu: "메뉴",
@@ -56,21 +43,12 @@ const translations = {
             settings: "설정관리",
         },
         offCanvas: {
-            code: "회원통계",
-            permissions: "매출통계",
-            logs: "생산통계",
-            menu: "판매통계",
-            settings: "실적",
+            config: "시스템 로그",
+            network: "컨설팅 지정",
+            survey: "서베이",
         },
-        breadcrumb: "회원통계",
-        buttons: {
-            search: "검색",
-            reset: "검색 초기화",
-            new: "신규",
-            delete: "삭제",
-            save: "저장",
-        },
-        
+
+
     },
     ja: {
         menu: "メニュー",
@@ -83,24 +61,14 @@ const translations = {
             settings: "設定管理",
         },
         offCanvas: {
-            code: "会員統計",
-            permissions: "売上統計",
-            logs: "生産統計",
-            menu: "販売統計",
-            settings: "業績",
+            config: "システムログ",
+            network: "コンサルティングの指定",
+            survey: "サーベイ"
         },
-        breadcrumb: "会員統計",
-        buttons: {
-            search: "検索",
-            reset: "検索をリセット",
-            new: "新規",
-            delete: "削除",
-            save: "保存",
-        },
-        
+
+
     },
 };
-
 
 const languageSwitcher = document.getElementById("languageSwitcher");
 const breadcrumb = document.querySelector(".breadcrumb");
@@ -113,8 +81,6 @@ languageSwitcher.addEventListener("click", function (event) {
     localStorage.setItem('lang', lang);
     if (!lang || !translations[lang]) return;
 
-    breadcrumb.textContent = translations[lang].breadcrumb;
-
     const tabLabels = translations[lang].tabs;
     tabs[0].textContent = tabLabels.system;
     tabs[1].textContent = tabLabels.organization;
@@ -124,11 +90,18 @@ languageSwitcher.addEventListener("click", function (event) {
     tabs[5].textContent = tabLabels.settings;
 
     const offCanvasLabels = translations[lang].offCanvas;
-    offCanvasItems[0].textContent = offCanvasLabels.code;
-    offCanvasItems[1].textContent = offCanvasLabels.permissions;
-    offCanvasItems[2].textContent = offCanvasLabels.logs;
-    //offCanvasItems[3].textContent = offCanvasLabels.menu;
-    //offCanvasItems[4].textContent = offCanvasLabels.settings;
+    offCanvasItems[0].textContent = offCanvasLabels.config;
+    offCanvasItems[1].textContent = offCanvasLabels.network;
+    offCanvasItems[2].textContent = offCanvasLabels.survey;
+
+    if (currentPage.includes("network")) {
+        breadcrumb.textContent = offCanvasLabels.network;
+    } else if (currentPage.includes("survey")) {
+        breadcrumb.textContent = offCanvasLabels.survey;
+    } else {
+        breadcrumb.textContent = offCanvasLabels.config;
+    }
+
 
 });
 
@@ -136,11 +109,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const appBrand = new AppBrand('logo', 'EDUMGT');
     const lang = localStorage.getItem('lang');
     console.log("lang: " + lang);
-  
-    // Breadcrumb 텍스트 변경
-    breadcrumb.textContent = translations[lang].breadcrumb;
-  
-    // 탭 메뉴 텍스트 변경
+
+
     const tabLabels = translations[lang].tabs;
     tabs[0].textContent = tabLabels.system;
     tabs[1].textContent = tabLabels.organization;
@@ -148,22 +118,20 @@ document.addEventListener('DOMContentLoaded', () => {
     tabs[3].textContent = tabLabels.schedule;
     tabs[4].textContent = tabLabels.statistics;
     tabs[5].textContent = tabLabels.settings;
-  
-    // OffCanvas 메뉴 텍스트 변경
+
+
     const offCanvasLabels = translations[lang].offCanvas;
-    offCanvasItems[0].textContent = offCanvasLabels.code;
-    offCanvasItems[1].textContent = offCanvasLabels.permissions;
-    offCanvasItems[2].textContent = offCanvasLabels.logs;
-    //offCanvasItems[3].textContent = offCanvasLabels.menu;
-    //offCanvasItems[4].textContent = offCanvasLabels.settings;
-  
-    // 버튼 텍스트 변경
-    // const buttonLabels = translations[lang].buttons;
-    // buttons[0].textContent = buttonLabels.search;
-    // buttons[1].textContent = buttonLabels.reset;
-    // buttons[2].textContent = buttonLabels.new;
-    // buttons[3].textContent = buttonLabels.delete;
-    // buttons[4].textContent = buttonLabels.save;
-  });
+    offCanvasItems[0].textContent = offCanvasLabels.config;
+    offCanvasItems[1].textContent = offCanvasLabels.network;
+    offCanvasItems[2].textContent = offCanvasLabels.survey;
+
+    if (currentPage.includes("network")) {
+        breadcrumb.textContent = offCanvasLabels.network;
+    } else if (currentPage.includes("survey")) {
+        breadcrumb.textContent = offCanvasLabels.survey;
+    } else {
+        breadcrumb.textContent = offCanvasLabels.config;
+    }
+});
 
 
