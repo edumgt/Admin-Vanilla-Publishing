@@ -5,6 +5,8 @@
         "required-input": "All input fields are required.",
         "request-permission": "Permission has been requested.",
         "not-allowed": "You do not have permission to access this document.",
+        "loading-error": "Error loading server data.",
+        "input-allowed": "Input is possible in row 1.",
         "surveyCompleted": "Survey completed successfully!",
         "questionAdded": "Question added successfully!",
         "questionRemoved": "Question removed successfully!"
@@ -15,6 +17,8 @@
         "required-input": "입력란의 모든 항목을 입력해야 합니다.",
         "request-permission": "권한을 요청하였습니다.",
         "not-allowed": "해당 문서에 대한 접근 권한이 없습니다.",
+        "loading-error": "서버 데이타 로딩 중 오류 입니다.",
+        "input-allowed": "1번 행에 입력 가능 합니다.",
         "surveyCompleted": "설문이 성공적으로 완료되었습니다!",
         "questionAdded": "문항이 성공적으로 추가되었습니다!",
         "questionRemoved": "문항이 성공적으로 제거되었습니다!"
@@ -25,6 +29,8 @@
         "required-input": "すべての入力項目を入力する必要があります。",
         "request-permission": "権限を要求しました。",
         "not-allowed": "この文書へのアクセス権がありません。",
+        "loading-error": "サーバーデータの読み込み中にエラーが発生しました。",
+        "input-allowed": "1行目に入力可能です。",
         "surveyCompleted": "アンケートが正常に完了しました！",
         "questionAdded": "質問が正常に追加されました！",
         "questionRemoved": "質問が正常に削除されました！"

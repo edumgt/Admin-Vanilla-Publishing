@@ -1,6 +1,6 @@
 
 const lang = localStorage.getItem('lang');
-console.log("requestPermission lang: " + lang);
+//console.log("requestPermission lang: " + lang);
 
 async function fetchDocuments() {
     const response = await fetch('assets/mock/documents.json');

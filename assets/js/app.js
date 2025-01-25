@@ -1,4 +1,5 @@
 
+const lang = localStorage.getItem('lang');
 const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
 const currentDate = new Date().toLocaleDateString('ko-KR', options).replace(/[\.]/g, '-').replace(/[\s]/g, '').substring(0, 10);
 
@@ -21,7 +22,7 @@ fetch('assets/mock/mock.json')
     })
     .catch(error => {
 
-        showToast('서버 데이타 로딩 중 오류 입니다.', 'error');
+        showToast('loading-error', 'error',lang);
         // Load data from local storage if server data is unavailable
         const storedData = localStorage.getItem('gridData');
         if (storedData) {
@@ -191,7 +192,7 @@ document.getElementById('newrow').addEventListener('click', function () {
     const data = grid.getData();
     const hasEmptyRow = data.some(row => row.tpCd === '' || row.tpNm === '');
     if (hasEmptyRow) {
-        showToast('1번행에 입력가능 합니다.', 'info');
+        showToast('input-allowed', 'info',lang);
         return;
     }
 

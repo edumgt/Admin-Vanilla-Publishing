@@ -1,4 +1,6 @@
 
+const lang = localStorage.getItem('lang');
+
 const menuLinks = document.querySelectorAll(".gnb-item");
 
 const menuLinks2 = document.querySelectorAll(".menu-item");
@@ -250,7 +252,8 @@ function saveAttendance(employeeId, dateStr) {
     localStorage.setItem('attendanceData', JSON.stringify(attendanceData));
     showAttendance();
   } else {
-    alert('Please enter both Check-In and Check-Out times.');
+    //alert('Please enter both Check-In and Check-Out times.');
+    showToast('required-input','warning',lang);
   }
 }
 
