@@ -13,13 +13,12 @@ const translations = {
             settings: "Settings",
         },
         offCanvas: {
-            code: "Member Statistics",
-            permissions: "Sales Statistics",
-            logs: "Production Statistics",
-            menu: "Sales Statistics",
-            settings: "Performance",
+            orgni: "Organization Structure",
+            attend: "Attendance Management",
+            total: "Incentive"
+
         },
-        breadcrumb: "Member Statistics",
+        
         buttons: {
             search: "Search",
             reset: "Reset Search",
@@ -40,13 +39,11 @@ const translations = {
             settings: "설정관리",
         },
         offCanvas: {
-            code: "회원통계",
-            permissions: "매출통계",
-            logs: "생산통계",
-            menu: "판매통계",
-            settings: "실적",
+            orgni: "조직도구성",
+            attend: "근태관리",
+            total: "인센티브",
         },
-        breadcrumb: "회원통계",
+        
         buttons: {
             search: "검색",
             reset: "검색 초기화",
@@ -67,13 +64,11 @@ const translations = {
             settings: "設定管理",
         },
         offCanvas: {
-            code: "会員統計",
-            permissions: "売上統計",
-            logs: "生産統計",
-            menu: "販売統計",
-            settings: "業績",
+            orgni: "組織構成",
+            attend: "勤怠管理",
+            total: "インセンティブ"
         },
-        breadcrumb: "会員統計",
+        
         buttons: {
             search: "検索",
             reset: "検索をリセット",
@@ -97,7 +92,7 @@ languageSwitcher.addEventListener("click", function (event) {
     localStorage.setItem('lang', lang);
     if (!lang || !translations[lang]) return;
 
-    breadcrumb.textContent = translations[lang].breadcrumb;
+    
 
     const tabLabels = translations[lang].tabs;
     tabs[0].textContent = tabLabels.system;
@@ -108,11 +103,16 @@ languageSwitcher.addEventListener("click", function (event) {
     tabs[5].textContent = tabLabels.settings;
 
     const offCanvasLabels = translations[lang].offCanvas;
-    offCanvasItems[0].textContent = offCanvasLabels.code;
-    offCanvasItems[1].textContent = offCanvasLabels.permissions;
-    offCanvasItems[2].textContent = offCanvasLabels.logs;
-    offCanvasItems[3].textContent = offCanvasLabels.menu;
-    //offCanvasItems[4].textContent = offCanvasLabels.settings;
+    offCanvasItems[0].textContent = offCanvasLabels.orgni;
+    offCanvasItems[1].textContent = offCanvasLabels.attend;
+    offCanvasItems[2].textContent = offCanvasLabels.total;
+    if (currentPage.includes("orgni")) {
+        breadcrumb.textContent = offCanvasLabels.orgni;
+    } else if (currentPage.includes("attend")) {
+        breadcrumb.textContent = offCanvasLabels.attend;
+    } else {
+        breadcrumb.textContent = offCanvasLabels.total;
+    }
 
 });
 
@@ -121,8 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const lang = localStorage.getItem('lang');
     console.log("lang: " + lang);
   
-    // Breadcrumb 텍스트 변경
-    breadcrumb.textContent = translations[lang].breadcrumb;
+    
   
     // 탭 메뉴 텍스트 변경
     const tabLabels = translations[lang].tabs;
@@ -133,21 +132,17 @@ document.addEventListener('DOMContentLoaded', () => {
     tabs[4].textContent = tabLabels.statistics;
     tabs[5].textContent = tabLabels.settings;
   
-    // OffCanvas 메뉴 텍스트 변경
     const offCanvasLabels = translations[lang].offCanvas;
-    offCanvasItems[0].textContent = offCanvasLabels.code;
-    offCanvasItems[1].textContent = offCanvasLabels.permissions;
-    offCanvasItems[2].textContent = offCanvasLabels.logs;
-    offCanvasItems[3].textContent = offCanvasLabels.menu;
-    //offCanvasItems[4].textContent = offCanvasLabels.settings;
-  
-    // 버튼 텍스트 변경
-    // const buttonLabels = translations[lang].buttons;
-    // buttons[0].textContent = buttonLabels.search;
-    // buttons[1].textContent = buttonLabels.reset;
-    // buttons[2].textContent = buttonLabels.new;
-    // buttons[3].textContent = buttonLabels.delete;
-    // buttons[4].textContent = buttonLabels.save;
+    offCanvasItems[0].textContent = offCanvasLabels.orgni;
+    offCanvasItems[1].textContent = offCanvasLabels.attend;
+    offCanvasItems[2].textContent = offCanvasLabels.total;
+    if (currentPage.includes("orgni")) {
+        breadcrumb.textContent = offCanvasLabels.orgni;
+    } else if (currentPage.includes("attend")) {
+        breadcrumb.textContent = offCanvasLabels.attend;
+    } else {
+        breadcrumb.textContent = offCanvasLabels.total;
+    }
   });
 
 

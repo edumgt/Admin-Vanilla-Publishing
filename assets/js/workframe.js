@@ -29,13 +29,13 @@ const translations = {
             settings: "Settings",
         },
         offCanvas: {
-            code: "Member Statistics",
-            permissions: "Sales Statistics",
-            logs: "Production Statistics",
-            menu: "Sales Statistics",
-            settings: "Performance",
+            work: "Reservation Management",
+            meeting: "Meeting Room Management",
+            hospital: "Hospital Reservation",
+            lectures: "Lecture Schedule",
+            city: "District Information"
         },
-        breadcrumb: "Member Statistics",
+        
         buttons: {
             search: "Search",
             reset: "Reset Search",
@@ -56,13 +56,13 @@ const translations = {
             settings: "설정관리",
         },
         offCanvas: {
-            code: "회원통계",
-            permissions: "매출통계",
-            logs: "생산통계",
-            menu: "판매통계",
-            settings: "실적",
+            work: "예약관리",
+            meeting: "회의실관리",
+            hospital: "병원예약",
+            lectures: "강의일정",
+            city: "행정구역정보",
         },
-        breadcrumb: "회원통계",
+        
         buttons: {
             search: "검색",
             reset: "검색 초기화",
@@ -83,13 +83,13 @@ const translations = {
             settings: "設定管理",
         },
         offCanvas: {
-            code: "会員統計",
-            permissions: "売上統計",
-            logs: "生産統計",
-            menu: "販売統計",
-            settings: "業績",
+            work: "予約管理",
+            meeting: "会議室管理",
+            hospital: "病院予約",
+            lectures: "講義日程",
+            city: "行政区情報",
         },
-        breadcrumb: "会員統計",
+        
         buttons: {
             search: "検索",
             reset: "検索をリセット",
@@ -113,7 +113,7 @@ languageSwitcher.addEventListener("click", function (event) {
     localStorage.setItem('lang', lang);
     if (!lang || !translations[lang]) return;
 
-    breadcrumb.textContent = translations[lang].breadcrumb;
+    
 
     const tabLabels = translations[lang].tabs;
     tabs[0].textContent = tabLabels.system;
@@ -124,11 +124,23 @@ languageSwitcher.addEventListener("click", function (event) {
     tabs[5].textContent = tabLabels.settings;
 
     const offCanvasLabels = translations[lang].offCanvas;
-    offCanvasItems[0].textContent = offCanvasLabels.code;
-    offCanvasItems[1].textContent = offCanvasLabels.permissions;
-    offCanvasItems[2].textContent = offCanvasLabels.logs;
-    offCanvasItems[3].textContent = offCanvasLabels.menu;
-    //offCanvasItems[4].textContent = offCanvasLabels.settings;
+    offCanvasItems[0].textContent = offCanvasLabels.work;
+    offCanvasItems[1].textContent = offCanvasLabels.meeting;
+    offCanvasItems[2].textContent = offCanvasLabels.hospital;
+    offCanvasItems[3].textContent = offCanvasLabels.lectures;
+    offCanvasItems[4].textContent = offCanvasLabels.city;
+    
+    if (currentPage.includes("work")) {
+        breadcrumb.textContent = offCanvasLabels.work;
+    } else if (currentPage.includes("meeting")) {
+        breadcrumb.textContent = offCanvasLabels.meeting;
+    } else if (currentPage.includes("hospital")) {
+        breadcrumb.textContent = offCanvasLabels.hospital;
+    } else if (currentPage.includes("lectures")) {
+        breadcrumb.textContent = offCanvasLabels.lectures;
+    } else {
+        breadcrumb.textContent = offCanvasLabels.city;
+    }
 
 });
 
@@ -137,7 +149,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const lang = localStorage.getItem('lang');
     console.log("lang: " + lang);
 
-    breadcrumb.textContent = translations[lang].breadcrumb;
 
     const tabLabels = translations[lang].tabs;
     tabs[0].textContent = tabLabels.system;
@@ -148,10 +159,23 @@ document.addEventListener('DOMContentLoaded', () => {
     tabs[5].textContent = tabLabels.settings;
 
     const offCanvasLabels = translations[lang].offCanvas;
-    offCanvasItems[0].textContent = offCanvasLabels.code;
-    offCanvasItems[1].textContent = offCanvasLabels.permissions;
-    offCanvasItems[2].textContent = offCanvasLabels.logs;
-    offCanvasItems[3].textContent = offCanvasLabels.menu;
+    offCanvasItems[0].textContent = offCanvasLabels.work;
+    offCanvasItems[1].textContent = offCanvasLabels.meeting;
+    offCanvasItems[2].textContent = offCanvasLabels.hospital;
+    offCanvasItems[3].textContent = offCanvasLabels.lectures;
+    offCanvasItems[4].textContent = offCanvasLabels.city;
+    
+    if (currentPage.includes("work")) {
+        breadcrumb.textContent = offCanvasLabels.work;
+    } else if (currentPage.includes("meeting")) {
+        breadcrumb.textContent = offCanvasLabels.meeting;
+    } else if (currentPage.includes("hospital")) {
+        breadcrumb.textContent = offCanvasLabels.hospital;
+    } else if (currentPage.includes("lectures")) {
+        breadcrumb.textContent = offCanvasLabels.lectures;
+    } else {
+        breadcrumb.textContent = offCanvasLabels.city;
+    }
 });
 
 

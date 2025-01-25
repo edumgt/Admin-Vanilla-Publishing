@@ -391,11 +391,7 @@ if (rows.length > 0) {
 
 
 const currentPage = window.location.pathname.split("/").pop();
-
-// 모든 메뉴 링크 가져오기
 const menuLinks = document.querySelectorAll(".gnb-item");
-
-// 활성화 상태 설정
 menuLinks.forEach((link) => {
 
     if (link.getAttribute("href") === currentPage) {
@@ -427,6 +423,10 @@ const translations = {
             stati: "Member Statistics",
             flow: "Sales Statistics",
             chain: "Chain Operation",
+            system: "Code Management",
+            orgtree: "Permission Management",
+            document: "Document Management",
+            wms: "WMS"
         },
 
         buttons: {
@@ -457,6 +457,10 @@ const translations = {
             stati: "회원통계",
             flow: "매출통계",
             chain: "체인운영",
+            system: "코드관리",
+            orgtree: "권한관리",
+            document: "문서관리",
+            wms: "WMS",
         },
 
         buttons: {
@@ -487,6 +491,10 @@ const translations = {
             stati: "会員統計",
             flow: "売上統計",
             chain: "チェーン運営",
+            system: "コード管理",
+            orgtree: "権限管理",
+            document: "文書管理",
+            wms: "WMS",
         },
 
         buttons: {
@@ -526,10 +534,13 @@ languageSwitcher.addEventListener("click", function (event) {
 
     // OffCanvas 메뉴 텍스트 변경
     const offCanvasLabels = translations[lang].offCanvas;
-    offCanvasItems[0].textContent = offCanvasLabels.code;
-    offCanvasItems[1].textContent = offCanvasLabels.permissions;
-    offCanvasItems[2].textContent = offCanvasLabels.logs;
-    offCanvasItems[3].textContent = offCanvasLabels.menu;
+    if (currentPage.includes("stati")) {
+    offCanvasItems[0].textContent = offCanvasLabels.stati;}
+    if (currentPage.includes("system")) {
+    offCanvasItems[0].textContent = offCanvasLabels.system;}
+    offCanvasItems[1].textContent = offCanvasLabels.flow;
+    offCanvasItems[2].textContent = offCanvasLabels.chain;
+    offCanvasItems[3].textContent = offCanvasLabels.config;
 
     if (currentPage.includes("stati")) {
         breadcrumb.textContent = offCanvasLabels.stati;
@@ -537,6 +548,8 @@ languageSwitcher.addEventListener("click", function (event) {
         breadcrumb.textContent = offCanvasLabels.flow;
     } else if (currentPage.includes("chain")) {
         breadcrumb.textContent = offCanvasLabels.chain;
+    } else if (currentPage.includes("system")) {
+        breadcrumb.textContent = offCanvasLabels.system;
     } else {
         breadcrumb.textContent = offCanvasLabels.config;
     }
@@ -568,12 +581,14 @@ document.addEventListener('DOMContentLoaded', () => {
     tabs[4].textContent = tabLabels.statistics;
     tabs[5].textContent = tabLabels.settings;
 
-    // OffCanvas 메뉴 텍스트 변경
     const offCanvasLabels = translations[lang].offCanvas;
-    offCanvasItems[0].textContent = offCanvasLabels.code;
-    offCanvasItems[1].textContent = offCanvasLabels.permissions;
-    offCanvasItems[2].textContent = offCanvasLabels.logs;
-    offCanvasItems[3].textContent = offCanvasLabels.menu;
+    if (currentPage.includes("stati")) {
+    offCanvasItems[0].textContent = offCanvasLabels.stati;}
+    if (currentPage.includes("system")) {
+    offCanvasItems[0].textContent = offCanvasLabels.system;}
+    offCanvasItems[1].textContent = offCanvasLabels.flow;
+    offCanvasItems[2].textContent = offCanvasLabels.chain;
+    
 
     if (currentPage.includes("stati")) {
         breadcrumb.textContent = offCanvasLabels.stati;
@@ -581,6 +596,8 @@ document.addEventListener('DOMContentLoaded', () => {
         breadcrumb.textContent = offCanvasLabels.flow;
     } else if (currentPage.includes("chain")) {
         breadcrumb.textContent = offCanvasLabels.chain;
+    } else if (currentPage.includes("system")) {
+        breadcrumb.textContent = offCanvasLabels.system;
     } else {
         breadcrumb.textContent = offCanvasLabels.config;
     }

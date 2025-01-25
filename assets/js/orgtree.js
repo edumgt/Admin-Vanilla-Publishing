@@ -1,9 +1,6 @@
 const currentPage = window.location.pathname.split("/").pop();
-
 const menuLinks = document.querySelectorAll(".gnb-item");
-
 const menuLinks2 = document.querySelectorAll(".menu-item");
-
 menuLinks2.forEach((link) => {
   if (link.getAttribute("href") === currentPage) {
     menuLinks.forEach((link) => {
@@ -29,13 +26,13 @@ const translations = {
       settings: "Settings",
     },
     offCanvas: {
-      code: "Code",
-      permissions: "Permissions",
-      logs: "Logs",
-      menu: "Menu",
-      settings: "Settings",
+      system: "Code Management",
+      orgtree: "Permission Management",
+      document: "Document Management",
+      wms: "WMS"
+
     },
-    breadcrumb: "Code",
+
     buttons: {
       search: "Search",
       reset: "Reset Search",
@@ -43,7 +40,7 @@ const translations = {
       delete: "Delete",
       save: "Save",
     },
-    
+
   },
   ko: {
     menu: "메뉴",
@@ -56,13 +53,12 @@ const translations = {
       settings: "설정관리",
     },
     offCanvas: {
-      code: "입출고관리",
-      permissions: "권한관리",
-      logs: "로그관리",
-      menu: "메뉴관리",
-      settings: "설정관리",
+      system: "코드관리",
+      orgtree: "권한관리",
+      document: "문서관리",
+      wms: "WMS",
     },
-    breadcrumb: "입출고관리",
+
     buttons: {
       search: "검색",
       reset: "검색 초기화",
@@ -70,7 +66,7 @@ const translations = {
       delete: "삭제",
       save: "저장",
     },
-    
+
   },
   ja: {
     menu: "メニュー",
@@ -83,13 +79,12 @@ const translations = {
       settings: "設定管理",
     },
     offCanvas: {
-      code: "コード管理",
-      permissions: "権限管理",
-      logs: "ログ管理",
-      menu: "メニュー管理",
-      settings: "設定管理",
+      system: "コード管理",
+      orgtree: "権限管理",
+      document: "文書管理",
+      wms: "WMS"
     },
-    breadcrumb: "コード管理",
+    
     buttons: {
       search: "検索",
       reset: "検索をリセット",
@@ -97,7 +92,7 @@ const translations = {
       delete: "削除",
       save: "保存",
     },
-    
+
   },
 };
 
@@ -114,8 +109,7 @@ languageSwitcher.addEventListener("click", function (event) {
   localStorage.setItem('lang', lang);
   if (!lang || !translations[lang]) return;
 
-  // Breadcrumb 텍스트 변경
-  breadcrumb.textContent = translations[lang].breadcrumb;
+
 
   // 탭 메뉴 텍스트 변경
   const tabLabels = translations[lang].tabs;
@@ -128,19 +122,19 @@ languageSwitcher.addEventListener("click", function (event) {
 
   // OffCanvas 메뉴 텍스트 변경
   const offCanvasLabels = translations[lang].offCanvas;
-  offCanvasItems[0].textContent = offCanvasLabels.code;
-  offCanvasItems[1].textContent = offCanvasLabels.permissions;
-  offCanvasItems[2].textContent = offCanvasLabels.logs;
-  offCanvasItems[3].textContent = offCanvasLabels.menu;
-  //offCanvasItems[4].textContent = offCanvasLabels.settings;
-
-  // 버튼 텍스트 변경
-  // const buttonLabels = translations[lang].buttons;
-  // buttons[0].textContent = buttonLabels.search;
-  // buttons[1].textContent = buttonLabels.reset;
-  // buttons[2].textContent = buttonLabels.new;
-  // buttons[3].textContent = buttonLabels.delete;
-  // buttons[4].textContent = buttonLabels.save;
+  offCanvasItems[0].textContent = offCanvasLabels.system;
+  offCanvasItems[1].textContent = offCanvasLabels.orgtree;
+  offCanvasItems[2].textContent = offCanvasLabels.document;
+  offCanvasItems[3].textContent = offCanvasLabels.wms;
+  if (currentPage.includes("system")) {
+    breadcrumb.textContent = offCanvasLabels.system;
+  } else if (currentPage.includes("orgtree")) {
+    breadcrumb.textContent = offCanvasLabels.orgtree;
+  } else if (currentPage.includes("document")) {
+    breadcrumb.textContent = offCanvasLabels.document;
+  } else {
+    breadcrumb.textContent = offCanvasLabels.wms;
+  }
 
 });
 
@@ -149,8 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const lang = localStorage.getItem('lang');
   console.log("lang: " + lang);
 
-  // Breadcrumb 텍스트 변경
-  breadcrumb.textContent = translations[lang].breadcrumb;
+
 
   // 탭 메뉴 텍스트 변경
   const tabLabels = translations[lang].tabs;
@@ -163,18 +156,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // OffCanvas 메뉴 텍스트 변경
   const offCanvasLabels = translations[lang].offCanvas;
-  offCanvasItems[0].textContent = offCanvasLabels.code;
-  offCanvasItems[1].textContent = offCanvasLabels.permissions;
-  offCanvasItems[2].textContent = offCanvasLabels.logs;
-  offCanvasItems[3].textContent = offCanvasLabels.menu;
-  //offCanvasItems[4].textContent = offCanvasLabels.settings;
-
-  // 버튼 텍스트 변경
-  // const buttonLabels = translations[lang].buttons;
-  // buttons[0].textContent = buttonLabels.search;
-  // buttons[1].textContent = buttonLabels.reset;
-  // buttons[2].textContent = buttonLabels.new;
-  // buttons[3].textContent = buttonLabels.delete;
-  // buttons[4].textContent = buttonLabels.save;
+  offCanvasItems[0].textContent = offCanvasLabels.system;
+  offCanvasItems[1].textContent = offCanvasLabels.orgtree;
+  offCanvasItems[2].textContent = offCanvasLabels.document;
+  offCanvasItems[3].textContent = offCanvasLabels.wms;
+  if (currentPage.includes("system")) {
+    breadcrumb.textContent = offCanvasLabels.system;
+  } else if (currentPage.includes("orgtree")) {
+    breadcrumb.textContent = offCanvasLabels.orgtree;
+  } else if (currentPage.includes("document")) {
+    breadcrumb.textContent = offCanvasLabels.document;
+  } else {
+    breadcrumb.textContent = offCanvasLabels.wms;
+  }
 });
 

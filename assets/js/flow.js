@@ -26,11 +26,8 @@ const translations = {
             settings: "Settings",
         },
         offCanvas: {
-            code: "Member Statistics",
-            permissions: "Sales Statistics",
-            logs: "Production Statistics",
-            menu: "Sales Statistics",
-            settings: "Performance",
+            stati: "Member Statistics",
+            
             flow: "Sales Statistics",
             chain: "Chain Operation",
         },
@@ -55,11 +52,8 @@ const translations = {
             settings: "설정관리",
         },
         offCanvas: {
-            code: "회원통계",
-            permissions: "매출통계",
-            logs: "생산통계",
-            menu: "판매통계",
-            settings: "실적",
+            stati: "회원통계",
+            
             flow: "매출통계",
             chain: "체인운영",
         },
@@ -84,11 +78,8 @@ const translations = {
             settings: "設定管理",
         },
         offCanvas: {
-            code: "会員統計",
-            permissions: "売上統計",
-            logs: "生産統計",
-            menu: "販売統計",
-            settings: "業績",
+            stati: "会員統計",
+            
             flow: "売上統計",
             chain: "チェーン運営",
         },
@@ -129,21 +120,17 @@ languageSwitcher.addEventListener("click", function (event) {
     tabs[4].textContent = tabLabels.statistics;
     tabs[5].textContent = tabLabels.settings;
 
-    // OffCanvas 메뉴 텍스트 변경
-    const offCanvasLabels = translations[lang].offCanvas;
-    offCanvasItems[0].textContent = offCanvasLabels.code;
-    offCanvasItems[1].textContent = offCanvasLabels.permissions;
-    offCanvasItems[2].textContent = offCanvasLabels.logs;
-    offCanvasItems[3].textContent = offCanvasLabels.menu;
 
+    const offCanvasLabels = translations[lang].offCanvas;
+    offCanvasItems[0].textContent = offCanvasLabels.stati;
+    offCanvasItems[1].textContent = offCanvasLabels.flow;
+    offCanvasItems[2].textContent = offCanvasLabels.chain;
     if (currentPage.includes("stati")) {
         breadcrumb.textContent = offCanvasLabels.stati;
     } else if (currentPage.includes("flow")) {
         breadcrumb.textContent = offCanvasLabels.flow;
-    } else if (currentPage.includes("chain")) {
-        breadcrumb.textContent = offCanvasLabels.chain;
     } else {
-        breadcrumb.textContent = offCanvasLabels.config;
+        breadcrumb.textContent = offCanvasLabels.chain;
     }
 
 });
@@ -164,21 +151,16 @@ document.addEventListener('DOMContentLoaded', () => {
     tabs[4].textContent = tabLabels.statistics;
     tabs[5].textContent = tabLabels.settings;
   
-    // OffCanvas 메뉴 텍스트 변경
     const offCanvasLabels = translations[lang].offCanvas;
-    offCanvasItems[0].textContent = offCanvasLabels.code;
-    offCanvasItems[1].textContent = offCanvasLabels.permissions;
-    offCanvasItems[2].textContent = offCanvasLabels.logs;
-    offCanvasItems[3].textContent = offCanvasLabels.menu;
-
+    offCanvasItems[0].textContent = offCanvasLabels.stati;
+    offCanvasItems[1].textContent = offCanvasLabels.flow;
+    offCanvasItems[2].textContent = offCanvasLabels.chain;
     if (currentPage.includes("stati")) {
         breadcrumb.textContent = offCanvasLabels.stati;
     } else if (currentPage.includes("flow")) {
         breadcrumb.textContent = offCanvasLabels.flow;
-    } else if (currentPage.includes("chain")) {
-        breadcrumb.textContent = offCanvasLabels.chain;
     } else {
-        breadcrumb.textContent = offCanvasLabels.config;
+        breadcrumb.textContent = offCanvasLabels.chain;
     }
   });
 
