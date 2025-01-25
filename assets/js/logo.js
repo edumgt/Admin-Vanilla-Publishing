@@ -14,7 +14,7 @@ function saveModal() {
     }
     document.getElementById('modal').classList.add('hidden');
     saveData(grid.getData());
-    showToast('well-done', 'success','en');
+    showToast('well-done', 'success', 'en');
 }
 
 
@@ -451,9 +451,11 @@ class AppBrand {
 }
 
 // Initialize the AppBrand component
-document.addEventListener('DOMContentLoaded', () => {
-    const appBrand = new AppBrand('logo', 'EDUMGT');
-});
+// document.addEventListener('DOMContentLoaded', () => {
+//     const appBrand = new AppBrand('logo', 'EDUMGT');
+//     const lang = localStorage.getItem('lang');
+//     console.log("lang: " + lang);
+// });
 
 /* gearIcon */
 const button = document.createElement('button');
@@ -511,31 +513,16 @@ function getMsg(key, lang = 'en') {
 
 loadMessages();
 
-    function showToast(messageKey, type = 'success', lang = 'en') {
-        const message = getMsg(messageKey, lang);
-        const toastContainer = document.getElementById('toast-container');
-        const toast = document.createElement('div');
-        toast.className = `toast toast-${type} show`;
-        toast.innerText = message;
+function showToast(messageKey, type = 'success', lang = 'en') {
+    const message = getMsg(messageKey, lang);
+    const toastContainer = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type} show`;
+    toast.innerText = message;
 
-        toastContainer.appendChild(toast);
-        setTimeout(() => {
-            toast.classList.remove('show');
-            setTimeout(() => toast.remove(), 300);
-        }, 3000);
-    }
-
-/* showToast */
-// function showToast(message, type = 'success') {
-//     const toastContainer = document.getElementById('toast-container');
-//     const toast = document.createElement('div');
-//     toast.className = `toast toast-${type} show`;
-//     toast.innerText = message;
-
-//     toastContainer.appendChild(toast);
-//     setTimeout(() => {
-//         toast.classList.remove('show');
-//         setTimeout(() => toast.remove(), 300);
-//     }, 3000);
-// }
-
+    toastContainer.appendChild(toast);
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}

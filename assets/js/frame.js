@@ -22,12 +22,12 @@ const translations = {
     en: {
         menu: "Menu",
         tabs: {
-            system: "System Management",
-            organization: "Organization Management",
-            task: "Task Management",
-            schedule: "Schedule Management",
+            system: "System",
+            organization: "Organization",
+            task: "Task",
+            schedule: "Schedule",
             statistics: "Statistics",
-            settings: "Settings Management",
+            settings: "Settings",
         },
         offCanvas: {
             code: "Member Statistics",
@@ -44,7 +44,7 @@ const translations = {
             delete: "Delete",
             save: "Save",
         },
-        alert: "Demo version does not support this feature.",
+        
     },
     ko: {
         menu: "메뉴",
@@ -71,7 +71,7 @@ const translations = {
             delete: "삭제",
             save: "저장",
         },
-        alert: "데모버젼에서는 지원하지 않습니다.",
+        
     },
     ja: {
         menu: "メニュー",
@@ -98,7 +98,7 @@ const translations = {
             delete: "削除",
             save: "保存",
         },
-        alert: "デモ版ではこの機能はサポートされていません。",
+        
     },
 };
 
@@ -111,6 +111,7 @@ const offCanvasItems = document.querySelectorAll("#offCanvas .menu-item span");
 
 languageSwitcher.addEventListener("click", function (event) {
     const lang = event.target.getAttribute("data-lang");
+    localStorage.setItem('lang', lang);
     if (!lang || !translations[lang]) return;
 
     breadcrumb.textContent = translations[lang].breadcrumb;
@@ -132,7 +133,39 @@ languageSwitcher.addEventListener("click", function (event) {
 
 });
 
-
+document.addEventListener('DOMContentLoaded', () => {
+    const appBrand = new AppBrand('logo', 'EDUMGT');
+    const lang = localStorage.getItem('lang');
+    console.log("lang: " + lang);
+  
+    // Breadcrumb 텍스트 변경
+    breadcrumb.textContent = translations[lang].breadcrumb;
+  
+    // 탭 메뉴 텍스트 변경
+    const tabLabels = translations[lang].tabs;
+    tabs[0].textContent = tabLabels.system;
+    tabs[1].textContent = tabLabels.organization;
+    tabs[2].textContent = tabLabels.task;
+    tabs[3].textContent = tabLabels.schedule;
+    tabs[4].textContent = tabLabels.statistics;
+    tabs[5].textContent = tabLabels.settings;
+  
+    // OffCanvas 메뉴 텍스트 변경
+    const offCanvasLabels = translations[lang].offCanvas;
+    offCanvasItems[0].textContent = offCanvasLabels.code;
+    offCanvasItems[1].textContent = offCanvasLabels.permissions;
+    offCanvasItems[2].textContent = offCanvasLabels.logs;
+    offCanvasItems[3].textContent = offCanvasLabels.menu;
+    //offCanvasItems[4].textContent = offCanvasLabels.settings;
+  
+    // 버튼 텍스트 변경
+    // const buttonLabels = translations[lang].buttons;
+    // buttons[0].textContent = buttonLabels.search;
+    // buttons[1].textContent = buttonLabels.reset;
+    // buttons[2].textContent = buttonLabels.new;
+    // buttons[3].textContent = buttonLabels.delete;
+    // buttons[4].textContent = buttonLabels.save;
+  });
 
 
 
