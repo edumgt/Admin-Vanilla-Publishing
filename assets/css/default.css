@@ -52,9 +52,24 @@ body {
 
 /* title */
 .breadcrumb {
-  font-size: 1.0rem;
+  font-size: 1.1rem;
   font-weight: bold;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  /* background: linear-gradient(90deg, #6a11cb, #2575fc); */
+  /* -webkit-background-clip: text; */
+  /* -webkit-text-fill-color: transparent; */
+  padding: 0px 0px 10px 0px;
+  border-bottom: 2px solid #4A90E2;
+  display: inline-block;
+  transition: all 0.3s ease-in-out;
 }
+
+/* .breadcrumb:hover {
+  transform: scale(1.05);
+  text-shadow: 0 4px 10px rgba(74, 144, 226, 0.5);
+} */
 
 /* OffCanvas - LNB */
 .menu-text {
@@ -323,10 +338,6 @@ body {
   font-size: 1rem;
 }
 
-/* .flex-1 {
-  font-size: 14px;
-} */
-
 .mt-1 {
   margin-top: 0.25rem;
   border: 1px solid #888;
@@ -337,6 +348,7 @@ body {
   position: absolute;
   top: 15px;
   right: 75px;
+  
 }
 
 .dropdown-toggle::after {
@@ -350,11 +362,12 @@ body {
   color: #ffcc00;
   font-size: 1.475rem;
   cursor: pointer;
-  /* position: absolute; */
-  /* top: 0px; */
   background: none;
   border: none;
-  /* padding:0px 0px 25px 0px; */
+}
+
+.dropdown-header {
+  padding: 1rem 1rem 1rem 1.5rem;
 }
 
 .dropdown-menu {
@@ -395,6 +408,10 @@ body {
   align-items: center;
   justify-content: center;
   padding: 1rem;
+}
+
+.border-bottom {
+  border-bottom: 1px solid var(--border-color);
 }
 
 /* Toast */
@@ -577,7 +594,7 @@ input[type="checkbox"] {
 
 /* grid */
 .grid-container {
-  margin: 10px 0px 10px 0px;
+  
   background-color: #fefefe;
   padding: 20px;
   border-radius: 6px;
@@ -748,4 +765,43 @@ input[type="date"]:focus {
   padding: 5px;
   border-radius: 6px;
   margin: 3px 5px 3px 5px;
+}
+
+/* .d-flex {
+  display: flex;
+} */
+
+.align-items-center {
+  align-items: center;
+}
+
+.justify-content-between {
+  justify-content: space-between;
+}
+
+/* Handsontable 기본 컨테이너 */
+.handsontable {
+  z-index: 41 !important;
+}
+
+/* Handsontable의 헤더 */
+.ht_clone_top,
+.ht_clone_left,
+.ht_clone_top_left_corner {
+  z-index: 41 !important;
+}
+
+/* Handsontable 컨텍스트 메뉴 */
+.htContextMenu {
+  z-index: 41 !important;
+}
+
+/* Handsontable 셀 편집기 */
+.handsontable .ht_editor {
+  z-index: 41 !important;
+}
+
+/* Handsontable 툴팁 */
+.handsontable .htTooltip {
+  z-index: 41 !important;
 }

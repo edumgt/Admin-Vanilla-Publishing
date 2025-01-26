@@ -1,7 +1,4 @@
-// 모든 메뉴 링크 가져오기
 const menuLinks = document.querySelectorAll(".gnb-item");
-
-// 활성화 상태 설정
 menuLinks.forEach((link) => {
     
     if (link.getAttribute("href") === currentPage) {
@@ -12,7 +9,6 @@ menuLinks.forEach((link) => {
     }
 });
 
-// 글로벌 변수
 const canvas = document.getElementById('orgChartCanvas');
 const ctx = canvas.getContext('2d');
 const canvasWidth = canvas.width;
@@ -322,7 +318,7 @@ canvas.addEventListener('click', (e) => {
 
         // 돋보기 클릭 처리
         if (x >= clickedNode.x + 130 && x <= clickedNode.x + 150 && y >= clickedNode.y + height - 30 && y <= clickedNode.y + height - 10) {
-            showModal(clickedNode, rect.left + clickedNode.x + 130, rect.top + clickedNode.y + height - 30);
+            showModal(clickedNode, rect.left + clickedNode.x + 140, rect.top + clickedNode.y + height - 20);
         }
     }
 });

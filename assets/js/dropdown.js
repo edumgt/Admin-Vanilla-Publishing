@@ -22,8 +22,8 @@ function renderDropdown(containerId) {
                     </div>
                     <div id="dropdown-menu-shortcuts" class="dropdown-menu dropdown-menu-end">
                         <div class="dropdown-header border-bottom">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <h6 class="fs-6">Shortcuts</h6>
+                            <div class="align-items-center justify-content-between">
+                                <h6>Shortcuts</h6>
                             </div>
                         </div>
                         <div class="dropdown-scroll-container">
@@ -32,14 +32,14 @@ function renderDropdown(containerId) {
                                     <div class="dropdown-shortcuts-icon">
                                         <i class="bx bx-bell fs-6"></i>
                                     </div>
-                                    <h6 class="fs-6">To Do</h6>
+                                    <h6>To Do</h6>
                                     <small>Reminders</small>
                                 </a>
                                 <a class="dropdown-shortcuts-item col">
                                     <div class="dropdown-shortcuts-icon">
                                         <i class="bx bx-calendar fs-6"></i>
                                     </div>
-                                    <h6 class="fs-6">Appointments</h6>
+                                    <h6>Appointments</h6>
                                     <small>Calendar</small>
                                 </a>
                             </div>
@@ -48,14 +48,14 @@ function renderDropdown(containerId) {
                                     <div class="dropdown-shortcuts-icon">
                                         <i class="bx bx-cog fs-6"></i>
                                     </div>
-                                    <h6 class="fs-6">Account Settings</h6>
+                                    <h6>Account Settings</h6>
                                     <small>Settings</small>
                                 </a>
                                 <a class="dropdown-shortcuts-item col">
                                     <div class="dropdown-shortcuts-icon">
                                         <i class="bx bx-user fs-6"></i>
                                     </div>
-                                    <h6 class="fs-6">Manage Users</h6>
+                                    <h6>Manage Users</h6>
                                     <small>Users</small>
                                 </a>
                             </div>
@@ -64,33 +64,18 @@ function renderDropdown(containerId) {
                                     <div class="dropdown-shortcuts-icon">
                                         <i class="bx bx-user-check fs-6"></i>
                                     </div>
-                                    <h6 class="fs-6">Manage Roles</h6>
+                                    <h6>Manage Roles</h6>
                                     <small>User Roles</small>
                                 </a>
                                 <a class="dropdown-shortcuts-item col">
                                     <div class="dropdown-shortcuts-icon">
                                         <i class="bx bx-hourglass fs-6"></i>
                                     </div>
-                                    <h6 class="fs-6">Approval Pending</h6>
+                                    <h6>Approval Pending</h6>
                                     <small>Waiting</small>
                                 </a>
                             </div>
-                            <div class="row row-bordered g-0">
-                                <a class="dropdown-shortcuts-item col">
-                                    <div class="dropdown-shortcuts-icon">
-                                        <i class="bx bxs-report fs-6"></i>
-                                    </div>
-                                    <h6 class="fs-6">Reports</h6>
-                                    <small>Edit Templates</small>
-                                </a>
-                                <a class="dropdown-shortcuts-item col">
-                                    <div class="dropdown-shortcuts-icon">
-                                        <i class="bx bx-task fs-6"></i>
-                                    </div>
-                                    <h6 class="fs-6">Tasks</h6>
-                                    <small>Scheduled Tasks</small>
-                                </a>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>

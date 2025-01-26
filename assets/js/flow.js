@@ -1,3 +1,4 @@
+const lang = localStorage.getItem('lang');
 const currentPage = window.location.pathname.split("/").pop();
 const menuLinks = document.querySelectorAll(".gnb-item");
 const menuLinks2 = document.querySelectorAll(".menu-item");
@@ -109,8 +110,6 @@ languageSwitcher.addEventListener("click", function (event) {
     localStorage.setItem('lang', lang);
     if (!lang || !translations[lang]) return;
 
-
-
     // 탭 메뉴 텍스트 변경
     const tabLabels = translations[lang].tabs;
     tabs[0].textContent = tabLabels.system;
@@ -138,9 +137,8 @@ languageSwitcher.addEventListener("click", function (event) {
 document.addEventListener('DOMContentLoaded', () => {
     const appBrand = new AppBrand('logo', 'EDUMGT');
     const lang = localStorage.getItem('lang');
-    console.log("lang: " + lang);
+    //console.log("lang: " + lang);
   
-    
   
     // 탭 메뉴 텍스트 변경
     const tabLabels = translations[lang].tabs;
@@ -177,10 +175,10 @@ function getDataFromLocalStorage() {
         })
         .then(data => {
             localStorage.setItem('handsontableData', JSON.stringify(data));
-            console.log(localStorage.getItem('handsontableData'));
+            //console.log(localStorage.getItem('handsontableData'));
         })
         .catch(error => {
-            showToast('서버 데이타 로딩 중 오류 입니다.', 'error');
+            showToast('loading-error', 'error', lang);
         });
 
     const data = localStorage.getItem('handsontableData');

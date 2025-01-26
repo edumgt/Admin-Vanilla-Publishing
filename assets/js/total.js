@@ -127,7 +127,7 @@ function setupGrid(teams) {
 
 function fixSummaryRow(grid) {
     const gridContainer = document.getElementById("grid").querySelector(".tui-grid-container");
-    gridContainer.classList.add("w-full");
+    gridContainer.classList.add("w-full", "mt-4", "h-full");
     
     const summaryContainer = document.querySelector(".tui-grid-summary-area");
 

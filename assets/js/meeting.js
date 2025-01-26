@@ -199,7 +199,9 @@ document.getElementById('booking-form').addEventListener('submit', function (eve
     );
 
     if (conflictingBooking) {
+        closeModal();
         document.getElementById('warning-modal').classList.remove('hidden');
+        
         return;
     }
 

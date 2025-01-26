@@ -153,7 +153,7 @@ function renderFloor(floor, date = new Date().toISOString().split('T')[0]) {
 
 function manageReservation(floor, room) {
     const roomId = `${floor}-${room}`;
-    const reservations = hotel.reservations[roomId] || []; // 배열이 없을 경우 빈 배열로 설정
+    const reservations = hotel.reservations[roomId] || [];
 
     const modal = document.createElement('div');
     modal.className = 'modal';
@@ -172,14 +172,12 @@ function manageReservation(floor, room) {
             <input type="time" id="departureTime" value="00:00" />
             <label>Cost:</label>
             <input type="number" id="cost" value="" />
-            <button id="saveReservation" >저장</button>
-            <button id="cancelReservation" style="background-color:#999">닫기</button>
+            <button id="saveReservation">저장</button>
+            <button id="cancelReservation">닫기</button>
         </div>
     `;
 
     document.body.appendChild(modal);
-
-
 
     document.getElementById('saveReservation').addEventListener('click', () => {
         const guestName = document.getElementById('guestName').value;
@@ -222,8 +220,8 @@ function manageReservation(floor, room) {
 
         reservations.push(newReservation);
         hotel.reservations[roomId] = reservations;
-        let lang = localStorage.getItem('lang') || 'ko'; 
-        showToast('well-done','success',lang);
+        let lang = localStorage.getItem('lang') || 'ko';
+        showToast('well-done', 'success', lang);
         document.body.removeChild(modal);
         renderFloor(floor);
     });
@@ -242,10 +240,5 @@ function isValidDate(date) {
 
 const container = document.createElement('div');
 container.id = 'hotel-container';
+// container.classList.add("mt-4");
 document.body.appendChild(container);
-
-const sR = document.getElementById('saveReservation');
-sR.className = 'bg-blue-500 text-white px-3 py-1 rounded';
-
-const cR = document.getElementById('cancelReservation')
-cR.className = 'bg-gray-500 text-white px-3 py-1 rounded';
