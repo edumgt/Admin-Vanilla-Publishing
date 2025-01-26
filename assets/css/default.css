@@ -331,7 +331,7 @@ body {
   background-color: var(--primary-color) !important;
   color: #ffcc00 !important;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 1rem;
 }
 
 .fs-4 {

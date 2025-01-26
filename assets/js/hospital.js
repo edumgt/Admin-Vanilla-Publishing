@@ -197,13 +197,25 @@ document.addEventListener('DOMContentLoaded', () => {
         addDragAndDrop();
     }
 
-    // 탭 버튼 클릭 이벤트 처리
-    document.querySelectorAll('.tab-button').forEach(button => {
+    document.querySelectorAll('.tab-hos').forEach(button => {
         button.addEventListener('click', () => {
+            // 모든 버튼에서 'active-tab' 클래스 제거 (기존 스타일 제거)
+            document.querySelectorAll('.tab-hos').forEach(btn => btn.classList.remove('active-tab'));
+    
+            // 클릭한 버튼에 'active-tab' 클래스 추가 (활성화된 스타일 적용)
+            button.classList.add('active-tab');
+    
+            // 모든 탭 콘텐츠 숨기기
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.getElementById(button.dataset.tab).classList.add('active');
+    
+            // 클릭한 버튼의 data-tab 속성 값에 해당하는 탭 콘텐츠 보이기
+            const targetTab = document.getElementById(button.dataset.tab);
+            if (targetTab) {
+                targetTab.classList.add('active');
+            }
         });
     });
+    
 
     // Drag and Drop 기능 추가
     function addDragAndDrop() {

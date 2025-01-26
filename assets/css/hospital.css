@@ -1,3 +1,11 @@
+@import url('default.css');
+
+.tab-hos {
+    color: #555;
+    padding:0.5rem;
+    border: 1px solid #efefef;
+}
+
 .drag-handle {
     display: inline-block;
     margin-top: 10px;
