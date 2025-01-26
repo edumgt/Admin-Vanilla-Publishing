@@ -37,8 +37,8 @@ body {
 /* main content */
 #content {
   margin-left: 20px;
-  padding: 75px 40px 10px 70px;
-  box-sizing: border-box;
+  padding: 75px 30px 0px 70px;
+  /* box-sizing: border-box; */
 }
 
 
@@ -189,7 +189,7 @@ body {
 .tabs {
   display: flex;
   gap: 25px;
-  
+
 }
 
 .tabs li {
@@ -323,9 +323,9 @@ body {
   font-size: 1rem;
 }
 
-.flex-1 {
+/* .flex-1 {
   font-size: 14px;
-}
+} */
 
 .mt-1 {
   margin-top: 0.25rem;

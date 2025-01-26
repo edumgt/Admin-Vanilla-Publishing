@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const section = document.createElement('div');
         section.id = `${tab.id}-section`;
-        section.className = 'p-6 hidden';
+        section.className = 'p-4 hidden';
         root.appendChild(section);
         sections[tab.id] = section;
     });
@@ -102,9 +102,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         const grid = new tui.Grid({
             el: document.getElementById(`${sectionId}-grid`),
             data: data,
+            bodyHeight: 530,
             pageOptions: {
                 useClient: true,
-                perPage: 15  
+                perPage: 15
             },
             columns: [
                 { header: 'ID', name: 'id', width: 150, align: 'center', editor: false },
@@ -135,7 +136,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function addGridToolbar(section, grid, storageKey) {
         const toolbar = document.createElement('div');
-        toolbar.className = 'flex justify-end gap-2 mt-4';
+        toolbar.className = 'flex justify-end gap-2 ';
 
         const addButton = document.createElement('button');
         addButton.className = 'bg-blue-500 text-white px-3 py-1 rounded ';
@@ -163,7 +164,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function populateDashboard(section) {
-        section.innerHTML = `<div id="stock-chart" class="mb-8"></div><div id="monthly-outbound-chart"></div>`;
+        section.innerHTML = `<div id="stock-chart" ></div><div id="monthly-outbound-chart"></div>`;
 
         const pieOptions = {
             chart: { type: 'pie', height: 350 },
@@ -181,7 +182,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }));
 
         const lineOptions = {
-            chart: { type: 'line', height: 350 },
+            chart: { type: 'line', height: 330 },
             series: [{ name: '월별 출고량', data: monthlyOutbound.map(item => item.quantity) }],
             xaxis: { categories: monthlyOutbound.map(item => item.month) },
             title: { text: '2024년 월별 출고 추이', align: 'center' }
