@@ -1,3 +1,5 @@
+const lang = localStorage.getItem('lang');
+
 const calendar = (() => {
     const calendarContainer = document.getElementById('calendar');
     const monthNames = [
@@ -20,10 +22,10 @@ const calendar = (() => {
 
     const renderCalendar = (month, year) => {
         calendarContainer.innerHTML = '';
-        calendarContainer.className = 'w-full h-screen mt-4';
+        calendarContainer.className = 'w-full h-full mt-4';
 
         const header = document.createElement('div');
-        header.className = 'calendar-header flex justify-between items-center py-2 bg-gray-100';
+        header.className = 'calendar-header flex justify-between items-center py-2 p-2 bg-gray-100';
 
         const prevBtn = document.createElement('button');
         prevBtn.className = 'bg-blue-500  text-white font-bold px-3 py-1 rounded';
@@ -36,7 +38,7 @@ const calendar = (() => {
         nextBtn.onclick = () => changeMonth(1);
 
         const title = document.createElement('div');
-        title.className = 'text-xl text-gray-600';
+        title.className = 'text-base text-gray-600';
         title.innerText = `${year}년 ${month + 1}월`;
 
 
@@ -70,7 +72,7 @@ const calendar = (() => {
 
         for (let day = 1; day <= daysInMonth; day++) {
             const dateDiv = document.createElement('div');
-            dateDiv.className = 'py-10 px-4 border cursor-pointer relative';
+            dateDiv.className = 'py-6 px-4 border cursor-pointer relative';
             dateDiv.innerHTML = `<div class="text-md  absolute top-2 left-2">${day}</div>`;
 
             const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
@@ -79,7 +81,7 @@ const calendar = (() => {
 
             if (tasks[dateKey]) {
                 const taskList = document.createElement('ul');
-                taskList.className = 'mt-4 text-left text-lg text-gray-800';
+                taskList.className = 'mt-4 text-left text-md text-gray-800';
                 tasks[dateKey].forEach((task, index) => {
                     const taskItem = document.createElement('li');
                     taskItem.className = 'border-b py-2 flex justify-between items-center';
@@ -87,7 +89,7 @@ const calendar = (() => {
                     taskText.innerText = `- ${task}`;
                     const deleteBtn = document.createElement('button');
                     deleteBtn.className = 'text-red-500 ml-4';
-                    deleteBtn.innerText = 'X';
+                    deleteBtn.innerText = 'x';
                     deleteBtn.onclick = () => {
                         tasks[dateKey].splice(index, 1);
                         if (tasks[dateKey].length === 0) {
@@ -145,7 +147,7 @@ const calendar = (() => {
         modalHeader.className = 'flex justify-between items-center mb-4';
 
         const modalTitle = document.createElement('h3');
-        modalTitle.className = 'text-lg font-bold';
+        modalTitle.className = 'text-md font-bold';
         modalTitle.innerText = `Tasks for ${monthNames[month]} ${day}, ${year}`;
 
         const closeModal = document.createElement('i');
@@ -156,7 +158,7 @@ const calendar = (() => {
         modalHeader.appendChild(closeModal);
 
         const taskList = document.createElement('ul');
-        taskList.className = 'task-list mb-4 text-left text-lg text-gray-800';
+        taskList.className = 'task-list mb-4 text-left text-md text-gray-800';
         existingTasks.forEach((task, index) => {
             const taskItem = document.createElement('li');
             taskItem.className = 'border-b py-2 flex justify-between items-center';
@@ -172,7 +174,7 @@ const calendar = (() => {
                     delete tasks[dateKey];
                 }
                 saveTasks();
-                showToast('해당 업무를 삭제하였습니다.');
+                showToast('select-delete','success',lang);
                 modal.remove();
                 renderCalendar(currentMonth, currentYear);
                 openTaskModal(day, month, year);

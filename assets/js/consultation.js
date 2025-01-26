@@ -8,15 +8,31 @@ const statusBoxes = [
 ];
 
 // 컨설턴트 목록 데이터
-const consultants = [
-    { id: 1, name: "Alice Johnson", position: "Senior Consultant" },
-    { id: 2, name: "Bob Smith", position: "Junior Consultant" },
-    { id: 3, name: "Charlie Brown", position: "Lead Consultant" }
-];
+// const consultants = [
+//     { id: 1, name: "Alice Johnson", position: "Senior Consultant" },
+//     { id: 2, name: "Bob Smith", position: "Junior Consultant" },
+//     { id: 3, name: "Charlie Brown", position: "Lead Consultant" }
+// ];
 
 // 상담 데이터 가져오기 함수
 function fetchConsultations() {
     return JSON.parse(localStorage.getItem('consultations')) || [];
+}
+
+// 컨설턴트 목록 가져오기 함수
+async function fetchConsultants() {
+    try {
+        const response = await fetch('assets/mock/consultants.json'); // JSON 파일 경로
+        if (!response.ok) {
+            throw new Error('Failed to fetch consultants');
+        }
+        const data = await response.json();
+        localStorage.setItem('consultants', JSON.stringify(data)); // 로컬 저장
+        return data;
+    } catch (error) {
+        console.error('Error fetching consultants:', error);
+        return [];
+    }
 }
 
 // 상담 데이터 저장 함수
@@ -161,10 +177,10 @@ function renderProcessFlow() {
                     ${consultation.id}
                 </div>
                 <div>
-                    <p class="text-gray-700 text-base"><strong>Customer Name:</strong> ${consultation.customerName}</p>
-                    <p class="text-gray-700 text-base"><strong>Date:</strong> ${consultation.date}</p>
-                    <p class="text-gray-700 text-base"><strong>Log:</strong> ${consultation.log}</p>
-                    <p class="text-gray-700 text-base"><strong>Solution:</strong> ${consultation.solution}</p>
+                    <p class="text-gray-700 text-base"><strong>고객명: </strong> ${consultation.customerName}</p>
+                    <p class="text-gray-700 text-base"><strong>상담일: </strong> ${consultation.date}</p>
+                    <p class="text-gray-700 text-base"><strong>상담내용: </strong> ${consultation.log}</p>
+                    <p class="text-gray-700 text-base"><strong>제안사항: </strong> ${consultation.solution}</p>
                     ${consultation.consultant ? `<p class="text-gray-700 text-base"><strong>Consultant:</strong> ${consultation.consultant.name}</p>` : ''}
                 </div>
             </div>
@@ -184,9 +200,15 @@ function renderProcessFlow() {
 }
 
 // 컨설턴트 목록 렌더링 함수
-function renderConsultants() {
+async function renderConsultants() {
+    let consultants = JSON.parse(localStorage.getItem('consultants'));
+
+    if (!consultants) {
+        consultants = await fetchConsultants();
+    }
+
     const consultantList = document.getElementById('consultantList');
-    consultantList.innerHTML = ''; // 기존 내용을 초기화
+    consultantList.innerHTML = ''; // 기존 목록 초기화
 
     consultants.forEach(consultant => {
         const consultantItem = document.createElement('div');
@@ -211,6 +233,12 @@ function handleDragStart(event) {
 function handleDrop(event) {
     const consultantId = event.dataTransfer.getData('text/plain');
     const consultationId = event.currentTarget.dataset.id;
+
+    let consultants = JSON.parse(localStorage.getItem('consultants'));
+    
+    // if (!consultants) {
+    //     consultants = await fetchConsultants();  
+    // }
 
     const consultations = fetchConsultations();
     const consultant = consultants.find(c => c.id == consultantId);

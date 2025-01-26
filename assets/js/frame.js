@@ -135,7 +135,7 @@ languageSwitcher.addEventListener("click", function (event) {
 document.addEventListener('DOMContentLoaded', () => {
     const appBrand = new AppBrand('logo', 'EDUMGT');
     const lang = localStorage.getItem('lang');
-    console.log("lang: " + lang);
+    //console.log("lang: " + lang);
   
     
   
