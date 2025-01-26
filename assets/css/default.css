@@ -189,6 +189,7 @@ body {
 .tabs {
   display: flex;
   gap: 25px;
+  
 }
 
 .tabs li {
@@ -198,10 +199,13 @@ body {
 
 /* Member Icon */
 #memberIcon {
-  font-size: 1.2rem;
+  position: absolute;
+  right: 20px;
+  top: 2px;
+  font-size: 1.25rem;
   background: var(--bg-dark);
   border-radius: 50%;
-  padding: 0.4rem;
+  /* padding: 0.4rem; */
   transition: background 0.3s ease;
   cursor: pointer;
 }
@@ -213,12 +217,9 @@ body {
 
 /* Logo Text */
 .logo-text {
-  /* padding-left: 10px; */
   color: var(--text-color);
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: bold;
-  /* line-height: 1; */
-  /* white-space: nowrap; */
 }
 
 /* Menu Icon */
@@ -335,7 +336,7 @@ body {
 .dropdown {
   position: absolute;
   top: 15px;
-  right: 70px;
+  right: 75px;
 }
 
 .dropdown-toggle::after {

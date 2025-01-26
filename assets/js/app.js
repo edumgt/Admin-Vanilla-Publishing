@@ -577,7 +577,7 @@ languageSwitcher.addEventListener("click", function (event) {
 
 document.addEventListener('DOMContentLoaded', () => {
     const appBrand = new AppBrand('logo', 'EDUMGT');
-    const lang = localStorage.getItem('lang');
+    //const lang = localStorage.getItem('lang');
 
     const tabLabels = translations[lang].tabs;
     tabs[0].textContent = tabLabels.system;

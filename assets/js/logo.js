@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-    let lang = localStorage.getItem('lang') || 'ko'; 
-    localStorage.setItem('lang', lang); 
+    let lang = localStorage.getItem('lang') || 'ko';
+    localStorage.setItem('lang', lang);
 });
 
 
@@ -83,38 +83,38 @@ const currentFileName = window.location.pathname.split('/').pop();
 
 // Define a mapping of text to icon classes
 const iconMapping = {
-    
-        "시스템로그": "fa-clipboard-list",
-        "컨설팅지정": "fa-network-wired",
-        "코드관리": "fa-server",
-        "VM현황": "fa-server",
-        "DB관리": "fa-database",
-        "행정구역정보": "fa-map-marked-alt",
-        "방화벽": "fa-shield-alt",
-        "조직도구성": "fa-sitemap",
-        "근태관리": "fa-user-clock",
-        "인센티브": "fa-gift",
-        "회의일정": "fa-calendar-check",
-        "이벤트": "fa-calendar-day",
-        "업무일정": "fa-calendar-alt",
-        "프로젝트일정": "fa-tasks",
-        "생산일정": "fa-industry",
-        "예약관리": "fa-calendar-plus",
-        "회의실관리": "fa-door-open",
-        "병원예약": "fa-hospital",
-        "강의일정": "fa-chalkboard-teacher",
-        "회원통계": "fa-user",
-        "매출통계": "fa-chart-line",
-        "체인운영": "fa-store-alt",
-        "판매통계": "fa-chart-pie",
-        "실적": "fa-chart-bar",
-        "입출고관리": "fa-warehouse",
-        "권한관리": "fa-user-shield",
-        "문서관리": "fa-file-alt",
-        "WMS": "fa-cubes",
-        "서베이": "fa-poll",
-    
-    
+
+    "시스템로그": "fa-clipboard-list",
+    "컨설팅지정": "fa-network-wired",
+    "코드관리": "fa-server",
+    "VM현황": "fa-server",
+    "DB관리": "fa-database",
+    "행정구역정보": "fa-map-marked-alt",
+    "방화벽": "fa-shield-alt",
+    "조직도구성": "fa-sitemap",
+    "근태관리": "fa-user-clock",
+    "인센티브": "fa-gift",
+    "회의일정": "fa-calendar-check",
+    "이벤트": "fa-calendar-day",
+    "업무일정": "fa-calendar-alt",
+    "프로젝트일정": "fa-tasks",
+    "생산일정": "fa-industry",
+    "예약관리": "fa-calendar-plus",
+    "회의실관리": "fa-door-open",
+    "병원예약": "fa-hospital",
+    "강의일정": "fa-chalkboard-teacher",
+    "회원통계": "fa-user",
+    "매출통계": "fa-chart-line",
+    "체인운영": "fa-store-alt",
+    "판매통계": "fa-chart-pie",
+    "실적": "fa-chart-bar",
+    "입출고관리": "fa-warehouse",
+    "권한관리": "fa-user-shield",
+    "문서관리": "fa-file-alt",
+    "WMS": "fa-cubes",
+    "서베이": "fa-poll",
+
+
 };
 
 
@@ -130,7 +130,7 @@ const menuConfigurations = {
         { href: 'calendar.html', text: '업무일정' },
         { href: 'trello.html', text: '프로젝트일정' },
         { href: 'timeline.html', text: '생산일정' },
- 
+
     ],
 
     'chain.html': [
@@ -238,7 +238,7 @@ const menuConfigurations = {
         { href: 'calendar.html', text: '업무일정' },
         { href: 'trello.html', text: '프로젝트일정' },
         { href: 'timeline.html', text: '생산일정' },
-  
+
     ],
 
     'total.html': [
@@ -252,7 +252,7 @@ const menuConfigurations = {
         { href: 'calendar.html', text: '업무일정' },
         { href: 'trello.html', text: '프로젝트일정' },
         { href: 'timeline.html', text: '생산일정' },
-  
+
     ],
 
     'wms.html': [
@@ -399,13 +399,13 @@ const tabsData = [
 function renderTabs(containerId) {
     const container = document.getElementById(containerId);
 
-    if (!container) {
-        console.error(`Container with ID \"${containerId}\" not found.`);
-        return;
-    }
+    // if (!container) {
+    //     console.error(`Container with ID \"${containerId}\" not found.`);
+    //     return;
+    // }
 
     const tabsDiv = document.createElement("div");
-    tabsDiv.className = "tabs flex";
+    tabsDiv.className = "px-8 tabs flex";
 
     tabsData.forEach(tab => {
         const li = document.createElement("li");
@@ -440,22 +440,11 @@ class AppBrand {
     }
 
     render() {
-        this.container.innerHTML = `
-            <div class="app-brand">
-                <a href="${this.logoHref}" class="app-logo">
+        this.container.innerHTML = `<a href="${this.logoHref}">
                     <span class="logo-text">${this.brandName}</span>
-                </a>
-            </div>
-        `;
+                </a>`;
     }
 }
-
-// Initialize the AppBrand component
-// document.addEventListener('DOMContentLoaded', () => {
-//     const appBrand = new AppBrand('logo', 'EDUMGT');
-//     const lang = localStorage.getItem('lang');
-//     console.log("lang: " + lang);
-// });
 
 /* gearIcon */
 const button = document.createElement('button');
@@ -474,7 +463,7 @@ document.getElementById('gearIcon').addEventListener('click', () => {
 /* floaingNav */
 document.getElementById('closeFloatingNav').addEventListener('click', () => {
     const floatingNav = document.getElementById('floatingNav');
-    floatingNav.classList.add('hidden'); // Hide the floating menu
+    floatingNav.classList.add('hidden'); 
 });
 
 /* LNB Left Menu */
@@ -514,10 +503,6 @@ function getMsg(key, lang = 'en') {
 loadMessages();
 
 function showToast(messageKey, type = 'success', lang = 'en') {
-    // console.log("messageKey:" + messageKey);
-    // console.log("type:" + type);
-    // console.log("lang:" + lang);
-
     const message = getMsg(messageKey, lang);
     const toastContainer = document.getElementById('toast-container');
     const toast = document.createElement('div');
