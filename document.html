@@ -30,21 +30,20 @@
                     <span class="flex-1">ID</span>
                     <span class="flex-1">Actions</span>
                 </div>
-                <div id="document-list" class="divide-y divide-gray-300">
-                </div>
+                <div id="document-list" class="divide-y divide-gray-300"></div>
                 <button class="px-3 py-1 text-white rounded bg-blue-500"
                     onclick="openNewDocumentModal()">New</button>
             </div>
-            <div id="viewer" class="flex-1 flex items-center justify-center bg-gray-100 p-6">
-                <p>Select a document to preview.</p>
+            <div id="viewer" class="flex-1 flex items-center justify-center bg-gray-100">
+                <p>미리보기 대상 문서를 선택하세요.</p>
             </div>
         </div>
 
         <!-- New Document Modal -->
         <div id="new-document-modal"
             class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div class="bg-white p-6 rounded shadow-sm w-96">
-                <p class="text-lg font-semibold mb-4">Upload New Document</p>
+            <div class="bg-white p-6 rounded shadow-sm">
+                <p class="font-semibold mb-4">문서 업로드</p>
                 <div id="drop-zone"
                     class="border-2 border-dashed border-gray-300 rounded h-32 flex items-center justify-center bg-gray-50 cursor-pointer">
                     <p class="text-gray-500">Drag & Drop a file here or click to select</p>

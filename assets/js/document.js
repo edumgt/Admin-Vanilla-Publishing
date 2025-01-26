@@ -1,6 +1,5 @@
 
 const lang = localStorage.getItem('lang');
-//console.log("requestPermission lang: " + lang);
 
 async function fetchDocuments() {
     const response = await fetch('assets/mock/documents.json');
@@ -61,9 +60,16 @@ function previewDocument(doc) {
         return;
     }
 
+    if (doc.type === 'pdf') {
+        viewer.innerHTML = `<iframe src="${doc.url}" class="w-full h-full"></iframe>`;
+        return;
+    }
+
+
+
     const iframe = document.createElement('iframe');
     iframe.src = doc.url;
-    iframe.className = 'w-11/12 h-5/6';
+    
     viewer.appendChild(iframe);
 }
 
@@ -102,7 +108,7 @@ function handleFileUpload(files) {
         progressBarInner.style.width = `${progress}%`;
         if (progress >= 100) {
             clearInterval(interval);
-            showToast('파일을 업로드 하였습니다.');
+            showToast('well-done','success',lang);
             closeNewDocumentModal();
             progressBar.classList.add('hidden');
             progressBarInner.style.width = '0%';
