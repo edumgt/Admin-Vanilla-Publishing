@@ -1,5 +1,6 @@
 const memberIcon = document.getElementById('memberIcon');
 memberIcon.classList.add("text-gray-200","hover:text-white","p-2");
+memberIcon.innerHTML=`<i class="fas fa-user"></i>`;
 
 const logoutModal = document.getElementById('logoutModal');
 
