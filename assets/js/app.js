@@ -1,11 +1,21 @@
 
 const lang = localStorage.getItem('lang');
+const currentPage = window.location.pathname.split("/").pop();
+let rowsPerPage = 0;
+let gridBodyHeight = 0;
+
+if (currentPage.includes("stati")) {
+    rowsPerPage = 15;
+    gridBodyHeight = 430;
+}
+if (currentPage.includes("system")) {
+    rowsPerPage = 20;
+    gridBodyHeight = 620;
+}
+
 const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
 const currentDate = new Date().toLocaleDateString('ko-KR', options).replace(/[\.]/g, '-').replace(/[\s]/g, '').substring(0, 10);
 
-let rowsPerPage = 20; // Default rows per page
-
-// Fetch data from the server
 //fetch('https://your-backend-api.com/data')
 fetch('assets/mock/mock.json')
     .then(response => {
@@ -15,15 +25,13 @@ fetch('assets/mock/mock.json')
         return response.json();
     })
     .then(data => {
-        // Load data from the server
         loadData(data);
-        // Save data to local storage
         localStorage.setItem('gridData', JSON.stringify(data));
     })
     .catch(error => {
 
         showToast('loading-error', 'error', lang);
-        // Load data from local storage if server data is unavailable
+
         const storedData = localStorage.getItem('gridData');
         if (storedData) {
             loadData(JSON.parse(storedData));
@@ -87,7 +95,7 @@ const grid = new tui.Grid({
     editingEvent: 'click',
     scrollX: true,
     scrollY: true,
-    bodyHeight: 600,
+    bodyHeight: gridBodyHeight,
     pageOptions: {
         useClient: true,
         perPage: rowsPerPage
@@ -95,7 +103,7 @@ const grid = new tui.Grid({
     rowHeight: 42,
     minRowHeight: 42,
     columns: [
-        { header: 'Key', name: 'Key', width: 250, align: 'left', sortable: true, resizable: true, width: 100, minWidth: 80 }, // UUID column    
+        { header: 'Key', name: 'Key', width: 250, align: 'left', sortable: true, resizable: true, width: 100, minWidth: 80 },
         { header: 'Group', name: 'tpCd', editor: 'text', validation: { required: true }, sortable: true, filter: 'text', resizable: true, width: 150 },
         { header: 'Name', name: 'tpNm', editor: 'text', sortable: true, filter: 'text', resizable: true, width: 200 },
         { header: 'Desc.', name: 'descCntn', editor: 'text', sortable: true, filter: 'text', resizable: true, },
@@ -144,10 +152,10 @@ document.getElementById('delrow').addEventListener('click', function () {
     if (chkArray.length > 0) {
         grid.removeCheckedRows();
         saveData(grid.getData());
-        showToast('선택된 항목이 삭제되었습니다.', 'success');
+        showToast('select-delete', 'success', lang);
         updateDataCount();
     } else {
-        showToast('삭제할 항목이 선택되지 않았습니다.', 'warning');
+        showToast('delete-not', 'warning', lang);
     }
 });
 
@@ -390,7 +398,7 @@ if (rows.length > 0) {
 }
 
 
-const currentPage = window.location.pathname.split("/").pop();
+
 const menuLinks = document.querySelectorAll(".gnb-item");
 menuLinks.forEach((link) => {
 
@@ -535,9 +543,11 @@ languageSwitcher.addEventListener("click", function (event) {
     // OffCanvas 메뉴 텍스트 변경
     const offCanvasLabels = translations[lang].offCanvas;
     if (currentPage.includes("stati")) {
-    offCanvasItems[0].textContent = offCanvasLabels.stati;}
+        offCanvasItems[0].textContent = offCanvasLabels.stati;
+    }
     if (currentPage.includes("system")) {
-    offCanvasItems[0].textContent = offCanvasLabels.system;}
+        offCanvasItems[0].textContent = offCanvasLabels.system;
+    }
     offCanvasItems[1].textContent = offCanvasLabels.flow;
     offCanvasItems[2].textContent = offCanvasLabels.chain;
     offCanvasItems[3].textContent = offCanvasLabels.config;
@@ -568,11 +578,7 @@ languageSwitcher.addEventListener("click", function (event) {
 document.addEventListener('DOMContentLoaded', () => {
     const appBrand = new AppBrand('logo', 'EDUMGT');
     const lang = localStorage.getItem('lang');
-    console.log("lang: " + lang);
 
-
-
-    // 탭 메뉴 텍스트 변경
     const tabLabels = translations[lang].tabs;
     tabs[0].textContent = tabLabels.system;
     tabs[1].textContent = tabLabels.organization;
@@ -583,12 +589,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const offCanvasLabels = translations[lang].offCanvas;
     if (currentPage.includes("stati")) {
-    offCanvasItems[0].textContent = offCanvasLabels.stati;}
+        offCanvasItems[0].textContent = offCanvasLabels.stati;
+    }
     if (currentPage.includes("system")) {
-    offCanvasItems[0].textContent = offCanvasLabels.system;}
+        offCanvasItems[0].textContent = offCanvasLabels.system;
+    }
     offCanvasItems[1].textContent = offCanvasLabels.flow;
     offCanvasItems[2].textContent = offCanvasLabels.chain;
-    
+
 
     if (currentPage.includes("stati")) {
         breadcrumb.textContent = offCanvasLabels.stati;

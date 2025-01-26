@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     let lang = localStorage.getItem('lang') || 'ko'; 
     localStorage.setItem('lang', lang); 
-    console.log("init lang: " + lang);
 });
 
 
@@ -328,14 +327,14 @@ createModal(
     ]
 );
 
-createModal(
-    'demoModal',
-    '알림',
-    '<p>데모버젼에서는 지원하지 않습니다.</p>',
-    [
-        { label: '닫기', class: 'bg-gray-800 text-white px-3 py-1 rounded ', onClick: "document.getElementById('demoModal').classList.add('hidden');" }
-    ]
-);
+// createModal(
+//     'demoModal',
+//     '알림',
+//     '<p>데모버젼에서는 지원하지 않습니다.</p>',
+//     [
+//         { label: '닫기', class: 'bg-gray-800 text-white px-3 py-1 rounded ', onClick: "document.getElementById('demoModal').classList.add('hidden');" }
+//     ]
+// );
 
 function generateUUID() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
