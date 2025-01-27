@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
+
+    const lang = localStorage.getItem('lang');
+
     const STORAGE_KEY_INBOUND = "inboundData";
     const STORAGE_KEY_OUTBOUND = "outboundData";
 
@@ -26,6 +29,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const outboundData = await loadData(STORAGE_KEY_OUTBOUND, "assets/mock/outbound.json");
 
     const root = document.getElementById('root');
+    root.className = 'mt-4';
 
     const tabs = [
         { id: 'tab-inbound', name: '입고 관리' },
@@ -137,31 +141,44 @@ document.addEventListener('DOMContentLoaded', async () => {
     function addGridToolbar(section, grid, storageKey) {
         const toolbar = document.createElement('div');
         toolbar.className = 'flex justify-end gap-2 ';
-
+    
         const addButton = document.createElement('button');
         addButton.className = 'bg-blue-500 text-white px-3 py-1 rounded ';
         addButton.innerText = '추가';
         addButton.addEventListener('click', () => {
             const newItem = { id: crypto.randomUUID(), date: '', title: '', quantity: 0 };
-            grid.appendRow(newItem);
-            const updatedData = [...grid.getData(), newItem];
+            
+            // 맨 위(1번 행)에 추가
+            grid.prependRow(newItem);
+            showToast('input-allowed','info',lang);
+            const updatedData = [newItem, ...grid.getData()];
             saveDataToStorage(storageKey, updatedData);
         });
-
+    
+        // 강제 삭제 버튼
         const deleteButton = document.createElement('button');
-        deleteButton.className = 'bg-gray-500 text-white px-3 py-1 rounded';
+        deleteButton.className = 'bg-yellow-500 text-white px-3 py-1 rounded';
         deleteButton.innerText = '삭제';
         deleteButton.addEventListener('click', () => {
             const checkedRows = grid.getCheckedRows();
-            const updatedData = grid.getData().filter(row => !checkedRows.some(checked => checked.id === row.id));
+            console.log(checkedRows);
+            
+            if (checkedRows.length === 0) {
+                showToast('delete-not','warning',lang);
+                return;
+            }
+
+            const updatedData = grid.getData().filter(row => !checkedRows.some(checked => checked.uuid === row.uuid));
             grid.removeCheckedRows();
             saveDataToStorage(storageKey, updatedData);
+            showToast('select-delete','success',lang);
         });
-
+    
         toolbar.appendChild(addButton);
         toolbar.appendChild(deleteButton);
         section.appendChild(toolbar);
     }
+    
 
     function populateDashboard(section) {
         section.innerHTML = `<div id="stock-chart" ></div><div id="monthly-outbound-chart"></div>`;

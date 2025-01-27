@@ -124,7 +124,7 @@ function renderFloor(floor, date = new Date().toISOString().split('T')[0]) {
                 // "X" 버튼 추가
                 const deleteButton = document.createElement('span');
                 deleteButton.innerText = 'X';
-                deleteButton.className = 'delete-button';
+                deleteButton.className = 'delete-button bg-yellow-500';
                 deleteButton.addEventListener('click', () => {
                     // 예약 삭제
                     reservations.splice(index, 1); // 해당 예약 제거

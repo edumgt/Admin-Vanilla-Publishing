@@ -108,7 +108,7 @@
     position: absolute;
     top: 5px;
     right: 10px;
-    background: red;
+    /* background: red; */
     color: white;
     padding: 2px 8px;
     cursor: pointer;
