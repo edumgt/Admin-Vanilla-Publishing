@@ -56,8 +56,8 @@ body {
   font-weight: bold;
   color: var(--primary-color);
   text-transform: uppercase;
-  letter-spacing: 1px;
-  padding: 0px 0px 10px 0px;
+  /* letter-spacing: 2px; */
+  /* padding: 0px 0px 10px 0px; */
 }
 
 /* OffCanvas - LNB */
