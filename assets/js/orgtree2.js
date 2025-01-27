@@ -12,31 +12,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   let permissions = [];
   let organization = [];
 
-  function showEditPopup(currentName, updateCallback) {
-    const newName = prompt("이름을 수정하세요:", currentName);
-    if (newName && newName.trim() !== "") {
-      updateCallback(newName.trim());
-    }
-  }
-
-  function createEditableLabel(name, updateCallback) {
-    const label = document.createElement("span");
-    label.textContent = name;
-    label.style.cursor = "pointer";
-
-    label.addEventListener("dblclick", () => {
-      showEditPopup(name, (newName) => {
-        updateCallback(newName);
-        label.textContent = newName;
-      });
-    });
-    return label;
-  }
+  
 
   async function fetchData(url) {
     const response = await fetch(url);
-    if (!response.ok) throw new Error("Failed to fetch ${url}");
+    if (!response.ok) throw new Error(`Failed to fetch ${url}`);
     return await response.json();
+
   }
 
   function savePermissionsToStorage(data) {
@@ -50,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   function createTreeNode(name, children = [], depth = 0) {
     const container = document.createElement("div");
-    container.style.marginLeft = "${depth * 25}px";
+    container.style.marginLeft = `${depth * 20}px`;
     container.style.padding = "5px";
     container.style.border = "1px solid #ccc";
     container.style.marginBottom = "8px";
@@ -66,14 +48,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     toggleButton.style.color = "#222";
     toggleButton.style.fontWeight = "800";
 
+    
+    const label = document.createElement("span");
+    label.textContent = name;
 
-    // const label = document.createElement("span");
-    // label.textContent = name;
-
-    const label = createEditableLabel(name, (newName) => {
-      name = newName;
-      //saveToStorage("organizationData", organization);
-    });
+   
 
     const childrenContainer = document.createElement("div");
     childrenContainer.style.display = "none";
@@ -241,7 +220,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   function updatePermissionsTitle(name) {
-    permissionsTitle.textContent = "권한 설정: ${name}";
+    permissionsTitle.textContent = `권한 설정: ${name}`;
   }
 
   function loadFromStorage(key) {
