@@ -42,11 +42,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const toggleButton = document.createElement("span");
     toggleButton.innerHTML = children.length > 0 ? "+" : "";
-    toggleButton.style.fontSize = "35px";
-    toggleButton.style.marginRight = "10px";
+    toggleButton.style.fontSize = "38px";
+    toggleButton.style.marginRight = "12px";
     toggleButton.style.cursor = "pointer";
-    toggleButton.style.color = "#222";
+    toggleButton.style.color = "#555";
     toggleButton.style.fontWeight = "800";
+    toggleButton.style.transform = "scaleX(1.2)";
 
     
     const label = document.createElement("span");
@@ -126,11 +127,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       document.querySelectorAll("#org-chart span:first-child").forEach((toggleButton) => {
         toggleButton.innerHTML = expanded ? "+" : "-";
-        toggleButton.style.fontSize = "35px";
-        toggleButton.style.marginRight = "10px";
+        toggleButton.style.fontSize = "38px";
+        toggleButton.style.marginRight = "12px";
         toggleButton.style.cursor = "pointer";
-        toggleButton.style.color = "#222";
+        toggleButton.style.color = "#555";
         toggleButton.style.fontWeight = "800";
+        toggleButton.style.transform = "scaleX(1.2)";
+        
       });
 
       expanded = !expanded;
