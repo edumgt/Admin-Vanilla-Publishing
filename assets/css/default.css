@@ -57,19 +57,8 @@ body {
   color: var(--primary-color);
   text-transform: uppercase;
   letter-spacing: 1px;
-  /* background: linear-gradient(90deg, #6a11cb, #2575fc); */
-  /* -webkit-background-clip: text; */
-  /* -webkit-text-fill-color: transparent; */
   padding: 0px 0px 10px 0px;
-  border-bottom: 2px solid #4A90E2;
-  display: inline-block;
-  transition: all 0.3s ease-in-out;
 }
-
-/* .breadcrumb:hover {
-  transform: scale(1.05);
-  text-shadow: 0 4px 10px rgba(74, 144, 226, 0.5);
-} */
 
 /* OffCanvas - LNB */
 .menu-text {
@@ -408,6 +397,22 @@ body {
   align-items: center;
   justify-content: center;
   padding: 1rem;
+  border: 1px solid #ddd;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.dropdown-shortcuts-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  color: var(--secondary-color);
+  background-color: hsl(220, 9%, 94%);
+  border-radius: 50%;
+  margin-bottom: 0.5rem;
 }
 
 .border-bottom {
