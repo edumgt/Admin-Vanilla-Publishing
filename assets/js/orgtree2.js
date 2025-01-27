@@ -37,10 +37,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     container.style.alignItems = "center";
 
     const toggleButton = document.createElement("span");
-    toggleButton.textContent = children.length > 0 ? "+" : "";
-    toggleButton.style.fontSize = "20px";
+    toggleButton.innerHTML = children.length > 0 ? "+" : "";
+    toggleButton.style.fontSize = "35px";
     toggleButton.style.marginRight = "10px";
     toggleButton.style.cursor = "pointer";
+    toggleButton.style.color = "#222";
+    toggleButton.style.fontWeight = "800";
+   
 
     const label = document.createElement("span");
     label.textContent = name;
@@ -53,10 +56,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       e.stopPropagation();
       if (childrenContainer.style.display === "none") {
         childrenContainer.style.display = "block";
-        toggleButton.textContent = "-";
+        toggleButton.innerHTML = "-";
       } else {
         childrenContainer.style.display = "none";
-        toggleButton.textContent = "+";
+        toggleButton.innerHTML = "+";
       }
     });
 
@@ -111,7 +114,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
 
       document.querySelectorAll("#org-chart span:first-child").forEach((toggleButton) => {
-        toggleButton.textContent = expanded ? "+" : "-";
+        toggleButton.innerHTML = expanded ? "+" : "-";
+        toggleButton.style.fontSize = "35px";
+        toggleButton.style.marginRight = "10px";
+        toggleButton.style.cursor = "pointer";
+        toggleButton.style.color = "#222";
+        toggleButton.style.fontWeight = "800";
       });
 
       expanded = !expanded;
