@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   async function fetchData(url) {
     const response = await fetch(url);
-    if (!response.ok) throw new Error(`Failed to fetch ${url}`);
+    if (!response.ok) throw new Error("Failed to fetch ${url}");
     return await response.json();
   }
 
@@ -28,10 +28,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   function createTreeNode(name, children = [], depth = 0) {
     const container = document.createElement("div");
-    container.style.marginLeft = `${depth * 20}px`;
+    container.style.marginLeft = "${depth * 25}px";
     container.style.padding = "5px";
-    container.style.border = "1px solid #ddd";
-    container.style.marginBottom = "5px";
+    container.style.border = "1px solid #ccc";
+    container.style.marginBottom = "8px";
     container.style.cursor = "pointer";
     container.style.display = "flex";
     container.style.alignItems = "center";
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     toggleButton.style.cursor = "pointer";
     toggleButton.style.color = "#222";
     toggleButton.style.fontWeight = "800";
-   
+
 
     const label = document.createElement("span");
     label.textContent = name;
@@ -91,12 +91,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   function renderOrgChart(data) {
     orgContainer.innerHTML = "";
 
-    // 📌 전체 펼침/접기 버튼 추가
     const expandButton = document.createElement("button");
-    expandButton.textContent = "전체 펼침 / 접기";
+    expandButton.textContent = "전체 펼침";
     expandButton.style.marginBottom = "10px";
     expandButton.style.padding = "5px 10px";
-    expandButton.style.backgroundColor = "#007BFF";
+    expandButton.style.backgroundColor = "#0058a3";
     expandButton.style.color = "#fff";
     expandButton.style.border = "none";
     expandButton.style.cursor = "pointer";
@@ -105,6 +104,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     let expanded = false;
 
     expandButton.addEventListener("click", () => {
+      expandButton.disabled = true;
+      expandButton.style.backgroundColor = "#999";
+      expandButton.style.color = "#fff";
+
+      expandButton.style.cursor = "not-allowed";
+
       document.querySelectorAll("#org-chart div div").forEach((childContainer) => {
         if (expanded) {
           childContainer.style.display = "none";
@@ -126,8 +131,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     orgContainer.appendChild(expandButton);
-
-    // 조직도 생성
     data.forEach((hq) => {
       const node = createTreeNode(hq.name, hq.departments.map((dept) => ({
         name: dept.name,
@@ -211,15 +214,27 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   function updatePermissionsTitle(name) {
-    permissionsTitle.textContent = `권한 설정: ${name}`;
+    permissionsTitle.textContent = "권한 설정: ${name}";
+  }
+
+  function loadFromStorage(key) {
+    const savedData = localStorage.getItem(key);
+    return savedData ? JSON.parse(savedData) : null;
+  }
+
+  function saveToStorage(key, data) {
+    localStorage.setItem(key, JSON.stringify(data));
   }
 
   try {
-    const organization = await fetchData("assets/mock/org.json");
+    let organization = loadFromStorage("organizationData");
+    if (!organization) {
+      organization = await fetchData("assets/mock/org.json");
+      saveToStorage("organizationData", organization);
+    }
     permissions = await fetchData("assets/mock/per.json");
-
     renderOrgChart(organization);
   } catch (error) {
     console.error("Error loading data:", error);
   }
-});
+}); 
