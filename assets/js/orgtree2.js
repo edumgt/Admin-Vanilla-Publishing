@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const permissionsContainer = document.getElementById("permissions");
   const permissionsTitle = document.createElement("h1");
   permissionsTitle.id = "permissions-title";
-  permissionsTitle.style.fontSize = "1.0rem";
+  permissionsTitle.style.fontSize = "1rem";
   permissionsTitle.style.marginBottom = "1rem";
   permissionsContainer.appendChild(permissionsTitle);
 
@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   let permissions = [];
   let organization = [];
 
-  
 
   async function fetchData(url) {
     const response = await fetch(url);
@@ -49,11 +48,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     toggleButton.style.fontWeight = "800";
     toggleButton.style.transform = "scaleX(1.2)";
 
-    
+
     const label = document.createElement("span");
     label.textContent = name;
 
-   
+
 
     const childrenContainer = document.createElement("div");
     childrenContainer.style.display = "none";
@@ -108,8 +107,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     expandButton.style.cursor = "pointer";
     expandButton.style.borderRadius = "5px";
 
-    let expanded = false;
+    const editButton = document.createElement("button");
+    editButton.textContent = "조직 수정";
+    editButton.style.padding = "5px 10px";
+    editButton.style.backgroundColor = "#333";
+    editButton.style.color = "#fff";
+    editButton.style.border = "none";
+    editButton.style.cursor = "pointer";
+    editButton.style.borderRadius = "5px";
+    editButton.style.marginRight = "10px";
+    editButton.addEventListener("click", openOrgEditorModal);
 
+    let expanded = false;
     expandButton.addEventListener("click", () => {
       expandButton.disabled = true;
       expandButton.style.backgroundColor = "#999";
@@ -133,12 +142,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         toggleButton.style.color = "#555";
         toggleButton.style.fontWeight = "800";
         toggleButton.style.transform = "scaleX(1.2)";
-        
+        toggleButton.style.transform = "scaleY(1.2)";
+
       });
 
       expanded = !expanded;
     });
 
+    orgContainer.appendChild(editButton);
     orgContainer.appendChild(expandButton);
     data.forEach((hq) => {
       const node = createTreeNode(hq.name, hq.departments.map((dept) => ({
@@ -235,15 +246,91 @@ document.addEventListener("DOMContentLoaded", async () => {
     localStorage.setItem(key, JSON.stringify(data));
   }
 
-  try {
-    let organization = loadFromStorage("organizationData");
-    if (!organization) {
-      organization = await fetchData("assets/mock/org.json");
-      saveToStorage("organizationData", organization);
+  function openOrgEditorModal() {
+    let modal = document.getElementById("org-editor-modal");
+    if (!modal) {
+      modal = document.createElement("div");
+      modal.id = "org-editor-modal";
+      modal.style.position = "absolute";
+      modal.style.top = "15%";
+      modal.style.right = "2%";
+      modal.style.width = "61%";
+      modal.style.height = "60%";
+      modal.style.backgroundColor = "#fff";
+      modal.style.padding = "10px";
+      modal.style.boxShadow = "0px 0px 6px rgba(0, 0, 0, 0.5)";
+      modal.style.zIndex = "50";
+      modal.style.overflow = "auto";
+
+      const closeButton = document.createElement("button");
+      closeButton.textContent = "X";
+      closeButton.style.position = "absolute";
+      closeButton.style.bottom = "10px";
+      closeButton.style.right = "10px";
+      
+      
+      closeButton.onclick = () => {
+        saveToStorage("organizationData", organization);
+        renderOrgChart(organization);
+        modal.remove();
+      };
+
+      const gridDiv = document.createElement("div");
+      gridDiv.style.height = "90%";
+      gridDiv.style.width = "100%";
+      gridDiv.id = "org-grid";
+
+      modal.appendChild(closeButton);
+      modal.appendChild(gridDiv);
+      permissionsContainer.appendChild(modal);
+
+      const columnDefs = [
+        { field: "name", headerName: "본부", editable: true },
+        { field: "departments", headerName: "부서", editable: true,
+          valueGetter: params => params.data.departments.map(d => d.name).join(","),
+          valueSetter: params => {
+            const updatedDepartments = params.newValue.split(",").map((name, i) => {
+              return params.data.departments[i] ? { ...params.data.departments[i], name } : { name, teams: [] };
+            });
+            params.data.departments = updatedDepartments;
+            return true;
+          }
+        },
+        { field: "teams", headerName: "팀(부서구분 ; )", editable: true,
+          valueGetter: params => params.data.departments.map(d => d.teams.join(",")).join(";"),
+          valueSetter: params => {
+            params.data.departments.forEach((dept, i) => {
+              if (params.newValue.split(";")[i]) {
+                dept.teams = params.newValue.split(";")[i].split(",");
+              }
+            });
+            return true;
+          }
+        }
+      ];
+
+      const gridOptions = {
+        columnDefs: columnDefs,
+        rowData: organization,
+        defaultColDef: { editable: true, flex: 1 },
+        onCellValueChanged: params => {
+          saveToStorage("organizationData", organization);
+        }
+      };
+
+      new agGrid.createGrid(gridDiv, gridOptions);
     }
-    permissions = await fetchData("assets/mock/per.json");
+  }
+
+  try {
+    organization = loadFromStorage("organizationData") || await fetchData("assets/mock/org.json");
+    saveToStorage("organizationData", organization);
     renderOrgChart(organization);
+
+    permissions = await fetchData("assets/mock/per.json");
+
   } catch (error) {
     console.error("Error loading data:", error);
   }
+
 }); 

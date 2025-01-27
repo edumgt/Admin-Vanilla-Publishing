@@ -286,7 +286,7 @@ renderOffCanvasMenu(menuItems);
 
 /* Dynamically create modals */
 function createModal(modalId, title, content, buttons) {
-    console.log("createModal: " + modalId);
+    //console.log("createModal: " + modalId);
 
     const modal = document.createElement('div');
     modal.id = modalId;
