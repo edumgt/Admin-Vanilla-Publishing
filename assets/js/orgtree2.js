@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const toggleButton = document.createElement("span");
     toggleButton.textContent = children.length > 0 ? "+" : "";
-    toggleButton.style.fontSize = "30px";
+    toggleButton.style.fontSize = "20px";
     toggleButton.style.marginRight = "10px";
     toggleButton.style.cursor = "pointer";
 
@@ -87,6 +87,39 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   function renderOrgChart(data) {
     orgContainer.innerHTML = "";
+
+    // 📌 전체 펼침/접기 버튼 추가
+    const expandButton = document.createElement("button");
+    expandButton.textContent = "전체 펼침 / 접기";
+    expandButton.style.marginBottom = "10px";
+    expandButton.style.padding = "5px 10px";
+    expandButton.style.backgroundColor = "#007BFF";
+    expandButton.style.color = "#fff";
+    expandButton.style.border = "none";
+    expandButton.style.cursor = "pointer";
+    expandButton.style.borderRadius = "5px";
+
+    let expanded = false;
+
+    expandButton.addEventListener("click", () => {
+      document.querySelectorAll("#org-chart div div").forEach((childContainer) => {
+        if (expanded) {
+          childContainer.style.display = "none";
+        } else {
+          childContainer.style.display = "block";
+        }
+      });
+
+      document.querySelectorAll("#org-chart span:first-child").forEach((toggleButton) => {
+        toggleButton.textContent = expanded ? "+" : "-";
+      });
+
+      expanded = !expanded;
+    });
+
+    orgContainer.appendChild(expandButton);
+
+    // 조직도 생성
     data.forEach((hq) => {
       const node = createTreeNode(hq.name, hq.departments.map((dept) => ({
         name: dept.name,
@@ -175,7 +208,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try {
     const organization = await fetchData("assets/mock/org.json");
-    permissions = await fetchData("assets/mock/per.json"); // Assign to global variable
+    permissions = await fetchData("assets/mock/per.json");
 
     renderOrgChart(organization);
   } catch (error) {

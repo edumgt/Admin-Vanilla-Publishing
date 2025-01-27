@@ -455,8 +455,8 @@ body {
 /* TUI Grid */
 .tui-grid-cell.tui-grid-cell-row-header,
 .tui-grid-cell.tui-grid-cell-header {
-  background-color: var(--bg-light);
-  color: #2c2c30;
+  background-color: var(--bg-light) !important;
+  color: #333 !important;
 }
 
 .tui-grid-row {
@@ -476,7 +476,7 @@ body {
 }
 
 .tui-grid-cell {
-  /* font-size: 15px; */
+  font-size: 0.9rem !important;
   color: #333;
   font-family: var(--font-family);
 }

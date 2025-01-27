@@ -373,11 +373,11 @@ document.getElementById('searchByDate').addEventListener('click', function () {
 
     document.getElementById('saverow').disabled = true;
     document.getElementById('saverow').classList.add('bg-gray-400', 'cursor-not-allowed');
-    document.getElementById('saverow').classList.remove('bg-gray-800', 'hover:bg-gray-700');
+    document.getElementById('saverow').classList.remove('bg-gray-700', 'hover:bg-gray-600');
 
     document.getElementById('newrow').disabled = true;
     document.getElementById('newrow').classList.add('bg-gray-400', 'cursor-not-allowed');
-    document.getElementById('newrow').classList.remove('bg-gray-800', 'hover:bg-gray-700');
+    document.getElementById('newrow').classList.remove('bg-gray-700', 'hover:bg-gray-600');
 
     showToast('검색 클릭 시 신규, 저장 기능은 비활성화 됩니다.');
 
@@ -400,13 +400,13 @@ document.getElementById('resetSearch').addEventListener('click', function () {
     const saveButton = document.getElementById('saverow');
     saveButton.disabled = false;
     saveButton.classList.remove('bg-gray-400', 'cursor-not-allowed');
-    saveButton.classList.add('bg-gray-800', 'hover:bg-gray-700');
+    saveButton.classList.add('bg-gray-700', 'hover:bg-gray-600');
 
 
     const newButton = document.getElementById('newrow');
     newButton.disabled = false;
     newButton.classList.remove('bg-gray-400', 'cursor-not-allowed');
-    newButton.classList.add('bg-gray-800', 'hover:bg-gray-700');
+    newButton.classList.add('bg-gray-700', 'hover:bg-gray-600');
 
     showToast('신규, 저장 기능이 활성화 됩니다.');
 });

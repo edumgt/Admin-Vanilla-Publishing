@@ -71,23 +71,21 @@ function saveData(data) {
 class BadgeRenderer {
     constructor(props) {
         const el = document.createElement('span');
-        el.className = 'px-3 py-1 text-sm  text-white bg-blue-500 rounded cursor-pointer ';
-        el.textContent = 'View';
+        el.className = 'px-3 py-1 text-gray-700 rounded cursor-pointer flex items-center justify-center';
+        el.innerHTML = '<i class="fas fa-pencil-alt"></i>'; // 연필 아이콘 (기본)
         el.style.display = 'inline-block';
         el.style.textAlign = 'center';
         this.el = el;
         this.props = props;
     }
-
     getElement() {
         return this.el;
     }
-
     render(props) {
         this.props = props;
-
     }
 }
+
 
 const grid = new tui.Grid({
     el: document.getElementById('grid'),
@@ -282,14 +280,14 @@ document.getElementById('saveModal').addEventListener('click', () => {
 });
 
 // Add event listener for the top-right close button
-document.getElementById('closeModalTopRight').addEventListener('click', () => {
-    toggleModal(false);
-});
+// document.getElementById('closeModalTopRight').addEventListener('click', () => {
+//     toggleModal(false);
+// });
 
 // Add event listener for the bottom close button
-document.getElementById('closeModal').addEventListener('click', () => {
-    toggleModal(false);
-});
+// document.getElementById('closeModal').addEventListener('click', () => {
+//     toggleModal(false);
+// });
 
 let currentRowKey = null; // To track the current row being edited
 
@@ -352,11 +350,11 @@ document.getElementById('searchByDate').addEventListener('click', function () {
 
     document.getElementById('saverow').disabled = true;
     document.getElementById('saverow').classList.add('bg-gray-400', 'cursor-not-allowed');
-    document.getElementById('saverow').classList.remove('bg-gray-800', 'hover:bg-gray-700');
+    document.getElementById('saverow').classList.remove('bg-gray-700', 'hover:bg-gray-600');
 
     document.getElementById('newrow').disabled = true;
     document.getElementById('newrow').classList.add('bg-gray-400', 'cursor-not-allowed');
-    document.getElementById('newrow').classList.remove('bg-gray-800', 'hover:bg-gray-700');
+    document.getElementById('newrow').classList.remove('bg-gray-700', 'hover:bg-gray-600');
 
     showToast('검색 클릭 시 신규, 저장 기능은 비활성화 됩니다.');
 
@@ -379,13 +377,13 @@ document.getElementById('resetSearch').addEventListener('click', function () {
     const saveButton = document.getElementById('saverow');
     saveButton.disabled = false;
     saveButton.classList.remove('bg-gray-400', 'cursor-not-allowed');
-    saveButton.classList.add('bg-gray-800', 'hover:bg-gray-700');
+    saveButton.classList.add('bg-gray-700', 'hover:bg-gray-600');
 
 
     const newButton = document.getElementById('newrow');
     newButton.disabled = false;
     newButton.classList.remove('bg-gray-400', 'cursor-not-allowed');
-    newButton.classList.add('bg-gray-800', 'hover:bg-gray-700');
+    newButton.classList.add('bg-gray-700', 'hover:bg-gray-600');
 
     showToast('신규, 저장 기능이 활성화 됩니다.');
 });

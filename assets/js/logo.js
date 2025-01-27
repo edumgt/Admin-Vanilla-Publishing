@@ -286,7 +286,7 @@ renderOffCanvasMenu(menuItems);
 
 /* Dynamically create modals */
 function createModal(modalId, title, content, buttons) {
-    //console.log(modalId);
+    console.log("createModal: " + modalId);
 
     const modal = document.createElement('div');
     modal.id = modalId;
@@ -295,10 +295,10 @@ function createModal(modalId, title, content, buttons) {
     const modalContent = `
         <div class="bg-white rounded-lg shadow-sm p-6 w-1/3 relative">
             <button class="close" onclick="document.getElementById('${modalId}').classList.add('hidden');">&times;</button>
-            <h2 class="text-lg font-semibold mb-4">${title}</h2>
+            <h4 class="text-md mb-4">${title}</h4>
             ${content}
             <div class="flex justify-end space-x-2 mt-4">
-                ${buttons.map(btn => `<button id="closeDemoModal" class="${btn.class}" onclick="${btn.onClick}">${btn.label}</button>`).join('')}
+                ${buttons.map(btn => `<button id="saveModal" class="${btn.class}" onclick="${btn.onClick}">${btn.label}</button>`).join('')}
             </div>
         </div>`;
 
@@ -312,8 +312,8 @@ createModal(
     '상세정보',
     '<form id="modalForm" class="space-y-4"></form>',
     [
-        { label: 'Save', class: 'bg-blue-500 text-white px-3 py-1 rounded ', onClick: 'saveModal()' },
-        { label: '닫기', class: 'bg-gray-800 text-white px-3 py-1 rounded ', onClick: "document.getElementById('modal').classList.add('hidden');" }
+        { label: '저장', class: 'bg-blue-500 text-white px-3 py-1 rounded ', onClick: 'saveModal()' },
+        { label: '닫기', class: 'bg-gray-500 text-white px-3 py-1 rounded ', onClick: "document.getElementById('modal').classList.add('hidden');" }
     ]
 );
 
@@ -322,8 +322,8 @@ createModal(
     '로그아웃 하시겠습니까?',
     '',
     [
-        { label: 'Logout', class: 'bg-red-500 text-white px-3 py-1 rounded ', onClick: "window.location.href='index.html';" },
-        { label: '닫기', class: 'bg-gray-800 text-white px-3 py-1 rounded ', onClick: "document.getElementById('logoutModal').classList.add('hidden');" }
+        { label: '로그아웃', class: 'bg-blue-500 text-white px-3 py-1 rounded ', onClick: "window.location.href='index.html';" },
+        { label: '닫기', class: 'bg-gray-500 text-white px-3 py-1 rounded ', onClick: "document.getElementById('logoutModal').classList.add('hidden');" }
     ]
 );
 
@@ -353,7 +353,7 @@ function renderFloatingNav(containerId) {
 
     const floatingNav = document.createElement('div');
     floatingNav.id = 'floatingNav';
-    floatingNav.className = 'fixed bottom-4 right-4 bg-gray-800 text-white rounded-lg p-2 z-50 hidden space-y-4';
+    floatingNav.className = 'fixed bottom-4 right-4 bg-gray-700 text-white rounded-lg p-2 z-50 hidden space-y-4';
     floatingNav.innerHTML = `
         <div class="flex justify-between items-center">
             <h3 class="text-white">Language</h3>
