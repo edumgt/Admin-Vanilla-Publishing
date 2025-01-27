@@ -152,11 +152,28 @@ document.addEventListener('DOMContentLoaded', () => {
         // 진료과 목록 및 의사 화면에 표시
         const departmentsContainer = document.querySelector('#departments-container');
         if (departments && departments.departments) {
-            console.log('Departments:', departments); // 데이터 구조 확인
+            //console.log('Departments:', departments); // 데이터 구조 확인
             departments.departments.forEach(department => {
                 const box = createBox(department, false, departments.departments);
                 departmentsContainer.appendChild(box);
+                console.log(box);
+
+                // 의사 목록이 있는지 확인 후 표시
+                if (department.doctors && department.doctors.length > 0) {
+                    const doctorsContainer = document.createElement('div');
+                    doctorsContainer.className = 'doctors-list';
+
+                    department.doctors.forEach(doctor => {
+                        const doctorElement = document.createElement('p');
+                        doctorElement.textContent = `${doctor.id} (${doctor.name})`;
+                        doctorsContainer.appendChild(doctorElement);
+                    });
+
+                    box.appendChild(doctorsContainer);
+                }
             });
+
+            
         } else {
             console.error('Invalid departments data structure.', departments);
         }

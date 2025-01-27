@@ -217,6 +217,16 @@ document.getElementById('booking-form').addEventListener('submit', function (eve
     displayRooms(date);
 });
 
+
+
 document.addEventListener('DOMContentLoaded', function () {
-    displayRooms();
+    // 오늘 날짜를 YYYY-MM-DD 형식으로 가져오기
+    const today = new Date().toISOString().slice(0, 10);
+
+    // 날짜 필드에 기본값으로 설정
+    document.getElementById('search-date').value = today;
+
+    // 오늘 날짜를 기준으로 회의실 데이터 가져오기
+    displayRooms(today);
 });
+

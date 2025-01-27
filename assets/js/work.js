@@ -179,6 +179,19 @@ function manageReservation(floor, room) {
 
     document.body.appendChild(modal);
 
+    const sR = document.getElementById('saveReservation');
+    sR.style.backgroundColor = "#0058a3";
+    sR.style.padding = "3px 6px 3px 6px";
+    sR.style.height = "calc(1.5em + 6px)";
+    sR.style.borderRadius = "3px";
+
+    const cR = document.getElementById('cancelReservation');
+    cR.style.backgroundColor = "#555";
+    cR.style.padding = "3px 6px 3px 6px";
+    cR.style.height = "calc(1.5em + 6px)";
+    cR.style.borderRadius = "3px";
+    
+
     document.getElementById('saveReservation').addEventListener('click', () => {
         const guestName = document.getElementById('guestName').value;
         const checkInDate = document.getElementById('checkInDate').value;

@@ -13,19 +13,38 @@ const canvas = document.getElementById('orgChartCanvas');
 const ctx = canvas.getContext('2d');
 const canvasWidth = canvas.width;
 
-let savedOrgData = null;
+
 let draggedNode = null;
 let offsetX, offsetY;
 
-fetch('assets/mock/organi.json')
-    .then(response => response.json())
-    .then(data => {
-        savedOrgData = data;
-        savedOrgData.x = canvasWidth / 2; // 기존 값 유지
-        savedOrgData.y = 0; // CEO 카드를 더 위쪽으로 조정
-        redraw();
-    })
-    .catch(error => console.error('Error fetching the organizational data:', error));
+const orgDataKey = "orgData"; // localStorage key
+
+// 저장된 데이터 확인
+let savedOrgData = JSON.parse(localStorage.getItem(orgDataKey));
+
+if (savedOrgData) {
+    // localStorage에서 데이터를 불러왔을 경우
+    console.log("Loaded orgData from localStorage:", savedOrgData);
+    savedOrgData.x = canvasWidth / 2;
+    savedOrgData.y = 0;
+    redraw();
+} else {
+    // localStorage에 데이터가 없으면 fetch 실행
+    fetch('assets/mock/organi.json')
+        .then(response => response.json())
+        .then(data => {
+            savedOrgData = data;
+            savedOrgData.x = canvasWidth / 2;
+            savedOrgData.y = 0;
+
+            // 불러온 데이터를 localStorage에 저장
+            localStorage.setItem(orgDataKey, JSON.stringify(savedOrgData));
+
+            redraw();
+        })
+        .catch(error => console.error('Error fetching the organizational data:', error));
+}
+
 
 function drawOrgChart(ctx, node) {
     drawCard(ctx, node);
@@ -52,7 +71,6 @@ function drawCard(ctx, node) {
     ctx.shadowOffsetX = 5;
     ctx.shadowOffsetY = 5;
 
-    // 카드 배경
     ctx.fillStyle = '#fff';
     ctx.beginPath();
     ctx.moveTo(node.x + borderRadius, node.y);
@@ -67,7 +85,7 @@ function drawCard(ctx, node) {
     ctx.closePath();
     ctx.fill();
 
-    // 카드 상단, 중단, 하단 색상
+ 
     ctx.fillStyle = '#0058a3';
     ctx.fillRect(node.x, node.y, width, height / 3);
     ctx.fillStyle = '#f7d117';
@@ -77,7 +95,6 @@ function drawCard(ctx, node) {
 
     ctx.shadowColor = 'transparent';
 
-    // 텍스트 설정
     ctx.fillStyle = '#fff';
     ctx.font = '15px Noto Sans';
     ctx.textAlign = 'center';
@@ -182,7 +199,7 @@ canvas.addEventListener('dblclick', (e) => {
             input.style.position = 'absolute';
             input.style.left = `${rect.left + clickedNode.x + (width / 2) - 50}px`;
             input.style.top = `${rect.top + clickedNode.y + 5}px`;
-            input.style.width = '100px';
+            input.style.width = '200px';
 
             document.body.appendChild(input);
 
@@ -208,7 +225,7 @@ canvas.addEventListener('dblclick', (e) => {
             input.style.position = 'absolute';
             input.style.left = `${rect.left + clickedNode.x + (width / 2) - 50}px`;
             input.style.top = `${rect.top + clickedNode.y + 45}px`;
-            input.style.width = '100px';
+            input.style.width = '200px';
 
             document.body.appendChild(input);
 
