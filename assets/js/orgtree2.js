@@ -10,6 +10,28 @@ document.addEventListener("DOMContentLoaded", async () => {
   let selectedNode = null;
   let selectedName = "";
   let permissions = [];
+  let organization = [];
+
+  function showEditPopup(currentName, updateCallback) {
+    const newName = prompt("이름을 수정하세요:", currentName);
+    if (newName && newName.trim() !== "") {
+      updateCallback(newName.trim());
+    }
+  }
+
+  function createEditableLabel(name, updateCallback) {
+    const label = document.createElement("span");
+    label.textContent = name;
+    label.style.cursor = "pointer";
+
+    label.addEventListener("dblclick", () => {
+      showEditPopup(name, (newName) => {
+        updateCallback(newName);
+        label.textContent = newName;
+      });
+    });
+    return label;
+  }
 
   async function fetchData(url) {
     const response = await fetch(url);
@@ -45,8 +67,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     toggleButton.style.fontWeight = "800";
 
 
-    const label = document.createElement("span");
-    label.textContent = name;
+    // const label = document.createElement("span");
+    // label.textContent = name;
+
+    const label = createEditableLabel(name, (newName) => {
+      name = newName;
+      //saveToStorage("organizationData", organization);
+    });
 
     const childrenContainer = document.createElement("div");
     childrenContainer.style.display = "none";
