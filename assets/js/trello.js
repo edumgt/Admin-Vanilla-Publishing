@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const lang = localStorage.getItem('lang');
+
+
     const taskList = document.getElementById("taskList");
     const ganttTableBody = document.getElementById("ganttTableBody");
     const splitter = document.getElementById("splitter");
@@ -42,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const endDate = document.getElementById("taskEndDate").value;
 
         if (!name || !startDate || !endDate) {
-            showToast("정보를 모두 입력해주세요","error");
+            showToast('required-input','warning',lang);
             return;
         }
 
@@ -130,9 +133,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 block.style.display = "inline-block";
 
                 if (currentDate >= taskStartDate && currentDate <= taskEndDate) {
-                    block.style.backgroundColor = "#4299e1";
+                    block.style.backgroundColor = "#0058a3";
                 } else {
-                    block.style.backgroundColor = "#f2f2f2";
+                    block.style.backgroundColor = "#e8eaee";
                 }
 
                 timelineCell.appendChild(block);

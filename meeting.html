@@ -34,36 +34,33 @@
                 <input type="hidden" id="room-name" name="roomName">
                 <input type="hidden" id="time-slot" name="timeSlot">
                 <div>
-                    <label for="date" class="block text-sm  text-gray-700">Date:</label>
+                    <label for="date" class="block">일자:</label>
                     <input type="date" id="date" name="date" class="mt-1 w-full" required>
                 </div>
                 <div>
-                    <label for="startTime" class="block text-sm  text-gray-700">Start Time:</label>
+                    <label for="startTime" class="block">시작시각:</label>
                     <select id="startTime" name="startTime" class="mt-1 block w-full" required>
 
                     </select>
                 </div>
                 <div>
-                    <label for="endTime" class="block text-sm  text-gray-700">End Time:</label>
+                    <label for="endTime" class="block">종료시각:</label>
                     <select id="endTime" name="endTime" class="mt-1 block w-full" required>
 
                     </select>
                 </div>
                 <div>
-                    <label for="meeting-title" class="block text-sm  text-gray-700">Meeting
-                        Title:</label>
+                    <label for="meeting-title" class="block">회의제목:</label>
                     <input type="text" id="meeting-title" name="meetingTitle"
-                        class="mt-1 block w-full  rounded-md shadow-sm p-2"
-                        placeholder="Enter meeting title" required>
+                        class="mt-1 block w-full  rounded-md shadow-sm p-2" placeholder="Enter meeting title" required>
                 </div>
                 <div>
-                    <label for="meeting-description" class="block text-sm  text-gray-700">Meeting
-                        Description:</label>
+                    <label for="meeting-description" class="block">회의설명:</label>
                     <textarea id="meeting-description" name="meetingDescription"
-                        class="mt-1 block w-full  rounded-md shadow-sm p-2"
-                        placeholder="Enter meeting description" required></textarea>
+                        class="mt-1 block w-full  rounded-md shadow-sm p-2" placeholder="Enter meeting description"
+                        required></textarea>
                 </div>
-                <div class="flex justify-end space-x-4">
+                <div class="flex justify-end space-x-2">
                     <button type="submit" class="bg-blue-500 text-white px-3 py-1 rounded">저장</button>
                     <button type="button" onclick="closeModal()"
                         class="bg-gray-500 text-white px-3 py-1 rounded">닫기</button>
@@ -78,10 +75,8 @@
         <div class="bg-white p-6 rounded-lg shadow-sm w-full max-w-4xl h-3/4">
             <h2 id="notes-modal-title" class="font-bold mb-4">Meeting Notes</h2>
             <div class="flex w-full h-full">
-                <textarea id="meeting-notes"
-                    class="w-1/2 h-full  rounded-md shadow-sm p-2"></textarea>
-                <div id="meeting-notes-preview"
-                    class="w-1/2 h-full  rounded-md shadow-sm p-2 overflow-auto"></div>
+                <textarea id="meeting-notes" class="w-1/2 h-full  rounded-md shadow-sm p-2"></textarea>
+                <div id="meeting-notes-preview" class="w-1/2 h-full  rounded-md shadow-sm p-2 overflow-auto"></div>
             </div>
             <div class="flex justify-end space-x-4 mt-4">
                 <button type="button" onclick="saveMeetingNotes()"
@@ -93,7 +88,8 @@
     </div>
 
     <!-- Warning Modal -->
-    <div id="warning-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div id="warning-modal"
+        class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden z-50">
         <div class="bg-white p-6 rounded-lg shadow-sm w-full max-w-md">
             <h2 class="font-bold mb-4">회의실예약</h2>
             <p>시간대가 겹치는 예약이 있습니다.</p>

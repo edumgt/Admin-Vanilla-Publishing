@@ -21,19 +21,17 @@
 
     <div class="flex items-center mb-2 mt-4">
       <div class="mr-4">
-        <label for="departmentSelect" class="block text-sm  text-gray-700 ">Department:</label>
-        <select id="departmentSelect" onchange="updateEmployeeSelect()">
-        </select>
+        <label for="departmentSelect" class="mr-2">Department:</label>
+        <select id="departmentSelect" onchange="updateEmployeeSelect()"></select>
       </div>
 
       <div class="mr-4">
-        <label for="employeeSelect" class="block text-sm  text-gray-700">Employee:</label>
-        <select id="employeeSelect" onchange="showAttendance()">
-        </select>
+        <label for="employeeSelect" class="mr-2">Employee:</label>
+        <select id="employeeSelect" onchange="showAttendance()"></select>
       </div>
 
       <div>
-        <label for="monthSelect" class="block text-sm  text-gray-700">Month:</label>
+        <label for="monthSelect" class="mr-2">Month:</label>
         <input type="month" id="monthSelect" value="2025-01" onchange="showAttendance()">
       </div>
     </div>

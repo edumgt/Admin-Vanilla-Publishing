@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <link href="assets/css/trello.css" rel="stylesheet">
 </head>
+
 <body>
     <div class="gnb-menu">
         <ul class="flex">
@@ -12,7 +14,7 @@
             <div id="memberIcon"></div>
         </ul>
     </div>
-  
+
     <div id="toast-container"></div>
     <div id="offCanvasContainer"></div>
     <div id="content">
@@ -22,33 +24,29 @@
             <div id="taskArea">
 
                 <form id="taskForm">
-                    <label for="taskName" class="text-sm  text-gray-700">Task
-                        Name</label>
-                    <input type="text" id="taskName" placeholder="타스크 명을 입력하세요요" required>
+                    <label for="taskName" class="block mb-1">업무이름:</label>
+                    <input type="text" id="taskName" placeholder="업무 명을 입력하세요요" required>
 
-                    <label for="taskDescription" class="text-sm  text-gray-700">Task
-                        Description</label>
-                    <textarea id="taskDescription" placeholder="타스크 설명을 입력하세요."></textarea>
+                    <label for="taskDescription" class="block mb-1">업무설명:</label>
+                    <textarea id="taskDescription" placeholder="업무 설명을 입력하세요."></textarea>
 
-                    <label for="taskStartDate" class="text-sm  text-gray-700">Start
-                        Date</label>
-                    <input type="date" id="taskStartDate" required>
+                    <div class="flex">
+                        <div class="flex-1 mr-4">
+                            <label for="taskStartDate" class="block mb-1">시작일자:</label>
+                            <input type="date" id="taskStartDate" required>
+                        </div>
+                        <div class="flex-1">
+                            <label for="taskEndDate" class="block mb-1">종료일자:</label>
+                            <input type="date" id="taskEndDate" required>
+                        </div>
+                    </div>
 
-                    <label for="taskEndDate" class="text-sm  text-gray-700">End
-                        Date</label>
-                    <input type="date" id="taskEndDate" required>
-
-                    <button type="submit" class="bg-blue-500 text-white px-3 py-1 rounded">Add Task</button>
+                    <button type="submit" class="bg-blue-500 text-white">저장</button>
                 </form>
                 <ul id="taskList" class="task-list"></ul>
-
-
             </div>
-
             <div id="splitter"></div>
-
             <div id="ganttArea">
-
                 <table class="gantt-table">
                     <thead>
                         <tr>
@@ -64,10 +62,7 @@
         </div>
     </div>
 
-
     <div id="buttonContainer"></div>
-
-
     <div id="appContainer"></div>
 
     <script type="text/javascript" src="assets/js/logo.js"></script>
