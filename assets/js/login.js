@@ -10,6 +10,7 @@ tabs.forEach(tab => {
         document.getElementById(tab.id.replace('-tab', '-form')).classList.remove('hidden');
     });
 });
+
 document.addEventListener('DOMContentLoaded', () => {
     fetch('assets/mock/messages.json')
         .then(response => response.json())

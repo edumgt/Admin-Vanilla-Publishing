@@ -5,8 +5,8 @@
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Register</title>
-   <link rel="stylesheet" href="assets/css/core.css">
-   <link rel="stylesheet" href="assets/css/style.css">
+   <link rel="stylesheet" href="assets/css/default.css">
+   <!-- <link rel="stylesheet" href="assets/css/style.css"> -->
    <link rel="stylesheet" href="assets/css/login.css">
 </head>
 
@@ -64,22 +64,7 @@
 
       </div>
    </div>
-   <script>
-      const tabs = document.querySelectorAll('button[id$="-tab"]');
-        const forms = document.querySelectorAll('.tab-content');
-
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                tabs.forEach(t => t.classList.remove('tab-active'));
-                tabs.forEach(t => t.classList.add('tab-inactive'));
-                tab.classList.remove('tab-inactive');
-                tab.classList.add('tab-active');
-                
-                forms.forEach(form => form.classList.add('hidden'));
-                document.getElementById(tab.id.replace('-tab', '-form')).classList.remove('hidden');
-            });
-        });
-   </script>
+   <script type="text/javascript" src="assets/js/login.js"></script>
 </body>
 
 </html>

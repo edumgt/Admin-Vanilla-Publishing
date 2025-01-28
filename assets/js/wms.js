@@ -256,8 +256,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     // }
 
     function populateDashboard(section) {
-        section.innerHTML = `<div id="stock-chart" class="w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300"></div>
-        <div id="monthly-outbound-chart" class="w-full border border-gray-300 rounded-lg p-2 focus:ring focus:ring-blue-300 mt-4"></div>`;
+        section.innerHTML = `<div id="stock-chart" class="w-full border border-gray-300 rounded-lg p-2 "></div>
+        <div id="monthly-outbound-chart" class="w-full border border-gray-300 rounded-lg p-2  mt-4"></div>`;
 
         // Convert inbound and outbound data into dictionaries keyed by ISBN
         const inboundDict = Object.fromEntries(inboundData.map(book => [book.isbn, book.quantity]));
