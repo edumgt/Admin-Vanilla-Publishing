@@ -20,4 +20,14 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(error => console.error('Error loading data:', error));
     let lang = localStorage.getItem('lang') || 'ko'; 
     localStorage.setItem('lang', lang); 
+
+    let firstFavorite = JSON.parse(localStorage.getItem('favorite-1st')) || null;
+    let firstPage = document.getElementById("firstPage");
+    
+    if (firstFavorite) {
+        firstPage.href = firstFavorite.url;
+        
+    } else {
+        firstPage.href = "system.html";
+    }
 });
