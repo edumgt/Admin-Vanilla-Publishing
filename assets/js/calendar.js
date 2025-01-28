@@ -73,7 +73,7 @@ const calendar = (() => {
         for (let day = 1; day <= daysInMonth; day++) {
             const dateDiv = document.createElement('div');
             dateDiv.className = 'py-6 px-4 border cursor-pointer relative';
-            dateDiv.innerHTML = `<div class="text-md  absolute top-2 left-2">${day}</div>`;
+            dateDiv.innerHTML = `<div class="text-md absolute top-2 left-2">${day}</div>`;
 
             const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 
