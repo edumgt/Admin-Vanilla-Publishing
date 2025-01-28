@@ -34,11 +34,11 @@
                </a>
             </div>
             <div class="navbar-nav nav-right">
-               <div class="theme-toggle">
+               <!-- <div class="theme-toggle">
                   <a href="#" class="nav-link">
                      <i class="bx bx-moon fs-5 cursor-pointer"></i>
                   </a>
-               </div>
+               </div> -->
                <div class="dropdown">
                   <div class="dropdown-toggle">
                      <a href="#" class="nav-link">
@@ -323,44 +323,8 @@
                      </div>
                   </div>
                </div>
-               <div class="col-12 col-md-6">
-                  <div class="card">
-                     <div class="card-header pb-0">
-                        <h5>Basic Rounded Buttons</h5>
-                     </div>
-                     <div class="card-body">
-                        <div class="badge-container">
-                           <button class="btn rounded-pill btn-primary">Primary</button>
-                           <button class="btn rounded-pill btn-secondary">Secondary</button>
-                           <button class="btn rounded-pill btn-success">Success</button>
-                           <button class="btn rounded-pill btn-danger">Danger</button>
-                           <button class="btn rounded-pill btn-warning">Warning</button>
-                           <button class="btn rounded-pill btn-info">Info</button>
-                           <button class="btn rounded-pill btn-light">Light</button>
-                           <button class="btn rounded-pill btn-dark">Dark</button>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-12 col-md-6">
-                  <div class="card">
-                     <div class="card-header pb-0">
-                        <h5>Label Rounded Buttons</h5>
-                     </div>
-                     <div class="card-body">
-                        <div class="badge-container">
-                           <button class="btn rounded-pill btn-label-primary">Primary</button>
-                           <button class="btn rounded-pill btn-label-secondary">Secondary</button>
-                           <button class="btn rounded-pill btn-label-success">Success</button>
-                           <button class="btn rounded-pill btn-label-danger">Danger</button>
-                           <button class="btn rounded-pill btn-label-warning">Warning</button>
-                           <button class="btn rounded-pill btn-label-info">Info</button>
-                           <button class="btn rounded-pill btn-label-light">Light</button>
-                           <button class="btn rounded-pill btn-label-dark">Dark</button>
-                        </div>
-                     </div>
-                  </div>
-               </div>
+               
+               
                <div class="col-12 col-md-6">
                   <div class="card">
                      <div class="card-header pb-0">
@@ -383,18 +347,18 @@
                <div class="col-12 col-md-6">
                   <div class="card">
                      <div class="card-header pb-0">
-                        <h5>Rounded Outline Buttons</h5>
+                        <h5>Basic Badges</h5>
                      </div>
                      <div class="card-body">
                         <div class="badge-container">
-                           <button class="btn rounded-pill btn-outline-primary">Primary</button>
-                           <button class="btn rounded-pill btn-outline-secondary">Secondary</button>
-                           <button class="btn rounded-pill btn-outline-success">Success</button>
-                           <button class="btn rounded-pill btn-outline-danger">Danger</button>
-                           <button class="btn rounded-pill btn-outline-warning">Warning</button>
-                           <button class="btn rounded-pill btn-outline-info">Info</button>
-                           <button class="btn rounded-pill btn-outline-light">Light</button>
-                           <button class="btn rounded-pill btn-outline-dark">Dark</button>
+                           <span class="badge bg-primary">Primary</span>
+                           <span class="badge bg-secondary">Secondary</span>
+                           <span class="badge bg-success">Success</span>
+                           <span class="badge bg-danger">Danger</span>
+                           <span class="badge bg-warning">Warning</span>
+                           <span class="badge bg-info">Info</span>
+                           <span class="badge bg-light">Light</span>
+                           <span class="badge bg-dark">Dark</span>
                         </div>
                      </div>
                   </div>
@@ -414,24 +378,37 @@
                   </div>
                </div>
                <div class="col-12 col-md-6">
-                  <div class="card">
-                     <div class="card-header pb-0">
-                        <h5>Rounded Buttons Sizes</h5>
-                     </div>
-                     <div class="card-body">
-                        <div class="badge-container">
-                           <button class="btn btn-xs rounded-pill btn-primary">Extra Small</button>
-                           <button class="btn btn-sm rounded-pill btn-primary">Small</button>
-                           <button class="btn rounded-pill btn-primary">Normal</button>
+                  <h6 class="text-muted mb-4">Basic Accordion</h6>
+                  <div class="accordion" id="accordion-1">
+                     <div class="accordion-item card mb-2" parent="accordion-1">
+                        <div class="accordion-header fw-semibold px-6 py-4">
+                           <button class="accordion-button">Accordion Item 1</button>
+                        </div>
+                        <div class="accordion-body px-6 pb-6">
+                           <p>
+                              This is the first accordion item. Each <span class="text-danger-dark">accordion</span>
+                              contains <span class="text-danger-dark">accordion-item</span>. accordion-item contains
+                              <span class="text-danger-dark">accordion-header</span> and <span
+                                 class="text-danger-dark">accordion-body</span>.
+                              accordion-header contains <span class="text-danger-dark">accordion-button</span>.
+                              accordion-item can be opened by adding <span class="text-danger-dark">open</span>
+                              class to it. <span class="text-danger-dark">no-collapse</span> class will prevent
+                              accordion-item from opening. Add <span class="text-danger-dark">parent</span>
+                              attribute to
+                              each accordion-item so that only one accordion-item is opened at a time. If you omit the
+                              parent attribute the accordion-item will always remain opened. Add <span
+                                 class="text-danger-dark">no-arrow</span> class to accordion-item to hide the arrow.
+                           </p>
                         </div>
                      </div>
+
                   </div>
                </div>
             </div>
             
             <div class="row g-6 mb-4">
                <div class="col-12 col-md-6">
-                  <div class="card">
+                  <!-- <div class="card">
                      <div class="card-header pb-0">
                         <h5>Basic Alerts</h5>
                      </div>
@@ -461,10 +438,10 @@
                            This is a dark alert
                         </div>
                      </div>
-                  </div>
+                  </div> -->
                </div>
                <div class="col-12 col-md-6">
-                  <div class="card">
+                  <!-- <div class="card">
                      <div class="card-header pb-0">
                         <h5>Dismissible Alerts</h5>
                      </div>
@@ -502,7 +479,7 @@
                            <button class="btn-close"></button>
                         </div>
                      </div>
-                  </div>
+                  </div> -->
                </div>
                <div class="col-12 col-md-6">
                   <div class="card">

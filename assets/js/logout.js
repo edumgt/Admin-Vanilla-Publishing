@@ -16,7 +16,7 @@ function createMenu(menuItemsLnb) {
   const container = document.getElementById('menu-container');
   const menuDiv = document.createElement('div');
   menuDiv.className = 'menu';
-  
+
 
   menuItemsLnb.forEach(item => {
     const menuItemDiv = document.createElement('div');
@@ -51,7 +51,6 @@ const menuItemsLnb = [
   { href: 'account-password.html', icon: 'fas fa-key', text: 'Account-password' },
 
   { href: 'dashboard.html', icon: 'fas fa-tachometer-alt', text: 'Dashboard' },
-  { href: 'accordions.html', icon: 'fas fa-bars', text: 'Accordions' },
   { href: 'alerts.html', icon: 'fas fa-bell', text: 'Alerts' },
   { href: 'cards.html', icon: 'fas fa-id-card', text: 'Cards' },
 

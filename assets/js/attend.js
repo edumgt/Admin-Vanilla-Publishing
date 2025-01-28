@@ -252,7 +252,7 @@ function saveAttendance(employeeId, dateStr) {
     localStorage.setItem('attendanceData', JSON.stringify(attendanceData));
     showAttendance();
   } else {
-    //alert('Please enter both Check-In and Check-Out times.');
+
     showToast('required-input','warning',lang);
   }
 }
