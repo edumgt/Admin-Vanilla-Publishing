@@ -42,48 +42,64 @@
             <div class="dates grid grid-cols-7 flex-grow" id="dates"></div>
         </div>
 
-        <div id="modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden z-50">
-            <div class="bg-white rounded-md shadow-md overflow-y-auto">
-                <h3 class="text-xl font-bold mb-4">강의일정 추가</h3>
-                <form id="lectureForm" class="space-y-4">
-                    <div>
-                        <label class="block mb-1">Time:</label>
-                        <input type="time" id="time" class="block w-full p-2 border rounded">
-                    </div>
-                    <div>
-                        <label class="block mb-1">Course:</label>
-                        <input type="text" id="course" placeholder="Course Name"
-                            class="block w-full p-2 border rounded">
-                    </div>
-                    <div>
-                        <label class="block mb-1">Instructor:</label>
-                        <input type="text" id="instructor" placeholder="Instructor Name"
-                            class="block w-full p-2 border rounded">
-                    </div>
+        <div id="modalLecture"
+            class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden z-50">
 
-                    <h4 class="font-bold mb-2">학생 추가</h4>
-                    <div id="studentsContainer" class="space-y-4">
-                        <div class="student-entry">
-                            <label class="block mb-1">학생명:</label>
-                            <input type="text" class="student-name block w-full mb-2 p-2 border rounded">
-                            <label class="block mb-1 ">학교:</label>
-                            <input type="text" class="student-university block w-full mb-2 p-2 border rounded">
-                            <label class="block mb-1 ">입학년도:</label>
-                            <input type="number" class="student-year block w-full mb-2 p-2 border rounded">
-                            <label class="block mb-1 ">전공(과):</label>
-                            <input type="text" class="student-major block w-full mb-2 p-2 border rounded">
+
+            <form id="lectureForm">
+            <div class="flex bg-white p-8 overflow-y-auto rounded-lg shadow-sm w-full ">
+                
+
+
+
+                    <div class="flex-1 mr-4">
+                        <h3 class="text-md font-bold mb-4">강의일정 추가</h3>
+
+                        <div>
+                            <label class="block mb-1">시각:</label>
+                            <input type="time" id="time" class="mb-4">
+                        </div>
+                        <div>
+                            <label class="block mb-1">강의명:</label>
+                            <input type="text" id="course" placeholder="Course Name" class="w-96 mb-4">
+                        </div>
+                        <div>
+                            <label class="block mb-1">강사:</label>
+                            <input type="text" id="instructor" placeholder="Instructor Name" class="w-auto mb-4">
+                        </div>
+
+                        <div class="space-x-2">
+                            <button type="submit" class="bg-blue-500 text-white">강의일정 추가</button>
+                            <button type="button" id="closeModal" class="bg-gray-500 text-white">닫기</button>
                         </div>
                     </div>
-                    <button type="button" id="addStudentBtn" class="bg-blue-500 text-white px-3 py-1 rounded">+ 학생
-                        추가</button>
+                    <div class="flex-1 ">
+                        <h3 class="text-md font-bold mb-4">학생 추가</h3>
+                        <div id="studentsContainer" class="space-y-4">
+                            <div class="student-entry">
+                                <label class="block mb-1">학생명:</label>
+                                <input type="text" class="student-name block w-auto mb-4">
+                                <label class="block mb-1 ">학교:</label>
+                                <input type="text" class="student-university block w-auto mb-4">
+                                <label class="block mb-1 ">입학년도:</label>
+                                <input type="number" class="student-year block w-auto mb-4">
+                                <label class="block mb-1 ">전공(과):</label>
+                                <input type="text" class="student-major block w-auto mb-4">
+                            </div>
+                        </div>
+                        <button type="button" id="addStudentBtn" class="bg-blue-500 text-white ">+
+                            학생
+                            추가</button>
 
-                    <div class="flex justify-end space-x-4">
-                        <button type="submit" class="bg-blue-500 text-white px-3 py-1  rounded">강의일정 추가</button>
-                        <button type="button" id="closeModal"
-                            class="bg-gray-500 text-white px-3 py-1  rounded">닫기</button>
+
                     </div>
-                </form>
-            </div>
+                
+            </div></form>
+
+
+
+
+
         </div>
 
         <!-- Student List Modal -->

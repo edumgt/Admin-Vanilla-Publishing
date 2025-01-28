@@ -664,15 +664,7 @@ input[type="checkbox"] {
 }
 
 /* default html component */
-input[type="button"] {
-  background-color: var(--primary-color) !important;
-  color: #ffcc00 !important;
-  border: none !important;
-  cursor: pointer !important;
-  border-radius: 3px;
-  height: calc(1.5em + 6px);
-  padding: 3px 6px 3px 6px;
-}
+
 
 select {
   width: 150px;
@@ -690,23 +682,43 @@ select {
 
 input[type="text"],
 input[type="password"],
-input[type="submit"],
 input[type="time"],
 input[type="number"],
 input[type="month"],
-input[type="date"],
-button[type="submit"]
+input[type="date"]
 {
   border: 1px solid var(--primary-color) !important;
-  /* padding: 1px 3px 1px 3px; */
   height: calc(1.5rem + 6px);
-  /* border-radius: 3px; */
+  padding-left: .35rem;
+  padding-right: .75rem;
+  padding-top: .35rem;
+  padding-bottom: .35rem;
+  border-radius: .25rem;
+}
+
+input[type="submit"],
+button[type="submit"],
+button[type="button"],
+input[type="button"]
+{
+  border: 1px solid var(--primary-color) !important;
+  height: calc(1.5rem + 6px);
   padding-left: .75rem;
   padding-right: .75rem;
   padding-top: .15rem;
   padding-bottom: .45rem;
   border-radius: .25rem;
 }
+
+/* input[type="button"] {
+  background-color: var(--primary-color) !important;
+  color: #ffcc00 !important;
+  border: none !important;
+  cursor: pointer !important;
+  border-radius: 3px;
+  height: calc(1.5em + 6px);
+  padding: 3px 6px 3px 6px;
+} */
 
 textarea {
   padding: 2px;

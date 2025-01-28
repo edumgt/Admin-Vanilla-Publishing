@@ -3,14 +3,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const dates = document.getElementById('dates');
     const prevMonth = document.getElementById('prevMonth');
     const nextMonth = document.getElementById('nextMonth');
-    const modal = document.getElementById('modal');
+
+    const modal = document.getElementById('modalLecture');
     const modalSt = document.getElementById('modalSt');
+
     const lectureForm = document.getElementById('lectureForm');
     const timeInput = document.getElementById('time');
     const courseInput = document.getElementById('course');
     const instructorInput = document.getElementById('instructor');
+
     const closeModal = document.getElementById('closeModal');
     const closeModal2 = document.getElementById('closeModal2');
+
     const addStudentBtn = document.getElementById('addStudentBtn');
     const studentsContainer = document.getElementById('studentsContainer');
     const studentList = document.getElementById('studentList');
@@ -29,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
         monthYear.textContent = `${year}년 ${month + 1}월`;
     
-        // 오늘 날짜 가져오기 (YYYY-MM-DD 형식)
+        
         const today = new Date();
         const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
     
@@ -45,9 +49,9 @@ document.addEventListener('DOMContentLoaded', () => {
             dateDiv.ondrop = drop;
             dateDiv.ondragover = allowDrop;
     
-            // 📌 오늘 날짜인 경우 특별한 스타일 추가
+            
             if (dateStr === todayStr) {
-                dateDiv.classList.add('bg-gray-100', 'font-bold'); // 강조 스타일 추가
+                dateDiv.classList.add('bg-gray-100', 'font-bold'); 
             }
     
             const dateNumber = document.createElement('span');
@@ -216,14 +220,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const studentEntry = document.createElement('div');
         studentEntry.classList.add('student-entry', 'mb-2');
         studentEntry.innerHTML = `
-            <label class="block mb-1">Student Name:</label>
-            <input type="text" class="student-name block w-full mb-2 p-2 border rounded">
-            <label class="block mb-1">University:</label>
-            <input type="text" class="student-university block w-full mb-2 p-2 border rounded">
-            <label class="block mb-1">Year:</label>
-            <input type="number" class="student-year block w-full mb-2 p-2 border rounded">
-            <label class="block mb-1">Major:</label>
-            <input type="text" class="student-major block w-full mb-2 p-2 border rounded">
+            <label class="block mb-1">학생명:</label>
+            <input type="text" class="student-name block mb-4">
+            <label class="block mb-1">학교:</label>
+            <input type="text" class="student-university block mb-4">
+            <label class="block mb-1">입학년도:</label>
+            <input type="number" class="student-year block mb-4">
+            <label class="block mb-1">전공(과):</label>
+            <input type="text" class="student-major block mb-4">
         `;
         studentsContainer.appendChild(studentEntry);
     });
