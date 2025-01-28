@@ -4,80 +4,91 @@ document.addEventListener('DOMContentLoaded', () => {
     const workarea = document.getElementById('workarea');
     workarea.classList.add('flex', 'mb-4', 'mt-4', 'gap-2');
     document.getElementsByClassName("tablinks")[0].click();
+
+    let rowData = JSON.parse(localStorage.getItem("questions"));
+    const questionsContainer = document.getElementById("questionsContainer");
+    questionsContainer.classList.add('mt-4');
+
+    // JSON 데이터를 불러오는 함수 (최대 3번 재시도)
+    function fetchQuestions(retryCount = 0) {
+        console.log(`Fetching questions... Attempt: ${retryCount + 1}`);
+
+        fetch('assets/mock/questions.json')
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                return response.json();
+            })
+            .then(data => {
+                localStorage.setItem('questions', JSON.stringify(data));
+                console.log("Questions successfully loaded:", data);
+                initializeGrid(data);
+            })
+            .catch(error => {
+                console.error('Error fetching surveys:', error);
+                if (retryCount < 2) {
+                    setTimeout(() => fetchQuestions(retryCount + 1), 2000); // 2초 후 재시도
+                } else {
+                    console.error("Failed to fetch questions after multiple attempts.");
+                }
+            });
+    }
+
+    if (!rowData) {
+        fetchQuestions(); // 최초 데이터 로드 시도
+    } else {
+        initializeGrid(rowData);
+    }
+
+    function initializeGrid(data) {
+        window.grid = new tui.Grid({
+            el: questionsContainer,
+            data: data,
+            columns: [
+                { header: "ID", name: "id", width: 60 },
+                {
+                    header: "질문", name: "text", width: 250,
+                    resizable: true,
+                    editor: "text"
+                },
+                {
+                    header: "옵션", name: "options",
+                    editor: {
+                        type: 'text',
+                        options: {
+                            useViewMode: false
+                        }
+                    },
+                    minWidth: 400
+                }
+            ],
+            bodyHeight: 500,
+            scrollX: true,
+            scrollY: true
+        });
+
+        grid.on('afterChange', ({ changes }) => {
+            let storedData = JSON.parse(localStorage.getItem("questions")) || [];
+
+            changes.forEach(change => {
+                const { rowKey, columnName, value } = change;
+                let updatedRow = grid.getRow(rowKey);
+
+                let existingIndex = storedData.findIndex(q => q.id === updatedRow.id);
+                if (existingIndex !== -1) {
+                    if (columnName === "options") {
+                        storedData[existingIndex][columnName] = value.split(",").map(opt => opt.trim()); // 문자열을 배열로 변환
+                    } else {
+                        storedData[existingIndex][columnName] = value;
+                    }
+                }
+            });
+
+            localStorage.setItem("questions", JSON.stringify(storedData));
+        });
+    }
     fetchData();
 });
 
-document.addEventListener("DOMContentLoaded", async function () {
-    let rowData = JSON.parse(localStorage.getItem("questions"));
-    displayQuestions(rowData);
-
-    if (!rowData) {
-        try {
-            const response = await fetch("assets/mock/questions.json"); // JSON 파일 경로
-            rowData = await response.json();
-            rowData = rowData.map(item => ({
-                id: item.id,
-                text: item.text,
-                options: item.options // TUI Grid에서 배열을 다룰 수 있도록 구조 변경
-            }));
-            localStorage.setItem("questions", JSON.stringify(rowData));
-        } catch (error) {
-            console.error("데이터를 불러오는 중 오류 발생:", error);
-            rowData = [];
-        }
-    }
-    window.grid = new tui.Grid({
-        el: document.getElementById("questionsContainer"),
-        data: rowData,
-        columns: [
-            { header: "ID", name: "id", width: 60 },
-            {
-                header: "질문", name: "text", width: 250,
-                resizable: true,
-                editor: "text"
-            },
-            {
-                header: "옵션", name: "options",
-                editor: {
-                    type: 'text',
-                    options: {
-                        useViewMode: false
-                    }
-                },
-                minWidth: 400
-            }
-        ],
-        bodyHeight: 500,
-        scrollX: true, 
-        scrollY: true
-        
-    });
-
-    // ✅ 변경된 데이터만 저장 (기존 값 유지)
-    grid.on('afterChange', ({ changes }) => {
-        let storedData = JSON.parse(localStorage.getItem("questions")) || [];
-
-        changes.forEach(change => {
-            const { rowKey, columnName, value } = change;
-            let updatedRow = grid.getRow(rowKey);
-
-            // 변경된 값만 업데이트 (기존 데이터 유지)
-            let existingIndex = storedData.findIndex(q => q.id === updatedRow.id);
-            if (existingIndex !== -1) {
-                if (columnName === "options") {
-                    storedData[existingIndex][columnName] = value.split(",").map(opt => opt.trim()); // 문자열을 배열로 변환
-                } else {
-                    storedData[existingIndex][columnName] = value;
-                }
-            }
-        });
-
-        // 수정된 데이터 localStorage에 저장
-        localStorage.setItem("questions", JSON.stringify(storedData));
-        var rowData = JSON.parse(localStorage.getItem("questions"));
-        displayQuestions(rowData);
-    });
-});
 
 function addQuestion() {
     const questionInput = document.getElementById('questionInput');
@@ -100,15 +111,16 @@ function addQuestion() {
     questions.push(newQuestion);
     localStorage.setItem('questions', JSON.stringify(questions));
     createQuestionBox(newQuestion, document.getElementById('questionsList'));
-    
+
     if (window.grid) {
         window.grid.appendRow(newQuestion); // 새로운 행 추가
-        //window.grid.scrollToBottom(); 
+
     }
 
     // 입력 필드 초기화
     questionInput.value = '';
     document.querySelectorAll('#optionsInput input').forEach(input => input.value = '');
+
 }
 
 // 탭 전환 함수
@@ -132,16 +144,8 @@ function openTab(evt, tabName) {
 
 // 데이터 fetch
 function fetchData() {
-    // fetch('assets/mock/questions.json')
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         localStorage.setItem('questions', JSON.stringify(data));
-    //         displayQuestions(data);
-    //     })
-    //     .catch(error => console.error('Error fetching questions:', error));
-
-    //let rowData = JSON.parse(localStorage.getItem("questions"));
-    
+    // 초기 실행
+    waitForQuestions();
 
     fetch('assets/mock/surveys.json')
         .then(response => response.json())
@@ -157,29 +161,38 @@ function fetchData() {
             localStorage.setItem('responses', JSON.stringify(data));
         })
         .catch(error => console.error('Error fetching responses:', error));
+
 }
+
+function waitForQuestions(retryCount = 0) {
+    let rowData = JSON.parse(localStorage.getItem("questions"));
+
+    if (rowData !== null) {
+        console.log("rowData: ", rowData);
+        console.log("rowData.length: " + rowData.length);
+        displayQuestions(rowData);
+    } else if (retryCount < 5) { // 최대 5번 재시도 (5초 동안 확인)
+        console.log(`Waiting for questions... Attempt: ${retryCount + 1}`);
+        setTimeout(() => waitForQuestions(retryCount + 1), 1000);
+    } else {
+        console.error("Failed to load questions after multiple attempts.");
+    }
+}
+
+
 
 // 문항 표시 함수
 function displayQuestions(questions) {
     const questionsList = document.getElementById('questionsList');
+    questionsList.style.height = "700px";
     questionsList.innerHTML = '<p class="mb-2">문항 목록</p>';
     questions.forEach(question => createQuestionBox(question, questionsList));
 }
 
-// 문항 목록 표시 함수
-function displayQuestionsGrid(questions) {
-    const questionsContainer = document.getElementById('questionsContainer');
-    questionsContainer.innerHTML = '<div id="questionsGrid"></div>';
-    questionsContainer.classList.add("mt-4");
-    questions.forEach(question => createQuestionBox(question, questionsContainer));
-}
-
-
-
 // 문항 생성 함수
 function createQuestionBox(question, container) {
     const questionBox = document.createElement('div');
-    questionBox.className = 'question-box border p-2 my-1 cursor-move';
+    questionBox.className = 'question-box border p-2 my-1 cursor-move bg-gray-100';
     questionBox.draggable = true;
     questionBox.textContent = question.text;
     questionBox.dataset.id = question.id;
@@ -216,12 +229,40 @@ function handleDrop(event) {
     event.target.classList.remove('bg-gray-200');
 
     const questionId = event.dataTransfer.getData('text/plain');
-    const question = JSON.parse(localStorage.getItem('questions')).find(q => q.id == questionId);
-    if (question) {
-        const surveyQuestionBox = createSurveyQuestionBox(question, true);
-        event.target.appendChild(surveyQuestionBox);
+    const questions = JSON.parse(localStorage.getItem('questions')) || [];
+    const question = questions.find(q => q.id == questionId);
+
+    if (!question) return;
+
+    // 드롭된 컨테이너에서 중복 검사
+    const existingItem = event.target.querySelector(`[data-id="${questionId}"]`);
+    if (existingItem) {
+        alert("이미 추가된 문항입니다.");
+        return;
     }
+
+    // 새로운 문항 박스 추가
+    const surveyQuestionBox = createSurveyQuestionBox(question, true);
+    event.target.appendChild(surveyQuestionBox);
 }
+
+// 문항 박스를 생성하는 함수
+function createSurveyQuestionBox(question, draggable = false) {
+    const box = document.createElement('div');
+    box.className = 'survey-question border p-2 my-1 bg-blue-100';
+    box.textContent = question.text;
+    box.dataset.id = question.id;
+    box.draggable = draggable;
+
+    if (draggable) {
+        box.classList.add('cursor-move');
+        box.addEventListener('dragstart', handleDragStart);
+        box.addEventListener('dragend', handleDragEnd);
+    }
+
+    return box;
+}
+
 
 // 설문 문항 생성 함수
 function createSurveyQuestionBox(question, isRemovable) {
@@ -243,9 +284,9 @@ function createSurveyQuestionBox(question, isRemovable) {
     });
 
     if (isRemovable) {
-        const removeButton = document.createElement('button');
-        removeButton.className = 'absolute top-0 right-0 bg-red-500 text-white p-1 rounded';
-        removeButton.textContent = 'Remove';
+        const removeButton = document.createElement('span');
+        removeButton.className = 'absolute top-1 right-1 text-red-500 text-white p-1 cursor-pointer';
+        removeButton.textContent = 'X';
         removeButton.onclick = () => questionBox.remove();
         questionBox.appendChild(removeButton);
     }
@@ -448,6 +489,7 @@ function displayReport(report) {
 
 // 드롭 존 설정
 const surveyContainer = document.getElementById('surveyContainer');
+surveyContainer.style.height = "700px";
 surveyContainer.addEventListener('dragover', handleDragOver);
 surveyContainer.addEventListener('dragleave', handleDragLeave);
 surveyContainer.addEventListener('drop', handleDrop);
@@ -511,8 +553,6 @@ function startMobileSurvey() {
         const storedResponses = JSON.parse(localStorage.getItem('responses')) || [];
         storedResponses.push(responses);
         localStorage.setItem('responses', JSON.stringify(storedResponses));
-
-        //showToast('설문에 답변하였습니다.');
         showToast('surveyCompleted', 'success', 'ko');
 
         generateReport(storedResponses);

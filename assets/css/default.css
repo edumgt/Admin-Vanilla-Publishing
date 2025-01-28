@@ -24,6 +24,7 @@
   --gnb-item-padding: 0.5rem 1rem;
 
   --input-color: #333;
+  --border-radius: 0.375rem;
 }
 
 /* General Styles */
@@ -695,16 +696,22 @@ input[type="checkbox"] {
 
 select {
   width: 150px;
-  padding: 3px;
-  font-size: 1rem;
+  height: calc(1.5em + 6px);
+  padding-left: .35rem;
+  padding-right: .75rem;
+  padding-top: .19rem;
+  padding-bottom: .29rem;
+  border-radius: .25rem;
+  font-size: 0.9rem;
   border: 1px solid var(--primary-color) !important;
-  border-radius: 3px;
+  
   background-color: white;
   color: var(--input-color);
+
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  height: calc(1.5em + 6px);
+  
 }
 
 input[type="text"],
@@ -715,11 +722,11 @@ input[type="month"],
 input[type="date"]
 {
   border: 1px solid var(--primary-color) !important;
-  height: calc(1.5rem + 6px);
+  height: calc(1.5rem + 4px);
   padding-left: .35rem;
   padding-right: .75rem;
   padding-top: .35rem;
-  padding-bottom: .35rem;
+  padding-bottom: .36rem;
   border-radius: .25rem;
 }
 
@@ -730,7 +737,8 @@ input[type="button"],
 button
 {
   /* border: 1px solid var(--primary-color) !important; */
-  height: calc(1.5rem + 6px);
+  /* height: calc(1.5rem + 6px); */
+  height: 29px;
   padding-left: .75rem;
   padding-right: .75rem;
   padding-top: .13rem;
@@ -842,3 +850,12 @@ label{
 .handsontable .htTooltip {
   z-index: 41 !important;
 }
+
+/* card */
+.card {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0.2rem 0.5rem 0 hsla(210, 30%, 20%, 0.1);
+  border-radius: var(--border-radius);
+}
+

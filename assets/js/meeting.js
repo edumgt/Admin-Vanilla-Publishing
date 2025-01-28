@@ -62,14 +62,14 @@ function generateTimeslots(room, dateFilter = null, currentTime) {
             timeslots += `
                     <div class="flex justify-between py-1 border-b border-gray-200">
                         <span>${startTime} - ${endTime} (${booking.title})</span>
-                        <button onclick="${isPastMeeting ? `openNotesModal(${room.bookings.indexOf(booking)})` : `openModal('${room.name}', 'Update', ${room.bookings.indexOf(booking)})`}" class="${buttonClass} text-white px-3 py-1 rounded-md">${buttonLabel}</button>
+                        <button onclick="${isPastMeeting ? `openNotesModal(${room.bookings.indexOf(booking)})` : `openModal('${room.name}', 'Update', ${room.bookings.indexOf(booking)})`}" class="${buttonClass} text-white">${buttonLabel}</button>
                     </div>
                 `;
         } else {
             timeslots += `
                     <div class="flex justify-between py-1 border-b border-gray-200">
                         <span>${startTime} - ${endTime}</span>
-                        <button onclick="openModal('${room.name}', 'New', '${startTime}')" class="bg-blue-500 text-white-md ">Add</button>
+                        <button onclick="openModal('${room.name}', 'New', '${startTime}')" class="bg-blue-500 text-white">Add</button>
                     </div>
                 `;
             hour++;
@@ -220,13 +220,8 @@ document.getElementById('booking-form').addEventListener('submit', function (eve
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    // 오늘 날짜를 YYYY-MM-DD 형식으로 가져오기
     const today = new Date().toISOString().slice(0, 10);
-
-    // 날짜 필드에 기본값으로 설정
     document.getElementById('search-date').value = today;
-
-    // 오늘 날짜를 기준으로 회의실 데이터 가져오기
     displayRooms(today);
 });
 
