@@ -9,9 +9,13 @@
         "input-allowed": "Input is possible in row 1.",
         "select-delete": "The selected item has been deleted.",
         "delete-not": "No item has been selected for deletion.",
+        "two-compare": "You can compare up to two items.",
         "surveyCompleted": "Survey completed successfully!",
         "questionAdded": "Question added successfully!",
-        "questionRemoved": "Question removed successfully!"
+        "questionRemoved": "Question removed successfully!",
+        "favo-login": "You have added this to your favorites after logging in.",
+        "favo-already": "This item is already in your favorites.",
+        "favo-save": "The item has been successfully saved to your favorites."
     },
     "ko": {
         "well-done": "작업을 완료하였습니다.",
@@ -23,9 +27,13 @@
         "input-allowed": "1번 행에 입력 가능 합니다.",
         "select-delete": "선택된 항목이 삭제되었습니다.",
         "delete-not": "삭제할 항목이 선택되지 않았습니다.",
+        "two-compare": "2개 까지 비교 가능 합니다.",
         "surveyCompleted": "설문이 성공적으로 완료되었습니다!",
         "questionAdded": "문항이 성공적으로 추가되었습니다!",
-        "questionRemoved": "문항이 성공적으로 제거되었습니다!"
+        "questionRemoved": "문항이 성공적으로 제거되었습니다!",
+        "favo-login": "로그인 후 바로가기에 등록하였습니다.",
+        "favo-already": "이미 Quick 즐겨찾기에 저장된 페이지입니다.",
+        "favo-save": "즐겨찾기에 저장되었습니다."
     },
     "ja": {
         "well-done": "作業が正常に完了しました。",
@@ -37,8 +45,12 @@
         "input-allowed": "1行目に入力可能です。",
         "select-delete": "選択した項目が削除されました。",
         "delete-not": "削除する項目が選択されていません。",
+        "two-compare": "2つまで比較可能です。(ふたつまでひかくかのうです)",
         "surveyCompleted": "アンケートが正常に完了しました！",
         "questionAdded": "質問が正常に追加されました！",
-        "questionRemoved": "質問が正常に削除されました！"
+        "questionRemoved": "質問が正常に削除されました！",
+        "favo-login": "ログイン後、お気に入りに登録しました。",
+        "favo-already": "このアイテムはすでにお気に入りに登録されています。",
+        "favo-save": "アイテムをお気に入りに保存しました。"
     }
 }

@@ -1,7 +1,11 @@
+const lang = localStorage.getItem('lang'); 
+
 let grid;
 let rawData;
 
 window.onload = function () {
+
+    
 
     const workarea = document.getElementById('workarea');
     workarea.classList.add('mb-4','mt-4');
@@ -62,7 +66,7 @@ function initializeGrid(data) {
         rowHeaders: ['checkbox', 'rowNum'],
         scrollX: false,
         scrollY: true,
-        bodyHeight: 380
+        bodyHeight: 220
     });
 
     grid.on('editingFinish', updateLocalStorage);
@@ -142,7 +146,7 @@ function handleSelectionChange() {
     const selectedRows = grid.getCheckedRows();
 
     if (selectedRows.length > 2) {
-        showToast('2개 까지 비교 가능 합니다.');
+        showToast('two-compare','warning',lang);
         const unselectIndex = selectedRows.length - 1;
         grid.uncheck(selectedRows[unselectIndex].rowKey);
         return;

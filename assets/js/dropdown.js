@@ -1,3 +1,5 @@
+// const lang = localStorage.getItem('lang'); 
+
 const memberIcon = document.getElementById('memberIcon');
 memberIcon.classList.add("text-gray-200", "hover:text-white", "p-2");
 memberIcon.innerHTML = `<i class="fas fa-user"></i>`;
@@ -12,39 +14,6 @@ memberIcon.addEventListener('click', function () {
         logoutModal.classList.remove('hidden');
     }
 });
-
-// function saveFavorite(key) {
-//     const title = document.querySelector('.breadcrumb')?.innerText || 'No Title';
-//     const fullPath = window.location.pathname;
-//     const fileName = fullPath.substring(fullPath.lastIndexOf('/') + 1) || 'index.html'; 
-
-//     let favoriteData = { title, url: fileName };
-
-//     if (key === '1st') {
-//         localStorage.setItem('favorite-1st', JSON.stringify(favoriteData));
-//         alert(`1st가 즐겨찾기에 저장되었습니다.`);
-//     } else if (key === 'Quick') {
-//         let quickFavorites = JSON.parse(localStorage.getItem('favorite-Quick')) || [];
-
-        
-//         const isDuplicate = quickFavorites.some(item => item.url === fileName);
-//         if (isDuplicate) {
-//             alert(`이미 Quick 즐겨찾기에 저장된 페이지입니다.`);
-//             return;
-//         }
-
-//         if (quickFavorites.length >= 8) {
-//             quickFavorites.shift(); 
-//         }
-//         quickFavorites.push(favoriteData);
-//         localStorage.setItem('favorite-Quick', JSON.stringify(quickFavorites));
-
-//         alert(`Quick이 즐겨찾기에 저장되었습니다.`);
-//     }
-
-//     renderDropdown('dropdown-container'); 
-// }
-
 
 function getFavorites() {
     let firstFavorite = JSON.parse(localStorage.getItem('favorite-1st')) || null;
@@ -73,7 +42,6 @@ function getFavorites() {
     return favoriteHTML;
 }
 
-
 function renderDropdown(containerId) {
     const container = document.getElementById(containerId);
     const dropdownHTML = `
@@ -82,11 +50,9 @@ function renderDropdown(containerId) {
                 <i class="fas fa-bars"></i>
             </div>
             <div id="dropdown-menu-shortcuts" class="dropdown-menu dropdown-menu-end">
-                
                     <div>
                         ${getFavorites()}
                     </div>
-                
             </div>
         </div>
     `;
@@ -141,14 +107,13 @@ function saveFavorite(key) {
 
     if (key === '1st') {
         localStorage.setItem('favorite-1st', JSON.stringify(favoriteData));
-        showToast(`1st가 즐겨찾기에 저장되었습니다.`);
+        showToast('favo-login','success',lang);
     } else if (key === 'Quick') {
         let quickFavorites = JSON.parse(localStorage.getItem('favorite-Quick')) || [];
-
-        
+       
         const isDuplicate = quickFavorites.some(item => item.url === fileName);
         if (isDuplicate) {
-            showToast(`이미 Quick 즐겨찾기에 저장된 페이지입니다.`);
+            showToast('favo-already','warning',lang);
             return; 
         }
 
@@ -158,12 +123,10 @@ function saveFavorite(key) {
         quickFavorites.push(favoriteData);
         localStorage.setItem('favorite-Quick', JSON.stringify(quickFavorites));
 
-        showToast(`Quick이 즐겨찾기에 저장되었습니다.`);
+        showToast('favo-save','success',lang);
     }
     renderDropdown('dropdown-container'); 
 }
-
-
 
 function addBreadcrumbBadges() {
     const breadcrumbContainer = document.querySelector('.breadcrumb');
@@ -176,8 +139,8 @@ function addBreadcrumbBadges() {
     favoriteContainer.style.right = '30px';
 
     favoriteContainer.innerHTML += `
-        <span style="cursor: pointer; margin-right: 10px; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; background-color: #6b7280; color: #fff; border-radius: 52%; font-size: 15px; font-weight: bold;" onclick="saveFavorite('1st', window.location.href)">1</span>
-        <span style="cursor: pointer; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; background-color: #6b7280; color: #fff; border-radius: 52%; font-size: 15px; font-weight: bold;" onclick="saveFavorite('Quick', window.location.href)">Q</span>
+        <span style="cursor: pointer; margin-right: 10px; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; background-color: #333; color: #fff; border-radius: 52%; font-size: 15px; font-weight: bold;" onclick="saveFavorite('1st', window.location.href)">1</span>
+        <span style="cursor: pointer; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; background-color: #333; color: #fff; border-radius: 52%; font-size: 15px; font-weight: bold;" onclick="saveFavorite('Quick', window.location.href)">Q</span>
     `;
 
     breadcrumbContainer.parentNode.insertBefore(favoriteContainer, breadcrumbContainer.nextSibling);

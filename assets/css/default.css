@@ -9,18 +9,18 @@
 :root {
   --text-color: #ffffff;
   --border-color: #8a8a8a;
-  --bg-light: #e8eaee;
+  --bg-light: #f6f7fa;
   --bg-dark: #2d3748;
   --hover-bg: #4a5568;
   --font-family: "Noto Sans", sans-serif;
   --primary-color: #0058a3;
-  --primary-lightest-color: hsl(240, 100%, 95%);
+
   --scrollbar-color: hsl(240, 25%, 100%);
   --scrollbar-thumb-color: #ffcc00;
   --gnb-height: 55px;
-  --gnb-item-color: #c7ced9;
+  --gnb-item-color: #e3e7ee;
   --gnb-item-font-size: 1rem;
-  --gnb-item-font-weight: 600;
+  --gnb-item-font-weight: 700;
   --gnb-item-padding: 0.5rem 1rem;
 
   --input-color: #333;
@@ -56,7 +56,7 @@ body {
 /* title */
 .breadcrumb {
   font-size: 1.1rem;
-  font-weight: bold;
+  font-weight: var(--gnb-item-font-weight);
   color: var(--primary-color);
   text-transform: uppercase;
   /* letter-spacing: 2px; */
@@ -66,7 +66,7 @@ body {
 /* OffCanvas - LNB */
 .menu-text {
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: var(--gnb-item-font-weight);
 }
 
 .collapsed {
@@ -226,7 +226,7 @@ body {
 .logo-text {
   color: var(--text-color);
   font-size: 1.4rem;
-  font-weight: bold;
+  font-weight: var(--gnb-item-font-weight);
 }
 
 /* Menu Icon */
@@ -322,7 +322,7 @@ body {
 .active-tab {
   background-color: var(--primary-color) !important;
   color: #ffcc00 !important;
-  font-weight: 600;
+  font-weight: var(--gnb-item-font-weight);
   font-size: 1rem;
 }
 
@@ -369,11 +369,11 @@ body {
   display: none;
   overflow: hidden;
   color: var(--input-color) !important;
-  background-color: white;
+  background-color: var(--bg-light);
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s, box-shadow 0.3s;
   z-index: 50;
-  width: 200px;
+  width: 180px;
 }
 
 .dropdown-menu.show {
@@ -401,9 +401,9 @@ body {
   justify-content: center;
   padding: 1rem;
   border: 1px solid #ddd;
-  font-size: 0.9rem;
-  font-weight: bold;
-  color: var(--primary-color);
+  font-size: 1.0rem;
+  font-weight: var(--gnb-item-font-weight);
+  color: var(--input-color);
 }
 
 .dropdown-shortcuts-icon {
@@ -499,6 +499,32 @@ input[type="checkbox"] {
   background-color: #fff !important;
   border-bottom: 1px solid #8f8f8f !important;
 }
+
+.tui-grid-cell-content input {
+  font-size: 15px;
+  font-weight: bold;
+  color: #333;
+  background-color: #f9f9f9;
+  /* border: 1px solid #ccc; */
+  padding: 5px;
+  border-radius: 4px;
+}
+
+/* total */
+.summary-row {
+  font-weight: bold;
+  background-color: #e1e1e1 !important;
+  background: #e1e1e1 !important;
+}
+
+.tui-grid-summary-area {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  background: #e1e1e1 !important;
+  background-color: #e1e1e1 !important;
+}
+
 
 /* Modal */
 .modal {
@@ -759,8 +785,10 @@ input[type="date"]:focus {
 /* city.html 용도 */
 #panelContainer {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   margin-top: 20px;
+  height:400px;
+  overflow-x: auto;
 }
 
 .panel {
@@ -769,27 +797,18 @@ input[type="date"]:focus {
   padding: 10px;
   border: 1px solid #ddd;
   background-color: #f9f9f9;
+  height:400px;
+  overflow-x: auto;
 }
 
 #comparisonPanel {
   flex: 1.5;
-  /* 가운데 패널을 더 넓게 */
+  height:400px;
+  overflow-x: auto;
+  
 }
 
-/* total */
-.summary-row {
-  font-weight: bold;
-  background-color: #e1e1e1 !important;
-  background: #e1e1e1 !important;
-}
 
-.tui-grid-summary-area {
-  position: sticky;
-  bottom: 0;
-  z-index: 20;
-  background: #e1e1e1 !important;
-  background-color: #e1e1e1 !important;
-}
 
 /* calnedar */
 .day-header {
