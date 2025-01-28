@@ -13,39 +13,39 @@ memberIcon.addEventListener('click', function () {
     }
 });
 
-function saveFavorite(key) {
-    const title = document.querySelector('.breadcrumb')?.innerText || 'No Title';
-    const fullPath = window.location.pathname;
-    const fileName = fullPath.substring(fullPath.lastIndexOf('/') + 1) || 'index.html'; // 파일명 추출
+// function saveFavorite(key) {
+//     const title = document.querySelector('.breadcrumb')?.innerText || 'No Title';
+//     const fullPath = window.location.pathname;
+//     const fileName = fullPath.substring(fullPath.lastIndexOf('/') + 1) || 'index.html'; 
 
-    let favoriteData = { title, url: fileName };
+//     let favoriteData = { title, url: fileName };
 
-    if (key === '1st') {
-        localStorage.setItem('favorite-1st', JSON.stringify(favoriteData));
-        alert(`1st가 즐겨찾기에 저장되었습니다.`);
-    } else if (key === 'Quick') {
-        let quickFavorites = JSON.parse(localStorage.getItem('favorite-Quick')) || [];
+//     if (key === '1st') {
+//         localStorage.setItem('favorite-1st', JSON.stringify(favoriteData));
+//         alert(`1st가 즐겨찾기에 저장되었습니다.`);
+//     } else if (key === 'Quick') {
+//         let quickFavorites = JSON.parse(localStorage.getItem('favorite-Quick')) || [];
 
-        // 중복 검사
-        const isDuplicate = quickFavorites.some(item => item.url === fileName);
-        if (isDuplicate) {
-            alert(`이미 Quick 즐겨찾기에 저장된 페이지입니다.`);
-            return;
-        }
+        
+//         const isDuplicate = quickFavorites.some(item => item.url === fileName);
+//         if (isDuplicate) {
+//             alert(`이미 Quick 즐겨찾기에 저장된 페이지입니다.`);
+//             return;
+//         }
 
-        if (quickFavorites.length >= 8) {
-            quickFavorites.shift(); // 최대 8개 유지
-        }
-        quickFavorites.push(favoriteData);
-        localStorage.setItem('favorite-Quick', JSON.stringify(quickFavorites));
+//         if (quickFavorites.length >= 8) {
+//             quickFavorites.shift(); 
+//         }
+//         quickFavorites.push(favoriteData);
+//         localStorage.setItem('favorite-Quick', JSON.stringify(quickFavorites));
 
-        alert(`Quick이 즐겨찾기에 저장되었습니다.`);
-    }
+//         alert(`Quick이 즐겨찾기에 저장되었습니다.`);
+//     }
 
-    renderDropdown('dropdown-container'); // 메뉴 다시 렌더링
-}
+//     renderDropdown('dropdown-container'); 
+// }
 
-// 🚀 즐겨찾기를 불러와서 드롭다운 메뉴에 추가하는 함수
+
 function getFavorites() {
     let firstFavorite = JSON.parse(localStorage.getItem('favorite-1st')) || null;
     let quickFavorites = JSON.parse(localStorage.getItem('favorite-Quick')) || [];
@@ -73,7 +73,7 @@ function getFavorites() {
     return favoriteHTML;
 }
 
-// ✅ renderDropdown을 수정하여 퀵메뉴에 favorite 추가
+
 function renderDropdown(containerId) {
     const container = document.getElementById(containerId);
     const dropdownHTML = `
@@ -101,12 +101,10 @@ function renderDropdown(containerId) {
     });
 }
 
-// ✅ DOM이 로드되면 renderDropdown 실행
 document.addEventListener('DOMContentLoaded', () => {
     renderDropdown('dropdown-container');
 });
 
-// ✅ 드롭다운 클릭 이벤트 핸들러 유지
 const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
 
 dropdownToggles.forEach((dropdownToggle) =>
@@ -119,7 +117,7 @@ dropdownToggles.forEach((dropdownToggle) =>
     })
 );
 
-// ✅ 드롭다운 외부 클릭 시 닫기
+
 function hideAllDropdowns(event) {
     const dropdownMenus = document.querySelectorAll('.dropdown-menu');
 
@@ -137,7 +135,7 @@ function hideAllDropdowns(event) {
 function saveFavorite(key) {
     const title = document.querySelector('.breadcrumb')?.innerText || 'No Title';
     const fullPath = window.location.pathname;
-    const fileName = fullPath.substring(fullPath.lastIndexOf('/') + 1) || 'index.html'; // 파일명 추출 (없으면 index.html)
+    const fileName = fullPath.substring(fullPath.lastIndexOf('/') + 1) || 'index.html'; 
 
     let favoriteData = { title, url: fileName };
 
@@ -147,21 +145,22 @@ function saveFavorite(key) {
     } else if (key === 'Quick') {
         let quickFavorites = JSON.parse(localStorage.getItem('favorite-Quick')) || [];
 
-        // 중복된 파일명이 있는지 확인
+        
         const isDuplicate = quickFavorites.some(item => item.url === fileName);
         if (isDuplicate) {
             showToast(`이미 Quick 즐겨찾기에 저장된 페이지입니다.`);
-            return; // 중복 시 저장하지 않음
+            return; 
         }
 
         if (quickFavorites.length >= 8) {
-            quickFavorites.shift(); // 최대 8개 유지, 가장 오래된 항목 제거
+            quickFavorites.shift(); 
         }
         quickFavorites.push(favoriteData);
         localStorage.setItem('favorite-Quick', JSON.stringify(quickFavorites));
 
         showToast(`Quick이 즐겨찾기에 저장되었습니다.`);
     }
+    renderDropdown('dropdown-container'); 
 }
 
 
@@ -173,7 +172,7 @@ function addBreadcrumbBadges() {
     favoriteContainer.style.display = 'flex';
     favoriteContainer.style.alignItems = 'center';
     favoriteContainer.style.position = 'absolute';
-    favoriteContainer.style.top = '75px';
+    favoriteContainer.style.top = '70px';
     favoriteContainer.style.right = '30px';
 
     favoriteContainer.innerHTML += `

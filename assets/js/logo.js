@@ -440,7 +440,8 @@ class AppBrand {
     }
 
     render() {
-        this.container.innerHTML = `<a href="${this.logoHref}">
+        this.container.innerHTML = `
+                <a href="${this.logoHref}">
                     <span class="logo-text">${this.brandName}</span>
                 </a>`;
     }
