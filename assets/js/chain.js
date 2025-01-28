@@ -151,7 +151,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const eGridDiv = document.querySelector('#myGrid');
     new agGrid.createGrid(eGridDiv, gridOptions);
     saveDataToLocalStorage(gridOptions.rowData);
-
     
     document.getElementById('closeHistoryBtn').addEventListener('click', function() {
         document.getElementById('historyModal').style.display = 'none';
