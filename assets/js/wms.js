@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     tabs.forEach(tab => {
         const tabButton = document.createElement('button');
         tabButton.id = tab.id;
-        tabButton.className = 'flex-1 py-2 text-center text-gray-600 hover:bg-gray-100';
+        tabButton.className = 'flex-1 text-center text-gray-600 hover:bg-gray-100';
         tabButton.innerText = tab.name;
         tabContainer.appendChild(tabButton);
 
@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         toolbar.className = 'flex justify-end gap-2';
 
         const addButton = document.createElement('button');
-        addButton.className = 'bg-blue-500 text-white px-3 py-1 rounded';
+        addButton.className = 'bg-blue-500 text-white';
         addButton.innerText = '추가';
         addButton.addEventListener('click', () => {
             const newItem = {
@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         const deleteButton = document.createElement('button');
-        deleteButton.className = 'bg-yellow-500 text-white px-3 py-1 rounded';
+        deleteButton.className = 'bg-yellow-500 text-white';
         deleteButton.innerText = '삭제';
         deleteButton.addEventListener('click', () => {
             const checkedRows = grid.getCheckedRows();
@@ -226,34 +226,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         section.appendChild(toolbar);
     }
 
-    // function populateDashboard(section) {
-    //     section.innerHTML = `<div id="stock-chart"></div><div id="monthly-outbound-chart"></div>`;
-
-    //     const pieOptions = {
-    //         chart: { type: 'pie', height: 350 },
-    //         series: [50, 30, 20],
-    //         labels: ["The Great Gatsby", "To Kill a Mockingbird", "1984"],
-    //         title: { text: '도서 재고 현황', align: 'center' }
-    //     };
-
-    //     const pieChart = new ApexCharts(document.querySelector("#stock-chart"), pieOptions);
-    //     pieChart.render();
-
-    //     const monthlyOutbound = Array.from({ length: 12 }, (_, i) => ({
-    //         month: `${i + 1}월`,
-    //         quantity: Math.floor(Math.random() * 500) + 50
-    //     }));
-
-    //     const lineOptions = {
-    //         chart: { type: 'line', height: 330 },
-    //         series: [{ name: '월별 출고량', data: monthlyOutbound.map(item => item.quantity) }],
-    //         xaxis: { categories: monthlyOutbound.map(item => item.month) },
-    //         title: { text: '2024년 월별 출고 추이', align: 'center' }
-    //     };
-
-    //     const lineChart = new ApexCharts(document.querySelector("#monthly-outbound-chart"), lineOptions);
-    //     lineChart.render();
-    // }
+    
 
     function populateDashboard(section) {
         section.innerHTML = `<div id="stock-chart" class="w-full border border-gray-300 rounded-lg p-2 "></div>

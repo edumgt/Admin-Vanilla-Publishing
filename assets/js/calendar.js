@@ -28,12 +28,12 @@ const calendar = (() => {
         header.className = 'calendar-header flex justify-between items-center py-2 p-2 bg-gray-100';
 
         const prevBtn = document.createElement('button');
-        prevBtn.className = 'bg-blue-500  text-white font-bold px-3 py-1 rounded';
+        prevBtn.className = 'bg-blue-500  text-white';
         prevBtn.innerHTML = "&lt;";
         prevBtn.onclick = () => changeMonth(-1);
 
         const nextBtn = document.createElement('button');
-        nextBtn.className = 'bg-blue-500  text-white font-bold px-3 py-1 rounded';
+        nextBtn.className = 'bg-blue-500  text-white';
         nextBtn.innerHTML = "&gt;";
         nextBtn.onclick = () => changeMonth(1);
 
@@ -138,7 +138,7 @@ const calendar = (() => {
         const existingTasks = tasks[dateKey] || [];
 
         const modal = document.createElement('div');
-        modal.className = 'z-50 task-modal fixed inset-0 bg-gray-700 bg-opacity-75 flex justify-center items-center';
+        modal.className = 'task-modal fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50';
 
         const modalContent = document.createElement('div');
         modalContent.className = 'bg-white rounded-lg p-6 w-96';
@@ -204,7 +204,7 @@ const calendar = (() => {
         taskTextarea.rows = 5;
 
         const saveBtn = document.createElement('button');
-        saveBtn.className = 'bg-blue-500 text-white px-3 py-1 rounded w-full';
+        saveBtn.className = 'bg-blue-500 text-white w-full';
         saveBtn.innerText = 'Save Task';
         saveBtn.onclick = () => {
             const newTask = taskTextarea.value.trim();

@@ -125,7 +125,7 @@ function drawCard(ctx, node) {
     ctx.arc(node.x + 130, node.y + height - 20, 10, 0, 2 * Math.PI);
     ctx.fill();
     ctx.fillStyle = '#fff';
-    ctx.font = '10px Arial';
+    ctx.font = '15px Arial';
     ctx.fillText('🔍', node.x + 130, node.y + height - 15);
 }
 
@@ -195,7 +195,7 @@ canvas.addEventListener('dblclick', (e) => {
             const input = document.createElement('input');
             input.type = 'text';
             input.value = clickedNode.manager;
-            input.className = ' bg-white  rounded';
+            // input.className = ' bg-white rounded';
             input.style.position = 'absolute';
             input.style.left = `${rect.left + clickedNode.x + (width / 2) - 50}px`;
             input.style.top = `${rect.top + clickedNode.y + 5}px`;
@@ -221,7 +221,7 @@ canvas.addEventListener('dblclick', (e) => {
             const input = document.createElement('input');
             input.type = 'text';
             input.value = clickedNode.name;
-            input.className = ' bg-white  rounded';
+            // input.className = ' bg-white rounded';
             input.style.position = 'absolute';
             input.style.left = `${rect.left + clickedNode.x + (width / 2) - 50}px`;
             input.style.top = `${rect.top + clickedNode.y + 45}px`;

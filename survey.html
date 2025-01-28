@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <link href="assets/css/default.css" rel="stylesheet">
     <link href="assets/css/survey.css" rel="stylesheet">
 </head>
+
 <body>
     <div class="gnb-menu">
         <ul class="flex">
@@ -18,30 +20,33 @@
     <div id="content">
         <nav class="breadcrumb"></nav>
 
-        <div class="flex mb-4 mt-4">
-            <button class="flex-1 tablinks p-2 bg-gray-300 rounded-l"
+        <div id="workarea">
+            <button class="flex-1 tablinks bg-gray-300 hover:bg-gray-100 "
                 onclick="openTab(event, 'QuestionCreation')">문항작성</button>
-            <button class="flex-1 tablinks p-2 bg-gray-300" onclick="openTab(event, 'SurveyBuilder')">설문지구성</button>
-            <button class="flex-1 tablinks p-2 bg-gray-300" onclick="openTab(event, 'SurveyResponse')">설문응답</button>
-            <button class="flex-1 tablinks p-2 bg-gray-300 rounded-r" onclick="openTab(event, 'ResponseResults')">응답결과</button>
+            <button class="flex-1 tablinks bg-gray-300 hover:bg-gray-100"
+                onclick="openTab(event, 'SurveyBuilder')">설문지구성</button>
+            <button class="flex-1 tablinks bg-gray-300 hover:bg-gray-100"
+                onclick="openTab(event, 'SurveyResponse')">설문응답</button>
+            <button class="flex-1 tablinks bg-gray-300 hover:bg-gray-100 "
+                onclick="openTab(event, 'ResponseResults')">응답결과</button>
         </div>
 
         <!-- 문항작성 탭 콘텐츠 -->
         <div id="QuestionCreation" class="tabcontent hidden">
 
-            <input type="text" id="questionInput" class="border p-2 mb-2 w-full" placeholder="Enter your question here">
+            <input type="text" id="questionInput" class="border p-2 mb-2 w-full" placeholder="질문을 입력하세요">
             <div id="optionsInput" class="mb-2">
-                <input type="text" class="border p-2 mb-2 w-full" placeholder="Option 1">
-                <input type="text" class="border p-2 mb-2 w-full" placeholder="Option 2">
-                <input type="text" class="border p-2 mb-2 w-full" placeholder="Option 3">
-                <input type="text" class="border p-2 mb-2 w-full" placeholder="Option 4">
-                <input type="text" class="border p-2 mb-2 w-full" placeholder="Option 5">
-            </div>
-            <button onclick="addQuestion()" class="bg-blue-500 text-white px-2 py-1 rounded">문항 추가</button>
+                <input type="text" class="w-80" placeholder="Option 1">
+                <input type="text" class="w-80" placeholder="Option 2">
+                <input type="text" class="w-80" placeholder="Option 3">
+                <input type="text" class="w-80" placeholder="Option 4">
+                <input type="text" class="w-80" placeholder="Option 5">
+            
+            <button onclick="addQuestion()" class="bg-blue-500 text-white">문항 추가</button></div>
             <div id="questionsContainer"></div>
         </div>
 
-        <!-- 설문지구성 탭 콘텐츠 -->
+        
         <div id="SurveyBuilder" class="tabcontent hidden">
 
             <div class="flex">
@@ -52,10 +57,10 @@
                     <h3 class="mb-2">구성 설문지</h3>
                 </div>
             </div>
-            <button onclick="saveSurvey()" class="bg-green-500 text-white px-2 py-1  rounded">설문지 저장</button>
+            <button onclick="saveSurvey()" class="bg-green-500 text-white">설문지 저장</button>
         </div>
 
-        <!-- 설문응답 탭 콘텐츠 -->
+        
         <div id="SurveyResponse" class="tabcontent hidden">
 
 
@@ -63,33 +68,28 @@
                 <option value="">설문지 선택</option>
             </select>
 
-            <!-- 설문 제출 탭에 추가 -->
-            <button id="mobileViewButton" class="bg-blue-500 text-white px-2 py-1  rounded">모바일 보기</button>
+            
+            <button id="mobileViewButton" class="bg-blue-500 text-white">모바일 보기</button>
 
 
             <form id="surveyForm" class="mb-4"></form>
-            <button id="submitSurvey" class="bg-green-500 text-white px-2 py-1  rounded">설문 제출</button>
+            <button id="submitSurvey" class="bg-green-500 text-white">설문 제출</button>
 
         </div>
 
-        <!-- 응답결과 탭 콘텐츠 -->
+        
         <div id="ResponseResults" class="tabcontent hidden">
-
             <div id="reportContainer"></div>
         </div>
 
     </div>
 
     <div id="buttonContainer"></div>
-
-
     <div id="appContainer"></div>
 
-    <!-- 모달 팝업 추가 -->
-    <div id="mobileSurveyModal" class="fixed inset-0 bg-gray-700 bg-opacity-75 flex items-center justify-center hidden">
+    <div id="mobileSurveyModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
         <div id="mobileSurveyContent">
             <div class="content" id="mobileSurveyContentInner"></div>
-
         </div>
     </div>
 

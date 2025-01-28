@@ -1,4 +1,12 @@
+const lang = localStorage.getItem('lang');
+
 document.addEventListener('DOMContentLoaded', () => {
+
+    
+    
+    const workarea = document.getElementById('workarea');
+    workarea.classList.add('flex','mb-4','mt-4','gap-2');
+
     document.getElementsByClassName("tablinks")[0].click();
     fetchData();
 });
@@ -67,20 +75,18 @@ function displayQuestionsGrid(questions) {
 
 }
 
-// 문항 추가 함수
 function addQuestion() {
     const questionInput = document.getElementById('questionInput');
     const questionText = questionInput.value.trim();
 
     if (questionText === '') {
-        //showToast("문항을 입력하세요!");
-        showToast("required-input","warning","en");
+        showToast("required-input","warning",lang);
         return;
     }
 
     const options = Array.from(document.querySelectorAll('#optionsInput input')).map(input => input.value.trim()).filter(option => option !== '');
     if (options.length < 2) {
-        showToast('최소 옵션은 2개 이상 입력하세요');
+        showToast('survey-2','warning',lang);
         return;
     }
 

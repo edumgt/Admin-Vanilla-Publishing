@@ -96,12 +96,12 @@
     margin: 10px 0;
     border: 1px solid #ddd;
     border-radius: 6px;
-    cursor: grab;
+    cursor: move;
     transition: background-color 0.2s ease;
 }
 
 .task-list li:active {
-    cursor: grabbing;
+    cursor: move;
 }
 
 .task-list li .drag-indicator {
@@ -126,7 +126,7 @@
 
 
 .task-list li:active {
-    cursor: grabbing;
+    cursor: move;
 }
 
 .task-list li.drag-over {

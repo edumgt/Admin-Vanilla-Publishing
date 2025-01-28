@@ -21,9 +21,9 @@
     /* border: none; */
     padding: 0px 5px 35px 5px;
     cursor: pointer;
-    font-size: 0.8rem;
-    height: 20px;
-    border-radius: 6px;
+    font-size: 0.9rem;
+    height: 22px;
+    border-radius: 3px;
 }
 
 .history-button:hover {

@@ -589,6 +589,7 @@ input[type="checkbox"] {
 
 .dragging {
   opacity: 0.5;
+  cursor: move;
 }
 
 .close {
@@ -619,7 +620,7 @@ input[type="checkbox"] {
 
 /* drag and drop */
 .draggable {
-  cursor: grab;
+  cursor: move;
 }
 
 .droppable {
@@ -725,26 +726,18 @@ input[type="date"]
 input[type="submit"],
 button[type="submit"],
 button[type="button"],
-input[type="button"]
+input[type="button"],
+button
 {
-  border: 1px solid var(--primary-color) !important;
+  /* border: 1px solid var(--primary-color) !important; */
   height: calc(1.5rem + 6px);
   padding-left: .75rem;
   padding-right: .75rem;
-  padding-top: .15rem;
-  padding-bottom: .45rem;
+  padding-top: .13rem;
+  padding-bottom: .47rem;
   border-radius: .25rem;
 }
 
-/* input[type="button"] {
-  background-color: var(--primary-color) !important;
-  color: #ffcc00 !important;
-  border: none !important;
-  cursor: pointer !important;
-  border-radius: 3px;
-  height: calc(1.5em + 6px);
-  padding: 3px 6px 3px 6px;
-} */
 
 textarea {
   padding: 2px;
@@ -763,12 +756,6 @@ label{
   line-height: 1.25rem;
   color: #333;
 }
-
-/* input[type="text"]:focus,
-textarea:focus,
-input[type="date"]:focus {
-  border-color: #ffcc00;
-} */
 
 .sortable:hover {
   cursor: pointer;

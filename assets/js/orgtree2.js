@@ -100,21 +100,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     const expandButton = document.createElement("button");
     expandButton.textContent = "전체 펼침";
     expandButton.style.marginBottom = "10px";
-    expandButton.style.padding = "5px 10px";
+    // expandButton.style.padding = "5px 10px";
     expandButton.style.backgroundColor = "#0058a3";
     expandButton.style.color = "#fff";
-    expandButton.style.border = "none";
-    expandButton.style.cursor = "pointer";
-    expandButton.style.borderRadius = "5px";
+    // expandButton.style.border = "none";
+    // expandButton.style.cursor = "pointer";
+    // expandButton.style.borderRadius = "5px";
 
     const editButton = document.createElement("button");
     editButton.textContent = "조직 수정";
-    editButton.style.padding = "5px 10px";
+    // editButton.style.padding = "5px 10px";
     editButton.style.backgroundColor = "#333";
     editButton.style.color = "#fff";
-    editButton.style.border = "none";
-    editButton.style.cursor = "pointer";
-    editButton.style.borderRadius = "5px";
+    // editButton.style.border = "none";
+    // editButton.style.cursor = "pointer";
+    // editButton.style.borderRadius = "5px";
     editButton.style.marginRight = "10px";
     editButton.addEventListener("click", openOrgEditorModal);
 

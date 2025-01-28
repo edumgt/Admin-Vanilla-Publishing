@@ -27,7 +27,7 @@ function saveModal() {
 function renderOffCanvasMenu(menuItems) {
     const offCanvas = document.createElement('div');
     offCanvas.id = 'offCanvas';
-    offCanvas.className = 'fixed top-14 h-full bg-gray-100 z-50 border-r';
+    offCanvas.className = 'fixed top-14 h-full bg-gray-100 border-r z-50';
 
     const flexContainer = document.createElement('div');
     flexContainer.className = 'flex flex-col h-full';
@@ -312,8 +312,8 @@ createModal(
     '상세정보',
     '<form id="modalForm" class="space-y-4"></form>',
     [
-        { label: '저장', class: 'bg-blue-500 text-white px-3 py-1 rounded ', onClick: 'saveModal()' },
-        { label: '닫기', class: 'bg-gray-500 text-white px-3 py-1 rounded ', onClick: "document.getElementById('modal').classList.add('hidden');" }
+        { label: '저장', class: 'bg-blue-500 text-white ', onClick: 'saveModal()' },
+        { label: '닫기', class: 'bg-gray-500 text-white ', onClick: "document.getElementById('modal').classList.add('hidden');" }
     ]
 );
 
@@ -322,8 +322,8 @@ createModal(
     '로그아웃 하시겠습니까?',
     '',
     [
-        { label: '로그아웃', class: 'bg-blue-500 text-white px-3 py-1 rounded ', onClick: "window.location.href='index.html';" },
-        { label: '닫기', class: 'bg-gray-500 text-white px-3 py-1 rounded ', onClick: "document.getElementById('logoutModal').classList.add('hidden');" }
+        { label: '로그아웃', class: 'bg-blue-500 text-white ', onClick: "window.location.href='index.html';" },
+        { label: '닫기', class: 'bg-gray-500 text-white ', onClick: "document.getElementById('logoutModal').classList.add('hidden');" }
     ]
 );
 
@@ -353,7 +353,7 @@ function renderFloatingNav(containerId) {
 
     const floatingNav = document.createElement('div');
     floatingNav.id = 'floatingNav';
-    floatingNav.className = 'fixed bottom-4 right-4 bg-gray-700 text-white rounded-lg p-2 z-50 hidden space-y-4';
+    floatingNav.className = 'fixed bottom-4 right-4 bg-gray-700 text-white rounded-lg p-2 hidden space-y-4 z-50';
     floatingNav.innerHTML = `
         <div class="flex justify-between items-center">
             <h3 class="text-white">Language</h3>
@@ -379,7 +379,7 @@ function renderFloatingNav(containerId) {
     languageSwitcher.addEventListener('click', (event) => {
         if (event.target.tagName === 'IMG') {
             const selectedLang = event.target.getAttribute('data-lang');
-            console.log(`Selected language: ${selectedLang}`);
+            //console.log(`Selected language: ${selectedLang}`);
         }
     });
 }
@@ -448,9 +448,9 @@ class AppBrand {
 }
 
 /* gearIcon */
-const button = document.createElement('button');
+const button = document.createElement('div');
 button.id = 'gearIcon';
-button.className = 'fixed bottom-4 right-4 bg-gray-700 text-white rounded-full p-3 z-50';
+button.className = 'fixed bottom-4 right-4 bg-black text-white rounded-3xl p-2 z-50';
 const icon = document.createElement('i');
 icon.className = 'fas fa-globe';
 button.appendChild(icon);

@@ -37,11 +37,11 @@
     color: white;
     padding: 5px 10px;
     border-radius: 6px;
-    cursor: grab;
+    cursor: move;
     margin: 5px 0;
 }
 .event:active {
-    cursor: grabbing;
+    cursor: move;
 }
 .carousel-btn {
     cursor: pointer;

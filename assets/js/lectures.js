@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+
     const monthYear = document.getElementById('monthYear');
     const dates = document.getElementById('dates');
     const prevMonth = document.getElementById('prevMonth');
@@ -72,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 lectureList.classList.add('list-none', 'p-0', 'w-full', 'overflow-y-auto', 'max-h-80');
                 dailyLectures.schedule.forEach((lecture, index) => {
                     const lectureItem = document.createElement('li');
-                    lectureItem.classList.add('bg-gray-100', 'm-1', 'p-1', 'border', 'border-gray-200', 'text-sm', 'relative', 'cursor-pointer');
+                    lectureItem.classList.add('bg-gray-100', 'm-1', 'p-1', 'border', 'border-gray-200', 'text-sm', 'relative', 'cursor-move');
                     lectureItem.setAttribute('draggable', 'true');
                     lectureItem.ondragstart = drag;
                     lectureItem.ondragend = endDrag;

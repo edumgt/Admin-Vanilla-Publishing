@@ -26,9 +26,9 @@
 
         <div class="calendar bg-white shadow-md rounded-lg w-full h-full flex flex-col mt-4">
             <div class="header text-white p-4 flex justify-between items-center bg-gray-100">
-                <button id="prevMonth" class="bg-blue-500  text-white font-bold px-3 py-1 rounded">&lt;</button>
+                <button id="prevMonth" class="bg-blue-500  text-white">&lt;</button>
                 <h2 id="monthYear" class="text-xl text-gray-600"></h2>
-                <button id="nextMonth" class="bg-blue-500  font-bold px-3 py-1 rounded">&gt;</button>
+                <button id="nextMonth" class="bg-blue-500 ">&gt;</button>
             </div>
             <div class="days grid grid-cols-7">
                 <div class="day-header text-center">Sun</div>
@@ -43,12 +43,12 @@
         </div>
 
         <div id="modalLecture"
-            class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden z-50">
+            class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
 
 
             <form id="lectureForm">
-            <div class="flex bg-white p-8 overflow-y-auto rounded-lg shadow-sm w-full ">
-                
+                <div class="flex bg-white p-8 overflow-y-auto rounded-lg shadow-sm w-full ">
+
 
 
 
@@ -93,22 +93,20 @@
 
 
                     </div>
-                
-            </div></form>
 
-
-
+                </div>
+            </form>
 
 
         </div>
 
         <!-- Student List Modal -->
-        <div id="modalSt" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div id="modalSt" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
             <div class="bg-white p-8 rounded-lg shadow-sm w-1/2 max-h-full overflow-y-auto">
                 <h3 class="text-xl font-bold mb-4">Student List</h3>
                 <ul id="studentList" class="list-disc pl-5"></ul>
                 <div class="flex justify-end mt-4">
-                    <button id="closeModal2" class="bg-gray-500 text-white px-3 py-1 rounded">닫기</button>
+                    <button id="closeModal2" class="bg-gray-500 text-white">닫기</button>
                 </div>
             </div>
         </div>

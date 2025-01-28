@@ -69,7 +69,7 @@ function generateTimeslots(room, dateFilter = null, currentTime) {
             timeslots += `
                     <div class="flex justify-between py-1 border-b border-gray-200">
                         <span>${startTime} - ${endTime}</span>
-                        <button onclick="openModal('${room.name}', 'New', '${startTime}')" class="bg-blue-500 text-white px-3 py-1 rounded-md ">Add</button>
+                        <button onclick="openModal('${room.name}', 'New', '${startTime}')" class="bg-blue-500 text-white-md ">Add</button>
                     </div>
                 `;
             hour++;
