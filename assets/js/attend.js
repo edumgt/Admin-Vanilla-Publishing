@@ -147,7 +147,10 @@ function showAttendance() {
 
   const dateRow = document.getElementById('dateRow');
   const attendanceBody = document.getElementById('attendanceBody');
-  dateRow.innerHTML = '<th class="px-3 py-2 text-left text-xs uppercase tracking-wider sortable" onclick="sortTableByName()">Employee Name <span id="sortIcon">▲</span></th>'; // 이전 날짜 초기화
+  dateRow.innerHTML = `
+  <th class="px-3 py-2 text-left text-xs uppercase tracking-wider sortable" onclick="sortTableByName()">
+  직원 명<span id="sortIcon">▲</span></th>
+  `; 
   attendanceBody.innerHTML = ''; 
 
   let todayColumnIndex = -1; // 오늘 날짜 열의 인덱스
@@ -177,7 +180,11 @@ function showAttendance() {
     const checkIns = employee.attendance.length;
     const checkInPercentage = ((checkIns / lastDay) * 100).toFixed(2); 
 
-    employeeNameCell.innerHTML = `${employee.name} (${checkIns}/${lastDay}, ${checkInPercentage}%)`; 
+    employeeNameCell.innerHTML = `
+    <a href='#' style="color: blue;text-decoration: underline; cursor: pointer;" 
+    class='open-modal' data-name='${employee.name}' data-id='${employee.id}'>
+    ${employee.name} (${checkIns}/${lastDay}, ${checkInPercentage}%)</a>
+    `; 
 
     const row = document.createElement('tr');
     row.className = 'hover:bg-gray-100';
@@ -215,6 +222,32 @@ function showAttendance() {
       }
     }, 500); // 0.5초 후 실행하여 테이블 렌더링이 완료된 후 스크롤
   }
+}
+
+// Modal popup handler
+document.addEventListener("click", function (e) {
+  if (e.target.classList.contains("open-modal")) {
+      e.preventDefault();
+      const name = e.target.getAttribute("data-name");
+      const id = e.target.getAttribute("data-id");
+      openModal(name, id);
+  }
+});
+
+function openModal(name, id) {
+  const modal = document.createElement("div");
+  modal.className = "modal";
+  modal.innerHTML = `
+      <div class='modal-content' style='position: relative; display: flex; align-items: flex-start;'>
+      <iframe src='account-pop.html?name=${encodeURIComponent(name)}&id=${encodeURIComponent(id)}' width='1440' height='850' class='rounded'></iframe>
+      <span class='close' style='margin-left: 10px; font-size: 30px; font-weight: 900; cursor: pointer;'>&times;</span>        
+          
+      </div>`;
+  document.body.appendChild(modal);
+
+  modal.querySelector(".close").addEventListener("click", function () {
+      document.body.removeChild(modal);
+  });
 }
 
 

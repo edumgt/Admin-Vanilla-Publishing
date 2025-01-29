@@ -1,5 +1,3 @@
-// const menuLinks = document.querySelectorAll(".gnb-item");
-// const menuLinks2 = document.querySelectorAll(".menu-item");
 menuLinks2.forEach((link) => {
     if (link.getAttribute("href") === currentPage) {
         menuLinks.forEach((link) => {
@@ -12,8 +10,8 @@ menuLinks2.forEach((link) => {
     }
 });
 
-const gridtmp = document.getElementById("grid");
-gridtmp.classList.add("mt-4");
+const workarea = document.getElementById("workarea");
+workarea.classList.add("mt-4");
 
 document.addEventListener("DOMContentLoaded", () => {
     fetch("assets/mock/total.json")
@@ -71,7 +69,7 @@ function setupGrid(teams) {
     Object.assign(summaryRow, Object.fromEntries(totalSummary.map((total, idx) => [`month${idx + 1}`, total])));
 
     const grid = new tui.Grid({
-        el: document.getElementById("grid"),
+        el: document.getElementById("workarea"),
         data: rowData,
         scrollX: true,
         scrollY: true,
@@ -184,7 +182,7 @@ function openModal(name, id) {
 }
 
 function fixSummaryRow(grid) {
-    const gridContainer = document.getElementById("grid").querySelector(".tui-grid-container");
+    const gridContainer = document.getElementById("workarea").querySelector(".tui-grid-container");
     gridContainer.classList.add("w-full", "mt-4", "h-full");
 
     const summaryContainer = document.querySelector(".tui-grid-summary-area");
