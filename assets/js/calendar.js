@@ -1,4 +1,4 @@
-const lang = localStorage.getItem('lang');
+// const lang = localStorage.getItem('lang');
 
 const calendar = (() => {
     const calendarContainer = document.getElementById('calendar');

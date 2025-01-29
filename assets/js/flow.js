@@ -1,4 +1,4 @@
-const lang = localStorage.getItem('lang');
+// const lang = localStorage.getItem('lang');
 const currentPage = window.location.pathname.split("/").pop();
 const menuLinks = document.querySelectorAll(".gnb-item");
 const menuLinks2 = document.querySelectorAll(".menu-item");

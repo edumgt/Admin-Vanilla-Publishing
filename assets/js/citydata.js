@@ -1,14 +1,11 @@
-const lang = localStorage.getItem('lang'); 
+// const lang = localStorage.getItem('lang'); 
 
 let grid;
 let rawData;
 
 window.onload = function () {
-
-    
-
     const workarea = document.getElementById('workarea');
-    workarea.classList.add('mb-4','mt-4');
+    workarea.classList.add('mb-4', 'mt-4');
 
     fetchDataAndInitialize();
     document.getElementById('sidoSelect').addEventListener('change', function () {
@@ -129,7 +126,7 @@ function updateLocalStorage(event) {
     const rowData = grid.getRow(rowKey);
     const updatedData = JSON.parse(localStorage.getItem('adminData'));
 
-    
+
     for (const sido in updatedData) {
         for (const gungu in updatedData[sido]) {
             const item = updatedData[sido][gungu].find(item => item['읍면동'] === rowData['읍면동']);
@@ -146,7 +143,7 @@ function handleSelectionChange() {
     const selectedRows = grid.getCheckedRows();
 
     if (selectedRows.length > 2) {
-        showToast('two-compare','warning',lang);
+        showToast('two-compare', 'warning', lang);
         const unselectIndex = selectedRows.length - 1;
         grid.uncheck(selectedRows[unselectIndex].rowKey);
         return;

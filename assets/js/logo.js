@@ -1,7 +1,5 @@
-document.addEventListener('DOMContentLoaded', () => {
-    let lang = localStorage.getItem('lang') || 'ko';
-    localStorage.setItem('lang', lang);
-});
+const lang = localStorage.getItem('lang') || 'ko';
+localStorage.setItem('lang', lang);
 
 
 function saveModal() {

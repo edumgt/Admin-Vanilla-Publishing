@@ -1,5 +1,5 @@
 
-const lang = localStorage.getItem('lang');
+// const lang = localStorage.getItem('lang');
 const currentPage = window.location.pathname.split("/").pop();
 let rowsPerPage = 0;
 let gridBodyHeight = 0;

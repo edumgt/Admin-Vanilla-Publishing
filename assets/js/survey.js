@@ -1,4 +1,4 @@
-const lang = localStorage.getItem('lang');
+// const lang = localStorage.getItem('lang');
 
 document.addEventListener('DOMContentLoaded', () => {
     const workarea = document.getElementById('workarea');
