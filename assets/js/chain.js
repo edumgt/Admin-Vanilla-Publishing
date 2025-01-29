@@ -24,7 +24,7 @@ hotelData.forEach((hotel, index) => {
     hotel.id = uuid.v4();
     hotel.rowNo = index + 1;
     hotel.visitors = Array.from({ length: 12 }, () => Math.floor(Math.random() * 101) + 100);
-    console.log(hotel.visitors);
+    //console.log(hotel.visitors);
 });
 
 // 데이터 로컬 스토리지에 저장
@@ -209,6 +209,6 @@ function onRowClicked(event) {
 
         pieChart.updateSeries(visitors);
     } else {
-        console.log('Visitors data not found for the selected row.');
+        //console.log('Visitors data not found for the selected row.');
     }
 }

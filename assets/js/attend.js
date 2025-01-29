@@ -1,8 +1,8 @@
 
 // const lang = localStorage.getItem('lang');
 
-const menuLinks = document.querySelectorAll(".gnb-item");
-const menuLinks2 = document.querySelectorAll(".menu-item");
+// const menuLinks = document.querySelectorAll(".gnb-item");
+// const menuLinks2 = document.querySelectorAll(".menu-item");
 menuLinks2.forEach((link) => {
   if (link.getAttribute("href") === currentPage) {
     menuLinks.forEach((link) => {
@@ -35,7 +35,7 @@ class AttendanceManager {
     } else {
       const employee = this.data.find(emp => emp.employeeId === employeeId);
       if (!employee) {
-        console.log(`Employee with ID ${employeeId} not found.`);
+        //console.log(`Employee with ID ${employeeId} not found.`);
         return [];
       }
 

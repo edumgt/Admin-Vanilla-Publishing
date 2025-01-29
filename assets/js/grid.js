@@ -36,7 +36,7 @@ let rowsPerPage = 15; // Default rows per page
         if (storedData) {
             loadData(JSON.parse(storedData));
         } else {
-            console.log('No data available in local storage');
+            //console.log('No data available in local storage');
         }
     });
 
@@ -180,7 +180,7 @@ document.getElementById('saverow').addEventListener('click', function () {
     saveData(validData);
     updateDataCount();
 
-    console.log(" validData : " + JSON.stringify(validData));
+    //console.log(" validData : " + JSON.stringify(validData));
 
     // Send the data to the backend API
     fetch('https://your-backend-api.com/save', {
@@ -192,7 +192,7 @@ document.getElementById('saverow').addEventListener('click', function () {
     })
         .then(response => response.json())
         .then(data => {
-            console.log('Success:', data);
+            //console.log('Success:', data);
             showToast('데이터가 성공적으로 저장되었습니다.');
         })
         .catch((error) => {
@@ -222,7 +222,7 @@ document.getElementById('newrow').addEventListener('click', function () {
 grid.on('click', (ev) => {
     const { columnName, rowKey } = ev;
 
-    console.log("rowKey : " + rowKey);
+    //console.log("rowKey : " + rowKey);
 
     if (columnName === 'view') {
         const row = grid.getRow(rowKey); // Get the row data

@@ -1,12 +1,15 @@
-const menuLinks = document.querySelectorAll(".gnb-item");
-menuLinks.forEach((link) => {
-    
-    if (link.getAttribute("href") === currentPage) {
-        console.log(currentPage);
+// const menuLinks = document.querySelectorAll(".gnb-item");
+// const menuLinks2 = document.querySelectorAll(".menu-item");
+menuLinks2.forEach((link) => {
+  if (link.getAttribute("href") === currentPage) {
+    menuLinks.forEach((link) => {
+      if (link.getAttribute("href") === "orgni.html") {
         link.classList.add("active");
-    } else {
+      } else {
         link.classList.remove("active");
-    }
+      }
+    });
+  }
 });
 
 const canvas = document.getElementById('orgChartCanvas');
@@ -24,7 +27,7 @@ let savedOrgData = JSON.parse(localStorage.getItem(orgDataKey));
 
 if (savedOrgData) {
     // localStorage에서 데이터를 불러왔을 경우
-    console.log("Loaded orgData from localStorage:", savedOrgData);
+    //console.log("Loaded orgData from localStorage:", savedOrgData);
     savedOrgData.x = canvasWidth / 2;
     savedOrgData.y = 0;
     redraw();

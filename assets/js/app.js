@@ -1,6 +1,6 @@
 
 // const lang = localStorage.getItem('lang');
-const currentPage = window.location.pathname.split("/").pop();
+// const currentPage = window.location.pathname.split("/").pop();
 let rowsPerPage = 0;
 let gridBodyHeight = 0;
 
@@ -36,7 +36,7 @@ fetch('assets/mock/mock.json')
         if (storedData) {
             loadData(JSON.parse(storedData));
         } else {
-            console.log('No data available in local storage');
+            //console.log('No data available in local storage');
         }
     });
 
@@ -167,7 +167,7 @@ document.getElementById('saverow').addEventListener('click', function () {
     saveData(validData);
     updateDataCount();
 
-    console.log(" validData : " + JSON.stringify(validData));
+    //console.log(" validData : " + JSON.stringify(validData));
 
     // Send the data to the backend API
     fetch('https://your-backend-api.com/save', {
@@ -209,7 +209,7 @@ document.getElementById('newrow').addEventListener('click', function () {
 grid.on('click', (ev) => {
     const { columnName, rowKey } = ev;
 
-    console.log("rowKey : " + rowKey);
+    //console.log("rowKey : " + rowKey);
 
     if (columnName === 'view') {
         const row = grid.getRow(rowKey); // Get the row data
@@ -395,16 +395,26 @@ if (rows.length > 0) {
     lastRow.style.borderBottom = '1px solid #8f8f8f'; // 마지막 행의 테두리 색
 }
 
+// const menuLinks = document.querySelectorAll(".gnb-item");
+// menuLinks.forEach((link) => {
+//     if (link.getAttribute("href") === currentPage) {
+//         link.classList.add("active");
+//     } else {
+//         link.classList.remove("active");
+//     }
+// });
 
-
-const menuLinks = document.querySelectorAll(".gnb-item");
-menuLinks.forEach((link) => {
-
+// const menuLinks = document.querySelectorAll(".gnb-item");
+// const menuLinks2 = document.querySelectorAll(".menu-item");
+menuLinks2.forEach((link) => {
     if (link.getAttribute("href") === currentPage) {
-        console.log(currentPage);
-        link.classList.add("active");
-    } else {
-        link.classList.remove("active");
+        menuLinks.forEach((link) => {
+            if (link.getAttribute("href") === "system.html" || link.getAttribute("href") === "stati.html") {
+                link.classList.add("active");
+            } else {
+                link.classList.remove("active");
+            }
+        });
     }
 });
 
@@ -515,11 +525,11 @@ const translations = {
 };
 
 
-const languageSwitcher = document.getElementById("languageSwitcher");
-const breadcrumb = document.querySelector(".breadcrumb");
-const buttons = document.querySelectorAll("#content button span");
-const tabs = document.querySelectorAll(".tabs li a span");
-const offCanvasItems = document.querySelectorAll("#offCanvas .menu-item span");
+// const languageSwitcher = document.getElementById("languageSwitcher");
+// const breadcrumb = document.querySelector(".breadcrumb");
+// const buttons = document.querySelectorAll("#content button span");
+// const tabs = document.querySelectorAll(".tabs li a span");
+// const offCanvasItems = document.querySelectorAll("#offCanvas .menu-item span");
 
 
 languageSwitcher.addEventListener("click", function (event) {

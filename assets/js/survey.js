@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // JSON 데이터를 불러오는 함수 (최대 3번 재시도)
     function fetchQuestions(retryCount = 0) {
-        console.log(`Fetching questions... Attempt: ${retryCount + 1}`);
+        //console.log(`Fetching questions... Attempt: ${retryCount + 1}`);
 
         fetch('assets/mock/questions.json')
             .then(response => {
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then(data => {
                 localStorage.setItem('questions', JSON.stringify(data));
-                console.log("Questions successfully loaded:", data);
+                //console.log("Questions successfully loaded:", data);
                 initializeGrid(data);
             })
             .catch(error => {
@@ -168,11 +168,11 @@ function waitForQuestions(retryCount = 0) {
     let rowData = JSON.parse(localStorage.getItem("questions"));
 
     if (rowData !== null) {
-        console.log("rowData: ", rowData);
-        console.log("rowData.length: " + rowData.length);
+        //console.log("rowData: ", rowData);
+        //console.log("rowData.length: " + rowData.length);
         displayQuestions(rowData);
     } else if (retryCount < 5) { // 최대 5번 재시도 (5초 동안 확인)
-        console.log(`Waiting for questions... Attempt: ${retryCount + 1}`);
+        //console.log(`Waiting for questions... Attempt: ${retryCount + 1}`);
         setTimeout(() => waitForQuestions(retryCount + 1), 1000);
     } else {
         console.error("Failed to load questions after multiple attempts.");
@@ -371,7 +371,7 @@ document.getElementById('submitSurvey').addEventListener('click', () => {
     formData.forEach((value, key) => {
         results[key] = value;
     });
-    console.log('Survey Results:', results);
+    //console.log('Survey Results:', results);
 
     const responses = JSON.parse(localStorage.getItem('responses')) || [];
     responses.push(results);
@@ -517,7 +517,7 @@ function startMobileSurvey() {
 
     function showQuestion(index) {
         const mobileSurveyContentInner = document.getElementById('mobileSurveyContentInner');
-        console.log(mobileSurveyContentInner);
+        //console.log(mobileSurveyContentInner);
         mobileSurveyContentInner.innerHTML = '';
         if (questions[index]) {
             const questionClone = questions[index].cloneNode(true);

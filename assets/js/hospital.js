@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
             departments.departments.forEach(department => {
                 const box = createBox(department, false, departments.departments);
                 departmentsContainer.appendChild(box);
-                console.log(box);
+                //console.log(box);
 
                 // 의사 목록이 있는지 확인 후 표시
                 if (department.doctors && department.doctors.length > 0) {
@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 진료 대기자 목록 화면에 표시
         const waitingListContainer = document.querySelector('#waiting-list-container');
         if (waitingList && waitingList.waitingList) {
-            console.log('Waiting List:', waitingList); // 데이터 구조 확인
+            //console.log('Waiting List:', waitingList); // 데이터 구조 확인
             waitingList.waitingList.forEach(waiting => {
                 const box = createBox(waiting, false, departments.departments, true);
                 box.dataset.id = waiting.id;
@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 예약 명단 목록 화면에 표시
         const reservationsContainer = document.querySelector('#reservations-container');
         if (reservations && reservations.reservations) {
-            console.log('Reservations:', reservations); // 데이터 구조 확인
+            //console.log('Reservations:', reservations); // 데이터 구조 확인
             reservations.reservations.forEach(reservation => {
                 const reservationDateTime = new Date(`${reservation.date}T${reservation.time}`);
                 const isCurrentReservation = currentDateTime.toDateString() === reservationDateTime.toDateString() &&

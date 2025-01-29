@@ -1,3 +1,5 @@
+const currentPage = window.location.pathname.split("/").pop();
+
 const lang = localStorage.getItem('lang') || 'ko';
 localStorage.setItem('lang', lang);
 
@@ -514,3 +516,12 @@ function showToast(messageKey, type = 'success', lang = 'en') {
         setTimeout(() => toast.remove(), 300);
     }, 3000);
 }
+
+const languageSwitcher = document.getElementById("languageSwitcher");
+const breadcrumb = document.querySelector(".breadcrumb");
+const buttons = document.querySelectorAll("#content button span");
+const tabs = document.querySelectorAll(".tabs li a span");
+const offCanvasItems = document.querySelectorAll("#offCanvas .menu-item span");
+
+const menuLinks = document.querySelectorAll(".gnb-item");
+const menuLinks2 = document.querySelectorAll(".menu-item");

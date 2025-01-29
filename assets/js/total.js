@@ -1,5 +1,5 @@
-const menuLinks = document.querySelectorAll(".gnb-item");
-const menuLinks2 = document.querySelectorAll(".menu-item");
+// const menuLinks = document.querySelectorAll(".gnb-item");
+// const menuLinks2 = document.querySelectorAll(".menu-item");
 menuLinks2.forEach((link) => {
     if (link.getAttribute("href") === currentPage) {
         menuLinks.forEach((link) => {
@@ -12,6 +12,9 @@ menuLinks2.forEach((link) => {
     }
 });
 
+const gridtmp = document.getElementById("grid");
+gridtmp.classList.add("mt-4");
+
 document.addEventListener("DOMContentLoaded", () => {
     fetch("assets/mock/total.json")
         .then(response => 
@@ -20,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(data => 
             {
                 setupGrid(data.teams);
-                console.log(data);
+                //console.log(data);
             }
         )
         .catch(error =>
