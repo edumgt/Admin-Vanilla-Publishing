@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
    const navLinks = document.querySelectorAll(".nav-item a");
    const contentDiv = document.getElementById("content");
 
@@ -105,6 +105,8 @@ document.addEventListener("DOMContentLoaded", function () {
                   <div class="card-body pt-0">
                      <form id="formAccountSettings" method="GET" onsubmit="return false">
                         <div class="row g-6">
+                           
+                        
                            <div class="col-md-6">
                               <label for="fullName" class="form-label mb-2">Full Name</label>
                               <input class="form-control" type="text" id="fullName" name="fullName" value="Dollar Gill"
@@ -156,45 +158,7 @@ document.addEventListener("DOMContentLoaded", function () {
                </div>
           `
       ,
-      "Overview": `<div class="card mb-6">
-               <div class="card-body">
-                  <div class="d-flex align-items-center gap-6 pb-5 border-bottom">
-                     <img src="sample/sample.svg" alt="user-avatar"
-                        class="d-block rounded bg-primary-lightest" height="50px" id="uploadedAvatar">
-                     <div>
-                        <h5 class="name-display">Dollar Gill</h5>
-                        <div>Admin</div>
-                     </div>
-                  </div>
-               </div>
-               <div class="card-body pt-0">
-                  <div class="row mb-4">
-                     <div class="col-sm-12 col-lg-3 text-muted">Full Name</div>
-                     <div class="col-sm-12 col-lg-9">Dollar Gill</div>
-                  </div>
-                  <div class="row mb-4">
-                     <div class="col-sm-12 col-lg-3 text-muted">Email Address</div>
-                     <div class="col-sm-12 col-lg-9">gilldollar@gmail.com</div>
-                  </div>
-                  <div class="row mb-4">
-                     <div class="col-sm-12 col-lg-3 text-muted">Login ID</div>
-                     <div class="col-sm-12 col-lg-9">gilldollar</div>
-                  </div>
-                  <div class="row mb-4">
-                     <div class="col-sm-12 col-lg-3 text-muted">Status</div>
-                     <div class="col-sm-12 col-lg-9">
-                        <span class="badge bg-label-success rounded">Active</span>
-                     </div>
-                  </div>
-                  <div class="row mb-4">
-                     <div class="col-sm-12 col-lg-3 text-muted">Phone Number</div>
-                     <div class="col-sm-12 col-lg-9">NA</div>
-                  </div>
-                  
-               </div>
-            </div>
-      
-      `,
+      "Overview": ``,
       "Password": `<div class="card mb-6">
                <div class="card-body">
                   <h5 class="mb-8">Change Password</h5>
@@ -244,12 +208,80 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
          // Update content
-         if (pages[tabName]) {
+         //if (pages[tabName]) {
+         if (tabName === "Overview") {
+            console.log("tabName: " + tabName);
+            if (id) {
+               var user = membersData.find(member => member.id === id);
+
+               if (user) {
+                  contentDiv.innerHTML = generateUserContent(user);
+               } else {
+                  contentDiv.innerHTML = "<div class='alert alert-danger'>User not found.</div>";
+               }
+            } else {
+               contentDiv.innerHTML = "<div class='alert alert-warning'>No user selected.</div>";
+            }
+         } else {
             contentDiv.innerHTML = pages[tabName];
          }
+         //}
       });
    });
 
+
+   let membersData = [];
+   try {
+      const response = await fetch("assets/mock/members.json");
+      membersData = await response.json();
+      //console.log(membersData);
+   } catch (error) {
+      console.error("Error fetching members.json:", error);
+   }
+
+
+   function generateUserContent(user) {
+      return `
+           <div class="card mb-6">
+               <div class="card-body">
+                   <div class="d-flex align-items-center gap-6 pb-5 border-bottom">
+                       <img src="sample/sample.svg" alt="user-avatar"
+                           class="d-block rounded bg-primary-lightest" height="50px" id="uploadedAvatar">
+                       <div>
+                           <h5>${user.name}</h5>
+                           <div>${user.team}</div>
+                       </div>
+                   </div>
+               </div>
+               <div class="card-body pt-0">
+                   <div class="row mb-4">
+                       <div class="col-sm-12 col-lg-3 text-muted">Full Name</div>
+                       <div class="col-sm-12 col-lg-9">${user.name}</div>
+                   </div>
+                   <div class="row mb-4">
+                       <div class="col-sm-12 col-lg-3 text-muted">Employee ID</div>
+                       <div class="col-sm-12 col-lg-9">${user.employeeId}</div>
+                   </div>
+                   <div class="row mb-4">
+                       <div class="col-sm-12 col-lg-3 text-muted">Team</div>
+                       <div class="col-sm-12 col-lg-9">${user.team}</div>
+                   </div>
+                   <div class="row mb-4">
+                       <div class="col-sm-12 col-lg-3 text-muted">Join Year</div>
+                       <div class="col-sm-12 col-lg-9">${user.joinYear}</div>
+                   </div>
+                   <div class="row mb-4">
+                       <div class="col-sm-12 col-lg-3 text-muted">Email Address</div>
+                       <div class="col-sm-12 col-lg-9">${user.email}</div>
+                   </div>
+                   <div class="row mb-4">
+                       <div class="col-sm-12 col-lg-3 text-muted">Address</div>
+                       <div class="col-sm-12 col-lg-9">${user.address}</div>
+                   </div>
+               </div>
+           </div>
+       `;
+   }
 
    function getQueryParam(param) {
       const urlParams = new URLSearchParams(window.location.search);
@@ -258,11 +290,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
    const name = getQueryParam("name");
    const id = getQueryParam("id");
-   if (name) {
-      document.querySelector(".name-display").textContent = `User: ${decodeURIComponent(name)} [ ${decodeURIComponent(id)} ]`;
+   // if (name) {
+   //    document.querySelector(".name-display").textContent = `User: ${decodeURIComponent(name)} [ ${decodeURIComponent(id)} ]`;
+   // } else {
+   //    document.querySelector(".name-display").textContent = "No user data found.";
+   // }
+
+   //console.log(id);
+   if (id) {
+      var user = membersData.find(member => member.id === id);
+
+      if (user) {
+         contentDiv.innerHTML = generateUserContent(user);
+      } else {
+         contentDiv.innerHTML = "<div class='alert alert-danger'>User not found.</div>";
+      }
    } else {
-      document.querySelector(".name-display").textContent = "No user data found.";
+      contentDiv.innerHTML = "<div class='alert alert-warning'>No user selected.</div>";
    }
 
 });
-
