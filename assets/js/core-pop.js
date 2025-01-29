@@ -1,7 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-
-
-
    const navLinks = document.querySelectorAll(".nav-item a");
    const contentDiv = document.getElementById("content");
 
@@ -15,39 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
                            <div class="w-80">
                               <h5 class="text-truncate">Office Address as per the record</h5>
                            </div>
-                           <div class="dropdown">
-                              <a href="#" class="dropdown-toggle text-body">
-                                 <i class="bx bx-dots-horizontal-rounded fs-4"></i>
-                              </a>
-                              <div class="dropdown-menu dropdown-menu-end">
-                                 <div class="dropdown-item">
-                                    <div class="d-flex align-items-center gap-2">
-                                       <i class="bx bx-up-arrow-circle fs-4"></i>
-                                       <span>Move up</span>
-                                    </div>
-                                 </div>
-                                 <div class="dropdown-item">
-                                    <div class="d-flex align-items-center gap-2">
-                                       <i class="bx bx-down-arrow-circle fs-4"></i>
-                                       <span>Move down</span>
-                                    </div>
-                                 </div>
-                                 <div class="dropdown-divider"></div>
-                                 <div class="dropdown-item">
-                                    <div class="d-flex align-items-center gap-2">
-                                       <i class="bx bx-trash fs-4"></i>
-                                       <span>Delete this address</span>
-                                    </div>
-                                 </div>
-                                 <div class="dropdown-item">
-                                    <div class="d-flex align-items-center gap-2">
-                                       <i class="bx bx-plus-circle fs-4"></i>
-                                       <span>Add new address</span>
-                                    </div>
-                                 </div>
-
-                              </div>
-                           </div>
+                           
                         </div>
                         <form id="formAccountAddress" method="GET" onsubmit="return false">
                            <div class="mb-5">
@@ -84,39 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
                            <div class="w-80">
                               <h5 class="text-truncate">House Address as per the record</h5>
                            </div>
-                           <div class="dropdown">
-                              <a href="#" class="dropdown-toggle text-body">
-                                 <i class="bx bx-dots-horizontal-rounded fs-4"></i>
-                              </a>
-                              <div class="dropdown-menu dropdown-menu-end">
-                                 <div class="dropdown-item">
-                                    <div class="d-flex align-items-center gap-2">
-                                       <i class="bx bx-up-arrow-circle fs-4"></i>
-                                       <span>Move up</span>
-                                    </div>
-                                 </div>
-                                 <div class="dropdown-item">
-                                    <div class="d-flex align-items-center gap-2">
-                                       <i class="bx bx-down-arrow-circle fs-4"></i>
-                                       <span>Move down</span>
-                                    </div>
-                                 </div>
-                                 <div class="dropdown-divider"></div>
-                                 <div class="dropdown-item">
-                                    <div class="d-flex align-items-center gap-2">
-                                       <i class="bx bx-trash fs-4"></i>
-                                       <span>Delete this address</span>
-                                    </div>
-                                 </div>
-                                 <div class="dropdown-item">
-                                    <div class="d-flex align-items-center gap-2">
-                                       <i class="bx bx-plus-circle fs-4"></i>
-                                       <span>Add new address</span>
-                                    </div>
-                                 </div>
-
-                              </div>
-                           </div>
+                           
                         </div>
                         <form id="formAccountAddress" method="GET" onsubmit="return false">
                            <div class="mb-5">
@@ -146,83 +79,15 @@ document.addEventListener("DOMContentLoaded", function () {
                      </div>
                   </div>
                </div>
-               <div class="col-12 col-lg-6">
-                  <div class="card">
-                     <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between mb-6">
-                           <div class="w-80">
-                              <h5 class="text-truncate">Other Address as per the record</h5>
-                           </div>
-                           <div class="dropdown">
-                              <a href="#" class="dropdown-toggle text-body">
-                                 <i class="bx bx-dots-horizontal-rounded fs-4"></i>
-                              </a>
-                              <div class="dropdown-menu dropdown-menu-end">
-                                 <div class="dropdown-item">
-                                    <div class="d-flex align-items-center gap-2">
-                                       <i class="bx bx-up-arrow-circle fs-4"></i>
-                                       <span>Move up</span>
-                                    </div>
-                                 </div>
-                                 <div class="dropdown-item">
-                                    <div class="d-flex align-items-center gap-2">
-                                       <i class="bx bx-down-arrow-circle fs-4"></i>
-                                       <span>Move down</span>
-                                    </div>
-                                 </div>
-                                 <div class="dropdown-divider"></div>
-                                 <div class="dropdown-item">
-                                    <div class="d-flex align-items-center gap-2">
-                                       <i class="bx bx-trash fs-4"></i>
-                                       <span>Delete this address</span>
-                                    </div>
-                                 </div>
-                                 <div class="dropdown-item">
-                                    <div class="d-flex align-items-center gap-2">
-                                       <i class="bx bx-plus-circle fs-4"></i>
-                                       <span>Add new address</span>
-                                    </div>
-                                 </div>
-
-                              </div>
-                           </div>
-                        </div>
-                        <form id="formAccountAddress" method="GET" onsubmit="return false">
-                           <div class="mb-5">
-                              <label for="address-type" class="form-label mb-2">Address Type</label>
-                              <input class="form-control" type="text" id="address-type" name="address-type"
-                                 placeholder="Official/Personal/Temp/Other etc." autofocus>
-                           </div>
-                           <div class="mb-5">
-                              <label for="address" class="form-label mb-2">Address</label>
-                              <textarea class="form-control" id="address" name="address" rows="3"
-                                 placeholder="Enter Address"></textarea>
-                           </div>
-                           <div class="mb-5">
-                              <label for="state" class="form-label mb-2">State</label>
-                              <input class="form-control" type="text" id="state" name="state" placeholder="Enter State">
-                           </div>
-                           <div class="mb-5">
-                              <label for="pinCode" class="form-label mb-2">Pin Code</label>
-                              <input type="text" class="form-control" id="pinCode" name="pinCode"
-                                 placeholder="Enter Pin Code" maxlength="6">
-                           </div>
-                           <div class="mt-8">
-                              <button type="submit" class="btn btn-primary me-1">Save Changes</button>
-                              <button type="reset" class="btn btn-secondary">Reset</button>
-                           </div>
-                        </form>
-                     </div>
-                  </div>
-               </div>
+               
             </div>
       `,
       "Account": `
           <div class="card mb-6">
                   <div class="card-body">
                      <div class="d-flex align-items-start align-items-sm-center gap-6 pb-5 border-bottom">
-                        <img src="assets/img/Avatars/Lalina.png" alt="user-avatar"
-                           class="d-block rounded bg-primary-medium" height="100px" id="uploadedAvatar">
+                        <img src="sample/sample.svg" alt="user-avatar"
+                           class="d-block rounded " height="50px" id="uploadedAvatar">
                         <div>
                            <label for="upload" class="btn btn-primary me-1 mb-4">
                               <span class="d-none d-sm-block">Upload Photo</span>
@@ -294,8 +159,8 @@ document.addEventListener("DOMContentLoaded", function () {
       "Overview": `<div class="card mb-6">
                <div class="card-body">
                   <div class="d-flex align-items-center gap-6 pb-5 border-bottom">
-                     <img src="assets/img/Avatars/Lalina.png" alt="user-avatar"
-                        class="d-block rounded bg-primary-lightest" height="100px" id="uploadedAvatar">
+                     <img src="sample/sample.svg" alt="user-avatar"
+                        class="d-block rounded bg-primary-lightest" height="50px" id="uploadedAvatar">
                      <div>
                         <h5 class="name-display">Dollar Gill</h5>
                         <div>Admin</div>
@@ -325,9 +190,7 @@ document.addEventListener("DOMContentLoaded", function () {
                      <div class="col-sm-12 col-lg-3 text-muted">Phone Number</div>
                      <div class="col-sm-12 col-lg-9">NA</div>
                   </div>
-                  <div class="mt-8">
-                     <a href="account.html" class="btn btn-primary">Edit Account</a>
-                  </div>
+                  
                </div>
             </div>
       
@@ -394,8 +257,9 @@ document.addEventListener("DOMContentLoaded", function () {
    }
 
    const name = getQueryParam("name");
+   const id = getQueryParam("id");
    if (name) {
-      document.querySelector(".name-display").textContent = `User: ${decodeURIComponent(name)}`;
+      document.querySelector(".name-display").textContent = `User: ${decodeURIComponent(name)} [ ${decodeURIComponent(id)} ]`;
    } else {
       document.querySelector(".name-display").textContent = "No user data found.";
    }

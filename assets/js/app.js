@@ -179,12 +179,12 @@ document.getElementById('saverow').addEventListener('click', function () {
     })
         .then(response => response.json())
         .then(data => {
-            console.log('Success:', data);
-            showToast('데이터가 성공적으로 저장되었습니다.');
+            //console.log('Success:', data);
+            showToast('well-done','success',lang);
         })
         .catch((error) => {
-            console.error('Error:', error);
-            showToast('로컬 스토리지에 저장 하였으나, 원격 서버 데이터 저장에 실패했습니다.', 'warning');
+            //console.error('Error:', error);
+            showToast('save-error', 'warning',lang);
 
         });
 });

@@ -14,9 +14,18 @@ menuLinks2.forEach((link) => {
 
 document.addEventListener("DOMContentLoaded", () => {
     fetch("assets/mock/total.json")
-        .then(response => response.json())
-        .then(data => setupGrid(data.teams))
-        .catch(error => console.error("Error loading data:", error));
+        .then(response => 
+            response.json()
+        )
+        .then(data => 
+            {
+                setupGrid(data.teams);
+                console.log(data);
+            }
+        )
+        .catch(error =>
+            showToast('loading-error', 'error', lang)
+        );
 });
 
 function setupGrid(teams) {
@@ -33,7 +42,8 @@ function setupGrid(teams) {
         team.members.forEach(member => {
             const memberData = {
                 team: team.name,
-                name: member.name
+                name: member.name,
+                id: member.id
             };
 
             member.sales.forEach((monthSales, idx) => {
@@ -48,6 +58,8 @@ function setupGrid(teams) {
         const teamSummaryRow = {
             team: `${team.name} 합계`,
             name: "합계",
+            id: "", 
+            
             ...Object.fromEntries(teamTotals.map((total, idx) => [`month${idx + 1}`, total]))
         };
         rowData.push(teamSummaryRow);
@@ -89,8 +101,10 @@ function setupGrid(teams) {
             }
         },
         columns: [
+            
             { header: "팀", name: "team", align: "center", rowSpan: true },
-            { header: "팀원", name: "name", align: "center", formatter: (cell) => cell.value !== "합계" ? `<a href='#' class='open-modal' data-name='${cell.value}'>${cell.value}</a>` : cell.value },
+            { header: "팀원", name: "name", align: "center"},
+            { header: "Key", name: "id", align: "center", formatter: (cell) => cell.value !== "합계" ? `<a href='#' class='open-modal' data-name='${cell.row.name}' data-id='${cell.value}'>${cell.value}</a>` : cell.value },  
             { header: "1월", name: "month1", formatter: formatCurrency },
             { header: "2월", name: "month2", formatter: formatCurrency },
             { header: "3월", name: "month3", formatter: formatCurrency },
@@ -125,16 +139,17 @@ document.addEventListener("click", function (e) {
     if (e.target.classList.contains("open-modal")) {
         e.preventDefault();
         const name = e.target.getAttribute("data-name");
-        openModal(name);
+        const id = e.target.getAttribute("data-id");
+        openModal(name,id);
     }
 });
 
-function openModal(name) {
+function openModal(name,id) {
     const modal = document.createElement("div");
     modal.className = "modal";
     modal.innerHTML = `
         <div class='modal-content' style='position: relative; display: flex; align-items: flex-start;'>
-        <iframe src='account-pop.html?name=${encodeURIComponent(name)}' width='1300' height='880'></iframe>
+        <iframe src='account-pop.html?name=${encodeURIComponent(name)}&id=${encodeURIComponent(id)}' width='1440' height='850' class='rounded'></iframe>
         <span class='close' style='margin-left: 10px; font-size: 30px; font-weight: 900; cursor: pointer;'>&times;</span>        
             
         </div>`;
