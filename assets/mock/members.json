@@ -66,7 +66,7 @@
         "name": "Charlie",
         "id": "f8216608-00dd-4ad4-a8d2-69e9abf101af",
         "employeeId": "B2001",
-        "team": "HR",
+        "team": "Consulting",
         "joinYear": 2014,
         "address": "Seoul, South Korea",
         "email": "charlie@example.com"
@@ -75,7 +75,7 @@
         "name": "David",
         "id": "a10ec08f-02cb-4cfd-adf2-1bc5eec2f3f8",
         "employeeId": "B2002",
-        "team": "HR",
+        "team": "Consulting",
         "joinYear": 2016,
         "address": "Busan, South Korea",
         "email": "david@example.com"

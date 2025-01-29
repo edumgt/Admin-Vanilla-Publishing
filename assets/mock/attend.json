@@ -78,7 +78,7 @@
     },
     {
         "id": "f8216608-00dd-4ad4-a8d2-69e9abf101af",
-        "department": "HR",
+        "department": "Consulting",
         "title": "HR Manager",
         "name": "Charlie",
         "employeeId": "B2001",
@@ -89,7 +89,7 @@
     },
     {
         "id": "a10ec08f-02cb-4cfd-adf2-1bc5eec2f3f8",
-        "department": "HR",
+        "department": "Consulting",
         "title": "HR Specialist",
         "name": "David",
         "employeeId": "B2002",
