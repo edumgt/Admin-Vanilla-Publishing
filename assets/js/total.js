@@ -1,7 +1,5 @@
 const menuLinks = document.querySelectorAll(".gnb-item");
-
 const menuLinks2 = document.querySelectorAll(".menu-item");
-
 menuLinks2.forEach((link) => {
     if (link.getAttribute("href") === currentPage) {
         menuLinks.forEach((link) => {
@@ -28,11 +26,9 @@ function setupGrid(teams) {
         name: "",
     };
 
-    
     const totalSummary = Array(12).fill(0);
-
     teams.forEach(team => {
-        let teamTotals = Array(12).fill(0); 
+        let teamTotals = Array(12).fill(0);
 
         team.members.forEach(member => {
             const memberData = {
@@ -43,13 +39,12 @@ function setupGrid(teams) {
             member.sales.forEach((monthSales, idx) => {
                 memberData[`month${idx + 1}`] = monthSales;
                 teamTotals[idx] += monthSales;
-                totalSummary[idx] += monthSales; 
+                totalSummary[idx] += monthSales;
             });
 
             rowData.push(memberData);
         });
 
-        
         const teamSummaryRow = {
             team: `${team.name} 합계`,
             name: "합계",
@@ -66,17 +61,17 @@ function setupGrid(teams) {
         data: rowData,
         scrollX: true,
         scrollY: true,
-        
+
         columnOptions: {
-            resizable: true 
+            resizable: true
         },
         summary: {
-            height: 50, 
+            height: 50,
             position: "bottom",
             columnContent: {
                 team: {
                     template() {
-                        return "<strong>총 합계</strong>"; 
+                        return "<strong>총 합계</strong>";
                     }
                 },
                 month1: { sum: true, template: summaryFormatter },
@@ -95,7 +90,7 @@ function setupGrid(teams) {
         },
         columns: [
             { header: "팀", name: "team", align: "center", rowSpan: true },
-            { header: "팀원", name: "name", align: "center" },
+            { header: "팀원", name: "name", align: "center", formatter: (cell) => `<a href='#' class='open-modal' data-name='${cell.value}'>${cell.value}</a>` },
             { header: "1월", name: "month1", formatter: formatCurrency },
             { header: "2월", name: "month2", formatter: formatCurrency },
             { header: "3월", name: "month3", formatter: formatCurrency },
@@ -125,10 +120,36 @@ function setupGrid(teams) {
     fixSummaryRow(grid);
 }
 
+// Modal popup handler
+document.addEventListener("click", function (e) {
+    if (e.target.classList.contains("open-modal")) {
+        e.preventDefault();
+        const name = e.target.getAttribute("data-name");
+        openModal(name);
+    }
+});
+
+function openModal(name) {
+    const modal = document.createElement("div");
+    modal.className = "modal";
+    modal.innerHTML = `
+        <div class='modal-content'>
+        
+        <iframe src='account-pop.html?name=${encodeURIComponent(name)}' width='1300' height='880'></iframe>
+        <span class='close' style='color:#fff;position: absolute; top: 0px; right: 160px; font-size: 55px; font-weight: 900; cursor: pointer;'>&times;</span>
+            
+        </div>`;
+    document.body.appendChild(modal);
+
+    modal.querySelector(".close").addEventListener("click", function () {
+        document.body.removeChild(modal);
+    });
+}
+
 function fixSummaryRow(grid) {
     const gridContainer = document.getElementById("grid").querySelector(".tui-grid-container");
     gridContainer.classList.add("w-full", "mt-4", "h-full");
-    
+
     const summaryContainer = document.querySelector(".tui-grid-summary-area");
 
     if (gridContainer && summaryContainer) {
@@ -143,6 +164,6 @@ function formatCurrency({ value }) {
 }
 
 function summaryFormatter(summary) {
-    const total = Number(summary?.sum || 0); 
+    const total = Number(summary?.sum || 0);
     return `<strong>${total.toLocaleString()} 원</strong>`;
 }
