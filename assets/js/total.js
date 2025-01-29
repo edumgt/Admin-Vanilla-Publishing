@@ -133,10 +133,9 @@ function openModal(name) {
     const modal = document.createElement("div");
     modal.className = "modal";
     modal.innerHTML = `
-        <div class='modal-content'>
-        
+        <div class='modal-content' style='position: relative; display: flex; align-items: flex-start;'>
         <iframe src='account-pop.html?name=${encodeURIComponent(name)}' width='1300' height='880'></iframe>
-        <span class='close' style='color:#fff;position: absolute; top: 0px; right: 160px; font-size: 55px; font-weight: 900; cursor: pointer;'>&times;</span>
+        <span class='close' style='margin-left: 10px; font-size: 30px; font-weight: 900; cursor: pointer;'>&times;</span>        
             
         </div>`;
     document.body.appendChild(modal);
