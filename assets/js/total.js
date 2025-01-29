@@ -17,14 +17,13 @@ gridtmp.classList.add("mt-4");
 
 document.addEventListener("DOMContentLoaded", () => {
     fetch("assets/mock/total.json")
-        .then(response => 
+        .then(response =>
             response.json()
         )
-        .then(data => 
-            {
-                setupGrid(data.teams);
-                //console.log(data);
-            }
+        .then(data => {
+            setupGrid(data.teams);
+            //console.log(data);
+        }
         )
         .catch(error =>
             showToast('loading-error', 'error', lang)
@@ -61,8 +60,8 @@ function setupGrid(teams) {
         const teamSummaryRow = {
             team: `${team.name} 합계`,
             name: "합계",
-            id: "", 
-            
+            id: "",
+
             ...Object.fromEntries(teamTotals.map((total, idx) => [`month${idx + 1}`, total]))
         };
         rowData.push(teamSummaryRow);
@@ -104,10 +103,19 @@ function setupGrid(teams) {
             }
         },
         columns: [
-            
+
             { header: "팀", name: "team", align: "center", rowSpan: true },
-            { header: "팀원", name: "name", align: "center"},
-            { header: "Key", name: "id", align: "center", formatter: (cell) => cell.value !== "합계" ? `<a href='#' class='open-modal' data-name='${cell.row.name}' data-id='${cell.value}'>${cell.value}</a>` : cell.value },  
+            { header: "팀원", name: "name", align: "center" },
+            {
+                header: "Key", name: "id", align: "center",
+                formatter: (cell) => cell.value !== "합계" ? `
+                
+                <a href='#' class='open-modal' data-name='${cell.row.name}' data-id='${cell.value}'
+                style="color: blue;text-decoration: underline; cursor: pointer;"
+                >${cell.value}</a>
+                
+                ` : cell.value
+            },
             { header: "1월", name: "month1", formatter: formatCurrency },
             { header: "2월", name: "month2", formatter: formatCurrency },
             { header: "3월", name: "month3", formatter: formatCurrency },
@@ -122,6 +130,9 @@ function setupGrid(teams) {
             { header: "12월", name: "month12", formatter: formatCurrency }
         ],
         rowHeaders: ["rowNum"]
+
+
+
     });
 
 
@@ -133,6 +144,15 @@ function setupGrid(teams) {
         });
     });
 
+    grid.on('afterRender', () => {
+        document.querySelectorAll('.custom-link').forEach(link => {
+            link.style.color = 'blue';
+            link.style.textDecoration = 'underline';
+        });
+    });
+
+
+
 
     fixSummaryRow(grid);
 }
@@ -143,11 +163,11 @@ document.addEventListener("click", function (e) {
         e.preventDefault();
         const name = e.target.getAttribute("data-name");
         const id = e.target.getAttribute("data-id");
-        openModal(name,id);
+        openModal(name, id);
     }
 });
 
-function openModal(name,id) {
+function openModal(name, id) {
     const modal = document.createElement("div");
     modal.className = "modal";
     modal.innerHTML = `

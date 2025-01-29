@@ -12,8 +12,15 @@ const icons = {
     hwp: '📚'
 };
 
+
+const workarea = document.getElementById('workarea');
+workarea.classList.add('flex','h-screen','mt-4');
+
 const documentList = document.getElementById('document-list');
+
 const viewer = document.getElementById('viewer');
+viewer.classList.add('flex-1', 'flex', 'items-center', 'justify-center', 'bg-gray-50');
+
 const newDocumentModal = document.getElementById('new-document-modal');
 const dropZone = document.getElementById('drop-zone');
 const fileInput = document.getElementById('file-input');

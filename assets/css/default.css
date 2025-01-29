@@ -322,7 +322,7 @@ body {
 
 .active-tab {
   background-color: var(--primary-color) !important;
-  color: #ffcc00 !important;
+  color: var(--scrollbar-thumb-color) !important;
   font-weight: var(--gnb-item-font-weight);
   font-size: 1rem;
 }
@@ -352,7 +352,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffcc00;
+  color: var(--scrollbar-thumb-color);
   font-size: 1.475rem;
   cursor: pointer;
   background: none;
@@ -454,7 +454,7 @@ body {
 
 .toast-info {
   background-color: var(--primary-color);
-  color: #ffcc00;
+  color: var(--scrollbar-thumb-color);
 }
 
 .toast-error {
@@ -464,30 +464,28 @@ body {
 /* TUI Grid */
 .tui-grid-cell.tui-grid-cell-row-header,
 .tui-grid-cell.tui-grid-cell-header {
-  background-color: var(--bg-light) !important;
-  color: var(--input-color) !important;
-}
-
-.tui-grid-row {
-  background-color: #fff !important;
-  border-bottom: 1px solid var(--primary-color) !important;
-}
-
-.tui-grid-header {
-  background: var(--primary-color) !important;
-  color: #ffcc00 !important;
-  /* font-weight: bold; */
-  text-align: center;
-  border-bottom: 2px solid var(--secondary-color);
-  border-radius: 10px 10px 0 0;
-  overflow: hidden;
-  font-family: var(--font-family) !important;
+  background-color: var(--bg-light);
+  color: var(--input-color);
+  font-size: 0.95rem !important;
+  font-weight: 500;
 }
 
 .tui-grid-cell {
-  font-size: 0.9rem !important;
-  color: var(--input-color);
-  font-family: var(--font-family);
+  font-size: 0.95rem !important;
+  font-weight: 500;
+  
+}
+
+.tui-grid-layer-editing input{
+  font-weight: 600;
+  font-size: 1rem !important;
+  padding: 1px !important; /* 내부 여백 */
+  margin: 0 !important; /* 외부 여백 제거 */
+}
+
+.tui-grid-layer-editing input:focus {
+  border: 1px solid #fff !important; 
+  /* box-shadow: 0 0 5px rgba(0, 0, 255, 0.5) !important;  */
 }
 
 .tui-grid-check-input,
@@ -496,22 +494,6 @@ input[type="checkbox"] {
   height: 18px;
 }
 
-.tui-grid-row:last-child {
-  background-color: #fff !important;
-  border-bottom: 1px solid #8f8f8f !important;
-}
-
-.tui-grid-cell-content input {
-  font-size: 15px;
-  font-weight: bold;
-  color: #333;
-  background-color: #f9f9f9;
-  /* border: 1px solid #ccc; */
-  padding: 5px;
-  border-radius: 4px;
-}
-
-/* total */
 .summary-row {
   font-weight: bold;
   background-color: #e1e1e1 !important;
@@ -565,23 +547,13 @@ input[type="checkbox"] {
   overflow: auto;
 }
 
-/* #modal button {
-  align-self: flex-end;
-} */
-
 .relative .fa-calendar-alt {
   pointer-events: none;
 }
 
-
-
 .bg-blue-500 {
   background-color: var(--primary-color) !important;
 }
-
-/* .shadow-lg {
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
-}*/
 
 /* tailwind overload */
 .shadow-md {
@@ -730,6 +702,8 @@ input[type="date"]
   border-radius: .25rem;
 }
 
+
+
 input[type="submit"],
 button[type="submit"],
 button[type="button"],
@@ -858,4 +832,5 @@ label{
   box-shadow: 0 0.2rem 0.5rem 0 hsla(210, 30%, 20%, 0.1);
   border-radius: var(--border-radius);
 }
+
 

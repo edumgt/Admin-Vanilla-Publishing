@@ -105,17 +105,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         const grid = new tui.Grid({
             el: document.getElementById(`${sectionId}-grid`),
             data: data,
-            bodyHeight: 540,
+            bodyHeight: 560,
             pageOptions: {
                 useClient: true,
                 perPage: 15
             },
             columns: [
-                { header: 'ID', name: 'id', width: 150, align: 'center', editor: false },
-                { header: 'ISBN', name: 'isbn', width: 150, align: 'center', editor: 'text', sortable: true },
-                { header: '날짜', name: 'date', align: 'center', editor: 'text', sortable: true, filter: 'text' },
+                { header: 'ID', name: 'id', width: 180, align: 'center', editor: false },
+                { header: 'ISBN', name: 'isbn', width: 200, align: 'center', editor: 'text', sortable: true },
+                {
+                    header: '날짜', name: 'date', width: 150, align: 'center',
+                    editor: 'text'
+                    , sortable: true, filter: 'text'
+                },
                 { header: '도서명', name: 'title', align: 'center', editor: 'text', sortable: true, filter: 'select' },
-                { header: '수량', name: 'quantity', align: 'center', editor: 'text', sortable: true, filter: 'number' }
+                { header: '수량', name: 'quantity', width: 80, align: 'center', editor: 'text', sortable: true, filter: 'number' }
             ],
             rowHeaders: ['checkbox'],
             copyOptions: { useFormattedValue: true },
@@ -126,6 +130,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const updatedData = grid.getData();
             saveDataToStorage(storageKey, updatedData);
         });
+
 
         addGridToolbar(section, grid, storageKey);
     }
@@ -137,33 +142,33 @@ document.addEventListener('DOMContentLoaded', async () => {
     function createOutboundGrid(sectionId, data, storageKey) {
         const section = document.getElementById(sectionId);
         section.innerHTML = `<div id="${sectionId}-grid"></div>`;
-    
+
         // Create a dictionary for inbound stock by ISBN
         const inboundDict = Object.fromEntries(inboundData.map(book => [book.isbn, book.quantity]));
-    
+
         // Add a "변경수량" field to each outbound entry (computed as inbound - outbound)
         data.forEach(book => {
             book.stockDifference = inboundDict[book.isbn] ? inboundDict[book.isbn] - book.quantity : -book.quantity;
         });
-    
+
         const grid = new tui.Grid({
             el: document.getElementById(`${sectionId}-grid`),
             data: data,
-            bodyHeight: 540,
+            bodyHeight: 560,
             pageOptions: { useClient: true, perPage: 15 },
             columns: [
                 { header: 'ID', name: 'id', width: 150, align: 'center', editor: false },
                 { header: 'ISBN', name: 'isbn', width: 150, align: 'center', editor: 'text', sortable: true },
                 { header: '날짜', name: 'date', align: 'center', editor: 'text', sortable: true, filter: 'text' },
                 { header: '도서명', name: 'title', align: 'center', editor: 'text', sortable: true, filter: 'select' },
-                { header: '수량', name: 'quantity', align: 'center', editor: 'text', sortable: true, filter: 'number' },
-                { header: '변경수량', name: 'stockDifference', align: 'center', editor: false, sortable: true }
+                { header: '수량', name: 'quantity', width: 90, align: 'center', editor: 'text', sortable: true, filter: 'number' },
+                { header: '변경수량', name: 'stockDifference', width: 90, align: 'center', editor: false, sortable: true }
             ],
             rowHeaders: ['checkbox'],
             copyOptions: { useFormattedValue: true },
             editable: true
         });
-    
+
         // Save updated data to storage when any change occurs and update "변경수량"
         grid.on('afterChange', () => {
             const updatedData = grid.getData();
@@ -173,14 +178,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             saveDataToStorage(storageKey, updatedData);
             grid.resetData(updatedData); // Refresh grid with updated values
         });
-    
+
         addGridToolbar(section, grid, storageKey);
     }
-    
+
     function populateOutbound(section) {
         createOutboundGrid(section.id, outboundData, STORAGE_KEY_OUTBOUND);
     }
-    
+
 
     function addGridToolbar(section, grid, storageKey) {
         const toolbar = document.createElement('div');
@@ -226,7 +231,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         section.appendChild(toolbar);
     }
 
-    
+
 
     function populateDashboard(section) {
         section.innerHTML = `<div id="stock-chart" class="w-full border border-gray-300 rounded-lg p-2 "></div>
