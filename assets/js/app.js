@@ -279,16 +279,6 @@ document.getElementById('saveModal').addEventListener('click', () => {
     showToast('해당 건의 데이타를 저장하였습니다.', 'success');
 });
 
-// Add event listener for the top-right close button
-// document.getElementById('closeModalTopRight').addEventListener('click', () => {
-//     toggleModal(false);
-// });
-
-// Add event listener for the bottom close button
-// document.getElementById('closeModal').addEventListener('click', () => {
-//     toggleModal(false);
-// });
-
 let currentRowKey = null; // To track the current row being edited
 
 function toggleModal(show, rowData = {}, rowKey = null) {
@@ -385,7 +375,7 @@ document.getElementById('resetSearch').addEventListener('click', function () {
     newButton.classList.remove('bg-gray-400', 'cursor-not-allowed');
     newButton.classList.add('bg-gray-700', 'hover:bg-gray-600');
 
-    showToast('신규, 저장 기능이 활성화 됩니다.');
+    showToast('new-save','info',lang);
 });
 
 const rows = document.querySelectorAll('.tui-grid-rside-area .tui-grid-body-tbody tr');
@@ -395,21 +385,11 @@ if (rows.length > 0) {
     lastRow.style.borderBottom = '1px solid #8f8f8f'; // 마지막 행의 테두리 색
 }
 
-// const menuLinks = document.querySelectorAll(".gnb-item");
-// menuLinks.forEach((link) => {
-//     if (link.getAttribute("href") === currentPage) {
-//         link.classList.add("active");
-//     } else {
-//         link.classList.remove("active");
-//     }
-// });
 
-// const menuLinks = document.querySelectorAll(".gnb-item");
-// const menuLinks2 = document.querySelectorAll(".menu-item");
 menuLinks2.forEach((link) => {
     if (link.getAttribute("href") === currentPage) {
         menuLinks.forEach((link) => {
-            if (link.getAttribute("href") === "system.html" || link.getAttribute("href") === "stati.html") {
+            if (link.getAttribute("href") === currentPage) {
                 link.classList.add("active");
             } else {
                 link.classList.remove("active");
