@@ -1,5 +1,6 @@
-// const menuLinks = document.querySelectorAll(".gnb-item");
-// const menuLinks2 = document.querySelectorAll(".menu-item");
+const workarea = document.getElementById('workarea');
+workarea.classList.add('grid-container','mt-4');
+
 menuLinks2.forEach((link) => {
   if (link.getAttribute("href") === currentPage) {
     menuLinks.forEach((link) => {
@@ -20,19 +21,17 @@ const canvasWidth = canvas.width;
 let draggedNode = null;
 let offsetX, offsetY;
 
-const orgDataKey = "orgData"; // localStorage key
+const orgDataKey = "orgData"; 
 
-// 저장된 데이터 확인
 let savedOrgData = JSON.parse(localStorage.getItem(orgDataKey));
 
 if (savedOrgData) {
-    // localStorage에서 데이터를 불러왔을 경우
-    //console.log("Loaded orgData from localStorage:", savedOrgData);
+    
     savedOrgData.x = canvasWidth / 2;
     savedOrgData.y = 0;
     redraw();
 } else {
-    // localStorage에 데이터가 없으면 fetch 실행
+    
     fetch('assets/mock/organi.json')
         .then(response => response.json())
         .then(data => {
@@ -40,7 +39,7 @@ if (savedOrgData) {
             savedOrgData.x = canvasWidth / 2;
             savedOrgData.y = 0;
 
-            // 불러온 데이터를 localStorage에 저장
+            
             localStorage.setItem(orgDataKey, JSON.stringify(savedOrgData));
 
             redraw();
@@ -102,27 +101,27 @@ function drawCard(ctx, node) {
     ctx.font = '15px Noto Sans';
     ctx.textAlign = 'center';
 
-    // 관리자 이름
+    
     ctx.fillText(node.manager, node.x + width / 2, node.y + 22);
 
-    // 부서 이름
+    
     ctx.fillStyle = '#000';
     ctx.fillText(node.name, node.x + width / 2, node.y + 60);
 
-    // 삭제 버튼 (x 표시)
+    
     if (node.manager !== 'CEO') {
         ctx.fillStyle = '#000';
         ctx.fillText('x', node.x + width - 20, node.y + height - 10);
     }
 
-    // 하위부서생성 버튼
-    ctx.fillStyle = '#333'; // 짙은 회색 배경
+    
+    ctx.fillStyle = '#333'; 
     ctx.fillRect(node.x + 10, node.y + height - 30, 100, 20);
 
-    ctx.fillStyle = '#fff'; // 흰색 텍스트
+    ctx.fillStyle = '#fff'; 
     ctx.fillText('하위부서생성', node.x + 60, node.y + height - 12);
 
-    // 돋보기 아이콘 (하위부서생성 버튼 오른쪽, 여백 10px)
+    
     ctx.fillStyle = '#000';
     ctx.beginPath();
     ctx.arc(node.x + 130, node.y + height - 20, 10, 0, 2 * Math.PI);
@@ -198,7 +197,7 @@ canvas.addEventListener('dblclick', (e) => {
             const input = document.createElement('input');
             input.type = 'text';
             input.value = clickedNode.manager;
-            // input.className = ' bg-white rounded';
+            
             input.style.position = 'absolute';
             input.style.left = `${rect.left + clickedNode.x + (width / 2) - 50}px`;
             input.style.top = `${rect.top + clickedNode.y + 5}px`;
