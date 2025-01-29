@@ -8,6 +8,7 @@ const calendar = (() => {
     ];
 
     let today = new Date();
+    // console.log(today);
     let currentMonth = today.getMonth();
     let currentYear = today.getFullYear();
 

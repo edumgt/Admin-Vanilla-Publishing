@@ -1,8 +1,6 @@
+const workarea = document.getElementById('workarea');
+workarea.classList.add('flex', 'items-center', 'mb-2', 'mt-4');
 
-// const lang = localStorage.getItem('lang');
-
-// const menuLinks = document.querySelectorAll(".gnb-item");
-// const menuLinks2 = document.querySelectorAll(".menu-item");
 menuLinks2.forEach((link) => {
   if (link.getAttribute("href") === currentPage) {
     menuLinks.forEach((link) => {
@@ -130,7 +128,8 @@ function showAttendance() {
   const selectedMonth = document.getElementById('monthSelect').value;
   const [year, month] = selectedMonth.split('-');
   const lastDay = getLastDayOfMonth(year, month);
-  const today = new Date().toISOString().split('T')[0]; // 오늘 날짜 (YYYY-MM-DD)
+  const today = new Date().toISOString().split('T')[0]; 
+  
 
   let employeesAttendance;
   const selectedDepartment = document.getElementById('departmentSelect').value;

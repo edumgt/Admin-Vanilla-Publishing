@@ -3,7 +3,7 @@
         "name": "Alice",
         "id": "5704179e-92b9-4c7e-bd36-2c4758db4ea7",
         "employeeId": "A1001",
-        "team": "Team A",
+        "team": "Engineering",
         "joinYear": 2015,
         "address": "Seoul, South Korea",
         "email": "alice@example.com"
@@ -12,7 +12,7 @@
         "name": "Bob",
         "id": "6d4afc76-4454-4953-a2f5-db9ac1353aae",
         "employeeId": "A1002",
-        "team": "Team A",
+        "team": "Engineering",
         "joinYear": 2017,
         "address": "Busan, South Korea",
         "email": "bob@example.com"
@@ -21,7 +21,7 @@
         "name": "Emma",
         "id": "d356030d-c2e9-4e93-a392-6418ac31f32a",
         "employeeId": "A1003",
-        "team": "Team A",
+        "team": "Engineering",
         "joinYear": 2018,
         "address": "Incheon, South Korea",
         "email": "emma@example.com"
@@ -30,7 +30,7 @@
         "name": "Liam",
         "id": "2240b84a-709e-4b98-bcb7-dfae5ce2655d",
         "employeeId": "A1004",
-        "team": "Team A",
+        "team": "Engineering",
         "joinYear": 2016,
         "address": "Daegu, South Korea",
         "email": "liam@example.com"
@@ -39,7 +39,7 @@
         "name": "Sophia",
         "id": "aeca335b-22f3-422c-b8e9-5ee5b922cde8",
         "employeeId": "A1005",
-        "team": "Team A",
+        "team": "Engineering",
         "joinYear": 2019,
         "address": "Daejeon, South Korea",
         "email": "sophia@example.com"
@@ -48,7 +48,7 @@
         "name": "Noah",
         "id": "83bc8abd-f043-4258-a81e-e64e29375f15",
         "employeeId": "A1006",
-        "team": "Team A",
+        "team": "Engineering",
         "joinYear": 2020,
         "address": "Gwangju, South Korea",
         "email": "noah@example.com"
@@ -57,7 +57,7 @@
         "name": "Isabella",
         "id": "836eb87b-16e6-4582-b514-2236920728b6",
         "employeeId": "A1007",
-        "team": "Team A",
+        "team": "Engineering",
         "joinYear": 2021,
         "address": "Ulsan, South Korea",
         "email": "isabella@example.com"
@@ -66,7 +66,7 @@
         "name": "Charlie",
         "id": "f8216608-00dd-4ad4-a8d2-69e9abf101af",
         "employeeId": "B2001",
-        "team": "Team B",
+        "team": "HR",
         "joinYear": 2014,
         "address": "Seoul, South Korea",
         "email": "charlie@example.com"
@@ -75,7 +75,7 @@
         "name": "David",
         "id": "a10ec08f-02cb-4cfd-adf2-1bc5eec2f3f8",
         "employeeId": "B2002",
-        "team": "Team B",
+        "team": "HR",
         "joinYear": 2016,
         "address": "Busan, South Korea",
         "email": "david@example.com"
@@ -84,7 +84,7 @@
         "name": "홍길동",
         "id": "f25df27c-6332-45b0-b045-86fee2ea00c3",
         "employeeId": "B2003",
-        "team": "Team B",
+        "team": "Marketing",
         "joinYear": 2019,
         "address": "Jeonju, South Korea",
         "email": "hong@example.com"
@@ -93,7 +93,7 @@
         "name": "Mr. Kim",
         "id": "948c8f58-d7fc-4fa5-a1af-9f0eea656ff6",
         "employeeId": "B2004",
-        "team": "Team B",
+        "team": "Finance",
         "joinYear": 2015,
         "address": "Suwon, South Korea",
         "email": "mrkim@example.com"

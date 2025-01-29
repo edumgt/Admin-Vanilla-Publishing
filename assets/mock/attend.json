@@ -1,142 +1,112 @@
 [
   {
-    "department": "Engineering",
-    "title": "Software Engineer",
-    "name": "John Doe",
-    "employeeId": "E1234",
-    "attendance": [
-      { "date": "2025-01-01", "checkIn": "09:00", "checkOut": "18:00" },
-      { "date": "2025-01-02", "checkIn": "09:15", "checkOut": "18:05" },
-      { "date": "2025-01-03", "checkIn": "09:10", "checkOut": "18:10" },
-      { "date": "2025-01-04", "checkIn": "09:00", "checkOut": "18:10" },
-      { "date": "2025-01-05", "checkIn": "08:30", "checkOut": "18:20" },
-      { "date": "2025-01-06", "checkIn": "09:10", "checkOut": "15:10" },
-      { "date": "2025-01-07", "checkIn": "09:10", "checkOut": "18:10" },
-      { "date": "2025-01-08", "checkIn": "09:10", "checkOut": "18:10" },
-      { "date": "2025-02-01", "checkIn": "09:00", "checkOut": "18:00" },
-      { "date": "2025-02-02", "checkIn": "09:10", "checkOut": "18:10" }
-    ]
+      "department": "Engineering",
+      "title": "Software Engineer",
+      "name": "Alice",
+      "employeeId": "A1001",
+      "attendance": [
+          { "date": "2025-01-01", "checkIn": "09:00", "checkOut": "18:00" },
+          { "date": "2025-01-02", "checkIn": "09:10", "checkOut": "18:05" }
+      ]
   },
   {
-    "department": "Engineering",
-    "title": "AA",
-    "name": "당나귀",
-    "employeeId": "E1235",
-    "attendance": [
-      { "date": "2025-01-01", "checkIn": "09:00", "checkOut": "18:00" },
-      { "date": "2025-01-02", "checkIn": "08:15", "checkOut": "18:05" },
-      { "date": "2025-01-03", "checkIn": "09:10", "checkOut": "18:20" },
-      { "date": "2025-01-04", "checkIn": "09:10", "checkOut": "18:15" },
-      { "date": "2025-01-05", "checkIn": "09:10", "checkOut": "18:10" },
-      { "date": "2025-01-06", "checkIn": "08:30", "checkOut": "18:10" },
-      { "date": "2025-01-07", "checkIn": "09:10", "checkOut": "18:10" },
-      { "date": "2025-01-08", "checkIn": "09:10", "checkOut": "18:12" },
-      { "date": "2025-02-01", "checkIn": "09:00", "checkOut": "18:00" },
-      { "date": "2025-02-02", "checkIn": "09:10", "checkOut": "18:10" }
-    ]
+      "department": "Engineering",
+      "title": "Software Engineer",
+      "name": "Bob",
+      "employeeId": "A1002",
+      "attendance": [
+          { "date": "2025-01-01", "checkIn": "08:50", "checkOut": "17:50" },
+          { "date": "2025-01-02", "checkIn": "09:00", "checkOut": "18:00" }
+      ]
   },
   {
-    "department": "HR",
-    "title": "HR Manager",
-    "name": "Jane Smith",
-    "employeeId": "H5678",
-    "attendance": [
-      { "date": "2025-01-01", "checkIn": "08:45", "checkOut": "17:45" },
-      { "date": "2025-01-02", "checkIn": "09:00", "checkOut": "18:00" },
-      { "date": "2025-01-03", "checkIn": "09:05", "checkOut": "18:15" },
-      { "date": "2025-02-01", "checkIn": "08:50", "checkOut": "17:50" },
-      { "date": "2025-02-02", "checkIn": "09:00", "checkOut": "18:00" }
-    ]
+      "department": "Engineering",
+      "title": "Software Engineer",
+      "name": "Emma",
+      "employeeId": "A1003",
+      "attendance": [
+          { "date": "2025-01-01", "checkIn": "09:05", "checkOut": "18:05" },
+          { "date": "2025-01-02", "checkIn": "09:10", "checkOut": "18:10" }
+      ]
   },
   {
-    "department": "Marketing",
-    "title": "Marketing Specialist",
-    "name": "김철수",
-    "employeeId": "M7890",
-    "attendance": [
-      { "date": "2025-01-01", "checkIn": "09:00", "checkOut": "18:00" },
-      { "date": "2025-01-02", "checkIn": "09:10", "checkOut": "18:10" },
-      { "date": "2025-01-03", "checkIn": "09:05", "checkOut": "18:05" },
-      { "date": "2025-02-01", "checkIn": "09:00", "checkOut": "18:00" },
-      { "date": "2025-02-02", "checkIn": "09:10", "checkOut": "18:10" }
-    ]
+      "department": "Engineering",
+      "title": "Software Engineer",
+      "name": "Liam",
+      "employeeId": "A1004",
+      "attendance": [
+          { "date": "2025-01-01", "checkIn": "08:55", "checkOut": "17:55" },
+          { "date": "2025-01-02", "checkIn": "09:00", "checkOut": "18:00" }
+      ]
   },
   {
-    "department": "Finance",
-    "title": "Financial Analyst",
-    "name": "이영희",
-    "employeeId": "F3456",
-    "attendance": [
-      { "date": "2025-01-01", "checkIn": "08:55", "checkOut": "17:55" },
-      { "date": "2025-01-02", "checkIn": "09:05", "checkOut": "18:05" },
-      { "date": "2025-01-03", "checkIn": "09:00", "checkOut": "18:00" },
-      { "date": "2025-02-01", "checkIn": "09:00", "checkOut": "18:00" },
-      { "date": "2025-02-02", "checkIn": "09:05", "checkOut": "18:05" }
-    ]
+      "department": "Engineering",
+      "title": "Software Engineer",
+      "name": "Sophia",
+      "employeeId": "A1005",
+      "attendance": [
+          { "date": "2025-01-01", "checkIn": "09:00", "checkOut": "18:00" },
+          { "date": "2025-01-02", "checkIn": "09:10", "checkOut": "18:10" }
+      ]
   },
   {
-    "department": "Sales",
-    "title": "Sales Executive",
-    "name": "박민호",
-    "employeeId": "S9012",
-    "attendance": [
-      { "date": "2025-01-01", "checkIn": "09:00", "checkOut": "18:00" },
-      { "date": "2025-01-02", "checkIn": "09:15", "checkOut": "18:15" },
-      { "date": "2025-01-03", "checkIn": "09:10", "checkOut": "18:10" },
-      { "date": "2025-02-01", "checkIn": "09:00", "checkOut": "18:00" },
-      { "date": "2025-02-02", "checkIn": "09:10", "checkOut": "18:10" }
-    ]
+      "department": "Engineering",
+      "title": "Software Engineer",
+      "name": "Noah",
+      "employeeId": "A1006",
+      "attendance": [
+          { "date": "2025-01-01", "checkIn": "08:45", "checkOut": "17:45" },
+          { "date": "2025-01-02", "checkIn": "09:05", "checkOut": "18:05" }
+      ]
   },
   {
-    "department": "Engineering",
-    "title": "Software Engineer",
-    "name": "김영수",
-    "employeeId": "E3456",
-    "attendance": [
-      { "date": "2025-01-01", "checkIn": "09:00", "checkOut": "18:00" },
-      { "date": "2025-01-02", "checkIn": "09:10", "checkOut": "18:10" },
-      { "date": "2025-01-03", "checkIn": "09:05", "checkOut": "18:05" },
-      { "date": "2025-02-01", "checkIn": "09:00", "checkOut": "18:00" },
-      { "date": "2025-02-02", "checkIn": "09:10", "checkOut": "18:10" }
-    ]
+      "department": "Engineering",
+      "title": "Software Engineer",
+      "name": "Isabella",
+      "employeeId": "A1007",
+      "attendance": [
+          { "date": "2025-01-01", "checkIn": "09:00", "checkOut": "18:00" },
+          { "date": "2025-01-02", "checkIn": "09:10", "checkOut": "18:10" }
+      ]
   },
   {
-    "department": "HR",
-    "title": "HR Specialist",
-    "name": "최미나",
-    "employeeId": "H7891",
-    "attendance": [
-      { "date": "2025-01-01", "checkIn": "08:50", "checkOut": "17:50" },
-      { "date": "2025-01-02", "checkIn": "09:00", "checkOut": "18:00" },
-      { "date": "2025-01-03", "checkIn": "09:05", "checkOut": "18:15" },
-      { "date": "2025-02-01", "checkIn": "08:55", "checkOut": "17:55" },
-      { "date": "2025-02-02", "checkIn": "09:00", "checkOut": "18:00" }
-    ]
+      "department": "HR",
+      "title": "HR Manager",
+      "name": "Charlie",
+      "employeeId": "B2001",
+      "attendance": [
+          { "date": "2025-01-01", "checkIn": "08:50", "checkOut": "17:50" },
+          { "date": "2025-01-02", "checkIn": "09:00", "checkOut": "18:00" }
+      ]
   },
   {
-    "department": "Marketing",
-    "title": "Marketing Manager",
-    "name": "박지훈",
-    "employeeId": "M5678",
-    "attendance": [
-      { "date": "2025-01-01", "checkIn": "09:00", "checkOut": "18:00" },
-      { "date": "2025-01-02", "checkIn": "09:15", "checkOut": "18:15" },
-      { "date": "2025-01-03", "checkIn": "09:10", "checkOut": "18:10" },
-      { "date": "2025-02-01", "checkIn": "09:00", "checkOut": "18:00" },
-      { "date": "2025-02-02", "checkIn": "09:10", "checkOut": "18:10" }
-    ]
+      "department": "HR",
+      "title": "HR Specialist",
+      "name": "David",
+      "employeeId": "B2002",
+      "attendance": [
+          { "date": "2025-01-01", "checkIn": "08:55", "checkOut": "17:55" },
+          { "date": "2025-01-02", "checkIn": "09:05", "checkOut": "18:05" }
+      ]
   },
   {
-    "department": "Finance",
-    "title": "Accountant",
-    "name": "이수진",
-    "employeeId": "F9013",
-    "attendance": [
-      { "date": "2025-01-01", "checkIn": "08:55", "checkOut": "17:55" },
-      { "date": "2025-01-02", "checkIn": "09:00", "checkOut": "18:00" },
-      { "date": "2025-01-03", "checkIn": "09:05", "checkOut": "18:05" },
-      { "date": "2025-02-01", "checkIn": "09:00", "checkOut": "18:00" },
-      { "date": "2025-02-02", "checkIn": "09:05", "checkOut": "18:05" }
-    ]
+      "department": "Marketing",
+      "title": "Marketing Manager",
+      "name": "홍길동",
+      "employeeId": "B2003",
+      "attendance": [
+          { "date": "2025-01-01", "checkIn": "09:10", "checkOut": "18:10" },
+          { "date": "2025-01-02", "checkIn": "09:15", "checkOut": "18:15" }
+      ]
+  },
+  {
+      "department": "Finance",
+      "title": "Financial Analyst",
+      "name": "Mr. Kim",
+      "employeeId": "B2004",
+      "attendance": [
+          { "date": "2025-01-01", "checkIn": "09:00", "checkOut": "18:00" },
+          { "date": "2025-01-02", "checkIn": "09:05", "checkOut": "18:05" }
+      ]
   }
 ]
