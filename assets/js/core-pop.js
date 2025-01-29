@@ -1,9 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const navLinks = document.querySelectorAll(".nav-item a");
-  const contentDiv = document.getElementById("content");
 
-  const pages = {
-    "Address": `
+
+
+   const navLinks = document.querySelectorAll(".nav-item a");
+   const contentDiv = document.getElementById("content");
+
+   const pages = {
+      "Address": `
       <div class="row g-6">
                <div class="col-12 col-lg-6">
                   <div class="card">
@@ -214,7 +217,7 @@ document.addEventListener("DOMContentLoaded", function () {
                </div>
             </div>
       `,
-    "Account": `
+      "Account": `
           <div class="card mb-6">
                   <div class="card-body">
                      <div class="d-flex align-items-start align-items-sm-center gap-6 pb-5 border-bottom">
@@ -287,14 +290,14 @@ document.addEventListener("DOMContentLoaded", function () {
                   </div>
                </div>
           `
-    ,
-    "Overview": `<div class="card mb-6">
+      ,
+      "Overview": `<div class="card mb-6">
                <div class="card-body">
                   <div class="d-flex align-items-center gap-6 pb-5 border-bottom">
                      <img src="assets/img/Avatars/Lalina.png" alt="user-avatar"
                         class="d-block rounded bg-primary-lightest" height="100px" id="uploadedAvatar">
                      <div>
-                        <h5>Dollar Gill</h5>
+                        <h5 class="name-display">Dollar Gill</h5>
                         <div>Admin</div>
                      </div>
                   </div>
@@ -329,7 +332,7 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
       
       `,
-    "Password": `<div class="card mb-6">
+      "Password": `<div class="card mb-6">
                <div class="card-body">
                   <h5 class="mb-8">Change Password</h5>
                   <form id="formAccountPasword" method="GET" onsubmit="return false">
@@ -357,30 +360,45 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
       
       `
-  };
+   };
 
-  // Set default view to Overview
-  contentDiv.innerHTML = pages["Overview"];
-  document.querySelector(".nav-item:first-child").classList.add("active");
+   // Set default view to Overview
+   contentDiv.innerHTML = pages["Overview"];
+   document.querySelector(".nav-item:first-child").classList.add("active");
 
-  navLinks.forEach(link => {
+   navLinks.forEach(link => {
       link.addEventListener("click", function (e) {
-          e.preventDefault();
-          
-          // Remove active class from all tabs
-          navLinks.forEach(nav => nav.parentElement.classList.remove("active"));
-          
-          // Add active class to clicked tab
-          this.parentElement.classList.add("active");
-          
-          // Get the tab name
-          const tabName = this.querySelector("span").textContent.trim();
-          
-          
-          // Update content
-          if (pages[tabName]) {
-              contentDiv.innerHTML = pages[tabName];
-          }
+         e.preventDefault();
+
+         // Remove active class from all tabs
+         navLinks.forEach(nav => nav.parentElement.classList.remove("active"));
+
+         // Add active class to clicked tab
+         this.parentElement.classList.add("active");
+
+         // Get the tab name
+         const tabName = this.querySelector("span").textContent.trim();
+
+
+         // Update content
+         if (pages[tabName]) {
+            contentDiv.innerHTML = pages[tabName];
+         }
       });
-  });
+   });
+
+
+   function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+   }
+
+   const name = getQueryParam("name");
+   if (name) {
+      document.querySelector(".name-display").textContent = `User: ${decodeURIComponent(name)}`;
+   } else {
+      document.querySelector(".name-display").textContent = "No user data found.";
+   }
+
 });
+

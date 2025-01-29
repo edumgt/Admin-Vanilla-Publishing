@@ -90,7 +90,7 @@ function setupGrid(teams) {
         },
         columns: [
             { header: "팀", name: "team", align: "center", rowSpan: true },
-            { header: "팀원", name: "name", align: "center", formatter: (cell) => `<a href='#' class='open-modal' data-name='${cell.value}'>${cell.value}</a>` },
+            { header: "팀원", name: "name", align: "center", formatter: (cell) => cell.value !== "합계" ? `<a href='#' class='open-modal' data-name='${cell.value}'>${cell.value}</a>` : cell.value },
             { header: "1월", name: "month1", formatter: formatCurrency },
             { header: "2월", name: "month2", formatter: formatCurrency },
             { header: "3월", name: "month3", formatter: formatCurrency },
