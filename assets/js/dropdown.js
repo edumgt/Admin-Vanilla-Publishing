@@ -139,10 +139,51 @@ function addBreadcrumbBadges() {
     favoriteContainer.style.right = '30px';
 
     favoriteContainer.innerHTML += `
-        <span style="cursor: pointer; margin-right: 10px; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; background-color: #333; color: #fff; border-radius: 52%; font-size: 15px; font-weight: bold;" onclick="saveFavorite('1st', window.location.href)">1</span>
-        <span style="cursor: pointer; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; background-color: #333; color: #fff; border-radius: 52%; font-size: 15px; font-weight: bold;" onclick="saveFavorite('Quick', window.location.href)">Q</span>
+        <span id="fav1" style="cursor: pointer; margin-right: 10px; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; background-color: #333; color: #fff; border-radius: 52%; font-size: 15px; font-weight: bold;" onclick="saveFavorite('1st', window.location.href)">1</span>
+        <span id="fav2" style="cursor: pointer; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; background-color: #333; color: #fff; border-radius: 52%; font-size: 15px; font-weight: bold;" onclick="saveFavorite('Quick', window.location.href)">Q</span>
     `;
 
     breadcrumbContainer.parentNode.insertBefore(favoriteContainer, breadcrumbContainer.nextSibling);
 }
 addBreadcrumbBadges();
+
+const fav1 = document.getElementById("fav1");
+createTooltip(fav1, "현재 페이지를 로그인 후 바로가기로 저장합니다.");
+const fav2 = document.getElementById("fav2");
+createTooltip(fav2, "현재 페이지를 바로가기 목록에 저장합니다.");
+
+/* Tool Tip */
+function createTooltip(element, text) {
+    const tooltip = document.createElement("div");
+    tooltip.textContent = text;
+    tooltip.style.position = "absolute";
+    tooltip.style.backgroundColor = "#333";
+    tooltip.style.color = "#fff";
+    tooltip.style.padding = "5px 10px";
+    tooltip.style.borderRadius = "5px";
+    tooltip.style.fontSize = "12px";
+    tooltip.style.visibility = "hidden";
+    tooltip.style.opacity = "0";
+    tooltip.style.transition = "opacity 0.2s ease-in-out";
+    tooltip.style.whiteSpace = "nowrap";
+    tooltip.style.zIndex = "1000";
+    
+    document.body.appendChild(tooltip);
+
+    element.addEventListener("mouseenter", function (event) {
+        tooltip.style.left = `${event.clientX - 160}px`;
+        tooltip.style.top = `${event.clientY - 40}px`;
+        tooltip.style.visibility = "visible";
+        tooltip.style.opacity = "1";
+    });
+
+    element.addEventListener("mousemove", function (event) {
+        tooltip.style.left = `${event.clientX - 160}px`;
+        tooltip.style.top = `${event.clientY - 40}px`;
+    });
+
+    element.addEventListener("mouseleave", function () {
+        tooltip.style.visibility = "hidden";
+        tooltip.style.opacity = "0";
+    });
+}

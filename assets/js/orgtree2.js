@@ -1,10 +1,23 @@
 document.addEventListener("DOMContentLoaded", async () => {
+
+  const workarea = document.getElementById('workarea');
+  workarea.classList.add('flex', 'h-screen', 'mt-4');
+
   const orgContainer = document.getElementById("org-chart");
+  orgContainer.classList.add('w-1/3', 'bg-white', 'overflow-y-auto', 'mr-4','h-5\/6');
+
   const permissionsContainer = document.getElementById("permissions");
+  permissionsContainer.classList.add('w-2/3', 'bg-gray-50', 'p-4', 'overflow-y-auto',
+    'border-t', 'border-gray-300', 
+    'border-l', 'border-gray-300', 
+    'border-r', 'border-gray-300',
+    'border-b', 'border-gray-300', 'h-5\/6'
+  );
+
   const permissionsTitle = document.createElement("h1");
   permissionsTitle.id = "permissions-title";
-  permissionsTitle.style.fontSize = "1rem";
-  permissionsTitle.style.marginBottom = "1rem";
+  permissionsTitle.style.fontSize = "1.1rem";
+  permissionsTitle.style.marginBottom = "1.1rem";
   permissionsContainer.appendChild(permissionsTitle);
 
   let selectedNode = null;
@@ -52,8 +65,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const label = document.createElement("span");
     label.textContent = name;
 
-
-
     const childrenContainer = document.createElement("div");
     childrenContainer.style.display = "none";
     childrenContainer.style.marginLeft = "20px";
@@ -100,23 +111,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     const expandButton = document.createElement("button");
     expandButton.textContent = "전체 펼침";
     expandButton.style.marginBottom = "10px";
-    // expandButton.style.padding = "5px 10px";
     expandButton.style.backgroundColor = "#0058a3";
     expandButton.style.color = "#fff";
-    // expandButton.style.border = "none";
-    // expandButton.style.cursor = "pointer";
-    // expandButton.style.borderRadius = "5px";
+    createTooltip(expandButton, "조직도를 전체 펼쳐서 볼 수 있습니다.");
 
     const editButton = document.createElement("button");
     editButton.textContent = "조직 수정";
-    // editButton.style.padding = "5px 10px";
     editButton.style.backgroundColor = "#333";
     editButton.style.color = "#fff";
-    // editButton.style.border = "none";
-    // editButton.style.cursor = "pointer";
-    // editButton.style.borderRadius = "5px";
     editButton.style.marginRight = "10px";
     editButton.addEventListener("click", openOrgEditorModal);
+    createTooltip(editButton, "조직도를 팝업으로 수정할 수 있습니다.");
+
 
     let expanded = false;
     expandButton.addEventListener("click", () => {
@@ -264,11 +270,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       const closeButton = document.createElement("button");
       closeButton.textContent = "X";
+      closeButton.style.fontWeight = "900";
       closeButton.style.position = "absolute";
       closeButton.style.bottom = "10px";
       closeButton.style.right = "10px";
-      
-      
+
+
       closeButton.onclick = () => {
         saveToStorage("organizationData", organization);
         renderOrgChart(organization);
@@ -286,7 +293,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       const columnDefs = [
         { field: "name", headerName: "본부", editable: true },
-        { field: "departments", headerName: "부서", editable: true,
+        {
+          field: "departments", headerName: "부서", editable: true,
           valueGetter: params => params.data.departments.map(d => d.name).join(","),
           valueSetter: params => {
             const updatedDepartments = params.newValue.split(",").map((name, i) => {
@@ -296,7 +304,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             return true;
           }
         },
-        { field: "teams", headerName: "팀(부서구분 ; )", editable: true,
+        {
+          field: "teams", headerName: "팀(부서구분 ; )", editable: true,
           valueGetter: params => params.data.departments.map(d => d.teams.join(",")).join(";"),
           valueSetter: params => {
             params.data.departments.forEach((dept, i) => {
