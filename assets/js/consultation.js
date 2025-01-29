@@ -1,4 +1,6 @@
-// 상담 상태를 시각화하기 위한 상태 박스 설정
+const workarea = document.getElementById('workarea');
+workarea.classList.add('flex', 'w-full', 'mt-4');
+
 const statusBoxes = [
     { status: "inProgress", label: "In Progress", className: "inProgress", bgColor: "#3b82f6" },
     { status: "pending", label: "Pending", className: "pending", bgColor: "#fbbf24" },
@@ -7,33 +9,48 @@ const statusBoxes = [
     { status: "fail", label: "Fail", className: "fail", bgColor: "#6b7280" }
 ];
 
-// 컨설턴트 목록 데이터
-// const consultants = [
-//     { id: 1, name: "Alice Johnson", position: "Senior Consultant" },
-//     { id: 2, name: "Bob Smith", position: "Junior Consultant" },
-//     { id: 3, name: "Charlie Brown", position: "Lead Consultant" }
-// ];
 
-// 상담 데이터 가져오기 함수
 function fetchConsultations() {
     return JSON.parse(localStorage.getItem('consultations')) || [];
 }
 
-// 컨설턴트 목록 가져오기 함수
+
+// async function fetchConsultants() {
+//     try {
+//         const response = await fetch('assets/mock/consultants.json'); 
+//         if (!response.ok) {
+//             throw new Error('Failed to fetch consultants');
+//         }
+//         const data = await response.json();
+//         localStorage.setItem('consultants', JSON.stringify(data)); 
+//         return data;
+//     } catch (error) {
+//         console.error('Error fetching consultants:', error);
+//         return [];
+//     }
+// }
+
 async function fetchConsultants() {
     try {
-        const response = await fetch('assets/mock/consultants.json'); // JSON 파일 경로
+        const response = await fetch('assets/mock/members.json'); // JSON 파일 경로
         if (!response.ok) {
-            throw new Error('Failed to fetch consultants');
+            throw new Error('Failed to fetch employees');
         }
         const data = await response.json();
-        localStorage.setItem('consultants', JSON.stringify(data)); // 로컬 저장
-        return data;
+
+        // "Consulting" 팀에 속한 직원만 필터링
+        const consultants = data.filter(employee => employee.team === "Consulting");
+
+        // 로컬 스토리지에 저장
+        localStorage.setItem('consultants', JSON.stringify(consultants));
+
+        return consultants;
     } catch (error) {
         console.error('Error fetching consultants:', error);
         return [];
     }
 }
+
 
 // 상담 데이터 저장 함수
 function saveConsultations(consultations) {
@@ -87,7 +104,7 @@ function saveReason() {
     if (reason && selectedStatusBox && selectedConsultationId && selectedStatus) {
         const consultations = fetchConsultations();
         const consultation = consultations.find(c => c.id == selectedConsultationId);
-        
+
         if (!consultation.reasons) {
             consultation.reasons = {};
         }
@@ -138,13 +155,13 @@ function renderProcessFlow() {
     consultations = sortConsultations(consultations, sortBy);
 
     const processFlow = document.getElementById('processFlow');
-    processFlow.innerHTML = ''; 
+    processFlow.innerHTML = '';
 
     consultations.forEach(consultation => {
         if (!consultation.reasons) {
             consultation.reasons = {};
         }
-        
+
         const statusBoxesHtml = statusBoxes.map(box => {
             const reason = consultation.reasons[box.status];
             return `
@@ -153,22 +170,22 @@ function renderProcessFlow() {
                      style="background-color: ${reason && reason.text ? box.bgColor : 'transparent'}; 
                             color: ${reason && reason.text ? 'white' : 'black'};">
                     <div>
-                        ${reason && reason.text 
-                            ? (reason.text.length > 10 
-                                ? reason.text.substring(0, 10) + '...' 
-                                : reason.text) 
-                            : box.label}
-                        ${reason && reason.text 
-                            ? `<small>${new Date(reason.date).toLocaleString()}</small>` 
-                            : ''}
+                        ${reason && reason.text
+                    ? (reason.text.length > 10
+                        ? reason.text.substring(0, 10) + '...'
+                        : reason.text)
+                    : box.label}
+                        ${reason && reason.text
+                    ? `<small>${new Date(reason.date).toLocaleString()}</small>`
+                    : ''}
                     </div>
-                    ${reason && reason.text 
-                        ? `<span class="tooltip">${reason.text}</span>` 
-                        : ''}
+                    ${reason && reason.text
+                    ? `<span class="tooltip">${reason.text}</span>`
+                    : ''}
                 </div>
             `;
         }).join('');
-        
+
         const processItem = document.createElement('div');
         processItem.className = 'border-t border-gray-100 process-item bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full flex';
         processItem.innerHTML = `
@@ -217,7 +234,8 @@ async function renderConsultants() {
         consultantItem.dataset.id = consultant.id;
         consultantItem.innerHTML = `
             <p class="text-gray-700 text-sm font-bold">${consultant.name}</p>
-            <p class="text-gray-500 text-xs">${consultant.position}</p>
+            <p class="text-gray-500 text-xs">${consultant.address}</p>
+            <p class="text-gray-500 text-xs">${consultant.id}</p>
         `;
         consultantItem.addEventListener('dragstart', handleDragStart);
         consultantList.appendChild(consultantItem);
@@ -235,7 +253,7 @@ function handleDrop(event) {
     const consultationId = event.currentTarget.dataset.id;
 
     let consultants = JSON.parse(localStorage.getItem('consultants'));
-    
+
     // if (!consultants) {
     //     consultants = await fetchConsultants();  
     // }
@@ -254,7 +272,7 @@ function handleDrop(event) {
 }
 
 // 폼 제출 이벤트 핸들러
-document.getElementById('consultationForm').addEventListener('submit', function(event) {
+document.getElementById('consultationForm').addEventListener('submit', function (event) {
     event.preventDefault();
     const customerName = document.getElementById('customerName').value;
     const log = document.getElementById('log').value;
