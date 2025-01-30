@@ -280,3 +280,93 @@ document.addEventListener('DOMContentLoaded', () => {
     renderConsultants();
     renderProcessFlow();
 });
+
+document.getElementById('searchButton').addEventListener('click', (event) => {
+    event.preventDefault(); // 기본 동작(폼 제출) 방지
+    event.stopPropagation(); // 이벤트 버블링 방지
+
+    const modal = document.getElementById('searchModal');
+    const inputBox = document.getElementById('customerName');
+
+    // 모달을 customerName 입력 필드의 오른쪽에 배치
+    // const rect = inputBox.getBoundingClientRect();
+    modal.style.top = `20px`; // 같은 높이에 위치
+    modal.style.left = `200px`; // 입력 필드 오른쪽에 배치
+    modal.style.width = `250px`; // 모달 너비 설정
+    modal.classList.remove('hidden');
+    document.getElementById('searchInput').focus();
+});
+
+
+
+
+const searchModal = document.getElementById('searchModal');
+searchModal.classList.add('absolute', 'bg-white', 'border', 'rounded', 'shadow-lg', 'hidden', 'z-50', 'p-4');
+searchModal.innerHTML = `<h2 class="text-lg font-semibold mb-2">예약자 찾기</h2>
+                         <input type="text" id="searchInput" class="w-full p-2 border rounded mb-2" placeholder="이름 검색"
+                         autocomplete="off">
+                         <div id="searchResults" class="border rounded p-2 bg-white max-h-48 overflow-y-auto mb-4"></div>
+                         <button id="closeModal" class="bg-gray-500 text-white">닫기</button>
+                         `;
+
+document.getElementById('closeModal').addEventListener('click', () => {
+    document.getElementById('searchModal').classList.add('hidden');
+});
+
+document.getElementById('searchInput').addEventListener('input', async () => {
+    const searchResults = document.getElementById('searchResults');
+    const query = document.getElementById('searchInput').value.trim().toLowerCase();
+
+    searchResults.innerHTML = '';
+
+    if (!query) return; // 빈 입력일 경우 처리하지 않음
+
+    try {
+        const response = await fetch('assets/mock/reservations.json'); // JSON 경로 확인 필요
+        const data = await response.json();
+
+        if (!data.reservations) {
+            console.error("JSON 데이터 구조가 올바르지 않습니다.");
+            return;
+        }
+
+        // 필터링 (대소문자 구분 없이 검색)
+        const filtered = data.reservations.filter(reservation =>
+            reservation.name.toLowerCase().includes(query)
+        );
+
+        if (filtered.length > 0) {
+            filtered.forEach(reservation => {
+                const div = document.createElement('div');
+                div.classList.add('p-2', 'cursor-pointer', 'hover:bg-gray-200');
+                div.textContent = reservation.name;
+                div.setAttribute('data-name', reservation.name); // 값 저장
+                searchResults.appendChild(div);
+            });
+        } else {
+            searchResults.innerHTML = `<div class="p-2 text-gray-500">검색 결과 없음</div>`;
+        }
+    } catch (error) {
+        console.error("검색 중 오류 발생:", error);
+    }
+});
+
+// 동적 검색 결과 클릭 시 이벤트 처리 (Event Delegation)
+document.getElementById('searchResults').addEventListener('click', (event) => {
+    const selectedName = event.target.getAttribute('data-name');
+    if (selectedName) {
+        document.getElementById('customerName').value = selectedName;
+        document.getElementById('searchModal').classList.add('hidden');
+    }
+});
+
+// 모달 외부 클릭 시 닫기
+document.addEventListener('click', (event) => {
+    const modal = document.getElementById('searchModal');
+    const searchButton = document.getElementById('searchButton');
+    const customerName = document.getElementById('customerName');
+
+    if (!modal.contains(event.target) && event.target !== searchButton && event.target !== customerName) {
+        modal.classList.add('hidden');
+    }
+});
