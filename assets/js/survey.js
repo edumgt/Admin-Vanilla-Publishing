@@ -39,15 +39,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function initializeGrid(data) {
+
+        
+
         window.grid = new tui.Grid({
             el: questionsContainer,
             data: data,
             columns: [
-                { header: "ID", name: "id", width: 60 },
+                { 
+                    header: "ID", name: "id", width: 60, 
+                    sortable: true, // 정렬 기능 추가
+                    filter: {
+                        type: 'number' // 숫자 필터 추가
+                    }
+                },
                 {
                     header: "질문", name: "text", width: 250,
                     resizable: true,
-                    editor: "text"
+                    editor: "text",
+                    sortable: true, // 정렬 기능 추가
+                    filter: {
+                        type: 'text'
+
+                    }
                 },
                 {
                     header: "옵션", name: "options",
@@ -57,13 +71,22 @@ document.addEventListener('DOMContentLoaded', () => {
                             useViewMode: false
                         }
                     },
-                    minWidth: 400
+                    minWidth: 400,
+                    sortable: true, // 정렬 기능 추가
+                    filter: {
+                        type: 'text'
+
+                    }
                 }
             ],
             bodyHeight: 500,
             scrollX: true,
             scrollY: true
         });
+
+        
+        
+        
 
         grid.on('afterChange', ({ changes }) => {
             let storedData = JSON.parse(localStorage.getItem("questions")) || [];

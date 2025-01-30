@@ -516,6 +516,41 @@ input[type="checkbox"] {
   background-color: #e1e1e1 !important;
 }
 
+/* 필터 컨테이너 스타일 */
+.tui-grid-filter-container {
+  font-family: var(--font-family) !important;
+  width: 250px;
+  height:130px;
+  background-color: #f1f1f1 !important;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column; 
+  
+}
+
+/* 필터 드롭다운 (select) 스타일 */
+.tui-grid-filter-container select {
+  font-family: var(--font-family) !important;
+  border-radius: 3px;
+  font-size: 15px;
+  background-color: #ffffff;
+  height:30px !important;
+  height:16px !important;
+}
+
+/* 필터 입력 필드 스타일 */
+.tui-grid-filter-container input {
+  font-family: var(--font-family) !important;
+  border-radius: 3px;
+  font-size: 15px;
+  background-color: #ffffff;
+  margin-top:15px !important;
+  height:28px !important;
+  width: 210px !important;
+}
+
 
 /* Modal */
 .modal {
