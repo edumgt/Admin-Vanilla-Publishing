@@ -3,7 +3,8 @@
 @import url('../vendor/tailwind/css/tailwind.min.css');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
 @import url('https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap'); */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
 /* CSS Variables */
 :root {
@@ -12,7 +13,7 @@
   --bg-light: #f6f7fa;
   --bg-dark: #2d3748;
   --hover-bg: #4a5568;
-  --font-family: "Noto Sans", sans-serif;
+  --font-family: 'Pretendard', sans-serif;
   --primary-color: #0058a3;
 
   --scrollbar-color: hsl(240, 25%, 100%);
@@ -30,6 +31,7 @@
 /* General Styles */
 body {
   font-family: var(--font-family);
+  font-weight: 500;
   color:var(--input-color);
   scrollbar-color: var(--scrollbar-thumb-color) transparent;
   scrollbar-width: thin;
@@ -214,7 +216,7 @@ body {
   background: var(--bg-dark);
   border-radius: 50%;
   /* padding: 0.4rem; */
-  transition: background 0.3s ease;
+  /* transition: background 0.3s ease; */
   cursor: pointer;
 }
 
@@ -427,9 +429,9 @@ body {
 .toast {
   position: fixed;
   top: 10px;
-  right: 10px;
+  right: 20px;
   min-width: 250px;
-  padding: 1rem;
+  padding: 0.5rem 1rem 0.5rem 1rem;
   border-radius: 6px;
   font-size: 1rem;
   color: #fff;
@@ -464,6 +466,8 @@ body {
 /* TUI Grid */
 .tui-grid-cell.tui-grid-cell-row-header,
 .tui-grid-cell.tui-grid-cell-header {
+  
+  font-family: var(--font-family) !important;
   background-color: var(--bg-light);
   color: var(--input-color);
   font-size: 0.95rem !important;
@@ -471,12 +475,14 @@ body {
 }
 
 .tui-grid-cell {
+  font-family: var(--font-family) !important;
   font-size: 0.95rem !important;
   font-weight: 500;
   
 }
 
 .tui-grid-layer-editing input{
+  font-family: var(--font-family) !important;
   font-weight: 600;
   font-size: 1rem !important;
   padding: 1px !important; /* 내부 여백 */
@@ -485,7 +491,7 @@ body {
 
 .tui-grid-layer-editing input:focus {
   border: 1px solid #fff !important; 
-  /* box-shadow: 0 0 5px rgba(0, 0, 255, 0.5) !important;  */
+  font-family: var(--font-family) !important;
 }
 
 .tui-grid-check-input,
@@ -495,12 +501,14 @@ input[type="checkbox"] {
 }
 
 .summary-row {
-  font-weight: bold;
+  font-family: var(--font-family) !important;
+  font-weight: 600;
   background-color: #e1e1e1 !important;
   background: #e1e1e1 !important;
 }
 
 .tui-grid-summary-area {
+  font-family: var(--font-family) !important;
   position: sticky;
   bottom: 0;
   z-index: 20;
@@ -529,7 +537,7 @@ input[type="checkbox"] {
   height: 90%;
   background-color: white;
   border-radius: 8px;
-  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+  
   padding: 1rem;
   display: flex;
   flex-direction: column;

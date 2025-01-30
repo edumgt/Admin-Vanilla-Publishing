@@ -4,12 +4,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   workarea.classList.add('flex', 'h-screen', 'mt-4');
 
   const orgContainer = document.getElementById("org-chart");
-  orgContainer.classList.add('w-1/3', 'bg-white', 'overflow-y-auto', 'mr-4','h-5\/6');
+  orgContainer.classList.add('w-1/3', 'bg-white', 'overflow-y-auto', 'mr-4', 'h-5\/6');
 
   const permissionsContainer = document.getElementById("permissions");
   permissionsContainer.classList.add('w-2/3', 'bg-gray-50', 'p-4', 'overflow-y-auto',
-    'border-t', 'border-gray-300', 
-    'border-l', 'border-gray-300', 
+    'border-t', 'border-gray-300',
+    'border-l', 'border-gray-300',
     'border-r', 'border-gray-300',
     'border-b', 'border-gray-300', 'h-5\/6'
   );
@@ -96,6 +96,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
       container.style.backgroundColor = "#0058a3";
       container.style.color = "#ffcc00";
+      container.style.fontWeight = "600";
+
       selectedNode = container;
       selectedName = name;
       updatePermissionsTitle(name);
@@ -142,11 +144,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       document.querySelectorAll("#org-chart span:first-child").forEach((toggleButton) => {
         toggleButton.innerHTML = expanded ? "+" : "-";
-        toggleButton.style.fontSize = "38px";
+        toggleButton.style.fontSize = "35px";
         toggleButton.style.marginRight = "12px";
         toggleButton.style.cursor = "pointer";
-        toggleButton.style.color = "#555";
-        toggleButton.style.fontWeight = "800";
+        toggleButton.style.color = "#333";
+        toggleButton.style.fontWeight = "700";
         toggleButton.style.transform = "scaleX(1.2)";
         toggleButton.style.transform = "scaleY(1.2)";
 
@@ -258,13 +260,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       modal = document.createElement("div");
       modal.id = "org-editor-modal";
       modal.style.position = "absolute";
-      modal.style.top = "15%";
+      modal.style.top = "14%";
       modal.style.right = "2%";
-      modal.style.width = "61%";
+      modal.style.width = "70%";
       modal.style.height = "60%";
       modal.style.backgroundColor = "#fff";
-      modal.style.padding = "10px";
-      modal.style.boxShadow = "0px 0px 6px rgba(0, 0, 0, 0.5)";
+      modal.style.padding = "5px";
+      modal.style.boxShadow = "2px 4px 6px rgba(0, 0, 0, 0.6)";
       modal.style.zIndex = "50";
       modal.style.overflow = "auto";
 
@@ -292,9 +294,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       permissionsContainer.appendChild(modal);
 
       const columnDefs = [
-        { field: "name", headerName: "본부", editable: true },
+        { field: "name", headerName: "본부", editable: true, width: '150' },
         {
-          field: "departments", headerName: "부서", editable: true,
+          field: "departments", headerName: "부서", editable: true, width: '300',
           valueGetter: params => params.data.departments.map(d => d.name).join(","),
           valueSetter: params => {
             const updatedDepartments = params.newValue.split(",").map((name, i) => {
@@ -305,7 +307,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           }
         },
         {
-          field: "teams", headerName: "팀(부서구분 ; )", editable: true,
+          field: "teams", headerName: "팀(부서구분 ; )", editable: true, width: '700',
           valueGetter: params => params.data.departments.map(d => d.teams.join(",")).join(";"),
           valueSetter: params => {
             params.data.departments.forEach((dept, i) => {
@@ -321,7 +323,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       const gridOptions = {
         columnDefs: columnDefs,
         rowData: organization,
-        defaultColDef: { editable: true, flex: 1 },
+        defaultColDef: {
+          editable: true,
+          cellStyle: { fontSize: "1rem", fontFamily: "'Pretendard', sans-serif" }
+        },
+        domLayout: "autoHeight", // 자동 높이 조정
         onCellValueChanged: params => {
           saveToStorage("organizationData", organization);
         }
