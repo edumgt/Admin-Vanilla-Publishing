@@ -15,21 +15,6 @@ function fetchConsultations() {
 }
 
 
-// async function fetchConsultants() {
-//     try {
-//         const response = await fetch('assets/mock/consultants.json'); 
-//         if (!response.ok) {
-//             throw new Error('Failed to fetch consultants');
-//         }
-//         const data = await response.json();
-//         localStorage.setItem('consultants', JSON.stringify(data)); 
-//         return data;
-//     } catch (error) {
-//         console.error('Error fetching consultants:', error);
-//         return [];
-//     }
-// }
-
 async function fetchConsultants() {
     try {
         const response = await fetch('assets/mock/members.json'); // JSON 파일 경로

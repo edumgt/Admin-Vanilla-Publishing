@@ -1,3 +1,5 @@
+const workarea = document.getElementById("workarea");
+workarea.classList.add('grid', 'grid-cols-1', 'lg:grid-cols-4', 'gap-4', 'py-1', 'mt-4');
 
 menuLinks2.forEach((link) => {
     if (link.getAttribute("href") === currentPage) {
@@ -11,19 +13,20 @@ menuLinks2.forEach((link) => {
     }
 });
 
+
 let rowsPerPage = 0;
 let gridBodyHeight = 0;
 
 
-rowsPerPage = 20;
-gridBodyHeight = 620;
+rowsPerPage = 15;
+gridBodyHeight = 420;
 
 
 const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
 const currentDate = new Date().toLocaleDateString('ko-KR', options).replace(/[\.]/g, '-').replace(/[\s]/g, '').substring(0, 10);
 
 //fetch('https://your-backend-api.com/data')
-fetch('assets/mock/mock.json')
+fetch('assets/mock/members.json')
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -32,13 +35,13 @@ fetch('assets/mock/mock.json')
     })
     .then(data => {
         loadData(data);
-        localStorage.setItem('gridData', JSON.stringify(data));
+        localStorage.setItem('membersData', JSON.stringify(data));
     })
     .catch(error => {
 
         showToast('loading-error', 'error', lang);
 
-        const storedData = localStorage.getItem('gridData');
+        const storedData = localStorage.getItem('membersData');
         if (storedData) {
             loadData(JSON.parse(storedData));
         } else {
@@ -64,14 +67,14 @@ function updateDataCount() {
 
 // Function to load data from localStorage
 function loadData() {
-    const data = localStorage.getItem('gridData');
+    const data = localStorage.getItem('membersData');
     return data ? JSON.parse(data) : [];
 }
 
 // Function to save data to localStorage
 function saveData(data) {
-    const filteredData = data.filter(row => row.tpCd && row.tpNm);
-    localStorage.setItem('gridData', JSON.stringify(filteredData));
+    const filteredData = data.filter(row => row.team && row.name);
+    localStorage.setItem('membersData', JSON.stringify(filteredData));
 }
 
 class BadgeRenderer {
@@ -106,28 +109,17 @@ const grid = new tui.Grid({
     },
     rowHeight: 42,
     minRowHeight: 42,
+
+
+
     columns: [
-        { header: 'Key', name: 'Key', width: 250, align: 'left', sortable: true, resizable: true, width: 100, minWidth: 80 },
-        { header: 'Group', name: 'tpCd', editor: 'text', validation: { required: true }, sortable: true, filter: 'text', resizable: true, width: 150 },
-        { header: 'Name', name: 'tpNm', editor: 'text', sortable: true, filter: 'text', resizable: true, width: 200 },
-        { header: 'Desc.', name: 'descCntn', editor: 'text', sortable: true, filter: 'text', resizable: true, },
-        {
-            header: 'UseYN', name: 'useYn', width: 100, align: 'center',
-            editor: {
-                type: 'select',
-                options: { listItems: [{ text: 'Y', value: 'Y' }, { text: 'N', value: 'N' }] }
-            },
-            sortable: true,
-            filter: {
-                type: 'select',
-                options: [
-                    { text: 'All', value: '' },
-                    { text: 'Y', value: 'Y' },
-                    { text: 'N', value: 'N' }
-                ]
-            }
-        },
-        { header: 'CreateDT', name: 'createdAt', width: 150, align: 'center', sortable: true },
+        { header: 'Key', name: 'id', align: 'left', sortable: true, resizable: true, width: 250, minWidth: 80 },
+        { header: 'Team', name: 'team', editor: 'text', validation: { required: true }, sortable: true, filter: 'text', resizable: true, width: 150 },
+        { header: 'Name', name: 'name', editor: 'text', sortable: true, filter: 'text', resizable: true, width: 200 },
+        { header: 'Email', name: 'email', editor: 'text', sortable: true, filter: 'text', resizable: true },
+        { header: 'Address', name: 'address', editor: 'text', sortable: true, filter: 'text', resizable: true },
+
+        { header: '입사년도', name: 'joinYear', width: 150, align: 'center', sortable: true },
         {
             header: 'View',
             name: 'view',
@@ -198,13 +190,13 @@ document.getElementById('saverow').addEventListener('click', function () {
 // Add new row functionality
 document.getElementById('newrow').addEventListener('click', function () {
     const data = grid.getData();
-    const hasEmptyRow = data.some(row => row.tpCd === '' || row.tpNm === '');
+    const hasEmptyRow = data.some(row => row.team === '' || row.name === '');
     if (hasEmptyRow) {
         showToast('input-allowed', 'info', lang);
         return;
     }
 
-    const newRow = { Key: generateUUID(), tpCd: '', tpNm: '', descCntn: '', useYn: 'Y', createdAt: currentDate };
+    const newRow = { id: generateUUID(), team: '', name: '', email: '', address: '', joinYear: '' };
     grid.prependRow(newRow, { focus: true });
 
     saveData([...data, newRow]);
@@ -222,28 +214,28 @@ grid.on('click', (ev) => {
         toggleModal(true, row, rowKey); // Pass the row data and row key to the modal
     }
 
-    if (ev.columnName === 'Key') {
-        showToast('자동 부여 Key 로 편집 불가 합니다.', 'info');
+    if (ev.columnName === 'id') {
+        showToast('auto-key', 'info', lang);
     }
 });
 
 // 신규 입력 가능한 셀에 placeholder 설정
 grid.on('editingStart', (ev) => {
 
-    showToast('데이타 입력/수정 가능 합니다.', 'info');
+    showToast('data-possible', 'info', lang);
 
 });
 
 grid.on('editingFinish', (ev) => {
     saveData(grid.getData());
-    showToast('데이타를 자동 저장하였습니다.', 'info');
+    showToast('well-done', 'info', lang);
 
 });
 
 
 // Initialize a new row
 function initNew() {
-    const rowData = { Key: generateUUID(), tpCd: '', tpNm: '', descCntn: '', useYn: 'Y', createdAt: currentDate };
+    const rowData = { id: generateUUID(), team: '', name: '', email: '', address: '', joinYear: '' };
     grid.prependRow(rowData, { focus: true });
 
     updateDataCount();
@@ -273,16 +265,17 @@ document.getElementById('saveModal').addEventListener('click', () => {
     }
 
     if (currentRowKey !== null) {
-        grid.setValue(currentRowKey, 'tpCd', updatedData.tpCd);
-        grid.setValue(currentRowKey, 'tpNm', updatedData.tpNm);
-        grid.setValue(currentRowKey, 'descCntn', updatedData.descCntn);
-        grid.setValue(currentRowKey, 'useYn', updatedData.useYn);
+        grid.setValue(currentRowKey, 'team', updatedData.team);
+        grid.setValue(currentRowKey, 'name', updatedData.name);
+        grid.setValue(currentRowKey, 'email', updatedData.email);
+        grid.setValue(currentRowKey, 'address', updatedData.address);
+        grid.setValue(currentRowKey, 'joinYear', updatedData.joinYear);
     }
 
     // Hide the modal and show a success toast
     toggleModal(false);
     saveData(grid.getData());
-    showToast('해당 건의 데이타를 저장하였습니다.', 'success');
+    showToast('well-done', 'success', lang);
 });
 
 let currentRowKey = null; // To track the current row being edited
@@ -328,18 +321,18 @@ document.getElementById('searchByDate').addEventListener('click', function () {
     const gridData = loadData();
 
     const selectedDate = document.getElementById('datePicker').value;
-    const groupCode = document.getElementById('groupCode').value.toLowerCase();
-    const codeName = document.getElementById('codeName').value.toLowerCase();
-    const description = document.getElementById('description').value.toLowerCase();
+    const team = document.getElementById('team').value.toLowerCase();
+    const name = document.getElementById('name').value.toLowerCase();
+    const email = document.getElementById('email').value.toLowerCase();
 
 
 
     const filteredData = gridData.filter(row => {
-        const matchesDate = selectedDate ? row.createdAt === selectedDate : true;
-        const matchesGroupCode = groupCode ? row.tpCd.toLowerCase().includes(groupCode) : true;
-        const matchesCodeName = codeName ? row.tpNm.toLowerCase().includes(codeName) : true;
-        const matchesDescription = description ? row.descCntn.toLowerCase().includes(description) : true;
-        return matchesDate && matchesGroupCode && matchesCodeName && matchesDescription;
+        //const matchesDate = selectedDate ? row.createdAt === selectedDate : true;
+        const matchesTeam = team ? row.team.toLowerCase().includes(team) : true;
+        const matchesName = name ? row.name.toLowerCase().includes(name) : true;
+        const matchesEmail = email ? row.email.toLowerCase().includes(email) : true;
+        return matchesTeam && matchesName && matchesEmail;
     });
 
     grid.resetData(filteredData);
@@ -352,7 +345,7 @@ document.getElementById('searchByDate').addEventListener('click', function () {
     document.getElementById('newrow').classList.add('bg-gray-400', 'cursor-not-allowed');
     document.getElementById('newrow').classList.remove('bg-gray-700', 'hover:bg-gray-600');
 
-    showToast('검색 클릭 시 신규, 저장 기능은 비활성화 됩니다.');
+    showToast('search-click', 'info', lang);
 
 });
 
@@ -361,9 +354,9 @@ document.getElementById('resetSearch').addEventListener('click', function () {
     const gridData = loadData();
 
     // Reset search fields
-    document.getElementById('groupCode').value = '';
-    document.getElementById('codeName').value = '';
-    document.getElementById('description').value = '';
+    document.getElementById('team').value = '';
+    document.getElementById('name').value = '';
+    document.getElementById('email').value = '';
     document.getElementById('datePicker').value = '';
 
     // Reset grid data
@@ -390,7 +383,6 @@ if (rows.length > 0) {
     lastRow.style.backgroundColor = '#fff'; // 마지막 행의 배경색
     lastRow.style.borderBottom = '1px solid #8f8f8f'; // 마지막 행의 테두리 색
 }
-
 
 
 
@@ -499,13 +491,6 @@ const translations = {
 
     },
 };
-
-
-// const languageSwitcher = document.getElementById("languageSwitcher");
-// const breadcrumb = document.querySelector(".breadcrumb");
-// const buttons = document.querySelectorAll("#content button span");
-// const tabs = document.querySelectorAll(".tabs li a span");
-// const offCanvasItems = document.querySelectorAll("#offCanvas .menu-item span");
 
 
 languageSwitcher.addEventListener("click", function (event) {
