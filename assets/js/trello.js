@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const lang = localStorage.getItem('lang');
 
+    const workarea = document.getElementById("app");
+    workarea.classList.add('mt-4');
 
     const taskList = document.getElementById("taskList");
     const ganttTableBody = document.getElementById("ganttTableBody");
@@ -18,8 +19,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             const fetchedTasks = await response.json();
-            tasks = [...loadTasks(), ...fetchedTasks]; // Merge localStorage and fetched tasks
-            saveTasks(tasks); // Ensure tasks are stored locally
+            tasks = [...loadTasks(), ...fetchedTasks]; 
+            //saveTasks(tasks); 
             renderTaskList();
             renderGanttChart();
         } catch (error) {
@@ -36,8 +37,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     taskForm.addEventListener("submit", (e) => {
-
-
         e.preventDefault();
         const name = document.getElementById("taskName").value;
         const description = document.getElementById("taskDescription").value;

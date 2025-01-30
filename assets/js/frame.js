@@ -1,6 +1,3 @@
-//const currentPage = window.location.pathname.split("/").pop();
-// const menuLinks = document.querySelectorAll(".gnb-item");
-// const menuLinks2 = document.querySelectorAll(".menu-item");
 menuLinks2.forEach((link) => {
     if (link.getAttribute("href") === currentPage) {
         menuLinks.forEach((link) => {
@@ -95,11 +92,6 @@ const translations = {
 };
 
 
-// const languageSwitcher = document.getElementById("languageSwitcher");
-// const breadcrumb = document.querySelector(".breadcrumb");
-// const buttons = document.querySelectorAll("#content button span");
-// const tabs = document.querySelectorAll(".tabs li a span");
-// const offCanvasItems = document.querySelectorAll("#offCanvas .menu-item span");
 
 languageSwitcher.addEventListener("click", function (event) {
     const lang = event.target.getAttribute("data-lang");
@@ -135,11 +127,7 @@ languageSwitcher.addEventListener("click", function (event) {
 document.addEventListener('DOMContentLoaded', () => {
     const appBrand = new AppBrand('logo', 'EDUMGT');
     const lang = localStorage.getItem('lang');
-    //console.log("lang: " + lang);
-  
-    
-  
-    // 탭 메뉴 텍스트 변경
+
     const tabLabels = translations[lang].tabs;
     tabs[0].textContent = tabLabels.system;
     tabs[1].textContent = tabLabels.organization;

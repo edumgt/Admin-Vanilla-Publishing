@@ -3,38 +3,38 @@
 #app {
     display: flex;
     height: 100vh;
-    
+
 }
 
 #taskArea {
     flex: 1;
-    padding: 15px;
-    background-color: #ffffff;
+    padding: 3px;
+
     overflow-y: auto;
-    
-    border-radius: 6px;
+    border-radius: 3px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin: 0px 5px 10px 0px;
+    margin: 3px;
+    height: 770px;
 }
 
 #ganttArea {
     flex: 2;
-    padding: 15px;
-    background-color: #e9ecef;
+    padding: 3px;
+
     overflow-y: auto;
-    border-radius: 6px;
-    margin: 0px 0px 10px 5px;
+    border-radius: 3px;
+    margin: 3px;
+    height: 770px;
 }
 
 #splitter {
 
     width: 5px;
-    background-color: #aaa;
+    background-color: #999;
     overflow-y: auto;
     cursor: col-resize;
-    
-    margin: 10px 5px 10px 5px;
-    /* z-index: 100; */
+    margin: 5px;
+    height: 770px;
 }
 
 #taskForm input[type="text"],
@@ -43,6 +43,7 @@
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
+    
 }
 
 
@@ -130,7 +131,8 @@
 }
 
 .task-list li.drag-over {
-    background-color: #f2f2f2; /* Highlight drop target */
+    background-color: #f2f2f2;
+    /* Highlight drop target */
     border: 2px dashed #4299e1;
 }
 
@@ -157,12 +159,9 @@
     padding: 0.5rem 1rem;
     border-radius: 0.375rem;
     cursor: pointer;
-    font-weight: 400; 
+    font-weight: 400;
     border: 1px solid #0058a3 !important;
-    height:30px;
+    height: 30px;
     font-size: 0.9rem;
-    padding:3px 10px 3px 10px;
+    padding: 3px 10px 3px 10px;
 }
-
-
-

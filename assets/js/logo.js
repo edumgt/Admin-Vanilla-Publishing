@@ -1,12 +1,43 @@
-// const today = new Date().toISOString().split('T')[0]; 
-//   const today = new Date(); 
-//   console.log(today);
-
 const currentPage = window.location.pathname.split("/").pop();
 
 const lang = localStorage.getItem('lang') || 'ko';
 localStorage.setItem('lang', lang);
 
+/* Tool Tip */
+function createTooltip(element, text) {
+    const tooltip = document.createElement("div");
+    tooltip.textContent = text;
+    tooltip.style.position = "absolute";
+    tooltip.style.backgroundColor = "#333";
+    tooltip.style.color = "#fff";
+    tooltip.style.padding = "5px 10px";
+    tooltip.style.borderRadius = "5px";
+    tooltip.style.fontSize = "12px";
+    tooltip.style.visibility = "hidden";
+    tooltip.style.opacity = "0";
+    tooltip.style.transition = "opacity 0.2s ease-in-out";
+    tooltip.style.whiteSpace = "nowrap";
+    tooltip.style.zIndex = "1000";
+
+    document.body.appendChild(tooltip);
+
+    element.addEventListener("mouseenter", function (event) {
+        tooltip.style.left = `${event.clientX - 160}px`;
+        tooltip.style.top = `${event.clientY - 40}px`;
+        tooltip.style.visibility = "visible";
+        tooltip.style.opacity = "1";
+    });
+
+    element.addEventListener("mousemove", function (event) {
+        tooltip.style.left = `${event.clientX - 160}px`;
+        tooltip.style.top = `${event.clientY - 40}px`;
+    });
+
+    element.addEventListener("mouseleave", function () {
+        tooltip.style.visibility = "hidden";
+        tooltip.style.opacity = "0";
+    });
+}
 
 function saveModal() {
     const modalForm = document.getElementById('modalForm');
@@ -453,6 +484,8 @@ class AppBrand {
 
 /* gearIcon */
 const button = document.createElement('div');
+createTooltip(button, "현재 페이지를 로그인 후 바로가기로 저장합니다.");
+
 button.id = 'gearIcon';
 button.className = 'fixed bottom-4 right-4 bg-black text-white rounded-3xl p-2 z-50';
 const icon = document.createElement('i');
@@ -468,7 +501,7 @@ document.getElementById('gearIcon').addEventListener('click', () => {
 /* floaingNav */
 document.getElementById('closeFloatingNav').addEventListener('click', () => {
     const floatingNav = document.getElementById('floatingNav');
-    floatingNav.classList.add('hidden'); 
+    floatingNav.classList.add('hidden');
 });
 
 /* LNB Left Menu */

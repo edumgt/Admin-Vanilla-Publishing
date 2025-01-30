@@ -1,5 +1,3 @@
-// const lang = localStorage.getItem('lang'); 
-
 const memberIcon = document.getElementById('memberIcon');
 memberIcon.classList.add("text-gray-200", "hover:text-white", "p-2");
 memberIcon.innerHTML = `<i class="fas fa-user"></i>`;
@@ -152,38 +150,4 @@ createTooltip(fav1, "현재 페이지를 로그인 후 바로가기로 저장합
 const fav2 = document.getElementById("fav2");
 createTooltip(fav2, "현재 페이지를 바로가기 목록에 저장합니다.");
 
-/* Tool Tip */
-function createTooltip(element, text) {
-    const tooltip = document.createElement("div");
-    tooltip.textContent = text;
-    tooltip.style.position = "absolute";
-    tooltip.style.backgroundColor = "#333";
-    tooltip.style.color = "#fff";
-    tooltip.style.padding = "5px 10px";
-    tooltip.style.borderRadius = "5px";
-    tooltip.style.fontSize = "12px";
-    tooltip.style.visibility = "hidden";
-    tooltip.style.opacity = "0";
-    tooltip.style.transition = "opacity 0.2s ease-in-out";
-    tooltip.style.whiteSpace = "nowrap";
-    tooltip.style.zIndex = "1000";
-    
-    document.body.appendChild(tooltip);
 
-    element.addEventListener("mouseenter", function (event) {
-        tooltip.style.left = `${event.clientX - 160}px`;
-        tooltip.style.top = `${event.clientY - 40}px`;
-        tooltip.style.visibility = "visible";
-        tooltip.style.opacity = "1";
-    });
-
-    element.addEventListener("mousemove", function (event) {
-        tooltip.style.left = `${event.clientX - 160}px`;
-        tooltip.style.top = `${event.clientY - 40}px`;
-    });
-
-    element.addEventListener("mouseleave", function () {
-        tooltip.style.visibility = "hidden";
-        tooltip.style.opacity = "0";
-    });
-}
