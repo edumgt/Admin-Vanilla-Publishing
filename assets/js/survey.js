@@ -1,8 +1,7 @@
-// const lang = localStorage.getItem('lang');
-
 document.addEventListener('DOMContentLoaded', () => {
     const workarea = document.getElementById('workarea');
     workarea.classList.add('flex', 'mb-4', 'mt-4', 'gap-2');
+
     document.getElementsByClassName("tablinks")[0].click();
 
     let rowData = JSON.parse(localStorage.getItem("questions"));
