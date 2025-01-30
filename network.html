@@ -36,7 +36,7 @@
                             </button>
                         </div>
                     
-                        <!-- 모달을 absolute로 위치 설정 -->
+                        <!-- 모달을 customerName 바로 아래에 표시 -->
                         <div id="searchModal" class="absolute left-0 w-full bg-white border rounded shadow-lg hidden z-50 p-4">
                             <h2 class="text-lg font-semibold mb-2">예약자 찾기</h2>
                             <input type="text" id="searchInput" class="w-full p-2 border rounded mb-2" placeholder="이름 검색">
@@ -51,13 +51,14 @@
                             const modal = document.getElementById('searchModal');
                             const inputBox = document.getElementById('customerName');
                     
-                            // 모달 위치 조정
+                            // 모달을 customerName 입력 필드 아래에 배치
                             const rect = inputBox.getBoundingClientRect();
                             modal.style.top = `${rect.bottom + window.scrollY}px`;
                             modal.style.left = `${rect.left}px`;
                             modal.style.width = `${rect.width}px`;
                     
                             modal.classList.remove('hidden');
+                            document.getElementById('searchInput').focus();
                         });
                     
                         document.getElementById('closeModal').addEventListener('click', () => {
@@ -76,8 +77,6 @@
                                 const response = await fetch('assets/mock/reservations.json'); // JSON 경로 확인 필요
                                 const data = await response.json();
                     
-                                console.log("불러온 데이터:", data); // 콘솔에서 데이터 확인
-                    
                                 if (!data.reservations) {
                                     console.error("JSON 데이터 구조가 올바르지 않습니다.");
                                     return;
@@ -93,10 +92,7 @@
                                         const div = document.createElement('div');
                                         div.classList.add('p-2', 'cursor-pointer', 'hover:bg-gray-200');
                                         div.textContent = reservation.name;
-                                        div.addEventListener('click', () => {
-                                            document.getElementById('customerName').value = reservation.name;
-                                            document.getElementById('searchModal').classList.add('hidden');
-                                        });
+                                        div.setAttribute('data-name', reservation.name); // 값 저장
                                         searchResults.appendChild(div);
                                     });
                                 } else {
@@ -104,6 +100,15 @@
                                 }
                             } catch (error) {
                                 console.error("검색 중 오류 발생:", error);
+                            }
+                        });
+                    
+                        // 동적 검색 결과 클릭 시 이벤트 처리 (Event Delegation)
+                        document.getElementById('searchResults').addEventListener('click', (event) => {
+                            const selectedName = event.target.getAttribute('data-name');
+                            if (selectedName) {
+                                document.getElementById('customerName').value = selectedName;
+                                document.getElementById('searchModal').classList.add('hidden');
                             }
                         });
                     
@@ -121,15 +126,16 @@
                     
                     
                     
+                    
                     <div class="mb-4">
                         <label class="block mb-1" for="log">상담내용:</label>
                         <textarea class=" rounded w-full    " id="log"
-                            placeholder="Describe the consultation..." required></textarea>
+                            placeholder="Describe the consultation..." ></textarea>
                     </div>
                     <div class="mb-4">
                         <label class="block mb-1" for="solution">제안사항:</label>
                         <textarea class=" rounded w-full    "
-                            id="solution" placeholder="Proposed solution..." required></textarea>
+                            id="solution" placeholder="Proposed solution..." ></textarea>
                     </div>
                     <div class="flex items-center justify-between">
                         <button class="bg-blue-500 text-white" type="submit">담당자 지정</button>
