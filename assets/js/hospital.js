@@ -287,7 +287,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatBotMessages = document.getElementById('chat-bot-messages');
     const chatBotInput = document.getElementById('chat-bot-input');
     const chatBotSend = document.getElementById('chat-bot-send');
-
     chatBot.classList.remove('hidden');
 
     // GitHub Copilot 연동 로직
