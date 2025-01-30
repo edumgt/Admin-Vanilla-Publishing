@@ -323,7 +323,7 @@ function saveSurvey() {
     const newSurvey = {
         id: Date.now(),
         title: "Custom Survey",
-        description: "A custom survey created by dragging and dropping questions.",
+        description: "문항을 드래그 앤 드롭 하여 설문지를 구성 합니다.",
         questions: surveyQuestions
     };
 

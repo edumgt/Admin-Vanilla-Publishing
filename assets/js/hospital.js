@@ -242,14 +242,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.target.closest('#waiting-list-container')) {
                 draggedItem = e.target;
                 setTimeout(() => {
-                    e.target.classList.add('dragging');
+                    e.target.classList.add('draggable');
                 }, 0);
             }
         });
 
         document.addEventListener('dragend', e => {
             if (e.target.closest('#waiting-list-container')) {
-                e.target.classList.remove('dragging');
+                e.target.classList.remove('draggable');
                 draggedItem = null;
             }
         });
@@ -268,7 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         function getDragAfterElement(container, y) {
-            const draggableElements = [...container.querySelectorAll('[draggable]:not(.dragging)')];
+            const draggableElements = [...container.querySelectorAll('[draggable]:not(.draggable)')];
 
             return draggableElements.reduce((closest, child) => {
                 const box = child.getBoundingClientRect();

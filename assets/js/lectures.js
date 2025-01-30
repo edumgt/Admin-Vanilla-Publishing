@@ -111,11 +111,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function drag(event) {
         event.dataTransfer.setData('text', event.target.getAttribute('data-date') + ',' + event.target.getAttribute('data-index'));
-        event.target.classList.add('dragging');
+        event.target.classList.add('draggable');
     }
 
     function endDrag(event) {
-        event.target.classList.remove('dragging');
+        event.target.classList.remove('draggable');
     }
 
     function drop(event) {
