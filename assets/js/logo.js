@@ -484,7 +484,7 @@ class AppBrand {
 
 /* gearIcon */
 const button = document.createElement('div');
-createTooltip(button, "현재 페이지를 로그인 후 바로가기로 저장합니다.");
+createTooltip(button, "다국어를 지정 합니다.");
 
 button.id = 'gearIcon';
 button.className = 'fixed bottom-4 right-4 bg-black text-white rounded-3xl p-2 z-50';

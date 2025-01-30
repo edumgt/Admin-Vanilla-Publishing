@@ -70,17 +70,17 @@
 .popup input {
     display: block;
     margin-bottom: 10px;
-    width: calc(100% - 20px);
-    padding: 10px;
+    /* width: calc(100% - 20px); */
+    padding: 3px;
     border: 1px solid #ddd;
-    border-radius: 6px;
+    border-radius: 3px;
 }
 .popup .btn {
     cursor: pointer;
     background: #0058a3;
     color: white;
-    padding: 10px 20px;
-    border-radius: 6px;
+    padding: 3px;
+    border-radius: 3px;
     margin-top: 10px;
     text-align: center;
 }

@@ -1,3 +1,9 @@
+const workarea = document.getElementById('workarea');
+workarea.classList.add('header', 'mt-4');
+
+const closepopup = document.getElementById('close-popup');
+closepopup.style.backgroundColor = "#555";
+
 const today = new Date();
 let events = [];
 let startDate = new Date(today);
@@ -120,16 +126,10 @@ function renderTimeline() {
                 events[eventIndex].start = newStartDate.toISOString();
                 events[eventIndex].end = newEndDate.toISOString();
                 events[eventIndex].row = newRow;
-
-
                 target.style.transform = 'translate(0, 0)';
                 target.setAttribute('data-x', 0);
                 target.setAttribute('data-y', 0);
-
-
                 localStorage.setItem('events', JSON.stringify(events));
-
-
                 renderTimeline();
             }
         }
@@ -171,9 +171,9 @@ function renderEvent(event, targetElement = null) {
     dateInfo.className = 'event-date';
     dateInfo.textContent = `${eventStartDate.toISOString().split('T')[0]} ~ ${eventEndDate.toISOString().split('T')[0]}`;
 
-    eventElement.innerHTML = '';  
-    eventElement.appendChild(dateInfo);  
-    eventElement.appendChild(document.createTextNode(event.title));  
+    eventElement.innerHTML = '';
+    eventElement.appendChild(dateInfo);
+    eventElement.appendChild(document.createTextNode(event.title));
 
     eventElement.style.left = `${(eventStartDay / totalDays) * 100}%`;
     eventElement.style.width = `${(eventDuration / totalDays) * 100}%`;
@@ -211,26 +211,16 @@ document.getElementById('save-event').addEventListener('click', () => {
         events[eventIndex].title = title;
         events[eventIndex].start = new Date(start).toISOString();
         events[eventIndex].end = new Date(end).toISOString();
-
-
         localStorage.setItem('events', JSON.stringify(events));
-
-
         renderTimeline();
-
-
         currentEventId = null;
     }
-
-
     document.getElementById('popup').classList.remove('active');
 });
-
 
 document.getElementById('close-popup').addEventListener('click', () => {
     document.getElementById('popup').classList.remove('active');
 });
-
 
 document.addEventListener('DOMContentLoaded', () => {
     const url = 'assets/mock/timeline.json';
