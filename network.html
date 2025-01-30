@@ -25,38 +25,42 @@
 
             <div class="w-1/4 border-t border-gray-100">
 
-                <form id="consultationForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <form id="consultationForm" autocomplete="off" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                     <div class="mb-4 relative">
                         <label class="block mb-1" for="customerName">고객명:</label>
-                        <div class="relative w-full">
+                        <div class="relative w-full flex items-center">
                             <input class="w-full p-2 pr-10 outline-none border rounded" 
-                            id="customerName" type="text" placeholder="Customer Name">
-                            <button id="searchButton" class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500">
+                                   id="customerName" type="text" placeholder="Customer Name" autocomplete="off" required>
+                            <!-- 돋보기 버튼 스타일 개선 -->
+                            <button type="button" id="searchButton" 
+                                    class="ml-2 p-2 rounded-full bg-gray-300 hover:bg-gray-400 transition duration-200">
                                 🔎
                             </button>
                         </div>
                     
-                        <!-- 모달을 customerName 바로 아래에 표시 -->
-                        <div id="searchModal" class="absolute left-0 w-full bg-white border rounded shadow-lg hidden z-50 p-4">
+                        <!-- 모달을 customerName의 오른쪽에 표시 -->
+                        <div id="searchModal" class="absolute bg-white border rounded shadow-lg hidden z-50 p-4">
                             <h2 class="text-lg font-semibold mb-2">예약자 찾기</h2>
-                            <input type="text" id="searchInput" class="w-full p-2 border rounded mb-2" placeholder="이름 검색">
-                            <div id="searchResults" class="border rounded p-2 bg-white max-h-48 overflow-y-auto"></div>
-                            <button id="closeModal" class="mt-2 px-4 py-2 bg-gray-500 text-white rounded w-full">닫기</button>
+                            <input type="text" id="searchInput" class="w-full p-2 border rounded mb-2" placeholder="이름 검색"
+                                   autocomplete="off">
+                            <div id="searchResults" class="border rounded p-2 bg-white max-h-48 overflow-y-auto mb-4"></div>
+                            <button id="closeModal" class="bg-gray-500 text-white">닫기</button>
                         </div>
                     </div>
                     
                     <script>
                         document.getElementById('searchButton').addEventListener('click', (event) => {
-                            event.stopPropagation();
+                            event.preventDefault(); // 기본 동작(폼 제출) 방지
+                            event.stopPropagation(); // 이벤트 버블링 방지
+                    
                             const modal = document.getElementById('searchModal');
                             const inputBox = document.getElementById('customerName');
                     
-                            // 모달을 customerName 입력 필드 아래에 배치
-                            const rect = inputBox.getBoundingClientRect();
-                            modal.style.top = `${rect.bottom + window.scrollY}px`;
-                            modal.style.left = `${rect.left}px`;
-                            modal.style.width = `${rect.width}px`;
-                    
+                            // 모달을 customerName 입력 필드의 오른쪽에 배치
+                            // const rect = inputBox.getBoundingClientRect();
+                            modal.style.top = `20px`; // 같은 높이에 위치
+                            modal.style.left = `200px`; // 입력 필드 오른쪽에 배치
+                            modal.style.width = `250px`; // 모달 너비 설정
                             modal.classList.remove('hidden');
                             document.getElementById('searchInput').focus();
                         });
@@ -123,19 +127,20 @@
                             }
                         });
                     </script>
+                                     
                     
                     
                     
                     
                     <div class="mb-4">
                         <label class="block mb-1" for="log">상담내용:</label>
-                        <textarea class=" rounded w-full    " id="log"
-                            placeholder="Describe the consultation..." ></textarea>
+                        <textarea class="rounded w-full" id="log"
+                            placeholder="Describe the consultation..." autocomplete="off" required></textarea>
                     </div>
                     <div class="mb-4">
                         <label class="block mb-1" for="solution">제안사항:</label>
-                        <textarea class=" rounded w-full    "
-                            id="solution" placeholder="Proposed solution..." ></textarea>
+                        <textarea class="rounded w-full"
+                            id="solution" placeholder="Proposed solution..." autocomplete="off" required></textarea>
                     </div>
                     <div class="flex items-center justify-between">
                         <button class="bg-blue-500 text-white" type="submit">담당자 지정</button>
