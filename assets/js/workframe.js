@@ -1,16 +1,4 @@
-// menuLinks2.forEach((link) => {
-//     if (link.getAttribute("href") === currentPage) {
-//         menuLinks.forEach((link) => {
-//             if (link.getAttribute("href") === "work.html") {
-//                 link.classList.add("active");
-//             } else {
-//                 link.classList.remove("active");
-//             }
-//         });
-//     }
-// });
 
-/* 다국어 */
 const translations = {
     en: {
         menu: "Menu",
@@ -96,11 +84,6 @@ const translations = {
 };
 
 
-// const languageSwitcher = document.getElementById("languageSwitcher");
-// const breadcrumb = document.querySelector(".breadcrumb");
-// const buttons = document.querySelectorAll("#content button span");
-// const tabs = document.querySelectorAll(".tabs li a span");
-// const offCanvasItems = document.querySelectorAll("#offCanvas .menu-item span");
 
 languageSwitcher.addEventListener("click", function (event) {
     const lang = event.target.getAttribute("data-lang");

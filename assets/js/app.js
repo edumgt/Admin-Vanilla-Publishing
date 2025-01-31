@@ -1,15 +1,5 @@
 
-menuLinks2.forEach((link) => {
-    if (link.getAttribute("href") === currentPage) {
-        menuLinks.forEach((link) => {
-            if (link.getAttribute("href") === currentPage) {
-                link.classList.add("active");
-            } else {
-                link.classList.remove("active");
-            }
-        });
-    }
-});
+
 
 let rowsPerPage = 0;
 let gridBodyHeight = 0;

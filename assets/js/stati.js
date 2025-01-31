@@ -1,17 +1,7 @@
 const workarea = document.getElementById("workarea");
 workarea.classList.add('grid', 'grid-cols-1', 'lg:grid-cols-4', 'gap-4', 'py-1', 'mt-4');
 
-menuLinks2.forEach((link) => {
-    if (link.getAttribute("href") === currentPage) {
-        menuLinks.forEach((link) => {
-            if (link.getAttribute("href") === currentPage) {
-                link.classList.add("active");
-            } else {
-                link.classList.remove("active");
-            }
-        });
-    }
-});
+
 
 
 let rowsPerPage = 0;

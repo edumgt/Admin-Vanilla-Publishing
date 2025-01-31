@@ -1,14 +1,3 @@
-// menuLinks2.forEach((link) => {
-//   if (link.getAttribute("href") === currentPage) {
-//     menuLinks.forEach((link) => {
-//       if (link.getAttribute("href") === "system.html") {
-//         link.classList.add("active");
-//       } else {
-//         link.classList.remove("active");
-//       }
-//     });
-//   }
-// });
 
 /* 다국어 */
 const translations = {

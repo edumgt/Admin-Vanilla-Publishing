@@ -1,4 +1,3 @@
-// const lang = localStorage.getItem('lang');
 
 async function fetchDocuments() {
     const response = await fetch('assets/mock/documents.json');
