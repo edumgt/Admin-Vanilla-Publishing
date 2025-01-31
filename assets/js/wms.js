@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
         addButton.addEventListener('click', () => {
             if (addButton.disabled) return; // ✅ 중복 클릭 방지
-            addButton.disabled = true; // ✅ 버튼 비활성화
+            addButton.disabled = true; // ✅ 클릭하자마자 버튼 비활성화
     
             const newItem = {
                 id: crypto.randomUUID(),
@@ -207,20 +207,19 @@ document.addEventListener('DOMContentLoaded', async () => {
                 quantity: 0
             };
     
-            // ✅ 중복된 ID가 있는지 확인 후 추가
+            // ✅ 중복된 ID가 있는지 확인 후 추가 방지
             if (grid.getData().some(row => row.id === newItem.id)) {
                 console.warn("이미 존재하는 ID입니다. 추가되지 않습니다.");
                 addButton.disabled = false;
                 return;
             }
     
-            //grid.prependRow(newItem);
+            grid.prependRow(newItem);
             showToast('input-allowed', 'info', lang);
     
-            // ✅ 데이터 저장 후 동기화
-            const updatedData = [newItem, ...grid.getData()];
+            // ✅ 기존 데이터 유지 + 새로운 데이터 추가 후 저장
+            const updatedData = [...grid.getData()];
             saveDataToStorage(storageKey, updatedData);
-            grid.resetData(updatedData);
     
             // ✅ 기존 이벤트 리스너 제거 후 새 리스너 등록 (중복 방지)
             grid.off('afterChange');
@@ -241,7 +240,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     
             // ✅ 체크된 데이터가 없으면 동기화 후 재확인
             if (checkedRows.length === 0) {
-                grid.resetData(grid.getData());
                 checkedRows = grid.getCheckedRows();
     
                 if (checkedRows.length === 0) {
@@ -254,7 +252,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             const updatedData = grid.getData().filter(row => !checkedRows.some(checked => checked.id === row.id));
             grid.removeCheckedRows();
             saveDataToStorage(storageKey, updatedData);
-            grid.resetData(updatedData);
             showToast('select-delete', 'success', lang);
         });
     
@@ -271,7 +268,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     grid.removeRow(newItemId);
                     const updatedData = grid.getData();
                     saveDataToStorage(storageKey, updatedData);
-                    grid.resetData(updatedData);
                 }
     
                 addButton.disabled = false;
@@ -297,6 +293,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             grid.on('focusChange', handleGridFocusChange);
         }
     }
+    
     
     
     
