@@ -1,15 +1,3 @@
-menuLinks2.forEach((link) => {
-    if (link.getAttribute("href") === currentPage) {
-        menuLinks.forEach((link) => {
-            if (link.getAttribute("href") === "orgni.html") {
-                link.classList.add("active");
-            } else {
-                link.classList.remove("active");
-            }
-        });
-    }
-});
-
 const workarea = document.getElementById("workarea");
 workarea.classList.add("mt-4");
 

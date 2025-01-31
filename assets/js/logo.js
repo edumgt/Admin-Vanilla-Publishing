@@ -362,15 +362,6 @@ createModal(
     ]
 );
 
-// createModal(
-//     'demoModal',
-//     '알림',
-//     '<p>데모버젼에서는 지원하지 않습니다.</p>',
-//     [
-//         { label: '닫기', class: 'bg-gray-800 text-white px-3 py-1 rounded ', onClick: "document.getElementById('demoModal').classList.add('hidden');" }
-//     ]
-// );
-
 function generateUUID() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
         const r = (Math.random() * 16) | 0,
@@ -434,10 +425,6 @@ const tabsData = [
 function renderTabs(containerId) {
     const container = document.getElementById(containerId);
 
-    // if (!container) {
-    //     console.error(`Container with ID \"${containerId}\" not found.`);
-    //     return;
-    // }
 
     const tabsDiv = document.createElement("div");
     tabsDiv.className = "px-8 tabs flex";
@@ -562,3 +549,95 @@ const offCanvasItems = document.querySelectorAll("#offCanvas .menu-item span");
 
 const menuLinks = document.querySelectorAll(".gnb-item");
 const menuLinks2 = document.querySelectorAll(".menu-item");
+
+
+
+const orgniPages = ["orgni.html", "attend.html", "total.html"];
+if (orgniPages.includes(currentPage)) {
+    menuLinks2.forEach((link) => {
+        if (link.getAttribute("href") === currentPage) {
+            menuLinks.forEach((menuLink) => {
+                if (menuLink.getAttribute("href") === "orgni.html") {
+                    menuLink.classList.add("active");
+                } else {
+                    menuLink.classList.remove("active");
+                }
+            });
+        }
+    });
+}
+
+const systemPages = ["system.html", "orgtree.html", "document.html", "wms.html"];
+if (systemPages.includes(currentPage)) {
+    menuLinks2.forEach((link) => {
+        if (link.getAttribute("href") === currentPage) {
+            menuLinks.forEach((menuLink) => {
+                if (menuLink.getAttribute("href") === "system.html") {
+                    menuLink.classList.add("active");
+                } else {
+                    menuLink.classList.remove("active");
+                }
+            });
+        }
+    });
+}
+
+const workPages = ["work.html", "hospital.html", "meeting.html", "lectures.html", "city.html"];
+if (workPages.includes(currentPage)) {
+    menuLinks2.forEach((link) => {
+        if (link.getAttribute("href") === currentPage) {
+            menuLinks.forEach((menuLink) => {
+                if (menuLink.getAttribute("href") === "work.html") {
+                    menuLink.classList.add("active");
+                } else {
+                    menuLink.classList.remove("active");
+                }
+            });
+        }
+    });
+}
+
+const calendarPages = ["calendar.html", "trello.html", "timeline.html"];
+if (calendarPages.includes(currentPage)) {
+    menuLinks2.forEach((link) => {
+        if (link.getAttribute("href") === currentPage) {
+            menuLinks.forEach((menuLink) => {
+                if (menuLink.getAttribute("href") === "calendar.html") {
+                    menuLink.classList.add("active");
+                } else {
+                    menuLink.classList.remove("active");
+                }
+            });
+        }
+    });
+}
+
+const statiPages = ["stati.html", "flow.html", "chain.html"];
+if (statiPages.includes(currentPage)) {
+    menuLinks2.forEach((link) => {
+        if (link.getAttribute("href") === currentPage) {
+            menuLinks.forEach((menuLink) => {
+                if (menuLink.getAttribute("href") === "stati.html") {
+                    menuLink.classList.add("active");
+                } else {
+                    menuLink.classList.remove("active");
+                }
+            });
+        }
+    });
+}
+
+const configPages = ["config.html", "network.html", "survey.html"];
+if (configPages.includes(currentPage)) {
+    menuLinks2.forEach((link) => {
+        if (link.getAttribute("href") === currentPage) {
+            menuLinks.forEach((menuLink) => {
+                if (menuLink.getAttribute("href") === "config.html") {
+                    menuLink.classList.add("active");
+                } else {
+                    menuLink.classList.remove("active");
+                }
+            });
+        }
+    });
+}

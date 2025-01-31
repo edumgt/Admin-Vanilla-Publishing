@@ -1,18 +1,6 @@
 const workarea = document.getElementById('workarea');
 workarea.classList.add('flex', 'items-center', 'mb-2', 'mt-4');
 
-menuLinks2.forEach((link) => {
-  if (link.getAttribute("href") === currentPage) {
-    menuLinks.forEach((link) => {
-      if (link.getAttribute("href") === "orgni.html") {
-        link.classList.add("active");
-      } else {
-        link.classList.remove("active");
-      }
-    });
-  }
-});
-
 let attendanceData = [];
 let sortDirection = 'asc';
 let manager;

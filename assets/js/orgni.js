@@ -1,18 +1,6 @@
 const workarea = document.getElementById('workarea');
 workarea.classList.add('grid-container','mt-4');
 
-menuLinks2.forEach((link) => {
-  if (link.getAttribute("href") === currentPage) {
-    menuLinks.forEach((link) => {
-      if (link.getAttribute("href") === "orgni.html") {
-        link.classList.add("active");
-      } else {
-        link.classList.remove("active");
-      }
-    });
-  }
-});
-
 const canvas = document.getElementById('orgChartCanvas');
 const ctx = canvas.getContext('2d');
 const canvasWidth = canvas.width;
