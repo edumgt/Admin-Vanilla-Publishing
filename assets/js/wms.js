@@ -143,10 +143,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         const section = document.getElementById(sectionId);
         section.innerHTML = `<div id="${sectionId}-grid"></div>`;
 
-        // Create a dictionary for inbound stock by ISBN
+ 
         const inboundDict = Object.fromEntries(inboundData.map(book => [book.isbn, book.quantity]));
 
-        // Add a "변경수량" field to each outbound entry (computed as inbound - outbound)
+        
         data.forEach(book => {
             book.stockDifference = inboundDict[book.isbn] ? inboundDict[book.isbn] - book.quantity : -book.quantity;
         });
@@ -169,14 +169,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             editable: true
         });
 
-        // Save updated data to storage when any change occurs and update "변경수량"
+        
         grid.on('afterChange', () => {
             const updatedData = grid.getData();
             updatedData.forEach(book => {
                 book.stockDifference = inboundDict[book.isbn] ? inboundDict[book.isbn] - book.quantity : -book.quantity;
             });
             saveDataToStorage(storageKey, updatedData);
-            grid.resetData(updatedData); // Refresh grid with updated values
+            grid.resetData(updatedData); 
         });
 
         addGridToolbar(section, grid, storageKey);
@@ -192,9 +192,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         toolbar.className = 'flex justify-end gap-2';
 
         const addButton = document.createElement('button');
-        addButton.className = 'bg-blue-500 text-white';
-        addButton.innerText = '추가';
+        addButton.className = 'flex items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2';
+        addButton.innerHTML = `<i class="fas fa-plus"></i><span>신규</span>`;
+    
         addButton.addEventListener('click', () => {
+            addButton.disabled = true;
+    
             const newItem = {
                 id: crypto.randomUUID(),
                 isbn: '',
@@ -210,8 +213,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         const deleteButton = document.createElement('button');
-        deleteButton.className = 'bg-yellow-500 text-white';
-        deleteButton.innerText = '삭제';
+        deleteButton.className = 'flex items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2';
+        deleteButton.innerHTML = `<i class="fas fa-trash"></i><span>삭제</span>`;
+    
         deleteButton.addEventListener('click', () => {
             const checkedRows = grid.getCheckedRows();
 
@@ -229,7 +233,45 @@ document.addEventListener('DOMContentLoaded', async () => {
         toolbar.appendChild(addButton);
         toolbar.appendChild(deleteButton);
         section.appendChild(toolbar);
+    
+        function setupGridExitListener(newItemId) {
+            function enableAddButtonAndRemoveRow() {
+                const currentData = grid.getData();
+                const newRow = currentData.find(row => row.id === newItemId);
+        
+                // UUID 칼럼 값이 있어도, 나머지 칼럼의 값이 없으면 삭제
+                if (newRow && isRowEmpty(newRow)) {
+                    grid.removeRow(newItemId); // 입력 없이 벗어나면 삭제
+                    saveDataToStorage(storageKey, grid.getData()); // 삭제 후 저장
+                }
+        
+                addButton.disabled = false;
+                document.removeEventListener('click', handleClickOutsideGrid);
+                grid.off('focusChange', handleGridFocusChange);
+            }
+        
+            function handleClickOutsideGrid(event) {
+                if (!section.contains(event.target)) {
+                    enableAddButtonAndRemoveRow();
+                }
+            }
+        
+            function handleGridFocusChange() {
+                enableAddButtonAndRemoveRow();
+            }
+        
+            function isRowEmpty(row) {
+                // ID(UUID) 필드는 제외하고 검사
+                return Object.keys(row).some(key => key !== 'id' && !row[key]);
+            }
+        
+            document.addEventListener('click', handleClickOutsideGrid);
+            grid.on('focusChange', handleGridFocusChange);
+        }
+        
     }
+
+    
 
 
 
