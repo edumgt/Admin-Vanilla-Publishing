@@ -615,11 +615,6 @@ input[type="checkbox"] {
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* .dragging {
-  opacity: 0.5;
-  cursor: move;
-} */
-
 .close {
   position: absolute;
   top: 10px;
@@ -719,8 +714,6 @@ input[type="checkbox"] {
 }
 
 /* default html component */
-
-
 select {
   width: 150px;
   height: calc(1.5em + 6px);
@@ -885,3 +878,27 @@ label {
   box-shadow: 0 0.2rem 0.5rem 0 hsla(210, 30%, 20%, 0.1);
   border-radius: var(--border-radius);
 }
+
+.tab-link {
+  display: flex;
+  align-items: center; /* 아이콘과 텍스트를 수직 정렬 */
+  padding: 10px 15px;
+  text-decoration: none;
+  font-size: 16px; /* 텍스트 크기 */
+}
+
+.tab-link i {
+  font-size: 16px; /* 아이콘 크기 */
+  display: flex; /* 아이콘을 정렬 */
+  align-items: center;
+  justify-content: center;
+  width: 20px; /* 아이콘 너비 */
+  height: 20px; /* 아이콘 높이 */
+}
+
+.tab-link span {
+  display: flex;
+  align-items: center; /* 아이콘과 동일한 높이 유지 */
+  line-height: 1; /* 텍스트 라인 높이 조정 */
+}
+

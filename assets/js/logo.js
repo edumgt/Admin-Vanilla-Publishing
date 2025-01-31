@@ -1,5 +1,4 @@
 const currentPage = window.location.pathname.split("/").pop();
-
 const lang = localStorage.getItem('lang') || 'ko';
 localStorage.setItem('lang', lang);
 
@@ -60,6 +59,7 @@ function saveModal() {
 
 
 function renderOffCanvasMenu(menuItems) {
+
     const offCanvas = document.createElement('div');
     offCanvas.id = 'offCanvas';
     offCanvas.className = 'fixed top-14 h-full bg-gray-100 border-r z-50';
@@ -75,7 +75,7 @@ function renderOffCanvasMenu(menuItems) {
 
         const a = document.createElement('a');
         a.href = item.href;
-        a.className = 'menu-item block text-gray-800 hover:text-blue-500 text-center';
+        a.className = 'menu-item block text-gray-800 hover:text-blue-500 text-center p-2 rounded-md';
 
         const icon = document.createElement('i');
         icon.className = `fas ${item.icon} menu-icon text-blue-400`;
@@ -83,6 +83,12 @@ function renderOffCanvasMenu(menuItems) {
         const span = document.createElement('span');
         span.className = 'menu-text';
         span.textContent = item.text;
+
+        // 현재 페이지와 메뉴의 href가 같으면 active 스타일 추가
+        if (item.href === currentPage) {
+            icon.classList.remove('text-blue-400');
+            icon.classList.add('text-gray-800');
+        }
 
         a.appendChild(icon);
         a.appendChild(span);
@@ -113,10 +119,7 @@ function renderOffCanvasMenu(menuItems) {
     document.getElementById('offCanvasContainer').appendChild(offCanvas);
 }
 
-// Determine the current HTML file name
-const currentFileName = window.location.pathname.split('/').pop();
 
-// Define a mapping of text to icon classes
 const iconMapping = {
 
     "시스템로그": "fa-clipboard-list",
@@ -305,24 +308,18 @@ const menuConfigurations = {
         { href: 'city.html', text: '행정구역정보' }
     ],
 
-
-
 };
 
 const defaultMenuItems = [];
-
-const menuItems = (menuConfigurations[currentFileName] || defaultMenuItems).map(item => ({
+const menuItems = (menuConfigurations[currentPage] || defaultMenuItems).map(item => ({
     ...item,
     icon: iconMapping[item.text]
 }));
-
 
 renderOffCanvasMenu(menuItems);
 
 /* Dynamically create modals */
 function createModal(modalId, title, content, buttons) {
-    //console.log("createModal: " + modalId);
-
     const modal = document.createElement('div');
     modal.id = modalId;
     modal.className = 'hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50';
@@ -405,13 +402,11 @@ function renderFloatingNav(containerId) {
     languageSwitcher.addEventListener('click', (event) => {
         if (event.target.tagName === 'IMG') {
             const selectedLang = event.target.getAttribute('data-lang');
-            //console.log(`Selected language: ${selectedLang}`);
         }
     });
 }
 
 renderFloatingNav('appContainer');
-
 
 const tabsData = [
     { href: "system.html", icon: "fas fa-cogs", label: "시스템관리" },
@@ -424,8 +419,6 @@ const tabsData = [
 
 function renderTabs(containerId) {
     const container = document.getElementById(containerId);
-
-
     const tabsDiv = document.createElement("div");
     tabsDiv.className = "px-8 tabs flex";
 
@@ -538,7 +531,7 @@ function showToast(messageKey, type = 'success', lang = 'en') {
     setTimeout(() => {
         toast.classList.remove('show');
         setTimeout(() => toast.remove(), 300);
-    }, 3000);
+    }, 2000);
 }
 
 const languageSwitcher = document.getElementById("languageSwitcher");
@@ -549,8 +542,6 @@ const offCanvasItems = document.querySelectorAll("#offCanvas .menu-item span");
 
 const menuLinks = document.querySelectorAll(".gnb-item");
 const menuLinks2 = document.querySelectorAll(".menu-item");
-
-
 
 const orgniPages = ["orgni.html", "attend.html", "total.html"];
 if (orgniPages.includes(currentPage)) {
