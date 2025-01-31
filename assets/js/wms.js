@@ -190,13 +190,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     function addGridToolbar(section, grid, storageKey) {
         const toolbar = document.createElement('div');
         toolbar.className = 'flex justify-end gap-2';
-
+    
         const addButton = document.createElement('button');
         addButton.className = 'flex items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2';
         addButton.innerHTML = `<i class="fas fa-plus"></i><span>신규</span>`;
     
         addButton.addEventListener('click', () => {
-            addButton.disabled = true;
+            if (addButton.disabled) return; // ✅ 중복 클릭 방지
+            addButton.disabled = true; // ✅ 버튼 비활성화
     
             const newItem = {
                 id: crypto.randomUUID(),
@@ -205,31 +206,58 @@ document.addEventListener('DOMContentLoaded', async () => {
                 title: '',
                 quantity: 0
             };
-
-            grid.prependRow(newItem);
+    
+            // ✅ 중복된 ID가 있는지 확인 후 추가
+            if (grid.getData().some(row => row.id === newItem.id)) {
+                console.warn("이미 존재하는 ID입니다. 추가되지 않습니다.");
+                addButton.disabled = false;
+                return;
+            }
+    
+            //grid.prependRow(newItem);
             showToast('input-allowed', 'info', lang);
+    
+            // ✅ 데이터 저장 후 동기화
             const updatedData = [newItem, ...grid.getData()];
             saveDataToStorage(storageKey, updatedData);
+            grid.resetData(updatedData);
+    
+            // ✅ 기존 이벤트 리스너 제거 후 새 리스너 등록 (중복 방지)
+            grid.off('afterChange');
+            grid.on('afterChange', () => {
+                saveDataToStorage(storageKey, grid.getData());
+                addButton.disabled = false; // ✅ 버튼 다시 활성화
+            });
+    
+            setupGridExitListener(newItem.id);
         });
-
+    
         const deleteButton = document.createElement('button');
         deleteButton.className = 'flex items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2';
         deleteButton.innerHTML = `<i class="fas fa-trash"></i><span>삭제</span>`;
     
         deleteButton.addEventListener('click', () => {
-            const checkedRows = grid.getCheckedRows();
-
+            let checkedRows = grid.getCheckedRows();
+    
+            // ✅ 체크된 데이터가 없으면 동기화 후 재확인
             if (checkedRows.length === 0) {
-                showToast('delete-not', 'warning', lang);
-                return;
+                grid.resetData(grid.getData());
+                checkedRows = grid.getCheckedRows();
+    
+                if (checkedRows.length === 0) {
+                    showToast('delete-not', 'warning', lang);
+                    return;
+                }
             }
-
+    
+            // ✅ 체크된 항목 삭제 후 동기화
             const updatedData = grid.getData().filter(row => !checkedRows.some(checked => checked.id === row.id));
             grid.removeCheckedRows();
             saveDataToStorage(storageKey, updatedData);
+            grid.resetData(updatedData);
             showToast('select-delete', 'success', lang);
         });
-
+    
         toolbar.appendChild(addButton);
         toolbar.appendChild(deleteButton);
         section.appendChild(toolbar);
@@ -238,42 +266,45 @@ document.addEventListener('DOMContentLoaded', async () => {
             function enableAddButtonAndRemoveRow() {
                 const currentData = grid.getData();
                 const newRow = currentData.find(row => row.id === newItemId);
-        
-                // UUID 칼럼 값이 있어도, 나머지 칼럼의 값이 없으면 삭제
+    
                 if (newRow && isRowEmpty(newRow)) {
-                    grid.removeRow(newItemId); // 입력 없이 벗어나면 삭제
-                    saveDataToStorage(storageKey, grid.getData()); // 삭제 후 저장
+                    grid.removeRow(newItemId);
+                    const updatedData = grid.getData();
+                    saveDataToStorage(storageKey, updatedData);
+                    grid.resetData(updatedData);
                 }
-        
+    
                 addButton.disabled = false;
                 document.removeEventListener('click', handleClickOutsideGrid);
                 grid.off('focusChange', handleGridFocusChange);
             }
-        
+    
             function handleClickOutsideGrid(event) {
                 if (!section.contains(event.target)) {
                     enableAddButtonAndRemoveRow();
                 }
             }
-        
+    
             function handleGridFocusChange() {
                 enableAddButtonAndRemoveRow();
             }
-        
+    
             function isRowEmpty(row) {
-                // ID(UUID) 필드는 제외하고 검사
-                return Object.keys(row).some(key => key !== 'id' && !row[key]);
+                return Object.keys(row).every(key => key !== 'id' && !row[key]); // UUID(id)는 제외
             }
-        
+    
             document.addEventListener('click', handleClickOutsideGrid);
             grid.on('focusChange', handleGridFocusChange);
         }
-        
     }
-
+    
+    
+    
     
 
-
+    
+    
+    
 
     function populateDashboard(section) {
         section.innerHTML = `<div id="stock-chart" class="w-full border border-gray-300 rounded-lg p-2 "></div>
