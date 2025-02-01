@@ -1,8 +1,5 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    const lang = localStorage.getItem('lang');
-
-    const STORAGE_KEY_INBOUND = "inboundData";
-    const STORAGE_KEY_OUTBOUND = "outboundData";
+    const lang = 'ko';
 
     async function fetchJson(url) {
         const response = await fetch(url);
@@ -10,22 +7,47 @@ document.addEventListener('DOMContentLoaded', async () => {
         return await response.json();
     }
 
-    async function loadData(key, url) {
-        const storedData = localStorage.getItem(key);
-        if (storedData) {
-            return JSON.parse(storedData);
+    async function updateData(url, updatedRows) {
+        console.log(updatedRows);
+        if (updatedRows.length > 0) {
+            const updatesWithId = updatedRows.map(row => ({ id: row.id, changes: row }));
+            await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updatesWithId)
+            });
         }
-        const fetchedData = await fetchJson(url);
-        localStorage.setItem(key, JSON.stringify(fetchedData));  // Save fetched data for future use
-        return fetchedData;
     }
 
-    function saveDataToStorage(key, data) {
-        localStorage.setItem(key, JSON.stringify(data));
+    async function addData(url, newRow) {
+        console.log(newRow);
+        await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newRow)
+        });
     }
 
-    const inboundData = await loadData(STORAGE_KEY_INBOUND, "assets/mock/inbound.json");
-    const outboundData = await loadData(STORAGE_KEY_OUTBOUND, "assets/mock/outbound.json");
+    async function deleteData(url, deletedRows) {
+        console.log(deletedRows);
+        if (deletedRows.length > 0) {
+            await fetch(url, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(deletedRows)
+            });
+        }
+    }
+
+    function generateUUID() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+
+    const inboundData = await fetchJson("assets/mock/inbound.json");
+    const outboundData = await fetchJson("assets/mock/outbound.json");
 
     const root = document.getElementById('root');
     root.className = 'mt-4';
@@ -71,34 +93,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
 
             const section = sections[tab.id];
-            showLoading(section);
-
             document.getElementById(tab.id).classList.add('active-tab');
 
             setTimeout(() => {
-                hideLoading(section);
                 section.classList.remove('hidden');
-
-                if (tab.id === 'tab-inbound') {
-                    populateInbound(section);
-                } else if (tab.id === 'tab-outbound') {
-                    populateOutbound(section);
-                } else if (tab.id === 'tab-dashboard') {
-                    populateDashboard(section);
-                }
+                if (tab.id === 'tab-inbound') populateInbound(section);
+                else if (tab.id === 'tab-outbound') populateOutbound(section);
+                else if (tab.id === 'tab-dashboard') populateDashboard(section);
             }, 500);
         });
     });
 
-    function showLoading(section) {
-        section.innerHTML = `<div class="text-center text-lg font-semibold">Loading...</div>`;
-    }
-
-    function hideLoading(section) {
-        section.innerHTML = "";
-    }
-
-    function createGrid(sectionId, data, storageKey) {
+    function createGrid(sectionId, data, updateUrl) {
         const section = document.getElementById(sectionId);
         section.innerHTML = `<div id="${sectionId}-grid"></div>`;
 
@@ -106,18 +112,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             el: document.getElementById(`${sectionId}-grid`),
             data: data,
             bodyHeight: 560,
-            pageOptions: {
-                useClient: true,
-                perPage: 15
-            },
+            pageOptions: { useClient: true, perPage: 15 },
             columns: [
-                { header: 'ID', name: 'id', width: 180, align: 'center', editor: false },
+                { header: 'ID', name: 'id', width: 180, align: 'center' },
                 { header: 'ISBN', name: 'isbn', width: 200, align: 'center', editor: 'text', sortable: true },
-                {
-                    header: '날짜', name: 'date', width: 150, align: 'center',
-                    editor: 'text'
-                    , sortable: true, filter: 'text'
-                },
+                { header: '날짜', name: 'date', width: 150, align: 'center', editor: 'text', sortable: true, filter: 'text' },
                 { header: '도서명', name: 'title', align: 'center', editor: 'text', sortable: true, filter: 'select' },
                 { header: '수량', name: 'quantity', width: 80, align: 'center', editor: 'text', sortable: true, filter: 'number' }
             ],
@@ -126,238 +125,44 @@ document.addEventListener('DOMContentLoaded', async () => {
             editable: true
         });
 
-        grid.on('afterChange', () => {
-            const updatedData = grid.getData();
-            saveDataToStorage(storageKey, updatedData);
+        grid.on('afterChange', ev => {
+            const updatedRows = ev.changes.map(change => ({
+                id: grid.getRow(change.rowKey).id,
+                [change.columnName]: change.value
+            }));
+            updateData(updateUrl, updatedRows);
         });
 
+        const addButton = document.createElement('button');
+        addButton.innerText = '추가';
+        addButton.addEventListener('click', () => {
+            const newRow = { id: generateUUID(), isbn: '', date: '', title: '', quantity: 0 };
+            grid.prependRow(newRow);
+            grid.startEditingAt(0, 'isbn');
+            addData(updateUrl, newRow);
+        });
+        section.appendChild(addButton);
 
-        addGridToolbar(section, grid, storageKey);
+        const deleteButton = document.createElement('button');
+        deleteButton.innerText = '삭제';
+        deleteButton.addEventListener('click', () => {
+            const checkedRows = grid.getCheckedRows();
+            grid.removeCheckedRows();
+            deleteData(updateUrl, checkedRows);
+        });
+        section.appendChild(deleteButton);
     }
 
     function populateInbound(section) {
-        createGrid(section.id, inboundData, STORAGE_KEY_INBOUND);
-    }
-
-    function createOutboundGrid(sectionId, data, storageKey) {
-        const section = document.getElementById(sectionId);
-        section.innerHTML = `<div id="${sectionId}-grid"></div>`;
-
- 
-        const inboundDict = Object.fromEntries(inboundData.map(book => [book.isbn, book.quantity]));
-
-        
-        data.forEach(book => {
-            book.stockDifference = inboundDict[book.isbn] ? inboundDict[book.isbn] - book.quantity : -book.quantity;
-        });
-
-        const grid = new tui.Grid({
-            el: document.getElementById(`${sectionId}-grid`),
-            data: data,
-            bodyHeight: 560,
-            pageOptions: { useClient: true, perPage: 15 },
-            columns: [
-                { header: 'ID', name: 'id', width: 150, align: 'center', editor: false },
-                { header: 'ISBN', name: 'isbn', width: 150, align: 'center', editor: 'text', sortable: true },
-                { header: '날짜', name: 'date', align: 'center', editor: 'text', sortable: true, filter: 'text' },
-                { header: '도서명', name: 'title', align: 'center', editor: 'text', sortable: true, filter: 'select' },
-                { header: '수량', name: 'quantity', width: 90, align: 'center', editor: 'text', sortable: true, filter: 'number' },
-                { header: '변경수량', name: 'stockDifference', width: 90, align: 'center', editor: false, sortable: true }
-            ],
-            rowHeaders: ['checkbox'],
-            copyOptions: { useFormattedValue: true },
-            editable: true
-        });
-
-        
-        grid.on('afterChange', () => {
-            const updatedData = grid.getData();
-            updatedData.forEach(book => {
-                book.stockDifference = inboundDict[book.isbn] ? inboundDict[book.isbn] - book.quantity : -book.quantity;
-            });
-            saveDataToStorage(storageKey, updatedData);
-            grid.resetData(updatedData); 
-        });
-
-        addGridToolbar(section, grid, storageKey);
+        createGrid(section.id, inboundData, "assets/mock/updateInbound.json");
     }
 
     function populateOutbound(section) {
-        createOutboundGrid(section.id, outboundData, STORAGE_KEY_OUTBOUND);
+        createGrid(section.id, outboundData, "assets/mock/updateOutbound.json");
     }
-
-
-    function addGridToolbar(section, grid, storageKey) {
-        const toolbar = document.createElement('div');
-        toolbar.className = 'flex justify-end gap-2';
-    
-        const addButton = document.createElement('button');
-        addButton.className = 'flex items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2';
-        addButton.innerHTML = `<i class="fas fa-plus"></i><span>신규</span>`;
-    
-        addButton.addEventListener('click', () => {
-            if (addButton.disabled) return; // ✅ 중복 클릭 방지
-            addButton.disabled = true; // ✅ 클릭하자마자 버튼 비활성화
-    
-            const newItem = {
-                id: crypto.randomUUID(),
-                isbn: '',
-                date: '',
-                title: '',
-                quantity: 0
-            };
-    
-            // ✅ 중복된 ID가 있는지 확인 후 추가 방지
-            if (grid.getData().some(row => row.id === newItem.id)) {
-                console.warn("이미 존재하는 ID입니다. 추가되지 않습니다.");
-                addButton.disabled = false;
-                return;
-            }
-    
-            grid.prependRow(newItem);
-            showToast('input-allowed', 'info', lang);
-    
-            // ✅ 기존 데이터 유지 + 새로운 데이터 추가 후 저장
-            const updatedData = [...grid.getData()];
-            saveDataToStorage(storageKey, updatedData);
-    
-            // ✅ 기존 이벤트 리스너 제거 후 새 리스너 등록 (중복 방지)
-            grid.off('afterChange');
-            grid.on('afterChange', () => {
-                saveDataToStorage(storageKey, grid.getData());
-                addButton.disabled = false; // ✅ 버튼 다시 활성화
-            });
-    
-            setupGridExitListener(newItem.id);
-        });
-    
-        const deleteButton = document.createElement('button');
-        deleteButton.className = 'flex items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2';
-        deleteButton.innerHTML = `<i class="fas fa-trash"></i><span>삭제</span>`;
-    
-        deleteButton.addEventListener('click', () => {
-            let checkedRows = grid.getCheckedRows();
-    
-            // ✅ 체크된 데이터가 없으면 동기화 후 재확인
-            if (checkedRows.length === 0) {
-                checkedRows = grid.getCheckedRows();
-    
-                if (checkedRows.length === 0) {
-                    showToast('delete-not', 'warning', lang);
-                    return;
-                }
-            }
-    
-            // ✅ 체크된 항목 삭제 후 동기화
-            const updatedData = grid.getData().filter(row => !checkedRows.some(checked => checked.id === row.id));
-            grid.removeCheckedRows();
-            saveDataToStorage(storageKey, updatedData);
-            showToast('select-delete', 'success', lang);
-        });
-    
-        toolbar.appendChild(addButton);
-        toolbar.appendChild(deleteButton);
-        section.appendChild(toolbar);
-    
-        function setupGridExitListener(newItemId) {
-            function enableAddButtonAndRemoveRow() {
-                const currentData = grid.getData();
-                const newRow = currentData.find(row => row.id === newItemId);
-    
-                if (newRow && isRowEmpty(newRow)) {
-                    grid.removeRow(newItemId);
-                    const updatedData = grid.getData();
-                    saveDataToStorage(storageKey, updatedData);
-                }
-    
-                addButton.disabled = false;
-                document.removeEventListener('click', handleClickOutsideGrid);
-                grid.off('focusChange', handleGridFocusChange);
-            }
-    
-            function handleClickOutsideGrid(event) {
-                if (!section.contains(event.target)) {
-                    enableAddButtonAndRemoveRow();
-                }
-            }
-    
-            function handleGridFocusChange() {
-                enableAddButtonAndRemoveRow();
-            }
-    
-            function isRowEmpty(row) {
-                return Object.keys(row).every(key => key !== 'id' && !row[key]); // UUID(id)는 제외
-            }
-    
-            document.addEventListener('click', handleClickOutsideGrid);
-            grid.on('focusChange', handleGridFocusChange);
-        }
-    }
-    
-    
-    
-    
-    
-
-    
-    
-    
 
     function populateDashboard(section) {
         section.innerHTML = `<div id="stock-chart" class="w-full border border-gray-300 rounded-lg p-2 "></div>
-        <div id="monthly-outbound-chart" class="w-full border border-gray-300 rounded-lg p-2  mt-4"></div>`;
-
-        // Convert inbound and outbound data into dictionaries keyed by ISBN
-        const inboundDict = Object.fromEntries(inboundData.map(book => [book.isbn, book.quantity]));
-        const outboundDict = Object.fromEntries(outboundData.map(book => [book.isbn, book.quantity]));
-
-        // Compute stock differences where there is a mismatch
-        const stockData = [];
-        inboundData.forEach(book => {
-            const inboundQty = book.quantity;
-            const outboundQty = outboundDict[book.isbn] || 0;
-            const stockRemaining = inboundQty - outboundQty;
-
-            if (stockRemaining !== 0) {  // Only show books with a difference
-                stockData.push({ title: book.title, quantity: stockRemaining });
-            }
-        });
-
-        // Extract labels and values for the pie chart
-        const titles = stockData.map(item => item.title);
-        const stockValues = stockData.map(item => item.quantity);
-
-        // Render Pie Chart with only books having stock differences
-        if (stockData.length > 0) {
-            const pieOptions = {
-                chart: { type: 'pie', height: 350 },
-                series: stockValues,
-                labels: titles,
-                title: { text: '재고 차이가 있는 도서 목록', align: 'center' }
-            };
-
-            const pieChart = new ApexCharts(document.querySelector("#stock-chart"), pieOptions);
-            pieChart.render();
-        } else {
-            document.querySelector("#stock-chart").innerHTML = `<div class="text-center text-lg font-semibold">모든 재고가 일치합니다</div>`;
-        }
-
-        const monthlyOutbound = Array.from({ length: 12 }, (_, i) => ({
-            month: `${i + 1}월`,
-            quantity: Math.floor(Math.random() * 500) + 50
-        }));
-
-        const lineOptions = {
-            chart: { type: 'line', height: 300 },
-            series: [{ name: '월별 출고량', data: monthlyOutbound.map(item => item.quantity) }],
-            xaxis: { categories: monthlyOutbound.map(item => item.month) },
-            title: { text: '2024년 월별 출고 추이', align: 'center' }
-        };
-
-        const lineChart = new ApexCharts(document.querySelector("#monthly-outbound-chart"), lineOptions);
-        lineChart.render();
-
-
+        <div id="monthly-outbound-chart" class="w-full border border-gray-300 rounded-lg p-2 mt-4"></div>`;
     }
-
 });
