@@ -327,7 +327,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           editable: true,
           cellStyle: { fontSize: "1rem", fontFamily: "'Pretendard', sans-serif" }
         },
-        domLayout: "autoHeight", // 자동 높이 조정
+        domLayout: "autoHeight", 
         onCellValueChanged: params => {
           saveToStorage("organizationData", organization);
         }

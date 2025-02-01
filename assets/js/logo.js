@@ -119,40 +119,28 @@ function renderOffCanvasMenu(menuItems) {
     document.getElementById('offCanvasContainer').appendChild(offCanvas);
 }
 
-
 const iconMapping = {
-
-    "시스템로그": "fa-clipboard-list",
-    "컨설팅지정": "fa-network-wired",
-    "코드관리": "fa-server",
-    "VM현황": "fa-server",
-    "DB관리": "fa-database",
-    "행정구역정보": "fa-map-marked-alt",
-    "방화벽": "fa-shield-alt",
     "조직도구성": "fa-sitemap",
     "근태관리": "fa-user-clock",
     "인센티브": "fa-gift",
-    "회의일정": "fa-calendar-check",
-    "이벤트": "fa-calendar-day",
     "업무일정": "fa-calendar-alt",
     "프로젝트일정": "fa-tasks",
     "생산일정": "fa-industry",
+    "회원통계": "fa-user",
+    "매출통계": "fa-chart-line",
+    "체인운영": "fa-store-alt",
     "예약관리": "fa-calendar-plus",
     "회의실관리": "fa-door-open",
     "병원예약": "fa-hospital",
     "강의일정": "fa-chalkboard-teacher",
-    "회원통계": "fa-user",
-    "매출통계": "fa-chart-line",
-    "체인운영": "fa-store-alt",
-    "판매통계": "fa-chart-pie",
-    "실적": "fa-chart-bar",
-    "입출고관리": "fa-warehouse",
+    "행정구역정보": "fa-map-marked-alt",
+    "시스템로그": "fa-clipboard-list",
+    "컨설팅지정": "fa-network-wired",
+    "서베이": "fa-poll",
+    "코드관리": "fa-server",
     "권한관리": "fa-user-shield",
     "문서관리": "fa-file-alt",
     "WMS": "fa-cubes",
-    "서베이": "fa-poll",
-
-
 };
 
 
