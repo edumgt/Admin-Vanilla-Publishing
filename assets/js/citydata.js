@@ -234,7 +234,7 @@ function displayComparisonPanel(selectedRows) {
             <div>
                 <h3>거리 및 교통수단</h3>
                 <p>${row1.읍면동} - ${row2.읍면동}</p>
-                <p style="padding:10px; color:#aa2828;">거리: ${distance.toFixed(2)} km</p>
+                <p class="p-info">거리: ${distance.toFixed(2)} km</p>
                 <p>교통수단: 버스, 지하철</p>
             </div>
             <div>

@@ -344,8 +344,8 @@ function showModal(node, left, top) {
         <p><strong>부서장:</strong> ${node.manager}</p>
         <p><strong>부서인원:</strong> ${node.members || 'N/A'}</p>
         <p><strong>부서설명:</strong> ${node.description || 'N/A'}</p>
-        <div id="map" style="width: 300px; height: 200px; background-color: #eaeaea;">지도 표시</div>
-        <button id="closeModal">닫기</button>
+        <div id="map" class="a-map">지도 표시</div>
+        <button type="button" id="closeModal">닫기</button>
     `;
     document.body.appendChild(modal);
 

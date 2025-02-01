@@ -197,8 +197,8 @@ function addBreadcrumbBadges() {
     favoriteContainer.style.right = '30px';
 
     favoriteContainer.innerHTML += `
-        <span id="fav1" style="cursor: pointer; margin-right: 10px; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; background-color: #333; color: #fff; border-radius: 52%; font-size: 15px; font-weight: bold;" onclick="saveFavorite('1st', window.location.href)">1</span>
-        <span id="fav2" style="cursor: pointer; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; background-color: #333; color: #fff; border-radius: 52%; font-size: 15px; font-weight: bold;" onclick="saveFavorite('Quick', window.location.href)">Q</span>
+        <span id="fav1" class="favo-1" onclick="saveFavorite('1st', window.location.href)">1</span>
+        <span id="fav2" class="favo-2" onclick="saveFavorite('Quick', window.location.href)">Q</span>
     `;
 
     breadcrumbContainer.parentNode.insertBefore(favoriteContainer, breadcrumbContainer.nextSibling);

@@ -169,8 +169,7 @@ function showAttendance() {
     const checkInPercentage = ((checkIns / lastDay) * 100).toFixed(2); 
 
     employeeNameCell.innerHTML = `
-    <a href='#' style="color: blue;text-decoration: underline; cursor: pointer;" 
-    class='open-modal' data-name='${employee.name}' data-id='${employee.id}'>
+    <a href='#' class='a-link open-modal' data-name='${employee.name}' data-id='${employee.id}'>
     ${employee.name} (${checkIns}/${lastDay}, ${checkInPercentage}%)</a>
     `; 
 

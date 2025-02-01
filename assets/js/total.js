@@ -96,9 +96,7 @@ function setupGrid(teams) {
                 header: "Key", name: "id", align: "center",
                 formatter: (cell) => cell.value !== "합계" ? `
                 
-                <a href='#' class='open-modal' data-name='${cell.row.name}' data-id='${cell.value}'
-                style="color: blue;text-decoration: underline; cursor: pointer;"
-                >${cell.value}</a>
+                <a href='#' class='a-link open-modal' data-name='${cell.row.name}' data-id='${cell.value}'>${cell.value}</a>
                 
                 ` : cell.value
             },
