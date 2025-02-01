@@ -184,7 +184,7 @@ body {
   color: var(--body-color);
   background: var(--body-bg);
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.375;
   font-family: var(--font-family);
 }
@@ -4742,9 +4742,8 @@ small,
 }
 
 
-/* General */
 body {
-  font-family: var(--font-family);
+  
   margin: 0;
   padding: 0;
   box-sizing: border-box;
