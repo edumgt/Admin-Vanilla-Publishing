@@ -13,7 +13,10 @@ const translations = {
       system: "Code Management",
       orgtree: "Permission Management",
       document: "Document Management",
-      wms: "WMS"
+      wms: "WMS",
+      config: "System log",
+      network: "Consultant",
+      survey: "Survey",
 
     },
 
@@ -41,6 +44,9 @@ const translations = {
       orgtree: "권한관리",
       document: "문서관리",
       wms: "WMS",
+      config: "시스템 로그",
+      network: "컨설팅 지정",
+      survey: "서베이",
     },
 
     buttons: {
@@ -66,7 +72,10 @@ const translations = {
       system: "コード管理",
       orgtree: "権限管理",
       document: "文書管理",
-      wms: "WMS"
+      wms: "WMS",
+      config: "システムログ",
+      network: "コンサルティングの指定",
+      survey: "サーベイ"
     },
 
     buttons: {
@@ -97,18 +106,46 @@ languageSwitcher.addEventListener("click", function (event) {
 
 
   let offCanvasLabels = translations[lang].offCanvas;
-  offCanvasItems[0].textContent = offCanvasLabels.system;
-  offCanvasItems[1].textContent = offCanvasLabels.orgtree;
-  offCanvasItems[2].textContent = offCanvasLabels.document;
-  offCanvasItems[3].textContent = offCanvasLabels.wms;
+
   if (currentPage.includes("system")) {
     breadcrumb.textContent = offCanvasLabels.system;
+    offCanvasItems[0].textContent = offCanvasLabels.system;
+    offCanvasItems[1].textContent = offCanvasLabels.orgtree;
+    offCanvasItems[2].textContent = offCanvasLabels.document;
+    offCanvasItems[3].textContent = offCanvasLabels.wms;
   } else if (currentPage.includes("orgtree")) {
     breadcrumb.textContent = offCanvasLabels.orgtree;
+    offCanvasItems[0].textContent = offCanvasLabels.system;
+    offCanvasItems[1].textContent = offCanvasLabels.orgtree;
+    offCanvasItems[2].textContent = offCanvasLabels.document;
+    offCanvasItems[3].textContent = offCanvasLabels.wms;
   } else if (currentPage.includes("document")) {
     breadcrumb.textContent = offCanvasLabels.document;
+    offCanvasItems[0].textContent = offCanvasLabels.system;
+    offCanvasItems[1].textContent = offCanvasLabels.orgtree;
+    offCanvasItems[2].textContent = offCanvasLabels.document;
+    offCanvasItems[3].textContent = offCanvasLabels.wms;
   } else if (currentPage.includes("wms")) {
     breadcrumb.textContent = offCanvasLabels.wms;
+    offCanvasItems[0].textContent = offCanvasLabels.system;
+    offCanvasItems[1].textContent = offCanvasLabels.orgtree;
+    offCanvasItems[2].textContent = offCanvasLabels.document;
+    offCanvasItems[3].textContent = offCanvasLabels.wms;
+  } else if (currentPage.includes("network")) {
+    breadcrumb.textContent = offCanvasLabels.network;
+    offCanvasItems[0].textContent = offCanvasLabels.config;
+    offCanvasItems[1].textContent = offCanvasLabels.network;
+    offCanvasItems[2].textContent = offCanvasLabels.survey;
+  } else if (currentPage.includes("survey")) {
+    breadcrumb.textContent = offCanvasLabels.survey;
+    offCanvasItems[0].textContent = offCanvasLabels.config;
+    offCanvasItems[1].textContent = offCanvasLabels.network;
+    offCanvasItems[2].textContent = offCanvasLabels.survey;
+  } else if (currentPage.includes("config")) {
+    breadcrumb.textContent = offCanvasLabels.config;
+    offCanvasItems[0].textContent = offCanvasLabels.config;
+    offCanvasItems[1].textContent = offCanvasLabels.network;
+    offCanvasItems[2].textContent = offCanvasLabels.survey;
   }
 
 });
@@ -125,18 +162,45 @@ document.addEventListener('DOMContentLoaded', () => {
   tabs[5].textContent = tabLabels.settings;
 
   let offCanvasLabels = translations[lang].offCanvas;
-  offCanvasItems[0].textContent = offCanvasLabels.system;
-  offCanvasItems[1].textContent = offCanvasLabels.orgtree;
-  offCanvasItems[2].textContent = offCanvasLabels.document;
-  offCanvasItems[3].textContent = offCanvasLabels.wms;
   if (currentPage.includes("system")) {
     breadcrumb.textContent = offCanvasLabels.system;
+    offCanvasItems[0].textContent = offCanvasLabels.system;
+    offCanvasItems[1].textContent = offCanvasLabels.orgtree;
+    offCanvasItems[2].textContent = offCanvasLabels.document;
+    offCanvasItems[3].textContent = offCanvasLabels.wms;
   } else if (currentPage.includes("orgtree")) {
     breadcrumb.textContent = offCanvasLabels.orgtree;
+    offCanvasItems[0].textContent = offCanvasLabels.system;
+    offCanvasItems[1].textContent = offCanvasLabels.orgtree;
+    offCanvasItems[2].textContent = offCanvasLabels.document;
+    offCanvasItems[3].textContent = offCanvasLabels.wms;
   } else if (currentPage.includes("document")) {
     breadcrumb.textContent = offCanvasLabels.document;
+    offCanvasItems[0].textContent = offCanvasLabels.system;
+    offCanvasItems[1].textContent = offCanvasLabels.orgtree;
+    offCanvasItems[2].textContent = offCanvasLabels.document;
+    offCanvasItems[3].textContent = offCanvasLabels.wms;
   } else if (currentPage.includes("wms")) {
     breadcrumb.textContent = offCanvasLabels.wms;
+    offCanvasItems[0].textContent = offCanvasLabels.system;
+    offCanvasItems[1].textContent = offCanvasLabels.orgtree;
+    offCanvasItems[2].textContent = offCanvasLabels.document;
+    offCanvasItems[3].textContent = offCanvasLabels.wms;
+  } else if (currentPage.includes("network")) {
+    breadcrumb.textContent = offCanvasLabels.network;
+    offCanvasItems[0].textContent = offCanvasLabels.config;
+    offCanvasItems[1].textContent = offCanvasLabels.network;
+    offCanvasItems[2].textContent = offCanvasLabels.survey;
+  } else if (currentPage.includes("survey")) {
+    breadcrumb.textContent = offCanvasLabels.survey;
+    offCanvasItems[0].textContent = offCanvasLabels.config;
+    offCanvasItems[1].textContent = offCanvasLabels.network;
+    offCanvasItems[2].textContent = offCanvasLabels.survey;
+  } else if (currentPage.includes("config")) {
+    breadcrumb.textContent = offCanvasLabels.config;
+    offCanvasItems[0].textContent = offCanvasLabels.config;
+    offCanvasItems[1].textContent = offCanvasLabels.network;
+    offCanvasItems[2].textContent = offCanvasLabels.survey;
   }
 });
 
