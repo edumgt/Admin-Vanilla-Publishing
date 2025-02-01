@@ -35,6 +35,11 @@
   --modal-bg: rgba(0, 0, 0, 0.5);
   --table-bg: #e1e1e1;
   --filter-bg: #f1f1f1;
+
+  --dark-color: hsl(240, 20%, 20%);
+  --dropdown-divider-color: hsl(210, 8%, 90%);
+  --text-muted-color: hsl(212, 8%, 68%);
+  --heading-color: hsl(210, 18%, 28%);
 }
 
 body {
@@ -398,6 +403,12 @@ body {
   white-space: nowrap;
   padding: 0.5rem 3rem 0.5rem 1.5rem;
   cursor: pointer;
+  color: var(--heading-color);
+}
+
+.dropdown-item:hover {
+  color: var(--heading-color);
+  background-color: hsla(210, 29%, 19%, 0.06);
 }
 
 .dropdown-shortcuts-item {
@@ -902,3 +913,67 @@ label {
   line-height: 1; /* 텍스트 라인 높이 조정 */
 }
 
+.dropdown-divider {
+  height: 0;
+  margin: 0.25rem 0;
+  overflow: hidden;
+  border-top: 1px solid var(--dropdown-divider-color);
+  opacity: 1;
+}
+
+.avatar {
+  position: relative;
+  width: 2.375rem;
+  height: 2.375rem;
+  cursor: pointer;
+}
+
+.avatar.avatar-online::after,
+.avatar.avatar-offline::after,
+.avatar.avatar-away::after,
+.avatar.avatar-busy::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 3px;
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  box-shadow: 0 0 0 2px #fff;
+}
+
+.avatar.avatar-online::after {
+  background-color: #71dd37;
+}
+
+.avatar .avatar-initial {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background-color: #eeedf0;
+  font-size: 0.9rem;
+}
+
+.rounded-circle {
+  border-radius: 50% !important;
+}
+
+.rounded-pill {
+  border-radius: 50rem !important;
+}
+
+.border-primary {
+  border-color: var(--primary-color) !important;
+}
+
+.text-muted {
+  opacity: 1;
+  color: var(--text-muted-color);
+}

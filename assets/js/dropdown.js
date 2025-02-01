@@ -1,17 +1,77 @@
 const memberIcon = document.getElementById('memberIcon');
-memberIcon.classList.add("text-gray-200", "hover:text-white", "p-2");
-memberIcon.innerHTML = `<i class="fas fa-user"></i>`;
+const memberMenu = document.getElementById('memberMenu');
+memberMenu.classList.add("hidden");
 
 const logoutModal = document.getElementById('logoutModal');
 
-let isLoggedIn = true;
-memberIcon.addEventListener('click', function () {
-    if (isLoggedIn) {
-        logoutModal.classList.remove('hidden');
-    } else {
-        logoutModal.classList.remove('hidden');
+memberIcon.classList.add("text-gray-200", "hover:text-white", "p-2");
+memberIcon.innerHTML = `<i class="fas fa-user"></i>`;
+
+memberMenu.innerHTML = `<div class="bg-white shadow-lg p-3 rounded-md border">
+                     <a class="dropdown-item" href="#">
+                        <div class="d-flex">
+                           <div class="me-3">
+                              <div class="avatar avatar-online">
+                                 <img class="rounded-circle bg-primary-subtle" src="sample/sample.svg"
+                                    alt="Avatar" width="40px">
+                              </div>
+                           </div>
+                           <div class="">
+                              <h6 class="fs-4 mb-0">송주희</h6>
+                              <small class="text-muted">관리자</small>
+                           </div>
+                        </div>
+                     </a>
+                     <div class="dropdown-divider"></div>
+                     <a href="#" class="dropdown-item">
+                        <div class="d-flex align-items-center gap-3">
+                           <i class="fas fa-user fs-5"></i>
+                           <span>Profile</span>
+                        </div>
+                     </a>
+                     <a href="#" class="dropdown-item">
+                        <div class="d-flex align-items-center gap-3">
+                           <i class="fas fa-cog fs-5"></i>
+                           <span>Settings</span>
+                        </div>
+                     </a>
+                     <div class="dropdown-divider"></div>
+                     <a href="#" class="dropdown-item" id="logoutButton">
+                        <div class="d-flex align-items-center gap-3">
+                           <i class="fas fa-sign-out-alt fs-5"></i>
+                           <span>로그아웃</span>
+                        </div>
+                     </a>
+                     <div class="dropdown-divider"></div>
+                </div>`;
+
+memberIcon.addEventListener('click', function (event) {
+    event.stopPropagation(); // 다른 클릭 이벤트 방지
+
+    memberMenu.style.position = `absolute`;
+    memberMenu.style.top = `45px`;
+    memberMenu.style.right = `20px`;
+
+    memberMenu.classList.remove('hidden');
+    memberMenu.classList.add('show');
+
+
+});
+
+document.addEventListener('click', function (event) {
+    if (!memberIcon.contains(event.target) && !memberMenu.contains(event.target)) {
+        memberMenu.classList.remove('show');
+        memberMenu.classList.add('hidden');
     }
 });
+
+// 로그아웃 버튼 클릭 시 모달 표시
+const logoutButton = document.getElementById('logoutButton');
+logoutButton.addEventListener('click', function () {
+    logoutModal.classList.remove('hidden');
+    logoutModal.classList.add('show');
+});
+
 
 function getFavorites() {
     let firstFavorite = JSON.parse(localStorage.getItem('favorite-1st')) || null;
@@ -21,7 +81,7 @@ function getFavorites() {
 
     if (firstFavorite) {
         favoriteHTML += `
-            <a href="${firstFavorite.url}" class="dropdown-shortcuts-item col">
+            <a href="${firstFavorite.url}" class="dropdown-item dropdown-shortcuts-item col">
                 <h5>${firstFavorite.title}</h5>
                 <small>처음화면</small>
             </a>
@@ -30,7 +90,7 @@ function getFavorites() {
 
     quickFavorites.forEach(fav => {
         favoriteHTML += `
-            <a href="${fav.url}" class="dropdown-shortcuts-item col">
+            <a href="${fav.url}" class="dropdown-item dropdown-shortcuts-item col">
                 <h6>${fav.title}</h6>
                 <small>바로가기</small>
             </a>
@@ -99,31 +159,31 @@ function hideAllDropdowns(event) {
 function saveFavorite(key) {
     const title = document.querySelector('.breadcrumb')?.innerText || 'No Title';
     const fullPath = window.location.pathname;
-    const fileName = fullPath.substring(fullPath.lastIndexOf('/') + 1) || 'index.html'; 
+    const fileName = fullPath.substring(fullPath.lastIndexOf('/') + 1) || 'index.html';
 
     let favoriteData = { title, url: fileName };
 
     if (key === '1st') {
         localStorage.setItem('favorite-1st', JSON.stringify(favoriteData));
-        showToast('favo-login','success',lang);
+        showToast('favo-login', 'success', lang);
     } else if (key === 'Quick') {
         let quickFavorites = JSON.parse(localStorage.getItem('favorite-Quick')) || [];
-       
+
         const isDuplicate = quickFavorites.some(item => item.url === fileName);
         if (isDuplicate) {
-            showToast('favo-already','warning',lang);
-            return; 
+            showToast('favo-already', 'warning', lang);
+            return;
         }
 
         if (quickFavorites.length >= 8) {
-            quickFavorites.shift(); 
+            quickFavorites.shift();
         }
         quickFavorites.push(favoriteData);
         localStorage.setItem('favorite-Quick', JSON.stringify(quickFavorites));
 
-        showToast('favo-save','success',lang);
+        showToast('favo-save', 'success', lang);
     }
-    renderDropdown('dropdown-container'); 
+    renderDropdown('dropdown-container');
 }
 
 function addBreadcrumbBadges() {
@@ -149,5 +209,3 @@ const fav1 = document.getElementById("fav1");
 createTooltip(fav1, "현재 페이지를 로그인 후 바로가기로 저장합니다.");
 const fav2 = document.getElementById("fav2");
 createTooltip(fav2, "현재 페이지를 바로가기 목록에 저장합니다.");
-
-

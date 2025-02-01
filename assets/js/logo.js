@@ -379,7 +379,7 @@ function renderFloatingNav(containerId) {
     floatingNav.className = 'fixed bottom-4 right-4 bg-gray-700 text-white rounded-lg p-2 hidden space-y-4 z-50';
     floatingNav.innerHTML = `
         <div class="flex justify-between items-center">
-            <h3 class="text-white">Language</h3>
+            <h3 class="text-white">다국어지정</h3>
             <button id="closeFloatingNav" class="text-white">
                 <i class="fas fa-times"></i>
             </button>
@@ -526,7 +526,6 @@ function showToast(messageKey, type = 'success', lang = 'en') {
     const toast = document.createElement('div');
     toast.className = `toast toast-${type} show`;
     toast.innerText = message;
-
     toastContainer.appendChild(toast);
     setTimeout(() => {
         toast.classList.remove('show');
