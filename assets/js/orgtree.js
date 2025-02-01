@@ -17,6 +17,11 @@ const translations = {
       config: "System log",
       network: "Consultant",
       survey: "Survey",
+      work: "Reservation Management",
+      meeting: "Meeting Room Management",
+      hospital: "Hospital Reservation",
+      lectures: "Lecture Schedule",
+      city: "District Information"
 
     },
 
@@ -47,6 +52,11 @@ const translations = {
       config: "시스템 로그",
       network: "컨설팅 지정",
       survey: "서베이",
+      work: "예약관리",
+      meeting: "회의실관리",
+      hospital: "병원예약",
+      lectures: "강의일정",
+      city: "행정구역정보",
     },
 
     buttons: {
@@ -75,7 +85,12 @@ const translations = {
       wms: "WMS",
       config: "システムログ",
       network: "コンサルティングの指定",
-      survey: "サーベイ"
+      survey: "サーベイ",
+      work: "予約管理",
+      meeting: "会議室管理",
+      hospital: "病院予約",
+      lectures: "講義日程",
+      city: "行政区情報",
     },
 
     buttons: {
@@ -146,6 +161,41 @@ languageSwitcher.addEventListener("click", function (event) {
     offCanvasItems[0].textContent = offCanvasLabels.config;
     offCanvasItems[1].textContent = offCanvasLabels.network;
     offCanvasItems[2].textContent = offCanvasLabels.survey;
+  } else if (currentPage.includes("work")) {
+    breadcrumb.textContent = offCanvasLabels.work;
+    offCanvasItems[0].textContent = offCanvasLabels.work;
+    offCanvasItems[1].textContent = offCanvasLabels.meeting;
+    offCanvasItems[2].textContent = offCanvasLabels.hospital;
+    offCanvasItems[3].textContent = offCanvasLabels.lectures;
+    offCanvasItems[4].textContent = offCanvasLabels.city;
+  } else if (currentPage.includes("meeting")) {
+    breadcrumb.textContent = offCanvasLabels.meeting;
+    offCanvasItems[0].textContent = offCanvasLabels.work;
+    offCanvasItems[1].textContent = offCanvasLabels.meeting;
+    offCanvasItems[2].textContent = offCanvasLabels.hospital;
+    offCanvasItems[3].textContent = offCanvasLabels.lectures;
+    offCanvasItems[4].textContent = offCanvasLabels.city;
+  } else if (currentPage.includes("hospital")) {
+    breadcrumb.textContent = offCanvasLabels.hospital;
+    offCanvasItems[0].textContent = offCanvasLabels.work;
+    offCanvasItems[1].textContent = offCanvasLabels.meeting;
+    offCanvasItems[2].textContent = offCanvasLabels.hospital;
+    offCanvasItems[3].textContent = offCanvasLabels.lectures;
+    offCanvasItems[4].textContent = offCanvasLabels.city;
+  } else if (currentPage.includes("lectures")) {
+    breadcrumb.textContent = offCanvasLabels.lectures;
+    offCanvasItems[0].textContent = offCanvasLabels.work;
+    offCanvasItems[1].textContent = offCanvasLabels.meeting;
+    offCanvasItems[2].textContent = offCanvasLabels.hospital;
+    offCanvasItems[3].textContent = offCanvasLabels.lectures;
+    offCanvasItems[4].textContent = offCanvasLabels.city;
+  } else if (currentPage.includes("city")) {
+    breadcrumb.textContent = offCanvasLabels.city;
+    offCanvasItems[0].textContent = offCanvasLabels.work;
+    offCanvasItems[1].textContent = offCanvasLabels.meeting;
+    offCanvasItems[2].textContent = offCanvasLabels.hospital;
+    offCanvasItems[3].textContent = offCanvasLabels.lectures;
+    offCanvasItems[4].textContent = offCanvasLabels.city;
   }
 
 });
@@ -201,6 +251,41 @@ document.addEventListener('DOMContentLoaded', () => {
     offCanvasItems[0].textContent = offCanvasLabels.config;
     offCanvasItems[1].textContent = offCanvasLabels.network;
     offCanvasItems[2].textContent = offCanvasLabels.survey;
+  } else if (currentPage.includes("work")) {
+    breadcrumb.textContent = offCanvasLabels.work;
+    offCanvasItems[0].textContent = offCanvasLabels.work;
+    offCanvasItems[1].textContent = offCanvasLabels.meeting;
+    offCanvasItems[2].textContent = offCanvasLabels.hospital;
+    offCanvasItems[3].textContent = offCanvasLabels.lectures;
+    offCanvasItems[4].textContent = offCanvasLabels.city;
+  } else if (currentPage.includes("meeting")) {
+    breadcrumb.textContent = offCanvasLabels.meeting;
+    offCanvasItems[0].textContent = offCanvasLabels.work;
+    offCanvasItems[1].textContent = offCanvasLabels.meeting;
+    offCanvasItems[2].textContent = offCanvasLabels.hospital;
+    offCanvasItems[3].textContent = offCanvasLabels.lectures;
+    offCanvasItems[4].textContent = offCanvasLabels.city;
+  } else if (currentPage.includes("hospital")) {
+    breadcrumb.textContent = offCanvasLabels.hospital;
+    offCanvasItems[0].textContent = offCanvasLabels.work;
+    offCanvasItems[1].textContent = offCanvasLabels.meeting;
+    offCanvasItems[2].textContent = offCanvasLabels.hospital;
+    offCanvasItems[3].textContent = offCanvasLabels.lectures;
+    offCanvasItems[4].textContent = offCanvasLabels.city;
+  } else if (currentPage.includes("lectures")) {
+    breadcrumb.textContent = offCanvasLabels.lectures;
+    offCanvasItems[0].textContent = offCanvasLabels.work;
+    offCanvasItems[1].textContent = offCanvasLabels.meeting;
+    offCanvasItems[2].textContent = offCanvasLabels.hospital;
+    offCanvasItems[3].textContent = offCanvasLabels.lectures;
+    offCanvasItems[4].textContent = offCanvasLabels.city;
+  } else if (currentPage.includes("city")) {
+    breadcrumb.textContent = offCanvasLabels.city;
+    offCanvasItems[0].textContent = offCanvasLabels.work;
+    offCanvasItems[1].textContent = offCanvasLabels.meeting;
+    offCanvasItems[2].textContent = offCanvasLabels.hospital;
+    offCanvasItems[3].textContent = offCanvasLabels.lectures;
+    offCanvasItems[4].textContent = offCanvasLabels.city;
   }
 });
 
