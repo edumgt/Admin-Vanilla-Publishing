@@ -1,5 +1,3 @@
-
-
 const translations = {
     en: {
         menu: "Menu",
@@ -60,11 +58,11 @@ const translations = {
 
 
 languageSwitcher.addEventListener("click", function (event) {
-    const lang = event.target.getAttribute("data-lang");
+    let lang = event.target.getAttribute("data-lang");
     localStorage.setItem('lang', lang);
     if (!lang || !translations[lang]) return;
 
-    const tabLabels = translations[lang].tabs;
+    let tabLabels = translations[lang].tabs;
     tabs[0].textContent = tabLabels.system;
     tabs[1].textContent = tabLabels.organization;
     tabs[2].textContent = tabLabels.task;
@@ -72,7 +70,7 @@ languageSwitcher.addEventListener("click", function (event) {
     tabs[4].textContent = tabLabels.statistics;
     tabs[5].textContent = tabLabels.settings;
 
-    const offCanvasLabels = translations[lang].offCanvas;
+    let offCanvasLabels = translations[lang].offCanvas;
     offCanvasItems[0].textContent = offCanvasLabels.config;
     offCanvasItems[1].textContent = offCanvasLabels.network;
     offCanvasItems[2].textContent = offCanvasLabels.survey;
@@ -81,7 +79,7 @@ languageSwitcher.addEventListener("click", function (event) {
         breadcrumb.textContent = offCanvasLabels.network;
     } else if (currentPage.includes("survey")) {
         breadcrumb.textContent = offCanvasLabels.survey;
-    } else {
+    } else if (currentPage.includes("config")) {
         breadcrumb.textContent = offCanvasLabels.config;
     }
 
@@ -89,10 +87,8 @@ languageSwitcher.addEventListener("click", function (event) {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    const appBrand = new AppBrand('logo', 'EDUMGT');
-    const lang = localStorage.getItem('lang');
-    //console.log("lang: " + lang);
-
+    
+    let lang = localStorage.getItem('lang');
 
     const tabLabels = translations[lang].tabs;
     tabs[0].textContent = tabLabels.system;
@@ -103,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
     tabs[5].textContent = tabLabels.settings;
 
 
-    const offCanvasLabels = translations[lang].offCanvas;
+    let offCanvasLabels = translations[lang].offCanvas;
     offCanvasItems[0].textContent = offCanvasLabels.config;
     offCanvasItems[1].textContent = offCanvasLabels.network;
     offCanvasItems[2].textContent = offCanvasLabels.survey;
@@ -112,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
         breadcrumb.textContent = offCanvasLabels.network;
     } else if (currentPage.includes("survey")) {
         breadcrumb.textContent = offCanvasLabels.survey;
-    } else {
+    } else if (currentPage.includes("config")) {
         breadcrumb.textContent = offCanvasLabels.config;
     }
 });

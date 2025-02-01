@@ -1,4 +1,3 @@
-/* 다국어 */
 const translations = {
     en: {
         menu: "Menu",
@@ -14,6 +13,9 @@ const translations = {
             calendar: "Work Schedule",
             trello: "Project Schedule",
             timeline: "Production Schedule",
+            orgni: "Organization Structure",
+            attend: "Attendance Management",
+            total: "Incentive"
 
         },
         
@@ -40,6 +42,9 @@ const translations = {
             calendar: "업무일정",
             trello: "프로젝트일정",
             timeline: "생산일정",
+            orgni: "조직도구성",
+            attend: "근태관리",
+            total: "인센티브",
         },
         
         buttons: {
@@ -65,6 +70,9 @@ const translations = {
             calendar: "業務日程",
             trello: "プロジェクト日程",
             timeline: "生産日程",
+            orgni: "組織構成",
+            attend: "勤怠管理",
+            total: "インセンティブ"
         },
         
         buttons: {
@@ -78,43 +86,58 @@ const translations = {
     },
 };
 
-
-
 languageSwitcher.addEventListener("click", function (event) {
-    const lang = event.target.getAttribute("data-lang");
+
+    let lang = event.target.getAttribute("data-lang");
     localStorage.setItem('lang', lang);
     if (!lang || !translations[lang]) return;
 
-    
-
-    const tabLabels = translations[lang].tabs;
+    let tabLabels = translations[lang].tabs;
     tabs[0].textContent = tabLabels.system;
     tabs[1].textContent = tabLabels.organization;
     tabs[2].textContent = tabLabels.task;
     tabs[3].textContent = tabLabels.schedule;
     tabs[4].textContent = tabLabels.statistics;
     tabs[5].textContent = tabLabels.settings;
-
-    const offCanvasLabels = translations[lang].offCanvas;
-    offCanvasItems[0].textContent = offCanvasLabels.calendar;
-    offCanvasItems[1].textContent = offCanvasLabels.trello;
-    offCanvasItems[2].textContent = offCanvasLabels.timeline;
+  
+    let offCanvasLabels = translations[lang].offCanvas;
     if (currentPage.includes("calendar")) {
         breadcrumb.textContent = offCanvasLabels.calendar;
+        offCanvasItems[0].textContent = offCanvasLabels.calendar;
+        offCanvasItems[1].textContent = offCanvasLabels.trello;
+        offCanvasItems[2].textContent = offCanvasLabels.timeline;
     } else if (currentPage.includes("trello")) {
         breadcrumb.textContent = offCanvasLabels.trello;
+        offCanvasItems[0].textContent = offCanvasLabels.calendar;
+        offCanvasItems[1].textContent = offCanvasLabels.trello;
+        offCanvasItems[2].textContent = offCanvasLabels.timeline;
     } else if (currentPage.includes("timeline")) {
         breadcrumb.textContent = offCanvasLabels.timeline;
-    } else {
-        breadcrumb.textContent = offCanvasLabels.timeline;
+        offCanvasItems[0].textContent = offCanvasLabels.calendar;
+        offCanvasItems[1].textContent = offCanvasLabels.trello;
+        offCanvasItems[2].textContent = offCanvasLabels.timeline;
+    } else if (currentPage.includes("orgni")) {
+        breadcrumb.textContent = offCanvasLabels.orgni;
+        offCanvasItems[0].textContent = offCanvasLabels.orgni;
+        offCanvasItems[1].textContent = offCanvasLabels.attend;
+        offCanvasItems[2].textContent = offCanvasLabels.total;
+    } else if (currentPage.includes("attend")) {
+        breadcrumb.textContent = offCanvasLabels.attend;
+        offCanvasItems[0].textContent = offCanvasLabels.orgni;
+        offCanvasItems[1].textContent = offCanvasLabels.attend;
+        offCanvasItems[2].textContent = offCanvasLabels.total;
+    } else if (currentPage.includes("total")) {
+        breadcrumb.textContent = offCanvasLabels.total;
+        offCanvasItems[0].textContent = offCanvasLabels.orgni;
+        offCanvasItems[1].textContent = offCanvasLabels.attend;
+        offCanvasItems[2].textContent = offCanvasLabels.total;
     }
 
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    const appBrand = new AppBrand('logo', 'EDUMGT');
-    const lang = localStorage.getItem('lang');
-
+    
+    let lang = localStorage.getItem('lang');
     const tabLabels = translations[lang].tabs;
     tabs[0].textContent = tabLabels.system;
     tabs[1].textContent = tabLabels.organization;
@@ -123,18 +146,37 @@ document.addEventListener('DOMContentLoaded', () => {
     tabs[4].textContent = tabLabels.statistics;
     tabs[5].textContent = tabLabels.settings;
   
-    const offCanvasLabels = translations[lang].offCanvas;
-    offCanvasItems[0].textContent = offCanvasLabels.calendar;
-    offCanvasItems[1].textContent = offCanvasLabels.trello;
-    offCanvasItems[2].textContent = offCanvasLabels.timeline;
+    let offCanvasLabels = translations[lang].offCanvas;
     if (currentPage.includes("calendar")) {
         breadcrumb.textContent = offCanvasLabels.calendar;
+        offCanvasItems[0].textContent = offCanvasLabels.calendar;
+        offCanvasItems[1].textContent = offCanvasLabels.trello;
+        offCanvasItems[2].textContent = offCanvasLabels.timeline;
     } else if (currentPage.includes("trello")) {
         breadcrumb.textContent = offCanvasLabels.trello;
+        offCanvasItems[0].textContent = offCanvasLabels.calendar;
+        offCanvasItems[1].textContent = offCanvasLabels.trello;
+        offCanvasItems[2].textContent = offCanvasLabels.timeline;
     } else if (currentPage.includes("timeline")) {
         breadcrumb.textContent = offCanvasLabels.timeline;
-    } else {
-        breadcrumb.textContent = offCanvasLabels.timeline;
+        offCanvasItems[0].textContent = offCanvasLabels.calendar;
+        offCanvasItems[1].textContent = offCanvasLabels.trello;
+        offCanvasItems[2].textContent = offCanvasLabels.timeline;
+    } else if (currentPage.includes("orgni")) {
+        breadcrumb.textContent = offCanvasLabels.orgni;
+        offCanvasItems[0].textContent = offCanvasLabels.orgni;
+        offCanvasItems[1].textContent = offCanvasLabels.attend;
+        offCanvasItems[2].textContent = offCanvasLabels.total;
+    } else if (currentPage.includes("attend")) {
+        breadcrumb.textContent = offCanvasLabels.attend;
+        offCanvasItems[0].textContent = offCanvasLabels.orgni;
+        offCanvasItems[1].textContent = offCanvasLabels.attend;
+        offCanvasItems[2].textContent = offCanvasLabels.total;
+    } else if (currentPage.includes("total")) {
+        breadcrumb.textContent = offCanvasLabels.total;
+        offCanvasItems[0].textContent = offCanvasLabels.orgni;
+        offCanvasItems[1].textContent = offCanvasLabels.attend;
+        offCanvasItems[2].textContent = offCanvasLabels.total;
     }
   });
 

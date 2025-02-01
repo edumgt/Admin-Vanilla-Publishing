@@ -83,13 +83,11 @@ const translations = {
 
 
 languageSwitcher.addEventListener("click", function (event) {
-    const lang = event.target.getAttribute("data-lang");
-    //console.log(lang);
+    let lang = event.target.getAttribute("data-lang");
     localStorage.setItem('lang', lang);
     if (!lang || !translations[lang]) return;
 
-    // 탭 메뉴 텍스트 변경
-    const tabLabels = translations[lang].tabs;
+    let tabLabels = translations[lang].tabs;
     tabs[0].textContent = tabLabels.system;
     tabs[1].textContent = tabLabels.organization;
     tabs[2].textContent = tabLabels.task;
@@ -98,7 +96,7 @@ languageSwitcher.addEventListener("click", function (event) {
     tabs[5].textContent = tabLabels.settings;
 
 
-    const offCanvasLabels = translations[lang].offCanvas;
+    let offCanvasLabels = translations[lang].offCanvas;
     offCanvasItems[0].textContent = offCanvasLabels.stati;
     offCanvasItems[1].textContent = offCanvasLabels.flow;
     offCanvasItems[2].textContent = offCanvasLabels.chain;
@@ -106,17 +104,17 @@ languageSwitcher.addEventListener("click", function (event) {
         breadcrumb.textContent = offCanvasLabels.stati;
     } else if (currentPage.includes("flow")) {
         breadcrumb.textContent = offCanvasLabels.flow;
-    } else {
+    } else if (currentPage.includes("chain")) {
         breadcrumb.textContent = offCanvasLabels.chain;
     }
 
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    const appBrand = new AppBrand('logo', 'EDUMGT');
-    const lang = localStorage.getItem('lang');
+    
+    let lang = localStorage.getItem('lang');
 
-    const tabLabels = translations[lang].tabs;
+    let tabLabels = translations[lang].tabs;
     tabs[0].textContent = tabLabels.system;
     tabs[1].textContent = tabLabels.organization;
     tabs[2].textContent = tabLabels.task;
@@ -124,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     tabs[4].textContent = tabLabels.statistics;
     tabs[5].textContent = tabLabels.settings;
 
-    const offCanvasLabels = translations[lang].offCanvas;
+    let offCanvasLabels = translations[lang].offCanvas;
     offCanvasItems[0].textContent = offCanvasLabels.stati;
     offCanvasItems[1].textContent = offCanvasLabels.flow;
     offCanvasItems[2].textContent = offCanvasLabels.chain;
@@ -132,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
         breadcrumb.textContent = offCanvasLabels.stati;
     } else if (currentPage.includes("flow")) {
         breadcrumb.textContent = offCanvasLabels.flow;
-    } else {
+    } else if (currentPage.includes("chain")) {
         breadcrumb.textContent = offCanvasLabels.chain;
     }
 });

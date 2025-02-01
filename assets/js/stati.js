@@ -1,16 +1,8 @@
 const workarea = document.getElementById("workarea");
 workarea.classList.add('grid', 'grid-cols-1', 'lg:grid-cols-4', 'gap-4', 'py-1', 'mt-4');
 
-
-
-
-let rowsPerPage = 0;
-let gridBodyHeight = 0;
-
-
-rowsPerPage = 15;
-gridBodyHeight = 420;
-
+let rowsPerPage = 15;
+let gridBodyHeight = 420;
 
 const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
 const currentDate = new Date().toLocaleDateString('ko-KR', options).replace(/[\.]/g, '-').replace(/[\s]/g, '').substring(0, 10);
@@ -99,8 +91,6 @@ const grid = new tui.Grid({
     },
     rowHeight: 42,
     minRowHeight: 42,
-
-
 
     columns: [
         { header: 'Key', name: 'id', align: 'left', sortable: true, resizable: true, width: 250, minWidth: 80 },
@@ -211,9 +201,7 @@ grid.on('click', (ev) => {
 
 // 신규 입력 가능한 셀에 placeholder 설정
 grid.on('editingStart', (ev) => {
-
     showToast('data-possible', 'info', lang);
-
 });
 
 grid.on('editingFinish', (ev) => {
@@ -315,8 +303,6 @@ document.getElementById('searchByDate').addEventListener('click', function () {
     const name = document.getElementById('name').value.toLowerCase();
     const email = document.getElementById('email').value.toLowerCase();
 
-
-
     const filteredData = gridData.filter(row => {
         //const matchesDate = selectedDate ? row.createdAt === selectedDate : true;
         const matchesTeam = team ? row.team.toLowerCase().includes(team) : true;
@@ -373,8 +359,6 @@ if (rows.length > 0) {
     lastRow.style.backgroundColor = '#fff'; // 마지막 행의 배경색
     lastRow.style.borderBottom = '1px solid #8f8f8f'; // 마지막 행의 테두리 색
 }
-
-
 
 /* 다국어 */
 const translations = {
@@ -484,14 +468,11 @@ const translations = {
 
 
 languageSwitcher.addEventListener("click", function (event) {
-    const lang = event.target.getAttribute("data-lang");
+    let lang = event.target.getAttribute("data-lang");
     localStorage.setItem('lang', lang);
     if (!lang || !translations[lang]) return;
 
-
-
-    // 탭 메뉴 텍스트 변경
-    const tabLabels = translations[lang].tabs;
+    let tabLabels = translations[lang].tabs;
     tabs[0].textContent = tabLabels.system;
     tabs[1].textContent = tabLabels.organization;
     tabs[2].textContent = tabLabels.task;
@@ -499,17 +480,12 @@ languageSwitcher.addEventListener("click", function (event) {
     tabs[4].textContent = tabLabels.statistics;
     tabs[5].textContent = tabLabels.settings;
 
-    // OffCanvas 메뉴 텍스트 변경
-    const offCanvasLabels = translations[lang].offCanvas;
+    let offCanvasLabels = translations[lang].offCanvas;
     if (currentPage.includes("stati")) {
         offCanvasItems[0].textContent = offCanvasLabels.stati;
+        offCanvasItems[1].textContent = offCanvasLabels.flow;
+        offCanvasItems[2].textContent = offCanvasLabels.chain;
     }
-    if (currentPage.includes("system")) {
-        offCanvasItems[0].textContent = offCanvasLabels.system;
-    }
-    offCanvasItems[1].textContent = offCanvasLabels.flow;
-    offCanvasItems[2].textContent = offCanvasLabels.chain;
-    offCanvasItems[3].textContent = offCanvasLabels.config;
 
     if (currentPage.includes("stati")) {
         breadcrumb.textContent = offCanvasLabels.stati;
@@ -517,13 +493,8 @@ languageSwitcher.addEventListener("click", function (event) {
         breadcrumb.textContent = offCanvasLabels.flow;
     } else if (currentPage.includes("chain")) {
         breadcrumb.textContent = offCanvasLabels.chain;
-    } else if (currentPage.includes("system")) {
-        breadcrumb.textContent = offCanvasLabels.system;
-    } else {
-        breadcrumb.textContent = offCanvasLabels.config;
     }
 
-    // 버튼 텍스트 변경
     const buttonLabels = translations[lang].buttons;
     buttons[0].textContent = buttonLabels.search;
     buttons[1].textContent = buttonLabels.reset;
@@ -535,10 +506,9 @@ languageSwitcher.addEventListener("click", function (event) {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    const appBrand = new AppBrand('logo', 'EDUMGT');
-    //const lang = localStorage.getItem('lang');
+    let lang = localStorage.getItem('lang');
 
-    const tabLabels = translations[lang].tabs;
+    let tabLabels = translations[lang].tabs;
     tabs[0].textContent = tabLabels.system;
     tabs[1].textContent = tabLabels.organization;
     tabs[2].textContent = tabLabels.task;
@@ -546,16 +516,12 @@ document.addEventListener('DOMContentLoaded', () => {
     tabs[4].textContent = tabLabels.statistics;
     tabs[5].textContent = tabLabels.settings;
 
-    const offCanvasLabels = translations[lang].offCanvas;
+    let offCanvasLabels = translations[lang].offCanvas;
     if (currentPage.includes("stati")) {
         offCanvasItems[0].textContent = offCanvasLabels.stati;
+        offCanvasItems[1].textContent = offCanvasLabels.flow;
+        offCanvasItems[2].textContent = offCanvasLabels.chain;
     }
-    if (currentPage.includes("system")) {
-        offCanvasItems[0].textContent = offCanvasLabels.system;
-    }
-    offCanvasItems[1].textContent = offCanvasLabels.flow;
-    offCanvasItems[2].textContent = offCanvasLabels.chain;
-
 
     if (currentPage.includes("stati")) {
         breadcrumb.textContent = offCanvasLabels.stati;
@@ -563,13 +529,8 @@ document.addEventListener('DOMContentLoaded', () => {
         breadcrumb.textContent = offCanvasLabels.flow;
     } else if (currentPage.includes("chain")) {
         breadcrumb.textContent = offCanvasLabels.chain;
-    } else if (currentPage.includes("system")) {
-        breadcrumb.textContent = offCanvasLabels.system;
-    } else {
-        breadcrumb.textContent = offCanvasLabels.config;
     }
 
-    // 버튼 텍스트 변경
     const buttonLabels = translations[lang].buttons;
     buttons[0].textContent = buttonLabels.search;
     buttons[1].textContent = buttonLabels.reset;

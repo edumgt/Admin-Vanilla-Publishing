@@ -462,6 +462,8 @@ class AppBrand {
     }
 }
 
+const appBrand = new AppBrand('logo', 'EDUMGT');
+
 /* gearIcon */
 const button = document.createElement('div');
 createTooltip(button, "다국어를 지정 합니다.");

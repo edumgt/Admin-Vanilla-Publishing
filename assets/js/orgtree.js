@@ -1,5 +1,3 @@
-
-/* 다국어 */
 const translations = {
   en: {
     menu: "Menu",
@@ -70,7 +68,7 @@ const translations = {
       document: "文書管理",
       wms: "WMS"
     },
-    
+
     buttons: {
       search: "検索",
       reset: "検索をリセット",
@@ -83,22 +81,13 @@ const translations = {
 };
 
 
-// const languageSwitcher = document.getElementById("languageSwitcher");
-// const breadcrumb = document.querySelector(".breadcrumb");
-// const buttons = document.querySelectorAll("#content button span");
-// const tabs = document.querySelectorAll(".tabs li a span");
-// const offCanvasItems = document.querySelectorAll("#offCanvas .menu-item span");
-
-// 언어 변경 이벤트 핸들러
 languageSwitcher.addEventListener("click", function (event) {
-  const lang = event.target.getAttribute("data-lang");
+  let lang = event.target.getAttribute("data-lang");
   localStorage.setItem('lang', lang);
   if (!lang || !translations[lang]) return;
 
 
-
-  // 탭 메뉴 텍스트 변경
-  const tabLabels = translations[lang].tabs;
+  let tabLabels = translations[lang].tabs;
   tabs[0].textContent = tabLabels.system;
   tabs[1].textContent = tabLabels.organization;
   tabs[2].textContent = tabLabels.task;
@@ -106,8 +95,8 @@ languageSwitcher.addEventListener("click", function (event) {
   tabs[4].textContent = tabLabels.statistics;
   tabs[5].textContent = tabLabels.settings;
 
-  // OffCanvas 메뉴 텍스트 변경
-  const offCanvasLabels = translations[lang].offCanvas;
+
+  let offCanvasLabels = translations[lang].offCanvas;
   offCanvasItems[0].textContent = offCanvasLabels.system;
   offCanvasItems[1].textContent = offCanvasLabels.orgtree;
   offCanvasItems[2].textContent = offCanvasLabels.document;
@@ -118,19 +107,16 @@ languageSwitcher.addEventListener("click", function (event) {
     breadcrumb.textContent = offCanvasLabels.orgtree;
   } else if (currentPage.includes("document")) {
     breadcrumb.textContent = offCanvasLabels.document;
-  } else {
+  } else if (currentPage.includes("wms")) {
     breadcrumb.textContent = offCanvasLabels.wms;
   }
 
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  const appBrand = new AppBrand('logo', 'EDUMGT');
-  const lang = localStorage.getItem('lang');
-  //console.log("lang: " + lang);
+  let lang = localStorage.getItem('lang');
 
-  // 탭 메뉴 텍스트 변경
-  const tabLabels = translations[lang].tabs;
+  let tabLabels = translations[lang].tabs;
   tabs[0].textContent = tabLabels.system;
   tabs[1].textContent = tabLabels.organization;
   tabs[2].textContent = tabLabels.task;
@@ -138,8 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
   tabs[4].textContent = tabLabels.statistics;
   tabs[5].textContent = tabLabels.settings;
 
-  // OffCanvas 메뉴 텍스트 변경
-  const offCanvasLabels = translations[lang].offCanvas;
+  let offCanvasLabels = translations[lang].offCanvas;
   offCanvasItems[0].textContent = offCanvasLabels.system;
   offCanvasItems[1].textContent = offCanvasLabels.orgtree;
   offCanvasItems[2].textContent = offCanvasLabels.document;
@@ -150,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
     breadcrumb.textContent = offCanvasLabels.orgtree;
   } else if (currentPage.includes("document")) {
     breadcrumb.textContent = offCanvasLabels.document;
-  } else {
+  } else if (currentPage.includes("wms")) {
     breadcrumb.textContent = offCanvasLabels.wms;
   }
 });

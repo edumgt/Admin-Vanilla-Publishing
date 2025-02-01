@@ -17,7 +17,7 @@ const translations = {
             lectures: "Lecture Schedule",
             city: "District Information"
         },
-        
+
         buttons: {
             search: "Search",
             reset: "Reset Search",
@@ -25,7 +25,7 @@ const translations = {
             delete: "Delete",
             save: "Save",
         },
-        
+
     },
     ko: {
         menu: "메뉴",
@@ -44,7 +44,7 @@ const translations = {
             lectures: "강의일정",
             city: "행정구역정보",
         },
-        
+
         buttons: {
             search: "검색",
             reset: "검색 초기화",
@@ -52,7 +52,7 @@ const translations = {
             delete: "삭제",
             save: "저장",
         },
-        
+
     },
     ja: {
         menu: "メニュー",
@@ -71,7 +71,7 @@ const translations = {
             lectures: "講義日程",
             city: "行政区情報",
         },
-        
+
         buttons: {
             search: "検索",
             reset: "検索をリセット",
@@ -79,20 +79,18 @@ const translations = {
             delete: "削除",
             save: "保存",
         },
-        
+
     },
 };
 
-
-
 languageSwitcher.addEventListener("click", function (event) {
-    const lang = event.target.getAttribute("data-lang");
+    let lang = event.target.getAttribute("data-lang");
     localStorage.setItem('lang', lang);
     if (!lang || !translations[lang]) return;
 
-    
 
-    const tabLabels = translations[lang].tabs;
+
+    let tabLabels = translations[lang].tabs;
     tabs[0].textContent = tabLabels.system;
     tabs[1].textContent = tabLabels.organization;
     tabs[2].textContent = tabLabels.task;
@@ -100,13 +98,13 @@ languageSwitcher.addEventListener("click", function (event) {
     tabs[4].textContent = tabLabels.statistics;
     tabs[5].textContent = tabLabels.settings;
 
-    const offCanvasLabels = translations[lang].offCanvas;
+    let offCanvasLabels = translations[lang].offCanvas;
     offCanvasItems[0].textContent = offCanvasLabels.work;
     offCanvasItems[1].textContent = offCanvasLabels.meeting;
     offCanvasItems[2].textContent = offCanvasLabels.hospital;
     offCanvasItems[3].textContent = offCanvasLabels.lectures;
     offCanvasItems[4].textContent = offCanvasLabels.city;
-    
+
     if (currentPage.includes("work")) {
         breadcrumb.textContent = offCanvasLabels.work;
     } else if (currentPage.includes("meeting")) {
@@ -115,19 +113,17 @@ languageSwitcher.addEventListener("click", function (event) {
         breadcrumb.textContent = offCanvasLabels.hospital;
     } else if (currentPage.includes("lectures")) {
         breadcrumb.textContent = offCanvasLabels.lectures;
-    } else {
+    } else if (currentPage.includes("city")) {
         breadcrumb.textContent = offCanvasLabels.city;
     }
 
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    const appBrand = new AppBrand('logo', 'EDUMGT');
-    const lang = localStorage.getItem('lang');
-    //console.log("lang: " + lang);
 
+    let lang = localStorage.getItem('lang');
 
-    const tabLabels = translations[lang].tabs;
+    let tabLabels = translations[lang].tabs;
     tabs[0].textContent = tabLabels.system;
     tabs[1].textContent = tabLabels.organization;
     tabs[2].textContent = tabLabels.task;
@@ -135,13 +131,13 @@ document.addEventListener('DOMContentLoaded', () => {
     tabs[4].textContent = tabLabels.statistics;
     tabs[5].textContent = tabLabels.settings;
 
-    const offCanvasLabels = translations[lang].offCanvas;
+    let offCanvasLabels = translations[lang].offCanvas;
     offCanvasItems[0].textContent = offCanvasLabels.work;
     offCanvasItems[1].textContent = offCanvasLabels.meeting;
     offCanvasItems[2].textContent = offCanvasLabels.hospital;
     offCanvasItems[3].textContent = offCanvasLabels.lectures;
     offCanvasItems[4].textContent = offCanvasLabels.city;
-    
+
     if (currentPage.includes("work")) {
         breadcrumb.textContent = offCanvasLabels.work;
     } else if (currentPage.includes("meeting")) {
@@ -150,15 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
         breadcrumb.textContent = offCanvasLabels.hospital;
     } else if (currentPage.includes("lectures")) {
         breadcrumb.textContent = offCanvasLabels.lectures;
-    } else {
+    } else if (currentPage.includes("city")) {
         breadcrumb.textContent = offCanvasLabels.city;
     }
 });
-
-
-
-
-
-
-
-

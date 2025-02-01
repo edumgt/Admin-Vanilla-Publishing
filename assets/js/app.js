@@ -1,13 +1,5 @@
-
-
-
-let rowsPerPage = 0;
-let gridBodyHeight = 0;
-
-
-rowsPerPage = 20;
-gridBodyHeight = 620;
-
+let rowsPerPage = 20;
+let gridBodyHeight = 620;
 
 const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
 const currentDate = new Date().toLocaleDateString('ko-KR', options).replace(/[\.]/g, '-').replace(/[\s]/g, '').substring(0, 10);
@@ -381,10 +373,6 @@ if (rows.length > 0) {
     lastRow.style.borderBottom = '1px solid #8f8f8f'; // 마지막 행의 테두리 색
 }
 
-
-
-
-/* 다국어 */
 const translations = {
     en: {
         menu: "Menu",
@@ -493,14 +481,12 @@ const translations = {
 
 
 languageSwitcher.addEventListener("click", function (event) {
-    const lang = event.target.getAttribute("data-lang");
+    let lang = event.target.getAttribute("data-lang");
     localStorage.setItem('lang', lang);
     if (!lang || !translations[lang]) return;
 
 
-
-    // 탭 메뉴 텍스트 변경
-    const tabLabels = translations[lang].tabs;
+    let tabLabels = translations[lang].tabs;
     tabs[0].textContent = tabLabels.system;
     tabs[1].textContent = tabLabels.organization;
     tabs[2].textContent = tabLabels.task;
@@ -508,32 +494,26 @@ languageSwitcher.addEventListener("click", function (event) {
     tabs[4].textContent = tabLabels.statistics;
     tabs[5].textContent = tabLabels.settings;
 
-    // OffCanvas 메뉴 텍스트 변경
-    const offCanvasLabels = translations[lang].offCanvas;
-    if (currentPage.includes("stati")) {
-        offCanvasItems[0].textContent = offCanvasLabels.stati;
-    }
+
+    let offCanvasLabels = translations[lang].offCanvas;
     if (currentPage.includes("system")) {
         offCanvasItems[0].textContent = offCanvasLabels.system;
+        offCanvasItems[1].textContent = offCanvasLabels.orgtree;
+        offCanvasItems[2].textContent = offCanvasLabels.document;
+        offCanvasItems[3].textContent = offCanvasLabels.wms;
     }
-    offCanvasItems[1].textContent = offCanvasLabels.flow;
-    offCanvasItems[2].textContent = offCanvasLabels.chain;
-    offCanvasItems[3].textContent = offCanvasLabels.config;
 
-    if (currentPage.includes("stati")) {
-        breadcrumb.textContent = offCanvasLabels.stati;
-    } else if (currentPage.includes("flow")) {
-        breadcrumb.textContent = offCanvasLabels.flow;
-    } else if (currentPage.includes("chain")) {
-        breadcrumb.textContent = offCanvasLabels.chain;
-    } else if (currentPage.includes("system")) {
+    if (currentPage.includes("system")) {
         breadcrumb.textContent = offCanvasLabels.system;
-    } else {
-        breadcrumb.textContent = offCanvasLabels.config;
+    } else if (currentPage.includes("orgtree")) {
+        breadcrumb.textContent = offCanvasLabels.orgtree;
+    } else if (currentPage.includes("document")) {
+        breadcrumb.textContent = offCanvasLabels.document;
+    } else if (currentPage.includes("wms")) {
+        breadcrumb.textContent = offCanvasLabels.system;
     }
 
-    // 버튼 텍스트 변경
-    const buttonLabels = translations[lang].buttons;
+    let buttonLabels = translations[lang].buttons;
     buttons[0].textContent = buttonLabels.search;
     buttons[1].textContent = buttonLabels.reset;
     buttons[2].textContent = buttonLabels.new;
@@ -544,10 +524,9 @@ languageSwitcher.addEventListener("click", function (event) {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    const appBrand = new AppBrand('logo', 'EDUMGT');
-    //const lang = localStorage.getItem('lang');
+    let lang = localStorage.getItem('lang');
 
-    const tabLabels = translations[lang].tabs;
+    let tabLabels = translations[lang].tabs;
     tabs[0].textContent = tabLabels.system;
     tabs[1].textContent = tabLabels.organization;
     tabs[2].textContent = tabLabels.task;
@@ -555,31 +534,25 @@ document.addEventListener('DOMContentLoaded', () => {
     tabs[4].textContent = tabLabels.statistics;
     tabs[5].textContent = tabLabels.settings;
 
-    const offCanvasLabels = translations[lang].offCanvas;
-    if (currentPage.includes("stati")) {
-        offCanvasItems[0].textContent = offCanvasLabels.stati;
-    }
+    let offCanvasLabels = translations[lang].offCanvas;
     if (currentPage.includes("system")) {
         offCanvasItems[0].textContent = offCanvasLabels.system;
+        offCanvasItems[1].textContent = offCanvasLabels.orgtree;
+        offCanvasItems[2].textContent = offCanvasLabels.document;
+        offCanvasItems[3].textContent = offCanvasLabels.wms;
     }
-    offCanvasItems[1].textContent = offCanvasLabels.flow;
-    offCanvasItems[2].textContent = offCanvasLabels.chain;
 
-
-    if (currentPage.includes("stati")) {
-        breadcrumb.textContent = offCanvasLabels.stati;
-    } else if (currentPage.includes("flow")) {
-        breadcrumb.textContent = offCanvasLabels.flow;
-    } else if (currentPage.includes("chain")) {
-        breadcrumb.textContent = offCanvasLabels.chain;
-    } else if (currentPage.includes("system")) {
+    if (currentPage.includes("system")) {
         breadcrumb.textContent = offCanvasLabels.system;
-    } else {
-        breadcrumb.textContent = offCanvasLabels.config;
+    } else if (currentPage.includes("orgtree")) {
+        breadcrumb.textContent = offCanvasLabels.orgtree;
+    } else if (currentPage.includes("document")) {
+        breadcrumb.textContent = offCanvasLabels.document;
+    } else if (currentPage.includes("wms")) {
+        breadcrumb.textContent = offCanvasLabels.system;
     }
 
-    // 버튼 텍스트 변경
-    const buttonLabels = translations[lang].buttons;
+    let buttonLabels = translations[lang].buttons;
     buttons[0].textContent = buttonLabels.search;
     buttons[1].textContent = buttonLabels.reset;
     buttons[2].textContent = buttonLabels.new;
