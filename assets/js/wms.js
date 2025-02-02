@@ -8,25 +8,50 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     async function updateData(url, updatedRows) {
-        console.log(updatedRows);
+        console.log('Sending updates:', updatedRows);
+
         if (updatedRows.length > 0) {
             const updatesWithId = updatedRows.map(row => ({ id: row.id, changes: row }));
-            await fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(updatesWithId)
-            });
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updatesWithId)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Server responded with status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                console.log('Server response:', result);
+            } catch (error) {
+                console.error('Fetch error:', error);
+            }
         }
     }
 
+
     async function addData(url, newRow) {
-        console.log(newRow);
-        await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(newRow)
-        });
+        console.log("Sending new row to server:", newRow); // ✅ 요청 데이터 확인
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newRow)
+            });
+
+            if (!response.ok) {
+                throw new Error(`Server responded with status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            console.log("Server response:", result); // ✅ 서버 응답 확인
+        } catch (error) {
+            console.error("Fetch error:", error);
+        }
     }
+
 
     async function deleteData(url, deletedRows) {
         console.log(deletedRows);
@@ -40,13 +65,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function generateUUID() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
             const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
             return v.toString(16);
         });
     }
 
-    const inboundData = await fetchJson("assets/mock/inbound.json");
+    const inboundData = await fetchJson("http://localhost:3000/api/inbound");
+    //const inboundData = await fetchJson("assets/mock/inbound.json");
     const outboundData = await fetchJson("assets/mock/outbound.json");
 
     const root = document.getElementById('root');
@@ -130,17 +156,27 @@ document.addEventListener('DOMContentLoaded', async () => {
                 id: grid.getRow(change.rowKey).id,
                 [change.columnName]: change.value
             }));
-            updateData(updateUrl, updatedRows);
+            updateData('http://localhost:3000/api/inbound/update', updatedRows);
         });
 
         const addButton = document.createElement('button');
         addButton.innerText = '추가';
+
         addButton.addEventListener('click', () => {
-            const newRow = { id: generateUUID(), isbn: '', date: '', title: '', quantity: 0 };
-            grid.prependRow(newRow);
-            grid.startEditingAt(0, 'isbn');
-            addData(updateUrl, newRow);
+            const newRow = {
+                id: generateUUID(), 
+                date: new Date().toISOString().split('T')[0], 
+                title: '',
+                quantity: 0,
+                isbn: ''
+            };
+        
+            grid.prependRow(newRow); // 첫 번째 행에 삽입
+            //grid.startEditingAt(0, 'isbn'); // 첫 번째 행의 'title' 필드에서 입력 시작
+            addData('http://localhost:3000/api/inbound/add', newRow);
         });
+
+
         section.appendChild(addButton);
 
         const deleteButton = document.createElement('button');
@@ -148,13 +184,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         deleteButton.addEventListener('click', () => {
             const checkedRows = grid.getCheckedRows();
             grid.removeCheckedRows();
-            deleteData(updateUrl, checkedRows);
+            deleteData('http://localhost:3000/api/inbound/delete', checkedRows);
         });
         section.appendChild(deleteButton);
     }
 
     function populateInbound(section) {
-        createGrid(section.id, inboundData, "assets/mock/updateInbound.json");
+        createGrid(section.id, inboundData, "http://localhost:3000/api/inbound");
     }
 
     function populateOutbound(section) {
