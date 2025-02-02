@@ -171,6 +171,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const section = document.getElementById(sectionId);
         section.innerHTML = `<div id="${sectionId}-grid"></div>`;
 
+
+
         const grid = new tui.Grid({
             el: document.getElementById(`${sectionId}-grid`),
             data: data,
@@ -183,10 +185,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                 { header: '도서명', name: 'title', align: 'center', editor: 'text', sortable: true, filter: 'select' },
                 { header: '수량', name: 'quantity', width: 80, align: 'center', editor: 'text', sortable: true, filter: 'number' }
             ],
-            rowHeaders: ['checkbox'],
+            rowHeaders: ["checkbox"],
             copyOptions: { useFormattedValue: true },
             editable: true
         });
+        
+        
+        
+        
+        
+        
+        
 
         grid.on('afterChange', ev => {
             const updatedRows = ev.changes.map(change => ({
