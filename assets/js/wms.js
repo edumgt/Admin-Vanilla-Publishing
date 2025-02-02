@@ -1,11 +1,20 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    const lang = 'ko';
+
 
     async function fetchJson(url) {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error(`Failed to fetch ${url}`);
-        return await response.json();
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch ${url} - Status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Fetch error:', error);
+            showToast('process-error', 'error', lang); 
+            return null; 
+        }
     }
+    
 
     async function updateData(url, updatedRows) {
         console.log('Sending updates:', updatedRows);
@@ -21,11 +30,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 if (!response.ok) {
                     throw new Error(`Server responded with status: ${response.status}`);
+                    
                 }
 
                 const result = await response.json();
+                showToast('well-done', 'success', lang); 
                 console.log('Server response:', result);
             } catch (error) {
+                showToast('process-error', 'error', lang); 
                 console.error('Fetch error:', error);
             }
         }
@@ -33,7 +45,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
     async function addData(url, newRow) {
-        console.log("Sending new row to server:", newRow); // ✅ 요청 데이터 확인
+        console.log("Sending new row to server:", newRow); 
         try {
             const response = await fetch(url, {
                 method: 'POST',
@@ -46,9 +58,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             const result = await response.json();
-            console.log("Server response:", result); // ✅ 서버 응답 확인
+            console.log("Server response:", result); 
+            showToast('input-allowed', 'success', lang); 
         } catch (error) {
             console.error("Fetch error:", error);
+            showToast('process-error', 'error', lang); 
         }
     }
 
@@ -62,6 +76,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 body: JSON.stringify(deletedRows)
             });
         }
+        showToast('well-done', 'success', lang); 
     }
 
     function generateUUID() {
@@ -72,7 +87,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     const inboundData = await fetchJson("http://localhost:3000/api/inbound");
-    //const inboundData = await fetchJson("assets/mock/inbound.json");
     const outboundData = await fetchJson("assets/mock/outbound.json");
 
     const root = document.getElementById('root');
@@ -90,6 +104,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const sections = {};
 
+    
     tabs.forEach(tab => {
         const tabButton = document.createElement('button');
         tabButton.id = tab.id;
@@ -159,33 +174,50 @@ document.addEventListener('DOMContentLoaded', async () => {
             updateData('http://localhost:3000/api/inbound/update', updatedRows);
         });
 
+        /*
+    <button id="newrow"
+                        class="flex items-center px-3 py-1 text-white  rounded bg-gray-700 hover:bg-gray-600 space-x-2">
+                        <i class="fas fa-plus"></i>
+                        <span>신규</span>
+                    </button>
+                    <button id="delrow"
+                        class="flex items-center px-3 py-1 text-white  rounded bg-gray-700 hover:bg-gray-600 space-x-2">
+                        <i class="fas fa-trash"></i>
+                        <span>삭제</span>
+                    </button>
+                    */
+        
         const addButton = document.createElement('button');
-        addButton.innerText = '추가';
+        addButton.className = "items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2 mr-2";
+        addButton.innerHTML = `<i class="fas fa-plus"></i><span>신규</span>`;
 
         addButton.addEventListener('click', () => {
             const newRow = {
-                id: generateUUID(), 
-                date: new Date().toISOString().split('T')[0], 
+                id: generateUUID(),
+                date: new Date().toISOString().split('T')[0],
                 title: '',
                 quantity: 0,
                 isbn: ''
             };
-        
+
             grid.prependRow(newRow); // 첫 번째 행에 삽입
             //grid.startEditingAt(0, 'isbn'); // 첫 번째 행의 'title' 필드에서 입력 시작
             addData('http://localhost:3000/api/inbound/add', newRow);
         });
 
-
-        section.appendChild(addButton);
+       
 
         const deleteButton = document.createElement('button');
-        deleteButton.innerText = '삭제';
+        deleteButton.className = "items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2";
+        deleteButton.innerHTML = `<i class="fas fa-trash"></i><span>삭제</span>`;
+        
         deleteButton.addEventListener('click', () => {
             const checkedRows = grid.getCheckedRows();
             grid.removeCheckedRows();
             deleteData('http://localhost:3000/api/inbound/delete', checkedRows);
         });
+
+        section.appendChild(addButton);
         section.appendChild(deleteButton);
     }
 

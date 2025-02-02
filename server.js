@@ -33,7 +33,7 @@ db.connect(err => {
 // Fetch inbound data
 app.get('/api/inbound', (req, res) => {
 
-    db.query('SELECT * FROM inbound_data', (err, results) => {
+    db.query('SELECT * FROM inbound_data order by date desc', (err, results) => {
         if (err) {
             console.log(res);
             res.status(500).json({ error: err.message });
@@ -59,24 +59,6 @@ app.post('/api/inbound/add', (req, res) => {
         }
     });
 });
-
-// Add new inbound record with client-provided UUID
-// app.post('/api/inbound/add', (req, res) => {
-//     const { id, date, title, quantity, isbn } = req.body;
-//     if (!id || !date || !title || !quantity || !isbn) {
-//         return res.status(400).json({ error: "Missing required fields" });
-//     }
-
-//     const query = 'INSERT INTO inbound_data (id, date, title, quantity, isbn) VALUES (?, ?, ?, ?, ?)';
-
-//     db.query(query, [id, date, title, quantity, isbn], (err, result) => {
-//         if (err) {
-//             res.status(500).json({ error: err.message });
-//         } else {
-//             res.json({ success: true, message: 'New inbound record added', item: { id, date, title, quantity, isbn } });
-//         }
-//     });
-// });
 
 // Update inbound data (Only update changed fields)
 app.post('/api/inbound/update', (req, res) => {
