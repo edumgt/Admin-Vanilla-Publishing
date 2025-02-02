@@ -86,14 +86,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         showToast('well-done', 'success', lang);
     }
 
-    // function generateUUID() {
-    //     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-    //         const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
-    //         return v.toString(16);
-    //     });
-    // }
-
-
 
     const root = document.getElementById('root');
     root.className = 'mt-4';
@@ -181,7 +173,20 @@ document.addEventListener('DOMContentLoaded', async () => {
             columns: [
                 { header: 'ID', name: 'id', width: 180, align: 'center' },
                 { header: 'ISBN', name: 'isbn', width: 200, align: 'center', editor: 'text', sortable: true },
-                { header: '날짜', name: 'date', width: 150, align: 'center', editor: 'text', sortable: true, filter: 'text' },
+                { 
+                    header: '날짜', 
+                    name: 'date', 
+                    width: 150, 
+                    align: 'center', 
+                    editor: 'text', 
+                    sortable: true, 
+                    filter: 'text',
+                    formatter: ({ value }) => {
+                        if (!value) return '';
+                        const date = new Date(value);
+                        return date.toISOString().split('T')[0]; // YYYY-MM-DD 형식으로 변환
+                    }
+                },
                 { header: '도서명', name: 'title', align: 'center', editor: 'text', sortable: true, filter: 'select' },
                 { header: '수량', name: 'quantity', width: 80, align: 'center', editor: 'text', sortable: true, filter: 'number' }
             ],
@@ -189,6 +194,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             copyOptions: { useFormattedValue: true },
             editable: true
         });
+        
         
         
         
