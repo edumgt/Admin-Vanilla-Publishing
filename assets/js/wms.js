@@ -86,12 +86,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         showToast('well-done', 'success', lang);
     }
 
-    function generateUUID() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-            const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
-            return v.toString(16);
-        });
-    }
+    // function generateUUID() {
+    //     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    //         const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+    //         return v.toString(16);
+    //     });
+    // }
 
 
 
@@ -230,6 +230,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         deleteButton.addEventListener('click', () => {
             const checkedRows = grid.getCheckedRows();
+
+            if (checkedRows.length === 0) {
+                // 체크된 항목이 없을 경우 toast 메시지 출력
+                showToast('delete-not','warning',lang);
+                return;
+            }
+
             grid.removeCheckedRows();
 
             if (sectionId === "tab-inbound-section") {
