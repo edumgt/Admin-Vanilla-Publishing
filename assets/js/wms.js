@@ -1,3 +1,5 @@
+import { createAddButton, createDelButton } from './common.js';
+
 document.addEventListener('DOMContentLoaded', async () => {
 
     function showLoading(section) {
@@ -238,10 +240,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (ev.columnName === 'date') {
                 const cellEl = grid.getElement(ev.rowKey, ev.columnName);
                 if (!cellEl) return;
-        
+
                 // 기존 DatePicker가 있으면 제거
                 document.querySelectorAll('.custom-datepicker').forEach(el => el.remove());
-        
+
                 // 새로운 DatePicker 컨테이너 생성
                 const pickerContainer = document.createElement('div');
                 pickerContainer.classList.add('custom-datepicker');
@@ -251,21 +253,21 @@ document.addEventListener('DOMContentLoaded', async () => {
                 pickerContainer.style.border = '1px solid #ddd';
                 pickerContainer.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
                 pickerContainer.style.padding = '5px';
-        
+
                 document.body.appendChild(pickerContainer);
-        
+
                 // 셀 위치를 기반으로 DatePicker 위치 조정
                 const rect = cellEl.getBoundingClientRect();
                 pickerContainer.style.top = `${rect.bottom + window.scrollY}px`;
                 pickerContainer.style.left = `${rect.left + window.scrollX}px`;
-        
+
                 // 기존 값에서 유효한 날짜만 가져오기
                 let initialDate = ev.value ? new Date(ev.value) : new Date();
                 if (isNaN(initialDate.getTime())) {
                     initialDate = new Date(); // 날짜가 유효하지 않으면 현재 날짜로 설정
                 }
                 initialDate.setHours(0, 0, 0, 0); // 시간 제거
-        
+
                 // TOAST UI DatePicker 생성
                 const datePicker = new tui.DatePicker(pickerContainer, {
                     showAlways: true,  // 캘린더 항상 보이도록 설정
@@ -274,14 +276,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                     type: 'date',      // ✅ "month" 타입 추가 (년/월 변경 활성화)
                     selectableRanges: [[new Date(1900, 0, 1), new Date(2100, 11, 31)]] // 선택 가능 범위 설정
                 });
-        
+
                 let prevDate = datePicker.getDate(); // 이전 날짜 저장
-        
+
                 // ✅ "날짜(일)"이 변경될 때만 캘린더를 닫도록 수정
                 datePicker.on('change', () => {
                     const selectedDate = datePicker.getDate();
                     if (!selectedDate) return;
-        
+
                     // "년도 또는 월만 변경" 시에는 캘린더 유지
                     if (
                         // selectedDate.getFullYear() === prevDate.getFullYear() &&
@@ -292,24 +294,24 @@ document.addEventListener('DOMContentLoaded', async () => {
                             selectedDate.getFullYear() + '-' +
                             String(selectedDate.getMonth() + 1).padStart(2, '0') + '-' +
                             String(selectedDate.getDate()).padStart(2, '0');
-        
+
                         console.log(`선택한 날짜: ${formattedDate}`);
-        
+
                         setTimeout(() => {
                             grid.finishEditing(); // 편집 종료 후 값 변경
                             grid.setValue(ev.rowKey, ev.columnName, formattedDate);
-                            pickerContainer.remove(); 
+                            pickerContainer.remove();
                         }, 50);
                     }
-        
+
                     prevDate = selectedDate; // 선택된 날짜를 저장하여 다음 비교 시 사용
                 });
-        
+
                 // ✅ "달력 UI가 다시 그려질 때" 닫히는 문제 방지
                 // datePicker.on('draw', () => {
                 //     console.log('캘린더가 다시 그려짐 (년/월 변경됨)');
                 // });
-        
+
                 // 셀 외부 클릭 시 캘린더 닫기
                 document.addEventListener('click', (event) => {
                     if (!pickerContainer.contains(event.target) && event.target !== cellEl) {
@@ -318,10 +320,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }, { once: true });
             }
         });
-        
-        
-        
-        
+
+
+
+
 
 
 
@@ -404,9 +406,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         });
 
-        const addButton = document.createElement('button');
-        addButton.className = "items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2 mr-2";
-        addButton.innerHTML = `<i class="fas fa-plus"></i><span>신규</span>`;
+        // const addButton = document.createElement('button');
+        // addButton.className = "items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2 mr-2";
+        // addButton.innerHTML = `<i class="fas fa-plus"></i><span>신규</span>`;
+
+
+        const addButton = createAddButton();
+
+
 
         addButton.addEventListener('click', () => {
             const newRow = {
@@ -428,9 +435,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         });
 
-        const deleteButton = document.createElement('button');
-        deleteButton.className = "items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2";
-        deleteButton.innerHTML = `<i class="fas fa-trash"></i><span>삭제</span>`;
+
+        const deleteButton = createDelButton();
 
         deleteButton.addEventListener('click', () => {
             const checkedRows = grid.getCheckedRows();
@@ -471,8 +477,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         createGrid(section.id, newOutboundData, "http://localhost:3000/api/outbound");
     }
-
-
 
 
     function populateDashboard(section) {

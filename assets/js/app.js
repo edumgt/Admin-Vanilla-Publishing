@@ -1,3 +1,5 @@
+import { createAddButton, createDelButton } from './common.js';
+
 let rowsPerPage = 20;
 let gridBodyHeight = 620;
 
@@ -133,7 +135,9 @@ const grid = new tui.Grid({
 
 updateDataCount();
 
-document.getElementById('delrow').addEventListener('click', function () {
+const deleteButton = createDelButton();
+
+deleteButton.addEventListener('click', function () {
     const chkArray = grid.getCheckedRowKeys();
     if (chkArray.length > 0) {
         grid.removeCheckedRows();
@@ -177,8 +181,11 @@ document.getElementById('saverow').addEventListener('click', function () {
         });
 });
 
+
+const addButton = createAddButton();
+
 // Add new row functionality
-document.getElementById('newrow').addEventListener('click', function () {
+addButton.addEventListener('click', function () {
     const data = grid.getData();
     const hasEmptyRow = data.some(row => row.tpCd === '' || row.tpNm === '');
     if (hasEmptyRow) {
@@ -192,6 +199,9 @@ document.getElementById('newrow').addEventListener('click', function () {
     saveData([...data, newRow]);
     updateDataCount();
 });
+
+btnContainer.appendChild(addButton);
+btnContainer.appendChild(deleteButton);
 
 // Handle View Button Click in Grid
 grid.on('click', (ev) => {
@@ -209,17 +219,14 @@ grid.on('click', (ev) => {
     }
 });
 
-// 신규 입력 가능한 셀에 placeholder 설정
+
 grid.on('editingStart', (ev) => {
-
     showToast('데이타 입력/수정 가능 합니다.', 'info');
-
 });
 
 grid.on('editingFinish', (ev) => {
     saveData(grid.getData());
     showToast('데이타를 자동 저장하였습니다.', 'info');
-
 });
 
 
@@ -330,9 +337,9 @@ document.getElementById('searchByDate').addEventListener('click', function () {
     document.getElementById('saverow').classList.add('bg-gray-400', 'cursor-not-allowed');
     document.getElementById('saverow').classList.remove('bg-gray-700', 'hover:bg-gray-600');
 
-    document.getElementById('newrow').disabled = true;
-    document.getElementById('newrow').classList.add('bg-gray-400', 'cursor-not-allowed');
-    document.getElementById('newrow').classList.remove('bg-gray-700', 'hover:bg-gray-600');
+    addButton.disabled = true;
+    addButton.classList.add('bg-gray-400', 'cursor-not-allowed');
+    addButton.classList.remove('bg-gray-700', 'hover:bg-gray-600');
 
     showToast('검색 클릭 시 신규, 저장 기능은 비활성화 됩니다.');
 
@@ -358,10 +365,10 @@ document.getElementById('resetSearch').addEventListener('click', function () {
     saveButton.classList.add('bg-gray-700', 'hover:bg-gray-600');
 
 
-    const newButton = document.getElementById('newrow');
-    newButton.disabled = false;
-    newButton.classList.remove('bg-gray-400', 'cursor-not-allowed');
-    newButton.classList.add('bg-gray-700', 'hover:bg-gray-600');
+    // const newButton = document.getElementById('newrow');
+    addButton.disabled = false;
+    addButton.classList.remove('bg-gray-400', 'cursor-not-allowed');
+    addButton.classList.add('bg-gray-700', 'hover:bg-gray-600');
 
     showToast('new-save', 'info', lang);
 });
@@ -516,9 +523,15 @@ languageSwitcher.addEventListener("click", function (event) {
     let buttonLabels = translations[lang].buttons;
     buttons[0].textContent = buttonLabels.search;
     buttons[1].textContent = buttonLabels.reset;
-    buttons[2].textContent = buttonLabels.new;
-    buttons[3].textContent = buttonLabels.delete;
-    buttons[4].textContent = buttonLabels.save;
+    // buttons[2].textContent = buttonLabels.new;
+    // buttons[3].textContent = buttonLabels.delete;
+    // addButton.textContent = buttonLabels.new;
+    // deleteButton.textContent = buttonLabels.delete;
+
+    addButton.innerHTML = `<i class="fas fa-plus"></i><span>`+buttonLabels.new+`</span>`; 
+    deleteButton.innerHTML = `<i class="fas fa-trash"></i><span>`+buttonLabels.delete+`</span>`; 
+    buttons[2].textContent = buttonLabels.save;
+    
 
 });
 
@@ -555,7 +568,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let buttonLabels = translations[lang].buttons;
     buttons[0].textContent = buttonLabels.search;
     buttons[1].textContent = buttonLabels.reset;
-    buttons[2].textContent = buttonLabels.new;
-    buttons[3].textContent = buttonLabels.delete;
-    buttons[4].textContent = buttonLabels.save;
+    // buttons[2].textContent = buttonLabels.new;
+    // buttons[3].textContent = buttonLabels.delete;
+    // addButton.textContent = buttonLabels.new;
+    // deleteButton.textContent = buttonLabels.delete;
+
+    addButton.innerHTML = `<i class="fas fa-plus"></i><span>`+buttonLabels.new+`</span>`; 
+    deleteButton.innerHTML = `<i class="fas fa-trash"></i><span>`+buttonLabels.delete+`</span>`; 
+    
+    buttons[2].textContent = buttonLabels.save;
 });

@@ -199,7 +199,6 @@ grid.on('click', (ev) => {
     }
 });
 
-// 신규 입력 가능한 셀에 placeholder 설정
 grid.on('editingStart', (ev) => {
     showToast('data-possible', 'info', lang);
 });
@@ -207,7 +206,6 @@ grid.on('editingStart', (ev) => {
 grid.on('editingFinish', (ev) => {
     saveData(grid.getData());
     showToast('well-done', 'info', lang);
-
 });
 
 

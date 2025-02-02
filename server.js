@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const databaseRoutes = require('./database');
+const databaseRoutes = require('./wms-api');
 
 const app = express();
 const PORT = 3000;
