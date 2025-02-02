@@ -114,6 +114,91 @@ app.delete('/api/inbound/delete', (req, res) => {
     });
 });
 
+
+// Fetch inbound data
+app.get('/api/outbound', (req, res) => {
+
+    db.query('SELECT * FROM outbound_data order by date desc', (err, results) => {
+        if (err) {
+            console.log(res);
+            res.status(500).json({ error: err.message });
+        } else {
+            console.log(res);
+            res.json(results);
+        }
+    });
+});
+
+// Add new inbound record
+app.post('/api/outbound/add', (req, res) => {
+
+    const newItem = { id: uuidv4(), ...req.body };
+    console.log(newItem);
+    const query = 'INSERT INTO outbound_data (id, date, title, quantity, isbn) VALUES (?, ?, ?, ?, ?)';
+
+    db.query(query, [newItem.id, newItem.date, newItem.title, newItem.quantity, newItem.isbn], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ success: true, message: 'New outbound record added', item: newItem });
+        }
+    });
+});
+
+// Update inbound data (Only update changed fields)
+app.post('/api/outbound/update', (req, res) => {
+    console.log('Received update request:', req.body);
+
+    const updates = req.body;
+    if (!Array.isArray(updates) || updates.length === 0) {
+        return res.status(400).json({ error: "Invalid request format. Expected an array of updates." });
+    }
+
+    const updatePromises = updates.map(update => {
+        return new Promise((resolve, reject) => {
+            const fields = Object.keys(update.changes);
+            if (fields.length === 0) {
+                return resolve(); // No changes to update
+            }
+
+            const setClause = fields.map(field => `${field} = ?`).join(', ');
+            const values = fields.map(field => update.changes[field]);
+            values.push(update.id); // Add ID to the values array for WHERE clause
+
+            const query = `UPDATE outbound_data SET ${setClause} WHERE id = ?`;
+            console.log('Executing query:', query, 'Values:', values);
+
+            db.query(query, values, (err, result) => {
+                if (err) {
+                    console.error("MySQL Update Error:", err);
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    });
+
+    Promise.all(updatePromises)
+        .then(() => res.json({ success: true, message: 'Outbound data updated' }))
+        .catch(err => res.status(500).json({ error: err.message }));
+});
+
+
+// Delete outbound records
+app.delete('/api/outbound/delete', (req, res) => {
+    console.log('Delete request:', req.body);
+    const idsToDelete = req.body.map(item => item.id);
+    const query = 'DELETE FROM outbound_data WHERE id IN (?)';
+    db.query(query, [idsToDelete], (err, result) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json({ success: true, message: 'Outbound records deleted' });
+        }
+    });
+});
+
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
