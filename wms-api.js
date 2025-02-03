@@ -157,4 +157,42 @@ router.delete('/outbound/delete', (req, res) => {
     });
 });
 
+// 📌 Fetch outbound data
+router.get('/calendar', (req, res) => {
+    db.query(`
+            SELECT 
+                JSON_OBJECTAGG(
+                    date, events
+                ) AS json_result
+            FROM (
+                SELECT
+                    d.date,
+                    JSON_ARRAYAGG(
+                        CONCAT(
+                            DATE_FORMAT(e.time, '%H:%i'), 
+                            ' - ', 
+                            e.description
+                        )
+                    ) AS events
+                FROM 
+                    dates d
+                JOIN 
+                    events e ON d.date_id = e.date_id
+                
+                GROUP BY 
+                    d.date
+            ) AS subquery
+        `, (err, results) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(results);
+
+            
+           
+        }
+    });
+});
+
+
 module.exports = router;

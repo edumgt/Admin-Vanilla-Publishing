@@ -175,7 +175,7 @@ const calendar = (() => {
                     delete tasks[dateKey];
                 }
                 saveTasks();
-                showToast('select-delete','success',lang);
+                showToast('select-delete', 'success', lang);
                 modal.remove();
                 renderCalendar(currentMonth, currentYear);
                 openTaskModal(day, month, year);
@@ -269,12 +269,14 @@ const calendar = (() => {
 
     const fetchTasks = async () => {
         try {
-            const response = await fetch('assets/mock/calendar.json'); // Fetch from calendar.json
-            //console.log(response);
-            if (!response.ok) {
-                throw new Error(`Failed to fetch tasks: ${response.statusText}`);
-            }
-            tasks = await response.json(); // Parse the JSON data
+            //const response = await fetch('assets/mock/calendar.json');
+            const response = await fetch('/api/calendar');
+
+
+            tasks = await response.json();
+            console.log(tasks);
+
+
         } catch (error) {
             console.error('Error fetching tasks:', error);
         }
