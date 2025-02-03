@@ -22,12 +22,46 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('lang', lang); 
 
     let firstFavorite = JSON.parse(localStorage.getItem('favorite-1st')) || null;
-    let firstPage = document.getElementById("firstPage");
+    let firstPage = "";
+    console.log(firstFavorite);
     
     if (firstFavorite) {
-        firstPage.href = firstFavorite.url;
+        firstPage = firstFavorite.url;
         
     } else {
-        firstPage.href = "system.html";
+        firstPage = "system.html";
     }
+
+    document.getElementById('loginButton').addEventListener('click', async () => {
+        const form = document.getElementById('loginForm');
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        try {
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                // 토큰을 로컬 스토리지에 저장
+                localStorage.setItem('token', result.token);
+                // index.html로 리다이렉트
+                window.location.href = firstPage;
+            } else {
+                const result = await response.json();
+                alert(result.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    });
 });
+
+
+
+        
