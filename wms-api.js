@@ -219,6 +219,7 @@ router.post('/addDate', (req, res) => {
 // 이벤트 추가 API 엔드포인트
 router.post('/addEvent', (req, res) => {
     const { date_id, time, description } = req.body;
+    console.log(`Received request to add event: date_id=${date_id}, time=${time}, description=${description}`); // 디버깅 로그
 
     if (!date_id || !time || !description) {
         return res.status(400).json({ error: 'Missing required fields' });
@@ -238,5 +239,28 @@ router.post('/addEvent', (req, res) => {
     });
 });
 
+// 이벤트 삭제 API 엔드포인트
+router.delete('/deleteEvent/:eventId', (req, res) => {
+    const { eventId } = req.params;
 
+    if (!eventId) {
+        return res.status(400).json({ error: 'Missing required parameter: eventId' });
+    }
+
+    const query = `
+        DELETE FROM events
+        WHERE event_id = ?
+    `;
+
+    db.query(query, [eventId], (err, results) => {
+        if (err) {
+            console.error('Error deleting event:', err);
+            return res.status(500).json({ error: 'Failed to delete event' });
+        }
+        if (results.affectedRows === 0) {
+            return res.status(404).json({ error: 'Event not found' });
+        }
+        res.status(200).json({ message: 'Event deleted successfully' });
+    });
+});
 module.exports = router;

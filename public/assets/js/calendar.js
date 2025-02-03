@@ -10,76 +10,95 @@ const calendar = (() => {
     let currentYear = today.getFullYear();
 
     let tasks = {}; // tasks 변수를 객체로 초기화
+let newTasks = {}; // 새로 추가된 이벤트를 추적
 
-    const saveTasks = async () => {
-        try {
-            // tasks 변수가 객체인지 확인
-            if (typeof tasks !== 'object' || tasks === null) {
-                throw new TypeError('tasks is not an object');
+const saveTasks = async () => {
+    try {
+        for (const [date, events] of Object.entries(newTasks)) {
+            // 날짜를 저장하고 dateId를 반환받음
+            const dateId = await saveDate(date);
+
+            // 각 이벤트를 저장
+            for (const event of events) {
+                const [time, description] = event.split(' - ');
+                await saveEvent(dateId, time, description);
             }
-
-            for (const [date, events] of Object.entries(tasks)) {
-                // 날짜를 저장하고 dateId를 반환받음
-                const dateId = await saveDate(date);
-
-                // 각 이벤트를 저장
-                for (const event of events) {
-                    const [time, description] = event.split(' - ');
-                    await saveEvent(dateId, time, description);
-                }
-            }
-
-            showToast('well-done','success',lang);
-        } catch (error) {
-            console.error('Error saving tasks:', error);
         }
-    };
 
-    const saveDate = async (date) => {
-        try {
-            const response = await fetch('/api/addDate', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ date })
-            });
+        // 이벤트가 저장된 후 newTasks를 초기화하여 다음 새 이벤트를 추적
+        newTasks = {};
 
-            if (!response.ok) {
-                throw new Error(`Failed to add date: ${response.statusText}`);
-            }
+        showToast('well-done', 'success', lang);
+    } catch (error) {
+        console.error('Error saving tasks:', error);
+    }
+};
 
-            const data = await response.json();
-            return data.dateId; // 반환된 dateId
-        } catch (error) {
-            console.error('Error adding date:', error);
-            throw error;
+const saveDate = async (date) => {
+    try {
+        const response = await fetch('/api/addDate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ date })
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to add date: ${response.statusText}`);
         }
-    };
 
-    const saveEvent = async (dateId, time, description) => {
-        try {
-            const response = await fetch('/api/addEvent', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ date_id: dateId, time, description })
-            });
+        const data = await response.json();
+        return data.dateId; // 반환된 dateId
+    } catch (error) {
+        console.error('Error adding date:', error);
+        throw error;
+    }
+};
 
-            if (!response.ok) {
-                throw new Error(`Failed to add event: ${response.statusText}`);
-            }
+const saveEvent = async (dateId, time, description) => {
+    try {
+        const response = await fetch('/api/addEvent', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ date_id: dateId, time, description })
+        });
 
-            const data = await response.json();
-            return data.eventId; // 반환된 eventId
-        } catch (error) {
-            console.error('Error adding event:', error);
-            throw error;
+        if (!response.ok) {
+            throw new Error(`Failed to add event: ${response.statusText}`);
         }
-    };
 
+        const data = await response.json();
+        return data.eventId; // 반환된 eventId
+    } catch (error) {
+        console.error('Error adding event:', error);
+        throw error;
+    }
+};
 
+const deleteEvent = async (eventId) => {
+    try {
+        console.log(`Deleting event with ID: ${eventId}`); // 확인용 로그
+        const response = await fetch(`/api/deleteEvent/${eventId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to delete event: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data.success;
+    } catch (error) {
+        console.error('Error deleting event:', error);
+        throw error;
+    }
+};
     const renderCalendar = (month, year) => {
         calendarContainer.innerHTML = '';
         calendarContainer.className = 'w-full h-full mt-4';
@@ -100,7 +119,6 @@ const calendar = (() => {
         const title = document.createElement('div');
         title.className = 'text-base text-gray-600';
         title.innerText = `${year}년 ${month + 1}월`;
-
 
         header.appendChild(prevBtn);
         header.appendChild(title);
@@ -129,16 +147,15 @@ const calendar = (() => {
             dates.appendChild(blank);
         }
 
-
         for (let day = 1; day <= daysInMonth; day++) {
             const dateDiv = document.createElement('div');
             dateDiv.className = 'py-6 px-4 border cursor-pointer relative';
             dateDiv.innerHTML = `<div class="text-md absolute top-2 left-2">${day}</div>`;
-
+    
             const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-
+    
             dateElements[dateKey] = dateDiv;
-
+    
             if (tasks[dateKey]) {
                 const taskList = document.createElement('ul');
                 taskList.className = 'mt-4 text-left text-md text-gray-800';
@@ -147,15 +164,17 @@ const calendar = (() => {
                     taskItem.className = 'border-b py-2 flex justify-between items-center';
                     const taskText = document.createElement('span');
                     taskText.innerText = `- ${task}`;
+                    
                     const deleteBtn = document.createElement('button');
                     deleteBtn.className = 'text-red-500 ml-4';
                     deleteBtn.innerText = 'x';
-                    deleteBtn.onclick = () => {
+                    deleteBtn.dataset.eventId = task.eventId; // 이벤트 ID를 데이터 속성으로 저장
+                    deleteBtn.onclick = async () => {
+                        await deleteEvent(task.eventId); // 이벤트 ID를 전달하여 삭제
                         tasks[dateKey].splice(index, 1);
                         if (tasks[dateKey].length === 0) {
                             delete tasks[dateKey];
                         }
-                        saveTasks();
                         renderCalendar(currentMonth, currentYear);
                     };
                     taskItem.appendChild(taskText);
@@ -164,18 +183,17 @@ const calendar = (() => {
                 });
                 dateDiv.appendChild(taskList);
             }
-
+    
             if (day === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
                 dateDiv.classList.add('bg-gray-100');
             }
-
+    
             dateDiv.onclick = () => openTaskModal(day, month, year);
             dates.appendChild(dateDiv);
         }
         calendarContainer.appendChild(header);
         calendarContainer.appendChild(daysOfWeek);
         calendarContainer.appendChild(dates);
-
     };
 
     const changeMonth = (delta) => {
@@ -187,14 +205,12 @@ const calendar = (() => {
             currentMonth = 0;
             currentYear++;
         }
-        //console.log('Changing to month:', monthNames[currentMonth], 'Year:', currentYear);
         renderCalendar(currentMonth, currentYear);
     };
 
     const openTaskModal = (day, month, year) => {
         const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
         const existingTasks = tasks[dateKey] || [];
-
 
         const modal = document.createElement('div');
         modal.className = 'task-modal fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50';
@@ -227,18 +243,18 @@ const calendar = (() => {
             const deleteBtn = document.createElement('button');
             deleteBtn.className = 'text-red-500 ml-4 text-2xl font-bold';
             deleteBtn.innerText = 'x';
-            deleteBtn.onclick = () => {
+            deleteBtn.onclick = async () => {
                 tasks[dateKey].splice(index, 1);
                 if (tasks[dateKey].length === 0) {
                     delete tasks[dateKey];
                 }
-                saveTasks();
+                await deleteEvent(dateKey, index); // 이벤트 삭제 API 호출
+                await saveTasks();
                 showToast('select-delete', 'success', lang);
                 modal.remove();
                 renderCalendar(currentMonth, currentYear);
                 openTaskModal(day, month, year);
             };
-
 
             taskItem.appendChild(taskText);
             taskItem.appendChild(deleteBtn);
@@ -254,7 +270,6 @@ const calendar = (() => {
         toDateInput.type = 'date';
         toDateInput.className = 'border w-full p-2 mb-4';
         toDateInput.value = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-
 
         const taskTextarea = document.createElement('textarea');
         taskTextarea.className = 'border w-full p-2 mb-4';
@@ -275,8 +290,16 @@ const calendar = (() => {
                 let currentDate = fromDate;
                 while (currentDate <= toDate) {
                     const dateKey = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
-                    if (!tasks[dateKey]) tasks[dateKey] = [];
+                    if (!tasks[dateKey]) {
+                        tasks[dateKey] = [];
+                    }
                     tasks[dateKey].push(`${time} - ${newTask}`);
+
+                    if (!newTasks[dateKey]) {
+                        newTasks[dateKey] = [];
+                    }
+                    newTasks[dateKey].push(`${time} - ${newTask}`);
+
                     currentDate.setDate(currentDate.getDate() + 1);
                 }
                 saveTasks();
@@ -285,11 +308,9 @@ const calendar = (() => {
             }
         };
 
-
         const createTimeSelect = () => {
             const timeSelect = document.createElement('select');
             timeSelect.className = 'w-full';
-
 
             const times = [];
             for (let hour = 8; hour < 24; hour++) { // Start from 08:00
@@ -308,7 +329,6 @@ const calendar = (() => {
             return timeSelect;
         };
 
-
         modalContent.appendChild(modalHeader);
         modalContent.appendChild(taskList);
         modalContent.appendChild(fromDateInput);
@@ -323,7 +343,6 @@ const calendar = (() => {
         document.body.appendChild(modal);
     };
 
-
     const fetchTasks = async () => {
         try {
             const response = await fetch('/api/calendar');
@@ -337,7 +356,6 @@ const calendar = (() => {
             console.error('Error fetching tasks:', error);
         }
     };
-
 
     return {
         init: async () => {
