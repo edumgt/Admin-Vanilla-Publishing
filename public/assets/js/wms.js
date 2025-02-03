@@ -1,6 +1,6 @@
 import { createAddButton, createDelButton } from './common.js';
 
-const apiurl = "https://scaling-space-couscous-5469jxg47gj274xw-3000.app.github.dev";
+const apiurl = "";
 
 document.addEventListener('DOMContentLoaded', async () => {
 
@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function createGrid(sectionId, data, updateUrl) {
 
-        console.log(sectionId);
+        //console.log(sectionId);
 
         const section = document.getElementById(sectionId);
         section.innerHTML = `<div id="${sectionId}-grid"></div>`;

@@ -1,3 +1,4 @@
+import { createAddButton, createCloseButton } from './common.js';
 
 async function fetchDocuments() {
     const response = await fetch('assets/mock/documents.json');
@@ -17,6 +18,15 @@ workarea.classList.add('flex','h-screen','mt-4');
 
 const documentList = document.getElementById('document-list');
 
+const addButton = createAddButton();
+addButton.addEventListener('click', () => {
+    openNewDocumentModal();
+});
+const btnArea = document.getElementById('btn-area');
+btnArea.classList.add("mt-4");
+btnArea.appendChild(addButton);
+
+
 const viewer = document.getElementById('viewer');
 viewer.classList.add('flex-1', 'flex', 'items-center', 'justify-center', 'bg-gray-50');
 
@@ -25,7 +35,7 @@ const dropZone = document.getElementById('drop-zone');
 const fileInput = document.getElementById('file-input');
 const progressBar = document.getElementById('progress-bar');
 const progressBarInner = progressBar.querySelector('div');
-const toast = document.getElementById('toast');
+// const toast = document.getElementById('toast');
 
 async function loadDocumentList() {
     const documents = await fetchDocuments();
@@ -122,3 +132,13 @@ function handleFileUpload(files) {
 }
 
 loadDocumentList();
+
+
+
+const closeButton = createCloseButton();
+closeButton.addEventListener('click', () => {
+    closeNewDocumentModal();
+});
+const closeBtn = document.getElementById('closeBtn');
+closeBtn.classList.add("mt-4","text-right");
+closeBtn.appendChild(closeButton);

@@ -14,5 +14,13 @@ function createDelButton() {
     return deleteButton;
 }
 
+function createCloseButton() {
+    const closeButton = document.createElement('button');
+    closeButton.className = "items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2";
+    closeButton.innerHTML = `<i class="fas fa-times"></i><span>닫기</span>`;
+
+    return closeButton;
+}
+
 // 모듈 내보내기
-export { createAddButton, createDelButton };
+export { createAddButton, createDelButton, createCloseButton};
