@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <link href="assets/css/default.css" rel="stylesheet">
 </head>
+
 <body>
     <div class="gnb-menu">
         <ul class="flex">
             <div id="logo"></div>
             <div id="tabs-container"></div>
             <div id="dropdown-container"></div>
-            <div id="memberIcon"></div><div id="memberMenu"></div>
+            <div id="memberIcon"></div>
+            <div id="memberMenu"></div>
         </ul>
     </div>
     <div id="toast-container"></div>
@@ -27,8 +30,7 @@
                     <span class="flex-1">Actions</span>
                 </div>
                 <div id="document-list"></div>
-                <button class="text-white bg-blue-500"
-                    onclick="openNewDocumentModal()">New</button>
+                <button class="text-white bg-blue-500" onclick="openNewDocumentModal()">New</button>
             </div>
             <div id="viewer">
                 <p>미리보기 대상 문서를 선택하세요.</p>
@@ -49,8 +51,7 @@
                     <div class="h-2 bg-blue-500 rounded width-0"></div>
                 </div>
                 <div class="mt-4 text-right">
-                    <button class="bg-blue-500 text-white"
-                        onclick="closeNewDocumentModal()">닫기</button>
+                    <button class="bg-blue-500 text-white" onclick="closeNewDocumentModal()">닫기</button>
                 </div>
             </div>
         </div>
@@ -58,10 +59,11 @@
 
     <div id="buttonContainer"></div>
     <div id="appContainer"></div>
-    
+
     <script type="text/javascript" src="assets/js/logo.js"></script>
     <script type="text/javascript" src="assets/js/orgtree.js"></script>
     <script type="text/javascript" src="assets/js/document.js"></script>
     <script type="text/javascript" src="assets/js/dropdown.js"></script>
 </body>
+
 </html>

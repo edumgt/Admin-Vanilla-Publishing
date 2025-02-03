@@ -1,5 +1,7 @@
 import { createAddButton, createDelButton } from './common.js';
 
+const apiurl = "https://scaling-space-couscous-5469jxg47gj274xw-3000.app.github.dev";
+
 document.addEventListener('DOMContentLoaded', async () => {
 
     function showLoading(section) {
@@ -158,16 +160,16 @@ document.addEventListener('DOMContentLoaded', async () => {
             setTimeout(async () => {
                 let newInboundData, newOutboundData;
                 if (button.id === 'tab-inbound') {
-                    newInboundData = await fetchJson("http://localhost:3000/api/inbound");
+                    newInboundData = await fetchJson(apiurl+"/api/inbound");
                     hideLoading(section);
                     populateInbound(section, newInboundData);
                 } else if (button.id === 'tab-outbound') {
-                    newOutboundData = await fetchJson("http://localhost:3000/api/outbound");
+                    newOutboundData = await fetchJson(apiurl+"/api/outbound");
                     hideLoading(section);
                     populateOutbound(section, newOutboundData);
                 } else if (button.id === 'tab-dashboard') {
-                    newInboundData = await fetchJson("http://localhost:3000/api/inbound");
-                    newOutboundData = await fetchJson("http://localhost:3000/api/outbound");
+                    newInboundData = await fetchJson(apiurl+"/api/inbound");
+                    newOutboundData = await fetchJson(apiurl+"/api/outbound");
                     hideLoading(section);
                     populateDashboard(section, newInboundData, newOutboundData);
                 }
@@ -344,10 +346,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 [change.columnName]: change.value
             }));
             if (sectionId === "tab-inbound-section") {
-                updateData('http://localhost:3000/api/inbound/update', updatedRows);
+                updateData(apiurl+'/api/inbound/update', updatedRows);
             }
             else {
-                updateData('http://localhost:3000/api/outbound/update', updatedRows);
+                updateData(apiurl+'/api/outbound/update', updatedRows);
             }
 
 
@@ -428,10 +430,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             grid.prependRow(newRow);
 
             if (sectionId === "tab-inbound-section") {
-                addData('http://localhost:3000/api/inbound/add', newRow);
+                addData(apiurl+'/api/inbound/add', newRow);
             }
             else {
-                addData('http://localhost:3000/api/outbound/add', newRow);
+                addData(apiurl+'/api/outbound/add', newRow);
             }
         });
 
@@ -450,10 +452,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             grid.removeCheckedRows();
 
             if (sectionId === "tab-inbound-section") {
-                deleteData('http://localhost:3000/api/inbound/delete', checkedRows);
+                deleteData(apiurl+'/api/inbound/delete', checkedRows);
             }
             else {
-                deleteData('http://localhost:3000/api/outbound/delete', checkedRows);
+                deleteData(apiurl+'/api/outbound/delete', checkedRows);
             }
 
         });
@@ -467,7 +469,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             section.innerHTML = `<div class="text-center text-lg font-semibold">데이터를 불러오는데 실패했습니다.</div>`;
             return;
         }
-        createGrid(section.id, newInboundData, "http://localhost:3000/api/inbound");
+        createGrid(section.id, newInboundData, apiurl+"/api/inbound");
     }
 
     function populateOutbound(section, newOutboundData) {
@@ -475,7 +477,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             section.innerHTML = `<div class="text-center text-lg font-semibold">데이터를 불러오는데 실패했습니다.</div>`;
             return;
         }
-        createGrid(section.id, newOutboundData, "http://localhost:3000/api/outbound");
+        createGrid(section.id, newOutboundData, apiurl+"/api/outbound");
     }
 
 
@@ -533,8 +535,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     }
 
-    const inboundData = await fetchJson("http://localhost:3000/api/inbound");
-    const outboundData = await fetchJson("http://localhost:3000/api/outbound");
+    const inboundData = await fetchJson(apiurl+"/api/inbound");
+    const outboundData = await fetchJson(apiurl+"/api/outbound");
 
 
     populateInbound(sections['tab-inbound'], inboundData);
