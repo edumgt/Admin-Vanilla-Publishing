@@ -163,7 +163,7 @@ router.get('/calendar', (req, res) => {
     db.query(`
             SELECT 
                 JSON_OBJECTAGG(
-                    date, events
+                    date, EVENTS
                 ) AS json_result
             FROM (
                 SELECT
@@ -172,9 +172,11 @@ router.get('/calendar', (req, res) => {
                         CONCAT(
                             DATE_FORMAT(e.time, '%H:%i'), 
                             ' - ', 
-                            e.description
+                            e.description,
+                            ' - ',
+                            e.event_id
                         )
-                    ) AS events
+                    ) AS EVENTS
                 FROM 
                     dates d
                 JOIN 
@@ -218,24 +220,26 @@ router.post('/addDate', (req, res) => {
 
 // 이벤트 추가 API 엔드포인트
 router.post('/addEvent', (req, res) => {
-    const { date_id, time, description } = req.body;
+    const { date_id, time, description, event_id} = req.body;
     console.log(`Received request to add event: date_id=${date_id}, time=${time}, description=${description}`); // 디버깅 로그
+
+    
 
     if (!date_id || !time || !description) {
         return res.status(400).json({ error: 'Missing required fields' });
     }
 
     const query = `
-        INSERT INTO events (date_id, time, description)
-        VALUES (?, ?, ?)
+        INSERT INTO events (date_id, time, description,event_id)
+        VALUES (?, ?, ?, ?)
     `;
 
-    db.query(query, [date_id, time, description], (err, results) => {
+    db.query(query, [date_id, time, description, event_id ], (err, results) => {
         if (err) {
             console.error('Error inserting event:', err);
             return res.status(500).json({ error: 'Failed to add event' });
         }
-        res.status(201).json({ message: 'Event added successfully', eventId: results.insertId });
+        res.status(201).json({ message: '일정을 추가 하였습니다.', eventId: event_id });
     });
 });
 

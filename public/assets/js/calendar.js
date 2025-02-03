@@ -1,9 +1,5 @@
 const calendar = (() => {
     const calendarContainer = document.getElementById('calendar');
-    const monthNames = [
-        'January', 'February', 'March', 'April', 'May', 'June',
-        'July', 'August', 'September', 'October', 'November', 'December'
-    ];
 
     let today = new Date();
     let currentMonth = today.getMonth();
@@ -15,13 +11,15 @@ const calendar = (() => {
     const saveTasks = async () => {
         try {
             for (const [date, events] of Object.entries(newTasks)) {
-                // 날짜를 저장하고 dateId를 반환받음
+                
                 const dateId = await saveDate(date);
-
-                // 각 이벤트를 저장
+                
+                
+                
                 for (const event of events) {
-                    const [time, description] = event.split(' - ');
-                    await saveEvent(dateId, time, description);
+                    
+                    const [time, description, eventId] = event.split(' - ');
+                    await saveEvent(dateId, time, description, eventId);
                 }
             }
 
@@ -56,14 +54,14 @@ const calendar = (() => {
         }
     };
 
-    const saveEvent = async (dateId, time, description) => {
+    const saveEvent = async (dateId, time, description, eventId) => {
         try {
             const response = await fetch('/api/addEvent', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ date_id: dateId, time, description })
+                body: JSON.stringify({ date_id: dateId, time, description , event_id: eventId})
             });
 
             if (!response.ok) {
@@ -87,11 +85,11 @@ const calendar = (() => {
                     'Content-Type': 'application/json'
                 }
             });
-    
+
             if (!response.ok) {
                 throw new Error(`Failed to delete event: ${response.statusText}`);
             }
-    
+
             const data = await response.json();
             return data.success;
         } catch (error) {
@@ -99,7 +97,7 @@ const calendar = (() => {
             throw error;
         }
     };
-    
+
     const renderCalendar = (month, year) => {
         calendarContainer.innerHTML = '';
         calendarContainer.className = 'w-full h-full mt-4';
@@ -127,7 +125,7 @@ const calendar = (() => {
 
         const daysOfWeek = document.createElement('div');
         daysOfWeek.className = 'grid grid-cols-7 text-center';
-        const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        const dayNames = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
         dayNames.forEach(day => {
             const dayDiv = document.createElement('div');
             dayDiv.className = 'day-header';
@@ -152,42 +150,51 @@ const calendar = (() => {
             const dateDiv = document.createElement('div');
             dateDiv.className = 'py-6 px-4 border cursor-pointer relative';
             dateDiv.innerHTML = `<div class="text-md absolute top-2 left-2">${day}</div>`;
-    
+
             const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-    
+
             dateElements[dateKey] = dateDiv;
-    
+
             if (tasks[dateKey]) {
                 const taskList = document.createElement('ul');
                 taskList.className = 'mt-4 text-left text-md text-gray-800';
+
                 tasks[dateKey].forEach((task, index) => {
                     const taskItem = document.createElement('li');
                     taskItem.className = 'border-b py-2 flex justify-between items-center';
                     const taskText = document.createElement('span');
-                    taskText.innerText = `- ${task.description}`; // 수정: task에 description 필드를 사용
-                    const deleteBtn = document.createElement('button');
-                    deleteBtn.className = 'text-red-500 ml-4';
-                    deleteBtn.innerText = 'x';
-                    deleteBtn.dataset.eventId = task.eventId; // 이벤트 ID를 데이터 속성으로 저장
-                    deleteBtn.onclick = async () => {
-                        await deleteEvent(task.eventId); // 이벤트 ID를 전달하여 삭제
-                        tasks[dateKey].splice(index, 1);
-                        if (tasks[dateKey].length === 0) {
-                            delete tasks[dateKey];
-                        }
-                        renderCalendar(currentMonth, currentYear);
-                    };
+
+                    
+                    
+                    taskText.innerText = `- ${task}`; 
+
+                    // const deleteBtn = document.createElement('button');
+                    // deleteBtn.className = 'text-red-500 ml-4';
+                    // deleteBtn.innerText = 'x';
+
+                    //console.log(taskText.innerText.split(" - ")[2]);
+
+                    // deleteBtn.dataset.eventId = taskText.innerText.split(" - ")[2];
+
+                    // deleteBtn.onclick = async () => {
+                    //     await deleteEvent(deleteBtn.dataset.eventId);
+                    //     tasks[dateKey].splice(index, 1);
+                    //     if (tasks[dateKey].length === 0) {
+                    //         delete tasks[dateKey];
+                    //     }
+                    //     renderCalendar(currentMonth, currentYear);
+                    // };
                     taskItem.appendChild(taskText);
-                    taskItem.appendChild(deleteBtn);
+                    //taskItem.appendChild(deleteBtn);
                     taskList.appendChild(taskItem);
                 });
                 dateDiv.appendChild(taskList);
             }
-    
+
             if (day === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
                 dateDiv.classList.add('bg-gray-100');
             }
-    
+
             dateDiv.onclick = () => openTaskModal(day, month, year);
             dates.appendChild(dateDiv);
         }
@@ -223,7 +230,7 @@ const calendar = (() => {
 
         const modalTitle = document.createElement('h3');
         modalTitle.className = 'text-md font-bold';
-        modalTitle.innerText = `Tasks for ${monthNames[month]} ${day}, ${year}`;
+        modalTitle.innerText = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')} 업무`;
 
         const closeModal = document.createElement('i');
         closeModal.className = 'fas fa-times cursor-pointer';
@@ -234,6 +241,7 @@ const calendar = (() => {
 
         const taskList = document.createElement('ul');
         taskList.className = 'task-list mb-4 text-left text-md text-gray-800';
+
         existingTasks.forEach((task, index) => {
             const taskItem = document.createElement('li');
             taskItem.className = 'border-b py-2 flex justify-between items-center';
@@ -243,17 +251,21 @@ const calendar = (() => {
             const deleteBtn = document.createElement('button');
             deleteBtn.className = 'text-red-500 ml-4 text-2xl font-bold';
             deleteBtn.innerText = 'x';
+
+            deleteBtn.dataset.eventId = taskText.innerText.split(" - ")[2];
+
             deleteBtn.onclick = async () => {
+                await deleteEvent(deleteBtn.dataset.eventId);
                 tasks[dateKey].splice(index, 1);
                 if (tasks[dateKey].length === 0) {
                     delete tasks[dateKey];
                 }
-                await deleteEvent(dateKey, index); // 이벤트 삭제 API 호출
+
                 await saveTasks();
                 showToast('select-delete', 'success', lang);
                 modal.remove();
                 renderCalendar(currentMonth, currentYear);
-                openTaskModal(day, month, year);
+                //openTaskModal(day, month, year);
             };
 
             taskItem.appendChild(taskText);
@@ -274,17 +286,23 @@ const calendar = (() => {
         const taskTextarea = document.createElement('textarea');
         taskTextarea.className = 'border w-full p-2 mb-4';
         taskTextarea.style.marginTop = '10px';
-        taskTextarea.placeholder = 'Add a detailed task';
+        taskTextarea.placeholder = ' 업무 일정 추가';
         taskTextarea.rows = 5;
 
         const saveBtn = document.createElement('button');
-        saveBtn.className = 'bg-blue-500 text-white w-full';
-        saveBtn.innerText = 'Save Task';
+        saveBtn.className = 'bg-blue-500 text-white';
+        saveBtn.innerText = '저장';
         saveBtn.onclick = () => {
             const newTask = taskTextarea.value.trim();
             const time = timeSelect.value;
             const fromDate = new Date(fromDateInput.value);
             const toDate = new Date(toDateInput.value);
+
+            const now = new Date();
+            
+            const eventId = generateNanoId();
+            
+
 
             if (newTask && time && fromDate <= toDate) {
                 let currentDate = fromDate;
@@ -293,12 +311,14 @@ const calendar = (() => {
                     if (!tasks[dateKey]) {
                         tasks[dateKey] = [];
                     }
-                    tasks[dateKey].push(`${time} - ${newTask}`);
+                    tasks[dateKey].push(`${time} - ${newTask} - ${eventId}`);
 
                     if (!newTasks[dateKey]) {
                         newTasks[dateKey] = [];
                     }
-                    newTasks[dateKey].push(`${time} - ${newTask}`);
+                    
+                    
+                    newTasks[dateKey].push(`${time} - ${newTask} - ${eventId}`);
 
                     currentDate.setDate(currentDate.getDate() + 1);
                 }
@@ -347,15 +367,13 @@ const calendar = (() => {
         try {
             const response = await fetch('/api/calendar');
             const data = await response.json();
-            console.log(data);
-
-            // 서버에서 받아온 데이터를 tasks 객체에 저장
+            console.log(data); // 서버에서 받아온 데이터 구조 확인
             tasks = data || {};
-
         } catch (error) {
             console.error('Error fetching tasks:', error);
         }
     };
+
 
     return {
         init: async () => {
@@ -368,3 +386,12 @@ const calendar = (() => {
 window.onload = () => {
     calendar.init();
 };
+
+function generateNanoId(length = 10) {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let id = '';
+    for (let i = 0; i < length; i++) {
+        id += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return id;
+}
