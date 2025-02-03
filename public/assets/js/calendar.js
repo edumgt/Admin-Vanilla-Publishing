@@ -265,24 +265,18 @@ const calendar = (() => {
         modal.appendChild(modalContent);
         document.body.appendChild(modal);
     };
-
-
     const fetchTasks = async () => {
         try {
-            //const response = await fetch('assets/mock/calendar.json');
+
             const response = await fetch('/api/calendar');
-
-
             tasks = await response.json();
-            console.log(tasks);
 
+            console.log(tasks);
 
         } catch (error) {
             console.error('Error fetching tasks:', error);
         }
     };
-
-
 
     return {
         init: async () => {

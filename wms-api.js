@@ -157,7 +157,6 @@ router.delete('/outbound/delete', (req, res) => {
     });
 });
 
-// 📌 Fetch outbound data
 router.get('/calendar', (req, res) => {
     db.query(`
             SELECT 
@@ -182,14 +181,13 @@ router.get('/calendar', (req, res) => {
                 GROUP BY 
                     d.date
             ) AS subquery
-        `, (err, results) => {
+            `, (err, results) => {
         if (err) {
             res.status(500).json({ error: err.message });
         } else {
-            res.json(results);
-
-            
-           
+            // json_result 필드 값만 추출하여 반환
+            const jsonResult = results[0].json_result;
+            res.json(JSON.parse(jsonResult));
         }
     });
 });
