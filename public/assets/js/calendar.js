@@ -10,95 +10,96 @@ const calendar = (() => {
     let currentYear = today.getFullYear();
 
     let tasks = {}; // tasks 변수를 객체로 초기화
-let newTasks = {}; // 새로 추가된 이벤트를 추적
+    let newTasks = {}; // 새로 추가된 이벤트를 추적
 
-const saveTasks = async () => {
-    try {
-        for (const [date, events] of Object.entries(newTasks)) {
-            // 날짜를 저장하고 dateId를 반환받음
-            const dateId = await saveDate(date);
+    const saveTasks = async () => {
+        try {
+            for (const [date, events] of Object.entries(newTasks)) {
+                // 날짜를 저장하고 dateId를 반환받음
+                const dateId = await saveDate(date);
 
-            // 각 이벤트를 저장
-            for (const event of events) {
-                const [time, description] = event.split(' - ');
-                await saveEvent(dateId, time, description);
+                // 각 이벤트를 저장
+                for (const event of events) {
+                    const [time, description] = event.split(' - ');
+                    await saveEvent(dateId, time, description);
+                }
             }
+
+            // 이벤트가 저장된 후 newTasks를 초기화하여 다음 새 이벤트를 추적
+            newTasks = {};
+
+            showToast('well-done', 'success', lang);
+        } catch (error) {
+            console.error('Error saving tasks:', error);
         }
+    };
 
-        // 이벤트가 저장된 후 newTasks를 초기화하여 다음 새 이벤트를 추적
-        newTasks = {};
+    const saveDate = async (date) => {
+        try {
+            const response = await fetch('/api/addDate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ date })
+            });
 
-        showToast('well-done', 'success', lang);
-    } catch (error) {
-        console.error('Error saving tasks:', error);
-    }
-};
-
-const saveDate = async (date) => {
-    try {
-        const response = await fetch('/api/addDate', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ date })
-        });
-
-        if (!response.ok) {
-            throw new Error(`Failed to add date: ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        return data.dateId; // 반환된 dateId
-    } catch (error) {
-        console.error('Error adding date:', error);
-        throw error;
-    }
-};
-
-const saveEvent = async (dateId, time, description) => {
-    try {
-        const response = await fetch('/api/addEvent', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ date_id: dateId, time, description })
-        });
-
-        if (!response.ok) {
-            throw new Error(`Failed to add event: ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        return data.eventId; // 반환된 eventId
-    } catch (error) {
-        console.error('Error adding event:', error);
-        throw error;
-    }
-};
-
-const deleteEvent = async (eventId) => {
-    try {
-        console.log(`Deleting event with ID: ${eventId}`); // 확인용 로그
-        const response = await fetch(`/api/deleteEvent/${eventId}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
+            if (!response.ok) {
+                throw new Error(`Failed to add date: ${response.statusText}`);
             }
-        });
 
-        if (!response.ok) {
-            throw new Error(`Failed to delete event: ${response.statusText}`);
+            const data = await response.json();
+            return data.dateId; // 반환된 dateId
+        } catch (error) {
+            console.error('Error adding date:', error);
+            throw error;
         }
+    };
 
-        const data = await response.json();
-        return data.success;
-    } catch (error) {
-        console.error('Error deleting event:', error);
-        throw error;
-    }
-};
+    const saveEvent = async (dateId, time, description) => {
+        try {
+            const response = await fetch('/api/addEvent', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ date_id: dateId, time, description })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to add event: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            return data.eventId; // 반환된 eventId
+        } catch (error) {
+            console.error('Error adding event:', error);
+            throw error;
+        }
+    };
+
+    const deleteEvent = async (eventId) => {
+        try {
+            console.log(`Deleting event with ID: ${eventId}`); // 확인용 로그
+            const response = await fetch(`/api/deleteEvent/${eventId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+    
+            if (!response.ok) {
+                throw new Error(`Failed to delete event: ${response.statusText}`);
+            }
+    
+            const data = await response.json();
+            return data.success;
+        } catch (error) {
+            console.error('Error deleting event:', error);
+            throw error;
+        }
+    };
+    
     const renderCalendar = (month, year) => {
         calendarContainer.innerHTML = '';
         calendarContainer.className = 'w-full h-full mt-4';
@@ -163,8 +164,7 @@ const deleteEvent = async (eventId) => {
                     const taskItem = document.createElement('li');
                     taskItem.className = 'border-b py-2 flex justify-between items-center';
                     const taskText = document.createElement('span');
-                    taskText.innerText = `- ${task}`;
-                    
+                    taskText.innerText = `- ${task.description}`; // 수정: task에 description 필드를 사용
                     const deleteBtn = document.createElement('button');
                     deleteBtn.className = 'text-red-500 ml-4';
                     deleteBtn.innerText = 'x';
