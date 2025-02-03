@@ -1,5 +1,3 @@
-// const lang = localStorage.getItem('lang');
-
 const calendar = (() => {
     const calendarContainer = document.getElementById('calendar');
     const monthNames = [
@@ -8,17 +6,78 @@ const calendar = (() => {
     ];
 
     let today = new Date();
-    // console.log(today);
     let currentMonth = today.getMonth();
     let currentYear = today.getFullYear();
 
-    //const tasks = JSON.parse(localStorage.getItem('calendarTasks')) || {};
-    let tasks = {};
+    let tasks = {}; // tasks 변수를 객체로 초기화
 
-    const saveTasks = () => {
-        localStorage.setItem('calendarTasks', JSON.stringify(tasks));
+    const saveTasks = async () => {
+        try {
+            // tasks 변수가 객체인지 확인
+            if (typeof tasks !== 'object' || tasks === null) {
+                throw new TypeError('tasks is not an object');
+            }
+
+            for (const [date, events] of Object.entries(tasks)) {
+                // 날짜를 저장하고 dateId를 반환받음
+                const dateId = await saveDate(date);
+
+                // 각 이벤트를 저장
+                for (const event of events) {
+                    const [time, description] = event.split(' - ');
+                    await saveEvent(dateId, time, description);
+                }
+            }
+
+            showToast('well-done','success',lang);
+        } catch (error) {
+            console.error('Error saving tasks:', error);
+        }
     };
 
+    const saveDate = async (date) => {
+        try {
+            const response = await fetch('/api/addDate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ date })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to add date: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            return data.dateId; // 반환된 dateId
+        } catch (error) {
+            console.error('Error adding date:', error);
+            throw error;
+        }
+    };
+
+    const saveEvent = async (dateId, time, description) => {
+        try {
+            const response = await fetch('/api/addEvent', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ date_id: dateId, time, description })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to add event: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            return data.eventId; // 반환된 eventId
+        } catch (error) {
+            console.error('Error adding event:', error);
+            throw error;
+        }
+    };
 
 
     const renderCalendar = (month, year) => {
@@ -133,10 +192,9 @@ const calendar = (() => {
     };
 
     const openTaskModal = (day, month, year) => {
-
         const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-
         const existingTasks = tasks[dateKey] || [];
+
 
         const modal = document.createElement('div');
         modal.className = 'task-modal fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50';
@@ -260,28 +318,31 @@ const calendar = (() => {
         modalContent.appendChild(timeSelect);
 
         modalContent.appendChild(taskTextarea);
-
         modalContent.appendChild(saveBtn);
         modal.appendChild(modalContent);
         document.body.appendChild(modal);
     };
+
+
     const fetchTasks = async () => {
         try {
-
             const response = await fetch('/api/calendar');
-            tasks = await response.json();
+            const data = await response.json();
+            console.log(data);
 
-            console.log(tasks);
+            // 서버에서 받아온 데이터를 tasks 객체에 저장
+            tasks = data || {};
 
         } catch (error) {
             console.error('Error fetching tasks:', error);
         }
     };
 
+
     return {
         init: async () => {
-            await fetchTasks(); // Ensure tasks are fetched before rendering
-            renderCalendar(currentMonth, currentYear); // Render calendar only after data is fetched
+            await fetchTasks();
+            renderCalendar(currentMonth, currentYear);
         }
     };
 })();

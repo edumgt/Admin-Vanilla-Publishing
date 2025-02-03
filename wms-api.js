@@ -157,6 +157,8 @@ router.delete('/outbound/delete', (req, res) => {
     });
 });
 
+
+// calendar list
 router.get('/calendar', (req, res) => {
     db.query(`
             SELECT 
@@ -189,6 +191,50 @@ router.get('/calendar', (req, res) => {
             const jsonResult = results[0].json_result;
             res.json(JSON.parse(jsonResult));
         }
+    });
+});
+
+// 날짜 추가 API 엔드포인트
+router.post('/addDate', (req, res) => {
+    const { date } = req.body;
+
+    if (!date) {
+        return res.status(400).json({ error: 'Missing required field: date' });
+    }
+
+    const query = `
+        INSERT INTO dates (date)
+        VALUES (?)
+    `;
+
+    db.query(query, [date], (err, results) => {
+        if (err) {
+            console.error('Error inserting date:', err);
+            return res.status(500).json({ error: 'Failed to add date' });
+        }
+        res.status(201).json({ message: 'Date added successfully', dateId: results.insertId });
+    });
+});
+
+// 이벤트 추가 API 엔드포인트
+router.post('/addEvent', (req, res) => {
+    const { date_id, time, description } = req.body;
+
+    if (!date_id || !time || !description) {
+        return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    const query = `
+        INSERT INTO events (date_id, time, description)
+        VALUES (?, ?, ?)
+    `;
+
+    db.query(query, [date_id, time, description], (err, results) => {
+        if (err) {
+            console.error('Error inserting event:', err);
+            return res.status(500).json({ error: 'Failed to add event' });
+        }
+        res.status(201).json({ message: 'Event added successfully', eventId: results.insertId });
     });
 });
 
