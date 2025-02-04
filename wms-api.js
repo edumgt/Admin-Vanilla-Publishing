@@ -267,4 +267,22 @@ router.delete('/deleteEvent/:eventId', (req, res) => {
         res.status(200).json({ message: 'Event deleted successfully' });
     });
 });
+
+// 📌 Fetch reservations data
+router.get('/reservations', (req, res) => {
+    db.query(`
+        SELECT * FROM reservations
+    `, (err, results) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            // 결과를 JSON 형식으로 변환하여 응답
+            res.json(results);
+        }
+    });
+});
+
+
+
+
 module.exports = router;

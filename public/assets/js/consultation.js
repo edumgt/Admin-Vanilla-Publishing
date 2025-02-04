@@ -318,16 +318,20 @@ document.getElementById('searchInput').addEventListener('input', async () => {
     if (!query) return; // 빈 입력일 경우 처리하지 않음
 
     try {
-        const response = await fetch('assets/mock/reservations.json'); // JSON 경로 확인 필요
+        //const response = await fetch('assets/mock/reservations.json'); // JSON 경로 확인 필요
+        const response = await fetch('/api/reservations'); // JSON 경로 확인 필요
+
         const data = await response.json();
 
-        if (!data.reservations) {
+        console.log(data);
+
+        if (!data) {
             console.error("JSON 데이터 구조가 올바르지 않습니다.");
             return;
         }
 
         // 필터링 (대소문자 구분 없이 검색)
-        const filtered = data.reservations.filter(reservation =>
+        const filtered = data.filter(reservation =>
             reservation.name.toLowerCase().includes(query)
         );
 
