@@ -140,8 +140,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (!reservations) {
-            reservations = await fetchData('assets/mock/reservations.json');
+            //reservations = await fetchData('assets/mock/reservations.json');
+            reservations = await fetchData('/api/reservations');
             if (reservations) {
+
                 saveToStorage('reservations', reservations);
             } else {
                 console.error('Failed to load reservations data.');
@@ -193,9 +195,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 예약 명단 목록 화면에 표시
         const reservationsContainer = document.querySelector('#reservations-container');
-        if (reservations && reservations.reservations) {
+        if (reservations ) {
             //console.log('Reservations:', reservations); // 데이터 구조 확인
-            reservations.reservations.forEach(reservation => {
+            reservations.forEach(reservation => {
                 const reservationDateTime = new Date(`${reservation.date}T${reservation.time}`);
                 const isCurrentReservation = currentDateTime.toDateString() === reservationDateTime.toDateString() &&
                                              currentDateTime.getHours() === reservationDateTime.getHours() &&
