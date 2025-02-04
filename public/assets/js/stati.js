@@ -7,8 +7,7 @@ let gridBodyHeight = 420;
 const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
 const currentDate = new Date().toLocaleDateString('ko-KR', options).replace(/[\.]/g, '-').replace(/[\s]/g, '').substring(0, 10);
 
-//fetch('https://your-backend-api.com/data')
-fetch('assets/mock/members.json')
+fetch('/api/members')
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');

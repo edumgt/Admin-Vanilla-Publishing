@@ -107,3 +107,33 @@ INSERT IGNORE INTO `reservations` (`id`, `name`, `departmentId`, `date`, `time`)
 	('9', '윤아름', 9, '2025-01-11', '09:00:00');
 
 
+-- 테이블 bbs.employees 구조 내보내기
+DROP TABLE IF EXISTS `employees`;
+CREATE TABLE IF NOT EXISTS `employees` (
+  `name` varchar(255) NOT NULL,
+  `id` char(36) NOT NULL,
+  `employeeId` varchar(10) NOT NULL,
+  `team` varchar(50) NOT NULL,
+  `joinYear` int(11) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `employeeId` (`employeeId`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- 테이블 데이터 bbs.employees:~11 rows (대략적) 내보내기
+INSERT IGNORE INTO `employees` (`name`, `id`, `employeeId`, `team`, `joinYear`, `address`, `email`) VALUES
+	('Liam', '2240b84a-709e-4b98-bcb7-dfae5ce2655d', 'A1004', 'Engineering', 2016, 'Daegu, South Korea', 'liam@example.com'),
+	('Alice', '5704179e-92b9-4c7e-bd36-2c4758db4ea7', 'A1001', 'Engineering', 2015, 'Seoul, South Korea', 'alice@example.com'),
+	('Bob', '6d4afc76-4454-4953-a2f5-db9ac1353aae', 'A1002', 'Engineering', 2017, 'Busan, South Korea', 'bob@example.com'),
+	('Isabella', '836eb87b-16e6-4582-b514-2236920728b6', 'A1007', 'Engineering', 2021, 'Ulsan, South Korea', 'isabella@example.com'),
+	('Noah', '83bc8abd-f043-4258-a81e-e64e29375f15', 'A1006', 'Engineering', 2020, 'Gwangju, South Korea', 'noah@example.com'),
+	('Mr. Kim', '948c8f58-d7fc-4fa5-a1af-9f0eea656ff6', 'B2004', 'Finance', 2015, 'Suwon, South Korea', 'mrkim@example.com'),
+	('David', 'a10ec08f-02cb-4cfd-adf2-1bc5eec2f3f8', 'B2002', 'Consulting', 2016, 'Busan, South Korea', 'david@example.com'),
+	('Sophia', 'aeca335b-22f3-422c-b8e9-5ee5b922cde8', 'A1005', 'Engineering', 2019, 'Daejeon, South Korea', 'sophia@example.com'),
+	('Emma', 'd356030d-c2e9-4e93-a392-6418ac31f32a', 'A1003', 'Engineering', 2018, 'Incheon, South Korea', 'emma@example.com'),
+	('홍길동', 'f25df27c-6332-45b0-b045-86fee2ea00c3', 'B2003', 'Marketing', 2019, 'Jeonju, South Korea', 'hong@example.com'),
+	('Charlie', 'f8216608-00dd-4ad4-a8d2-69e9abf101af', 'B2001', 'Consulting', 2014, 'Seoul, South Korea', 'charlie@example.com');
+
+

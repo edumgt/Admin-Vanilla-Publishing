@@ -17,7 +17,8 @@ function fetchConsultations() {
 
 async function fetchConsultants() {
     try {
-        const response = await fetch('assets/mock/members.json'); // JSON 파일 경로
+        const response = await fetch('/api/members'); 
+
         if (!response.ok) {
             throw new Error('Failed to fetch employees');
         }

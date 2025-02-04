@@ -19,7 +19,21 @@ db.connect(err => {
     }
 });
 
-// 📌 Fetch inbound data
+/**
+ * @swagger
+ * /inbound:
+ *   get:
+ *     summary: Fetch inbound data
+ *     responses:
+ *       200:
+ *         description: Inbound data fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ */
 router.get('/inbound', (req, res) => {
     db.query('SELECT * FROM inbound_data ORDER BY date DESC', (err, results) => {
         if (err) {
@@ -30,7 +44,35 @@ router.get('/inbound', (req, res) => {
     });
 });
 
-// 📌 Add new inbound record
+/**
+ * @swagger
+ * /inbound/add:
+ *   post:
+ *     summary: Add new inbound record
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               date:
+ *                 type: string
+ *                 format: date-time
+ *               title:
+ *                 type: string
+ *               quantity:
+ *                 type: integer
+ *               isbn:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: New inbound record added
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ */
 router.post('/inbound/add', (req, res) => {
     const newItem = { id: uuidv4(), ...req.body };
     const query = 'INSERT INTO inbound_data (id, date, title, quantity, isbn) VALUES (?, ?, ?, ?, ?)';
@@ -44,7 +86,32 @@ router.post('/inbound/add', (req, res) => {
     });
 });
 
-// 📌 Update inbound data
+/**
+ * @swagger
+ * /inbound/update:
+ *   post:
+ *     summary: Update inbound data
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: array
+ *             items:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                 changes:
+ *                   type: object
+ *     responses:
+ *       200:
+ *         description: Inbound data updated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ */
 router.post('/inbound/update', (req, res) => {
     const updates = req.body;
     if (!Array.isArray(updates) || updates.length === 0) {
@@ -74,7 +141,30 @@ router.post('/inbound/update', (req, res) => {
         .catch(err => res.status(500).json({ error: err.message }));
 });
 
-// 📌 Delete inbound records
+/**
+ * @swagger
+ * /inbound/delete:
+ *   delete:
+ *     summary: Delete inbound records
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: array
+ *             items:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *     responses:
+ *       200:
+ *         description: Inbound records deleted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ */
 router.delete('/inbound/delete', (req, res) => {
     const idsToDelete = req.body.map(item => item.id);
     const query = 'DELETE FROM inbound_data WHERE id IN (?)';
@@ -88,7 +178,21 @@ router.delete('/inbound/delete', (req, res) => {
     });
 });
 
-// 📌 Fetch outbound data
+/**
+ * @swagger
+ * /outbound:
+ *   get:
+ *     summary: Fetch outbound data
+ *     responses:
+ *       200:
+ *         description: Outbound data fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ */
 router.get('/outbound', (req, res) => {
     db.query('SELECT * FROM outbound_data ORDER BY date DESC', (err, results) => {
         if (err) {
@@ -99,7 +203,35 @@ router.get('/outbound', (req, res) => {
     });
 });
 
-// 📌 Add new outbound record
+/**
+ * @swagger
+ * /outbound/add:
+ *   post:
+ *     summary: Add new outbound record
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               date:
+ *                 type: string
+ *                 format: date-time
+ *               title:
+ *                 type: string
+ *               quantity:
+ *                 type: integer
+ *               isbn:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: New outbound record added
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ */
 router.post('/outbound/add', (req, res) => {
     const newItem = { id: uuidv4(), ...req.body };
     const query = 'INSERT INTO outbound_data (id, date, title, quantity, isbn) VALUES (?, ?, ?, ?, ?)';
@@ -113,7 +245,32 @@ router.post('/outbound/add', (req, res) => {
     });
 });
 
-// 📌 Update outbound data
+/**
+ * @swagger
+ * /outbound/update:
+ *   post:
+ *     summary: Update outbound data
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: array
+ *             items:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                 changes:
+ *                   type: object
+ *     responses:
+ *       200:
+ *         description: Outbound data updated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ */
 router.post('/outbound/update', (req, res) => {
     const updates = req.body;
     if (!Array.isArray(updates) || updates.length === 0) {
@@ -143,7 +300,30 @@ router.post('/outbound/update', (req, res) => {
         .catch(err => res.status(500).json({ error: err.message }));
 });
 
-// 📌 Delete outbound records
+/**
+ * @swagger
+ * /outbound/delete:
+ *   delete:
+ *     summary: Delete outbound records
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: array
+ *             items:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *     responses:
+ *       200:
+ *         description: Outbound records deleted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ */
 router.delete('/outbound/delete', (req, res) => {
     const idsToDelete = req.body.map(item => item.id);
     const query = 'DELETE FROM outbound_data WHERE id IN (?)';
@@ -157,8 +337,19 @@ router.delete('/outbound/delete', (req, res) => {
     });
 });
 
-
-// calendar list
+/**
+ * @swagger
+ * /calendar:
+ *   get:
+ *     summary: Fetch calendar list
+ *     responses:
+ *       200:
+ *         description: Calendar list fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ */
 router.get('/calendar', (req, res) => {
     db.query(`
             SELECT 
@@ -189,14 +380,35 @@ router.get('/calendar', (req, res) => {
         if (err) {
             res.status(500).json({ error: err.message });
         } else {
-            // json_result 필드 값만 추출하여 반환
             const jsonResult = results[0].json_result;
             res.json(JSON.parse(jsonResult));
         }
     });
 });
 
-// 날짜 추가 API 엔드포인트
+/**
+ * @swagger
+ * /addDate:
+ *   post:
+ *     summary: Add new date
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               date:
+ *                 type: string
+ *                 format: date
+ *     responses:
+ *       201:
+ *         description: Date added successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ */
 router.post('/addDate', (req, res) => {
     const { date } = req.body;
 
@@ -218,19 +430,45 @@ router.post('/addDate', (req, res) => {
     });
 });
 
-// 이벤트 추가 API 엔드포인트
+/**
+ * @swagger
+ * /addEvent:
+ *   post:
+ *     summary: Add new event
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               date_id:
+ *                 type: integer
+ *               time:
+ *                 type: string
+ *                 format: time
+ *               description:
+ *                 type: string
+ *               event_id:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Event added successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ */
 router.post('/addEvent', (req, res) => {
     const { date_id, time, description, event_id } = req.body;
-    console.log(`Received request to add event: date_id=${date_id}, time=${time}, description=${description}`); // 디버깅 로그
-
-
+    console.log(`Received request to add event: date_id=${date_id}, time=${time}, description=${description}`); // Debug log
 
     if (!date_id || !time || !description) {
         return res.status(400).json({ error: 'Missing required fields' });
     }
 
     const query = `
-        INSERT INTO events (date_id, time, description,event_id)
+        INSERT INTO events (date_id, time, description, event_id)
         VALUES (?, ?, ?, ?)
     `;
 
@@ -239,11 +477,29 @@ router.post('/addEvent', (req, res) => {
             console.error('Error inserting event:', err);
             return res.status(500).json({ error: 'Failed to add event' });
         }
-        res.status(201).json({ message: '일정을 추가 하였습니다.', eventId: event_id });
+        res.status(201).json({ message: 'Event added successfully', eventId: event_id });
     });
 });
 
-// 이벤트 삭제 API 엔드포인트
+/**
+ * @swagger
+ * /deleteEvent/{eventId}:
+ *   delete:
+ *     summary: Delete event
+ *     parameters:
+ *       - in: path
+ *         name: eventId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Event deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ */
 router.delete('/deleteEvent/:eventId', (req, res) => {
     const { eventId } = req.params;
 
@@ -268,7 +524,21 @@ router.delete('/deleteEvent/:eventId', (req, res) => {
     });
 });
 
-// 📌 Fetch reservations data
+/**
+ * @swagger
+ * /reservations:
+ *   get:
+ *     summary: Fetch reservations data
+ *     responses:
+ *       200:
+ *         description: Reservations data fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ */
 router.get('/reservations', (req, res) => {
     db.query(`
         SELECT * FROM reservations
@@ -276,13 +546,36 @@ router.get('/reservations', (req, res) => {
         if (err) {
             res.status(500).json({ error: err.message });
         } else {
-            // 결과를 JSON 형식으로 변환하여 응답
             res.json(results);
         }
     });
 });
 
-
-
+/**
+ * @swagger
+ * /members:
+ *   get:
+ *     summary: Fetch members data
+ *     responses:
+ *       200:
+ *         description: Members data fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ */
+router.get('/members', (req, res) => {
+    db.query(`
+        SELECT * FROM employees
+    `, (err, results) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(results);
+        }
+    });
+});
 
 module.exports = router;

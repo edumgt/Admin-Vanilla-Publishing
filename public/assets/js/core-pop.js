@@ -18,10 +18,11 @@ document.addEventListener("DOMContentLoaded", async function () {
 
    // Fetch members data
    try {
-      const response = await fetch("assets/mock/members.json");
+      const response = await fetch("/api/members");
+
       membersData = await response.json();
    } catch (error) {
-      console.error("Error fetching members.json:", error);
+      console.error("Error fetching members", error);
    }
 
    // Get user ID from URL parameters **before** using it

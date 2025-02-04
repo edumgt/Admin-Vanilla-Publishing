@@ -7,6 +7,10 @@ const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const databaseRoutes = require('./wms-api');
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerDocument = require('./swagger.json');
+
 const app = express();
 const PORT = 3000;
 const SECRET_KEY = 'edumgtedumgt'; // JWT 서명에 사용할 비밀 키
@@ -25,6 +29,14 @@ app.use(cors({
 
 // 📌 데이터베이스 API 연동
 app.use('/api', databaseRoutes);
+
+// Swagger setup
+const options = {
+    swaggerDefinition: swaggerDocument,
+    apis: ['./wms-api.js'], // Path to the API docs
+};
+const specs = swaggerJsdoc(options);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 
 // 정적 파일을 서빙하기 위해 'public' 디렉토리를 사용
