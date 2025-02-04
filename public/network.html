@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <link href="assets/css/trello.css" rel="stylesheet">
     <link href="assets/css/network.css" rel="stylesheet">
@@ -53,12 +54,13 @@
 
             <div class="w-3/4 px-4">
                 <div class="flex justify-between items-center ">
-                    
+
                     <select id="sortOptions">
-                        <option value="customerName">Customer Name</option>
-                        <option value="date">Date</option>
-                        <option value="consultant">Consultant</option>
+                        <option value="customerName">고객명</option>
+                        <option value="date">날짜</option>
+                        <option value="consultant">컨설턴트</option>
                     </select>
+
                 </div>
                 <div id="processFlow"></div>
             </div>
@@ -68,8 +70,7 @@
             class="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div class="modal-content">
                 <div class="mb-4">상태별 메모</div>
-                <textarea id="reasonInput"
-                    class=" appearance-none border rounded w-full h-full py-2 px-3 text-gray-700"
+                <textarea id="reasonInput" class=" appearance-none border rounded w-full h-full py-2 px-3 text-gray-700"
                     placeholder="상태에 대한 내역을 입력하세요"></textarea>
                 <div class="flex items-center justify-between mt-4">
                     <button id="saveReason" class="bg-blue-500 text-white">저장</button>
@@ -88,4 +89,5 @@
     <script type="text/javascript" src="assets/js/consultation.js"></script>
     <script type="text/javascript" src="assets/js/dropdown.js"></script>
 </body>
+
 </html>
