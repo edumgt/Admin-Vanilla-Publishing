@@ -62,22 +62,20 @@ INSERT IGNORE INTO `dates` (`date_id`, `date`) VALUES
 	(4, '2025-01-05'),
 	(5, '2025-01-06');
 
-
--- 테이블 test.events 구조 내보내기
+DROP TABLE IF EXISTS `events`;
 CREATE TABLE IF NOT EXISTS `events` (
-  `event_id` int(11) NOT NULL AUTO_INCREMENT,
+  `event_id` varchar(50) NOT NULL DEFAULT '',
   `date_id` int(11) DEFAULT NULL,
   `time` time NOT NULL,
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`event_id`),
   KEY `date_id` (`date_id`),
   CONSTRAINT `events_ibfk_1` FOREIGN KEY (`date_id`) REFERENCES `dates` (`date_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- 테이블 데이터 test.events:~0 rows (대략적) 내보내기
+-- 테이블 데이터 test.events:~4 rows (대략적) 내보내기
 INSERT IGNORE INTO `events` (`event_id`, `date_id`, `time`, `description`) VALUES
-	(9, 1, '16:30:00', '디자인팀 회의'),
-	(10, 1, '17:00:00', '개발자 인터뷰'),
-	(11, 1, '16:30:00', '네트웍 점검'),
-	(12, 1, '16:30:00', '공공 입찰/투찰 계획안 협의');
-
+	('1000', 1, '17:00:00', '개발자 인터뷰'),
+	('1111', 1, '16:30:00', '네트웍 점검'),
+	('1212', 1, '16:30:00', '공공 입찰/투찰 계획안 협의'),
+	('999', 1, '16:30:00', '디자인팀 회의');

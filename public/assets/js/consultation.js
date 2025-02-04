@@ -73,7 +73,6 @@ function openModal(statusBox, consultationId, status) {
     document.getElementById('modal').style.display = 'flex';
 }
 
-
 // 모달 팝업 닫기 함수
 function closeModal() {
     selectedStatusBox = null;
@@ -288,10 +287,7 @@ document.getElementById('searchButton').addEventListener('click', (event) => {
     event.stopPropagation(); // 이벤트 버블링 방지
 
     const modal = document.getElementById('searchModal');
-    const inputBox = document.getElementById('customerName');
 
-    // 모달을 customerName 입력 필드의 오른쪽에 배치
-    // const rect = inputBox.getBoundingClientRect();
     modal.style.top = `20px`; // 같은 높이에 위치
     modal.style.left = `200px`; // 입력 필드 오른쪽에 배치
     modal.style.width = `250px`; // 모달 너비 설정
@@ -300,16 +296,15 @@ document.getElementById('searchButton').addEventListener('click', (event) => {
 });
 
 
-
-
 const searchModal = document.getElementById('searchModal');
 searchModal.classList.add('absolute', 'bg-white', 'border', 'rounded', 'shadow-lg', 'hidden', 'z-50', 'p-4');
-searchModal.innerHTML = `<h2 class="text-lg font-semibold mb-2">예약자 찾기</h2>
-                         <input type="text" id="searchInput" class="w-full p-2 border rounded mb-2" placeholder="이름 검색"
-                         autocomplete="off">
-                         <div id="searchResults" class="border rounded p-2 bg-white max-h-48 overflow-y-auto mb-4"></div>
-                         <button id="closeModal" class="bg-gray-500 text-white">닫기</button>
-                         `;
+searchModal.innerHTML = `
+        <h2 class="text-lg font-semibold mb-2">예약자 찾기</h2>
+            <input type="text" id="searchInput" class="w-full p-2 border rounded mb-2" placeholder="이름 검색"
+                autocomplete="off">
+                <div id="searchResults" class="border rounded p-2 bg-white max-h-48 overflow-y-auto mb-4"></div>
+                <button id="closeModal" class="bg-gray-500 text-white">닫기</button>
+        `;
 
 document.getElementById('closeModal').addEventListener('click', () => {
     document.getElementById('searchModal').classList.add('hidden');
