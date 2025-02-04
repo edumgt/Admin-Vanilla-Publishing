@@ -140,6 +140,7 @@ function renderProcessFlow() {
     consultations = sortConsultations(consultations, sortBy);
 
     const processFlow = document.getElementById('processFlow');
+    processFlow.classList.add("mt-2", "flex", "flex-wrap");
     processFlow.innerHTML = '';
 
     consultations.forEach(consultation => {
@@ -210,6 +211,7 @@ async function renderConsultants() {
     }
 
     const consultantList = document.getElementById('consultantList');
+    consultantList.classList.add("bg-gray-200", "p-4", "overflow-x-auto", "flex", "flex-wrap");
     consultantList.innerHTML = ''; // 기존 목록 초기화
 
     consultants.forEach(consultant => {
