@@ -303,8 +303,7 @@ searchModal.innerHTML = `
             <input type="text" id="searchInput" class="w-full p-2 border rounded mb-2" placeholder="이름 검색"
                 autocomplete="off">
                 <div id="searchResults" class="border rounded p-2 bg-white max-h-48 overflow-y-auto mb-4"></div>
-                <button id="closeModal" class="bg-gray-500 text-white">닫기</button>
-        `;
+                <button id="closeModal" class="bg-gray-500 text-white">닫기</button>`;
 
 document.getElementById('closeModal').addEventListener('click', () => {
     document.getElementById('searchModal').classList.add('hidden');

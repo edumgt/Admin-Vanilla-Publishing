@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `dates` (
   `date_id` int(11) NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
   PRIMARY KEY (`date_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- 테이블 데이터 test.dates:~5 rows (대략적) 내보내기
 INSERT IGNORE INTO `dates` (`date_id`, `date`) VALUES
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `events` (
   PRIMARY KEY (`event_id`),
   KEY `date_id` (`date_id`),
   CONSTRAINT `events_ibfk_1` FOREIGN KEY (`date_id`) REFERENCES `dates` (`date_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- 테이블 데이터 test.events:~4 rows (대략적) 내보내기
 INSERT IGNORE INTO `events` (`event_id`, `date_id`, `time`, `description`) VALUES
@@ -79,3 +79,31 @@ INSERT IGNORE INTO `events` (`event_id`, `date_id`, `time`, `description`) VALUE
 	('1111', 1, '16:30:00', '네트웍 점검'),
 	('1212', 1, '16:30:00', '공공 입찰/투찰 계획안 협의'),
 	('999', 1, '16:30:00', '디자인팀 회의');
+
+
+
+-- 테이블 test.reservations 구조 내보내기
+DROP TABLE IF EXISTS `reservations`;
+CREATE TABLE IF NOT EXISTS `reservations` (
+  `id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `departmentId` int(11) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `time` time DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- 테이블 데이터 test.reservations:~10 rows (대략적) 내보내기
+INSERT IGNORE INTO `reservations` (`id`, `name`, `departmentId`, `date`, `time`) VALUES
+	('1', '최유리', 1, '2025-01-10', '09:00:00'),
+	('10', '최준호', 10, '2025-01-11', '10:00:00'),
+	('2', '박지훈', 2, '2025-01-10', '10:00:00'),
+	('3', '이승기', 3, '2025-01-10', '11:00:00'),
+	('4', '김소연', 4, '2025-01-10', '13:00:00'),
+	('5', '오지연', 5, '2025-01-10', '14:00:00'),
+	('6', '박성민', 6, '2025-01-10', '15:00:00'),
+	('7', '김나현', 7, '2025-01-10', '16:00:00'),
+	('8', '이정훈', 8, '2025-01-10', '17:00:00'),
+	('9', '윤아름', 9, '2025-01-11', '09:00:00');
+
+
