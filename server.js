@@ -50,8 +50,8 @@ app.get('/', (req, res) => {
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
 
-    console.log(username);
-    console.log(password);
+    // console.log(username);
+    // console.log(password);
 
     // 실제로는 데이터베이스에서 사용자 인증을 해야 합니다.
     if (username === 'admin' && password === '1111') {
