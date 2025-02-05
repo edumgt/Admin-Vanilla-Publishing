@@ -163,29 +163,10 @@ const calendar = (() => {
                     const taskItem = document.createElement('li');
                     taskItem.className = 'border-b py-2 flex justify-between items-center';
                     const taskText = document.createElement('span');
-
-                    
                     
                     taskText.innerText = `- ${task}`; 
 
-                    // const deleteBtn = document.createElement('button');
-                    // deleteBtn.className = 'text-red-500 ml-4';
-                    // deleteBtn.innerText = 'x';
-
-                    //console.log(taskText.innerText.split(" - ")[2]);
-
-                    // deleteBtn.dataset.eventId = taskText.innerText.split(" - ")[2];
-
-                    // deleteBtn.onclick = async () => {
-                    //     await deleteEvent(deleteBtn.dataset.eventId);
-                    //     tasks[dateKey].splice(index, 1);
-                    //     if (tasks[dateKey].length === 0) {
-                    //         delete tasks[dateKey];
-                    //     }
-                    //     renderCalendar(currentMonth, currentYear);
-                    // };
                     taskItem.appendChild(taskText);
-                    //taskItem.appendChild(deleteBtn);
                     taskList.appendChild(taskItem);
                 });
                 dateDiv.appendChild(taskList);
@@ -265,7 +246,7 @@ const calendar = (() => {
                 showToast('select-delete', 'success', lang);
                 modal.remove();
                 renderCalendar(currentMonth, currentYear);
-                //openTaskModal(day, month, year);
+                
             };
 
             taskItem.appendChild(taskText);
@@ -387,11 +368,3 @@ window.onload = () => {
     calendar.init();
 };
 
-function generateNanoId(length = 10) {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let id = '';
-    for (let i = 0; i < length; i++) {
-        id += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return id;
-}

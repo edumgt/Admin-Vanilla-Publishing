@@ -175,7 +175,7 @@ document.getElementById('newrow').addEventListener('click', function () {
         return;
     }
 
-    const newRow = { id: generateUUID(), team: '', name: '', email: '', address: '', joinYear: '' };
+    const newRow = { id: generateNanoId(), team: '', name: '', email: '', address: '', joinYear: '' };
     grid.prependRow(newRow, { focus: true });
 
     saveData([...data, newRow]);
@@ -210,7 +210,7 @@ grid.on('editingFinish', (ev) => {
 
 // Initialize a new row
 function initNew() {
-    const rowData = { id: generateUUID(), team: '', name: '', email: '', address: '', joinYear: '' };
+    const rowData = { id: generateNanoId(), team: '', name: '', email: '', address: '', joinYear: '' };
     grid.prependRow(rowData, { focus: true });
 
     updateDataCount();

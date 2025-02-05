@@ -21,7 +21,8 @@ const hotelData = [
 
 // UUID 및 RowNo를 각 호텔 데이터에 추가
 hotelData.forEach((hotel, index) => {
-    hotel.id = uuid.v4();
+    hotel.id = generateNanoId();
+    
     hotel.rowNo = index + 1;
     hotel.visitors = Array.from({ length: 12 }, () => Math.floor(Math.random() * 101) + 100);
     //console.log(hotel.visitors);

@@ -408,18 +408,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         });
 
-        // const addButton = document.createElement('button');
-        // addButton.className = "items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2 mr-2";
-        // addButton.innerHTML = `<i class="fas fa-plus"></i><span>신규</span>`;
-
-
         const addButton = createAddButton();
 
 
 
         addButton.addEventListener('click', () => {
             const newRow = {
-                id: generateUUID(),
+                id: generateNanoId(),
                 date: new Date().toISOString().split('T')[0],
 
                 title: '',

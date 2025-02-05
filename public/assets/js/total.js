@@ -7,8 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
             response.json()
         )
         .then(data => {
-            setupGrid(data.teams);
-            //console.log(data);
+            setupGrid(data);
         }
         )
         .catch(error =>

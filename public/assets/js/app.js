@@ -193,7 +193,7 @@ addButton.addEventListener('click', function () {
         return;
     }
 
-    const newRow = { Key: generateUUID(), tpCd: '', tpNm: '', descCntn: '', useYn: 'Y', createdAt: currentDate };
+    const newRow = { Key: generateNanoId(), tpCd: '', tpNm: '', descCntn: '', useYn: 'Y', createdAt: currentDate };
     grid.prependRow(newRow, { focus: true });
 
     saveData([...data, newRow]);
@@ -232,7 +232,7 @@ grid.on('editingFinish', (ev) => {
 
 // Initialize a new row
 function initNew() {
-    const rowData = { Key: generateUUID(), tpCd: '', tpNm: '', descCntn: '', useYn: 'Y', createdAt: currentDate };
+    const rowData = { Key: generateNanoId(), tpCd: '', tpNm: '', descCntn: '', useYn: 'Y', createdAt: currentDate };
     grid.prependRow(rowData, { focus: true });
 
     updateDataCount();
