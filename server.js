@@ -27,6 +27,8 @@ app.use(cors({
 }));
 
 
+
+
 // 📌 데이터베이스 API 연동
 app.use('/api', databaseRoutes);
 
