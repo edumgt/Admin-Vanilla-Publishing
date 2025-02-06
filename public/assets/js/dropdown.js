@@ -46,7 +46,7 @@ memberMenu.innerHTML = `<div class="bg-white shadow-lg p-3 rounded-md border">
                 </div>`;
 
 memberIcon.addEventListener('click', function (event) {
-    event.stopPropagation(); // 다른 클릭 이벤트 방지
+    event.stopPropagation(); 
 
     memberMenu.style.position = `absolute`;
     memberMenu.style.top = `45px`;

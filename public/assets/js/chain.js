@@ -19,7 +19,7 @@ const hotelData = [
     {"name": "Hotel BC", "address": "177 Gyeongnam St.", "phone": "010-1234-5732", "region": "Gyeongnam"}
 ];
 
-// UUID 및 RowNo를 각 호텔 데이터에 추가
+
 hotelData.forEach((hotel, index) => {
     hotel.id = generateNanoId();
     
