@@ -200,7 +200,7 @@ const createTanslations = {
 class createBadgeRenderer {
     constructor(props) {
         const el = document.createElement('span');
-        el.className = 'px-3 py-1 text-blue-900 rounded cursor-pointer flex items-center justify-center';
+        el.className = 'text-blue-900 rounded cursor-pointer flex items-center justify-center';
         el.innerHTML = '<i class="fas fa-pencil-alt"></i>'; 
         el.style.display = 'inline-block';
         el.style.textAlign = 'center';
