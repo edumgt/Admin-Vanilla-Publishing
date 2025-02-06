@@ -16,8 +16,8 @@
 :root {
   --btn-close-z-index: 2;
   --navbar-z-index: 3;
-  --sidebar-backdrop-z-index: 996;
-  --sidebar-z-index: 997;
+  /* --sidebar-backdrop-z-index: 996;
+  --sidebar-z-index: 997; */
   --dropdown-z-index: 998;
   --modal-backdrop-z-index: 999;
   --modal-z-index: 1000;
