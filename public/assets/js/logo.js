@@ -120,26 +120,36 @@ function renderOffCanvasMenu(menuItems) {
 }
 
 const iconMapping = {
+
+    
+      
+
+
+
     "조직도구성": "fa-sitemap",
     "근태관리": "fa-user-clock",
     "인센티브": "fa-gift",
     "업무일정": "fa-calendar-alt",
     "프로젝트일정": "fa-tasks",
+
     "생산일정": "fa-industry",
     "회원통계": "fa-user",
     "매출통계": "fa-chart-line",
     "체인운영": "fa-store-alt",
     "예약관리": "fa-calendar-plus",
+
     "회의실관리": "fa-door-open",
     "병원예약": "fa-hospital",
     "강의일정": "fa-chalkboard-teacher",
     "행정구역정보": "fa-map-marked-alt",
     "시스템로그": "fa-clipboard-list",
+
     "컨설팅지정": "fa-network-wired",
     "서베이": "fa-poll",
     "코드관리": "fa-server",
     "권한관리": "fa-user-shield",
     "문서관리": "fa-file-alt",
+
     "WMS": "fa-cubes",
 };
 
@@ -347,13 +357,6 @@ createModal(
     ]
 );
 
-// function generateUUID() {
-//     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-//         const r = (Math.random() * 16) | 0,
-//             v = c === 'x' ? r : (r & 0x3) | 0x8;
-//         return v.toString(16);
-//     });
-// }
 
 function renderFloatingNav(containerId) {
     const container = document.getElementById(containerId);

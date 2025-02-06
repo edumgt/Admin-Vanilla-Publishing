@@ -55,11 +55,12 @@ const createTanslations = {
             lectures: "Lecture Schedule",
             city: "District Information",
 
-            code: "Code",
-            permissions: "Permissions",
-            logs: "Logs",
-            menu: "Menu",
-            settings: "Settings",
+            // code: "Code",
+            // permissions: "Permissions",
+            // logs: "Logs",
+            // menu: "Menu",
+            // settings: "Settings",
+
             stati: "Member Statistics",
             flow: "Sales Statistics",
             chain: "Chain Operation",
@@ -93,24 +94,30 @@ const createTanslations = {
             settings: "설정관리",
         },
         offCanvas: {
+
+
+
             system: "코드관리",
             orgtree: "권한관리",
             document: "문서관리",
             wms: "WMS",
             config: "시스템 로그",
+
             network: "컨설팅 지정",
             survey: "서베이",
             work: "예약관리",
             meeting: "회의실관리",
             hospital: "병원예약",
+
             lectures: "강의일정",
             city: "행정구역정보",
 
-            code: "입출고관리",
-            permissions: "권한관리",
-            logs: "로그관리",
-            menu: "메뉴관리",
-            settings: "설정관리",
+            // code: "입출고관리",
+            // permissions: "권한관리",
+            // logs: "로그관리",
+            // menu: "메뉴관리",
+            // settings: "설정관리",
+
             stati: "회원통계",
             flow: "매출통계",
             chain: "체인운영",
@@ -120,6 +127,7 @@ const createTanslations = {
             timeline: "생산일정",
             orgni: "조직도구성",
             attend: "근태관리",
+
             total: "인센티브",
 
 
@@ -159,11 +167,12 @@ const createTanslations = {
             lectures: "講義日程",
             city: "行政区情報",
 
-            code: "コード管理",
-            permissions: "権限管理",
-            logs: "ログ管理",
-            menu: "メニュー管理",
-            settings: "設定管理",
+            // code: "コード管理",
+            // permissions: "権限管理",
+            // logs: "ログ管理",
+            // menu: "メニュー管理",
+            // settings: "設定管理",
+
             stati: "会員統計",
             flow: "売上統計",
             chain: "チェーン運営",
@@ -188,4 +197,24 @@ const createTanslations = {
 };
 
 
-export { createAddButton, createDelButton, createCloseButton, createSaveButton, createTanslations };
+class createBadgeRenderer {
+    constructor(props) {
+        const el = document.createElement('span');
+        el.className = 'px-3 py-1 text-blue-900 rounded cursor-pointer flex items-center justify-center';
+        el.innerHTML = '<i class="fas fa-pencil-alt"></i>'; 
+        el.style.display = 'inline-block';
+        el.style.textAlign = 'center';
+        this.el = el;
+        this.props = props;
+    }
+    getElement() {
+        return this.el;
+    }
+    render(props) {
+        this.props = props;
+    }
+}
+
+
+
+export { createAddButton, createDelButton, createCloseButton, createSaveButton, createTanslations, createBadgeRenderer };

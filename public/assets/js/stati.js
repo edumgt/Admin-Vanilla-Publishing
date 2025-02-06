@@ -1,11 +1,14 @@
+import { createTanslations , createBadgeRenderer } from './common.js';
+const translations = createTanslations;
+
 const workarea = document.getElementById("workarea");
 workarea.classList.add('grid', 'grid-cols-1', 'lg:grid-cols-4', 'gap-4', 'py-1', 'mt-4');
 
 let rowsPerPage = 15;
-let gridBodyHeight = 420;
+let gridBodyHeight = 430;
 
 const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-const currentDate = new Date().toLocaleDateString('ko-KR', options).replace(/[\.]/g, '-').replace(/[\s]/g, '').substring(0, 10);
+//const currentDate = new Date().toLocaleDateString('ko-KR', options).replace(/[\.]/g, '-').replace(/[\s]/g, '').substring(0, 10);
 
 fetch('/api/members')
     .then(response => {
@@ -58,23 +61,24 @@ function saveData(data) {
     localStorage.setItem('membersData', JSON.stringify(filteredData));
 }
 
-class BadgeRenderer {
-    constructor(props) {
-        const el = document.createElement('span');
-        el.className = 'px-3 py-1 text-gray-700 rounded cursor-pointer flex items-center justify-center';
-        el.innerHTML = '<i class="fas fa-pencil-alt"></i>'; // 연필 아이콘 (기본)
-        el.style.display = 'inline-block';
-        el.style.textAlign = 'center';
-        this.el = el;
-        this.props = props;
-    }
-    getElement() {
-        return this.el;
-    }
-    render(props) {
-        this.props = props;
-    }
-}
+const BadgeRenderer = createBadgeRenderer;
+// class BadgeRenderer {
+//     constructor(props) {
+//         const el = document.createElement('span');
+//         el.className = 'px-3 py-1 text-gray-700 rounded cursor-pointer flex items-center justify-center';
+//         el.innerHTML = '<i class="fas fa-pencil-alt"></i>'; // 연필 아이콘 (기본)
+//         el.style.display = 'inline-block';
+//         el.style.textAlign = 'center';
+//         this.el = el;
+//         this.props = props;
+//     }
+//     getElement() {
+//         return this.el;
+//     }
+//     render(props) {
+//         this.props = props;
+//     }
+// }
 
 
 const grid = new tui.Grid({
@@ -357,111 +361,7 @@ if (rows.length > 0) {
     lastRow.style.borderBottom = '1px solid #8f8f8f'; // 마지막 행의 테두리 색
 }
 
-/* 다국어 */
-const translations = {
-    en: {
-        menu: "Menu",
-        tabs: {
-            system: "System",
-            organization: "Organization",
-            task: "Task",
-            schedule: "Schedule",
-            statistics: "Statistics",
-            settings: "Settings",
-        },
-        offCanvas: {
-            code: "Code",
-            permissions: "Permissions",
-            logs: "Logs",
-            menu: "Menu",
-            settings: "Settings",
-            stati: "Member Statistics",
-            flow: "Sales Statistics",
-            chain: "Chain Operation",
-            system: "Code Management",
-            orgtree: "Permission Management",
-            document: "Document Management",
-            wms: "WMS"
-        },
 
-        buttons: {
-            search: "Search",
-            reset: "Reset Search",
-            new: "New",
-            delete: "Delete",
-            save: "Save",
-        },
-
-    },
-    ko: {
-        menu: "메뉴",
-        tabs: {
-            system: "시스템관리",
-            organization: "조직관리",
-            task: "업무관리",
-            schedule: "일정관리",
-            statistics: "통계",
-            settings: "설정관리",
-        },
-        offCanvas: {
-            code: "입출고관리",
-            permissions: "권한관리",
-            logs: "로그관리",
-            menu: "메뉴관리",
-            settings: "설정관리",
-            stati: "회원통계",
-            flow: "매출통계",
-            chain: "체인운영",
-            system: "코드관리",
-            orgtree: "권한관리",
-            document: "문서관리",
-            wms: "WMS",
-        },
-
-        buttons: {
-            search: "검색",
-            reset: "검색 초기화",
-            new: "신규",
-            delete: "삭제",
-            save: "저장",
-        },
-
-    },
-    ja: {
-        menu: "メニュー",
-        tabs: {
-            system: "システム管理",
-            organization: "組織管理",
-            task: "業務管理",
-            schedule: "スケジュール管理",
-            statistics: "統計",
-            settings: "設定管理",
-        },
-        offCanvas: {
-            code: "コード管理",
-            permissions: "権限管理",
-            logs: "ログ管理",
-            menu: "メニュー管理",
-            settings: "設定管理",
-            stati: "会員統計",
-            flow: "売上統計",
-            chain: "チェーン運営",
-            system: "コード管理",
-            orgtree: "権限管理",
-            document: "文書管理",
-            wms: "WMS",
-        },
-
-        buttons: {
-            search: "検索",
-            reset: "検索をリセット",
-            new: "新規",
-            delete: "削除",
-            save: "保存",
-        },
-
-    },
-};
 
 
 languageSwitcher.addEventListener("click", function (event) {

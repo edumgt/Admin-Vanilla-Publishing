@@ -1,4 +1,4 @@
-import { createAddButton, createDelButton, createSaveButton, createTanslations } from './common.js';
+import { createAddButton, createDelButton, createSaveButton, createTanslations, createBadgeRenderer } from './common.js';
 
 let rowsPerPage = 20;
 let gridBodyHeight = 630;
@@ -53,23 +53,25 @@ function saveData(data) {
     localStorage.setItem('gridData', JSON.stringify(filteredData));
 }
 
-class BadgeRenderer {
-    constructor(props) {
-        const el = document.createElement('span');
-        el.className = 'px-3 py-1 text-gray-700 rounded cursor-pointer flex items-center justify-center';
-        el.innerHTML = '<i class="fas fa-pencil-alt"></i>'; 
-        el.style.display = 'inline-block';
-        el.style.textAlign = 'center';
-        this.el = el;
-        this.props = props;
-    }
-    getElement() {
-        return this.el;
-    }
-    render(props) {
-        this.props = props;
-    }
-}
+
+const BadgeRenderer = createBadgeRenderer;
+// class BadgeRenderer {
+//     constructor(props) {
+//         const el = document.createElement('span');
+//         el.className = 'px-3 py-1 text-gray-700 rounded cursor-pointer flex items-center justify-center';
+//         el.innerHTML = '<i class="fas fa-pencil-alt"></i>'; 
+//         el.style.display = 'inline-block';
+//         el.style.textAlign = 'center';
+//         this.el = el;
+//         this.props = props;
+//     }
+//     getElement() {
+//         return this.el;
+//     }
+//     render(props) {
+//         this.props = props;
+//     }
+// }
 
 
 const grid = new tui.Grid({
