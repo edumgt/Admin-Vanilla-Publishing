@@ -10,9 +10,9 @@
         "rowKey": 21,
         "_attributes": {
             "rowNum": 21,
-            "checked": false,
+            "checked": true,
             "disabled": false,
-            "checkDisabled": false,
+            "checkDisabled": true,
             "className": {
                 "row": [],
                 "column": {}
@@ -32,7 +32,7 @@
             "rowNum": 22,
             "checked": false,
             "disabled": false,
-            "checkDisabled": false,
+            "checkDisabled": true,
             "className": {
                 "row": [],
                 "column": {}

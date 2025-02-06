@@ -136,7 +136,6 @@ const grid = new tui.Grid({
 updateDataCount();
 
 const deleteButton = createDelButton();
-
 deleteButton.addEventListener('click', function () {
     const chkArray = grid.getCheckedRowKeys();
     if (chkArray.length > 0) {
@@ -151,9 +150,7 @@ deleteButton.addEventListener('click', function () {
 
 
 const saveButton = createSaveButton();
-
 saveButton.addEventListener('click', function () {
-
     const data = grid.getData();
     // Filter out rows without a Key value
     const validData = data.filter(row => row.Key && row.Key.trim() !== '');
@@ -186,8 +183,6 @@ saveButton.addEventListener('click', function () {
 
 
 const addButton = createAddButton();
-
-// Add new row functionality
 addButton.addEventListener('click', function () {
     const data = grid.getData();
     const hasEmptyRow = data.some(row => row.tpCd === '' || row.tpNm === '');
@@ -210,16 +205,13 @@ btnContainer.appendChild(saveButton);
 // Handle View Button Click in Grid
 grid.on('click', (ev) => {
     const { columnName, rowKey } = ev;
-
-    //console.log("rowKey : " + rowKey);
-
     if (columnName === 'view') {
         const row = grid.getRow(rowKey); // Get the row data
         toggleModal(true, row, rowKey); // Pass the row data and row key to the modal
     }
 
     if (ev.columnName === 'Key') {
-        showToast('자동 부여 Key 로 편집 불가 합니다.', 'info');
+        showToast('auto-key', 'info',lang);
     }
 });
 
@@ -534,7 +526,7 @@ languageSwitcher.addEventListener("click", function (event) {
 
     addButton.innerHTML = `<i class="fas fa-plus"></i><span>`+buttonLabels.new+`</span>`; 
     deleteButton.innerHTML = `<i class="fas fa-trash"></i><span>`+buttonLabels.delete+`</span>`; 
-    buttons[2].textContent = buttonLabels.save;
+    saveButton.innerHTML = `<i class="fas fa-save"></i><span>`+buttonLabels.save+`</span>`; 
     
 
 });
@@ -579,6 +571,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     addButton.innerHTML = `<i class="fas fa-plus"></i><span>`+buttonLabels.new+`</span>`; 
     deleteButton.innerHTML = `<i class="fas fa-trash"></i><span>`+buttonLabels.delete+`</span>`; 
-    
-    buttons[2].textContent = buttonLabels.save;
+    saveButton.innerHTML = `<i class="fas fa-save"></i><span>`+buttonLabels.save+`</span>`; 
 });
