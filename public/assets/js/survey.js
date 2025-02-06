@@ -259,7 +259,7 @@ function handleDrop(event) {
     // 드롭된 컨테이너에서 중복 검사
     const existingItem = event.target.querySelector(`[data-id="${questionId}"]`);
     if (existingItem) {
-        alert("이미 추가된 문항입니다.");
+        showToast("이미 추가된 문항입니다.");
         return;
     }
 
@@ -452,7 +452,7 @@ function displayReport(report) {
         // 캔버스 생성 및 CSS 적용
         const chartCanvas = document.createElement('canvas');
         chartCanvas.id = `chart-${question}`;
-        chartCanvas.className = 'w-full h-[300px]'; // Tailwind로 높이 강제 적용
+        chartCanvas.className = 'w-full h-[300px]'; 
         questionDiv.appendChild(chartCanvas);
 
         gridContainer.appendChild(questionDiv);

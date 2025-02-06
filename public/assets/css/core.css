@@ -1,16 +1,4 @@
-
-/* @import url('../vendor/boxicons-2.1.4/css/boxicons.min.css'); */
-
-/* @import url('../vendor/tailwind/css/tailwind.min.css'); */
-
-/* @import url('https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css'); */
-
-/* @import url('https://uicdn.toast.com/tui-grid/latest/tui-grid.css'); */
-
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
-
-/* @import url('https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css'); */
-
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
 
 * {
@@ -152,8 +140,6 @@
 }
 
 
-
-
 /* Color variables for dark theme */
 .dark-mode {
   --white-color: #171717;
@@ -162,13 +148,6 @@
   --light-gray-color: #404040;
 }
 
-/*--------------------------------------------------------------------------*/
-/*                         Standard HTML Elements                           */
-/*--------------------------------------------------------------------------*/
-/*
-/*-------------------------------------*/
-/*               Anchor                */
-/*-------------------------------------*/
 a {
   text-decoration: none;
   color: var(--link-color);
@@ -282,124 +261,6 @@ thead {
   .table-pagination {
     justify-content: center;
   }
-}
-
-
-
-/*-------------------------------------*/
-/*                Alert                */
-/*-------------------------------------*/
-.alert {
-  position: relative;
-  padding: 0.75rem 1rem;
-  border-radius: var(--border-radius);
-}
-
-.alert-dismissible {
-  padding-right: 3rem;
-}
-
-.alert-dismissible .btn-close {
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: var(--btn-close-z-index);
-  padding: 0.95rem 1rem;
-  background-size: 0.625rem 0.625rem;
-}
-
-.alert-primary {
-  color: var(--primary-color);
-  background-color: var(--primary-lightest-color);
-}
-
-
-.alert-secondary {
-  color: var(--secondary-color);
-  background-color: var(--secondary-lightest-color);
-}
-
-
-.alert-success {
-  color: var(--success-color);
-  background-color: var(--success-lightest-color);
-}
-
-
-
-.alert-danger {
-  color: var(--danger-color);
-  background-color: var(--danger-lightest-color);
-}
-
-
-
-.alert-warning {
-  color: var(--warning-color);
-  background-color: var(--warning-lightest-color);
-}
-
-
-
-.alert-info {
-  color: var(--info-color);
-  background-color: var(--info-lightest-color);
-}
-
-
-
-.alert-light {
-  color: var(--light-darkest-color);
-  background-color: var(--light-lighter-color);
-}
-
-
-
-.alert-dark {
-  color: var(--dark-color);
-  background-color: var(--dark-lightest-color);
-}
-
-
-
-.alert-solid-primary {
-  color: var(--white-color);
-  background-color: var(--primary-color);
-}
-
-.alert-solid-secondary {
-  color: var(--white-color);
-  background-color: var(--secondary-color);
-}
-
-.alert-solid-success {
-  color: var(--white-color);
-  background-color: var(--success-color);
-}
-
-.alert-solid-danger {
-  color: var(--white-color);
-  background-color: var(--danger-color);
-}
-
-.alert-solid-warning {
-  color: var(--white-color);
-  background-color: var(--warning-color);
-}
-
-.alert-solid-info {
-  color: var(--white-color);
-  background-color: var(--info-color);
-}
-
-.alert-solid-light {
-  color: var(--white-color);
-  background-color: var(--light-color);
-}
-
-.alert-solid-dark {
-  color: var(--white-color);
-  background-color: var(--dark-color);
 }
 
 

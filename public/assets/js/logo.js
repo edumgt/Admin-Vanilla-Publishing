@@ -121,11 +121,6 @@ function renderOffCanvasMenu(menuItems) {
 
 const iconMapping = {
 
-    
-      
-
-
-
     "조직도구성": "fa-sitemap",
     "근태관리": "fa-user-clock",
     "인센티브": "fa-gift",

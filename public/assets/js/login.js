@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.location.href = firstPage;
             } else {
                 const result = await response.json();
-                alert(result.message);
+                //alert(result.message);
             }
         } catch (error) {
             //console.error('Error:', error);
