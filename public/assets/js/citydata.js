@@ -1,5 +1,3 @@
-// const lang = localStorage.getItem('lang'); 
-
 let grid;
 let rawData;
 

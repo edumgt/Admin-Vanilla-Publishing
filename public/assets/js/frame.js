@@ -120,6 +120,21 @@ languageSwitcher.addEventListener("click", function (event) {
         offCanvasItems[2].textContent = offCanvasLabels.hospital;
         offCanvasItems[3].textContent = offCanvasLabels.lectures;
         offCanvasItems[4].textContent = offCanvasLabels.city;
+    } else if (currentPage.includes("stati")) {
+        breadcrumb.textContent = offCanvasLabels.stati;
+        offCanvasItems[0].textContent = offCanvasLabels.stati;
+        offCanvasItems[1].textContent = offCanvasLabels.flow;
+        offCanvasItems[2].textContent = offCanvasLabels.chain;
+    } else if (currentPage.includes("flow")) {
+        breadcrumb.textContent = offCanvasLabels.flow;
+        offCanvasItems[0].textContent = offCanvasLabels.stati;
+        offCanvasItems[1].textContent = offCanvasLabels.flow;
+        offCanvasItems[2].textContent = offCanvasLabels.chain;
+    } else if (currentPage.includes("chain")) {
+        breadcrumb.textContent = offCanvasLabels.chain;
+        offCanvasItems[0].textContent = offCanvasLabels.stati;
+        offCanvasItems[1].textContent = offCanvasLabels.flow;
+        offCanvasItems[2].textContent = offCanvasLabels.chain;
     }
 
 
@@ -241,6 +256,21 @@ document.addEventListener('DOMContentLoaded', () => {
         offCanvasItems[2].textContent = offCanvasLabels.hospital;
         offCanvasItems[3].textContent = offCanvasLabels.lectures;
         offCanvasItems[4].textContent = offCanvasLabels.city;
+    } else if (currentPage.includes("stati")) {
+        breadcrumb.textContent = offCanvasLabels.stati;
+        offCanvasItems[0].textContent = offCanvasLabels.stati;
+        offCanvasItems[1].textContent = offCanvasLabels.flow;
+        offCanvasItems[2].textContent = offCanvasLabels.chain;
+    } else if (currentPage.includes("flow")) {
+        breadcrumb.textContent = offCanvasLabels.flow;
+        offCanvasItems[0].textContent = offCanvasLabels.stati;
+        offCanvasItems[1].textContent = offCanvasLabels.flow;
+        offCanvasItems[2].textContent = offCanvasLabels.chain;
+    } else if (currentPage.includes("chain")) {
+        breadcrumb.textContent = offCanvasLabels.chain;
+        offCanvasItems[0].textContent = offCanvasLabels.stati;
+        offCanvasItems[1].textContent = offCanvasLabels.flow;
+        offCanvasItems[2].textContent = offCanvasLabels.chain;
     }
 });
 

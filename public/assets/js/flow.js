@@ -2,58 +2,58 @@ import { createTanslations } from './common.js';
 const translations = createTanslations;
 
 
-languageSwitcher.addEventListener("click", function (event) {
-    let lang = event.target.getAttribute("data-lang");
-    localStorage.setItem('lang', lang);
-    if (!lang || !translations[lang]) return;
+// languageSwitcher.addEventListener("click", function (event) {
+//     let lang = event.target.getAttribute("data-lang");
+//     localStorage.setItem('lang', lang);
+//     if (!lang || !translations[lang]) return;
 
-    let tabLabels = translations[lang].tabs;
-    tabs[0].textContent = tabLabels.system;
-    tabs[1].textContent = tabLabels.organization;
-    tabs[2].textContent = tabLabels.task;
-    tabs[3].textContent = tabLabels.schedule;
-    tabs[4].textContent = tabLabels.statistics;
-    tabs[5].textContent = tabLabels.settings;
+//     let tabLabels = translations[lang].tabs;
+//     tabs[0].textContent = tabLabels.system;
+//     tabs[1].textContent = tabLabels.organization;
+//     tabs[2].textContent = tabLabels.task;
+//     tabs[3].textContent = tabLabels.schedule;
+//     tabs[4].textContent = tabLabels.statistics;
+//     tabs[5].textContent = tabLabels.settings;
 
 
-    let offCanvasLabels = translations[lang].offCanvas;
-    offCanvasItems[0].textContent = offCanvasLabels.stati;
-    offCanvasItems[1].textContent = offCanvasLabels.flow;
-    offCanvasItems[2].textContent = offCanvasLabels.chain;
-    if (currentPage.includes("stati")) {
-        breadcrumb.textContent = offCanvasLabels.stati;
-    } else if (currentPage.includes("flow")) {
-        breadcrumb.textContent = offCanvasLabels.flow;
-    } else if (currentPage.includes("chain")) {
-        breadcrumb.textContent = offCanvasLabels.chain;
-    }
+//     let offCanvasLabels = translations[lang].offCanvas;
+//     offCanvasItems[0].textContent = offCanvasLabels.stati;
+//     offCanvasItems[1].textContent = offCanvasLabels.flow;
+//     offCanvasItems[2].textContent = offCanvasLabels.chain;
+//     if (currentPage.includes("stati")) {
+//         breadcrumb.textContent = offCanvasLabels.stati;
+//     } else if (currentPage.includes("flow")) {
+//         breadcrumb.textContent = offCanvasLabels.flow;
+//     } else if (currentPage.includes("chain")) {
+//         breadcrumb.textContent = offCanvasLabels.chain;
+//     }
 
-});
+// });
 
-document.addEventListener('DOMContentLoaded', () => {
+// document.addEventListener('DOMContentLoaded', () => {
     
-    let lang = localStorage.getItem('lang');
+//     let lang = localStorage.getItem('lang');
 
-    let tabLabels = translations[lang].tabs;
-    tabs[0].textContent = tabLabels.system;
-    tabs[1].textContent = tabLabels.organization;
-    tabs[2].textContent = tabLabels.task;
-    tabs[3].textContent = tabLabels.schedule;
-    tabs[4].textContent = tabLabels.statistics;
-    tabs[5].textContent = tabLabels.settings;
+//     let tabLabels = translations[lang].tabs;
+//     tabs[0].textContent = tabLabels.system;
+//     tabs[1].textContent = tabLabels.organization;
+//     tabs[2].textContent = tabLabels.task;
+//     tabs[3].textContent = tabLabels.schedule;
+//     tabs[4].textContent = tabLabels.statistics;
+//     tabs[5].textContent = tabLabels.settings;
 
-    let offCanvasLabels = translations[lang].offCanvas;
-    offCanvasItems[0].textContent = offCanvasLabels.stati;
-    offCanvasItems[1].textContent = offCanvasLabels.flow;
-    offCanvasItems[2].textContent = offCanvasLabels.chain;
-    if (currentPage.includes("stati")) {
-        breadcrumb.textContent = offCanvasLabels.stati;
-    } else if (currentPage.includes("flow")) {
-        breadcrumb.textContent = offCanvasLabels.flow;
-    } else if (currentPage.includes("chain")) {
-        breadcrumb.textContent = offCanvasLabels.chain;
-    }
-});
+//     let offCanvasLabels = translations[lang].offCanvas;
+//     offCanvasItems[0].textContent = offCanvasLabels.stati;
+//     offCanvasItems[1].textContent = offCanvasLabels.flow;
+//     offCanvasItems[2].textContent = offCanvasLabels.chain;
+//     if (currentPage.includes("stati")) {
+//         breadcrumb.textContent = offCanvasLabels.stati;
+//     } else if (currentPage.includes("flow")) {
+//         breadcrumb.textContent = offCanvasLabels.flow;
+//     } else if (currentPage.includes("chain")) {
+//         breadcrumb.textContent = offCanvasLabels.chain;
+//     }
+// });
 
 
 // 로컬 스토리지에서 데이터 가져오기

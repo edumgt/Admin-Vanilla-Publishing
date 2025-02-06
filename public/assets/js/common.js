@@ -55,11 +55,7 @@ const createTanslations = {
             lectures: "Lecture Schedule",
             city: "District Information",
 
-            // code: "Code",
-            // permissions: "Permissions",
-            // logs: "Logs",
-            // menu: "Menu",
-            // settings: "Settings",
+
 
             stati: "Member Statistics",
             flow: "Sales Statistics",
@@ -112,11 +108,7 @@ const createTanslations = {
             lectures: "강의일정",
             city: "행정구역정보",
 
-            // code: "입출고관리",
-            // permissions: "권한관리",
-            // logs: "로그관리",
-            // menu: "메뉴관리",
-            // settings: "설정관리",
+
 
             stati: "회원통계",
             flow: "매출통계",
@@ -167,11 +159,6 @@ const createTanslations = {
             lectures: "講義日程",
             city: "行政区情報",
 
-            // code: "コード管理",
-            // permissions: "権限管理",
-            // logs: "ログ管理",
-            // menu: "メニュー管理",
-            // settings: "設定管理",
 
             stati: "会員統計",
             flow: "売上統計",

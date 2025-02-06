@@ -62,23 +62,6 @@ function saveData(data) {
 }
 
 const BadgeRenderer = createBadgeRenderer;
-// class BadgeRenderer {
-//     constructor(props) {
-//         const el = document.createElement('span');
-//         el.className = 'px-3 py-1 text-gray-700 rounded cursor-pointer flex items-center justify-center';
-//         el.innerHTML = '<i class="fas fa-pencil-alt"></i>'; // 연필 아이콘 (기본)
-//         el.style.display = 'inline-block';
-//         el.style.textAlign = 'center';
-//         this.el = el;
-//         this.props = props;
-//     }
-//     getElement() {
-//         return this.el;
-//     }
-//     render(props) {
-//         this.props = props;
-//     }
-// }
 
 
 const grid = new tui.Grid({
@@ -364,74 +347,81 @@ if (rows.length > 0) {
 
 
 
-languageSwitcher.addEventListener("click", function (event) {
-    let lang = event.target.getAttribute("data-lang");
-    localStorage.setItem('lang', lang);
-    if (!lang || !translations[lang]) return;
+// languageSwitcher.addEventListener("click", function (event) {
+//     let lang = event.target.getAttribute("data-lang");
+//     localStorage.setItem('lang', lang);
+//     if (!lang || !translations[lang]) return;
 
-    let tabLabels = translations[lang].tabs;
-    tabs[0].textContent = tabLabels.system;
-    tabs[1].textContent = tabLabels.organization;
-    tabs[2].textContent = tabLabels.task;
-    tabs[3].textContent = tabLabels.schedule;
-    tabs[4].textContent = tabLabels.statistics;
-    tabs[5].textContent = tabLabels.settings;
+//     let tabLabels = translations[lang].tabs;
+//     tabs[0].textContent = tabLabels.system;
+//     tabs[1].textContent = tabLabels.organization;
+//     tabs[2].textContent = tabLabels.task;
+//     tabs[3].textContent = tabLabels.schedule;
+//     tabs[4].textContent = tabLabels.statistics;
+//     tabs[5].textContent = tabLabels.settings;
 
-    let offCanvasLabels = translations[lang].offCanvas;
-    if (currentPage.includes("stati")) {
-        offCanvasItems[0].textContent = offCanvasLabels.stati;
-        offCanvasItems[1].textContent = offCanvasLabels.flow;
-        offCanvasItems[2].textContent = offCanvasLabels.chain;
-    }
+//     let offCanvasLabels = translations[lang].offCanvas;
 
-    if (currentPage.includes("stati")) {
-        breadcrumb.textContent = offCanvasLabels.stati;
-    } else if (currentPage.includes("flow")) {
-        breadcrumb.textContent = offCanvasLabels.flow;
-    } else if (currentPage.includes("chain")) {
-        breadcrumb.textContent = offCanvasLabels.chain;
-    }
+//     if (currentPage.includes("stati")) {
+//         breadcrumb.textContent = offCanvasLabels.stati;
+//         offCanvasItems[0].textContent = offCanvasLabels.stati;
+//         offCanvasItems[1].textContent = offCanvasLabels.flow;
+//         offCanvasItems[2].textContent = offCanvasLabels.chain;
+//     } else if (currentPage.includes("flow")) {
+//         breadcrumb.textContent = offCanvasLabels.flow;
+//         offCanvasItems[0].textContent = offCanvasLabels.stati;
+//         offCanvasItems[1].textContent = offCanvasLabels.flow;
+//         offCanvasItems[2].textContent = offCanvasLabels.chain;
+//     } else if (currentPage.includes("chain")) {
+//         breadcrumb.textContent = offCanvasLabels.chain;
+//         offCanvasItems[0].textContent = offCanvasLabels.stati;
+//         offCanvasItems[1].textContent = offCanvasLabels.flow;
+//         offCanvasItems[2].textContent = offCanvasLabels.chain;
+//     }
 
-    const buttonLabels = translations[lang].buttons;
-    buttons[0].textContent = buttonLabels.search;
-    buttons[1].textContent = buttonLabels.reset;
-    buttons[2].textContent = buttonLabels.new;
-    buttons[3].textContent = buttonLabels.delete;
-    buttons[4].textContent = buttonLabels.save;
+//     const buttonLabels = translations[lang].buttons;
+//     buttons[0].textContent = buttonLabels.search;
+//     buttons[1].textContent = buttonLabels.reset;
+//     buttons[2].textContent = buttonLabels.new;
+//     buttons[3].textContent = buttonLabels.delete;
+//     buttons[4].textContent = buttonLabels.save;
 
-});
+// });
 
 
-document.addEventListener('DOMContentLoaded', () => {
-    let lang = localStorage.getItem('lang');
+// document.addEventListener('DOMContentLoaded', () => {
+//     let lang = localStorage.getItem('lang');
 
-    let tabLabels = translations[lang].tabs;
-    tabs[0].textContent = tabLabels.system;
-    tabs[1].textContent = tabLabels.organization;
-    tabs[2].textContent = tabLabels.task;
-    tabs[3].textContent = tabLabels.schedule;
-    tabs[4].textContent = tabLabels.statistics;
-    tabs[5].textContent = tabLabels.settings;
+//     let tabLabels = translations[lang].tabs;
+//     tabs[0].textContent = tabLabels.system;
+//     tabs[1].textContent = tabLabels.organization;
+//     tabs[2].textContent = tabLabels.task;
+//     tabs[3].textContent = tabLabels.schedule;
+//     tabs[4].textContent = tabLabels.statistics;
+//     tabs[5].textContent = tabLabels.settings;
 
-    let offCanvasLabels = translations[lang].offCanvas;
-    if (currentPage.includes("stati")) {
-        offCanvasItems[0].textContent = offCanvasLabels.stati;
-        offCanvasItems[1].textContent = offCanvasLabels.flow;
-        offCanvasItems[2].textContent = offCanvasLabels.chain;
-    }
+//     let offCanvasLabels = translations[lang].offCanvas;
+//     if (currentPage.includes("stati")) {
+//         breadcrumb.textContent = offCanvasLabels.stati;
+//         offCanvasItems[0].textContent = offCanvasLabels.stati;
+//         offCanvasItems[1].textContent = offCanvasLabels.flow;
+//         offCanvasItems[2].textContent = offCanvasLabels.chain;
+//     } else if (currentPage.includes("flow")) {
+//         breadcrumb.textContent = offCanvasLabels.flow;
+//         offCanvasItems[0].textContent = offCanvasLabels.stati;
+//         offCanvasItems[1].textContent = offCanvasLabels.flow;
+//         offCanvasItems[2].textContent = offCanvasLabels.chain;
+//     } else if (currentPage.includes("chain")) {
+//         breadcrumb.textContent = offCanvasLabels.chain;
+//         offCanvasItems[0].textContent = offCanvasLabels.stati;
+//         offCanvasItems[1].textContent = offCanvasLabels.flow;
+//         offCanvasItems[2].textContent = offCanvasLabels.chain;
+//     }
 
-    if (currentPage.includes("stati")) {
-        breadcrumb.textContent = offCanvasLabels.stati;
-    } else if (currentPage.includes("flow")) {
-        breadcrumb.textContent = offCanvasLabels.flow;
-    } else if (currentPage.includes("chain")) {
-        breadcrumb.textContent = offCanvasLabels.chain;
-    }
-
-    const buttonLabels = translations[lang].buttons;
-    buttons[0].textContent = buttonLabels.search;
-    buttons[1].textContent = buttonLabels.reset;
-    buttons[2].textContent = buttonLabels.new;
-    buttons[3].textContent = buttonLabels.delete;
-    buttons[4].textContent = buttonLabels.save;
-});
+//     const buttonLabels = translations[lang].buttons;
+//     buttons[0].textContent = buttonLabels.search;
+//     buttons[1].textContent = buttonLabels.reset;
+//     buttons[2].textContent = buttonLabels.new;
+//     buttons[3].textContent = buttonLabels.delete;
+//     buttons[4].textContent = buttonLabels.save;
+// });

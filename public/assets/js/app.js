@@ -363,32 +363,32 @@ languageSwitcher.addEventListener("click", function (event) {
     if (!lang || !translations[lang]) return;
 
 
-    let tabLabels = translations[lang].tabs;
-    tabs[0].textContent = tabLabels.system;
-    tabs[1].textContent = tabLabels.organization;
-    tabs[2].textContent = tabLabels.task;
-    tabs[3].textContent = tabLabels.schedule;
-    tabs[4].textContent = tabLabels.statistics;
-    tabs[5].textContent = tabLabels.settings;
+    // let tabLabels = translations[lang].tabs;
+    // tabs[0].textContent = tabLabels.system;
+    // tabs[1].textContent = tabLabels.organization;
+    // tabs[2].textContent = tabLabels.task;
+    // tabs[3].textContent = tabLabels.schedule;
+    // tabs[4].textContent = tabLabels.statistics;
+    // tabs[5].textContent = tabLabels.settings;
 
 
-    let offCanvasLabels = translations[lang].offCanvas;
-    if (currentPage.includes("system")) {
-        offCanvasItems[0].textContent = offCanvasLabels.system;
-        offCanvasItems[1].textContent = offCanvasLabels.orgtree;
-        offCanvasItems[2].textContent = offCanvasLabels.document;
-        offCanvasItems[3].textContent = offCanvasLabels.wms;
-    }
+    // let offCanvasLabels = translations[lang].offCanvas;
+    // if (currentPage.includes("system")) {
+    //     offCanvasItems[0].textContent = offCanvasLabels.system;
+    //     offCanvasItems[1].textContent = offCanvasLabels.orgtree;
+    //     offCanvasItems[2].textContent = offCanvasLabels.document;
+    //     offCanvasItems[3].textContent = offCanvasLabels.wms;
+    // }
 
-    if (currentPage.includes("system")) {
-        breadcrumb.textContent = offCanvasLabels.system;
-    } else if (currentPage.includes("orgtree")) {
-        breadcrumb.textContent = offCanvasLabels.orgtree;
-    } else if (currentPage.includes("document")) {
-        breadcrumb.textContent = offCanvasLabels.document;
-    } else if (currentPage.includes("wms")) {
-        breadcrumb.textContent = offCanvasLabels.system;
-    }
+    // if (currentPage.includes("system")) {
+    //     breadcrumb.textContent = offCanvasLabels.system;
+    // } else if (currentPage.includes("orgtree")) {
+    //     breadcrumb.textContent = offCanvasLabels.orgtree;
+    // } else if (currentPage.includes("document")) {
+    //     breadcrumb.textContent = offCanvasLabels.document;
+    // } else if (currentPage.includes("wms")) {
+    //     breadcrumb.textContent = offCanvasLabels.system;
+    // }
 
     let buttonLabels = translations[lang].buttons;
     buttons[0].textContent = buttonLabels.search;
@@ -405,31 +405,31 @@ languageSwitcher.addEventListener("click", function (event) {
 document.addEventListener('DOMContentLoaded', () => {
     let lang = localStorage.getItem('lang');
 
-    let tabLabels = translations[lang].tabs;
-    tabs[0].textContent = tabLabels.system;
-    tabs[1].textContent = tabLabels.organization;
-    tabs[2].textContent = tabLabels.task;
-    tabs[3].textContent = tabLabels.schedule;
-    tabs[4].textContent = tabLabels.statistics;
-    tabs[5].textContent = tabLabels.settings;
+    // let tabLabels = translations[lang].tabs;
+    // tabs[0].textContent = tabLabels.system;
+    // tabs[1].textContent = tabLabels.organization;
+    // tabs[2].textContent = tabLabels.task;
+    // tabs[3].textContent = tabLabels.schedule;
+    // tabs[4].textContent = tabLabels.statistics;
+    // tabs[5].textContent = tabLabels.settings;
 
-    let offCanvasLabels = translations[lang].offCanvas;
-    if (currentPage.includes("system")) {
-        offCanvasItems[0].textContent = offCanvasLabels.system;
-        offCanvasItems[1].textContent = offCanvasLabels.orgtree;
-        offCanvasItems[2].textContent = offCanvasLabels.document;
-        offCanvasItems[3].textContent = offCanvasLabels.wms;
-    }
+    // let offCanvasLabels = translations[lang].offCanvas;
+    // if (currentPage.includes("system")) {
+    //     offCanvasItems[0].textContent = offCanvasLabels.system;
+    //     offCanvasItems[1].textContent = offCanvasLabels.orgtree;
+    //     offCanvasItems[2].textContent = offCanvasLabels.document;
+    //     offCanvasItems[3].textContent = offCanvasLabels.wms;
+    // }
 
-    if (currentPage.includes("system")) {
-        breadcrumb.textContent = offCanvasLabels.system;
-    } else if (currentPage.includes("orgtree")) {
-        breadcrumb.textContent = offCanvasLabels.orgtree;
-    } else if (currentPage.includes("document")) {
-        breadcrumb.textContent = offCanvasLabels.document;
-    } else if (currentPage.includes("wms")) {
-        breadcrumb.textContent = offCanvasLabels.system;
-    }
+    // if (currentPage.includes("system")) {
+    //     breadcrumb.textContent = offCanvasLabels.system;
+    // } else if (currentPage.includes("orgtree")) {
+    //     breadcrumb.textContent = offCanvasLabels.orgtree;
+    // } else if (currentPage.includes("document")) {
+    //     breadcrumb.textContent = offCanvasLabels.document;
+    // } else if (currentPage.includes("wms")) {
+    //     breadcrumb.textContent = offCanvasLabels.system;
+    // }
 
     let buttonLabels = translations[lang].buttons;
     buttons[0].textContent = buttonLabels.search;
