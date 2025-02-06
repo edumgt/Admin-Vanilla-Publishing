@@ -1,4 +1,4 @@
-import { createAddButton, createDelButton } from './common.js';
+import { createAddButton, createDelButton, createSaveButton } from './common.js';
 
 let rowsPerPage = 20;
 let gridBodyHeight = 620;
@@ -149,7 +149,10 @@ deleteButton.addEventListener('click', function () {
     }
 });
 
-document.getElementById('saverow').addEventListener('click', function () {
+
+const saveButton = createSaveButton();
+
+saveButton.addEventListener('click', function () {
 
     const data = grid.getData();
     // Filter out rows without a Key value
@@ -202,6 +205,7 @@ addButton.addEventListener('click', function () {
 
 btnContainer.appendChild(addButton);
 btnContainer.appendChild(deleteButton);
+btnContainer.appendChild(saveButton);
 
 // Handle View Button Click in Grid
 grid.on('click', (ev) => {

@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (lecture.pastDate) {
                         const pastDate = document.createElement('div');
                         pastDate.classList.add('past-date');
-                        pastDate.textContent = `Moved from: ${lecture.pastDate}`;
+                        pastDate.textContent = `이동 이전 날짜: ${lecture.pastDate}`;
                         lectureItem.appendChild(pastDate);
                     }
     
