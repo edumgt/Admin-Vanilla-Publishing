@@ -284,48 +284,7 @@ thead {
   }
 }
 
-/*-------------------------------------*/
-/*             Accordion               */
-/*-------------------------------------*/
-.accordion-header {
-  display: flex;
-  align-items: start;
-  justify-content: space-between;
-  cursor: pointer;
-}
 
-.accordion-button {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  text-align: left;
-  font-size: 0.9rem;
-  font-weight: inherit;
-  border: none;
-  background: transparent;
-  transition: all 0.2s ease-in-out;
-  cursor: pointer;
-}
-
-
-
-.accordion-item.no-arrow .accordion-button::after {
-  background-image: none !important;
-}
-
-.accordion-item .accordion-body {
-  display: none;
-}
-
-.accordion-item:not(.no-collapse).open>.accordion-body {
-  display: block;
-}
-
-.accordion-item:not(.no-collapse).open .accordion-button::after {
-  transform: rotate(180deg);
-}
 
 /*-------------------------------------*/
 /*                Alert                */
