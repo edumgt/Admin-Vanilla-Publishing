@@ -1,5 +1,4 @@
 import { createTanslations } from './common.js';
-
 const translations = createTanslations;
 
 

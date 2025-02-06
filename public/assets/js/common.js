@@ -64,6 +64,13 @@ const createTanslations = {
             flow: "Sales Statistics",
             chain: "Chain Operation",
 
+            calendar: "Work Schedule",
+            trello: "Project Schedule",
+            timeline: "Production Schedule",
+            orgni: "Organization Structure",
+            attend: "Attendance Management",
+            total: "Incentive",
+
         },
 
         buttons: {
@@ -107,6 +114,13 @@ const createTanslations = {
             stati: "회원통계",
             flow: "매출통계",
             chain: "체인운영",
+
+            calendar: "업무일정",
+            trello: "프로젝트일정",
+            timeline: "생산일정",
+            orgni: "조직도구성",
+            attend: "근태관리",
+            total: "인센티브",
 
 
 
@@ -153,6 +167,13 @@ const createTanslations = {
             stati: "会員統計",
             flow: "売上統計",
             chain: "チェーン運営",
+
+            calendar: "業務日程",
+            trello: "プロジェクト日程",
+            timeline: "生産日程",
+            orgni: "組織構成",
+            attend: "勤怠管理",
+            total: "インセンティブ"
         },
 
         buttons: {
