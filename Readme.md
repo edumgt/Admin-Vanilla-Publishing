@@ -9,3 +9,7 @@
 # done
 
 # common 처리대상 : modal, grid, button, calendar
+
+# modal 을 js 하나로
+# button 을 js 하나로
+# grid, calendar 를 component 화
