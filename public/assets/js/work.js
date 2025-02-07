@@ -130,7 +130,7 @@ function renderFloor(floor, date = new Date().toISOString().split('T')[0]) {
                     reservations.splice(index, 1); // 해당 예약 제거
                     hotel.reservations[roomId] = reservations; // 업데이트
 
-                    showToast(`해당 예약건을 취소하였습니다.`);
+                    showToast(`reserve-cancel`,'success',lang);
                     renderFloor(floor, date); // UI 갱신
                 });
 
@@ -253,5 +253,4 @@ function isValidDate(date) {
 
 const container = document.createElement('div');
 container.id = 'hotel-container';
-// container.classList.add("mt-4");
 document.body.appendChild(container);

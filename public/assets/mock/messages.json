@@ -24,7 +24,9 @@
         "search-click":"검색 클릭 시 신규, 저장 기능은 비활성화 됩니다.",
         "number-only":"숫자만 입력 가능합니다.",
         "server-warning":"일부 데이타의 타입이 맞지 않아, 서버에서 조정 처리하였습니다.",
-        "invalid-date-format":"날짜 형식은 YYYY-MM-DD 입니다."
+        "invalid-date-format":"날짜 형식은 YYYY-MM-DD 입니다.",
+        "auto-save":"데이타를 자동 저장하였습니다.",
+        "reserve-cancel":"해당 예약건을 취소하였습니다."
 
     },
     "ko": {
@@ -49,10 +51,13 @@
         "new-save":"신규, 저장 기능이 활성화 됩니다.",
         "data-possible":"데이타 입력/수정 가능 합니다.",
         "auto-key":"자동 부여 Key 로 편집 불가 합니다.",
+       
         "search-click":"검색 클릭 시 신규, 저장 기능은 비활성화 됩니다.",
         "number-only":"숫자만 입력 가능합니다.",
         "server-warning":"일부 데이타의 타입이 맞지 않아, 서버에서 조정 처리하였습니다.",
-        "invalid-date-format":"날짜 형식은 YYYY-MM-DD 입니다."
+        "invalid-date-format":"날짜 형식은 YYYY-MM-DD 입니다.",
+        "auto-save":"데이타를 자동 저장하였습니다.",
+        "reserve-cancel":"해당 예약건을 취소하였습니다."
     },
     "ja": {
         "well-done": "作業が正常に完了しました。",
@@ -79,7 +84,9 @@
         "search-click":"검색 클릭 시 신규, 저장 기능은 비활성화 됩니다.",
         "number-only":"숫자만 입력 가능합니다.",
         "server-warning":"일부 데이타의 타입이 맞지 않아, 서버에서 조정 처리하였습니다.",
-        "invalid-date-format":"날짜 형식은 YYYY-MM-DD 입니다."
+        "invalid-date-format":"날짜 형식은 YYYY-MM-DD 입니다.",
+        "auto-save":"데이타를 자동 저장하였습니다.",
+        "reserve-cancel":"해당 예약건을 취소하였습니다."
 
     }
 }

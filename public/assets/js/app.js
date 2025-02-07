@@ -196,7 +196,7 @@ btnContainer.appendChild(saveButton);
 grid.on('click', (ev) => {
     const { columnName, rowKey } = ev;
     if (columnName === 'view') {
-        const row = grid.getRow(rowKey); 
+        const row = grid.getRow(rowKey);
         toggleModal(true, row, rowKey);
     }
 
@@ -207,12 +207,12 @@ grid.on('click', (ev) => {
 
 
 grid.on('editingStart', (ev) => {
-    showToast('데이타 입력/수정 가능 합니다.', 'info');
+    showToast('data-possible', 'info', lang);
 });
 
 grid.on('editingFinish', (ev) => {
     saveData(grid.getData());
-    showToast('데이타를 자동 저장하였습니다.', 'info');
+    showToast('auto-save', 'info', lang);
 });
 
 
@@ -352,43 +352,12 @@ if (rows.length > 0) {
     lastRow.style.borderBottom = '1px solid #8f8f8f';
 }
 
-
-//console.log("createTanslations:" + createTanslations.ko.offCanvas.stati);
 const translations = createTanslations;
-
 
 languageSwitcher.addEventListener("click", function (event) {
     let lang = event.target.getAttribute("data-lang");
     localStorage.setItem('lang', lang);
     if (!lang || !translations[lang]) return;
-
-
-    // let tabLabels = translations[lang].tabs;
-    // tabs[0].textContent = tabLabels.system;
-    // tabs[1].textContent = tabLabels.organization;
-    // tabs[2].textContent = tabLabels.task;
-    // tabs[3].textContent = tabLabels.schedule;
-    // tabs[4].textContent = tabLabels.statistics;
-    // tabs[5].textContent = tabLabels.settings;
-
-
-    // let offCanvasLabels = translations[lang].offCanvas;
-    // if (currentPage.includes("system")) {
-    //     offCanvasItems[0].textContent = offCanvasLabels.system;
-    //     offCanvasItems[1].textContent = offCanvasLabels.orgtree;
-    //     offCanvasItems[2].textContent = offCanvasLabels.document;
-    //     offCanvasItems[3].textContent = offCanvasLabels.wms;
-    // }
-
-    // if (currentPage.includes("system")) {
-    //     breadcrumb.textContent = offCanvasLabels.system;
-    // } else if (currentPage.includes("orgtree")) {
-    //     breadcrumb.textContent = offCanvasLabels.orgtree;
-    // } else if (currentPage.includes("document")) {
-    //     breadcrumb.textContent = offCanvasLabels.document;
-    // } else if (currentPage.includes("wms")) {
-    //     breadcrumb.textContent = offCanvasLabels.system;
-    // }
 
     let buttonLabels = translations[lang].buttons;
     buttons[0].textContent = buttonLabels.search;
@@ -397,39 +366,11 @@ languageSwitcher.addEventListener("click", function (event) {
     addButton.innerHTML = `<i class="fas fa-plus"></i><span>` + buttonLabels.new + `</span>`;
     deleteButton.innerHTML = `<i class="fas fa-trash"></i><span>` + buttonLabels.delete + `</span>`;
     saveButton.innerHTML = `<i class="fas fa-save"></i><span>` + buttonLabels.save + `</span>`;
-
-
 });
 
 
 document.addEventListener('DOMContentLoaded', () => {
     let lang = localStorage.getItem('lang');
-
-    // let tabLabels = translations[lang].tabs;
-    // tabs[0].textContent = tabLabels.system;
-    // tabs[1].textContent = tabLabels.organization;
-    // tabs[2].textContent = tabLabels.task;
-    // tabs[3].textContent = tabLabels.schedule;
-    // tabs[4].textContent = tabLabels.statistics;
-    // tabs[5].textContent = tabLabels.settings;
-
-    // let offCanvasLabels = translations[lang].offCanvas;
-    // if (currentPage.includes("system")) {
-    //     offCanvasItems[0].textContent = offCanvasLabels.system;
-    //     offCanvasItems[1].textContent = offCanvasLabels.orgtree;
-    //     offCanvasItems[2].textContent = offCanvasLabels.document;
-    //     offCanvasItems[3].textContent = offCanvasLabels.wms;
-    // }
-
-    // if (currentPage.includes("system")) {
-    //     breadcrumb.textContent = offCanvasLabels.system;
-    // } else if (currentPage.includes("orgtree")) {
-    //     breadcrumb.textContent = offCanvasLabels.orgtree;
-    // } else if (currentPage.includes("document")) {
-    //     breadcrumb.textContent = offCanvasLabels.document;
-    // } else if (currentPage.includes("wms")) {
-    //     breadcrumb.textContent = offCanvasLabels.system;
-    // }
 
     let buttonLabels = translations[lang].buttons;
     buttons[0].textContent = buttonLabels.search;
