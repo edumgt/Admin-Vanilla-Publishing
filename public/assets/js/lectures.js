@@ -28,20 +28,20 @@ document.addEventListener('DOMContentLoaded', () => {
         dates.innerHTML = '';
         const year = current.getFullYear();
         const month = current.getMonth();
-    
+
         const firstDay = new Date(year, month, 1).getDay();
         const lastDate = new Date(year, month + 1, 0).getDate();
-    
+
         monthYear.textContent = `${year}년 ${month + 1}월`;
-    
-        
+
+
         const today = new Date();
         const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-    
+
         for (let i = 0; i < firstDay; i++) {
             dates.innerHTML += '<div class="date"></div>';
         }
-    
+
         for (let i = 1; i <= lastDate; i++) {
             const dateDiv = document.createElement('div');
             dateDiv.classList.add('date', 'border', 'border-gray-300', 'p-2', 'flex', 'flex-col', 'items-start');
@@ -49,25 +49,25 @@ document.addEventListener('DOMContentLoaded', () => {
             dateDiv.setAttribute('data-date', dateStr);
             dateDiv.ondrop = drop;
             dateDiv.ondragover = allowDrop;
-    
-            
+
+
             if (dateStr === todayStr) {
-                dateDiv.classList.add('bg-gray-100', 'font-bold'); 
+                dateDiv.classList.add('bg-gray-100', 'font-bold');
             }
-    
+
             const dateNumber = document.createElement('span');
             dateNumber.classList.add('date-number');
             dateNumber.textContent = i;
             dateDiv.appendChild(dateNumber);
-    
+
             const newButton = document.createElement('button');
             newButton.classList.add('new-button');
             newButton.textContent = 'New';
             newButton.onclick = () => openModal(dateStr);
             dateDiv.appendChild(newButton);
-    
+
             const dailyLectures = data.lectures.find(lecture => lecture.date === dateStr);
-    
+
             if (dailyLectures) {
                 const lectureList = document.createElement('ul');
                 lectureList.classList.add('list-none', 'p-0', 'w-full', 'overflow-y-auto', 'max-h-80');
@@ -81,29 +81,29 @@ document.addEventListener('DOMContentLoaded', () => {
                     lectureItem.setAttribute('data-date', dateStr);
                     lectureItem.setAttribute('data-index', index);
                     lectureItem.textContent = `${lecture.time}: ${lecture.course} by ${lecture.instructor}`;
-    
+
                     const dragIcon = document.createElement('span');
                     dragIcon.classList.add('custom-drag-icon');
                     dragIcon.innerHTML = '☰';
-                    
-    
+
+
                     if (lecture.pastDate) {
                         const pastDate = document.createElement('div');
                         pastDate.classList.add('past-date');
                         pastDate.textContent = `이동 이전 날짜: ${lecture.pastDate}`;
                         lectureItem.appendChild(pastDate);
                     }
-    
+
                     lectureList.appendChild(lectureItem);
                     lectureItem.appendChild(dragIcon);
                 });
                 dateDiv.appendChild(lectureList);
             }
-    
+
             dates.appendChild(dateDiv);
         }
     }
-    
+
 
     function allowDrop(event) {
         event.preventDefault();
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const fromIndex = parseInt(data[1], 10);
         const toDate = event.target.closest('.date').getAttribute('data-date');
 
-        if (fromDate === toDate) return; 
+        if (fromDate === toDate) return;
 
         let lecturesData = JSON.parse(localStorage.getItem('lecturesData'));
         if (!lecturesData) return;
@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const toDailyLectures = lecturesData.lectures.find(lecture => lecture.date === toDate) || { date: toDate, schedule: [] };
 
         const lecture = fromDailyLectures.schedule.splice(fromIndex, 1)[0];
-        lecture.pastDate = fromDate; 
+        lecture.pastDate = fromDate;
         toDailyLectures.schedule.push(lecture);
 
         if (!lecturesData.lectures.find(lecture => lecture.date === toDate)) {
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showModal(students, lecture) {
-        studentList.innerHTML = ''; 
+        studentList.innerHTML = '';
         if (students && students.length > 0) {
             students.forEach(student => {
                 const studentItem = document.createElement('li');
@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const instructor = instructorInput.value;
         const students = [];
 
-        
+
         const studentEntries = document.querySelectorAll('.student-entry');
         studentEntries.forEach(entry => {
             const name = entry.querySelector('.student-name').value;
@@ -194,8 +194,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (!time || !course || !instructor) {
-            
-            showToast("required-input","warning","en");
+
+            showToast("required-input", "warning", "en");
             return;
         }
 
