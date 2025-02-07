@@ -165,3 +165,30 @@
     font-size: 0.9rem;
     padding: 3px 10px 3px 10px;
 }
+
+/* lectures.html 사용 */
+.custom-drag-icon {
+    background-color: #555;
+    color: #ffffff; 
+    font-size: 1.2rem;
+    position: absolute;
+    right:5px;
+    bottom:8px;
+
+}
+
+.new-button {
+    font-size: 0.9rem;
+    background-color: #0058A3;
+    color: #fff;
+    padding: 2px;
+    border-radius: 3px;
+    margin: 0px 0px 0px 30px;
+    position: fixed;
+
+
+}
+
+.date-number{
+    margin-bottom: 10px;
+}
