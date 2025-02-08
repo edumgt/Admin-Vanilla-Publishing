@@ -17,7 +17,7 @@ function fetchConsultations() {
 
 async function fetchConsultants() {
     try {
-        const response = await fetch('/api/members'); 
+        const response = await fetch('/api/members');
 
         if (!response.ok) {
             throw new Error('Failed to fetch employees');
@@ -71,7 +71,7 @@ function openModal(statusBox, consultationId, status) {
     selectedStatusBox = statusBox;
     selectedConsultationId = consultationId;
     selectedStatus = status;
-    document.getElementById('modal').style.display = 'flex';
+    document.getElementById('modalReason').style.display = 'flex';
 }
 
 // 모달 팝업 닫기 함수
@@ -79,7 +79,7 @@ function closeModal() {
     selectedStatusBox = null;
     selectedConsultationId = null;
     selectedStatus = null;
-    document.getElementById('modal').style.display = 'none';
+    document.getElementById('modalReason').style.display = 'none';
     document.getElementById('reasonInput').value = ''; // 입력 필드 초기화
 }
 
@@ -268,11 +268,16 @@ document.getElementById('consultationForm').addEventListener('submit', function 
     this.reset(); // 폼 초기화
 });
 
-// 모달 닫기 이벤트 핸들러
-document.getElementById('closeModalTopRight').addEventListener('click', closeModal);
-
-// 모달 저장 이벤트 핸들러
-document.getElementById('saveReason').addEventListener('click', saveReason);
+createModal2(
+    'modalReason',
+    '상태별 메모',
+    `<textarea id="reasonInput" class="appearance-none border rounded w-full h-full py-2 px-3 text-gray-700"
+    placeholder="상태에 대한 내역을 입력하세요"></textarea>`,
+    [
+        { label: '저장', class: 'bg-blue-500 text-white ', onClick: 'saveReason()' },
+        { label: '닫기', class: 'bg-gray-500 text-white ', onClick: 'closeModal()' }
+    ]
+);
 
 // 정렬 옵션 변경 이벤트 핸들러
 document.getElementById('sortOptions').addEventListener('change', renderProcessFlow);

@@ -352,6 +352,22 @@ createModal(
     ]
 );
 
+function createModal2(modalId, title, content, buttons) {
+    const modal = document.createElement('div');
+    modal.id = modalId;
+    modal.className = 'hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50';
+    const modalContent = `
+        <div class="modal-content bg-white rounded-lg shadow-sm p-6 w-1/3 relative">
+            <h4 class="text-md mb-4">${title}</h4>
+            ${content}
+            <div class="flex justify-end space-x-2 mt-4">
+                ${buttons.map(btn => `<button id="saveModal" class="${btn.class}" onclick="${btn.onClick}">${btn.label}</button>`).join('')}
+            </div>
+        </div>`;
+    modal.innerHTML = modalContent;
+    document.body.appendChild(modal);
+}
+
 
 function renderFloatingNav(containerId) {
     const container = document.getElementById(containerId);
