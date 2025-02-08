@@ -1,6 +1,23 @@
 const workarea = document.getElementById('workarea');
 workarea.classList.add('header', 'mt-4');
 
+createModal3(
+    'modalTime',
+    '일정변경',
+    `<div class="popup" id="popup">
+        <input type="text" id="event-title" placeholder="Event Title">
+        <input type="datetime-local" id="event-start">
+        <input type="datetime-local" id="event-end">
+        <div class="error" id="date-error">Start date cannot be later than end date.</div>
+        <div class="btn" id="save-event">저장</div>
+        <div class="btn" id="close-popup">닫기</div>
+    </div>`,
+    [
+        { label: '저장', class: 'bg-blue-500 text-white ', onClick: 'saveReason()' },
+        { label: '닫기', class: 'bg-gray-500 text-white ', onClick: 'closeModal()' }
+    ]
+);
+
 const closepopup = document.getElementById('close-popup');
 closepopup.style.backgroundColor = "#555";
 
@@ -162,6 +179,8 @@ function renderEvent(event, targetElement = null) {
             document.getElementById('event-start').value = new Date(event.start).toISOString().substring(0, 16);
             document.getElementById('event-end').value = new Date(event.end).toISOString().substring(0, 16);
             document.getElementById('date-error').style.display = 'none';
+
+            document.getElementById('modalTime').style.display='block';
             document.getElementById('popup').classList.add('active');
         });
     }
@@ -215,10 +234,12 @@ document.getElementById('save-event').addEventListener('click', () => {
         renderTimeline();
         currentEventId = null;
     }
+    document.getElementById('modalTime').style.display='none';
     document.getElementById('popup').classList.remove('active');
 });
 
 document.getElementById('close-popup').addEventListener('click', () => {
+    document.getElementById('modalTime').style.display='none';
     document.getElementById('popup').classList.remove('active');
 });
 

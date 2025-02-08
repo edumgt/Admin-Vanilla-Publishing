@@ -368,6 +368,15 @@ function createModal2(modalId, title, content, buttons) {
     document.body.appendChild(modal);
 }
 
+function createModal3(modalId, title, content, buttons) {
+    const modal = document.createElement('div');
+    modal.id = modalId;
+    modal.className = 'hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50';
+    const modalContent = `${content}`;
+    modal.innerHTML = modalContent;
+    document.body.appendChild(modal);
+}
+
 
 function renderFloatingNav(containerId) {
     const container = document.getElementById(containerId);
