@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+
 
     const monthYear = document.getElementById('monthYear');
     const dates = document.getElementById('dates');
@@ -259,4 +259,3 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     fetchData();
-});
