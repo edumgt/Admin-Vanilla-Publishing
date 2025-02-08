@@ -80,7 +80,7 @@ function closeModal() {
     selectedConsultationId = null;
     selectedStatus = null;
     document.getElementById('modalReason').style.display = 'none';
-    document.getElementById('reasonInput').value = ''; // 입력 필드 초기화
+    document.getElementById('reasonInput').value = ''; 
 }
 
 // 모달 팝업 저장 함수
