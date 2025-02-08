@@ -58,6 +58,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background: white;
+    /* background-color: var(--modal-bg); */
     padding: 20px;
 
     border-radius: 6px;
