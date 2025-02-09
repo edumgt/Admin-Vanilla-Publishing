@@ -196,7 +196,7 @@ class createBadgeRenderer {
     constructor(props) {
         const el = document.createElement('span');
         el.className = 'text-blue-900 rounded cursor-pointer flex items-center justify-center';
-        el.innerHTML = '<i class="fas fa-pencil-alt"></i>'; 
+        el.innerHTML = '<i class="fas fa-pencil-alt"></i>';
         el.style.display = 'inline-block';
         el.style.textAlign = 'center';
         this.el = el;
@@ -212,11 +212,12 @@ class createBadgeRenderer {
 
 
 
-export { 
-    createAddButton, 
-    createDelButton, 
-    createCloseButton, 
-    createSaveButton, 
+export {
+    createAddButton,
+    createDelButton,
+    createCloseButton,
+    createSaveButton,
     createSearchButton,
-    createTanslations, 
-    createBadgeRenderer };
+    createTanslations,
+    createBadgeRenderer
+};
