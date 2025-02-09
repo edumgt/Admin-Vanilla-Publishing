@@ -19,6 +19,15 @@ const hotelData = [
     {"name": "Hotel BC", "address": "177 Gyeongnam St.", "phone": "010-1234-5732", "region": "Gyeongnam"}
 ];
 
+createModal3(
+    'tmpModal',
+    '수정 이력',
+    `<div id="historyModal" class="rounded">
+            <pre id="historyContent"></pre>
+            <button id="closeHistoryBtn" class="bg-gray-500 text-white mt-2">닫기</button>
+        </div>`,
+    []
+);
 
 hotelData.forEach((hotel, index) => {
     hotel.id = generateNanoId();
@@ -81,6 +90,7 @@ const columnDefs = [
                 const rowHistory = historyData.filter(hist => hist.id === params.data.id);
                 const historyContent = document.getElementById('historyContent');
                 historyContent.textContent = JSON.stringify(rowHistory, null, 2);
+                document.getElementById('tmpModal').style.display = 'block';
                 document.getElementById('historyModal').style.display = 'block';
             });
             return button;
@@ -154,6 +164,7 @@ document.addEventListener('DOMContentLoaded', function () {
     saveDataToLocalStorage(gridOptions.rowData);
     
     document.getElementById('closeHistoryBtn').addEventListener('click', function() {
+        document.getElementById('tmpModal').style.display = 'none';
         document.getElementById('historyModal').style.display = 'none';
     });
 

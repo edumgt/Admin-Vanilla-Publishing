@@ -41,6 +41,7 @@
     padding: 1rem;
     /* border: 1px solid #ccc; */
     z-index: 50;
+    
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
 }
 
