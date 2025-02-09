@@ -5,8 +5,24 @@
     const prevMonth = document.getElementById('prevMonth');
     const nextMonth = document.getElementById('nextMonth');
 
+    createModal3(
+        'modalSt',
+        '수강생 목록',
+        `<div class="bg-white p-8 rounded-lg shadow-sm w-1/2 max-h-full overflow-y-auto">
+                <h3 class="text-xl font-bold mb-4">수강생 목록</h3>
+                <ul id="studentList" class="list-disc pl-5"></ul>
+                <div class="flex justify-end mt-4">
+                    <button id="closeModal2" class="bg-gray-500 text-white">닫기</button>
+                </div>
+            </div>`,
+        []
+    );
+
+
     const modal = document.getElementById('modalLecture');
     const modalSt = document.getElementById('modalSt');
+
+    
 
     const lectureForm = document.getElementById('lectureForm');
     const timeInput = document.getElementById('time');
