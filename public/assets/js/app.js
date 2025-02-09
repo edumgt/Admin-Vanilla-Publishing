@@ -1,4 +1,10 @@
-import { createAddButton, createDelButton, createSaveButton, createTanslations, createBadgeRenderer } from './common.js';
+import { 
+    createAddButton, 
+    createDelButton, 
+    createSaveButton, 
+    createSearchButton,
+    createTanslations, 
+    createBadgeRenderer } from './common.js';
 
 let rowsPerPage = 20;
 let gridBodyHeight = 630;
@@ -55,24 +61,6 @@ function saveData(data) {
 
 
 const BadgeRenderer = createBadgeRenderer;
-// class BadgeRenderer {
-//     constructor(props) {
-//         const el = document.createElement('span');
-//         el.className = 'px-3 py-1 text-gray-700 rounded cursor-pointer flex items-center justify-center';
-//         el.innerHTML = '<i class="fas fa-pencil-alt"></i>'; 
-//         el.style.display = 'inline-block';
-//         el.style.textAlign = 'center';
-//         this.el = el;
-//         this.props = props;
-//     }
-//     getElement() {
-//         return this.el;
-//     }
-//     render(props) {
-//         this.props = props;
-//     }
-// }
-
 
 const grid = new tui.Grid({
     el: document.getElementById('grid'),
@@ -188,11 +176,15 @@ addButton.addEventListener('click', function () {
     updateDataCount();
 });
 
+const searchButton = createSearchButton();
+btnContainer.appendChild(searchButton);
+
 btnContainer.appendChild(addButton);
 btnContainer.appendChild(deleteButton);
 btnContainer.appendChild(saveButton);
 
-// Handle View Button Click in Grid
+
+
 grid.on('click', (ev) => {
     const { columnName, rowKey } = ev;
     if (columnName === 'view') {
@@ -292,7 +284,7 @@ function toggleModal(show, rowData = {}, rowKey = null) {
 }
 
 
-document.getElementById('searchByDate').addEventListener('click', function () {
+searchButton.addEventListener('click', function () {
 
     const gridData = loadData();
 
@@ -360,9 +352,12 @@ languageSwitcher.addEventListener("click", function (event) {
     if (!lang || !translations[lang]) return;
 
     let buttonLabels = translations[lang].buttons;
-    buttons[0].textContent = buttonLabels.search;
-    buttons[1].textContent = buttonLabels.reset;
+    buttons[0].textContent = buttonLabels.reset;
+    //buttons[0].textContent = buttonLabels.search;
+    
 
+    searchButton.innerHTML = `<i class="fas fa-search"></i><span>` + buttonLabels.search + `</span>`;
+    
     addButton.innerHTML = `<i class="fas fa-plus"></i><span>` + buttonLabels.new + `</span>`;
     deleteButton.innerHTML = `<i class="fas fa-trash"></i><span>` + buttonLabels.delete + `</span>`;
     saveButton.innerHTML = `<i class="fas fa-save"></i><span>` + buttonLabels.save + `</span>`;
@@ -373,9 +368,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let lang = localStorage.getItem('lang');
 
     let buttonLabels = translations[lang].buttons;
-    buttons[0].textContent = buttonLabels.search;
-    buttons[1].textContent = buttonLabels.reset;
+    buttons[0].textContent = buttonLabels.reset;
+    //buttons[0].textContent = buttonLabels.search;
+    
 
+    searchButton.innerHTML = `<i class="fas fa-search"></i><span>` + buttonLabels.search + `</span>`;
+    
     addButton.innerHTML = `<i class="fas fa-plus"></i><span>` + buttonLabels.new + `</span>`;
     deleteButton.innerHTML = `<i class="fas fa-trash"></i><span>` + buttonLabels.delete + `</span>`;
     saveButton.innerHTML = `<i class="fas fa-save"></i><span>` + buttonLabels.save + `</span>`;

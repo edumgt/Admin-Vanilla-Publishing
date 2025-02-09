@@ -1,3 +1,11 @@
+function createSearchButton() {
+    const searchButton = document.createElement('button');
+    searchButton.className = "items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2 mr-2";
+    searchButton.innerHTML = `<i class="fas fa-search"></i><span>검색</span>`;
+
+    return searchButton;
+}
+
 function createAddButton() {
     const addButton = document.createElement('button');
     addButton.className = "items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2 mr-2";
@@ -204,4 +212,11 @@ class createBadgeRenderer {
 
 
 
-export { createAddButton, createDelButton, createCloseButton, createSaveButton, createTanslations, createBadgeRenderer };
+export { 
+    createAddButton, 
+    createDelButton, 
+    createCloseButton, 
+    createSaveButton, 
+    createSearchButton,
+    createTanslations, 
+    createBadgeRenderer };
