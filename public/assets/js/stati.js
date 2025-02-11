@@ -1,4 +1,11 @@
-import { createTanslations , createBadgeRenderer } from './common.js';
+import { 
+    createAddButton, 
+    createDelButton, 
+    createSaveButton, 
+    createSearchButton,
+    createTanslations, 
+    createBadgeRenderer } from './common.js';
+
 const translations = createTanslations;
 
 const workarea = document.getElementById("workarea");
@@ -109,7 +116,8 @@ const grid = new tui.Grid({
 
 updateDataCount();
 
-document.getElementById('delrow').addEventListener('click', function () {
+const deleteButton = createDelButton();
+deleteButton.addEventListener('click', function () {
     const chkArray = grid.getCheckedRowKeys();
     if (chkArray.length > 0) {
         grid.removeCheckedRows();
@@ -121,7 +129,8 @@ document.getElementById('delrow').addEventListener('click', function () {
     }
 });
 
-document.getElementById('saverow').addEventListener('click', function () {
+const saveButton = createSaveButton();
+saveButton.addEventListener('click', function () {
 
     const data = grid.getData();
     // Filter out rows without a Key value
@@ -153,8 +162,8 @@ document.getElementById('saverow').addEventListener('click', function () {
         });
 });
 
-// Add new row functionality
-document.getElementById('newrow').addEventListener('click', function () {
+const addButton = createAddButton();
+addButton.addEventListener('click', function () {
     const data = grid.getData();
     const hasEmptyRow = data.some(row => row.team === '' || row.name === '');
     if (hasEmptyRow) {
@@ -169,7 +178,14 @@ document.getElementById('newrow').addEventListener('click', function () {
     updateDataCount();
 });
 
-// Handle View Button Click in Grid
+const searchButton = createSearchButton();
+btnContainer.appendChild(searchButton);
+
+btnContainer.appendChild(addButton);
+btnContainer.appendChild(deleteButton);
+btnContainer.appendChild(saveButton);
+
+
 grid.on('click', (ev) => {
     const { columnName, rowKey } = ev;
 
@@ -278,7 +294,7 @@ function toggleModal(show, rowData = {}, rowKey = null) {
 }
 
 
-document.getElementById('searchByDate').addEventListener('click', function () {
+searchButton.addEventListener('click', function () {
 
     const gridData = loadData();
 
@@ -297,13 +313,13 @@ document.getElementById('searchByDate').addEventListener('click', function () {
 
     grid.resetData(filteredData);
 
-    document.getElementById('saverow').disabled = true;
-    document.getElementById('saverow').classList.add('bg-gray-400', 'cursor-not-allowed');
-    document.getElementById('saverow').classList.remove('bg-gray-700', 'hover:bg-gray-600');
+    saveButton.disabled = true;
+    saveButton.classList.add('bg-gray-400', 'cursor-not-allowed');
+    saveButton.classList.remove('bg-gray-700', 'hover:bg-gray-600');
 
-    document.getElementById('newrow').disabled = true;
-    document.getElementById('newrow').classList.add('bg-gray-400', 'cursor-not-allowed');
-    document.getElementById('newrow').classList.remove('bg-gray-700', 'hover:bg-gray-600');
+    addButton.disabled = true;
+    addButton.classList.add('bg-gray-400', 'cursor-not-allowed');
+    addButton.classList.remove('bg-gray-700', 'hover:bg-gray-600');
 
     showToast('search-click', 'info', lang);
 
@@ -322,17 +338,13 @@ document.getElementById('resetSearch').addEventListener('click', function () {
     // Reset grid data
     grid.resetData(gridData);
 
-    // Enable the Save button
-    const saveButton = document.getElementById('saverow');
     saveButton.disabled = false;
     saveButton.classList.remove('bg-gray-400', 'cursor-not-allowed');
     saveButton.classList.add('bg-gray-700', 'hover:bg-gray-600');
 
-
-    const newButton = document.getElementById('newrow');
-    newButton.disabled = false;
-    newButton.classList.remove('bg-gray-400', 'cursor-not-allowed');
-    newButton.classList.add('bg-gray-700', 'hover:bg-gray-600');
+    addButton.disabled = false;
+    addButton.classList.remove('bg-gray-400', 'cursor-not-allowed');
+    addButton.classList.add('bg-gray-700', 'hover:bg-gray-600');
 
     showToast('new-save', 'info', lang);
 });
@@ -344,84 +356,3 @@ if (rows.length > 0) {
     lastRow.style.borderBottom = '1px solid #8f8f8f'; // 마지막 행의 테두리 색
 }
 
-
-
-
-// languageSwitcher.addEventListener("click", function (event) {
-//     let lang = event.target.getAttribute("data-lang");
-//     localStorage.setItem('lang', lang);
-//     if (!lang || !translations[lang]) return;
-
-//     let tabLabels = translations[lang].tabs;
-//     tabs[0].textContent = tabLabels.system;
-//     tabs[1].textContent = tabLabels.organization;
-//     tabs[2].textContent = tabLabels.task;
-//     tabs[3].textContent = tabLabels.schedule;
-//     tabs[4].textContent = tabLabels.statistics;
-//     tabs[5].textContent = tabLabels.settings;
-
-//     let offCanvasLabels = translations[lang].offCanvas;
-
-//     if (currentPage.includes("stati")) {
-//         breadcrumb.textContent = offCanvasLabels.stati;
-//         offCanvasItems[0].textContent = offCanvasLabels.stati;
-//         offCanvasItems[1].textContent = offCanvasLabels.flow;
-//         offCanvasItems[2].textContent = offCanvasLabels.chain;
-//     } else if (currentPage.includes("flow")) {
-//         breadcrumb.textContent = offCanvasLabels.flow;
-//         offCanvasItems[0].textContent = offCanvasLabels.stati;
-//         offCanvasItems[1].textContent = offCanvasLabels.flow;
-//         offCanvasItems[2].textContent = offCanvasLabels.chain;
-//     } else if (currentPage.includes("chain")) {
-//         breadcrumb.textContent = offCanvasLabels.chain;
-//         offCanvasItems[0].textContent = offCanvasLabels.stati;
-//         offCanvasItems[1].textContent = offCanvasLabels.flow;
-//         offCanvasItems[2].textContent = offCanvasLabels.chain;
-//     }
-
-//     const buttonLabels = translations[lang].buttons;
-//     buttons[0].textContent = buttonLabels.search;
-//     buttons[1].textContent = buttonLabels.reset;
-//     buttons[2].textContent = buttonLabels.new;
-//     buttons[3].textContent = buttonLabels.delete;
-//     buttons[4].textContent = buttonLabels.save;
-
-// });
-
-
-// document.addEventListener('DOMContentLoaded', () => {
-//     let lang = localStorage.getItem('lang');
-
-//     let tabLabels = translations[lang].tabs;
-//     tabs[0].textContent = tabLabels.system;
-//     tabs[1].textContent = tabLabels.organization;
-//     tabs[2].textContent = tabLabels.task;
-//     tabs[3].textContent = tabLabels.schedule;
-//     tabs[4].textContent = tabLabels.statistics;
-//     tabs[5].textContent = tabLabels.settings;
-
-//     let offCanvasLabels = translations[lang].offCanvas;
-//     if (currentPage.includes("stati")) {
-//         breadcrumb.textContent = offCanvasLabels.stati;
-//         offCanvasItems[0].textContent = offCanvasLabels.stati;
-//         offCanvasItems[1].textContent = offCanvasLabels.flow;
-//         offCanvasItems[2].textContent = offCanvasLabels.chain;
-//     } else if (currentPage.includes("flow")) {
-//         breadcrumb.textContent = offCanvasLabels.flow;
-//         offCanvasItems[0].textContent = offCanvasLabels.stati;
-//         offCanvasItems[1].textContent = offCanvasLabels.flow;
-//         offCanvasItems[2].textContent = offCanvasLabels.chain;
-//     } else if (currentPage.includes("chain")) {
-//         breadcrumb.textContent = offCanvasLabels.chain;
-//         offCanvasItems[0].textContent = offCanvasLabels.stati;
-//         offCanvasItems[1].textContent = offCanvasLabels.flow;
-//         offCanvasItems[2].textContent = offCanvasLabels.chain;
-//     }
-
-//     const buttonLabels = translations[lang].buttons;
-//     buttons[0].textContent = buttonLabels.search;
-//     buttons[1].textContent = buttonLabels.reset;
-//     buttons[2].textContent = buttonLabels.new;
-//     buttons[3].textContent = buttonLabels.delete;
-//     buttons[4].textContent = buttonLabels.save;
-// });

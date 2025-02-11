@@ -1,3 +1,7 @@
+import { 
+
+    createSaveButton } from './common.js';
+
 const calendar = (() => {
     const calendarContainer = document.getElementById('calendar');
 
@@ -270,9 +274,9 @@ const calendar = (() => {
         taskTextarea.placeholder = ' 업무 일정 추가';
         taskTextarea.rows = 5;
 
-        const saveBtn = document.createElement('button');
-        saveBtn.className = 'bg-blue-500 text-white';
-        saveBtn.innerText = '저장';
+        //const saveBtn = document.createElement('button');
+        const saveBtn = createSaveButton();
+
         saveBtn.onclick = () => {
             const newTask = taskTextarea.value.trim();
             const time = timeSelect.value;
