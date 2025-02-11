@@ -126,12 +126,12 @@ function renderFloor(floor, date = new Date().toISOString().split('T')[0]) {
                 deleteButton.innerText = 'X';
                 deleteButton.className = 'delete-button bg-yellow-500';
                 deleteButton.addEventListener('click', () => {
-                    // 예약 삭제
-                    reservations.splice(index, 1); // 해당 예약 제거
-                    hotel.reservations[roomId] = reservations; // 업데이트
+                    
+                    reservations.splice(index, 1); 
+                    hotel.reservations[roomId] = reservations; 
 
                     showToast(`reserve-cancel`,'success',lang);
-                    renderFloor(floor, date); // UI 갱신
+                    renderFloor(floor, date); 
                 });
 
                 reservationDiv.appendChild(deleteButton);
