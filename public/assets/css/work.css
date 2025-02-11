@@ -108,16 +108,11 @@
     position: absolute;
     top: 5px;
     right: 10px;
-    /* background: red; */
     color: white;
     padding: 2px 8px;
     cursor: pointer;
     border-radius: 3px;
     font-size: 12px;
-}
-
-.delete-button:hover {
-    background: darkred;
 }
 
 .reservation-item {
