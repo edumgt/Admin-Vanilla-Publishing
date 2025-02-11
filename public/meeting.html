@@ -19,9 +19,10 @@
     <div id="offCanvasContainer"></div>
     <div id="content">
         <nav class="breadcrumb"></nav>
-        <div class="mb-2 align-items-center space-x-2 mt-4">
+        <div class="flex items-center mb-2 align-items-center space-x-2 mt-4">
             <input type="date" id="search-date">
-            <button onclick="filterByDate()" class="bg-blue-500 text-white">Search</button>
+            <div id="btnContainer"></div>
+            <!-- <button onclick="filterByDate()" class="bg-blue-500 text-white">Search</button> -->
         </div>
         <div id="rooms-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
     </div>
@@ -107,7 +108,7 @@
     <script type="text/javascript" src="assets/js/logo.js"></script>
     <script type="module" src="assets/js/frame.js"></script>
     <script src="https://unpkg.com/stackedit-js@1.0.7/docs/lib/stackedit.min.js"></script>
-    <script type="text/javascript" src="assets/js/meeting.js"></script>
+    <script type="module" src="assets/js/meeting.js"></script>
     
 </body>
 

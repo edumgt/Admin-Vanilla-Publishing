@@ -1,3 +1,10 @@
+import {
+    createSearchButton
+} from './common.js';
+
+const searchButton = createSearchButton();
+document.getElementById('btnContainer').appendChild(searchButton);
+
 const roomsData = {
     rooms: [
         { name: "Meeting Room #1", seats: 5, bookings: [] },
@@ -26,11 +33,11 @@ function displayRooms(dateFilter = null) {
     container.innerHTML = '';
 
     const data = fetchBookings();
-    const currentTime = new Date().toISOString().slice(0, 16); 
+    const currentTime = new Date().toISOString().slice(0, 16);
 
     data.rooms.forEach(room => {
         const card = document.createElement('div');
-        card.className = 'bg-white p-4 rounded-md shadow-md text-sm'; 
+        card.className = 'bg-white p-4 rounded-md shadow-md text-sm';
         card.innerHTML = `
                 <h2 class="text-md font-bold mb-2">${room.name}</h2>
                 <p class="text-sm mb-2">Seats: ${room.seats}</p>
@@ -42,6 +49,33 @@ function displayRooms(dateFilter = null) {
     });
 }
 
+export function openModal(roomName, action, timeSlotOrIndex) {
+    document.getElementById('modal-title').textContent = `${action} Booking for ${roomName}`;
+    document.getElementById('room-name').value = roomName;
+    document.getElementById('booking-form').dataset.action = action;
+    if (action === 'Update') {
+        const data = fetchBookings();
+        const booking = data.rooms.find(room => room.name === roomName).bookings[timeSlotOrIndex];
+        document.getElementById('date').value = booking.date;
+        document.getElementById('startTime').value = booking.startTime;
+        document.getElementById('endTime').value = booking.endTime;
+        document.getElementById('meeting-title').value = booking.title || '';
+        document.getElementById('meeting-description').value = booking.description || '';
+        document.getElementById('booking-form').dataset.bookingIndex = timeSlotOrIndex;
+    } else {
+        document.getElementById('booking-form').reset();
+        const date = document.getElementById('search-date').value;
+        document.getElementById('date').value = date;
+        document.getElementById('startTime').value = timeSlotOrIndex;
+        document.getElementById('endTime').value = `${parseInt(timeSlotOrIndex.split(':')[0]) + 1}:00`;
+        document.getElementById('booking-form').dataset.bookingIndex = '';
+        populateTimeOptions();
+    }
+    document.getElementById('booking-modal').classList.remove('hidden');
+}
+
+
+
 function generateTimeslots(room, dateFilter = null, currentTime) {
     let timeslots = '';
     let hour = 8;
@@ -50,7 +84,7 @@ function generateTimeslots(room, dateFilter = null, currentTime) {
         let endTime = `${(hour + 1).toString().padStart(2, '0')}:00`;
         let booking = room.bookings.find(b => b.date === dateFilter && b.startTime === startTime);
 
-        
+
         if (booking) {
             endTime = booking.endTime;
             hour = parseInt(booking.endTime.split(':')[0]);
@@ -78,35 +112,13 @@ function generateTimeslots(room, dateFilter = null, currentTime) {
     return timeslots;
 }
 
-function filterByDate() {
+searchButton.addEventListener('click', function () {
+    console.log("##");
     const selectedDate = document.getElementById('search-date').value;
     displayRooms(selectedDate);
-}
+})
 
-function openModal(roomName, action, timeSlotOrIndex) {
-    document.getElementById('modal-title').textContent = `${action} Booking for ${roomName}`;
-    document.getElementById('room-name').value = roomName;
-    document.getElementById('booking-form').dataset.action = action;
-    if (action === 'Update') {
-        const data = fetchBookings();
-        const booking = data.rooms.find(room => room.name === roomName).bookings[timeSlotOrIndex];
-        document.getElementById('date').value = booking.date;
-        document.getElementById('startTime').value = booking.startTime;
-        document.getElementById('endTime').value = booking.endTime;
-        document.getElementById('meeting-title').value = booking.title || '';
-        document.getElementById('meeting-description').value = booking.description || '';
-        document.getElementById('booking-form').dataset.bookingIndex = timeSlotOrIndex;
-    } else {
-        document.getElementById('booking-form').reset();
-        const date = document.getElementById('search-date').value;
-        document.getElementById('date').value = date;
-        document.getElementById('startTime').value = timeSlotOrIndex;
-        document.getElementById('endTime').value = `${parseInt(timeSlotOrIndex.split(':')[0]) + 1}:00`;
-        document.getElementById('booking-form').dataset.bookingIndex = '';
-        populateTimeOptions();
-    }
-    document.getElementById('booking-modal').classList.remove('hidden');
-}
+
 
 function populateTimeOptions() {
     const startTimeSelect = document.getElementById('startTime');
@@ -127,15 +139,15 @@ function populateTimeOptions() {
     }
 }
 
-function closeModal() {
+export function closeModal() {
     document.getElementById('booking-modal').classList.add('hidden');
 }
 
-function closeWarningModal() {
+export function closeWarningModal() {
     document.getElementById('warning-modal').classList.add('hidden');
 }
 
-function openNotesModal(bookingIndex) {
+export function openNotesModal(bookingIndex) {
     const data = fetchBookings();
     const booking = data.rooms.flatMap(room => room.bookings)[bookingIndex];
     document.getElementById('notes-modal-title').textContent = `Meeting Notes for ${booking.title}`;
@@ -160,9 +172,14 @@ function openNotesModal(bookingIndex) {
     });
 }
 
-function closeNotesModal() {
+export function closeNotesModal() {
     document.getElementById('meeting-notes-modal').classList.add('hidden');
 }
+
+window.openModal = openModal;
+window.closeModal = closeModal;
+window.openNotesModal = openNotesModal;
+window.closeWarningModal = closeWarningModal;
 
 function saveMeetingNotes() {
     const bookingIndex = document.getElementById('meeting-notes-modal').dataset.bookingIndex;
@@ -201,7 +218,7 @@ document.getElementById('booking-form').addEventListener('submit', function (eve
     if (conflictingBooking) {
         closeModal();
         document.getElementById('warning-modal').classList.remove('hidden');
-        
+
         return;
     }
 
