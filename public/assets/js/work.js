@@ -121,7 +121,7 @@ function renderFloor(floor, date = new Date().toISOString().split('T')[0]) {
                     <p>Cost: $${reservation.cost}</p>
                 `;
 
-                // "X" 버튼 추가
+    
                 const deleteButton = document.createElement('span');
                 deleteButton.innerText = 'X';
                 deleteButton.className = 'delete-button bg-yellow-500';
