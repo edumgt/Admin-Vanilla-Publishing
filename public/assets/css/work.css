@@ -89,20 +89,19 @@
     border-radius: 3px;
 }
 
-.modal-content button {
+/* .modal-content button {
     margin-top: 10px;
     padding: 10px 20px;
     border: none;
     background-color: #0058a3;
     color: #fff;
-
     cursor: pointer;
     border-radius: 3px;
-}
+} */
 
-.modal-content button:hover {
+/* .modal-content button:hover {
     background-color: #0056b3;
-}
+} */
 
 .delete-button {
     position: absolute;

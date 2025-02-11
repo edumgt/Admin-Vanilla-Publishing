@@ -1,3 +1,8 @@
+import { 
+
+    createSaveButton, 
+    createCloseButton } from './common.js';
+
 const hotel = {
     floors: 10,
     roomsPerFloor: 20,
@@ -170,27 +175,27 @@ function manageReservation(floor, room) {
             <input type="time" id="departureTime" value="00:00" />
             <label>Cost:</label>
             <input type="number" id="cost" value="" />
-            <button id="saveReservation">저장</button>
-            <button id="cancelReservation">닫기</button>
+            <div id="btnContainer"></div>
+            
         </div>
     `;
 
     document.body.appendChild(modal);
 
-    const sR = document.getElementById('saveReservation');
-    sR.style.backgroundColor = "#0058a3";
-    sR.style.padding = "3px 6px 3px 6px";
-    sR.style.height = "calc(1.5em + 6px)";
-    sR.style.borderRadius = "3px";
+    const saveButton = createSaveButton();
+    saveButton.classList.add("mr-2");
+    
+    const closeButton = createCloseButton();
 
-    const cR = document.getElementById('cancelReservation');
-    cR.style.backgroundColor = "#555";
-    cR.style.padding = "3px 6px 3px 6px";
-    cR.style.height = "calc(1.5em + 6px)";
-    cR.style.borderRadius = "3px";
     
 
-    document.getElementById('saveReservation').addEventListener('click', () => {
+    document.getElementById('btnContainer').appendChild(saveButton);
+    document.getElementById('btnContainer').appendChild(closeButton);
+
+    
+    
+
+    saveButton.addEventListener('click', () => {
         const guestName = document.getElementById('guestName').value;
         const checkInDate = document.getElementById('checkInDate').value;
         const checkOutDate = document.getElementById('checkOutDate').value;
@@ -237,7 +242,7 @@ function manageReservation(floor, room) {
         renderFloor(floor);
     });
 
-    document.getElementById('cancelReservation').addEventListener('click', () => {
+    closeButton.addEventListener('click', () => {
         document.body.removeChild(modal);
     });
 }

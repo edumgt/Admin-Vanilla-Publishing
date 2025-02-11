@@ -1,8 +1,9 @@
 import {
     createSaveButton,
 } from './common.js';
+
 const saveButton = createSaveButton();
-document.getElementById('buttonContainer').appendChild(saveButton);
+document.getElementById('btnContainer').appendChild(saveButton);
 
 
 const workarea = document.getElementById('workarea');
