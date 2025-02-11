@@ -1,3 +1,10 @@
+import {
+    createSaveButton,
+} from './common.js';
+const saveButton = createSaveButton();
+document.getElementById('buttonContainer').appendChild(saveButton);
+
+
 const workarea = document.getElementById('workarea');
 workarea.classList.add('flex', 'w-full', 'mt-4');
 
@@ -80,7 +87,7 @@ function closeModal() {
     selectedConsultationId = null;
     selectedStatus = null;
     document.getElementById('modalReason').style.display = 'none';
-    document.getElementById('reasonInput').value = ''; 
+    document.getElementById('reasonInput').value = '';
 }
 
 // 모달 팝업 저장 함수
