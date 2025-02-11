@@ -83,7 +83,6 @@ function renderFloor(floor, date = new Date().toISOString().split('T')[0]) {
         roomTitle.className = 'room-title';
         roomTitle.innerText = roomId;
 
-
         const newBadge = document.createElement('span');
         newBadge.className = 'badge';
         newBadge.innerText = 'New';
@@ -92,15 +91,12 @@ function renderFloor(floor, date = new Date().toISOString().split('T')[0]) {
             manageReservation(floor, room);
         });
         roomTitle.appendChild(newBadge);
-
         roomDiv.appendChild(roomTitle);
 
         const roomInfo = document.createElement('div');
         roomInfo.className = 'room-info';
 
-
         const reservations = hotel.reservations[roomId] || [];
-
 
         const overlappingReservations = reservations.filter(reservation => {
             return (
@@ -125,6 +121,8 @@ function renderFloor(floor, date = new Date().toISOString().split('T')[0]) {
                 const deleteButton = document.createElement('span');
                 deleteButton.innerText = 'X';
                 deleteButton.className = 'delete-button bg-yellow-500';
+
+                console.log(index);
                 deleteButton.addEventListener('click', () => {
                     
                     reservations.splice(index, 1); 
