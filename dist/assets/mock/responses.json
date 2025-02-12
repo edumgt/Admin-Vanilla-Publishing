@@ -1,0 +1,80 @@
+[
+    {
+      "question-1": "예",
+      "question-2": "매일",
+      "question-4": "정기적으로 상담",
+      "question-9": "아침"
+    },
+    {
+      "question-1": "전혀 없음",
+      "question-2": "전혀 사용하지 않음",
+      "question-4": "상담 계획 중",
+      "question-9": "항상 일정함"
+    },
+    {
+      "question-1": "전혀 없음",
+      "question-2": "전혀 사용하지 않음",
+      "question-4": "상담 계획 중",
+      "question-9": "저녁"
+    },
+    {
+      "question-1": "전혀 없음",
+      "question-2": "매주",
+      "question-4": "한 번 상담",
+      "question-9": "저녁"
+    },
+    {
+      "question-1": "전혀 없음",
+      "question-2": "매주",
+      "question-4": "한 번 상담",
+      "question-9": "저녁"
+    },
+    {
+      "question-1": "가끔",
+      "question-2": "매주",
+      "question-4": "한 번 상담",
+      "question-9": "아침"
+    },
+    {
+      "question-1": "가끔",
+      "question-2": "매주",
+      "question-4": "한 번 상담",
+      "question-9": "아침"
+    },
+    {
+      "question-1": "가끔",
+      "question-2": "매주",
+      "question-4": "한 번 상담",
+      "question-9": "아침"
+    },
+    {
+      "question-1": "드물게",
+      "question-2": "전혀 사용하지 않음",
+      "question-4": "전혀 없음",
+      "question-9": "밤"
+    },
+    {
+      "question-1": "드물게",
+      "question-2": "전혀 사용하지 않음",
+      "question-4": "전혀 없음",
+      "question-9": "밤"
+    },
+    {
+      "question-1": "드물게",
+      "question-2": "전혀 사용하지 않음",
+      "question-4": "전혀 없음",
+      "question-9": "밤"
+    },
+    {
+      "question-1": "드물게",
+      "question-2": "전혀 사용하지 않음",
+      "question-4": "전혀 없음",
+      "question-9": "밤"
+    },
+    {
+      "question-1": "드물게",
+      "question-2": "전혀 사용하지 않음",
+      "question-4": "전혀 없음",
+      "question-9": "밤"
+    }
+  ]

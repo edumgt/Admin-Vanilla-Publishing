@@ -1,0 +1,290 @@
+{
+    "1-1": [
+        {
+            "guestName": "홍길동",
+            "checkInDate": "2025-01-05",
+            "checkOutDate": "2025-01-07",
+            "arrivalTime": "15:30",
+            "departureTime": "18:30",
+            "cost": 200000
+        },
+        {
+            "guestName": "Tom",
+            "checkInDate": "2025-01-05",
+            "checkOutDate": "2025-01-10",
+            "arrivalTime": "15:30",
+            "departureTime": "18:30",
+            "cost": 100000
+        },
+        {
+            "guestName": "Alice",
+            "checkInDate": "2025-01-15",
+            "checkOutDate": "2025-01-20",
+            "arrivalTime": "14:00",
+            "departureTime": "12:00",
+            "cost": 300000
+        },
+        {
+            "guestName": "Bob",
+            "checkInDate": "2025-02-01",
+            "checkOutDate": "2025-02-05",
+            "arrivalTime": "16:00",
+            "departureTime": "11:00",
+            "cost": 150000
+        },
+        {
+            "guestName": "Eve",
+            "checkInDate": "2025-02-10",
+            "checkOutDate": "2025-02-15",
+            "arrivalTime": "17:00",
+            "departureTime": "10:00",
+            "cost": 250000
+        }
+    ],
+    "2-5": [
+        {
+            "guestName": "Rich",
+            "checkInDate": "2025-01-03",
+            "checkOutDate": "2025-01-05",
+            "arrivalTime": "15:30",
+            "departureTime": "18:30",
+            "cost": 200000
+        },
+        {
+            "guestName": "Grace",
+            "checkInDate": "2025-01-10",
+            "checkOutDate": "2025-01-12",
+            "arrivalTime": "13:00",
+            "departureTime": "12:00",
+            "cost": 180000
+        },
+        {
+            "guestName": "Mallory",
+            "checkInDate": "2025-01-20",
+            "checkOutDate": "2025-01-22",
+            "arrivalTime": "14:30",
+            "departureTime": "11:30",
+            "cost": 160000
+        },
+        {
+            "guestName": "Oscar",
+            "checkInDate": "2025-02-05",
+            "checkOutDate": "2025-02-08",
+            "arrivalTime": "15:00",
+            "departureTime": "13:00",
+            "cost": 220000
+        },
+        {
+            "guestName": "Peggy",
+            "checkInDate": "2025-02-15",
+            "checkOutDate": "2025-02-18",
+            "arrivalTime": "16:30",
+            "departureTime": "12:30",
+            "cost": 210000
+        }
+    ],
+    "2-8": [
+        {
+            "guestName": "Steve",
+            "checkInDate": "2025-01-07",
+            "checkOutDate": "2025-01-10",
+            "arrivalTime": "15:30",
+            "departureTime": "18:30",
+            "cost": 100000
+        },
+        {
+            "guestName": "Trudy",
+            "checkInDate": "2025-01-15",
+            "checkOutDate": "2025-01-18",
+            "arrivalTime": "15:00",
+            "departureTime": "11:00",
+            "cost": 180000
+        },
+        {
+            "guestName": "Victor",
+            "checkInDate": "2025-01-25",
+            "checkOutDate": "2025-01-28",
+            "arrivalTime": "14:00",
+            "departureTime": "13:00",
+            "cost": 170000
+        },
+        {
+            "guestName": "Wendy",
+            "checkInDate": "2025-02-08",
+            "checkOutDate": "2025-02-12",
+            "arrivalTime": "13:30",
+            "departureTime": "12:30",
+            "cost": 200000
+        },
+        {
+            "guestName": "Xavier",
+            "checkInDate": "2025-02-20",
+            "checkOutDate": "2025-02-25",
+            "arrivalTime": "17:00",
+            "departureTime": "10:00",
+            "cost": 300000
+        }
+    ],
+    "2-7": [
+        {
+            "guestName": "Rich",
+            "checkInDate": "2025-01-16",
+            "checkOutDate": "2025-01-18",
+            "arrivalTime": "15:30",
+            "departureTime": "18:30",
+            "cost": 19000
+        },
+        {
+            "guestName": "Yvonne",
+            "checkInDate": "2025-01-22",
+            "checkOutDate": "2025-01-25",
+            "arrivalTime": "14:30",
+            "departureTime": "12:00",
+            "cost": 210000
+        },
+        {
+            "guestName": "Zack",
+            "checkInDate": "2025-01-28",
+            "checkOutDate": "2025-01-31",
+            "arrivalTime": "13:00",
+            "departureTime": "11:00",
+            "cost": 180000
+        },
+        {
+            "guestName": "Aaron",
+            "checkInDate": "2025-02-01",
+            "checkOutDate": "2025-02-05",
+            "arrivalTime": "15:00",
+            "departureTime": "13:00",
+            "cost": 250000
+        },
+        {
+            "guestName": "Brittany",
+            "checkInDate": "2025-02-15",
+            "checkOutDate": "2025-02-20",
+            "arrivalTime": "16:00",
+            "departureTime": "11:00",
+            "cost": 270000
+        }
+    ],
+    "1-5": [
+        {
+            "guestName": "Steve",
+            "checkInDate": "2025-01-05",
+            "checkOutDate": "2025-01-05",
+            "arrivalTime": "15:30",
+            "departureTime": "18:30",
+            "cost": 20000
+        },
+        {
+            "guestName": "Charlie",
+            "checkInDate": "2025-01-10",
+            "checkOutDate": "2025-01-12",
+            "arrivalTime": "14:00",
+            "departureTime": "12:00",
+            "cost": 150000
+        },
+        {
+            "guestName": "David",
+            "checkInDate": "2025-01-20",
+            "checkOutDate": "2025-01-22",
+            "arrivalTime": "13:30",
+            "departureTime": "10:30",
+            "cost": 160000
+        },
+        {
+            "guestName": "Evelyn",
+            "checkInDate": "2025-02-05",
+            "checkOutDate": "2025-02-08",
+            "arrivalTime": "15:00",
+            "departureTime": "11:00",
+            "cost": 220000
+        },
+        {
+            "guestName": "Frank",
+            "checkInDate": "2025-02-20",
+            "checkOutDate": "2025-02-25",
+            "arrivalTime": "16:30",
+            "departureTime": "12:30",
+            "cost": 250000
+        }
+    ],
+    "3-2": [
+        {
+            "guestName": "George",
+            "checkInDate": "2025-01-05",
+            "checkOutDate": "2025-01-07",
+            "arrivalTime": "15:30",
+            "departureTime": "18:30",
+            "cost": 200000
+        },
+        {
+            "guestName": "Hannah",
+            "checkInDate": "2025-01-10",
+            "checkOutDate": "2025-01-12",
+            "arrivalTime": "14:00",
+            "departureTime": "12:00",
+            "cost": 150000
+        },
+        {
+            "guestName": "Irene",
+            "checkInDate": "2025-01-20",
+            "checkOutDate": "2025-01-22",
+            "arrivalTime": "13:30",
+            "departureTime": "10:30",
+            "cost": 160000
+        }
+    ],
+    "3-4": [
+        {
+            "guestName": "Jack",
+            "checkInDate": "2025-01-15",
+            "checkOutDate": "2025-01-20",
+            "arrivalTime": "14:00",
+            "departureTime": "12:00",
+            "cost": 300000
+        },
+        {
+            "guestName": "Kevin",
+            "checkInDate": "2025-02-01",
+            "checkOutDate": "2025-02-05",
+            "arrivalTime": "16:00",
+            "departureTime": "11:00",
+            "cost": 150000
+        },
+        {
+            "guestName": "Linda",
+            "checkInDate": "2025-02-10",
+            "checkOutDate": "2025-02-15",
+            "arrivalTime": "17:00",
+            "departureTime": "10:00",
+            "cost": 250000
+        }
+    ],
+    "3-5": [
+        {
+            "guestName": "Mike",
+            "checkInDate": "2025-01-15",
+            "checkOutDate": "2025-01-20",
+            "arrivalTime": "14:00",
+            "departureTime": "12:00",
+            "cost": 300000
+        },
+        {
+            "guestName": "Nancy",
+            "checkInDate": "2025-02-01",
+            "checkOutDate": "2025-02-05",
+            "arrivalTime": "16:00",
+            "departureTime": "11:00",
+            "cost": 150000
+        },
+        {
+            "guestName": "Olivia",
+            "checkInDate": "2025-02-10",
+            "checkOutDate": "2025-02-15",
+            "arrivalTime": "17:00",
+            "departureTime": "10:00",
+            "cost": 250000
+        }
+    ]
+}

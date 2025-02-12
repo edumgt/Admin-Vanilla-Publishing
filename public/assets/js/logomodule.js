@@ -354,7 +354,7 @@ createModal(
     '로그아웃 하시겠습니까?',
     '',
     [
-        { label: '로그아웃', class: 'bg-blue-500 text-white ', onClick: "window.location.href='index.html';" },
+        { label: '로그아웃', class: 'bg-blue-500 text-white ', onClick: "window.location.href='login.html';" },
         { label: '닫기', class: 'bg-gray-500 text-white ', onClick: "document.getElementById('logoutModal').classList.add('hidden');" }
     ]
 );
@@ -834,7 +834,7 @@ function hideAllDropdowns(event) {
 export function saveFavorite(key) {
     const title = document.querySelector('.breadcrumb')?.innerText || 'No Title';
     const fullPath = window.location.pathname;
-    const fileName = fullPath.substring(fullPath.lastIndexOf('/') + 1) || 'index.html';
+    const fileName = fullPath.substring(fullPath.lastIndexOf('/') + 1) || 'login.html';
 
     let favoriteData = { title, url: fileName };
 
