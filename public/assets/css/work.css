@@ -4,7 +4,8 @@
     gap: 10px;
     overflow: hidden;
     width: 100%;
-    margin-top: 1rem;;
+    margin-top: 1rem;
+    ;
 }
 
 #control-panel {
@@ -20,7 +21,7 @@
 }
 
 .floor {
-    
+
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 10px;
@@ -50,12 +51,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* font-weight: bold; */
     padding: 5px 0px 5px 0px;
     font-size: 1.1em;
-    /* background-color: #0058a3;
-    color: #fff; */
-    /* border-bottom: 1px solid #ddd; */
 }
 
 .room-info {
@@ -76,6 +73,16 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* .modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 6px;
+    width: 600px !important;
+    height: 400px !important;
+    display: flex;
+    flex-direction: column;
+} */
+
 .modal-content label {
     display: block;
     margin: 10px 0 5px;
@@ -88,20 +95,6 @@
     border: 1px solid #ccc;
     border-radius: 3px;
 }
-
-/* .modal-content button {
-    margin-top: 10px;
-    padding: 10px 20px;
-    border: none;
-    background-color: #0058a3;
-    color: #fff;
-    cursor: pointer;
-    border-radius: 3px;
-} */
-
-/* .modal-content button:hover {
-    background-color: #0056b3;
-} */
 
 .delete-button {
     position: absolute;
