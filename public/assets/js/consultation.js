@@ -75,23 +75,23 @@ let selectedConsultationId = null;
 let selectedStatus = null;
 
 // 모달 팝업 열기 함수
-function openModal(statusBox, consultationId, status) {
+export function openModal(statusBox, consultationId, status) {
     selectedStatusBox = statusBox;
     selectedConsultationId = consultationId;
     selectedStatus = status;
     document.getElementById('modalReason').style.display = 'flex';
 }
+window.openModal = openModal;
 
-// 모달 팝업 닫기 함수
-function closeModal() {
+export function closeModal() {
     selectedStatusBox = null;
     selectedConsultationId = null;
     selectedStatus = null;
     document.getElementById('modalReason').style.display = 'none';
     document.getElementById('reasonInput').value = '';
 }
+window.closeModal = closeModal;
 
-// 모달 팝업 저장 함수
 function saveReason() {
     const reason = document.getElementById('reasonInput').value.trim();
     if (reason && selectedStatusBox && selectedConsultationId && selectedStatus) {
@@ -120,8 +120,8 @@ function saveReason() {
         closeModal();
     }
 }
+window.saveReason = saveReason;
 
-// 정렬 함수
 function sortConsultations(consultations, sortBy) {
     return consultations.sort((a, b) => {
         if (sortBy === "customerName") {

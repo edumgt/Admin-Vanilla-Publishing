@@ -13,6 +13,7 @@
 # modal 을 js 하나로
 # button 을 js 하나로
 # grid, calendar 를 component 화
+# javascript module 화 
 
 
 
