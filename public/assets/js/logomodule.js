@@ -538,7 +538,7 @@ function getMsg(key, lang = 'en') {
 
 loadMessages();
 
-function showToast(messageKey, type = 'success', lang = 'en') {
+export function showToast(messageKey, type = 'success', lang = 'en') {
     const message = getMsg(messageKey, lang);
     const toastContainer = document.getElementById('toast-container');
     const toast = document.createElement('div');
@@ -550,6 +550,7 @@ function showToast(messageKey, type = 'success', lang = 'en') {
         setTimeout(() => toast.remove(), 300);
     }, 2000);
 }
+window.showToast = showToast;
 
 const languageSwitcher = document.getElementById("languageSwitcher");
 
@@ -657,7 +658,7 @@ if (configPages.includes(currentPage)) {
     });
 }
 
-function generateNanoId(length = 10) {
+export function generateNanoId(length = 10) {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let id = '';
     for (let i = 0; i < length; i++) {
@@ -665,7 +666,7 @@ function generateNanoId(length = 10) {
     }
     return id;
 }
-
+window.generateNanoId = generateNanoId;
 
 /* dropdown.js */
 const memberIcon = document.getElementById('memberIcon');
