@@ -3,9 +3,10 @@ workarea.classList.add('flex', 'items-center', 'mb-2', 'mt-4');
 
 let attendanceData = [];
 let sortDirection = 'asc';
-let manager;
+export let manager;
+window.manager = manager;
 
-class AttendanceManager {
+export class AttendanceManager {
   constructor(data) {
     this.data = data;
   }
@@ -53,11 +54,14 @@ class AttendanceManager {
   }
 }
 
+window.AttendanceManager = AttendanceManager;
+
 fetch('assets/mock/attend.json')
   .then(response => response.json())
   .then(data => {
     attendanceData = data;
     manager = new AttendanceManager(attendanceData);
+
     populateDepartmentSelect();
     updateEmployeeSelect();
   })
@@ -66,7 +70,6 @@ fetch('assets/mock/attend.json')
 function populateDepartmentSelect() {
   const departmentSelect = document.getElementById('departmentSelect');
   const departments = [...new Set(attendanceData.map(employee => employee.department))];
-
 
   departments.forEach(department => {
     const option = document.createElement('option');
@@ -81,7 +84,7 @@ function populateDepartmentSelect() {
   }
 }
 
-function updateEmployeeSelect() {
+export function updateEmployeeSelect() {
   const selectedDepartment = document.getElementById('departmentSelect').value;
   const employeeSelect = document.getElementById('employeeSelect');
   employeeSelect.innerHTML = ''; 
@@ -107,18 +110,19 @@ function updateEmployeeSelect() {
   showAttendance();
 }
 
+window.updateEmployeeSelect = updateEmployeeSelect;
+
 function getLastDayOfMonth(year, month) {
   return new Date(year, month, 0).getDate();
 }
 
-function showAttendance() {
+export function showAttendance() {
   const employeeId = document.getElementById('employeeSelect').value;
   const selectedMonth = document.getElementById('monthSelect').value;
   const [year, month] = selectedMonth.split('-');
   const lastDay = getLastDayOfMonth(year, month);
   const today = new Date().toISOString().split('T')[0]; 
   
-
   let employeesAttendance;
   const selectedDepartment = document.getElementById('departmentSelect').value;
 
@@ -141,9 +145,8 @@ function showAttendance() {
   `; 
   attendanceBody.innerHTML = ''; 
 
-  let todayColumnIndex = -1; // 오늘 날짜 열의 인덱스
+  let todayColumnIndex = -1; 
 
-  // 날짜 헤더 생성
   for (let day = 1; day <= lastDay; day++) {
     const dateStr = `${year}-${month}-${day.toString().padStart(2, '0')}`;
     const date = new Date(year, month - 1, day);
@@ -160,6 +163,7 @@ function showAttendance() {
 
     dateRow.appendChild(dateCell);
   }
+  
 
   employeesAttendance.forEach(employee => {
     const employeeNameCell = document.createElement('td');
@@ -200,7 +204,6 @@ function showAttendance() {
     attendanceBody.appendChild(row);
   });
 
-  // 오늘 날짜가 있는 열로 자동 스크롤
   if (todayColumnIndex !== -1) {
     setTimeout(() => {
       const todayCell = dateRow.children[todayColumnIndex];
@@ -211,7 +214,8 @@ function showAttendance() {
   }
 }
 
-// Modal popup handler
+window.showAttendance = showAttendance;
+
 document.addEventListener("click", function (e) {
   if (e.target.classList.contains("open-modal")) {
       e.preventDefault();
@@ -248,7 +252,7 @@ function makeEditable(cell, employeeId, dateStr) {
       `;
 }
 
-function saveAttendance(employeeId, dateStr) {
+export function saveAttendance(employeeId, dateStr) {
   const checkInInput = document.getElementById('checkInInput').value;
   const checkOutInput = document.getElementById('checkOutInput').value;
 
@@ -273,6 +277,8 @@ function saveAttendance(employeeId, dateStr) {
     showToast('required-input','warning',lang);
   }
 }
+
+window.saveAttendance = saveAttendance;
 
 function sortTableByName() {
   const table = document.getElementById('attendanceTable');
