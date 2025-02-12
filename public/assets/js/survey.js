@@ -275,13 +275,11 @@ function createSurveyQuestionBox(question, draggable = false) {
     box.textContent = question.text;
     box.dataset.id = question.id;
     box.draggable = draggable;
-
     if (draggable) {
         box.classList.add('cursor-move');
         box.addEventListener('dragstart', handleDragStart);
         box.addEventListener('dragend', handleDragEnd);
     }
-
     return box;
 }
 
@@ -315,6 +313,7 @@ function createSurveyQuestionBox(question, isRemovable) {
 
     return questionBox;
 }
+
 
 // 설문 저장 함수
 function saveSurvey() {

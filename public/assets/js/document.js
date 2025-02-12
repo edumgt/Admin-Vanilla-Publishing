@@ -59,6 +59,13 @@ async function loadDocumentList() {
     });
 }
 
+
+export function editDocument(doc) {}
+window.editDocument = editDocument;
+
+export function deleteDocument(doc) {}
+window.deleteDocument = deleteDocument;
+
 function previewDocument(doc) {
     viewer.innerHTML = '';
 
@@ -88,9 +95,10 @@ function previewDocument(doc) {
     viewer.appendChild(iframe);
 }
 
-function requestPermission() {
+export function requestPermission() {
     showToast('request-permission','success',lang);
 }
+window.requestPermission = requestPermission;
 
 function openNewDocumentModal() {
     newDocumentModal.classList.remove('hidden');

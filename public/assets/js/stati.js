@@ -3,6 +3,7 @@ import {
     createDelButton, 
     createSaveButton, 
     createSearchButton,
+    createResetSearchButton,
     createTanslations, 
     createBadgeRenderer } from './common.js';
 
@@ -185,6 +186,10 @@ btnContainer.appendChild(addButton);
 btnContainer.appendChild(deleteButton);
 btnContainer.appendChild(saveButton);
 
+const resetSearchButton = createResetSearchButton();
+resetSearchButton.classList.add("ml-2")
+btnContainer.appendChild(resetSearchButton);
+
 
 grid.on('click', (ev) => {
     const { columnName, rowKey } = ev;
@@ -325,7 +330,7 @@ searchButton.addEventListener('click', function () {
 
 });
 
-document.getElementById('resetSearch').addEventListener('click', function () {
+resetSearchButton.addEventListener('click', function () {
 
     const gridData = loadData();
 
