@@ -38,6 +38,7 @@ function createTooltip(element, text) {
     });
 }
 
+
 function saveModal() {
     const modalForm = document.getElementById('modalForm');
     const formData = new FormData(modalForm);

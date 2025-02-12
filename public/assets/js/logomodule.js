@@ -7,7 +7,7 @@ window.lang = lang;
 localStorage.setItem('lang', lang);
 
 /* Tool Tip */
-function createTooltip(element, text) {
+export function createTooltip(element, text) {
     const tooltip = document.createElement("div");
     tooltip.textContent = text;
     tooltip.style.position = "absolute";
@@ -41,6 +41,7 @@ function createTooltip(element, text) {
         tooltip.style.opacity = "0";
     });
 }
+window.createTooltip = createTooltip;
 
 function saveModal() {
     const modalForm = document.getElementById('modalForm');
