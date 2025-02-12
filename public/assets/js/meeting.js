@@ -113,7 +113,6 @@ function generateTimeslots(room, dateFilter = null, currentTime) {
 }
 
 searchButton.addEventListener('click', function () {
-    console.log("##");
     const selectedDate = document.getElementById('search-date').value;
     displayRooms(selectedDate);
 })

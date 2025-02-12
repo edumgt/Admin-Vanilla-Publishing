@@ -1,7 +1,9 @@
 export const currentPage = window.location.pathname.split("/").pop();
 window.currentPage = currentPage;
 
-const lang = localStorage.getItem('lang') || 'ko';
+export const lang = localStorage.getItem('lang') || 'ko';
+window.lang = lang;
+
 localStorage.setItem('lang', lang);
 
 /* Tool Tip */
@@ -373,7 +375,7 @@ export function createModal2(modalId, title, content, buttons) {
 }
 window.createModal2 = createModal2;
 
-function createModal3(modalId, title, content, buttons) {
+export function createModal3(modalId, title, content, buttons) {
     const modal = document.createElement('div');
     modal.id = modalId;
     modal.className = 'hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50';
@@ -381,6 +383,7 @@ function createModal3(modalId, title, content, buttons) {
     modal.innerHTML = modalContent;
     document.body.appendChild(modal);
 }
+window.createModal3 = createModal3;
 
 
 function renderFloatingNav(containerId) {
@@ -827,7 +830,7 @@ function hideAllDropdowns(event) {
     });
 }
 
-function saveFavorite(key) {
+export function saveFavorite(key) {
     const title = document.querySelector('.breadcrumb')?.innerText || 'No Title';
     const fullPath = window.location.pathname;
     const fileName = fullPath.substring(fullPath.lastIndexOf('/') + 1) || 'index.html';
@@ -856,6 +859,7 @@ function saveFavorite(key) {
     }
     renderDropdown('dropdown-container');
 }
+window.saveFavorite = saveFavorite;
 
 function addBreadcrumbBadges() {
     const breadcrumbContainer = document.querySelector('.breadcrumb');
