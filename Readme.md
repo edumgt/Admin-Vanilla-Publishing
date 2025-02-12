@@ -22,3 +22,11 @@
 # 찾을 수 없다는 오류가 발생할 수 있습니다.
 # export function openModal(.....
 # window.openModal = openModal;
+
+# 파일에서 import를 사용하려면 package.json에 다음과 같이 설정해야 합니다.
+# {
+#  "type": "module",
+#  "dependencies": {
+#    "fs": "^0.0.1-security"
+#  }
+# }
