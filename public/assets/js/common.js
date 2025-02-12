@@ -38,6 +38,15 @@ function createSaveButton() {
     return saveButton;
 }
 
+function createResetSearchButton() {
+    const resetSearchButton = document.createElement('button');
+    resetSearchButton.className = "items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2";
+    resetSearchButton.innerHTML = `<i class="fas fa-undo"></i><span>검색 초기화</span>`;
+
+    return resetSearchButton;
+}
+
+
 const createTanslations = {
     en: {
         menu: "Menu",
@@ -218,6 +227,7 @@ export {
     createCloseButton,
     createSaveButton,
     createSearchButton,
+    createResetSearchButton,
     createTanslations,
     createBadgeRenderer
 };

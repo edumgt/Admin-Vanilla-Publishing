@@ -3,6 +3,7 @@ import {
     createDelButton, 
     createSaveButton, 
     createSearchButton,
+    createResetSearchButton,
     createTanslations, 
     createBadgeRenderer } from './common.js';
 
@@ -183,6 +184,9 @@ btnContainer.appendChild(addButton);
 btnContainer.appendChild(deleteButton);
 btnContainer.appendChild(saveButton);
 
+const resetSearchButton = createResetSearchButton();
+resetSearchButton.classList.add("ml-2")
+btnContainer.appendChild(resetSearchButton);
 
 
 grid.on('click', (ev) => {
@@ -315,7 +319,7 @@ searchButton.addEventListener('click', function () {
 
 });
 
-document.getElementById('resetSearch').addEventListener('click', function () {
+resetSearchButton.addEventListener('click', function () {
 
     const gridData = loadData();
 
@@ -352,15 +356,11 @@ languageSwitcher.addEventListener("click", function (event) {
     if (!lang || !translations[lang]) return;
 
     let buttonLabels = translations[lang].buttons;
-    buttons[0].textContent = buttonLabels.reset;
-    //buttons[0].textContent = buttonLabels.search;
-    
-
     searchButton.innerHTML = `<i class="fas fa-search"></i><span>` + buttonLabels.search + `</span>`;
-    
     addButton.innerHTML = `<i class="fas fa-plus"></i><span>` + buttonLabels.new + `</span>`;
     deleteButton.innerHTML = `<i class="fas fa-trash"></i><span>` + buttonLabels.delete + `</span>`;
     saveButton.innerHTML = `<i class="fas fa-save"></i><span>` + buttonLabels.save + `</span>`;
+    resetSearchButton.innerHTML = `<i class="fas fa-undo"></i><span>` + buttonLabels.reset + `</span>`;
 });
 
 
@@ -368,13 +368,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let lang = localStorage.getItem('lang');
 
     let buttonLabels = translations[lang].buttons;
-    buttons[0].textContent = buttonLabels.reset;
-    //buttons[0].textContent = buttonLabels.search;
-    
-
     searchButton.innerHTML = `<i class="fas fa-search"></i><span>` + buttonLabels.search + `</span>`;
-    
     addButton.innerHTML = `<i class="fas fa-plus"></i><span>` + buttonLabels.new + `</span>`;
     deleteButton.innerHTML = `<i class="fas fa-trash"></i><span>` + buttonLabels.delete + `</span>`;
     saveButton.innerHTML = `<i class="fas fa-save"></i><span>` + buttonLabels.save + `</span>`;
+    resetSearchButton.innerHTML = `<i class="fas fa-undo"></i><span>` + buttonLabels.reset + `</span>`;
 });
