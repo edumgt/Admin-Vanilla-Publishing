@@ -1,16 +1,23 @@
+import {
+    createSearchButton
+} from './common.js';
+
+const searchButton = createSearchButton();
+
 let grid;
 let rawData;
 
 window.onload = function () {
     const workarea = document.getElementById('workarea');
     workarea.classList.add('mb-4', 'mt-4');
+    workarea.appendChild(searchButton);
 
     fetchDataAndInitialize();
     document.getElementById('sidoSelect').addEventListener('change', function () {
         const selectedSido = this.value;
         populateGunguSelect(selectedSido);
     });
-    document.getElementById('searchButton').addEventListener('click', filterBySidoAndGungu);
+    searchButton.addEventListener('click', filterBySidoAndGungu);
 };
 
 function fetchDataAndInitialize() {
