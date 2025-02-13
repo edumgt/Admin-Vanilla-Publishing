@@ -9,17 +9,13 @@ createModal3(
         <input type="datetime-local" id="event-start">
         <input type="datetime-local" id="event-end">
         <div class="error" id="date-error">Start date cannot be later than end date.</div>
-        <div class="btn" id="save-event">저장</div>
-        <div class="btn" id="close-popup">닫기</div>
+        <button class="bg-blue-500 text-white" id="save-event">저장</button>
+        <button class="bg-gray-500 text-white" id="close-popup">닫기</button>
     </div>`,
-    [
-        { label: '저장', class: 'bg-blue-500 text-white ', onClick: 'saveReason()' },
-        { label: '닫기', class: 'bg-gray-500 text-white ', onClick: 'closeModal()' }
-    ]
+    []
 );
 
 const closepopup = document.getElementById('close-popup');
-closepopup.style.backgroundColor = "#555";
 
 const today = new Date();
 let events = [];
@@ -180,12 +176,11 @@ function renderEvent(event, targetElement = null) {
             document.getElementById('event-end').value = new Date(event.end).toISOString().substring(0, 16);
             document.getElementById('date-error').style.display = 'none';
 
-            document.getElementById('modalTime').style.display='block';
+            document.getElementById('modalTime').style.display = 'block';
             document.getElementById('popup').classList.add('active');
         });
     }
 
-    // 시작일과 종료일 표시하는 요소 추가
     const dateInfo = document.createElement('span');
     dateInfo.className = 'event-date';
     dateInfo.textContent = `${eventStartDate.toISOString().split('T')[0]} ~ ${eventEndDate.toISOString().split('T')[0]}`;
@@ -234,12 +229,12 @@ document.getElementById('save-event').addEventListener('click', () => {
         renderTimeline();
         currentEventId = null;
     }
-    document.getElementById('modalTime').style.display='none';
+    document.getElementById('modalTime').style.display = 'none';
     document.getElementById('popup').classList.remove('active');
 });
 
 document.getElementById('close-popup').addEventListener('click', () => {
-    document.getElementById('modalTime').style.display='none';
+    document.getElementById('modalTime').style.display = 'none';
     document.getElementById('popup').classList.remove('active');
 });
 

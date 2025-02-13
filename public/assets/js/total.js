@@ -140,7 +140,6 @@ function setupGrid(teams) {
     fixSummaryRow(grid);
 }
 
-// Modal popup handler
 document.addEventListener("click", function (e) {
     if (e.target.classList.contains("open-modal")) {
         e.preventDefault();
