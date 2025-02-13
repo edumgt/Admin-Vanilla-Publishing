@@ -8,7 +8,7 @@ createModal3(
         <input type="text" id="event-title" placeholder="Event Title">
         <input type="datetime-local" id="event-start">
         <input type="datetime-local" id="event-end">
-        <div class="error" id="date-error">Start date cannot be later than end date.</div>
+        <div class="error" id="date-error">시작일이 종료일 보다 이후 날짜 입니다.</div>
         <button class="bg-blue-500 text-white" id="save-event">저장</button>
         <button class="bg-gray-500 text-white" id="close-popup">닫기</button>
     </div>`,
