@@ -160,6 +160,7 @@ const gridOptions = {
 
 document.addEventListener('DOMContentLoaded', function () {
     const eGridDiv = document.querySelector('#myGrid');
+    eGridDiv.classList.add('custom-grid');
     new agGrid.createGrid(eGridDiv, gridOptions);
     saveDataToLocalStorage(gridOptions.rowData);
     
