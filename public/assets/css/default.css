@@ -1357,11 +1357,11 @@ label {
   cursor: move;
 }
 
-.tab-content {
+.tab-content2 {
   display: none;
 }
 
-.tab-content.active {
+.tab-content2.active {
   display: block;
 }
 

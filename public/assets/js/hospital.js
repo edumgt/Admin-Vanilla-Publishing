@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
             button.classList.add('active-tab');
     
             // 모든 탭 콘텐츠 숨기기
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content2').forEach(tab => tab.classList.remove('active'));
     
             // 클릭한 버튼의 data-tab 속성 값에 해당하는 탭 콘텐츠 보이기
             const targetTab = document.getElementById(button.dataset.tab);
