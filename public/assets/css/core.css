@@ -1,5 +1,7 @@
-@import url('../vendor/fontawesome-free-5.15.4-web/css/all.css');
-@import url('../vendor/pretendard/dist/web/variable/pretendardvariable.css');
+/* @import url('../vendor/fontawesome-free-5.15.4-web/css/all.css');
+@import url('../vendor/pretendard/dist/web/variable/pretendardvariable.css'); */
+
+@import url('default.css');
 
 * {
   margin: 0;

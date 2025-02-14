@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async function () {
    const navLinks = document.querySelectorAll(".nav-item a");
-   const contentDiv = document.getElementById("content");
+   const contentDiv = document.getElementById("content2");
 
    // Define pages BEFORE calling setActiveTab()
    const pages = {
@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     */
    function generateUserContent(user) {
       return `
-           <div class="card mb-6">
+           <div class="card mb-6" >
                <div class="card-body">
                    <div class="d-flex align-items-center gap-6 pb-5 border-bottom">
                        <img src="sample/sample.svg" alt="user-avatar"
