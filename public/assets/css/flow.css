@@ -1,5 +1,6 @@
 @import url('../vendor/handsontable/css/handsontable.full.min.css');
-@import url('https://cdn.jsdelivr.net/npm/apexcharts/dist/apexcharts.css');
+/* @import url('https://cdn.jsdelivr.net/npm/apexcharts/dist/apexcharts.css'); */
+@import url('../vendor/apexcharts/dist/apexcharts.css');
 
 @import url('default.css');
 
