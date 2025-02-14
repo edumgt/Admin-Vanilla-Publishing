@@ -1,5 +1,9 @@
-@import url('https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css');
-@import url('https://uicdn.toast.com/tui-grid/latest/tui-grid.css');
+/* @import url('https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css'); */
+@import url('../vendor/tui-pagination/dist/tui-pagination.css');
+
+/* @import url('https://uicdn.toast.com/tui-grid/latest/tui-grid.css'); */
+@import url('../vendor/tui-grid/dist/tui-grid.css');
+
 @import url('../vendor/tailwind/css/tailwind.min.css');
 
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
