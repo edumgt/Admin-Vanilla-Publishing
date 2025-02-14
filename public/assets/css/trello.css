@@ -69,9 +69,7 @@
 
 .gantt-table .timeline-column {
     width: 70%;
-    /* Set 70% width for the Timeline column */
     background-color: #ffffff;
-    /* Set background to white */
 }
 
 .timeline {
