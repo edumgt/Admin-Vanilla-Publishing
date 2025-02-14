@@ -9,6 +9,7 @@
         "build": "vite build",
         "postbuild": "node scripts/obfuscate.js"
     },
+   
     "dependencies": {
         "@fortawesome/fontawesome-svg-core": "^6.7.2",
         "ag-grid-community": "^33.1.0",

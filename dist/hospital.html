@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    
+    <link href="assets/css/default.css" rel="stylesheet">
+    
+</head>
+
+<body>
+    <div class="gnb-menu">
+        <ul class="flex">
+            <div id="logo"></div>
+            <div id="tabs-container"></div>
+            <div id="dropdown-container"></div>
+            <div id="memberIcon"></div><div id="memberMenu"></div>
+        </ul>
+    </div>
+
+    <div id="toast-container"></div>
+  
+
+    <div id="offCanvasContainer"></div>
+
+    <div id="content">
+        <nav class="breadcrumb"></nav>
+
+        
+        <div class="mb-4 mt-4 flex">
+            <button class="flex-1 tab-hos bg-gray-300 hover:bg-gray-100 active-tab" data-tab="departments-tab">진료과목별
+                보기</button>
+            <button class="flex-1 tab-hos bg-gray-300 hover:bg-gray-100" data-tab="calendar-tab">캘린더 형식
+                보기</button>
+        </div>
+
+        
+        <div id="departments-tab" class="tab-content2 active">
+            <div id="departments-section" class="mb-8">
+                <h2 class="text-md font-semibold mb-2">진료과 목록 및 의사</h2>
+                <div id="departments-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    
+                </div>
+            </div>
+
+            <div id="waiting-list-section" class="mb-8">
+                <h2 class="text-md font-semibold mb-2">진료 대기자 목록</h2>
+                <div id="waiting-list-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    
+                </div>
+            </div>
+
+            <div id="reservations-section" class="mb-8">
+                <h2 class="text-md font-semibold mb-2">예약 명단 목록</h2>
+                <div id="reservations-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    
+                </div>
+            </div>
+        </div>
+
+        
+        <div id="calendar-tab" class="tab-content2">
+            <div id="calendar-section" class="mb-8">
+                <h2 class="text-xl font-semibold mb-2">캘린더 형식의 예약 정보</h2>
+                <div id="calendar-container" class="calendar">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="chat-bot hidden" id="chat-bot">
+        <div class="chat-bot-header">진료 상담 봇</div>
+        <div class="chat-bot-messages" id="chat-bot-messages"></div>
+        <div class="chat-bot-input">
+            <input type="text" id="chat-bot-input" placeholder="질문을 입력하세요...">
+            <button id="chat-bot-send">전송</button>
+        </div>
+    </div>
+
+
+    <div id="buttonContainer"></div>
+
+    <div id="appContainer"></div>
+    
+    <script type="module" src="assets/js/logomodule.js"></script>
+    <script type="module" src="assets/js/frame.js"></script>
+    <script type="module" src="assets/js/hospital.js"></script>
+    
+    
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+[
+  {
+    "name": "연구개발본부",
+    "departments": [
+      {
+        "name": "파워트레인개발센터",
+        "teams": ["전동화개발팀", "배터리연구팀"]
+      },
+      {
+        "name": "자율주행기술센터",
+        "teams": ["센서개발팀"]
+      },
+      {
+        "name": "디자인센터",
+        "teams": ["Engineering", "Consulting", "Marketing", "Finance"]
+      }
+    ]
+  },
+  {
+    "name": "생산본부",
+    "departments": [
+      {
+        "name": "공장운영팀",
+        "teams": []
+      },
+      {
+        "name": "품질관리팀",
+        "teams": []
+      }
+    ]
+  },
+  {
+    "name": "영업본부",
+    "departments": [
+      {
+        "name": "국내영업팀",
+        "teams": []
+      },
+      {
+        "name": "해외영업팀",
+        "teams": []
+      }
+    ]
+  },
+  {
+    "name": "경영지원본부",
+    "departments": [
+      {
+        "name": "인사팀",
+        "teams": []
+      },
+      {
+        "name": "재무팀",
+        "teams": []
+      }
+    ]
+  }
+]

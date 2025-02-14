@@ -28,13 +28,13 @@ const obfuscateJS = async () => {
 };
 
 // CSS 난독화
-const obfuscateCSS = () => {
-    const cssFiles = getFiles(DIST_DIR+"/assets/css", '.css');
-    for (const file of cssFiles) {
-        execSync(`cleancss -o ${file} ${file}`);
-        console.log(`CSS 난독화 완료: ${file}`);
-    }
-};
+// const obfuscateCSS = () => {
+//     const cssFiles = getFiles(DIST_DIR+"/assets/css", '.css');
+//     for (const file of cssFiles) {
+//         execSync(`cleancss -o ${file} ${file}`);
+//         console.log(`CSS 난독화 완료: ${file}`);
+//     }
+// };
 
 // HTML 난독화
 const obfuscateHTML = () => {
@@ -55,6 +55,6 @@ const obfuscateHTML = () => {
 // 난독화 실행
 (async () => {
     await obfuscateJS();
-    obfuscateCSS();
+    //obfuscateCSS();
     obfuscateHTML();
 })();

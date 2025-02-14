@@ -1,0 +1,148 @@
+{
+    "logs": [
+        {
+            "timestamp": "2025-01-05T08:35:07Z",
+            "cpuUsage": 26,
+            "memoryUsage": 45,
+            "diskUsage": 60
+        },
+        {
+            "timestamp": "2025-01-05T09:35:07Z",
+            "cpuUsage": 20,
+            "memoryUsage": 55,
+            "diskUsage": 50
+        },
+        {
+            "timestamp": "2025-01-05T10:35:07Z",
+            "cpuUsage": 84,
+            "memoryUsage": 62,
+            "diskUsage": 75
+        },
+        {
+            "timestamp": "2025-01-05T11:35:07Z",
+            "cpuUsage": 71,
+            "memoryUsage": 70,
+            "diskUsage": 80
+        },
+        {
+            "timestamp": "2025-01-05T12:35:07Z",
+            "cpuUsage": 14,
+            "memoryUsage": 38,
+            "diskUsage": 42
+        },
+        {
+            "timestamp": "2025-01-05T13:35:07Z",
+            "cpuUsage": 42,
+            "memoryUsage": 50,
+            "diskUsage": 65
+        },
+        {
+            "timestamp": "2025-01-05T14:35:07Z",
+            "cpuUsage": 41,
+            "memoryUsage": 48,
+            "diskUsage": 55
+        },
+        {
+            "timestamp": "2025-01-05T15:35:07Z",
+            "cpuUsage": 24,
+            "memoryUsage": 35,
+            "diskUsage": 40
+        },
+        {
+            "timestamp": "2025-01-05T16:35:07Z",
+            "cpuUsage": 86,
+            "memoryUsage": 78,
+            "diskUsage": 90
+        },
+        {
+            "timestamp": "2025-01-05T17:35:07Z",
+            "cpuUsage": 6,
+            "memoryUsage": 15,
+            "diskUsage": 20
+        },
+        {
+            "timestamp": "2025-01-05T18:35:07Z",
+            "cpuUsage": 51,
+            "memoryUsage": 60,
+            "diskUsage": 72
+        },
+        {
+            "timestamp": "2025-01-05T19:35:07Z",
+            "cpuUsage": 75,
+            "memoryUsage": 80,
+            "diskUsage": 85
+        },
+        {
+            "timestamp": "2025-01-05T20:35:07Z",
+            "cpuUsage": 50,
+            "memoryUsage": 48,
+            "diskUsage": 52
+        },
+        {
+            "timestamp": "2025-01-05T21:35:07Z",
+            "cpuUsage": 12,
+            "memoryUsage": 22,
+            "diskUsage": 30
+        },
+        {
+            "timestamp": "2025-01-05T22:35:07Z",
+            "cpuUsage": 20,
+            "memoryUsage": 35,
+            "diskUsage": 40
+        },
+        {
+            "timestamp": "2025-01-05T23:35:07Z",
+            "cpuUsage": 95,
+            "memoryUsage": 88,
+            "diskUsage": 92
+        },
+        {
+            "timestamp": "2025-01-06T00:35:07Z",
+            "cpuUsage": 40,
+            "memoryUsage": 50,
+            "diskUsage": 60
+        },
+        {
+            "timestamp": "2025-01-06T01:35:07Z",
+            "cpuUsage": 59,
+            "memoryUsage": 65,
+            "diskUsage": 70
+        },
+        {
+            "timestamp": "2025-01-06T02:35:07Z",
+            "cpuUsage": 29,
+            "memoryUsage": 38,
+            "diskUsage": 45
+        },
+        {
+            "timestamp": "2025-01-06T03:35:07Z",
+            "cpuUsage": 4,
+            "memoryUsage": 10,
+            "diskUsage": 15
+        },
+        {
+            "timestamp": "2025-01-06T04:35:07Z",
+            "cpuUsage": 46,
+            "memoryUsage": 52,
+            "diskUsage": 60
+        },
+        {
+            "timestamp": "2025-01-06T05:35:07Z",
+            "cpuUsage": 79,
+            "memoryUsage": 85,
+            "diskUsage": 90
+        },
+        {
+            "timestamp": "2025-01-06T06:35:07Z",
+            "cpuUsage": 84,
+            "memoryUsage": 80,
+            "diskUsage": 78
+        },
+        {
+            "timestamp": "2025-01-06T07:35:07Z",
+            "cpuUsage": 3,
+            "memoryUsage": 12,
+            "diskUsage": 20
+        }
+    ]
+}

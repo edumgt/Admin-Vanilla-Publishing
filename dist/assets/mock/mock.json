@@ -1,0 +1,304 @@
+[
+    {
+        "Key": "92ba1bb3-2555-41f4-b6e1-c1cbf7591271",
+        "tpCd": "DPT-1002",
+        "tpNm": "Finance",
+        "descCntn": "Jasmine Lewis",
+        "useYn": "Y",
+        "createdAt": "2021-09-23",
+        "view": null,
+        "rowKey": 21,
+        "_attributes": {
+            "rowNum": 21,
+            "checked": true,
+            "disabled": false,
+            "checkDisabled": true,
+            "className": {
+                "row": [],
+                "column": {}
+            }
+        }
+    },
+    {
+        "Key": "1cd00818-fede-4071-9092-326c5d2e7dc1",
+        "tpCd": "DPT-1003",
+        "tpNm": "Marketing",
+        "descCntn": "Alice Johnson",
+        "useYn": "Y",
+        "createdAt": "2021-10-23",
+        "view": null,
+        "rowKey": 22,
+        "_attributes": {
+            "rowNum": 22,
+            "checked": false,
+            "disabled": false,
+            "checkDisabled": true,
+            "className": {
+                "row": [],
+                "column": {}
+            }
+        }
+    },
+    {
+        "Key": "e7c8ecbd-a20c-44fa-8a5a-251755200976",
+        "tpCd": "DPT-1004",
+        "tpNm": "IT",
+        "descCntn": "George Wilson",
+        "useYn": "Y",
+        "createdAt": "2021-11-22",
+        "view": null,
+        "rowKey": 23,
+        "_attributes": {
+            "rowNum": 23,
+            "checked": false,
+            "disabled": false,
+            "checkDisabled": false,
+            "className": {
+                "row": [],
+                "column": {}
+            }
+        }
+    },
+    {
+        "Key": "65beddce-9bcc-45f8-941e-2c4303d8a73b",
+        "tpCd": "DPT-1005",
+        "tpNm": "Human Resources",
+        "descCntn": "Diana Garcia",
+        "useYn": "Y",
+        "createdAt": "2021-12-22",
+        "view": null,
+        "rowKey": 24,
+        "_attributes": {
+            "rowNum": 24,
+            "checked": false,
+            "disabled": false,
+            "checkDisabled": false,
+            "className": {
+                "row": [],
+                "column": {}
+            }
+        }
+    },
+    {
+        "Key": "b3a97a52-e73c-4341-b359-da5f8252b8f3",
+        "tpCd": "DPT-1006",
+        "tpNm": "Sales",
+        "descCntn": "Ethan Martinez",
+        "useYn": "Y",
+        "createdAt": "2022-01-21",
+        "view": null,
+        "rowKey": 25,
+        "_attributes": {
+            "rowNum": 25,
+            "checked": false,
+            "disabled": false,
+            "checkDisabled": false,
+            "className": {
+                "row": [],
+                "column": {}
+            }
+        }
+    },
+    {
+        "Key": "315191b5-f257-4455-b6ab-c70be9d018e7",
+        "tpCd": "DPT-1007",
+        "tpNm": "Customer Service",
+        "descCntn": "Bob Smith",
+        "useYn": "Y",
+        "createdAt": "2022-02-20",
+        "view": null,
+        "rowKey": 26,
+        "_attributes": {
+            "rowNum": 26,
+            "checked": false,
+            "disabled": false,
+            "checkDisabled": false,
+            "className": {
+                "row": [],
+                "column": {}
+            }
+        }
+    },
+    {
+        "Key": "f7db73bc-08a6-4d1e-8a81-945ab49b485d",
+        "tpCd": "DPT-1008",
+        "tpNm": "Legal",
+        "descCntn": "Charlie Davis",
+        "useYn": "Y",
+        "createdAt": "2022-03-22",
+        "view": null,
+        "rowKey": 27,
+        "_attributes": {
+            "rowNum": 27,
+            "checked": false,
+            "disabled": false,
+            "checkDisabled": false,
+            "className": {
+                "row": [],
+                "column": {}
+            }
+        }
+    },
+    {
+        "Key": "872e4910-3e5a-4f50-8261-fb5361a620d4",
+        "tpCd": "DPT-1009",
+        "tpNm": "R&D",
+        "descCntn": "Hannah Lee",
+        "useYn": "Y",
+        "createdAt": "2022-04-21",
+        "view": null,
+        "rowKey": 28,
+        "_attributes": {
+            "rowNum": 28,
+            "checked": false,
+            "disabled": false,
+            "checkDisabled": false,
+            "className": {
+                "row": [],
+                "column": {}
+            }
+        }
+    },
+    {
+        "Key": "970dad4d-f941-436c-9730-4b57b218e24c",
+        "tpCd": "DPT-1010",
+        "tpNm": "Procurement",
+        "descCntn": "Ian Clark",
+        "useYn": "Y",
+        "createdAt": "2022-05-21",
+        "view": null,
+        "rowKey": 29,
+        "_attributes": {
+            "rowNum": 29,
+            "checked": false,
+            "disabled": false,
+            "checkDisabled": false,
+            "className": {
+                "row": [],
+                "column": {}
+            }
+        }
+    },
+    {
+        "Key": "5e7dacc4-a9d6-49c6-afba-f41f89d52931",
+        "tpCd": "DPT-1001",
+        "tpNm": "Operations",
+        "descCntn": "Fiona Brown",
+        "useYn": "Y",
+        "createdAt": "2022-06-20",
+        "view": null,
+        "rowKey": 30,
+        "_attributes": {
+            "rowNum": 30,
+            "checked": false,
+            "disabled": false,
+            "checkDisabled": false,
+            "className": {
+                "row": [],
+                "column": {}
+            }
+        }
+    }
+   ,
+        {
+            "Key": "1c076c4c-7e23-4d5b-ade0-c6a375c9df73",
+            "tpCd": "CITY-1002",
+            "tpNm": "성남",
+            "descCntn": "판교 테크노밸리로 유명한 도시",
+            "useYn": "Y",
+            "createdAt": "2023-01-16",
+            "view": null,
+            "rowKey": 1,
+            "_attributes": {
+                "rowNum": 1,
+                "checked": false,
+                "disabled": false,
+                "checkDisabled": false,
+                "className": {
+                    "row": [],
+                    "column": {}
+                }
+            }
+        },
+        {
+            "Key": "fa23efa7-3f47-4e04-90c7-678842ece210",
+            "tpCd": "CITY-1003",
+            "tpNm": "고양",
+            "descCntn": "일산 호수공원으로 유명한 도시",
+            "useYn": "Y",
+            "createdAt": "2023-01-31",
+            "view": null,
+            "rowKey": 2,
+            "_attributes": {
+                "rowNum": 2,
+                "checked": false,
+                "disabled": false,
+                "checkDisabled": false,
+                "className": {
+                    "row": [],
+                    "column": {}
+                }
+            }
+        },
+        {
+            "Key": "a808d647-affb-45a8-8eb7-722913b963ed",
+            "tpCd": "CITY-1004",
+            "tpNm": "용인",
+            "descCntn": "에버랜드 테마파크가 있는 도시",
+            "useYn": "Y",
+            "createdAt": "2023-02-15",
+            "view": null,
+            "rowKey": 3,
+            "_attributes": {
+                "rowNum": 3,
+                "checked": false,
+                "disabled": false,
+                "checkDisabled": false,
+                "className": {
+                    "row": [],
+                    "column": {}
+                }
+            }
+        },
+        {
+            "Key": "b2312637-e5c5-47c2-8102-a22bf3640767",
+            "tpCd": "CITY-1005",
+            "tpNm": "부천",
+            "descCntn": "문화 허브로 알려진 도시",
+            "useYn": "Y",
+            "createdAt": "2023-03-02",
+            "view": null,
+            "rowKey": 4,
+            "_attributes": {
+                "rowNum": 4,
+                "checked": false,
+                "disabled": false,
+                "checkDisabled": false,
+                "className": {
+                    "row": [],
+                    "column": {}
+                }
+            }
+        },
+        {
+            "Key": "5ae7b721-5b39-465a-af08-e23b151562ba",
+            "tpCd": "CITY-1006",
+            "tpNm": "화성",
+            "descCntn": "빠르게 성장하는 도시",
+            "useYn": "Y",
+            "createdAt": "2023-03-17",
+            "view": null,
+            "rowKey": 5,
+            "_attributes": {
+                "rowNum": 5,
+                "checked": false,
+                "disabled": false,
+                "checkDisabled": false,
+                "className": {
+                    "row": [],
+                    "column": {}
+                }
+            }
+        }
+    ]
+    

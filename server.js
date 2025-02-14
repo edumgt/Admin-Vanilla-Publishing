@@ -42,12 +42,12 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 
 // 정적 파일을 서빙하기 위해 'public' 디렉토리를 사용
-app.use(express.static(path.join(__dirname, 'public')));
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+// app.use(express.static(path.join(__dirname, 'public')));
+// app.get('/', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'public', 'index.html'));
+// });
 
-//app.use(express.static('dist'));
+app.use(express.static('dist'));
 
 
 // 로그인 엔드포인트 (토큰 생성)
