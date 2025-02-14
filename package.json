@@ -11,6 +11,7 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-svg-core": "^6.7.2",
+        "@wissakib/fontawesome-free-5.15.4-web": "^1.0.0",
         "ag-grid-community": "^33.1.0",
         "apexcharts": "^4.4.0",
         "body-parser": "^1.20.3",
