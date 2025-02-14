@@ -229,7 +229,7 @@ router.get('/outbound', (req, res) => {
  *         description: New outbound record added
  *         content:
  *           application/json:
- *             schema:
+ *             schema: 
  *               type: object
  */
 router.post('/outbound/add', (req, res) => {
