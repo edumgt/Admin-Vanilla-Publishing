@@ -153,7 +153,7 @@ function openModal(name, id) {
     const modal = document.createElement("div");
     modal.className = "modal";
     modal.innerHTML = `
-        <div class='modal-content' style='position: relative; display: flex; align-items: flex-start;'>
+        <div style='position: relative; display: flex; align-items: flex-start;'>
         <iframe src='account-pop.html?name=${encodeURIComponent(name)}&id=${encodeURIComponent(id)}' width='1440' height='850' class='rounded'></iframe>
         <span class='close' style='margin-left: 10px; font-size: 30px; font-weight: 900; cursor: pointer;'>&times;</span>        
             
