@@ -21,6 +21,8 @@
 # export function openModal(.....
 # window.openModal = openModal;
 
+# package.json 설정
+
 # 파일에서 import를 사용하려면 package.json에 다음과 같이 설정해야 합니다.
 # {
 #  "type": "module",
@@ -30,7 +32,7 @@
 # }
 
 
-# 정적 파일을 서빙하기 위해 'public' 디렉토리를 사용
+# 정적 파일을 서빙하기 위해 'public' 디렉토리를 사용 
 # app.use(express.static(path.join(__dirname, 'public')));
 # app.get('/', (req, res) => {
 #    res.sendFile(path.join(__dirname, 'public', 'index.html'));
