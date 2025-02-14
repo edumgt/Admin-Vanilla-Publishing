@@ -1,4 +1,3 @@
-
 const logContainer = document.getElementById('log-container');
 logContainer.classList.add('w-full', 'mt-4');
 logContainer.style.display = 'flex';
