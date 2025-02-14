@@ -10,7 +10,6 @@
         "postbuild": "node scripts/obfuscate.js"
     },
     "dependencies": {
-        "@fortawesome/fontawesome-svg-core": "^6.7.2",
         "@wissakib/fontawesome-free-5.15.4-web": "^1.0.0",
         "ag-grid-community": "^33.1.0",
         "apexcharts": "^4.4.0",
@@ -18,7 +17,6 @@
         "cors": "^2.8.5",
         "express": "^4.21.2",
         "express-api-server": "file:",
-        "font-awesome": "^4.7.0",
         "fs": "^0.0.1-security",
         "jsonwebtoken": "^9.0.2",
         "mysql2": "^3.12.0",
@@ -28,7 +26,6 @@
         "react-dom": "^18.2.0",
         "swagger-jsdoc": "^6.2.8",
         "swagger-ui-express": "^5.0.1",
-        "tui-code-snippet": "^2.3.3",
         "tui-date-picker": "^4.3.3",
         "tui-grid": "^4.21.22",
         "tui-pagination": "^3.4.1",
