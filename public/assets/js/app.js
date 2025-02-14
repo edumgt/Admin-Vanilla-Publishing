@@ -7,6 +7,9 @@ import {
     createTanslations, 
     createBadgeRenderer } from './common.js';
 
+
+
+
 let rowsPerPage = 20;
 let gridBodyHeight = 630;
 
