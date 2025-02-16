@@ -1365,7 +1365,6 @@ label {
 }
 
 /* 
-
 .calendar {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -1395,3 +1394,19 @@ label {
 .calendar .day .schedule .vacation {
   color: red;
 } */
+
+.scroll-x {
+  overflow-x: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.scroll-y {
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.overflow-y-auto {
+  overflow-y: auto
+}
