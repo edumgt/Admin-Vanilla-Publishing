@@ -386,6 +386,8 @@ router.get('/calendar', (req, res) => {
     });
 });
 
+
+
 /**
  * @swagger
  * /addDate:
@@ -574,6 +576,36 @@ router.get('/members', (req, res) => {
             res.status(500).json({ error: err.message });
         } else {
             res.json(results);
+        }
+    });
+});
+
+
+router.get('/bookings', (req, res) => {
+    db.query(`
+        SELECT JSON_OBJECTAGG(
+            room_number,
+            (SELECT JSON_ARRAYAGG(
+                        JSON_OBJECT(
+                            'guestName', guest_name,
+                            'checkInDate', check_in_date,
+                            'checkOutDate', check_out_date,
+                            'arrivalTime', arrival_time,
+                            'departureTime', departure_time,
+                            'cost', cost
+                        )
+                    )
+             FROM booking AS r2
+             WHERE r1.room_number = r2.room_number
+            )
+        ) AS result
+        FROM booking AS r1
+    `, (err, results) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            const jsonResult = results[0].result;
+            res.json(JSON.parse(jsonResult));
         }
     });
 });

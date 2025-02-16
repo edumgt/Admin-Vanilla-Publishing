@@ -12,7 +12,9 @@ const hotel = {
 
 document.addEventListener('DOMContentLoaded', async () => {
     try {
-        const response = await fetch('assets/mock/hotel.json');
+        //const response = await fetch('assets/mock/hotel.json');
+        const response = await fetch('/api/bookings');
+
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
