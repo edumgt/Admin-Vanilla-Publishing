@@ -6,7 +6,6 @@ body {
 }
 
 .tab-active {
-
   background: #0056b3;
   color: white;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -20,7 +19,6 @@ body {
 }
 
 .tab-button {
-  /* padding: 0.5rem 1rem; */
   border-radius: 0.375rem;
   cursor: pointer;
   font-weight: 500;

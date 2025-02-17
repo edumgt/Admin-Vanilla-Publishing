@@ -1,3 +1,21 @@
+export const cmmContainer = document.getElementById('cmmContainer');
+cmmContainer.innerHTML = `
+    <div class="gnb-menu">
+        <ul class="flex">
+            <div id="logo"></div>
+            <div id="tabs-container"></div>
+            <div id="dropdown-container"></div>
+            <div id="memberIcon"></div>
+            <div id="memberMenu"></div>
+        </ul>
+    </div>
+    <div id="toast-container"></div>
+    <div id="offCanvasContainer"></div>
+    <div id="buttonContainer"></div>
+    <div id="appContainer"></div>
+`;
+
+
 export const currentPage = window.location.pathname.split("/").pop();
 window.currentPage = currentPage;
 
