@@ -1,4 +1,8 @@
 
+import {
+
+    createAddButton
+} from './common.js';
 
     const monthYear = document.getElementById('monthYear');
     const dates = document.getElementById('dates');
@@ -76,10 +80,17 @@
             dateNumber.textContent = i;
             dateDiv.appendChild(dateNumber);
 
-            const newButton = document.createElement('button');
-            newButton.classList.add('new-button');
-            newButton.textContent = 'New';
-            newButton.onclick = () => openModal(dateStr);
+            //const newButton = document.createElement('button');
+            const newButton = createAddButton();
+            // newButton.classList.add('new-button');
+            // newButton.textContent = 'New';
+            
+            newButton.addEventListener('click', function () {
+                openModal(dateStr);
+            });
+
+
+            //newButton.onclick = () => openModal(dateStr);
             dateDiv.appendChild(newButton);
 
             const dailyLectures = data.lectures.find(lecture => lecture.date === dateStr);
@@ -211,7 +222,7 @@
 
         if (!time || !course || !instructor) {
 
-            showToast("required-input", "warning", "en");
+            showToast("required-input", "warning", lang);
             return;
         }
 

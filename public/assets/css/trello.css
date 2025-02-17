@@ -165,7 +165,7 @@
 
 }
 
-.new-button {
+/* .new-button {
     font-size: 0.9rem;
     background-color: #0058A3;
     color: #fff;
@@ -173,9 +173,7 @@
     border-radius: 3px;
     margin: 0px 0px 0px 30px;
     position: fixed;
-
-
-}
+} */
 
 .date-number{
     margin-bottom: 10px;
