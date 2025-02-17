@@ -140,10 +140,10 @@ function renderGanttChart() {
             <td>${task.name}</td>
             <td>${taskStartDate.toLocaleDateString()}</td>
             <td>${taskEndDate.toLocaleDateString()}</td>
-            <td class="timeline-column"><div class="timeline"></div></td>
+            <td class="timeline-column"><div class="timeline2"></div></td>
         `;
 
-        const timelineCell = row.querySelector(".timeline");
+        const timelineCell = row.querySelector(".timeline2");
 
         for (let i = 0; i < totalDays; i++) {
             const currentDate = new Date(overallStartDate);

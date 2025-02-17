@@ -19,7 +19,6 @@
         "express-api-server": "file:",
         "fs": "^0.0.1-security",
         "handsontable": "^15.0.1",
-        "interact": "^0.0.3",
         "interactjs": "^1.10.27",
         "jsonwebtoken": "^9.0.2",
         "mysql2": "^3.12.0",

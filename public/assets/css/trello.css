@@ -72,7 +72,7 @@
     background-color: #ffffff;
 }
 
-.timeline {
+.timeline2 {
     display: flex;
     background-color: #ffffff;
     padding: 5px;
@@ -80,11 +80,11 @@
     border: 1px solid #ddd;
 }
 
-.timeline div {
+.timeline2 div {
     margin-right: 2px;
 }
 
-.timeline .highlight {
+.timeline2 .highlight {
     background-color: #0058a3;
 }
 
