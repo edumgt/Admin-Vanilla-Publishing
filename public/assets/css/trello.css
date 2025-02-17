@@ -43,7 +43,7 @@
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
-    
+
 }
 
 
@@ -157,24 +157,14 @@
 /* lectures.html 사용 */
 .custom-drag-icon {
     background-color: #555;
-    color: #ffffff; 
+    color: #ffffff;
     font-size: 1.2rem;
     position: absolute;
-    right:5px;
-    bottom:8px;
+    right: 5px;
+    bottom: 8px;
 
 }
 
-/* .new-button {
-    font-size: 0.9rem;
-    background-color: #0058A3;
-    color: #fff;
-    padding: 2px;
-    border-radius: 3px;
-    margin: 0px 0px 0px 30px;
-    position: fixed;
-} */
-
-.date-number{
+.date-number {
     margin-bottom: 10px;
 }
