@@ -1,12 +1,13 @@
-import { 
+import {
 
-    createSaveButton, 
-    createCloseButton } from './common.js';
+    createSaveButton,
+    createCloseButton
+} from './common.js';
 
 const hotel = {
     floors: 10,
     roomsPerFloor: 20,
-    reservations: JSON.parse(localStorage.getItem('hotelReservations')) || {}
+    reservations: {}
 
 };
 
@@ -36,12 +37,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     for (let i = 1; i <= hotel.floors; i++) {
         const tabButton = document.createElement('button');
-        tabButton.className = 'tab-button';
+        tabButton.className = 'tab-button2';
         tabButton.innerText = `Floor ${i}`;
         tabButton.addEventListener('click', () => {
             const selectedDate = document.getElementById('date-select').value;
             renderFloor(i, selectedDate);
-            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active-tab'));
+            document.querySelectorAll('.tab-button2').forEach(btn => btn.classList.remove('active-tab'));
             tabButton.classList.add('active-tab');
         });
         if (i === 1) tabButton.classList.add('active-tab');
@@ -56,7 +57,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     dateInput.value = today;
 
     dateInput.addEventListener('change', () => {
-        const activeTab = document.querySelector('.tab-button.active-tab');
+        const activeTab = document.querySelector('.tab-button2.active-tab');
         if (activeTab) {
             const selectedFloor = parseInt(activeTab.innerText.split(' ')[1]);
             renderFloor(selectedFloor, dateInput.value);
@@ -124,19 +125,19 @@ function renderFloor(floor, date = new Date().toISOString().split('T')[0]) {
                     <p>Cost: $${reservation.cost}</p>
                 `;
 
-    
+
                 const deleteButton = document.createElement('span');
                 deleteButton.innerText = 'X';
                 deleteButton.className = 'delete-button bg-yellow-500';
 
-                console.log(index);
+                //console.log(index);
                 deleteButton.addEventListener('click', () => {
-                    
-                    reservations.splice(index, 1); 
-                    hotel.reservations[roomId] = reservations; 
 
-                    showToast(`reserve-cancel`,'success',lang);
-                    renderFloor(floor, date); 
+                    reservations.splice(index, 1);
+                    hotel.reservations[roomId] = reservations;
+
+                    showToast(`reserve-cancel`, 'success', lang);
+                    renderFloor(floor, date);
                 });
 
                 reservationDiv.appendChild(deleteButton);
@@ -164,7 +165,7 @@ function manageReservation(floor, room) {
     modal.className = 'modal';
     modal.innerHTML = `
         <div class="modal-content">
-            <h2>Manage Reservation for Room ${roomId}</h2>
+            <h2>예약 추가 Room ${roomId}</h2>
             <label>Guest Name:</label>
             <input type="text" id="guestName" value="" />
             <label>Check-In Date (YYYY-MM-DD):</label>
@@ -186,16 +187,11 @@ function manageReservation(floor, room) {
 
     const saveButton = createSaveButton();
     saveButton.classList.add("mr-2");
-    
-    const closeButton = createCloseButton();
 
-    
+    const closeButton = createCloseButton();
 
     document.getElementById('btnContainer').appendChild(saveButton);
     document.getElementById('btnContainer').appendChild(closeButton);
-
-    
-    
 
     saveButton.addEventListener('click', () => {
         const guestName = document.getElementById('guestName').value;
@@ -206,12 +202,12 @@ function manageReservation(floor, room) {
         const cost = parseFloat(document.getElementById('cost').value);
 
         if (!guestName || !checkInDate || !checkOutDate || isNaN(cost)) {
-            showToast('required-input', 'warning', 'en');
+            showToast('required-input', 'warning', lang);
             return;
         }
 
         if (!isValidDate(checkInDate) || !isValidDate(checkOutDate)) {
-            showToast('날짜 양식을 맞춰 입력하세요');
+            showToast('invalid-date-format', 'warning', lang);
             return;
         }
 
@@ -238,7 +234,9 @@ function manageReservation(floor, room) {
 
         reservations.push(newReservation);
         hotel.reservations[roomId] = reservations;
-        let lang = localStorage.getItem('lang') || 'ko';
+
+        //let lang = localStorage.getItem('lang') || 'ko';
+
         showToast('well-done', 'success', lang);
         document.body.removeChild(modal);
         renderFloor(floor);
