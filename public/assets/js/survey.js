@@ -259,7 +259,7 @@ function handleDrop(event) {
     // 드롭된 컨테이너에서 중복 검사
     const existingItem = event.target.querySelector(`[data-id="${questionId}"]`);
     if (existingItem) {
-        showToast("이미 추가된 문항입니다.");
+        showToast("already-add",'warning',lang);
         return;
     }
 
@@ -330,7 +330,7 @@ function saveSurvey() {
     surveys.push(newSurvey);
     localStorage.setItem('surveys', JSON.stringify(surveys));
 
-    showToast('설문지를 추가하였습니다.');
+    showToast('survey-add','success',lang);
     populateSurveySelect();
 }
 
@@ -398,7 +398,7 @@ document.getElementById('submitSurvey').addEventListener('click', () => {
     responses.push(results);
     localStorage.setItem('responses', JSON.stringify(responses));
 
-    showToast('surveyCompleted', 'success', 'ko');
+    showToast('surveyCompleted', 'success', lang);
     generateReport(responses);
 });
 
@@ -551,7 +551,7 @@ function startMobileSurvey() {
                     responses[`question-${questions[index].dataset.id}`] = selectedOption.value;
                     nextQuestion();
                 } else {
-                    showToast('답안을 선택하세요.');
+                    showToast('choice-q','warning',lang);
                 }
             });
             questionClone.appendChild(nextButton);
@@ -564,7 +564,7 @@ function startMobileSurvey() {
             currentQuestionIndex++;
             showQuestion(currentQuestionIndex);
         } else {
-            showToast('모든 문항 답변을 완료했습니다.');
+            showToast('all-answer','success',lang);
             document.getElementById('mobileSurveyModal').classList.add('hidden');
             saveResponses();
         }
@@ -574,7 +574,7 @@ function startMobileSurvey() {
         const storedResponses = JSON.parse(localStorage.getItem('responses')) || [];
         storedResponses.push(responses);
         localStorage.setItem('responses', JSON.stringify(storedResponses));
-        showToast('surveyCompleted', 'success', 'ko');
+        showToast('surveyCompleted', 'success',lang);
 
         generateReport(storedResponses);
     }
