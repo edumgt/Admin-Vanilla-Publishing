@@ -67,10 +67,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     controlPanel.appendChild(tabContainer);
     controlPanel.appendChild(dateInput);
     controlPanel.appendChild(dateInput);
-    const breadcrumb = document.querySelector('.breadcrumb');
-    if (breadcrumb) {
-        breadcrumb.insertAdjacentElement('afterend', controlPanel);
-    }
+    
+    //const breadcrumb = document.querySelector('.breadcrumb');
+    // if (breadcrumb) {
+    //     breadcrumb.insertAdjacentElement('afterend', controlPanel);
+    // }
+    const breadcrumb = document.getElementById('content');
+
+    breadcrumb.insertAdjacentElement('afterbegin', controlPanel);
+
+    //breadcrumb.appendChild(controlPanel);
+    
 
     renderFloor(1);
 });
