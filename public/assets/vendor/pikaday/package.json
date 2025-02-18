@@ -35,5 +35,8 @@
   "scripts": {
     "test": "testling",
     "lint": "jshint *.js plugins/*.js tests/*.js"
+  },
+  "dependencies": {
+    "pikaday": "file:"
   }
 }

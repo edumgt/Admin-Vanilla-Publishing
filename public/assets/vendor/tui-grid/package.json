@@ -84,6 +84,7 @@
   "dependencies": {
     "dompurify": "^2.3.9",
     "tui-date-picker": "^4.1.0",
+    "tui-grid": "file:",
     "tui-pagination": "^3.4.0",
     "xlsx": "^0.17.1"
   }
