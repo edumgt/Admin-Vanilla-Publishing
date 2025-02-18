@@ -1,22 +1,22 @@
 const hotelData = [
-    {"name": "Hotel A", "address": "123 Seoul St.", "phone": "010-1234-5678", "region": "Seoul"},
-    {"name": "Hotel B", "address": "124 Busan St.", "phone": "010-1234-5679", "region": "Busan"},
-    {"name": "Hotel C", "address": "125 Daegu St.", "phone": "010-1234-5680", "region": "Daegu"},
-    {"name": "Hotel D", "address": "126 Incheon St.", "phone": "010-1234-5681", "region": "Incheon"},
-    {"name": "Hotel E", "address": "127 Gwangju St.", "phone": "010-1234-5682", "region": "Gwangju"},
-    {"name": "Hotel F", "address": "128 Daejeon St.", "phone": "010-1234-5683", "region": "Daejeon"},
-    {"name": "Hotel G", "address": "129 Ulsan St.", "phone": "010-1234-5684", "region": "Ulsan"},
-    {"name": "Hotel H", "address": "130 Sejong St.", "phone": "010-1234-5685", "region": "Sejong"},
-    {"name": "Hotel I", "address": "131 Gyeonggi St.", "phone": "010-1234-5686", "region": "Gyeonggi"},
-    {"name": "Hotel J", "address": "132 Gangwon St.", "phone": "010-1234-5687", "region": "Gangwon"},
-    {"name": "Hotel K", "address": "133 Chungbuk St.", "phone": "010-1234-5688", "region": "Chungbuk"},
-    {"name": "Hotel L", "address": "134 Chungnam St.", "phone": "010-1234-5689", "region": "Chungnam"},
-    {"name": "Hotel M", "address": "135 Jeonbuk St.", "phone": "010-1234-5690", "region": "Jeonbuk"},
-    {"name": "Hotel N", "address": "136 Jeonnam St.", "phone": "010-1234-5691", "region": "Jeonnam"},
-    {"name": "Hotel O", "address": "137 Gyeongbuk St.", "phone": "010-1234-5692", "region": "Gyeongbuk"},
-    {"name": "Hotel P", "address": "138 Gyeongnam St.", "phone": "010-1234-5693", "region": "Gyeongnam"},
-    {"name": "Hotel Q", "address": "139 Jeju St.", "phone": "010-1234-5694", "region": "Jeju"},
-    {"name": "Hotel BC", "address": "177 Gyeongnam St.", "phone": "010-1234-5732", "region": "Gyeongnam"}
+    { "name": "Hotel A", "address": "123 Seoul St.", "phone": "010-1234-5678", "region": "Seoul" },
+    { "name": "Hotel B", "address": "124 Busan St.", "phone": "010-1234-5679", "region": "Busan" },
+    { "name": "Hotel C", "address": "125 Daegu St.", "phone": "010-1234-5680", "region": "Daegu" },
+    { "name": "Hotel D", "address": "126 Incheon St.", "phone": "010-1234-5681", "region": "Incheon" },
+    { "name": "Hotel E", "address": "127 Gwangju St.", "phone": "010-1234-5682", "region": "Gwangju" },
+    { "name": "Hotel F", "address": "128 Daejeon St.", "phone": "010-1234-5683", "region": "Daejeon" },
+    { "name": "Hotel G", "address": "129 Ulsan St.", "phone": "010-1234-5684", "region": "Ulsan" },
+    { "name": "Hotel H", "address": "130 Sejong St.", "phone": "010-1234-5685", "region": "Sejong" },
+    { "name": "Hotel I", "address": "131 Gyeonggi St.", "phone": "010-1234-5686", "region": "Gyeonggi" },
+    { "name": "Hotel J", "address": "132 Gangwon St.", "phone": "010-1234-5687", "region": "Gangwon" },
+    { "name": "Hotel K", "address": "133 Chungbuk St.", "phone": "010-1234-5688", "region": "Chungbuk" },
+    { "name": "Hotel L", "address": "134 Chungnam St.", "phone": "010-1234-5689", "region": "Chungnam" },
+    { "name": "Hotel M", "address": "135 Jeonbuk St.", "phone": "010-1234-5690", "region": "Jeonbuk" },
+    { "name": "Hotel N", "address": "136 Jeonnam St.", "phone": "010-1234-5691", "region": "Jeonnam" },
+    { "name": "Hotel O", "address": "137 Gyeongbuk St.", "phone": "010-1234-5692", "region": "Gyeongbuk" },
+    { "name": "Hotel P", "address": "138 Gyeongnam St.", "phone": "010-1234-5693", "region": "Gyeongnam" },
+    { "name": "Hotel Q", "address": "139 Jeju St.", "phone": "010-1234-5694", "region": "Jeju" },
+    { "name": "Hotel BC", "address": "177 Gyeongnam St.", "phone": "010-1234-5732", "region": "Gyeongnam" }
 ];
 
 createModal3(
@@ -31,7 +31,7 @@ createModal3(
 
 hotelData.forEach((hotel, index) => {
     hotel.id = generateNanoId();
-    
+
     hotel.rowNo = index + 1;
     hotel.visitors = Array.from({ length: 12 }, () => Math.floor(Math.random() * 101) + 100);
     //console.log(hotel.visitors);
@@ -62,6 +62,17 @@ function loadHistoryFromLocalStorage() {
     return storedHistory ? JSON.parse(storedHistory) : [];
 }
 
+function saveColumnOrder() {
+    if (!gridOptions.api) return;  // ✅ gridOptions.api가 존재하는지 확인
+    const columnState = gridOptions.api.getColumnState();
+    localStorage.setItem('columnOrder', JSON.stringify(columnState));
+}
+
+function loadColumnOrder() {
+    const storedColumnOrder = localStorage.getItem('columnOrder');
+    return storedColumnOrder ? JSON.parse(storedColumnOrder) : null;
+}
+
 // AG Grid 초기화
 const columnDefs = [
     { headerName: 'Row No', field: 'rowNo', cellClass: 'custom-cell', headerClass: 'custom-header', editable: false, flex: 0.5 },
@@ -79,13 +90,13 @@ const columnDefs = [
     {
         headerName: 'Actions',
         field: 'actions',
-        
+
         headerClass: 'custom-header',
-        cellRenderer: function(params) {
+        cellRenderer: function (params) {
             const button = document.createElement('button');
             button.textContent = '수정 이력 보기';
             button.className = 'history-button';
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 const historyData = loadHistoryFromLocalStorage();
                 const rowHistory = historyData.filter(hist => hist.id === params.data.id);
                 const historyContent = document.getElementById('historyContent');
@@ -107,14 +118,14 @@ const gridOptions = {
         sortable: true,
         filter: true,
         resizable: true,
-        flex: 1, 
-        editable: true, 
+        flex: 1,
+        editable: true,
     },
-    pagination: true, 
-    paginationPageSize: 10, 
+    pagination: true,
+    paginationPageSize: 10,
     paginationPageSizeSelector: [10, 20, 50, 100],
     animateRows: true,
-    getDataPath: function(data) {
+    getDataPath: function (data) {
         return [data.region, data.name];
     },
     autoGroupColumnDef: {
@@ -130,15 +141,15 @@ const gridOptions = {
         groupExpanded: '<i class="fas fa-minus-square"></i>',
         groupContracted: '<i class="fas fa-plus-square"></i>'
     },
-    onCellValueChanged: function(event) {
-        
+    onCellValueChanged: function (event) {
+
         const updatedData = [];
-        event.api.forEachNode(function(node) {
+        event.api.forEachNode(function (node) {
             updatedData.push(node.data);
         });
         saveDataToLocalStorage(updatedData);
 
-        
+
         const history = {
             timestamp: new Date().toISOString(),
             originalValue: event.oldValue,
@@ -148,12 +159,25 @@ const gridOptions = {
         };
         saveHistoryToLocalStorage(history);
     },
-    onGridReady: function(params) {
-        setTimeout(function() {
-            params.api.sizeColumnsToFit();
-        });
+
+    
+
+    // 컬럼 이동 시 상태 저장
+    onColumnMoved: function (event) {
+        if (!event.api) return;  // ✅ event.api가 존재하는지 확인
+        const columnState = event.api.getColumnState();
+        localStorage.setItem('columnOrder', JSON.stringify(columnState));
     },
-    rowHeight: 40, 
+
+    // 그리드 로드 시 저장된 컬럼 순서 적용
+    onGridReady: function (params) {
+        const storedColumnOrder = loadColumnOrder();
+        if (storedColumnOrder) {
+            params.api.applyColumnState({ state: storedColumnOrder, applyOrder: true });
+        }
+        setTimeout(() => params.api.sizeColumnsToFit(), 100);
+    },
+    rowHeight: 40,
     headerHeight: 40,
     onRowClicked: onRowClicked,
 };
@@ -163,13 +187,15 @@ document.addEventListener('DOMContentLoaded', function () {
     eGridDiv.classList.add('custom-grid');
     new agGrid.createGrid(eGridDiv, gridOptions);
     saveDataToLocalStorage(gridOptions.rowData);
-    
-    document.getElementById('closeHistoryBtn').addEventListener('click', function() {
+
+    document.getElementById('closeHistoryBtn').addEventListener('click', function () {
         document.getElementById('tmpModal').style.display = 'none';
         document.getElementById('historyModal').style.display = 'none';
     });
 
 });
+
+
 
 const lineChartOptions = {
     series: [{
