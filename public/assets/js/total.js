@@ -155,9 +155,7 @@ function openModal(name, id) {
     modal.innerHTML = `
         <div style='position: relative; display: flex; align-items: flex-start;'>
         <iframe src='account-pop.html?name=${encodeURIComponent(name)}&id=${encodeURIComponent(id)}' width='1440' height='700' class='rounded'></iframe>
-        <span class='close' style='margin-left: 10px; font-size: 30px; font-weight: 900; cursor: pointer;'>&times;</span>        
-            
-        </div>`;
+        <span class='close' style='margin-left: 10px; font-size: 30px; font-weight: 900; cursor: pointer;'>&times;</span></div>`;
     document.body.appendChild(modal);
 
     modal.querySelector(".close").addEventListener("click", function () {
