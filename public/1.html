@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>강의 시간표 (강의 정보 많음)</title>
+  <title>강의 시간표 (다양한 색상)</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     html, body {
@@ -15,35 +15,56 @@
     .root-container {
       width: 100%;
       margin: 0 auto;
-      background: #f8f9fa;
+      background: #F5F5F5;
       position: relative;
     }
     .calendar-container {
       position: relative;
-      background: #fff;
-      border: 1px solid #ccc;
+      background: #FFFFFF;
+      border: 1px solid #CCCCCC;
       width: 100%;
       margin: 60px auto;
       overflow: hidden;
     }
     .lecture {
       position: absolute;
-      color: #fff;
-      text-align: center;
+      color: #FFFFFF;
+      text-align: left;
       border-radius: 4px;
       overflow: hidden;
       padding: 4px;
-      font-size: 0.875rem;
+      font-size: 0.75rem;
     }
-    .time-cell, .empty-cell {
+    .time-cell, .empty-cell, .day-cell, .room-cell {
       position: absolute;
       box-sizing: border-box;
-      border: 1px solid #ddd;
-      background: #e2e8f0;
+      border: 1px solid #DDDDDD;
+      background: #F0F0F0;
       text-align: center;
       font-weight: bold;
       font-size: 0.75rem;
       overflow: hidden;
+    }
+    .day-cell {
+      background: #0058A3;
+      color: #FFFFFF;
+      border: 1px solid #00457C;
+    }
+    .room-cell {
+      background: #FFD900;
+      color: #000000;
+      border: 1px solid #CCAA00;
+    }
+    .time-cell {
+      background: #FFFFFF;
+      color: #000000;
+      border: 1px solid #CCCCCC;
+    }
+    .empty-cell {
+      background: #FFFFFF;
+    }
+    .lecture-content {
+      text-align: left;
     }
   </style>
 </head>
@@ -53,12 +74,12 @@
        style="position:absolute; left:400px; z-index:2;">
   </div>
   <button id="prev-week"
-          class="bg-blue-500 text-white px-4 py-2 rounded"
+          class="bg-blue-700 text-white px-4 py-2 rounded"
           style="position:absolute; top:10px; left:100px; z-index:2;">
     이전 주
   </button>
   <button id="next-week"
-          class="bg-blue-500 text-white px-4 py-2 rounded"
+          class="bg-blue-700 text-white px-4 py-2 rounded"
           style="position:absolute; top:10px; left:800px; z-index:2;">
     다음 주
   </button>
@@ -78,21 +99,22 @@
 
       const startHour = 9;
       const endHour = 22;
-      const days = ["일","월","화","수","목","금","토"];
-      const rooms = ["101호","102호","103호","104호","105호"];
-      const durations = [2,3,4];
+      const days = ["일", "월", "화", "수", "목", "금", "토"];
+      const rooms = ["101호", "102호", "103호", "104호", "105호"];
+      const durations = [2, 3, 4];
       const courseCategories = [
-        { name: "웹/IT", color: "bg-blue-500" },
-        { name: "인테리어", color: "bg-green-500" },
-        { name: "영상편집", color: "bg-red-500" },
-        { name: "그래픽디자인", color: "bg-purple-500" },
-        { name: "사무자격증", color: "bg-yellow-500" },
-        { name: "OA", color: "bg-pink-500" },
-        { name: "회계", color: "bg-orange-500" },
-        { name: "자바", color: "bg-sky-500" },
-        { name: "C++", color: "bg-indigo-500" },
-        { name: "취업특강", color: "bg-teal-500" }
+        { name: "웹/IT", color: "#FF5733" },
+        { name: "인테리어", color: "#33FF57" },
+        { name: "영상편집", color: "#3357FF" },
+        { name: "그래픽디자인", color: "#FF33A8" },
+        { name: "사무자격증", color: "#558800" },
+        { name: "OA", color: "#777" },
+        { name: "회계", color: "#8D33FF" },
+        { name: "자바", color: "#FF8D33" },
+        { name: "C++", color: "#353566" },
+        { name: "취업특강", color: "#FF3333" }
       ];
+      const instructors = ["김민수", "이서현", "박지훈", "최예진", "조민아", "정우성", "한지민", "서강준", "문채원", "유승호"];
 
       // 셀 크기
       const cellWidth = 80;
@@ -107,151 +129,242 @@
         const endOfWeek = new Date(startOfWeek);
         endOfWeek.setDate(startOfWeek.getDate() + 6);
         return {
-          start: startOfWeek.toISOString().split("T")[0],
-          end: endOfWeek.toISOString().split("T")[0]
+          start: startOfWeek,
+          end: endOfWeek
         };
       }
 
       function updateWeekDisplay() {
         const range = getWeekRange(currentWeekOffset);
-        weekDisplay.innerText = `주차: ${range.start} ~ ${range.end}`;
+        const startStr = range.start.toISOString().split("T")[0];
+        const endStr = range.end.toISOString().split("T")[0];
+        weekDisplay.innerText = `주차: ${startStr} ~ ${endStr}`;
       }
 
-      // 강의 정보 대량 생성 (중복 +3)
+      // 시간 -> 30분 단위 인덱스
+      function timeToIndex(hour, minute) {
+        let base = (hour - startHour) * 2;
+        if (minute === "30") base++;
+        return base;
+      }
+
+      // Conflict Detection Function
+      function isSlotAvailable(scheduleMap, day, room, startIdx, endIdx) {
+        const key = `${day}-${room}`;
+        if (!scheduleMap[key]) return true;
+
+        for (let i = startIdx; i < endIdx; i++) {
+          if (scheduleMap[key][i]) return false;
+        }
+        return true;
+      }
+
+      // Mark Slots as Occupied
+      function occupySlots(scheduleMap, day, room, startIdx, endIdx) {
+        const key = `${day}-${room}`;
+        if (!scheduleMap[key]) scheduleMap[key] = {};
+
+        for (let i = startIdx; i < endIdx; i++) {
+          scheduleMap[key][i] = true;
+        }
+      }
+
+      // 강의 정보 대량 생성 (중복 방지)
       function generateSchedule() {
         let schedule = [];
+        let scheduleMap = {}; // To keep track of occupied slots
+
         days.forEach(day => {
-          // 하루에 예: 1~rooms.length+2 만큼 강의 많이 생성
-          let numLectures = Math.floor(Math.random() * (rooms.length+2)) + 1;
-          for(let i=0; i<numLectures; i++) {
-            let randomRoom = rooms[ Math.floor(Math.random()*rooms.length) ];
+          // 하루에 3~rooms.length 만큼 강의 생성
+          let numLectures = Math.floor(Math.random() * (rooms.length)) + 3;
 
-            let startHr= Math.floor(Math.random()*(endHour-startHour-2))+startHour;
-            let duration= durations[Math.floor(Math.random()*durations.length)];
-            let startMin= (Math.random()<0.5)?"00":"30";
-            let endHr= startHr + duration;
-            let endMin= startMin;
+          for (let i = 0; i < numLectures; i++) {
+            let attempts = 0;
+            let maxAttempts = 10; // To prevent infinite loops
 
-            let cat= courseCategories[Math.floor(Math.random()* courseCategories.length)];
+            while (attempts < maxAttempts) {
+              attempts++;
 
-            schedule.push({
-              day,
-              room: randomRoom,
-              startHour: startHr,
-              startMinute: startMin,
-              endHour: endHr,
-              endMinute: endMin,
-              duration,
-              course: cat.name,
-              color: cat.color
-            });
+              let randomRoom = rooms[Math.floor(Math.random() * rooms.length)];
+              let startHr = Math.floor(Math.random() * (endHour - startHour - 2)) + startHour;
+              let duration = durations[Math.floor(Math.random() * durations.length)];
+              let startMin = (Math.random() < 0.5) ? "00" : "30";
+              let endHr = startHr + duration;
+              let endMin = startMin;
+
+              if (endHr > endHour) {
+                endHr = endHour;
+                endMin = "00";
+              }
+
+              let cat = courseCategories[Math.floor(Math.random() * courseCategories.length)];
+
+              let startIdx = timeToIndex(startHr, startMin);
+              let endIdx = timeToIndex(endHr, endMin);
+
+              // Check for conflicts
+              if (isSlotAvailable(scheduleMap, day, randomRoom, startIdx, endIdx)) {
+                // Occupy the slots
+                occupySlots(scheduleMap, day, randomRoom, startIdx, endIdx);
+
+                // 강사명, 정원, 출석, 출석율 생성
+                let randomInstructor = instructors[Math.floor(Math.random() * instructors.length)];
+                let capacity = Math.floor(Math.random() * 21) + 10; // 정원: 10~30명
+                let attendance = Math.floor(Math.random() * (capacity + 1)); // 출석: 0~정원
+                let attendanceRate = ((attendance / capacity) * 100).toFixed(1); // 소수점 한 자리까지 표시
+
+                schedule.push({
+                  day,
+                  room: randomRoom,
+                  startHour: startHr,
+                  startMinute: startMin,
+                  endHour: endHr,
+                  endMinute: endMin,
+                  duration,
+                  course: cat.name,
+                  color: cat.color,
+                  instructor: randomInstructor,
+                  capacity,
+                  attendance,
+                  attendanceRate
+                });
+                break; // Lecture scheduled successfully
+              }
+            }
           }
         });
         return schedule;
       }
 
-      // 시간 -> 30분 단위 인덱스
-      function timeToIndex(hour, minute) {
-        let base = (hour - startHour)*2;
-        if(minute==="30") base++;
-        return base;
-      }
-
       function renderCalendar(schedule) {
-        const totalRows = (endHour-startHour)*2 +1;
-        const totalCols = 1 + days.length* rooms.length;
+        const totalRows = (endHour - startHour) * 2 + 1;
+        const totalCols = 1 + days.length * rooms.length;
 
-        const containerWidth = totalCols* cellWidth;
-        const containerHeight= totalRows* cellHeight;
+        const containerWidth = totalCols * cellWidth;
+        const containerHeight = (totalRows + 2) * cellHeight; // 헤더가 두 줄이므로 +2
 
-        calendar.style.width = containerWidth+"px";
-        calendar.style.height= containerHeight+"px";
-        calendar.style.position= "relative";
-        calendar.innerHTML= "";
+        calendar.style.width = containerWidth + "px";
+        calendar.style.height = containerHeight + "px";
+        calendar.style.position = "relative";
+        calendar.innerHTML = "";
 
         let bgHTML = "";
         // 첫행(왼상단)
-        bgHTML+= `<div class="time-cell" style="
-                    position:absolute; left:0; top:0;
-                    width:${cellWidth}px; height:${cellHeight}px;">
-                  </div>`;
-        // 요일+강의실
-        days.forEach((d,dIdx)=>{
-          rooms.forEach((r,rIdx)=>{
-            let left = (1+(dIdx*rooms.length + rIdx))*cellWidth;
-            bgHTML+= `<div class="time-cell" style="
-                        position:absolute; top:0; left:${left}px;
-                        width:${cellWidth}px; height:${cellHeight}px;">
-                        ${d}<br>${r}
+        bgHTML += `<div class="time-cell" style="
+                      position:absolute; left:0; top:0;
+                      width:${cellWidth}px; height:${cellHeight * 2}px;">
+                    </div>`;
+
+        // 현재 주의 각 날짜 계산
+        const range = getWeekRange(currentWeekOffset);
+        const weekDates = [];
+        for (let i = 0; i < 7; i++) {
+          const date = new Date(range.start);
+          date.setDate(range.start.getDate() + i);
+          weekDates.push(date);
+        }
+
+        // 요일 헤더
+        let leftPosition = cellWidth;
+        days.forEach((d, index) => {
+          let dayWidth = rooms.length * cellWidth;
+          const dateStr = (weekDates[index].getMonth() + 1) + "/" + weekDates[index].getDate();
+          bgHTML += `<div class="day-cell" style="
+                        position:absolute; top:0; left:${leftPosition}px;
+                        width:${dayWidth}px; height:${cellHeight}px;
+                        border: 1px solid #00457C;">
+                        ${d} (${dateStr})
                       </div>`;
+          leftPosition += dayWidth;
+        });
+
+        // 강의실 헤더
+        leftPosition = cellWidth;
+        days.forEach((d) => {
+          rooms.forEach((r) => {
+            bgHTML += `<div class="room-cell" style="
+                          position:absolute; top:${cellHeight}px; left:${leftPosition}px;
+                          width:${cellWidth}px; height:${cellHeight}px;
+                          border: 1px solid #CCCCCC;">
+                          ${r}
+                        </div>`;
+            leftPosition += cellWidth;
           });
         });
 
         // 시간열 + 빈칸
-        for(let row=1; row< totalRows; row++){
-          let hr= startHour+ Math.floor((row-1)/2);
-          let min= ((row-1)%2===1)?"30":"00";
-          let top= row* cellHeight;
-          bgHTML+= `<div class="time-cell" style="
-                      position:absolute; left:0; top:${top}px;
-                      width:${cellWidth}px; height:${cellHeight}px;">
-                     ${hr}:${min}
-                     </div>`;
+        for (let row = 2; row < totalRows + 2; row++) {
+          let hr = startHour + Math.floor((row - 2) / 2);
+          let min = ((row - 2) % 2 === 1) ? "30" : "00";
+          let top = row * cellHeight;
+          bgHTML += `<div class="time-cell" style="
+                        position:absolute; left:0; top:${top}px;
+                        width:${cellWidth}px; height:${cellHeight}px;">
+                       ${hr}:${min}
+                       </div>`;
 
-          // 빈칸 35개
-          for(let c=0;c< days.length*rooms.length;c++){
-            let left= (c+1)* cellWidth;
-            bgHTML+= `<div class="empty-cell" style="
-                        position:absolute; top:${top}px; left:${left}px;
-                        width:${cellWidth}px; height:${cellHeight}px;
-                      "></div>`;
+          // 빈칸
+          for (let c = 0; c < days.length * rooms.length; c++) {
+            let left = (c + 1) * cellWidth;
+            bgHTML += `<div class="empty-cell" style="
+                          position:absolute; top:${top}px; left:${left}px;
+                          width:${cellWidth}px; height:${cellHeight}px;
+                        "></div>`;
           }
         }
-        calendar.innerHTML= bgHTML;
+        calendar.innerHTML = bgHTML;
 
         // 강의 배치
         schedule.forEach(lec => {
-          let startIdx= timeToIndex(lec.startHour, lec.startMinute);
-          let endIdx= timeToIndex(lec.endHour, lec.endMinute);
-          let rowSpan= endIdx - startIdx;
-          let dIndex= days.indexOf(lec.day);
-          let rIndex= rooms.indexOf(lec.room);
-          let col= 1+ (dIndex* rooms.length + rIndex);
+          let startIdx = timeToIndex(lec.startHour, lec.startMinute);
+          let endIdx = timeToIndex(lec.endHour, lec.endMinute);
+          let rowSpan = endIdx - startIdx;
+          let dIndex = days.indexOf(lec.day);
+          let rIndex = rooms.indexOf(lec.room);
+          let col = 1 + (dIndex * rooms.length + rIndex);
 
-          let top= (startIdx+1)* cellHeight;
-          let left= col* cellWidth;
-          let h= rowSpan* cellHeight;
+          let top = (startIdx + 2) * cellHeight; // 헤더가 두 줄이므로 +2
+          let left = col * cellWidth;
+          let h = rowSpan * cellHeight;
 
-          let div= document.createElement("div");
-          div.className= `lecture ${lec.color}`;
-          div.style.top= top+"px";
-          div.style.left= left+"px";
-          div.style.width= (cellWidth - 2)+"px";
-          div.style.height= (h - 2)+"px";
-          div.innerHTML= `${lec.room} (${lec.course})<br>
-                          ${lec.startHour}:${lec.startMinute} ~ ${lec.endHour}:${lec.endMinute}`;
+          let div = document.createElement("div");
+          div.className = `lecture`;
+          div.style.top = top + "px";
+          div.style.left = left + "px";
+          div.style.width = (cellWidth - 2) + "px";
+          div.style.height = (h - 2) + "px";
+          div.style.backgroundColor = lec.color;
+          div.innerHTML = `
+            <div class="lecture-content">
+              <strong>${lec.course}</strong><br>
+              강사: ${lec.instructor}<br>
+              정원: ${lec.capacity}명<br>
+              출석: ${lec.attendance}명<br>
+              출석율: ${lec.attendanceRate}%
+            </div>
+          `;
           calendar.appendChild(div);
         });
 
         // 동적 높이 조정
-        let maxBottom=0;
-        const lectures= calendar.querySelectorAll(".lecture");
+        let maxBottom = 0;
+        const lectures = calendar.querySelectorAll(".lecture");
         lectures.forEach(el => {
-          let bottom= el.offsetTop + el.offsetHeight;
-          if(bottom> maxBottom) maxBottom= bottom;
+          let bottom = el.offsetTop + el.offsetHeight;
+          if (bottom > maxBottom) maxBottom = bottom;
         });
-        if(maxBottom< containerHeight) maxBottom= containerHeight;
-        calendar.style.height= maxBottom+"px";
+        if (maxBottom < containerHeight) maxBottom = containerHeight;
+        calendar.style.height = maxBottom + "px";
       }
 
-      prevWeekBtn.addEventListener("click", ()=>{
+      prevWeekBtn.addEventListener("click", () => {
         currentWeekOffset--;
         updateWeekDisplay();
         let schedule = generateSchedule();
         renderCalendar(schedule);
       });
 
-      nextWeekBtn.addEventListener("click", ()=>{
+      nextWeekBtn.addEventListener("click", () => {
         currentWeekOffset++;
         updateWeekDisplay();
         let schedule = generateSchedule();
@@ -259,7 +372,7 @@
       });
 
       updateWeekDisplay();
-      let schedule= generateSchedule();
+      let schedule = generateSchedule();
       renderCalendar(schedule);
     });
   </script>
