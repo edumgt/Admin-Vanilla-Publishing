@@ -66,6 +66,41 @@
     .lecture-content {
       text-align: left;
     }
+    /* Modal styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.close-btn {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
   </style>
 </head>
 <body>
@@ -88,6 +123,15 @@
     <div id="calendar" class="calendar-container"></div>
   </div>
 
+  <!-- Modal Structure -->
+<div id="lecture-modal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+    <div id="modal-lecture-details"></div>
+  </div>
+</div>
+
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const weekDisplay = document.getElementById('week-display');
@@ -104,7 +148,7 @@
       const durations = [2, 3, 4];
       const courseCategories = [
         { name: "웹/IT", color: "#FF5733" },
-        { name: "인테리어", color: "#33FF57" },
+        { name: "인테리어", color: "#59838f" },
         { name: "영상편집", color: "#3357FF" },
         { name: "그래픽디자인", color: "#FF33A8" },
         { name: "사무자격증", color: "#558800" },
@@ -117,7 +161,7 @@
       const instructors = ["김민수", "이서현", "박지훈", "최예진", "조민아", "정우성", "한지민", "서강준", "문채원", "유승호"];
 
       // 셀 크기
-      const cellWidth = 80;
+      const cellWidth = 60;
       const cellHeight = 30;
 
       // 주차 계산
@@ -343,8 +387,30 @@
               출석율: ${lec.attendanceRate}%
             </div>
           `;
+
+          // Add click event listener to open modal
+  div.addEventListener('click', () => {
+    document.getElementById('modal-lecture-details').innerHTML = `
+      <strong>강의명: </strong> ${lec.course}<br>
+      <strong>강사: </strong> ${lec.instructor}<br>
+      <strong>정원: </strong> ${lec.capacity}명<br>
+      <strong>출석: </strong> ${lec.attendance}명<br>
+      <strong>출석율: </strong> ${lec.attendanceRate}%<br>
+      <strong>요일: </strong> ${lec.day}<br>
+      <strong>강의실: </strong> ${lec.room}<br>
+      <strong>시작 시간: </strong> ${lec.startHour}:${lec.startMinute}<br>
+      <strong>종료 시간: </strong> ${lec.endHour}:${lec.endMinute}
+    `;
+    document.getElementById('lecture-modal').style.display = 'block';
+  });
+
           calendar.appendChild(div);
         });
+
+        // Modal close function
+document.querySelector('.close-btn').addEventListener('click', () => {
+  document.getElementById('lecture-modal').style.display = 'none';
+});
 
         // 동적 높이 조정
         let maxBottom = 0;
