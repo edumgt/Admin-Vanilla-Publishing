@@ -47,7 +47,7 @@
         "html-minifier": "^4.0.0",
         "nodemon": "^3.1.9",
         "terser": "^5.38.2",
-        "vite": "^0.10.3",
+        "vite": "^6.2.0",
         "webpack": "^5.75.0",
         "webpack-cli": "^5.0.1"
     },
