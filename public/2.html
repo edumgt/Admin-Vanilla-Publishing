@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <title>SBS 아카데미 수강 신청 (할인율 적용 예시)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+  <div class="max-w-md w-full bg-white shadow-md rounded p-6">
+    <h1 class="text-2xl font-bold mb-4 text-center">SBS 아카데미 수강 신청</h1>
+
+    <!-- 1) 계열 선택 -->
+    <div class="mb-4">
+      <label for="majorSelect" class="block mb-1 font-semibold">계열 선택:</label>
+      <select id="majorSelect" class="w-full border border-gray-300 rounded px-2 py-1">
+        <option value="">계열을 선택하세요</option>
+      </select>
+    </div>
+
+    <!-- 2) 지점 선택 -->
+    <div class="mb-4">
+      <label for="branchSelect" class="block mb-1 font-semibold">지점 선택:</label>
+      <select id="branchSelect" class="w-full border border-gray-300 rounded px-2 py-1" disabled>
+        <option value="">계열을 먼저 선택하세요</option>
+      </select>
+    </div>
+
+    <!-- 3) 과정 선택 -->
+    <div class="mb-4">
+      <label for="courseSelect" class="block mb-1 font-semibold">과정 선택:</label>
+      <select id="courseSelect" class="w-full border border-gray-300 rounded px-2 py-1" disabled>
+        <option value="">지점을 먼저 선택하세요</option>
+      </select>
+    </div>
+
+    <!-- 4) 과목 체크박스 & (회차 과목이면) 회차 선택 영역 -->
+    <div id="subjectContainer" class="mb-4">
+      <!-- 과정 선택 시, 이 영역에 체크박스가 동적으로 생성됩니다. -->
+    </div>
+
+    <!-- 5) 수강 신청 버튼 -->
+    <button 
+      id="registerBtn" 
+      class="w-full bg-blue-500 text-white py-2 rounded disabled:bg-gray-400" 
+      disabled
+    >
+      수강 신청
+    </button>
+  </div>
+
+  <!-- ===== 모달(견적서) 영역 ===== -->
+  <div 
+    id="modalOverlay" 
+    class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 hidden justify-center items-center"
+  >
+    <div 
+      id="modalContent"
+      class="bg-white p-6 rounded shadow-md w-11/12 max-w-lg"
+    >
+      <h2 class="text-xl font-bold mb-3">수강 신청 견적서</h2>
+      <div id="modalBody" class="text-sm whitespace-pre-line mb-4">
+        <!-- 견적 내용이 JS로 삽입됩니다. (개행 처리를 위해 whitespace-pre-line 적용) -->
+      </div>
+      <button 
+        id="modalCloseBtn"
+        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+      >
+        닫기
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== 스크립트 시작 ===== -->
+  <script>
+    // 1) 예시 데이터 (계열 -> 지점 -> 과정 -> [과목들])
+    // 각 과목: { name, repeat, price, discount }
+    //  - repeat: true면 "회차 과목" (10회 나누어 회차만큼 선택)
+    //  - price: 정가 (10회 전체 금액 or 단일 과목 금액)
+    //  - discount: 0.10 ~ 0.20 (예: 0.15 => 15% 할인)
+    //    => 실제 결제 = 정가 × (1 - discount)
+    const sbsAcademyData = {
+      "뷰티예술계열": {
+        "강남지점": {
+          "메이크업 전문가 과정": [
+            { name: "기초 메이크업", repeat: false, price: 300000, discount: 0.1 },
+            { name: "방송·미디어 메이크업", repeat: true, price: 500000, discount: 0.15 },  
+            { name: "특수분장", repeat: false, price: 600000, discount: 0.2 }
+          ],
+          "네일아트 마스터 과정": [
+            { name: "젤아트 기초", repeat: false, price: 350000, discount: 0.1 },
+            { name: "아트디자인", repeat: false, price: 400000, discount: 0.1 },
+            { name: "젤연장 테크닉", repeat: true, price: 550000, discount: 0.2 }
+          ]
+        },
+        "신촌지점": {
+          "피부&에스테틱 과정": [
+            { name: "피부관리 기초", repeat: false, price: 400000, discount: 0.1 },
+            { name: "스파 실습", repeat: false, price: 600000, discount: 0.15 },
+            { name: "아로마테라피", repeat: false, price: 450000, discount: 0.2 }
+          ],
+          "헤어 디자인 과정": [
+            { name: "커트 기초", repeat: true, price: 300000, discount: 0.1 },
+            { name: "염색", repeat: false, price: 500000, discount: 0.15 },
+            { name: "드라이 & 스타일링", repeat: false, price: 400000, discount: 0.2 }
+          ]
+        }
+      },
+
+      "컴퓨터IT계열": {
+        "강남지점": {
+          "프로그래밍 기초 과정": [
+            { name: "C 기초", repeat: false, price: 300000, discount: 0.1 },
+            { name: "Python 기본", repeat: false, price: 500000, discount: 0.15 },
+            { name: "Git/GitHub 연동", repeat: false, price: 400000, discount: 0.1 }
+          ],
+          "웹개발 전문가 과정": [
+            { name: "HTML/CSS 기초", repeat: false, price: 350000, discount: 0.1 },
+            { name: "JS 프레임워크", repeat: true, price: 700000, discount: 0.2 },
+            { name: "DB 연동", repeat: false, price: 500000, discount: 0.15 }
+          ]
+        },
+        "부산지점": {
+          "네트워크관리 과정": [
+            { name: "TCP/IP", repeat: true, price: 600000, discount: 0.15 },
+            { name: "서버 구축", repeat: false, price: 550000, discount: 0.1 },
+            { name: "보안 실무", repeat: false, price: 450000, discount: 0.2 }
+          ],
+          "클라우드 운영 과정": [
+            { name: "AWS 기초", repeat: false, price: 500000, discount: 0.15 },
+            { name: "Docker/Kubernetes", repeat: false, price: 650000, discount: 0.15 },
+            { name: "DevOps 개념", repeat: false, price: 300000, discount: 0.1 }
+          ]
+        }
+      },
+
+      // 승무원 계열
+      "승무원 계열": {
+        "신촌지점": {
+          "항공서비스 개론": [
+            { name: "항공사 소개", repeat: false, price: 300000, discount: 0.1 },
+            { name: "서비스 매뉴얼", repeat: false, price: 400000, discount: 0.15 },
+            { name: "기내 방송 실습", repeat: true, price: 600000, discount: 0.2 }
+          ],
+          "이미지메이킹 과정": [
+            { name: "메이크업 기초", repeat: false, price: 350000, discount: 0.1 },
+            { name: "헤어 스타일링", repeat: false, price: 300000, discount: 0.15 },
+            { name: "표정·자세 교정", repeat: true, price: 450000, discount: 0.2 }
+          ]
+        },
+        "홍대지점": {
+          "객실 안전관리 과정": [
+            { name: "비상상황 대처", repeat: true, price: 500000, discount: 0.1 },
+            { name: "응급처치", repeat: false, price: 350000, discount: 0.2 },
+            { name: "항공 보안", repeat: false, price: 400000, discount: 0.15 }
+          ],
+          "인터뷰 대비 과정": [
+            { name: "영어 면접 스킬", repeat: false, price: 300000, discount: 0.1 },
+            { name: "자기소개서 작성", repeat: true, price: 400000, discount: 0.15 },
+            { name: "항공사 면접 모의", repeat: false, price: 500000, discount: 0.2 }
+          ]
+        }
+      },
+
+      // 요리 계열
+      "요리 계열": {
+        "강남지점": {
+          "한식조리 과정": [
+            { name: "기초 칼질", repeat: false, price: 300000, discount: 0.15 },
+            { name: "전통 한식 메뉴", repeat: false, price: 450000, discount: 0.1 },
+            { name: "퓨전 한식 개발", repeat: true, price: 600000, discount: 0.2 }
+          ],
+          "베이킹·디저트 과정": [
+            { name: "제과 기초", repeat: false, price: 400000, discount: 0.15 },
+            { name: "빵·케이크 제조", repeat: false, price: 500000, discount: 0.1 },
+            { name: "초콜릿 공예", repeat: true, price: 550000, discount: 0.2 }
+          ]
+        },
+        "대전지점": {
+          "양식조리 과정": [
+            { name: "파스타·피자", repeat: false, price: 500000, discount: 0.1 },
+            { name: "스테이크·소스", repeat: false, price: 600000, discount: 0.2 },
+            { name: "식문화 이해", repeat: true, price: 300000, discount: 0.15 }
+          ],
+          "일식조리 과정": [
+            { name: "초밥·롤 기초", repeat: true, price: 450000, discount: 0.2 },
+            { name: "튀김·덮밥 실습", repeat: false, price: 400000, discount: 0.15 },
+            { name: "사시미 칼질", repeat: false, price: 500000, discount: 0.1 }
+          ]
+        }
+      }
+    };
+
+    // 주요 DOM 요소
+    const majorSelect = document.getElementById('majorSelect');
+    const branchSelect = document.getElementById('branchSelect');
+    const courseSelect = document.getElementById('courseSelect');
+    const subjectContainer = document.getElementById('subjectContainer');
+    const registerBtn = document.getElementById('registerBtn');
+
+    // 모달 관련 요소
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalBody = document.getElementById('modalBody');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+
+    // 모달 열기
+    function openModal(contentText) {
+      // \n => <br> 변환
+      modalBody.innerHTML = contentText.replace(/\n/g, "<br>");
+      modalOverlay.classList.remove('hidden');
+      modalOverlay.classList.add('flex'); 
+    }
+
+    // 모달 닫기
+    function closeModal() {
+      modalOverlay.classList.add('hidden');
+      modalOverlay.classList.remove('flex');
+    }
+
+    // 페이지 로드 시 - 계열 목록(majorSelect) 초기화
+    window.addEventListener('DOMContentLoaded', function() {
+      const majors = Object.keys(sbsAcademyData);
+      majors.forEach(major => {
+        const option = document.createElement('option');
+        option.value = major;
+        option.textContent = major;
+        majorSelect.appendChild(option);
+      });
+    });
+
+    // 모달 닫기 버튼
+    modalCloseBtn.addEventListener('click', closeModal);
+
+    // 계열 선택 -> 지점 목록
+    majorSelect.addEventListener('change', function() {
+      const selectedMajor = this.value;
+      branchSelect.innerHTML = '<option value="">지점을 선택하세요</option>';
+      branchSelect.disabled = true;
+
+      courseSelect.innerHTML = '<option value="">과정을 선택하세요</option>';
+      courseSelect.disabled = true;
+
+      subjectContainer.innerHTML = '';
+      registerBtn.disabled = true;
+
+      if (selectedMajor) {
+        const branches = Object.keys(sbsAcademyData[selectedMajor]);
+        branches.forEach(branch => {
+          const option = document.createElement('option');
+          option.value = branch;
+          option.textContent = branch;
+          branchSelect.appendChild(option);
+        });
+        branchSelect.disabled = false;
+      }
+    });
+
+    // 지점 선택 -> 과정 목록
+    branchSelect.addEventListener('change', function() {
+      const selectedMajor = majorSelect.value;
+      const selectedBranch = this.value;
+
+      courseSelect.innerHTML = '<option value="">과정을 선택하세요</option>';
+      courseSelect.disabled = true;
+
+      subjectContainer.innerHTML = '';
+      registerBtn.disabled = true;
+
+      if (selectedBranch) {
+        const courses = Object.keys(sbsAcademyData[selectedMajor][selectedBranch]);
+        courses.forEach(course => {
+          const option = document.createElement('option');
+          option.value = course;
+          option.textContent = course;
+          courseSelect.appendChild(option);
+        });
+        courseSelect.disabled = false;
+      }
+    });
+
+    // 과정 선택 -> 과목 체크박스 + 회차 <select multiple>
+    courseSelect.addEventListener('change', function() {
+      const selectedMajor = majorSelect.value;
+      const selectedBranch = branchSelect.value;
+      const selectedCourse = this.value;
+
+      subjectContainer.innerHTML = '';
+      registerBtn.disabled = true;
+
+      if (selectedCourse) {
+        const subjects = sbsAcademyData[selectedMajor][selectedBranch][selectedCourse];
+
+        subjects.forEach(subject => {
+          // 체크박스 라벨
+          const label = document.createElement('label');
+          label.className = "block mb-2 cursor-pointer";
+
+          const checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.name = 'subjects';
+          checkbox.className = "mr-2 w-4 h-4";
+
+          // data-*로 필요한 정보 저장
+          checkbox.dataset.subjectName = subject.name;
+          checkbox.dataset.subjectPrice = subject.price;     // 정가
+          checkbox.dataset.subjectDiscount = subject.discount; 
+          checkbox.dataset.subjectRepeat = subject.repeat;
+
+          // 표시 텍스트: "기초 메이크업 (정가:300,000원)"
+          const span = document.createElement('span');
+          span.textContent = `${subject.name} (정가: ${subject.price.toLocaleString()}원)`;
+          span.className = "font-medium";
+
+          // 회차 과목 뱃지
+          if (subject.repeat === true) {
+            const badge = document.createElement('span');
+            badge.textContent = "회차 과목";
+            badge.className = "ml-2 px-1 text-sm text-red-600 border border-red-500 rounded";
+            span.appendChild(badge);
+          }
+
+          // 할인율 표기도 원한다면 추가:
+          const discountRatePercent = Math.round(subject.discount * 100);
+          const discountSpan = document.createElement('span');
+          discountSpan.textContent = ` (할인율: ${discountRatePercent}%)`;
+          discountSpan.className = "ml-1 text-sm text-blue-600";
+          span.appendChild(discountSpan);
+
+          // 조립
+          label.appendChild(checkbox);
+          label.appendChild(span);
+          subjectContainer.appendChild(label);
+
+          // 회차 과목이면 <select multiple> (1~10)
+          if (subject.repeat === true) {
+            const roundSelect = document.createElement('select');
+            roundSelect.multiple = true;
+            roundSelect.className = "mt-1 w-full border border-gray-300 rounded px-1 py-1 text-sm hidden";
+
+            for (let i = 1; i <= 10; i++) {
+              const opt = document.createElement('option');
+              opt.value = `${i}회차`;
+              opt.textContent = `${i}회차`;
+              roundSelect.appendChild(opt);
+            }
+
+            // 체크박스 체크 시 show/hide
+            checkbox.addEventListener('change', function() {
+              if (this.checked) {
+                roundSelect.classList.remove('hidden');
+              } else {
+                roundSelect.classList.add('hidden');
+              }
+            });
+
+            subjectContainer.appendChild(roundSelect);
+          }
+        });
+
+        // 과목이 하나 이상이면 버튼 활성화
+        if (subjects.length > 0) {
+          registerBtn.disabled = false;
+        }
+      }
+    });
+
+    // 수강 신청 버튼 -> 할인 적용하여 견적 표시 (모달)
+    registerBtn.addEventListener('click', function() {
+      const finalMajor = majorSelect.value;
+      const finalBranch = branchSelect.value;
+      const finalCourse = courseSelect.value;
+
+      // 체크된 과목
+      const checkedBoxes = document.querySelectorAll('input[name="subjects"]:checked');
+      if (checkedBoxes.length === 0) {
+        alert("최소 한 개 이상의 과목을 선택해주세요.");
+        return;
+      }
+
+      let totalPrice = 0;
+      let detailLines = [];
+
+      checkedBoxes.forEach(cb => {
+        const subjectName = cb.dataset.subjectName;
+        const subjectPrice = parseInt(cb.dataset.subjectPrice, 10); // 정가
+        const subjectDiscount = parseFloat(cb.dataset.subjectDiscount); // 할인율(0.1 ~ 0.2)
+        const isRepeat = (cb.dataset.subjectRepeat === 'true');
+
+        // 회차 과목 -> "정가 / 10" 이 1회당 금액
+        // 일반 과목 -> 정가 그대로
+        let basePrice = subjectPrice; // 기본적으로 정가
+        let usedRounds = [];
+
+        if (isRepeat) {
+          const roundSelect = cb.parentElement.nextElementSibling;
+          if (roundSelect && roundSelect.tagName.toLowerCase() === 'select' && !roundSelect.classList.contains('hidden')) {
+            usedRounds = Array.from(roundSelect.selectedOptions).map(opt => opt.value);
+            const roundCount = usedRounds.length;
+            if (roundCount > 0) {
+              // 회차별 금액 = (정가 / 10)
+              basePrice = (subjectPrice / 10) * roundCount; 
+            } else {
+              // 회차를 하나도 선택 안 했다면 0원 처리
+              basePrice = 0;
+            }
+          }
+        } 
+        // else { basePrice = subjectPrice; } (일반 과목)
+
+        // 할인가 계산 = basePrice * (1 - discount)
+        // 소수점 처리는 toLocaleString()에 맡기거나 round 가능
+        const discountedPrice = basePrice * (1 - subjectDiscount);
+
+        totalPrice += discountedPrice;
+
+        // 견적서 라인: "과목명 (정가 => 할인가)"
+        // 회차 과목 & 회차 선택 => "방송·미디어 메이크업(1회차,2회차) : 정가 100,000원 => 할인가 85,000원"
+        // 할인액이나 할인율 표기도 원하면 자유롭게 추가
+        const originalStr = `정가 ${basePrice.toLocaleString()}원`;
+        const discountStr = `할인가 ${Math.round(discountedPrice).toLocaleString()}원`;
+
+        if (isRepeat && usedRounds.length > 0) {
+          detailLines.push(
+            `${subjectName} (${usedRounds.join(", ")}) : ${originalStr} => ${discountStr}`
+          );
+        } else if (isRepeat && usedRounds.length === 0) {
+          // 회차 미선택
+          detailLines.push(
+            `${subjectName} (회차 미선택) : 정가 0원 => 할인가 0원`
+          );
+        } else {
+          // 일반 과목
+          detailLines.push(
+            `${subjectName} : ${originalStr} => ${discountStr}`
+          );
+        }
+      });
+
+      // 최종 견적 메시지
+      let message = "=== SBS 아카데미 수강 신청 견적서 ===\n\n";
+      message += `계열: ${finalMajor}\n`;
+      message += `지점: ${finalBranch}\n`;
+      message += `과정: ${finalCourse}\n\n`;
+      message += "[과목별 내역]\n";
+      detailLines.forEach(line => {
+        message += ` - ${line}\n`;
+      });
+      message += `\n총 수강료(할인가 기준): ${Math.round(totalPrice).toLocaleString()}원\n`;
+
+      // 모달 열기
+      openModal(message);
+    });
+  </script>
+  <!-- ===== 스크립트 종료 ===== -->
+</body>
+</html>
