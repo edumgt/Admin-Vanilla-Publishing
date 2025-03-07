@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>멋진 카드형 용어사전</title>
+  <!-- Tailwind CDN (가장 간단한 사용 예시) -->
+  <link href="assets/css/default.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+  <!-- 헤더 영역 -->
+  <header class="max-w-5xl mx-auto p-4">
+    <h1 class="text-2xl font-extrabold mb-2">용어사전 (카드 레이아웃)</h1>
+    <p class="text-gray-600">아래 검색창에 음절 하나만 입력해도 해당 음절이 포함된 단어를 모두 찾을 수 있습니다.</p>
+  </header>
+
+  <!-- 메인 영역 -->
+  <main class="max-w-5xl mx-auto p-4">
+    <!-- 검색 영역 -->
+    <div class="mb-6">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="검색어(음절) 입력..."
+        aria-label="용어사전 검색"
+        class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
+
+    <!-- 용어사전 목록 (카드형으로) -->
+    <dl
+      id="glossary"
+      aria-label="용어사전 목록"
+      role="list"
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+    ></dl>
+  </main>
+
+  <script>
+    // 50개 용어 데이터 (JSON 형태로 예시)
+    // 실제로는 별도 JSON 파일로 분리한 뒤 fetch()하여 사용 가능
+    const glossaryData = [
+      { "term": "UI/UX", "definition": "사용자 인터페이스와 사용자 경험 설계" },
+      { "term": "접근성", "definition": "장애인 접근성 표준을 준수해 누구나 쉽게 이용" },
+      { "term": "반응형", "definition": "화면 크기에 따라 유연하게 레이아웃 조정" },
+      { "term": "배포 방식", "definition": "온프레미스, 클라우드 등 인프라 선택" },
+      { "term": "모바일 앱", "definition": "모바일 환경에서 최적 성능 제공" },
+      { "term": "예시", "definition": "설명이나 상황을 구체화하기 위한 샘플" },
+      { "term": "응집도", "definition": "모듈 내부 구성 요소 간의 밀접한 연관 정도" },
+      { "term": "결합도", "definition": "모듈 상호 간에 의존하는 정도" },
+      { "term": "클라우드", "definition": "인터넷 기반으로 서버, 스토리지, 애플리케이션 제공" },
+      { "term": "빅데이터", "definition": "방대한 규모의 데이터로부터 가치와 정보를 추출" },
+      { "term": "인공지능", "definition": "인간의 지적 능력을 모방·추론하는 기술" },
+      { "term": "머신러닝", "definition": "데이터로부터 규칙을 학습하는 알고리즘 기법" },
+      { "term": "딥러닝", "definition": "신경망 기반으로 심층 학습을 수행하는 머신러닝 기법" },
+      { "term": "데이터마이닝", "definition": "대량의 데이터에서 유의미한 패턴을 추출" },
+      { "term": "알고리즘", "definition": "문제를 해결하기 위한 절차나 방법" },
+      { "term": "자료구조", "definition": "데이터를 저장·관리·조작하기 위한 구조" },
+      { "term": "네트워크", "definition": "장치 간 데이터 통신을 위한 연결 구조" },
+      { "term": "프로토콜", "definition": "통신 규약, 데이터 전송 시 지켜야 하는 규칙" },
+      { "term": "UI", "definition": "User Interface, 사용자와 시스템 간 상호 작용 표면" },
+      { "term": "UX", "definition": "User Experience, 제품·서비스 사용 시 느끼는 경험" },
+      { "term": "플러터", "definition": "구글에서 개발한 모바일·웹·데스크톱 앱 개발 프레임워크" },
+      { "term": "리액트네이티브", "definition": "React 기반 하이브리드 모바일 앱 개발 프레임워크" },
+      { "term": "노드JS", "definition": "JavaScript 런타임 환경, 서버 사이드 JS 실행" },
+      { "term": "익스프레스", "definition": "Node.js 기반의 대표적인 웹 애플리케이션 프레임워크" },
+      { "term": "뷰JS", "definition": "진입 장벽이 낮고 가벼운 프론트엔드 프레임워크" },
+      { "term": "스벨트", "definition": "컴파일 단계에서 변환되는 경량 프론트엔드 프레임워크" },
+      { "term": "앙귤러", "definition": "구글 지원의 대규모 프론트엔드 애플리케이션 프레임워크" },
+      { "term": "Java", "definition": "오라클의 객체지향 언어, JVM 상에서 동작" },
+      { "term": "JavaScript", "definition": "웹 브라우저 및 Node.js 환경에서 동작하는 스크립트 언어" },
+      { "term": "Python", "definition": "인터프리터 방식, 문법이 간결하고 라이브러리 풍부" },
+      { "term": "C++", "definition": "C 언어에 객체지향 기능을 추가한 범용 프로그래밍 언어" },
+      { "term": "PHP", "definition": "서버 사이드 스크립팅에 많이 사용되는 프로그래밍 언어" },
+      { "term": "Linux", "definition": "오픈소스 기반의 유닉스 계열 운영체제" },
+      { "term": "Ubuntu", "definition": "데스크톱·서버 등에서 인기 많은 리눅스 배포판" },
+      { "term": "Container", "definition": "애플리케이션과 그 의존성을 분리·격리 실행하는 환경" },
+      { "term": "Docker", "definition": "가상 머신 대비 가벼운 컨테이너 기술" },
+      { "term": "Kubernetes", "definition": "컨테이너 오케스트레이션을 위한 오픈소스 시스템" },
+      { "term": "DevOps", "definition": "개발(Dev)과 운영(Ops)의 협업·자동화 문화·기술" },
+      { "term": "CI/CD", "definition": "지속적 통합(Continuous Integration)·배포(Continuous Deployment)" },
+      { "term": "깃(Git)", "definition": "버전 관리 시스템, 분산형" },
+      { "term": "GitHub", "definition": "Git 기반 코드 호스팅 플랫폼, 협업 도구" },
+      { "term": "GitLab", "definition": "Git 기반 리포지토리 관리 및 CI/CD 기능 제공" },
+      { "term": "Agile", "definition": "유연하고 반복적인 소프트웨어 개발 방법론" },
+      { "term": "Scrum", "definition": "Agile 철학을 바탕으로 한 팀 단위 개발 관리 프레임워크" },
+      { "term": "Kanban", "definition": "시각적 업무 흐름 관리를 위한 도구이자 방법론" },
+      { "term": "TDD", "definition": "테스트 주도 개발, 테스트 작성 후 구현" },
+      { "term": "BDD", "definition": "행위 주도 개발, 시나리오 기반 테스트 접근" },
+      { "term": "머큐리얼(Mercurial)", "definition": "Git과 유사한 분산 버전 관리 시스템" },
+      { "term": "HTTP", "definition": "HyperText Transfer Protocol, 웹 통신 규약" },
+      { "term": "HTTPS", "definition": "보안을 강화한 HTTP, SSL/TLS 암호화 사용" },
+      { "term": "REST", "definition": "Representational State Transfer, 웹 서비스 디자인 아키텍처" },
+      { "term": "GraphQL", "definition": "페이스북이 개발한 쿼리 언어 기반의 API 규격" },
+      { "term": "Full Stack", "definition": "프론트엔드부터 백엔드·인프라까지 전체 기술 스택" },
+      { "term": "백엔드", "definition": "서버 로직, 데이터베이스, API 등을 담당하는 부분" },
+      { "term": "프론트엔드", "definition": "사용자에게 직접 보이는 UI 및 UX 구현" }
+    ];
+
+    /**
+     * 용어사전 목록(카드) 렌더링
+     */
+    function renderGlossaryList(data) {
+      const glossary = document.getElementById("glossary");
+      glossary.innerHTML = ""; // 기존 목록 초기화
+
+      data.forEach(item => {
+        // 카드 하나를 감싸는 <div> (카드 스타일)
+        const cardWrap = document.createElement("div");
+        cardWrap.className =
+          "p-4 bg-white rounded shadow-sm hover:shadow-lg transition-shadow duration-200";
+        cardWrap.setAttribute("role", "listitem");
+
+        // dt: 용어
+        const dt = document.createElement("dt");
+        dt.textContent = item.term;
+        dt.className = "font-bold text-lg text-gray-800 mb-1";
+
+        // dd: 정의
+        const dd = document.createElement("dd");
+        dd.textContent = item.definition;
+        dd.className = "text-gray-600 leading-snug";
+
+        cardWrap.appendChild(dt);
+        cardWrap.appendChild(dd);
+
+        // dl에 삽입
+        glossary.appendChild(cardWrap);
+      });
+    }
+
+    /**
+     * 검색 함수 (부분 문자열 검색)
+     * - 한글/영문 음절 하나만 입력해도 해당 음절을 포함한 모든 항목 표시
+     */
+    function filterGlossary(event) {
+      const searchValue = event.target.value.toLowerCase();
+
+      const filteredData = glossaryData.filter(item => {
+        const term = item.term.toLowerCase();
+        const definition = item.definition.toLowerCase();
+        return term.includes(searchValue) || definition.includes(searchValue);
+      });
+
+      renderGlossaryList(filteredData);
+    }
+
+    // 초기 전체 용어를 카드로 렌더링
+    renderGlossaryList(glossaryData);
+
+    // 검색 이벤트 리스너
+    document
+      .getElementById("searchInput")
+      .addEventListener("input", filterGlossary);
+  </script>
+</body>
+</html>
