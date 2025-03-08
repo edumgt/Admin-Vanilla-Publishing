@@ -1,0 +1,449 @@
+@import url('../vendor/pretendard/dist/web/variable/pretendardvariable.css');
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Pretendard', -apple-system, system-ui, sans-serif;
+    font-size: 18px;
+    line-height: 1.5;
+    color: #222;
+    background: #f9f9f9;
+}
+
+/* 2) 초기에는 max-width: 720px */
+.container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+/* 3) PC 화면(너비 1024px 이상)에서는 max-width: 1000px */
+@media (min-width: 1024px) {
+    .container {
+        max-width: 1000px;
+    }
+}
+
+/* 4) 카드 형태 */
+#glossary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* 2열 예시 */
+    gap: 1rem;
+}
+
+.card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s;
+    position: relative;
+    /* 상세보기 버튼 우측하단 부착을 위해 relative */
+}
+
+.card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.card dt {
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+}
+
+.card .en {
+    color: #0074D9;
+    font-size: 1.25rem;
+    /* 한글보다 조금 더 크게 */
+}
+
+.card .ko {
+    color: #333;
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+}
+
+.card .desc {
+    color: #555;
+    line-height: 1.6;
+}
+
+/* 상세보기 버튼 (badge 스타일) */
+.detail-btn {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    background: #ff6633;
+    color: #fff;
+    border: none;
+    border-radius: 9999px;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s;
+}
+
+.detail-btn:hover {
+    background: #e25422;
+}
+
+/* 5) 검색창 스타일 */
+.search-wrapper {
+    position: relative;
+    margin-bottom: 0.75rem;
+}
+
+#searchInput {
+    width: 100%;
+    height: 2.75rem;
+    padding: 0 0 0 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 9999px;
+    outline: none;
+    transition: border-color 0.2s;
+    font-size: 1rem;
+}
+
+#searchInput:focus {
+    border-color: #0074D9;
+    box-shadow: 0 0 0 2px rgba(0, 116, 217, 0.2);
+}
+
+.search-wrapper svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: #888;
+    stroke-width: 2;
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+/* 6) 검색 결과 건수 */
+#searchCount {
+    color: #444;
+    margin-bottom: 0.75rem;
+}
+
+.filter-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 1rem;
+    background-color: #b1d5f4;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.filter-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.28rem;
+}
+
+.filter-btn {
+    display: inline-block;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    background: #fff;
+    cursor: pointer;
+    color:#494848;
+    width:35px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    /* transition: background-color 0.2s, border-color 0.2s; */
+}
+
+.filter-btn:hover {
+    background: #eee;
+    border-color: #999;
+}
+
+/* 8) 페이징 영역 스타일 */
+.pagination {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    justify-content: center;
+}
+
+.page-btn {
+    min-width: 2.75rem;
+    padding: 0.45rem 0.7rem;
+    text-align: center;
+    border: 1px solid #ddd;
+    background: #fff;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+    font-size: 1rem;
+}
+
+.page-btn:hover {
+    background: #f0f0f0;
+    border-color: #999;
+}
+
+.page-btn.active {
+    background: #0074D9;
+    border-color: #0074D9;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* 모바일(<=600px)에서는 1열 */
+@media (max-width: 600px) {
+    #glossary {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 모달 팝업 */
+.modal {
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: #fff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    max-width: 500px;
+
+    width: 90%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.modal-close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.75rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+}
+
+.modal-close:hover {
+    color: #000;
+}
+
+.modal-title {
+    font-size: 1.3rem;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    color: #0074D9;
+    font-weight: bold;
+}
+
+.modal-subtitle {
+    font-size: 1.1rem;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+.modal-desc {
+    font-size: 1rem;
+    color: #444;
+    line-height: 1.6;
+    /* min-height: 300px; */
+    white-space: pre-line;
+}
+
+/* (추가) 모달 하단 뱃지 버튼 영역 */
+.modal-actions {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+    /* 오른쪽 정렬 */
+}
+
+.modal-badge-btn {
+    background: #eee;
+    border: 1px solid #ccc;
+    border-radius: 9999px;
+    padding: 0.4rem 0.7rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.modal-badge-btn:hover {
+    background: #ddd;
+}
+
+.modal-actions {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+/* 공통 */
+.modal-badge-btn {
+    background: #eee;
+    border: 1px solid #ccc;
+    border-radius: 9999px;
+    padding: 0.4rem 0.7rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.modal-badge-btn:hover {
+    background: #ddd;
+}
+
+/* 뱃지 버튼 공통 스타일 */
+.modal-badge-btn {
+    background: #eee;
+    border: 1px solid #ccc;
+    border-radius: 9999px;
+    font-size: 1.2rem;
+    /* 글자를 크게 */
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    /* 아이콘-텍스트 간격 */
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.modal-badge-btn:hover {
+    background: #ddd;
+}
+
+/* 1) 유익함 (helpful) */
+.modal-badge-btn[data-action="helpful"] {
+    background: #1e51b0;
+    /* 초록 */
+    color: #fff;
+    border-color: #1e51b0;
+}
+
+.modal-badge-btn[data-action="helpful"]::before {
+    content: "✅";
+}
+
+.modal-badge-btn[data-action="needs-improve"] {
+    background: #1e51b0;
+    color: #fff;
+    border-color: #1e51b0;
+}
+
+.modal-badge-btn[data-action="needs-improve"]::before {
+    content: "🚧";
+}
+
+.modal-badge-btn[data-action="request-correction"] {
+    background: #1e51b0;
+    color: #fff;
+    border-color: #1e51b0;
+}
+
+.modal-badge-btn[data-action="request-correction"]::before {
+    content: "✍️";
+}
+
+.modal-img {
+    display: block;
+    /* JS에서 보이게 할 때 */
+    max-width: 100%;
+    /* 모달 폭에 맞춤 */
+    margin: 0 auto 1rem;
+    /* 가운데 정렬 + 하단 여백 */
+    border-radius: 8px;
+    /* 둥근 모서리 예시 */
+}
+
+#correctionForm {
+    display: none;
+    /* 처음엔 숨김 */
+    margin-top: 1rem;
+}
+
+#mobileCorrectionForm {
+
+    margin-top: 1rem;
+}
+
+#correctionText {
+    width: 100%;
+    height: 100px;
+    /* 100px 높이 */
+    font-size: 1rem;
+    resize: none;
+    /* 필요하면 사용자가 높이를 늘리지 못하게 */
+}
+
+#saveCorrectionBtn {
+    margin-top: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid #1d78da;
+    background: #1d78da;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#saveCorrectionBtn:hover {
+
+    border: 1px solid #0a4262;
+    background: #0a4262;
+}
+
+#mobileBackBtn {
+    margin-top: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid #1d78da;
+    background: #1d78da;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#mobileBackBtn:hover {
+
+    border: 1px solid #0a4262;
+    background: #0a4262;
+}
+
+#mobileSaveCorrectionBtn {
+    margin-top: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid #1d78da;
+    background: #1d78da;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#mobileSaveCorrectionBtn:hover {
+
+    border: 1px solid #0a4262;
+    background: #0a4262;
+}
