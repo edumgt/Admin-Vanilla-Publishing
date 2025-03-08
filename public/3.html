@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>용어사전 (Pretendard 예시)</title>
 
   <!-- Pretendard CDN (예시) -->
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"
-  />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
 
   <style>
     /* 1) 전체 바디에 Pretendard 적용, 글자 크게 (18px), 색상은 좀 더 진하게(#222) */
@@ -17,9 +15,9 @@
       margin: 0;
       padding: 0;
       font-family: 'Pretendard', -apple-system, system-ui, sans-serif;
-      font-size: 18px;           
-      line-height: 1.5;          
-      color: #222;               
+      font-size: 18px;
+      line-height: 1.5;
+      color: #222;
       background: #f9f9f9;
     }
 
@@ -40,33 +38,42 @@
     /* 4) 카드 형태 */
     #glossary {
       display: grid;
-      grid-template-columns: 1fr 1fr; /* 2열 예시 */
+      grid-template-columns: 1fr 1fr;
+      /* 2열 예시 */
       gap: 1rem;
     }
+
     .card {
       background: #fff;
       border-radius: 8px;
       padding: 1rem;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       transition: box-shadow 0.2s;
-      position: relative; /* 상세보기 버튼 우측하단 부착을 위해 relative */
+      position: relative;
+      /* 상세보기 버튼 우측하단 부착을 위해 relative */
     }
+
     .card:hover {
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     }
+
     .card dt {
       font-weight: bold;
       margin-bottom: 0.25rem;
     }
+
     .card .en {
       color: #0074D9;
-      font-size: 1.25rem; /* 한글보다 조금 더 크게 */
+      font-size: 1.25rem;
+      /* 한글보다 조금 더 크게 */
     }
+
     .card .ko {
       color: #333;
       font-size: 1.125rem;
       margin-bottom: 0.5rem;
     }
+
     .card .desc {
       color: #555;
       line-height: 1.6;
@@ -84,9 +91,10 @@
       padding: 0.4rem 0.9rem;
       font-size: 0.9rem;
       cursor: pointer;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
       transition: background-color 0.2s;
     }
+
     .detail-btn:hover {
       background: #e25422;
     }
@@ -96,9 +104,10 @@
       position: relative;
       margin-bottom: 0.75rem;
     }
+
     #searchInput {
       width: 100%;
-      height: 2.75rem; 
+      height: 2.75rem;
       padding: 0 0 0 0.75rem;
       border: 1px solid #ccc;
       border-radius: 9999px;
@@ -106,10 +115,12 @@
       transition: border-color 0.2s;
       font-size: 1rem;
     }
+
     #searchInput:focus {
       border-color: #0074D9;
-      box-shadow: 0 0 0 2px rgba(0,116,217,0.2);
+      box-shadow: 0 0 0 2px rgba(0, 116, 217, 0.2);
     }
+
     .search-wrapper svg {
       width: 18px;
       height: 18px;
@@ -137,22 +148,25 @@
       margin-bottom: 1rem;
       background-color: #b1d5f4;
       padding: 20px;
-      border-radius: 8px; 
+      border-radius: 8px;
     }
+
     .filter-group {
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
     }
+
     .filter-btn {
       display: inline-block;
       padding: 0.4rem 0.7rem;
       border: 1px solid #ccc;
       background: #fff;
       cursor: pointer;
-      font-size: 1rem; 
+      font-size: 1rem;
       transition: background-color 0.2s, border-color 0.2s;
     }
+
     .filter-btn:hover {
       background: #eee;
       border-color: #999;
@@ -166,6 +180,7 @@
       margin-top: 1rem;
       justify-content: center;
     }
+
     .page-btn {
       min-width: 2.75rem;
       padding: 0.45rem 0.7rem;
@@ -174,12 +189,14 @@
       background: #fff;
       cursor: pointer;
       transition: background-color 0.2s, border-color 0.2s;
-      font-size: 1rem; 
+      font-size: 1rem;
     }
+
     .page-btn:hover {
       background: #f0f0f0;
       border-color: #999;
     }
+
     .page-btn.active {
       background: #0074D9;
       border-color: #0074D9;
@@ -188,32 +205,41 @@
     }
 
     /* 모바일(<=600px)에서는 1열 */
-    @media (max-width: 600px){
+    @media (max-width: 600px) {
       #glossary {
         grid-template-columns: 1fr;
       }
     }
+
+    /* 모달 팝업 */
     .modal {
       position: fixed;
       z-index: 999;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: rgba(0,0,0,0.5);
-      display: none; /* 숨김 */
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: none;
       justify-content: center;
       align-items: center;
     }
+
     .modal.active {
-      display: flex; /* 보이게 */
+      display: flex;
     }
+
     .modal-content {
       background: #fff;
       border-radius: 8px;
       padding: 1.5rem;
       max-width: 500px;
+      
       width: 90%;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       position: relative;
     }
+
     .modal-close {
       position: absolute;
       top: 0.5rem;
@@ -222,9 +248,11 @@
       cursor: pointer;
       color: #666;
     }
+
     .modal-close:hover {
       color: #000;
     }
+
     .modal-title {
       font-size: 1.3rem;
       margin-top: 0;
@@ -232,6 +260,7 @@
       color: #0074D9;
       font-weight: bold;
     }
+
     .modal-subtitle {
       font-size: 1.1rem;
       color: #333;
@@ -239,12 +268,155 @@
       margin-bottom: 1rem;
       font-weight: bold;
     }
+
     .modal-desc {
       font-size: 1rem;
       color: #444;
       line-height: 1.6;
-      white-space: pre-line; /* desc 내용 개행 반영 시 */
+      min-height: 300px;
+      white-space: pre-line;
     }
+
+    /* (추가) 모달 하단 뱃지 버튼 영역 */
+    .modal-actions {
+      margin-top: 1.5rem;
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+      /* 오른쪽 정렬 */
+    }
+
+    .modal-badge-btn {
+      background: #eee;
+      border: 1px solid #ccc;
+      border-radius: 9999px;
+      padding: 0.4rem 0.7rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background-color 0.2s, border-color 0.2s;
+    }
+
+    .modal-badge-btn:hover {
+      background: #ddd;
+    }
+
+    .modal-actions {
+      margin-top: 1.5rem;
+      display: flex;
+      gap: 0.5rem;
+      justify-content: flex-end;
+    }
+
+    /* 공통 */
+    .modal-badge-btn {
+      background: #eee;
+      border: 1px solid #ccc;
+      border-radius: 9999px;
+      padding: 0.4rem 0.7rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background-color 0.2s, border-color 0.2s;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .modal-badge-btn:hover {
+      background: #ddd;
+    }
+
+    /* 뱃지 버튼 공통 스타일 */
+    .modal-badge-btn {
+      background: #eee;
+      border: 1px solid #ccc;
+      border-radius: 9999px;
+      font-size: 1.2rem;
+      /* 글자를 크게 */
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      /* 아이콘-텍스트 간격 */
+      transition: background-color 0.2s, border-color 0.2s;
+    }
+
+    .modal-badge-btn:hover {
+      background: #ddd;
+    }
+
+    /* 1) 유익함 (helpful) */
+    .modal-badge-btn[data-action="helpful"] {
+      background: #4caf50;
+      /* 초록 */
+      color: #fff;
+      border-color: #4caf50;
+    }
+
+    .modal-badge-btn[data-action="helpful"]::before {
+      content: "✅";
+      /* 아이콘 */
+    }
+
+    /* 2) 보완필요 (needs-improve) */
+    .modal-badge-btn[data-action="needs-improve"] {
+      background: #ff9800;
+      /* 오렌지 */
+      color: #fff;
+      border-color: #ff9800;
+    }
+
+    .modal-badge-btn[data-action="needs-improve"]::before {
+      content: "🚧";
+      /* 아이콘 */
+    }
+
+    /* 3) 정정요청 (request-correction) */
+    .modal-badge-btn[data-action="request-correction"] {
+      background: #9c27b0;
+      /* 보라 (빨강 대신 사용) */
+      color: #fff;
+      border-color: #9c27b0;
+    }
+
+    .modal-badge-btn[data-action="request-correction"]::before {
+      content: "✍️";
+      /* 아이콘 */
+    }
+
+    #correctionForm {
+      display: none;
+      /* 처음엔 숨김 */
+      margin-top: 1rem;
+    }
+
+    #correctionText {
+      width: 100%;
+      height: 100px;
+      /* 100px 높이 */
+      font-size: 1rem;
+      resize: none;
+      /* 필요하면 사용자가 높이를 늘리지 못하게 */
+    }
+
+    #saveCorrectionBtn {
+      margin-top: 0.5rem;
+      padding: 0.4rem 0.8rem;
+      border: 1px solid #1d78da;
+      background: #1d78da;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #saveCorrectionBtn:hover {
+
+      border: 1px solid #0a4262;
+      background: #0a4262;
+    }
+
+    
   </style>
 </head>
 
@@ -255,18 +427,9 @@
 
     <!-- 검색 영역 -->
     <div class="search-wrapper">
-      <input
-        type="text"
-        id="searchInput"
-        placeholder="검색어(음절)를 입력..."
-        aria-label="용어사전 검색"
-      />
+      <input type="text" id="searchInput" placeholder="검색어(음절)를 입력..." aria-label="용어사전 검색" />
       <svg viewBox="0 0 24 24">
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M21 21l-4-4m0 0A7 7 0 1110 10a7 7 0 017 7z"
-        />
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4-4m0 0A7 7 0 1110 10a7 7 0 017 7z" />
       </svg>
     </div>
 
@@ -338,15 +501,29 @@
       <h2 id="modalEn" class="modal-title"></h2>
       <h3 id="modalKo" class="modal-subtitle"></h3>
       <div id="modalDesc" class="modal-desc"></div>
+
+      <!-- (추가) 모달 하단 뱃지 버튼들 -->
+      <div class="modal-actions">
+        <button class="modal-badge-btn" data-action="helpful">유익함</button>
+        <button class="modal-badge-btn" data-action="needs-improve">보완필요</button>
+        <button class="modal-badge-btn" data-action="request-correction">정정요청</button>
+      </div>
+
+      <!-- 정정요청 용 textarea + 저장 버튼 영역 -->
+      <div id="correctionForm">
+        <textarea id="correctionText" placeholder="정정 요청 내용을 입력하세요."></textarea>
+        <button id="saveCorrectionBtn" >저장</button>
+      </div>
+
     </div>
   </div>
 
   <script>
     /* ============ (1) 한글 초성 추출 로직 ============ */
     const CHOSEONG_LIST = [
-      "ㄱ","ㄲ","ㄴ","ㄷ","ㄸ","ㄹ","ㅁ",
-      "ㅂ","ㅃ","ㅅ","ㅆ","ㅇ","ㅈ","ㅉ",
-      "ㅊ","ㅋ","ㅌ","ㅍ","ㅎ"
+      "ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", "ㄹ", "ㅁ",
+      "ㅂ", "ㅃ", "ㅅ", "ㅆ", "ㅇ", "ㅈ", "ㅉ",
+      "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"
     ];
     function getHangulInitial(str) {
       if (!str || typeof str !== "string") return "";
@@ -358,27 +535,36 @@
     }
 
     /* ============ (2) 전역 변수 & 상수 ============ */
-    let glossaryData = [];    
-    let filteredData = [];    
-    const PAGE_SIZE = 20;     
+    let glossaryData = [];
+    let filteredData = [];
+    const PAGE_SIZE = 20;
     let currentPage = 1;
     let totalPages = 1;
 
-    ///////////////////////////////////////////////////
-    // 모달 요소 참조
+
     const detailModal = document.getElementById("detailModal");
     const modalClose = document.querySelector(".modal-close");
     const modalEn = document.getElementById("modalEn");
     const modalKo = document.getElementById("modalKo");
     const modalDesc = document.getElementById("modalDesc");
 
-    /* 모달 오픈 함수 */
+    // 정정요청 영역
+    const correctionForm = document.getElementById("correctionForm");
+    const correctionText = document.getElementById("correctionText");
+    const saveCorrectionBtn = document.getElementById("saveCorrectionBtn");
+
+    /* 모달 열기 함수 */
     function openModal(item) {
       // 모달 내용 채우기
       modalEn.textContent = item.en;
       modalKo.textContent = item.ko;
-      modalDesc.textContent = item.desc; // 줄바꿈 표시하려면 white-space: pre-line
-      // 모달 보여주기
+      modalDesc.textContent = item.desc;
+
+      // 혹시 정정요청 영역이 열려 있을 수 있으므로, 다시 숨김
+      correctionForm.style.display = "none";
+      correctionText.value = ""; // 이전 입력값 초기화
+
+      // 모달 보이기
       detailModal.classList.add("active");
     }
 
@@ -387,15 +573,45 @@
       detailModal.classList.remove("active");
     }
 
-    // 모달 닫기 이벤트: ×버튼
+    // 모달 닫기 이벤트
     modalClose.addEventListener("click", closeModal);
-    // 모달 배경 클릭 시 닫기 (선택)
     detailModal.addEventListener("click", e => {
       if (e.target === detailModal) {
         closeModal();
       }
     });
-    ///////////////////////////////////////////////////////
+
+    // 모달 뱃지 버튼 (유익함, 보완필요, 정정요청) 클릭 이벤트
+    document.addEventListener("click", e => {
+      if (e.target.classList.contains("modal-badge-btn")) {
+        const action = e.target.dataset.action;
+
+        if (action === "request-correction") {
+          
+          correctionForm.style.display = "block";
+        } else {
+          // 유익함 or 보완필요 등은 간단히 alert
+          alert(`'${action}' 버튼이 클릭되었습니다!`);
+        }
+      }
+    });
+
+
+    saveCorrectionBtn.addEventListener("click", () => {
+      const correctionMsg = correctionText.value.trim();
+      if (!correctionMsg) {
+        alert("정정 요청 내용을 입력해 주세요.");
+        return;
+      }
+      
+      alert(`정정 요청이 저장되었습니다.\n\n내용: ${correctionMsg}`);
+
+      // 저장 후 textarea 숨기고, 모달 닫거나 유지?
+      correctionForm.style.display = "none";
+      // detailModal.classList.remove("active"); // 원하면 모달도 닫기
+    });
+
+
 
     /* ============ (3) 카드 렌더링 ============ */
     function renderGlossaryList(data) {
@@ -420,7 +636,7 @@
         // 설명 (10글자 제한 + "...")
         let shortDesc = item.desc;
         if (shortDesc.length > 20) {
-          shortDesc = shortDesc.slice(0, 20) + "..."; 
+          shortDesc = shortDesc.slice(0, 20) + "...";
           // 여기서 10 대신 20 등 원하는 길이로 조정 가능
         }
         const ddDesc = document.createElement("dd");
@@ -445,6 +661,7 @@
         glossaryEl.appendChild(card);
       });
     }
+
 
     /* ============ (4) 페이지별 데이터 표시 ============ */
     function displayPage(pageNum) {
@@ -549,4 +766,5 @@
     })();
   </script>
 </body>
+
 </html>
