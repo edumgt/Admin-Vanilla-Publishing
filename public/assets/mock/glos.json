@@ -1,0 +1,253 @@
+[
+    {
+      "en": "Acoustic Emission (AE)",
+      "ko": "음향 방출",
+      "desc": "재료나 구조물에서 결함 발생 시 방출되는 탄성파를 감지해 이상을 진단하는 비파괴 검사 기법"
+    },
+    {
+      "en": "Modal Analysis",
+      "ko": "모달 해석",
+      "desc": "구조물의 고유진동수, 모드 형상을 해석해 진동 특성을 파악하는 방법"
+    },
+    {
+      "en": "Vibration Isolation",
+      "ko": "진동 절연",
+      "desc": "기계나 구조물에 발생하는 진동을 저감·차단하기 위한 설계와 기술"
+    },
+    {
+      "en": "Damping",
+      "ko": "감쇠",
+      "desc": "진동 시스템에서 에너지가 소실되는 현상으로 진동 폭을 줄이는 역할"
+    },
+    {
+      "en": "Frequency Response Function (FRF)",
+      "ko": "주파수 응답 함수",
+      "desc": "시스템이 각 주파수에서 어떻게 응답하는지를 나타내는 전달 특성"
+    },
+    {
+      "en": "Natural Frequency",
+      "ko": "고유 진동수",
+      "desc": "시스템이 고유하게 진동할 때 나타나는 고유 주파수"
+    },
+    {
+      "en": "Impact Hammer Test",
+      "ko": "충격 해머 시험",
+      "desc": "해머로 구조물에 충격을 가해 진동 응답(주파수 응답 등)을 측정하는 방법"
+    },
+    {
+      "en": "Decibel (dB)",
+      "ko": "데시벨",
+      "desc": "음압, 음압레벨 등을 로그 스케일로 표현하는 단위"
+    },
+    {
+      "en": "White Noise",
+      "ko": "백색 잡음",
+      "desc": "모든 주파수대에서 동일한 에너지를 갖는 난수성 신호"
+    },
+    {
+      "en": "Sound Pressure Level (SPL)",
+      "ko": "음압 레벨",
+      "desc": "참조 음압 대비 실제 음압의 비를 데시벨 단위로 환산한 값"
+    },
+    {
+      "en": "Transfer Path Analysis (TPA)",
+      "ko": "전달 경로 해석",
+      "desc": "소음 또는 진동이 발생원에서 최종 측정점까지 전달되는 경로와 기여도를 분석"
+    },
+    {
+      "en": "Noise Criterion (NC)",
+      "ko": "소음 기준 (NC)",
+      "desc": "실내 소음 허용 기준을 구체적인 NC 등급으로 구분한 수치"
+    },
+    {
+      "en": "Sound Intensity",
+      "ko": "음성 강도",
+      "desc": "단위 면적당 전달되는 음향 에너지 흐름"
+    },
+    {
+      "en": "Helmholtz Resonator",
+      "ko": "헬름홀츠 공진기",
+      "desc": "특정 주파수대의 소음을 효과적으로 흡수하는 공진기 구조"
+    },
+    {
+      "en": "Reverberation Time (RT)",
+      "ko": "잔향 시간",
+      "desc": "공간 내 소음이 특정 수준만큼 감소하는 데 걸리는 시간"
+    },
+    {
+      "en": "Vibration Transmissibility",
+      "ko": "진동 전달율",
+      "desc": "진동 절연 시스템에서 입력 진동 대비 출력 진동의 비율"
+    },
+    {
+      "en": "Shock Spectrum",
+      "ko": "충격 스펙트럼",
+      "desc": "단발성 충격에 대해 시스템이 어떻게 응답하는지를 주파수별로 나타낸 것"
+    },
+    {
+      "en": "Acoustic Impedance",
+      "ko": "음향 임피던스",
+      "desc": "소리의 전파 과정에서 물질이 가지는 저항 특성"
+    },
+    {
+      "en": "Active Noise Control (ANC)",
+      "ko": "능동 소음 제어",
+      "desc": "실제 소음을 상쇄하기 위해 반대 위상의 음원을 생성·투입해 소음을 줄이는 기술"
+    },
+    {
+      "en": "Passive Noise Control",
+      "ko": "수동 소음 제어",
+      "desc": "차음재, 흡음재 등을 사용해 물리적으로 소음을 저감하는 전통적 방법"
+    },
+    {
+      "en": "Anti-Resonance",
+      "ko": "반(反)공진",
+      "desc": "시스템 주파수 응답에서 진폭이 극소가 되는 주파수"
+    },
+    {
+      "en": "Fourier Transform",
+      "ko": "푸리에 변환",
+      "desc": "시간영역 신호를 주파수영역으로 변환하여 성분을 해석하는 수학적 도구"
+    },
+    {
+      "en": "Order Tracking",
+      "ko": "오더 트래킹",
+      "desc": "회전체나 왕복운동계의 동기화된 진동/소음 신호를 해석하기 위한 분석 기법"
+    },
+    {
+      "en": "Cyclostationary Analysis",
+      "ko": "사이클 정상이론 해석",
+      "desc": "주기성을 띠는 확률 과정(베어링 결함 등)에 대한 고급 신호처리 기법"
+    },
+    {
+      "en": "Rotordynamics",
+      "ko": "회전체 동역학",
+      "desc": "회전축, 터보머신 등 회전체 시스템에서 발생하는 진동 및 동특성 해석"
+    },
+    {
+      "en": "Bearing Stiffness",
+      "ko": "베어링 강성",
+      "desc": "베어링 구조가 가진 변형 저항 특성으로 회전체 동특성에 큰 영향을 미침"
+    },
+    {
+      "en": "Torsional Vibration",
+      "ko": "비틀림 진동",
+      "desc": "회전체가 축 방향으로 비틀리는 형태의 진동"
+    },
+    {
+      "en": "Random Vibration",
+      "ko": "랜덤 진동",
+      "desc": "주파수 구성이 시간적으로 불규칙한 진동, 통계적으로 분석되는 형태"
+    },
+    {
+      "en": "Equivalent Radiated Power (ERP)",
+      "ko": "등가 방사 파워",
+      "desc": "구조물이 방사하는 소리를 에너지 관점에서 등가로 표현한 양"
+    },
+    {
+      "en": "Campbell Diagram",
+      "ko": "캠벨 선도",
+      "desc": "회전체의 운전속도 범위에서 발생하는 공진, 배음 등을 시각화한 그래프"
+    },
+    {
+      "en": "Operational Deflection Shape (ODS)",
+      "ko": "운전 변형 형상",
+      "desc": "장비가 실제 운전 중일 때 발생하는 변형이나 진동 형상을 측정·시각화한 것"
+    },
+    {
+      "en": "Gear Mesh Frequency",
+      "ko": "기어 물림 주파수",
+      "desc": "기어가 맞물릴 때 발생하는 기본 주파수로 기어 진동 분석에서 핵심 지표"
+    },
+    {
+      "en": "Half-Power Bandwidth",
+      "ko": "반출력 대역폭",
+      "desc": "공진점에서 시스템 출력이 최대값의 절반(-3dB) 수준까지 이르는 주파수 폭"
+    },
+    {
+      "en": "Aeroacoustics",
+      "ko": "공력 음향학",
+      "desc": "유체 흐름이 원인이 되는 소음을 해석하고 제어하는 학문"
+    },
+    {
+      "en": "Vibro-Acoustic Coupling",
+      "ko": "진동-음향 결합",
+      "desc": "진동과 음향이 서로 상호작용하여 에너지가 교환되는 현상"
+    },
+    {
+      "en": "Transfer Matrix Method",
+      "ko": "전달 행렬법",
+      "desc": "다중 자유도 시스템 해석 시 요소별 행렬을 곱해 전체 시스템 특성을 구하는 방법"
+    },
+    {
+      "en": "Dynamic Stiffness",
+      "ko": "동강성",
+      "desc": "시스템이 동하중에 대해 보여주는 유효 강성, 주파수에 따라 달라짐"
+    },
+    {
+      "en": "Rayleigh Integral",
+      "ko": "레이리 적분",
+      "desc": "판이나 막 등의 진동으로부터 방사되는 음장을 해석하는 수학적 표현"
+    },
+    {
+      "en": "Structure-Borne Sound",
+      "ko": "구조 전달음",
+      "desc": "고체 구조를 통해 전달되는 진동이 다시 소음으로 방사되는 형태"
+    },
+    {
+      "en": "Water Hammer",
+      "ko": "수격 작용",
+      "desc": "유체가 갑자기 정지하거나 유속이 변할 때 파이프 내부에 압력 충격이 발생하는 현상"
+    },
+    {
+      "en": "Turbomachinery Noise",
+      "ko": "터보기계 소음",
+      "desc": "펌프, 팬, 터빈 등 회전체 유체기계에서 발생하는 유동 소음"
+    },
+    {
+      "en": "Virtual Mass",
+      "ko": "가상 질량",
+      "desc": "물체가 가속될 때 주변 유체가 함께 움직여 관성에 영향을 주는 개념"
+    },
+    {
+      "en": "Flow-Induced Vibration (FIV)",
+      "ko": "유동 유발 진동",
+      "desc": "유체 흐름이 구조물에 작용해 진동을 일으키는 현상"
+    },
+    {
+      "en": "Constrained Layer Damping (CLD)",
+      "ko": "구속층 감쇠",
+      "desc": "점성층과 강성층으로 구성된 복합구조로 진동 에너지를 효과적으로 흡수"
+    },
+    {
+      "en": "Finite Element Analysis (FEA)",
+      "ko": "유한요소 해석",
+      "desc": "구조물·유체·열 등 물리 현상을 요소 단위로 나눠 근사 해를 구하는 수치해석 기법"
+    },
+    {
+      "en": "Boundary Element Method (BEM)",
+      "ko": "경계요소법",
+      "desc": "해석 대상의 경계를 요소로 분할해 진동·음향 문제를 해석하는 방법"
+    },
+    {
+      "en": "Lumped Parameter Model",
+      "ko": "집중정수 모델",
+      "desc": "질량, 스프링, 감쇠기를 하나의 점 혹은 요소로 단순화하여 동적 특성을 해석"
+    },
+    {
+      "en": "Acoustic Fatigue",
+      "ko": "음향 피로",
+      "desc": "강한 음장이나 진동 음압에 장시간 노출돼 구조물이 미세 균열·파손에 이르는 현상"
+    },
+    {
+      "en": "Muffler",
+      "ko": "머플러",
+      "desc": "배기 소음을 감소시키기 위해 배기관 내에 설치되는 소음기 장치"
+    },
+    {
+      "en": "Cavitation",
+      "ko": "캐비테이션",
+      "desc": "액체 내 압력이 국부적으로 낮아져 기포가 발생·붕괴하면서 소음·진동·손상을 일으키는 현상"
+    }
+  ]
+  

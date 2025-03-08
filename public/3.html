@@ -3,155 +3,301 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>멋진 카드형 용어사전</title>
-  <!-- Tailwind CDN (가장 간단한 사용 예시) -->
-  <link href="assets/css/default.css" rel="stylesheet">
+  <title>KSNVE 용어사전 - 페이징 예시</title>
+
+  <!-- Tailwind가 아닌 다른 CSS를 사용한다고 가정하므로, 예시로 넣지 않았습니다.
+       필요하다면 Tailwind CDN 혹은 별도 CSS를 import 하세요. -->
+  <link rel="stylesheet" href="assets/css/default.css">
 </head>
 <body class="bg-gray-100">
+
   <!-- 헤더 영역 -->
-  <header class="max-w-5xl mx-auto p-4">
-    <h1 class="text-2xl font-extrabold mb-2">용어사전 (카드 레이아웃)</h1>
-    <p class="text-gray-600">아래 검색창에 음절 하나만 입력해도 해당 음절이 포함된 단어를 모두 찾을 수 있습니다.</p>
+  <header class="max-w-3xl mx-auto p-4">
+    <h1 class="text-2xl font-extrabold mb-2">KSNVE 용어사전 (페이징 예시)</h1>
+    <p class="text-gray-600">
+      - 영어(en), 한글(ko), 설명(desc) 구조<br/>
+      - 부분 검색 + ㄱㄴㄷ / A B C 필터 + <strong>20개씩 페이징</strong> + 검색 결과 건수 표기
+    </p>
   </header>
 
   <!-- 메인 영역 -->
-  <main class="max-w-5xl mx-auto p-4">
+  <main class="max-w-3xl mx-auto p-4">
     <!-- 검색 영역 -->
-    <div class="mb-6">
+    <div class="mb-4 relative">
+      <!-- 검색 입력 (돋보기 아이콘은 오른쪽) -->
       <input
         type="text"
         id="searchInput"
         placeholder="검색어(음절) 입력..."
         aria-label="용어사전 검색"
-        class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        class="w-full h-12 pl-4 pr-10 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
+      <!-- 예시 돋보기 아이콘 (오른쪽) -->
+      <svg
+        class="w-5 h-5 text-gray-400 absolute"
+        style="right: 1rem; top: 50%; transform: translateY(-50%); pointer-events: none;"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M21 21l-4-4m0 0A7 7 0 1110 10a7 7 0 017 7z"
+        />
+      </svg>
     </div>
 
-    <!-- 용어사전 목록 (카드형으로) -->
+    <!-- 검색 결과 건수 표기 -->
+    <div id="searchCount" class="text-gray-600 mb-4"></div>
+
+    <!-- 초성/알파벳 버튼들 -->
+    <div class="flex flex-wrap gap-2 mb-6">
+      <!-- 한글 초성 -->
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="ㄱ">ㄱ</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="ㄴ">ㄴ</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="ㄷ">ㄷ</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="ㄹ">ㄹ</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="ㅁ">ㅁ</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="ㅂ">ㅂ</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="ㅅ">ㅅ</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="ㅇ">ㅇ</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="ㅈ">ㅈ</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="ㅊ">ㅊ</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="ㅋ">ㅋ</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="ㅌ">ㅌ</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="ㅍ">ㅍ</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="ㅎ">ㅎ</button>
+
+      <!-- 알파벳 (A~Z) -->
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="A">A</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="B">B</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="C">C</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="D">D</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="E">E</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="F">F</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="G">G</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="H">H</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="I">I</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="J">J</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="K">K</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="L">L</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="M">M</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="N">N</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="O">O</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="P">P</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="Q">Q</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="R">R</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="S">S</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="T">T</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="U">U</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="V">V</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="W">W</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="X">X</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="Y">Y</button>
+      <button class="filter-btn py-1 px-2 bg-white border rounded" data-initial="Z">Z</button>
+    </div>
+
+    <!-- 실제 용어사전 목록 표시 (카드형) -->
     <dl
       id="glossary"
       aria-label="용어사전 목록"
       role="list"
-      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+      class="grid grid-cols-1 sm:grid-cols-2 gap-4"
     ></dl>
+
+    <!-- 페이징 영역: Prev / Next 버튼 -->
+    <div id="pagination" class="mt-4 flex items-center gap-4">
+      <button id="prevBtn" class="border rounded py-1 px-3">이전</button>
+      <button id="nextBtn" class="border rounded py-1 px-3">다음</button>
+    </div>
   </main>
 
   <script>
-    // 50개 용어 데이터 (JSON 형태로 예시)
-    // 실제로는 별도 JSON 파일로 분리한 뒤 fetch()하여 사용 가능
-    const glossaryData = [
-      { "term": "UI/UX", "definition": "사용자 인터페이스와 사용자 경험 설계" },
-      { "term": "접근성", "definition": "장애인 접근성 표준을 준수해 누구나 쉽게 이용" },
-      { "term": "반응형", "definition": "화면 크기에 따라 유연하게 레이아웃 조정" },
-      { "term": "배포 방식", "definition": "온프레미스, 클라우드 등 인프라 선택" },
-      { "term": "모바일 앱", "definition": "모바일 환경에서 최적 성능 제공" },
-      { "term": "예시", "definition": "설명이나 상황을 구체화하기 위한 샘플" },
-      { "term": "응집도", "definition": "모듈 내부 구성 요소 간의 밀접한 연관 정도" },
-      { "term": "결합도", "definition": "모듈 상호 간에 의존하는 정도" },
-      { "term": "클라우드", "definition": "인터넷 기반으로 서버, 스토리지, 애플리케이션 제공" },
-      { "term": "빅데이터", "definition": "방대한 규모의 데이터로부터 가치와 정보를 추출" },
-      { "term": "인공지능", "definition": "인간의 지적 능력을 모방·추론하는 기술" },
-      { "term": "머신러닝", "definition": "데이터로부터 규칙을 학습하는 알고리즘 기법" },
-      { "term": "딥러닝", "definition": "신경망 기반으로 심층 학습을 수행하는 머신러닝 기법" },
-      { "term": "데이터마이닝", "definition": "대량의 데이터에서 유의미한 패턴을 추출" },
-      { "term": "알고리즘", "definition": "문제를 해결하기 위한 절차나 방법" },
-      { "term": "자료구조", "definition": "데이터를 저장·관리·조작하기 위한 구조" },
-      { "term": "네트워크", "definition": "장치 간 데이터 통신을 위한 연결 구조" },
-      { "term": "프로토콜", "definition": "통신 규약, 데이터 전송 시 지켜야 하는 규칙" },
-      { "term": "UI", "definition": "User Interface, 사용자와 시스템 간 상호 작용 표면" },
-      { "term": "UX", "definition": "User Experience, 제품·서비스 사용 시 느끼는 경험" },
-      { "term": "플러터", "definition": "구글에서 개발한 모바일·웹·데스크톱 앱 개발 프레임워크" },
-      { "term": "리액트네이티브", "definition": "React 기반 하이브리드 모바일 앱 개발 프레임워크" },
-      { "term": "노드JS", "definition": "JavaScript 런타임 환경, 서버 사이드 JS 실행" },
-      { "term": "익스프레스", "definition": "Node.js 기반의 대표적인 웹 애플리케이션 프레임워크" },
-      { "term": "뷰JS", "definition": "진입 장벽이 낮고 가벼운 프론트엔드 프레임워크" },
-      { "term": "스벨트", "definition": "컴파일 단계에서 변환되는 경량 프론트엔드 프레임워크" },
-      { "term": "앙귤러", "definition": "구글 지원의 대규모 프론트엔드 애플리케이션 프레임워크" },
-      { "term": "Java", "definition": "오라클의 객체지향 언어, JVM 상에서 동작" },
-      { "term": "JavaScript", "definition": "웹 브라우저 및 Node.js 환경에서 동작하는 스크립트 언어" },
-      { "term": "Python", "definition": "인터프리터 방식, 문법이 간결하고 라이브러리 풍부" },
-      { "term": "C++", "definition": "C 언어에 객체지향 기능을 추가한 범용 프로그래밍 언어" },
-      { "term": "PHP", "definition": "서버 사이드 스크립팅에 많이 사용되는 프로그래밍 언어" },
-      { "term": "Linux", "definition": "오픈소스 기반의 유닉스 계열 운영체제" },
-      { "term": "Ubuntu", "definition": "데스크톱·서버 등에서 인기 많은 리눅스 배포판" },
-      { "term": "Container", "definition": "애플리케이션과 그 의존성을 분리·격리 실행하는 환경" },
-      { "term": "Docker", "definition": "가상 머신 대비 가벼운 컨테이너 기술" },
-      { "term": "Kubernetes", "definition": "컨테이너 오케스트레이션을 위한 오픈소스 시스템" },
-      { "term": "DevOps", "definition": "개발(Dev)과 운영(Ops)의 협업·자동화 문화·기술" },
-      { "term": "CI/CD", "definition": "지속적 통합(Continuous Integration)·배포(Continuous Deployment)" },
-      { "term": "깃(Git)", "definition": "버전 관리 시스템, 분산형" },
-      { "term": "GitHub", "definition": "Git 기반 코드 호스팅 플랫폼, 협업 도구" },
-      { "term": "GitLab", "definition": "Git 기반 리포지토리 관리 및 CI/CD 기능 제공" },
-      { "term": "Agile", "definition": "유연하고 반복적인 소프트웨어 개발 방법론" },
-      { "term": "Scrum", "definition": "Agile 철학을 바탕으로 한 팀 단위 개발 관리 프레임워크" },
-      { "term": "Kanban", "definition": "시각적 업무 흐름 관리를 위한 도구이자 방법론" },
-      { "term": "TDD", "definition": "테스트 주도 개발, 테스트 작성 후 구현" },
-      { "term": "BDD", "definition": "행위 주도 개발, 시나리오 기반 테스트 접근" },
-      { "term": "머큐리얼(Mercurial)", "definition": "Git과 유사한 분산 버전 관리 시스템" },
-      { "term": "HTTP", "definition": "HyperText Transfer Protocol, 웹 통신 규약" },
-      { "term": "HTTPS", "definition": "보안을 강화한 HTTP, SSL/TLS 암호화 사용" },
-      { "term": "REST", "definition": "Representational State Transfer, 웹 서비스 디자인 아키텍처" },
-      { "term": "GraphQL", "definition": "페이스북이 개발한 쿼리 언어 기반의 API 규격" },
-      { "term": "Full Stack", "definition": "프론트엔드부터 백엔드·인프라까지 전체 기술 스택" },
-      { "term": "백엔드", "definition": "서버 로직, 데이터베이스, API 등을 담당하는 부분" },
-      { "term": "프론트엔드", "definition": "사용자에게 직접 보이는 UI 및 UX 구현" }
+    /* ------------ (1) 한글 초성 추출 로직 ------------ */
+    const CHOSEONG_LIST = [
+      "ㄱ","ㄲ","ㄴ","ㄷ","ㄸ","ㄹ","ㅁ",
+      "ㅂ","ㅃ","ㅅ","ㅆ","ㅇ","ㅈ","ㅉ",
+      "ㅊ","ㅋ","ㅌ","ㅍ","ㅎ"
     ];
+    function getHangulInitial(str) {
+      if (!str || typeof str !== "string") return "";
+      const firstChar = str.trim().charAt(0);
+      const code = firstChar.charCodeAt(0) - 0xAC00;
+      // '가'(AC00) ~ '힣'(D7A3) 범위 밖이면 빈 문자열
+      if (code < 0 || code > 11172) return "";
+      const choseongIndex = Math.floor(code / (21 * 28));
+      return CHOSEONG_LIST[choseongIndex] || "";
+    }
 
-    /**
-     * 용어사전 목록(카드) 렌더링
-     */
+    /* ------------ (2) 전역 변수 -------------- */
+    let glossaryData = [];   // 전체 JSON 데이터
+    let filteredData = [];   // 현재 필터된 결과 (검색/초성)
+    let currentPage = 1;     // 현재 페이지
+    const PAGE_SIZE = 20;    // 한 페이지에 보여줄 개수
+    let totalPages = 1;      // 총 페이지 수
+
+    /* ------------ (3) 렌더링 함수 (카드 출력) ------------- */
     function renderGlossaryList(data) {
       const glossary = document.getElementById("glossary");
-      glossary.innerHTML = ""; // 기존 목록 초기화
+      glossary.innerHTML = "";
 
       data.forEach(item => {
-        // 카드 하나를 감싸는 <div> (카드 스타일)
-        const cardWrap = document.createElement("div");
-        cardWrap.className =
-          "p-4 bg-white rounded shadow-sm hover:shadow-lg transition-shadow duration-200";
-        cardWrap.setAttribute("role", "listitem");
+        // 카드 <div>
+        const card = document.createElement("div");
+        // 아래 클래스들은 예시로 가볍게 지정.
+        // default.css 또는 Tailwind로 원하는 스타일을 적용하세요.
+        card.className = "p-4 bg-white rounded shadow-sm hover:shadow-lg transition-shadow duration-200";
+        card.setAttribute("role", "listitem");
 
-        // dt: 용어
-        const dt = document.createElement("dt");
-        dt.textContent = item.term;
-        dt.className = "font-bold text-lg text-gray-800 mb-1";
+        // 영어(en)
+        const dtEn = document.createElement("dt");
+        dtEn.textContent = item.en;
+        dtEn.className = "text-xl font-bold text-blue-600 mb-1";
 
-        // dd: 정의
-        const dd = document.createElement("dd");
-        dd.textContent = item.definition;
-        dd.className = "text-gray-600 leading-snug";
+        // 한글(ko)
+        const dtKo = document.createElement("dt");
+        dtKo.textContent = item.ko;
+        dtKo.className = "text-lg text-gray-700 mb-2";
 
-        cardWrap.appendChild(dt);
-        cardWrap.appendChild(dd);
+        // 설명(desc)
+        const ddDesc = document.createElement("dd");
+        ddDesc.textContent = item.desc;
+        ddDesc.className = "text-gray-600 leading-snug";
 
-        // dl에 삽입
-        glossary.appendChild(cardWrap);
+        card.appendChild(dtEn);
+        card.appendChild(dtKo);
+        card.appendChild(ddDesc);
+
+        glossary.appendChild(card);
       });
     }
 
-    /**
-     * 검색 함수 (부분 문자열 검색)
-     * - 한글/영문 음절 하나만 입력해도 해당 음절을 포함한 모든 항목 표시
-     */
-    function filterGlossary(event) {
-      const searchValue = event.target.value.toLowerCase();
+    /* ------------ (4) 페이지 표시에 따라 실제 목록 출력 ------------- */
+    function displayPage(pageNum) {
+      // 현재 페이지 범위 체크
+      if (pageNum < 1) pageNum = 1;
+      else if (pageNum > totalPages) pageNum = totalPages;
+      currentPage = pageNum;
 
-      const filteredData = glossaryData.filter(item => {
-        const term = item.term.toLowerCase();
-        const definition = item.definition.toLowerCase();
-        return term.includes(searchValue) || definition.includes(searchValue);
-      });
+      // pageNum에 해당하는 slice 범위
+      const startIndex = (currentPage - 1) * PAGE_SIZE;
+      const endIndex = startIndex + PAGE_SIZE;
+      const pageData = filteredData.slice(startIndex, endIndex);
 
-      renderGlossaryList(filteredData);
+      // 렌더링
+      renderGlossaryList(pageData);
+
+      // 건수 표시
+      const countEl = document.getElementById("searchCount");
+      countEl.textContent = `검색 결과: ${filteredData.length}건 (페이지 ${currentPage}/${totalPages})`;
+
+      // 이전/다음 버튼 활성/비활성
+      document.getElementById("prevBtn").disabled = currentPage === 1;
+      document.getElementById("nextBtn").disabled = currentPage === totalPages || totalPages === 0;
     }
 
-    // 초기 전체 용어를 카드로 렌더링
-    renderGlossaryList(glossaryData);
+    /* ------------ (5) 검색 (부분 문자열 검색) ------------ */
+    function handleSearchInput(e) {
+      const val = e.target.value.toLowerCase();
 
-    // 검색 이벤트 리스너
-    document
-      .getElementById("searchInput")
-      .addEventListener("input", filterGlossary);
+      if (!val) {
+        // 입력 없으면 전체
+        filteredData = glossaryData;
+      } else {
+        // en, ko, desc 중 하나라도 val를 포함하면 필터
+        filteredData = glossaryData.filter(item => {
+          const en = item.en.toLowerCase();
+          const ko = item.ko.toLowerCase();
+          const desc = item.desc.toLowerCase();
+          return en.includes(val) || ko.includes(val) || desc.includes(val);
+        });
+      }
+
+      // 페이지 계산 후 1페이지부터 다시 표시
+      totalPages = Math.ceil(filteredData.length / PAGE_SIZE);
+      if (totalPages < 1) totalPages = 1;
+      currentPage = 1;
+      displayPage(currentPage);
+    }
+
+    /* ------------ (6) 초성/알파벳 버튼 필터 ------------- */
+    function handleInitialClick(e) {
+      const clickedInitial = e.target.dataset.initial;
+      if (!clickedInitial) return;
+
+      // 검색창 초기화
+      document.getElementById("searchInput").value = "";
+
+      // ㄱㄴㄷ vs A B C
+      const isKoreanInitial = /[ㄱ-ㅎ]/.test(clickedInitial);
+
+      if (isKoreanInitial) {
+        // ko 필드 첫 글자 초성과 비교
+        filteredData = glossaryData.filter(item => {
+          const koInitial = getHangulInitial(item.ko);
+          return koInitial === clickedInitial;
+        });
+      } else {
+        // en 필드 첫 글자 (대소문자 구분X)와 비교
+        filteredData = glossaryData.filter(item => {
+          const firstEn = item.en.trim().charAt(0).toLowerCase();
+          return firstEn === clickedInitial.toLowerCase();
+        });
+      }
+
+      // 페이지 계산 후 첫 페이지부터
+      totalPages = Math.ceil(filteredData.length / PAGE_SIZE);
+      if (totalPages < 1) totalPages = 1;
+      currentPage = 1;
+      displayPage(currentPage);
+    }
+
+    /* ------------ (7) Prev / Next 버튼 ------------- */
+    function goPrevPage() {
+      if (currentPage > 1) {
+        displayPage(currentPage - 1);
+      }
+    }
+    function goNextPage() {
+      if (currentPage < totalPages) {
+        displayPage(currentPage + 1);
+      }
+    }
+
+    /* ------------ (8) 초기화 (fetch) ------------- */
+    (function init() {
+      // 버튼 클릭 이벤트
+      document.querySelectorAll(".filter-btn").forEach(btn => {
+        btn.addEventListener("click", handleInitialClick);
+      });
+      // 검색창 이벤트
+      document.getElementById("searchInput").addEventListener("input", handleSearchInput);
+
+      // Prev / Next 버튼
+      document.getElementById("prevBtn").addEventListener("click", goPrevPage);
+      document.getElementById("nextBtn").addEventListener("click", goNextPage);
+
+      // JSON 가져오기
+      fetch("/assets/mock/glos.json")
+        .then(res => res.json())
+        .then(data => {
+          // 전역 변수에 저장
+          glossaryData = data;
+          // 초기에 전체 데이터를 필터 결과로 가정
+          filteredData = glossaryData;
+
+          // 페이지 계산
+          totalPages = Math.ceil(filteredData.length / PAGE_SIZE);
+          currentPage = 1;
+
+          // 초기 표시
+          displayPage(currentPage);
+        })
+        .catch(err => console.error("JSON 불러오기 실패:", err));
+    })();
   </script>
 </body>
 </html>
