@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,7 +7,6 @@
 
   <link href="assets/css/glos.css" rel="stylesheet">
 </head>
-
 <body>
   <div class="container" id="mainContainer">
     <!-- 헤더 영역 -->
@@ -18,7 +16,8 @@
     <div class="search-wrapper">
       <input type="text" id="searchInput" placeholder="검색어(음절)를 입력..." aria-label="용어사전 검색" />
       <svg viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4-4m0 0A7 7 0 1110 10a7 7 0 017 7z" />
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M21 21l-4-4m0 0A7 7 0 1110 10a7 7 0 017 7z" />
       </svg>
     </div>
 
@@ -26,6 +25,7 @@
     <div class="filter-section">
       <div>
         <div class="filter-group">
+          <!-- 한글 초성 버튼들 -->
           <button class="filter-btn" data-initial="ㄱ">ㄱ</button>
           <button class="filter-btn" data-initial="ㄴ">ㄴ</button>
           <button class="filter-btn" data-initial="ㄷ">ㄷ</button>
@@ -44,6 +44,7 @@
       </div>
       <div>
         <div class="filter-group">
+          <!-- 알파벳 버튼들 -->
           <button class="filter-btn" data-initial="A">A</button>
           <button class="filter-btn" data-initial="B">B</button>
           <button class="filter-btn" data-initial="C">C</button>
@@ -84,364 +85,52 @@
     <div id="pagination" class="pagination"></div>
   </div>
 
+  <!-- PC 모달 -->
   <div id="detailModal" class="modal">
     <div class="modal-content">
       <span class="modal-close">&times;</span>
       <h2 id="modalEn" class="modal-title"></h2>
       <h3 id="modalKo" class="modal-subtitle"></h3>
       <div id="modalDesc" class="modal-desc"></div>
-
-      <!-- (추가) 이미지 표시 -->
+      <!-- 이미지 표시 -->
       <img id="modalImg" class="modal-img" src="" alt="이미지" style="display: none;" />
 
-      <!-- (추가) 모달 하단 뱃지 버튼들 -->
+      <!-- 모달 하단 뱃지 버튼들 -->
       <div class="modal-actions">
         <button class="modal-badge-btn" data-action="helpful">유익함</button>
         <button class="modal-badge-btn" data-action="needs-improve">보완필요</button>
         <button class="modal-badge-btn" data-action="request-correction">정정요청</button>
       </div>
-
-      <!-- 정정요청 용 textarea + 저장 버튼 영역 -->
+      <input type="hidden" id="modalGlosId" />
       <div id="correctionForm">
         <textarea id="correctionText" placeholder="정정 요청 내용을 입력하세요."></textarea>
         <button id="saveCorrectionBtn">저장</button>
       </div>
-
     </div>
   </div>
 
-  <!-- (추가) 모바일 상세보기 전용 영역 -->
+  <!-- 모바일 상세보기 전용 영역 -->
   <div id="mobileDetailView" style="display:none; padding:1rem;">
-    <!-- 뒤로가기/목록 보기 -->
-    <button id="mobileBackBtn" style="margin-bottom:0.75rem;">뒤로</button>
 
-    <!-- 상세 정보 표시 -->
+    <button id="mobileBackBtn" style="margin-bottom:0.75rem;">뒤로</button>
     <h2 id="mobileEn" class="modal-title"></h2>
     <h3 id="mobileKo" class="modal-subtitle"></h3>
     <div id="mobileDesc" class="modal-desc"></div>
     <img id="mobileImg" class="modal-img" src="" alt="이미지" style="display:none;" />
 
-    <!-- 뱃지 버튼들도 원한다면 추가 가능 -->
     <div class="modal-actions">
       <button class="modal-badge-btn" data-action="helpful">유익함</button>
       <button class="modal-badge-btn" data-action="needs-improve">보완필요</button>
       <button class="modal-badge-btn" data-action="request-correction">정정요청</button>
     </div>
-
-    <!-- 정정요청 textarea... -->
+    <input type="hidden" id="modalGlosId2" />
     <div id="mobileCorrectionForm" style="display:none;">
-      <textarea id="mobileCorrectionText" placeholder="정정 요청 내용을 입력하세요." style="width:100%; height:100px;"></textarea>
+      <textarea id="mobileCorrectionText" placeholder="정정 요청 내용을 입력하세요."
+                style="width:100%; height:100px;"></textarea>
       <button id="mobileSaveCorrectionBtn">저장</button>
     </div>
   </div>
 
-  <script>
-    /* ============ (1) 한글 초성 추출 로직 ============ */
-    const CHOSEONG_LIST = [
-      "ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", "ㄹ", "ㅁ",
-      "ㅂ", "ㅃ", "ㅅ", "ㅆ", "ㅇ", "ㅈ", "ㅉ",
-      "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"
-    ];
-    function getHangulInitial(str) {
-      if (!str || typeof str !== "string") return "";
-      const c = str.trim().charAt(0);
-      const code = c.charCodeAt(0) - 0xAC00;
-      if (code < 0 || code > 11172) return "";
-      const idx = Math.floor(code / (21 * 28));
-      return CHOSEONG_LIST[idx] || "";
-    }
-
-    /* ============ (2) 전역 변수 & 상수 ============ */
-    let glossaryData = [];
-    let filteredData = [];
-    const PAGE_SIZE = 20;
-    let currentPage = 1;
-    let totalPages = 1;
-
-
-    const detailModal = document.getElementById("detailModal");
-    const modalClose = document.querySelector(".modal-close");
-    const modalEn = document.getElementById("modalEn");
-    const modalKo = document.getElementById("modalKo");
-    const modalDesc = document.getElementById("modalDesc");
-
-    // 정정요청 영역
-    const correctionForm = document.getElementById("correctionForm");
-    const correctionText = document.getElementById("correctionText");
-    const saveCorrectionBtn = document.getElementById("saveCorrectionBtn");
-
-    /* 모달 열기 함수 */
-    function openModal(item) {
-      // 모달 내용 채우기
-      modalEn.textContent = item.en;
-      modalKo.textContent = item.ko;
-      modalDesc.textContent = item.desc;
-
-      // 혹시 정정요청 영역이 열려 있을 수 있으므로, 다시 숨김
-      correctionForm.style.display = "none";
-      correctionText.value = ""; // 이전 입력값 초기화
-
-      // (추가) 이미지 처리
-      if (item.img) {
-        // 이미지 경로가 있다면
-        modalImg.src = item.img;
-        modalImg.style.display = "block"; // 보이기
-      } else {
-        // 이미지 경로가 없거나 빈 문자열
-        modalImg.style.display = "none";  // 숨기기
-      }
-
-      detailModal.classList.add("active");
-    }
-
-    /* 모달 닫기 함수 */
-    function closeModal() {
-      detailModal.classList.remove("active");
-    }
-
-    // 모달 닫기 이벤트
-    modalClose.addEventListener("click", closeModal);
-    detailModal.addEventListener("click", e => {
-      if (e.target === detailModal) {
-        closeModal();
-      }
-    });
-
-    // 모달 뱃지 버튼 (유익함, 보완필요, 정정요청) 클릭 이벤트
-    document.addEventListener("click", e => {
-      if (e.target.classList.contains("modal-badge-btn")) {
-        const action = e.target.dataset.action;
-
-        // PC 모달의 correctionForm vs 모바일의 mobileCorrectionForm 둘 다 관리해야 할 수도 있음
-        if (window.innerWidth <= 600) {
-          // 모바일
-          if (action === "request-correction") {
-            document.getElementById("mobileCorrectionForm").style.display = "block";
-          } else {
-            alert(`(모바일) '${action}' 버튼이 클릭되었습니다!`);
-          }
-        } else {
-          // PC 모달
-          if (action === "request-correction") {
-            correctionForm.style.display = "block";
-          } else {
-            alert(`(PC) '${action}' 버튼이 클릭되었습니다!`);
-          }
-        }
-      }
-    });
-
-
-    saveCorrectionBtn.addEventListener("click", () => {
-      const correctionMsg = correctionText.value.trim();
-      if (!correctionMsg) {
-        alert("정정 요청 내용을 입력해 주세요.");
-        return;
-      }
-
-      alert(`정정 요청이 저장되었습니다.\n\n내용: ${correctionMsg}`);
-
-      // 저장 후 textarea 숨기고, 모달 닫거나 유지?
-      correctionForm.style.display = "none";
-      // detailModal.classList.remove("active"); // 원하면 모달도 닫기
-    });
-
-
-
-    /* ============ (3) 카드 렌더링 ============ */
-    function renderGlossaryList(data) {
-      const glossaryEl = document.getElementById("glossary");
-      glossaryEl.innerHTML = "";
-
-      data.forEach(item => {
-        const card = document.createElement("div");
-        card.className = "card";
-        card.setAttribute("role", "listitem");
-
-        // 영문
-        const dtEn = document.createElement("dt");
-        dtEn.textContent = item.en;
-        dtEn.className = "en";
-
-        // 한글
-        const dtKo = document.createElement("dt");
-        dtKo.textContent = item.ko;
-        dtKo.className = "ko";
-
-        // 설명 (10글자 제한 + "...")
-        let shortDesc = item.desc;
-        if (shortDesc.length > 20) {
-          shortDesc = shortDesc.slice(0, 20) + "...";
-          // 여기서 10 대신 20 등 원하는 길이로 조정 가능
-        }
-        const ddDesc = document.createElement("dd");
-        ddDesc.textContent = shortDesc;
-        ddDesc.className = "desc";
-
-        // 상세보기 버튼
-        const detailBtn = document.createElement("button");
-        detailBtn.className = "detail-btn";
-        detailBtn.textContent = "상세보기";
-
-
-        detailBtn.addEventListener("click", () => {
-          openDetailView(item);
-        });
-
-        card.appendChild(dtEn);
-        card.appendChild(dtKo);
-        card.appendChild(ddDesc);
-        card.appendChild(detailBtn);  // 버튼 삽입
-
-        glossaryEl.appendChild(card);
-      });
-    }
-
-
-    /* ============ (4) 페이지별 데이터 표시 ============ */
-    function displayPage(pageNum) {
-      if (pageNum < 1) pageNum = 1;
-      if (pageNum > totalPages) pageNum = totalPages;
-      currentPage = pageNum;
-
-      const start = (currentPage - 1) * PAGE_SIZE;
-      const end = start + PAGE_SIZE;
-      const pageData = filteredData.slice(start, end);
-
-      renderGlossaryList(pageData);
-
-      document.getElementById("searchCount").textContent =
-        `검색 결과: ${filteredData.length}건 (페이지 ${currentPage}/${totalPages})`;
-
-      renderPagination();
-    }
-
-    /* ============ (5) 페이지 버튼 렌더링 ============ */
-    function renderPagination() {
-      const paginationEl = document.getElementById("pagination");
-      paginationEl.innerHTML = "";
-
-      for (let i = 1; i <= totalPages; i++) {
-        const btn = document.createElement("button");
-        btn.className = "page-btn";
-        btn.textContent = i;
-        btn.dataset.page = i;
-        if (i === currentPage) btn.classList.add("active");
-        paginationEl.appendChild(btn);
-      }
-
-      document.querySelectorAll(".page-btn").forEach(b => {
-        b.addEventListener("click", e => {
-          const page = parseInt(e.target.dataset.page, 10);
-          displayPage(page);
-        });
-      });
-    }
-
-    /* ============ (6) 검색 로직 ============ */
-    function handleSearch(e) {
-      const val = e.target.value.toLowerCase().trim();
-      if (!val) {
-        filteredData = glossaryData;
-      } else {
-        filteredData = glossaryData.filter(item => {
-          const en = item.en.toLowerCase();
-          const ko = item.ko.toLowerCase();
-          const desc = item.desc.toLowerCase();
-          return en.includes(val) || ko.includes(val) || desc.includes(val);
-        });
-      }
-      totalPages = Math.ceil(filteredData.length / PAGE_SIZE) || 1;
-      displayPage(1);
-    }
-
-    /* ============ (7) 초성/알파벳 버튼 클릭 ============ */
-    function handleInitialClick(e) {
-      const init = e.target.dataset.initial;
-      if (!init) return;
-
-      // 검색어 리셋
-      document.getElementById("searchInput").value = "";
-
-      if (/[ㄱ-ㅎ]/.test(init)) {
-        filteredData = glossaryData.filter(item => {
-          const koInit = getHangulInitial(item.ko);
-          return koInit === init;
-        });
-      } else {
-        filteredData = glossaryData.filter(item => {
-          const firstEn = item.en.trim().charAt(0).toLowerCase();
-          return firstEn === init.toLowerCase();
-        });
-      }
-
-      totalPages = Math.ceil(filteredData.length / PAGE_SIZE) || 1;
-      displayPage(1);
-    }
-
-
-    function openDetailView(item) {
-      
-      if (window.innerWidth <= 600) {
-
-        document.getElementById("mainContainer").style.display = "none";
-
-
-        const mobileDetailView = document.getElementById("mobileDetailView");
-        mobileDetailView.style.display = "block";
-
-
-        document.getElementById("mobileEn").textContent = item.en;
-        document.getElementById("mobileKo").textContent = item.ko;
-        document.getElementById("mobileDesc").textContent = item.desc;
-
-
-        const mobileImg = document.getElementById("mobileImg");
-        if (item.img) {
-          mobileImg.src = item.img;
-          mobileImg.style.display = "block";
-        } else {
-          mobileImg.style.display = "none";
-        }
-
-
-        document.getElementById("mobileCorrectionForm").style.display = "none";
-        document.getElementById("mobileCorrectionText").value = "";
-
-      } else {
-
-        openModal(item);
-      }
-    }
-
-    document.getElementById("mobileBackBtn").addEventListener("click", () => {
-
-      document.getElementById("mobileDetailView").style.display = "none";
-      document.getElementById("mainContainer").style.display = "block";
-    });
-
-
-    
-    (function init() {
-      
-      document.querySelectorAll(".filter-btn").forEach(btn => {
-        btn.addEventListener("click", handleInitialClick);
-      });
-      
-      document.getElementById("searchInput").addEventListener("input", handleSearch);
-
-      
-      fetch("/assets/mock/glos.json")
-        .then(res => res.json())
-        .then(data => {
-          glossaryData = data;
-          filteredData = data;
-          totalPages = Math.ceil(filteredData.length / PAGE_SIZE) || 1;
-          displayPage(1);
-        })
-        .catch(err => console.error("JSON 불러오기 실패:", err));
-    })();
-  </script>
+  <script type="module" src="assets/js/glos.js"></script>
 </body>
-
 </html>

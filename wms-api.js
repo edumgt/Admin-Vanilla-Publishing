@@ -610,4 +610,34 @@ router.get('/bookings', (req, res) => {
     });
 });
 
+
+router.get('/glos', (req, res) => {
+    db.query('SELECT * FROM glos', (err, results) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        } else {
+            res.json(results);
+        }
+    });
+});
+
+// pseudo-code
+router.post("/glos_req", (req, res) => {
+    const { glos_id, req_msg } = req.body;
+    if (!glos_id || !req_msg) {
+      return res.status(400).json({ success: false, message: "Missing fields" });
+    }
+  
+    // INSERT
+    const sql = `INSERT INTO glos_req (glos_id, req_msg, req_date) VALUES (?, ?, CURDATE())`;
+    db.query(sql, [glos_id, req_msg], (err, result) => {
+      if (err) {
+        console.error("DB insert error:", err);
+        return res.status(500).json({ success: false, message: "DB Error" });
+      }
+      return res.json({ success: true, message: "정정 요청이 DB에 저장되었습니다.", insertId: result.insertId });
+    });
+  });
+  
+
 module.exports = router;
