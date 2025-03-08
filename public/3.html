@@ -1,99 +1,118 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>용어사전</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>용어사전 (Pretendard 예시)</title>
+
+  <!-- Pretendard CDN (예시) -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"
+  />
 
   <style>
-    /* 기본 바디, 카드 레이아웃 스타일 */
+    /* 1) 전체 바디에 Pretendard 적용, 글자 크게 (18px), 색상은 좀 더 진하게(#222) */
     body {
       margin: 0;
       padding: 0;
-      font-family: sans-serif;
+      font-family: 'Pretendard', -apple-system, system-ui, sans-serif;
+      font-size: 18px;           
+      line-height: 1.5;          
+      color: #222;               
       background: #f9f9f9;
     }
 
-    /* 초기에는 max-width: 720px */
+    /* 2) 초기에는 max-width: 720px */
     .container {
       max-width: 720px;
       margin: 0 auto;
       padding: 1rem;
     }
 
-    /* PC 화면(너비 1024px 이상)에서는 max-width: 1000px */
+    /* 3) PC 화면(너비 1024px 이상)에서는 max-width: 1000px */
     @media (min-width: 1024px) {
       .container {
         max-width: 1000px;
       }
     }
 
-    /* 카드 형태 */
+    /* 4) 카드 형태 */
     #glossary {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      /* 2열 예시 */
+      grid-template-columns: 1fr 1fr; /* 2열 예시 */
       gap: 1rem;
     }
-
     .card {
       background: #fff;
       border-radius: 8px;
       padding: 1rem;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       transition: box-shadow 0.2s;
+      position: relative; /* 상세보기 버튼 우측하단 부착을 위해 relative */
     }
-
     .card:hover {
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
     }
-
     .card dt {
       font-weight: bold;
       margin-bottom: 0.25rem;
     }
-
     .card .en {
       color: #0074D9;
-      font-size: 1.2rem;
+      font-size: 1.25rem; /* 한글보다 조금 더 크게 */
     }
-
     .card .ko {
-      color: #555;
-      font-size: 1rem;
+      color: #333;
+      font-size: 1.125rem;
       margin-bottom: 0.5rem;
     }
-
     .card .desc {
-      color: #666;
-      line-height: 1.4;
+      color: #555;
+      line-height: 1.6;
     }
 
-    /* 검색창 스타일 */
+    /* 상세보기 버튼 (badge 스타일) */
+    .detail-btn {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      background: #ff6633;
+      color: #fff;
+      border: none;
+      border-radius: 9999px;
+      padding: 0.4rem 0.9rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      transition: background-color 0.2s;
+    }
+    .detail-btn:hover {
+      background: #e25422;
+    }
+
+    /* 5) 검색창 스타일 */
+    .search-wrapper {
+      position: relative;
+      margin-bottom: 0.75rem;
+    }
     #searchInput {
       width: 100%;
-      height: 2.5rem;
+      height: 2.75rem; 
       padding: 0 0 0 0.75rem;
       border: 1px solid #ccc;
       border-radius: 9999px;
       outline: none;
       transition: border-color 0.2s;
+      font-size: 1rem;
     }
-
     #searchInput:focus {
       border-color: #0074D9;
-      box-shadow: 0 0 0 2px rgba(0, 116, 217, 0.2);
+      box-shadow: 0 0 0 2px rgba(0,116,217,0.2);
     }
-
-    .search-wrapper {
-      position: relative;
-      margin-bottom: 0.5rem;
-    }
-
     .search-wrapper svg {
-      width: 16px;
-      height: 16px;
+      width: 18px;
+      height: 18px;
       fill: none;
       stroke: #888;
       stroke-width: 2;
@@ -104,13 +123,13 @@
       pointer-events: none;
     }
 
-    /* 결과 건수 */
+    /* 6) 검색 결과 건수 */
     #searchCount {
-      color: #555;
-      margin-bottom: 0.5rem;
+      color: #444;
+      margin-bottom: 0.75rem;
     }
 
-    /* 필터 영역 구분 */
+    /* 7) 필터 영역 구분 */
     .filter-section {
       display: flex;
       flex-wrap: wrap;
@@ -118,31 +137,28 @@
       margin-bottom: 1rem;
       background-color: #b1d5f4;
       padding: 20px;
+      border-radius: 8px; 
     }
-
     .filter-group {
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
     }
-
-    /* 초성/알파벳 버튼 */
     .filter-btn {
       display: inline-block;
-      padding: 0.3rem 0.6rem;
+      padding: 0.4rem 0.7rem;
       border: 1px solid #ccc;
       background: #fff;
       cursor: pointer;
-      font-size: 0.9rem;
+      font-size: 1rem; 
       transition: background-color 0.2s, border-color 0.2s;
     }
-
     .filter-btn:hover {
       background: #eee;
       border-color: #999;
     }
 
-    /* 페이징 영역 스타일 */
+    /* 8) 페이징 영역 스타일 */
     .pagination {
       display: flex;
       flex-wrap: wrap;
@@ -150,22 +166,20 @@
       margin-top: 1rem;
       justify-content: center;
     }
-
     .page-btn {
-      min-width: 2.5rem;
-      padding: 0.4rem 0.7rem;
+      min-width: 2.75rem;
+      padding: 0.45rem 0.7rem;
       text-align: center;
       border: 1px solid #ddd;
       background: #fff;
       cursor: pointer;
       transition: background-color 0.2s, border-color 0.2s;
+      font-size: 1rem; 
     }
-
     .page-btn:hover {
       background: #f0f0f0;
       border-color: #999;
     }
-
     .page-btn.active {
       background: #0074D9;
       border-color: #0074D9;
@@ -173,11 +187,63 @@
       font-weight: bold;
     }
 
-    @media (max-width: 600px) {
+    /* 모바일(<=600px)에서는 1열 */
+    @media (max-width: 600px){
       #glossary {
         grid-template-columns: 1fr;
-        /* 모바일에서는 1열 */
       }
+    }
+    .modal {
+      position: fixed;
+      z-index: 999;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0,0,0,0.5);
+      display: none; /* 숨김 */
+      justify-content: center;
+      align-items: center;
+    }
+    .modal.active {
+      display: flex; /* 보이게 */
+    }
+    .modal-content {
+      background: #fff;
+      border-radius: 8px;
+      padding: 1.5rem;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.75rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #666;
+    }
+    .modal-close:hover {
+      color: #000;
+    }
+    .modal-title {
+      font-size: 1.3rem;
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      color: #0074D9;
+      font-weight: bold;
+    }
+    .modal-subtitle {
+      font-size: 1.1rem;
+      color: #333;
+      margin-top: 0;
+      margin-bottom: 1rem;
+      font-weight: bold;
+    }
+    .modal-desc {
+      font-size: 1rem;
+      color: #444;
+      line-height: 1.6;
+      white-space: pre-line; /* desc 내용 개행 반영 시 */
     }
   </style>
 </head>
@@ -186,15 +252,23 @@
   <div class="container">
     <!-- 헤더 영역 -->
     <h1 style="margin-bottom:0.25rem;">용어사전</h1>
+
     <!-- 검색 영역 -->
     <div class="search-wrapper">
-      <input type="text" id="searchInput" placeholder="검색어(음절)를 입력..." aria-label="용어사전 검색" />
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="검색어(음절)를 입력..."
+        aria-label="용어사전 검색"
+      />
       <svg viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4-4m0 0A7 7 0 1110 10a7 7 0 017 7z" />
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M21 21l-4-4m0 0A7 7 0 1110 10a7 7 0 017 7z"
+        />
       </svg>
     </div>
-
-
 
     <!-- 한글 초성 & 알파벳 필터 영역 -->
     <div class="filter-section">
@@ -246,11 +320,9 @@
           <button class="filter-btn" data-initial="Z">Z</button>
         </div>
       </div>
-
-
-
     </div>
 
+    <!-- 검색 결과 건수 표기 -->
     <div id="searchCount"></div>
 
     <!-- 카드형 목록 -->
@@ -260,12 +332,21 @@
     <div id="pagination" class="pagination"></div>
   </div>
 
+  <div id="detailModal" class="modal">
+    <div class="modal-content">
+      <span class="modal-close">&times;</span>
+      <h2 id="modalEn" class="modal-title"></h2>
+      <h3 id="modalKo" class="modal-subtitle"></h3>
+      <div id="modalDesc" class="modal-desc"></div>
+    </div>
+  </div>
+
   <script>
     /* ============ (1) 한글 초성 추출 로직 ============ */
     const CHOSEONG_LIST = [
-      "ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", "ㄹ", "ㅁ",
-      "ㅂ", "ㅃ", "ㅅ", "ㅆ", "ㅇ", "ㅈ", "ㅉ",
-      "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"
+      "ㄱ","ㄲ","ㄴ","ㄷ","ㄸ","ㄹ","ㅁ",
+      "ㅂ","ㅃ","ㅅ","ㅆ","ㅇ","ㅈ","ㅉ",
+      "ㅊ","ㅋ","ㅌ","ㅍ","ㅎ"
     ];
     function getHangulInitial(str) {
       if (!str || typeof str !== "string") return "";
@@ -277,11 +358,44 @@
     }
 
     /* ============ (2) 전역 변수 & 상수 ============ */
-    let glossaryData = [];    // 원본 JSON 데이터
-    let filteredData = [];    // 검색/필터 적용 후
-    const PAGE_SIZE = 20;     // 페이지당 표시할 개수
+    let glossaryData = [];    
+    let filteredData = [];    
+    const PAGE_SIZE = 20;     
     let currentPage = 1;
     let totalPages = 1;
+
+    ///////////////////////////////////////////////////
+    // 모달 요소 참조
+    const detailModal = document.getElementById("detailModal");
+    const modalClose = document.querySelector(".modal-close");
+    const modalEn = document.getElementById("modalEn");
+    const modalKo = document.getElementById("modalKo");
+    const modalDesc = document.getElementById("modalDesc");
+
+    /* 모달 오픈 함수 */
+    function openModal(item) {
+      // 모달 내용 채우기
+      modalEn.textContent = item.en;
+      modalKo.textContent = item.ko;
+      modalDesc.textContent = item.desc; // 줄바꿈 표시하려면 white-space: pre-line
+      // 모달 보여주기
+      detailModal.classList.add("active");
+    }
+
+    /* 모달 닫기 함수 */
+    function closeModal() {
+      detailModal.classList.remove("active");
+    }
+
+    // 모달 닫기 이벤트: ×버튼
+    modalClose.addEventListener("click", closeModal);
+    // 모달 배경 클릭 시 닫기 (선택)
+    detailModal.addEventListener("click", e => {
+      if (e.target === detailModal) {
+        closeModal();
+      }
+    });
+    ///////////////////////////////////////////////////////
 
     /* ============ (3) 카드 렌더링 ============ */
     function renderGlossaryList(data) {
@@ -293,21 +407,40 @@
         card.className = "card";
         card.setAttribute("role", "listitem");
 
+        // 영문
         const dtEn = document.createElement("dt");
         dtEn.textContent = item.en;
         dtEn.className = "en";
 
+        // 한글
         const dtKo = document.createElement("dt");
         dtKo.textContent = item.ko;
         dtKo.className = "ko";
 
+        // 설명 (10글자 제한 + "...")
+        let shortDesc = item.desc;
+        if (shortDesc.length > 20) {
+          shortDesc = shortDesc.slice(0, 20) + "..."; 
+          // 여기서 10 대신 20 등 원하는 길이로 조정 가능
+        }
         const ddDesc = document.createElement("dd");
-        ddDesc.textContent = item.desc;
+        ddDesc.textContent = shortDesc;
         ddDesc.className = "desc";
+
+        // 상세보기 버튼
+        const detailBtn = document.createElement("button");
+        detailBtn.className = "detail-btn";
+        detailBtn.textContent = "상세보기";
+
+
+        detailBtn.addEventListener("click", () => {
+          openModal(item);
+        });
 
         card.appendChild(dtEn);
         card.appendChild(dtKo);
         card.appendChild(ddDesc);
+        card.appendChild(detailBtn);  // 버튼 삽입
 
         glossaryEl.appendChild(card);
       });
@@ -345,7 +478,6 @@
         paginationEl.appendChild(btn);
       }
 
-      // 페이지 버튼 클릭
       document.querySelectorAll(".page-btn").forEach(b => {
         b.addEventListener("click", e => {
           const page = parseInt(e.target.dataset.page, 10);
@@ -376,17 +508,15 @@
       const init = e.target.dataset.initial;
       if (!init) return;
 
-      // 검색창 리셋
+      // 검색어 리셋
       document.getElementById("searchInput").value = "";
 
       if (/[ㄱ-ㅎ]/.test(init)) {
-        // 한글 초성 필터
         filteredData = glossaryData.filter(item => {
           const koInit = getHangulInitial(item.ko);
           return koInit === init;
         });
       } else {
-        // 알파벳 필터 (영문 첫 글자)
         filteredData = glossaryData.filter(item => {
           const firstEn = item.en.trim().charAt(0).toLowerCase();
           return firstEn === init.toLowerCase();
@@ -397,17 +527,16 @@
       displayPage(1);
     }
 
-    /* ============ (8) 초기화 ============ */
+    /* ============ (8) 초기화 & JSON 불러오기 ============ */
     (function init() {
-      // 필터 버튼 이벤트
+      // 필터 버튼
       document.querySelectorAll(".filter-btn").forEach(btn => {
         btn.addEventListener("click", handleInitialClick);
       });
-      // 검색창 이벤트
-      document.getElementById("searchInput")
-        .addEventListener("input", handleSearch);
+      // 검색창
+      document.getElementById("searchInput").addEventListener("input", handleSearch);
 
-      // JSON 불러오기 (경로 수정)
+      // (예시) JSON 로드
       fetch("/assets/mock/glos.json")
         .then(res => res.json())
         .then(data => {
@@ -420,5 +549,4 @@
     })();
   </script>
 </body>
-
 </html>
