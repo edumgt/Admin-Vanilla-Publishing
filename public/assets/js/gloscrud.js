@@ -212,7 +212,7 @@ addButton.addEventListener('click', function () {
         return;
     }
 
-    const newRow = { Key: generateNanoId(), tpCd: '', tpNm: '', descCntn: '', useYn: 'Y', createdAt: currentDate };
+    const newRow = { en: '', ko: '', desc: '' };
     grid.prependRow(newRow, { focus: true });
 
     //saveData([...data, newRow]);
@@ -246,23 +246,24 @@ grid.on('click', (ev) => {
         const rowData = grid.getRow(rowKey);
 
         saveRowEdit(rowData);
+        //syncLocalStorageWithServer();
     }
 });
 
 
 grid.on('editingStart', (ev) => {
-    showToast('data-possible', 'info', lang);
+    //showToast('data-possible', 'info', lang);
 });
 
 grid.on('editingFinish', (ev) => {
     //saveData(grid.getData());
-    showToast('auto-save', 'info', lang);
+    //showToast('auto-save', 'info', lang);
 
 });
 
 
 function initNew() {
-    const rowData = { Key: generateNanoId(), tpCd: '', tpNm: '', descCntn: '', useYn: 'Y', createdAt: currentDate };
+    const rowData = { en: '', ko: '', desc: '' };
     grid.prependRow(rowData, { focus: true });
     updateDataCount();
 }
@@ -290,10 +291,10 @@ document.getElementById('saveModal').addEventListener('click', () => {
     }
 
     if (currentRowKey !== null) {
-        grid.setValue(currentRowKey, 'tpCd', updatedData.tpCd);
-        grid.setValue(currentRowKey, 'tpNm', updatedData.tpNm);
-        grid.setValue(currentRowKey, 'descCntn', updatedData.descCntn);
-        grid.setValue(currentRowKey, 'useYn', updatedData.useYn);
+        grid.setValue(currentRowKey, 'id', updatedData.id);
+        grid.setValue(currentRowKey, 'en', updatedData.en);
+        grid.setValue(currentRowKey, 'ko', updatedData.ko);
+        grid.setValue(currentRowKey, 'desc', updatedData.desc);
     }
 
     toggleModal(false);
@@ -358,46 +359,46 @@ function toggleModal(show, rowData = {}, rowKey = null) {
         }
 
         const reqTitle = document.createElement('h3');
-    reqTitle.textContent = "정정요청 목록";
-    reqTitle.className = "text-lg font-bold mt-4";
-    modalForm.appendChild(reqTitle);
+        reqTitle.textContent = "정정요청 목록";
+        reqTitle.className = "text-lg font-bold mt-4";
+        modalForm.appendChild(reqTitle);
 
-    // 그리드 컨테이너
-    const reqGridDiv = document.createElement('div');
-    reqGridDiv.id = "correctionGridContainer"; 
-    reqGridDiv.style.height = "200px"; // 적절한 높이
-    reqGridDiv.style.marginTop = "0.5rem";
-    modalForm.appendChild(reqGridDiv);
+        // 그리드 컨테이너
+        const reqGridDiv = document.createElement('div');
+        reqGridDiv.id = "correctionGridContainer";
+        reqGridDiv.style.height = "200px"; // 적절한 높이
+        reqGridDiv.style.marginTop = "0.5rem";
+        modalForm.appendChild(reqGridDiv);
 
-    // (C) rowData.id가 있다면 -> 서버에서 정정요청 로드
-    if (rowData.id) {
-      fetch(`/api/getGlosReq?glos_id=${rowData.id}`)
-        .then(res => res.json())
-        .then(correctionData => {
-          // correctionData 예: [{id:1, glos_id:10, req_msg:"...", req_date:"2023-01-02"}, ...]
-          // (D) 모달 내부에 서브 그리드 생성
-          const subGrid = new tui.Grid({
-            el: reqGridDiv,
-            data: correctionData,
-            scrollX: false,
-            scrollY: true,
-            rowHeight: 32,
-            bodyHeight: 160, 
-            columns: [
-              { header: 'ID', name: 'id', width: 50 },
-              { header: '요청내용', name: 'req_msg', width: 250 },
-              { header: '요청일자', name: 'req_date', width: 120 }
-              // 필요 시 더 많은 컬럼
-            ]
-          });
-        })
-        .catch(err => {
-          console.error("정정요청 로드 실패:", err);
-        });
-    } else {
-      // rowData.id가 없으면 "신규"라 정정요청 없음
-      reqGridDiv.innerHTML = "<p class='text-sm text-gray-500'>신규 데이터이므로 정정요청이 없습니다.</p>";
-    }
+        // (C) rowData.id가 있다면 -> 서버에서 정정요청 로드
+        if (rowData.id) {
+            fetch(`/api/getGlosReq?glos_id=${rowData.id}`)
+                .then(res => res.json())
+                .then(correctionData => {
+                    // correctionData 예: [{id:1, glos_id:10, req_msg:"...", req_date:"2023-01-02"}, ...]
+                    // (D) 모달 내부에 서브 그리드 생성
+                    const subGrid = new tui.Grid({
+                        el: reqGridDiv,
+                        data: correctionData,
+                        scrollX: false,
+                        scrollY: true,
+                        rowHeight: 32,
+                        bodyHeight: 160,
+                        columns: [
+                            { header: 'ID', name: 'id', width: 50 },
+                            { header: '요청내용', name: 'req_msg', width: 250 },
+                            { header: '요청일자', name: 'req_date', width: 120 }
+                            // 필요 시 더 많은 컬럼
+                        ]
+                    });
+                })
+                .catch(err => {
+                    console.error("정정요청 로드 실패:", err);
+                });
+        } else {
+            // rowData.id가 없으면 "신규"라 정정요청 없음
+            reqGridDiv.innerHTML = "<p class='text-sm text-gray-500'>신규 데이터이므로 정정요청이 없습니다.</p>";
+        }
 
 
         modal.classList.remove('hidden');
@@ -509,12 +510,12 @@ function syncLocalStorageWithServer() {
             return response.json();
         })
         .then(data => {
-            // 1) 로컬스토리지 갱신
+
             localStorage.setItem("glosCrudData", JSON.stringify(data));
 
-            // 2) 그리드도 최신 데이터로 초기화
+
             grid.resetData(data);
-            // (옵션) 데이터 건수 표시 etc.
+
             updateDataCount(data.length);
         })
         .catch(error => {
