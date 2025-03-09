@@ -300,7 +300,7 @@ CREATE TABLE IF NOT EXISTS `glos` (
   `img` varchar(500) DEFAULT NULL,
   `created_dt` varchar(20) DEFAULT curdate(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=245 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=249 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- 테이블 데이터 bbs.glos:~237 rows (대략적) 내보내기
 DELETE FROM `glos`;
@@ -540,9 +540,8 @@ INSERT INTO `glos` (`id`, `en`, `ko`, `desc`, `img`, `created_dt`) VALUES
 	(232, 'Turbo Lag Noise', '터보 래그 소음', '터보차저가 회전속도를 올리는 과정에서 일시적인 압력 부족·유동 잡음이 발생', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
 	(233, 'Squeak and Rattle', '스퀵 앤 래틀', '자동차 내장재나 부품 간 마찰·헐거움으로 인해 발생하는 잡음', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
 	(234, 'Particle Velocity', '입자 속도', '음향장에서 매질 입자가 진동하는 속도의 크기와 방향', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(235, 'Noise Certification', '소음 인증', '항공기, 차량 등이 규정된 소음 기준을 만족하는지 확인하기 위한 제도', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(236, 'Elasto-Plastic Vibration', '탄소성 진동', '재료가 탄성 한계를 넘어 소성 범위에서도 반복하중을 받아 진동하는 현상', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(237, 'Acoustic Reflectivity', '음향 반사율', '음이 경계면에서 반사되는 비율로, 재료·형상·경계 조건에 따라 달라짐', 'http://aaa11.vvv.com', '2025-03-09');
+	(235, 'Noise Certification', '소음 인증 wrw', '항공기,   됴됻 차량 등이 규정된 소음 기준을 만족하는지 확인하기 위한 제도', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
+	(236, 'Elasto-Plastic Vibration', '탄소성 진동', '재료가 탄성 한계를 넘어 소성 범위에서도 반복하중을 받아 진동하는 현상', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09');
 /*!40000 ALTER TABLE `glos` ENABLE KEYS */;
 
 -- 테이블 bbs.glos_req 구조 내보내기
@@ -552,20 +551,21 @@ CREATE TABLE IF NOT EXISTS `glos_req` (
   `req_msg` varchar(500) NOT NULL DEFAULT '0',
   `req_date` varchar(20) NOT NULL DEFAULT curdate(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- 테이블 데이터 bbs.glos_req:~7 rows (대략적) 내보내기
+-- 테이블 데이터 bbs.glos_req:~8 rows (대략적) 내보내기
 DELETE FROM `glos_req`;
 /*!40000 ALTER TABLE `glos_req` DISABLE KEYS */;
 INSERT INTO `glos_req` (`id`, `glos_id`, `req_msg`, `req_date`) VALUES
-	(1, 16, 'ㅈㅂㅂㄷㅂㅈㄷㅂㄷ', '2025-03-08'),
-	(2, 13, '1112222', '2025-03-08'),
-	(3, 120, '1112222', '2025-03-08'),
-	(4, 2, 'ㅈㄷㅈㄷㄱㅈㄷㄱㅈㄷㄱ', '2025-03-08'),
-	(5, 188, 'ㅁㄴㅇㅁㅇ ㅁㄴㅇㅁㅇㅁ ㅁㄴㅇㅁㄴㅇ', '2025-03-08'),
-	(6, 1, 'asdadasd', '2025-03-08'),
-	(7, 95, 'asdasd asdasd', '2025-03-08'),
-	(8, 119, 'qweqeqeq qweqwe', '2025-03-09');
+	(1, 16, '내용을 ~~ 바꿔 주세요', '2025-03-08'),
+	(2, 13, '내용을 ~~ 바꿔 주세요', '2025-03-08'),
+	(3, 120, '내용을 ~~ 바꿔 주세요', '2025-03-08'),
+	(4, 2, '내용을 ~~ 바꿔 주세요', '2025-03-08'),
+	(5, 188, '내용을 ~~ 바꿔 주세요', '2025-03-08'),
+	(6, 1, '내용을 ~~ 바꿔 주세요', '2025-03-08'),
+	(7, 95, '내용을 ~~ 바꿔 주세요', '2025-03-08'),
+	(8, 119, '내용을 ~~ 바꿔 주세요', '2025-03-09'),
+	(9, 1, '테스트 입니다.', '2025-03-09');
 /*!40000 ALTER TABLE `glos_req` ENABLE KEYS */;
 
 -- 테이블 bbs.inbound_data 구조 내보내기
