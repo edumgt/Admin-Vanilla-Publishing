@@ -718,4 +718,22 @@ router.post("/setGlos", (req, res) => {
   });
   
 
+  router.get("/getGlosReq", (req, res) => {
+    const { glos_id } = req.query;
+    if (!glos_id) {
+      return res.status(400).json({ success: false, message: "Missing glos_id" });
+    }
+  
+    // 예: glos_req 테이블 (id, glos_id, req_msg, req_date)
+    const sql = "SELECT * FROM glos_req WHERE glos_id = ?";
+    db.query(sql, [glos_id], (err, rows) => {
+      if (err) {
+        console.error("glos_req query error:", err);
+        return res.status(500).json({ success: false, message: "DB error" });
+      }
+      return res.json(rows);
+    });
+  });
+  
+
 module.exports = router;

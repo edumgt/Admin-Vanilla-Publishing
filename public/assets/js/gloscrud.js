@@ -103,9 +103,9 @@ const grid = new tui.Grid({
             align: 'center',
             width: 60,
             resizable: false,
-            
+
             renderer: {
-                type: SaveRenderer 
+                type: SaveRenderer
             }
         }
 
@@ -138,11 +138,11 @@ deleteButton.addEventListener('click', function () {
             .then(res => res.json())
             .then(result => {
                 if (result.success) {
-                    
+
                     grid.removeCheckedRows();
-                    
+
                 } else {
-                    
+
                 }
             })
             .catch(err => {
@@ -162,9 +162,9 @@ deleteButton.addEventListener('click', function () {
 const saveButton = createSaveButton();
 
 saveButton.addEventListener("click", () => {
-    const allRows = grid.getData(); 
+    const allRows = grid.getData();
 
-    const newRows = allRows.filter(row => !row.id); 
+    const newRows = allRows.filter(row => !row.id);
 
     Promise.all(
         newRows.map(row => {
@@ -183,7 +183,7 @@ saveButton.addEventListener("click", () => {
                     if (result.success) {
                         console.log(result.id);
                         row.id = result.id;
-                        
+
                     } else {
                         console.error("INSERT 실패:", result.message);
                     }
@@ -191,14 +191,14 @@ saveButton.addEventListener("click", () => {
         })
     )
         .then(() => {
-            
+
             showToast('well-done', 'success', lang);
             syncLocalStorageWithServer();
         })
         .catch(err => {
             console.error("신규 저장 중 오류:", err);
             showToast('process-error', 'warning', lang);
-            
+
         });
 });
 
@@ -244,7 +244,7 @@ grid.on('click', (ev) => {
 
     if (columnName === 'save') {
         const rowData = grid.getRow(rowKey);
-        
+
         saveRowEdit(rowData);
     }
 });
@@ -257,7 +257,7 @@ grid.on('editingStart', (ev) => {
 grid.on('editingFinish', (ev) => {
     //saveData(grid.getData());
     showToast('auto-save', 'info', lang);
-    
+
 });
 
 
@@ -309,20 +309,28 @@ function toggleModal(show, rowData = {}, rowKey = null) {
     currentRowKey = rowKey;
 
     if (show) {
-        
+
         modalForm.innerHTML = '';
 
         for (const [key, value] of Object.entries(rowData)) {
-            
+
+            if (key.startsWith('_')) continue;
+            if (key.startsWith('view')) continue;
+            if (key.startsWith('save')) continue;
+            if (key.startsWith('created')) continue;
+            if (key.startsWith('sort')) continue;
+            if (key.startsWith('unique')) continue;
+            if (key.startsWith('row')) continue;
+
             const formGroup = document.createElement('div');
             formGroup.className = 'flex flex-col';
 
-            
+
             const label = document.createElement('label');
             label.className = 'text-sm text-gray-700';
-            label.textContent = key; 
+            label.textContent = key;
 
-            
+
             const input = document.createElement('input');
             input.type = 'text';
             input.className = 'border rounded px-3 py-2 mt-1 text-gray-900';
@@ -332,22 +340,64 @@ function toggleModal(show, rowData = {}, rowKey = null) {
             formGroup.appendChild(label);
             formGroup.appendChild(input);
 
-            
+
             if (key === 'img') {
-                
+
                 const imgPreview = document.createElement('img');
-                imgPreview.style.width = '300px';  
+                imgPreview.style.width = '300px';
                 imgPreview.style.height = 'auto';
                 imgPreview.style.marginTop = '0.5rem';
-                
+
                 imgPreview.src = value || '';
 
-                
+
                 formGroup.appendChild(imgPreview);
             }
 
             modalForm.appendChild(formGroup);
         }
+
+        const reqTitle = document.createElement('h3');
+    reqTitle.textContent = "정정요청 목록";
+    reqTitle.className = "text-lg font-bold mt-4";
+    modalForm.appendChild(reqTitle);
+
+    // 그리드 컨테이너
+    const reqGridDiv = document.createElement('div');
+    reqGridDiv.id = "correctionGridContainer"; 
+    reqGridDiv.style.height = "200px"; // 적절한 높이
+    reqGridDiv.style.marginTop = "0.5rem";
+    modalForm.appendChild(reqGridDiv);
+
+    // (C) rowData.id가 있다면 -> 서버에서 정정요청 로드
+    if (rowData.id) {
+      fetch(`/api/getGlosReq?glos_id=${rowData.id}`)
+        .then(res => res.json())
+        .then(correctionData => {
+          // correctionData 예: [{id:1, glos_id:10, req_msg:"...", req_date:"2023-01-02"}, ...]
+          // (D) 모달 내부에 서브 그리드 생성
+          const subGrid = new tui.Grid({
+            el: reqGridDiv,
+            data: correctionData,
+            scrollX: false,
+            scrollY: true,
+            rowHeight: 32,
+            bodyHeight: 160, 
+            columns: [
+              { header: 'ID', name: 'id', width: 50 },
+              { header: '요청내용', name: 'req_msg', width: 250 },
+              { header: '요청일자', name: 'req_date', width: 120 }
+              // 필요 시 더 많은 컬럼
+            ]
+          });
+        })
+        .catch(err => {
+          console.error("정정요청 로드 실패:", err);
+        });
+    } else {
+      // rowData.id가 없으면 "신규"라 정정요청 없음
+      reqGridDiv.innerHTML = "<p class='text-sm text-gray-500'>신규 데이터이므로 정정요청이 없습니다.</p>";
+    }
 
 
         modal.classList.remove('hidden');
@@ -435,16 +485,16 @@ function saveRowEdit(rowData) {
         .then(res => res.json())
         .then(result => {
             if (result.success) {
-                
+
                 showToast('well-done', 'success', lang);
             } else {
-                
+
                 showToast('process-error', 'warning', lang);
             }
         })
         .catch(err => {
             console.error("업데이트 에러:", err);
-            
+
             showToast('process-error', 'warning', lang);
         });
 }
@@ -452,26 +502,22 @@ function saveRowEdit(rowData) {
 
 function syncLocalStorageWithServer() {
     fetch("/api/glos")
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then(data => {
-        // 1) 로컬스토리지 갱신
-        localStorage.setItem("glosCrudData", JSON.stringify(data));
-  
-        // 2) 그리드도 최신 데이터로 초기화
-        grid.resetData(data);
-        // (옵션) 데이터 건수 표시 etc.
-        updateDataCount(data.length);
-      })
-      .catch(error => {
-        console.error("서버 전체 조회 실패:", error);
-      });
-  }
-  
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+        .then(data => {
+            // 1) 로컬스토리지 갱신
+            localStorage.setItem("glosCrudData", JSON.stringify(data));
 
-
-
+            // 2) 그리드도 최신 데이터로 초기화
+            grid.resetData(data);
+            // (옵션) 데이터 건수 표시 etc.
+            updateDataCount(data.length);
+        })
+        .catch(error => {
+            console.error("서버 전체 조회 실패:", error);
+        });
+}
