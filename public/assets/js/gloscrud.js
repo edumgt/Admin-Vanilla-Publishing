@@ -87,7 +87,7 @@ const grid = new tui.Grid({
 
         { header: 'CreateDT', name: 'createdAt', width: 150, align: 'center', sortable: true },
         {
-            header: 'View',
+            header: '상세',
             name: 'view',
             align: 'center',
             text: 'V',
@@ -98,17 +98,17 @@ const grid = new tui.Grid({
             resizable: false
         },
         {
-            header: 'Save',
+            header: '수정',
             name: 'save',
             align: 'center',
             width: 60,
             resizable: false,
-            // (옵션) 직접 렌더러 사용 가능. 아래는 간단히 'S' 표시
+            
             renderer: {
-              type: SaveRenderer // 이미 사용 중인 함수 재활용 가능
+                type: SaveRenderer 
             }
-          }
-          
+        }
+
     ],
     data: loadPageData(1, rowsPerPage),
     columnOptions: {
@@ -124,10 +124,35 @@ const deleteButton = createDelButton();
 deleteButton.addEventListener('click', function () {
     const chkArray = grid.getCheckedRowKeys();
     if (chkArray.length > 0) {
+        const checkedRows = grid.getCheckedRows();
+        const idsToDelete = checkedRows.map(row => row.id).filter(id => !!id);
+
         grid.removeCheckedRows();
-        saveData(grid.getData());
+        //saveData(grid.getData());
+
+        fetch("/api/glos/delete", {
+            method: "POST", // 예: POST 사용. (실제로 DELETE 메서드 or PUT도 가능)
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ids: idsToDelete })
+        })
+            .then(res => res.json())
+            .then(result => {
+                if (result.success) {
+                    
+                    grid.removeCheckedRows();
+                    
+                } else {
+                    
+                }
+            })
+            .catch(err => {
+                console.error("삭제 API 오류:", err);
+
+            });
+
         showToast('select-delete', 'success', lang);
         updateDataCount();
+        syncLocalStorageWithServer();
     } else {
         showToast('delete-not', 'warning', lang);
     }
@@ -135,27 +160,45 @@ deleteButton.addEventListener('click', function () {
 
 
 const saveButton = createSaveButton();
-saveButton.addEventListener('click', function () {
-    const data = grid.getData();
-    const validData = data.filter(row => row.Key && row.Key.trim() !== '');
 
-    saveData(validData);
-    updateDataCount();
+saveButton.addEventListener("click", () => {
+    const allRows = grid.getData(); 
 
-    fetch('https://your-backend-api.com/save', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(validData)
-    })
-        .then(response => response.json())
-        .then(data => {
-            showToast('well-done', 'success', lang);
+    const newRows = allRows.filter(row => !row.id); 
+
+    Promise.all(
+        newRows.map(row => {
+            return fetch("/api/setGlos", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    en: row.en,
+                    ko: row.ko,
+                    desc: row.desc,
+                    img: row.img
+                })
+            })
+                .then(res => res.json())
+                .then(result => {
+                    if (result.success) {
+                        console.log(result.id);
+                        row.id = result.id;
+                        
+                    } else {
+                        console.error("INSERT 실패:", result.message);
+                    }
+                });
         })
-        .catch((error) => {
-            showToast('save-error', 'warning', lang);
-
+    )
+        .then(() => {
+            
+            showToast('well-done', 'success', lang);
+            syncLocalStorageWithServer();
+        })
+        .catch(err => {
+            console.error("신규 저장 중 오류:", err);
+            showToast('process-error', 'warning', lang);
+            
         });
 });
 
@@ -172,7 +215,7 @@ addButton.addEventListener('click', function () {
     const newRow = { Key: generateNanoId(), tpCd: '', tpNm: '', descCntn: '', useYn: 'Y', createdAt: currentDate };
     grid.prependRow(newRow, { focus: true });
 
-    saveData([...data, newRow]);
+    //saveData([...data, newRow]);
     updateDataCount();
 });
 
@@ -201,9 +244,9 @@ grid.on('click', (ev) => {
 
     if (columnName === 'save') {
         const rowData = grid.getRow(rowKey);
-        // 실제로 DB UPDATE를 보내는 함수
+        
         saveRowEdit(rowData);
-      }
+    }
 });
 
 
@@ -212,8 +255,9 @@ grid.on('editingStart', (ev) => {
 });
 
 grid.on('editingFinish', (ev) => {
-    saveData(grid.getData());
+    //saveData(grid.getData());
     showToast('auto-save', 'info', lang);
+    
 });
 
 
@@ -253,7 +297,7 @@ document.getElementById('saveModal').addEventListener('click', () => {
     }
 
     toggleModal(false);
-    saveData(grid.getData());
+    //saveData(grid.getData());
     showToast('well-done', 'success', lang);
 });
 
@@ -265,20 +309,20 @@ function toggleModal(show, rowData = {}, rowKey = null) {
     currentRowKey = rowKey;
 
     if (show) {
-        // 모달 열기 전에, 기존 내용 비움
+        
         modalForm.innerHTML = '';
 
         for (const [key, value] of Object.entries(rowData)) {
-            // (1) formGroup 생성
+            
             const formGroup = document.createElement('div');
             formGroup.className = 'flex flex-col';
 
-            // (2) label
+            
             const label = document.createElement('label');
             label.className = 'text-sm text-gray-700';
-            label.textContent = key; // 예: 'img', 'desc' 등
+            label.textContent = key; 
 
-            // (3) input (text) - 기본적으로 rowData[key]를 표시
+            
             const input = document.createElement('input');
             input.type = 'text';
             input.className = 'border rounded px-3 py-2 mt-1 text-gray-900';
@@ -288,27 +332,27 @@ function toggleModal(show, rowData = {}, rowKey = null) {
             formGroup.appendChild(label);
             formGroup.appendChild(input);
 
-            // (4) 추가: 만약 key가 'img'라면, 아래에 실제 이미지 태그를 추가
+            
             if (key === 'img') {
-                // 이미지 미리보기
+                
                 const imgPreview = document.createElement('img');
-                imgPreview.style.width = '300px';  // 적절한 크기로
+                imgPreview.style.width = '300px';  
                 imgPreview.style.height = 'auto';
                 imgPreview.style.marginTop = '0.5rem';
-                // img src 할당 (없으면 빈 값)
+                
                 imgPreview.src = value || '';
 
-                // formGroup에 이미지 태그도 함께 넣기
+                
                 formGroup.appendChild(imgPreview);
             }
 
             modalForm.appendChild(formGroup);
         }
 
-        // 모달 열기
+
         modal.classList.remove('hidden');
     } else {
-        // 모달 닫기
+
         modal.classList.add('hidden');
     }
 }
@@ -319,22 +363,18 @@ searchButton.addEventListener('click', function () {
 
     const gridData = loadData();
 
-    // 2) 검색창 값 읽기 (소문자로 변환)
     const enVal = document.getElementById('en').value.toLowerCase().trim();
     const koVal = document.getElementById('ko').value.toLowerCase().trim();
     const descVal = document.getElementById('desc').value.toLowerCase().trim();
 
     const selectedDate = document.getElementById('datePicker').value;
     const filteredData = gridData.filter(row => {
-        // row.en, row.ko, row.desc가 존재해야 함
-        // (row.en이 없는 경우도 있을 수 있으니, 대비로 ''+row.en 처리하기도 함)
+
         const enMatch = enVal ? (row.en || '').toLowerCase().includes(enVal) : true;
         const koMatch = koVal ? (row.ko || '').toLowerCase().includes(koVal) : true;
         const descMatch = descVal ? (row.desc || '').toLowerCase().includes(descVal) : true;
         return enMatch && koMatch && descMatch;
     });
-
-
 
     grid.resetData(filteredData);
 
@@ -380,37 +420,58 @@ if (rows.length > 0) {
 }
 
 function saveRowEdit(rowData) {
-    // rowData 예: { id, en, ko, desc, img, createdAt, ... }
-    if (!rowData.id) {
-      alert("id가 없습니다. 저장 불가");
-      return;
-    }
-  
     fetch("/api/glos/" + rowData.id, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        en: rowData.en,
-        ko: rowData.ko,
-        desc: rowData.desc,
-        img: rowData.img
-      })
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            en: rowData.en,
+            ko: rowData.ko,
+            desc: rowData.desc,
+            img: rowData.img
+        })
     })
-      .then(res => res.json())
-      .then(result => {
-        if (result.success) {
-          alert("DB 업데이트 성공: " + JSON.stringify(rowData));
-        } else {
-          alert("DB 업데이트 실패: " + result.message);
+        .then(res => res.json())
+        .then(result => {
+            if (result.success) {
+                
+                showToast('well-done', 'success', lang);
+            } else {
+                
+                showToast('process-error', 'warning', lang);
+            }
+        })
+        .catch(err => {
+            console.error("업데이트 에러:", err);
+            
+            showToast('process-error', 'warning', lang);
+        });
+}
+
+
+function syncLocalStorageWithServer() {
+    fetch("/api/glos")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
         }
+        return response.json();
       })
-      .catch(err => {
-        console.error("업데이트 에러:", err);
-        alert("업데이트 중 오류가 발생했습니다.");
+      .then(data => {
+        // 1) 로컬스토리지 갱신
+        localStorage.setItem("glosCrudData", JSON.stringify(data));
+  
+        // 2) 그리드도 최신 데이터로 초기화
+        grid.resetData(data);
+        // (옵션) 데이터 건수 표시 etc.
+        updateDataCount(data.length);
+      })
+      .catch(error => {
+        console.error("서버 전체 조회 실패:", error);
       });
   }
   
-  
+
+
 

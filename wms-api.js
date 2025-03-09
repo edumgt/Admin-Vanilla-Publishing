@@ -612,7 +612,7 @@ router.get('/bookings', (req, res) => {
 
 
 router.get('/glos', (req, res) => {
-    db.query('SELECT * FROM glos', (err, results) => {
+    db.query('SELECT * FROM glos order by id desc', (err, results) => {
         if (err) {
             res.status(500).json({ error: err.message });
         } else {
@@ -674,5 +674,48 @@ router.put("/glos/:id", (req, res) => {
         return res.json({ success: true, message: "Row updated successfully" });
     });
 });
+
+
+router.post("/setGlos", (req, res) => {
+    const { en, ko, desc, img } = req.body;
+  
+    // 간단 검증
+    if (!en || !ko) {
+      return res.status(400).json({ success: false, message: "en, ko 필수" });
+    }
+  
+    const sql = `INSERT INTO glos (en, ko, \`desc\`, img)
+                 VALUES (?, ?, ?, ?)`;
+  
+    db.query(sql, [en, ko, desc, img], (err, result) => {
+      if (err) {
+        console.error("INSERT error:", err);
+        return res.status(500).json({ success: false, message: "DB Error" });
+      }
+      // 새로 생성된 ID (AUTO_INCREMENT)
+      const newId = result.insertId;
+      return res.json({ success: true, message: "New row inserted", id: newId });
+    });
+  });
+
+  router.post("/glos/delete", (req, res) => {
+    const { ids } = req.body; // { ids: [1,4,7] }
+    if (!Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({ success: false, message: "No IDs provided" });
+    }
+  
+    // DELETE FROM glos WHERE id IN (1,4,7)
+    const placeholder = ids.map(() => '?').join(',');
+    const sql = `DELETE FROM glos WHERE id IN (${placeholder})`;
+  
+    db.query(sql, ids, (err, result) => {
+      if (err) {
+        console.error("DELETE error:", err);
+        return res.status(500).json({ success: false, message: "DB Error" });
+      }
+      return res.json({ success: true, message: result.affectedRows + " rows deleted" });
+    });
+  });
+  
 
 module.exports = router;

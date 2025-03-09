@@ -219,7 +219,22 @@ class createBadgeRenderer {
     }
     render(props) {
         this.props = props;
-    }
+    
+        // rowKey, grid
+        const { rowKey, grid } = props;
+        // 해당 행 전체 데이터
+        const rowData = grid.getRow(rowKey);
+    
+        // (핵심) id 유무에 따라 disabled
+        if (!rowData.id) {
+          // id == null, undefined, 0 등 falsy
+          this.el.style.pointerEvents = 'none'; // 클릭 불가
+          this.el.style.opacity = '0.5';       // 반투명
+        } else {
+          this.el.style.pointerEvents = 'auto'; // 클릭 가능
+          this.el.style.opacity = '1';          // 완전 표시
+        }
+      }
 }
 
 class createSaveRenderer {
@@ -242,10 +257,24 @@ class createSaveRenderer {
       return this.el;
     }
   
-    // 렌더 호출 시, props 갱신
     render(props) {
-      this.props = props;
-    }
+        this.props = props;
+    
+        // rowKey, grid
+        const { rowKey, grid } = props;
+        // 해당 행 전체 데이터
+        const rowData = grid.getRow(rowKey);
+    
+        // (핵심) id 유무에 따라 disabled
+        if (!rowData.id) {
+          // id == null, undefined, 0 등 falsy
+          this.el.style.pointerEvents = 'none'; // 클릭 불가
+          this.el.style.opacity = '0.5';       // 반투명
+        } else {
+          this.el.style.pointerEvents = 'auto'; // 클릭 가능
+          this.el.style.opacity = '1';          // 완전 표시
+        }
+      }
   }
   
 
