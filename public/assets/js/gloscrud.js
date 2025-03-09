@@ -7,14 +7,13 @@ import {
     createTanslations, 
     createBadgeRenderer } from './common.js';
 
-let rowsPerPage = 20;
+let rowsPerPage = 1000;
 let gridBodyHeight = 630;
 
 const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
 const currentDate = new Date().toLocaleDateString('ko-KR', options).replace(/[\.]/g, '-').replace(/[\s]/g, '').substring(0, 10);
 
-//fetch('https://your-backend-api.com/data')
-fetch('assets/mock/mock.json')
+fetch('/api/glos')
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -23,13 +22,13 @@ fetch('assets/mock/mock.json')
     })
     .then(data => {
         loadData(data);
-        localStorage.setItem('gridData', JSON.stringify(data));
+        localStorage.setItem('glosCrudData', JSON.stringify(data));
     })
     .catch(error => {
 
         showToast('loading-error', 'error', lang);
 
-        const storedData = localStorage.getItem('gridData');
+        const storedData = localStorage.getItem('glosCrudData');
         if (storedData) {
             loadData(JSON.parse(storedData));
         } else {
@@ -51,13 +50,13 @@ function updateDataCount() {
 }
 
 function loadData() {
-    const data = localStorage.getItem('gridData');
+    const data = localStorage.getItem('glosCrudData');
     return data ? JSON.parse(data) : [];
 }
 
 function saveData(data) {
-    const filteredData = data.filter(row => row.tpCd && row.tpNm);
-    localStorage.setItem('gridData', JSON.stringify(filteredData));
+    // const filteredData = data.filter(row => row.tpCd && row.tpNm);
+    // localStorage.setItem('glosCrudData', JSON.stringify(filteredData));
 }
 
 
@@ -77,26 +76,12 @@ const grid = new tui.Grid({
     rowHeight: 42,
     minRowHeight: 42,
     columns: [
-        { header: 'Key', name: 'Key', width: 250, align: 'left', sortable: true, resizable: true, width: 100, minWidth: 80 },
-        { header: 'Group', name: 'tpCd', editor: 'text', validation: { required: true }, sortable: true, filter: 'text', resizable: true, width: 150 },
-        { header: 'Name', name: 'tpNm', editor: 'text', sortable: true, filter: 'text', resizable: true, width: 200 },
-        { header: 'Desc.', name: 'descCntn', editor: 'text', sortable: true, filter: 'text', resizable: true, },
-        {
-            header: 'UseYN', name: 'useYn', width: 100, align: 'center',
-            editor: {
-                type: 'select',
-                options: { listItems: [{ text: 'Y', value: 'Y' }, { text: 'N', value: 'N' }] }
-            },
-            sortable: true,
-            filter: {
-                type: 'select',
-                options: [
-                    { text: 'All', value: '' },
-                    { text: 'Y', value: 'Y' },
-                    { text: 'N', value: 'N' }
-                ]
-            }
-        },
+        { header: 'SeqNo', name: 'id', width: 250, align: 'left', sortable: true, resizable: true, width: 100, minWidth: 80 },
+        { header: '영문단어', name: 'en', editor: 'text', validation: { required: true }, sortable: true, filter: 'text', resizable: true, width: 150 },
+        { header: '한글', name: 'ko', editor: 'text', sortable: true, filter: 'text', resizable: true, width: 200 },
+        { header: '설명', name: 'desc', editor: 'text', sortable: true, filter: 'text', resizable: true, },
+        { header: 'Image', name: 'img', editor: 'text', sortable: true, filter: 'text', resizable: true, width: 200},
+        
         { header: 'CreateDT', name: 'createdAt', width: 150, align: 'center', sortable: true },
         {
             header: 'View',
@@ -347,6 +332,10 @@ if (rows.length > 0) {
     lastRow.style.backgroundColor = '#fff';
     lastRow.style.borderBottom = '1px solid #8f8f8f';
 }
+
+
+
+
 
 const translations = createTanslations;
 

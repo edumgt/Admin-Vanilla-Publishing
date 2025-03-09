@@ -12,14 +12,14 @@ const CHOSEONG_LIST = [
     return CHOSEONG_LIST[idx] || "";
   }
 
-  /* ============ (2) 전역 변수 & 상수 ============ */
+  
   let glossaryData = [];
   let filteredData = [];
   const PAGE_SIZE = 20;
   let currentPage = 1;
   let totalPages = 1;
 
-  // localStorage에서 glosData를 로드하거나 /api/glos에서 가져온 뒤 저장
+ 
   function loadGlossaryData() {
     const stored = localStorage.getItem("glosData");
     if (stored) {
@@ -345,15 +345,15 @@ const CHOSEONG_LIST = [
     displayPage(1);
   }
 
-  // ============ 초기화 & 실행 ============
+  
   (function init() {
-    // 필터 버튼 이벤트
+    
     document.querySelectorAll(".filter-btn").forEach(btn => {
       btn.addEventListener("click", handleInitialClick);
     });
-    // 검색 이벤트
+    
     document.getElementById("searchInput").addEventListener("input", handleSearch);
 
-    // (1) localStorage or /api/glos에서 데이터 로드
+    
     loadGlossaryData();
   })();

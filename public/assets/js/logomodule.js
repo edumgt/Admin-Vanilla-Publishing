@@ -107,7 +107,7 @@ function renderOffCanvasMenu(menuItems) {
         span.className = 'menu-text';
         span.textContent = item.text;
 
-        // 현재 페이지와 메뉴의 href가 같으면 active 스타일 추가
+        
         if (item.href === currentPage) {
             icon.classList.remove('text-blue-400');
             icon.classList.add('text-gray-800');
@@ -169,6 +169,7 @@ const iconMapping = {
     "문서관리": "fa-file-alt",
 
     "WMS": "fa-cubes",
+    "용어관리": "fa-book",
 };
 
 
@@ -210,6 +211,7 @@ const menuConfigurations = {
 
     'document.html': [
         { href: 'system.html', text: '코드관리' },
+        { href: 'glos.html', text: '용어관리' },
         { href: 'orgtree.html', text: '권한관리' },
         { href: 'document.html', text: '문서관리' },
         { href: 'wms.html', text: 'WMS' }
@@ -220,6 +222,14 @@ const menuConfigurations = {
         { href: 'flow.html', text: '매출통계' },
         { href: 'chain.html', text: '체인운영' },
 
+    ],
+
+    'glos.html': [
+        { href: 'system.html', text: '코드관리' },
+        { href: 'glos.html', text: '용어관리' },
+        { href: 'orgtree.html', text: '권한관리' },
+        { href: 'document.html', text: '문서관리' },
+        { href: 'wms.html', text: 'WMS' }
     ],
 
     'hospital.html': [
@@ -262,6 +272,7 @@ const menuConfigurations = {
 
     'orgtree.html': [
         { href: 'system.html', text: '코드관리' },
+        { href: 'glos.html', text: '용어관리' },
         { href: 'orgtree.html', text: '권한관리' },
         { href: 'document.html', text: '문서관리' },
         { href: 'wms.html', text: 'WMS' }
@@ -283,6 +294,7 @@ const menuConfigurations = {
 
     'system.html': [
         { href: 'system.html', text: '코드관리' },
+        { href: 'glos.html', text: '용어관리' },
         { href: 'orgtree.html', text: '권한관리' },
         { href: 'document.html', text: '문서관리' },
         { href: 'wms.html', text: 'WMS' }
@@ -311,6 +323,7 @@ const menuConfigurations = {
 
     'wms.html': [
         { href: 'system.html', text: '코드관리' },
+        { href: 'glos.html', text: '용어관리' },
         { href: 'orgtree.html', text: '권한관리' },
         { href: 'document.html', text: '문서관리' },
         { href: 'wms.html', text: 'WMS' }
@@ -605,7 +618,7 @@ if (orgniPages.includes(currentPage)) {
     });
 }
 
-const systemPages = ["system.html", "orgtree.html", "document.html", "wms.html"];
+const systemPages = ["system.html", "glos.html", "orgtree.html", "document.html", "wms.html"];
 if (systemPages.includes(currentPage)) {
     menuLinks2.forEach((link) => {
         if (link.getAttribute("href") === currentPage) {
@@ -956,27 +969,38 @@ languageSwitcher.addEventListener("click", function (event) {
     } else if (currentPage.includes("system")) {
         breadcrumb.textContent = offCanvasLabels.system;
         offCanvasItems[0].textContent = offCanvasLabels.system;
-        offCanvasItems[1].textContent = offCanvasLabels.orgtree;
-        offCanvasItems[2].textContent = offCanvasLabels.document;
-        offCanvasItems[3].textContent = offCanvasLabels.wms;
+        offCanvasItems[1].textContent = offCanvasLabels.glos;
+        offCanvasItems[2].textContent = offCanvasLabels.orgtree;
+        offCanvasItems[3].textContent = offCanvasLabels.document;
+        offCanvasItems[4].textContent = offCanvasLabels.wms;
+    } else if (currentPage.includes("glos")) {
+        breadcrumb.textContent = offCanvasLabels.glos;
+        offCanvasItems[0].textContent = offCanvasLabels.system;
+        offCanvasItems[1].textContent = offCanvasLabels.glos;
+        offCanvasItems[2].textContent = offCanvasLabels.orgtree;
+        offCanvasItems[3].textContent = offCanvasLabels.document;
+        offCanvasItems[4].textContent = offCanvasLabels.wms;
     } else if (currentPage.includes("orgtree")) {
         breadcrumb.textContent = offCanvasLabels.orgtree;
         offCanvasItems[0].textContent = offCanvasLabels.system;
-        offCanvasItems[1].textContent = offCanvasLabels.orgtree;
-        offCanvasItems[2].textContent = offCanvasLabels.document;
-        offCanvasItems[3].textContent = offCanvasLabels.wms;
+        offCanvasItems[1].textContent = offCanvasLabels.glos;
+        offCanvasItems[2].textContent = offCanvasLabels.orgtree;
+        offCanvasItems[3].textContent = offCanvasLabels.document;
+        offCanvasItems[4].textContent = offCanvasLabels.wms;
     } else if (currentPage.includes("document")) {
         breadcrumb.textContent = offCanvasLabels.document;
         offCanvasItems[0].textContent = offCanvasLabels.system;
-        offCanvasItems[1].textContent = offCanvasLabels.orgtree;
-        offCanvasItems[2].textContent = offCanvasLabels.document;
-        offCanvasItems[3].textContent = offCanvasLabels.wms;
+        offCanvasItems[1].textContent = offCanvasLabels.glos;
+        offCanvasItems[2].textContent = offCanvasLabels.orgtree;
+        offCanvasItems[3].textContent = offCanvasLabels.document;
+        offCanvasItems[4].textContent = offCanvasLabels.wms;
     } else if (currentPage.includes("wms")) {
         breadcrumb.textContent = offCanvasLabels.wms;
         offCanvasItems[0].textContent = offCanvasLabels.system;
-        offCanvasItems[1].textContent = offCanvasLabels.orgtree;
-        offCanvasItems[2].textContent = offCanvasLabels.document;
-        offCanvasItems[3].textContent = offCanvasLabels.wms;
+        offCanvasItems[1].textContent = offCanvasLabels.glos;
+        offCanvasItems[2].textContent = offCanvasLabels.orgtree;
+        offCanvasItems[3].textContent = offCanvasLabels.document;
+        offCanvasItems[4].textContent = offCanvasLabels.wms;
     } else if (currentPage.includes("network")) {
         breadcrumb.textContent = offCanvasLabels.network;
         offCanvasItems[0].textContent = offCanvasLabels.config;
@@ -1092,27 +1116,38 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (currentPage.includes("system")) {
         breadcrumb.textContent = offCanvasLabels.system;
         offCanvasItems[0].textContent = offCanvasLabels.system;
-        offCanvasItems[1].textContent = offCanvasLabels.orgtree;
-        offCanvasItems[2].textContent = offCanvasLabels.document;
-        offCanvasItems[3].textContent = offCanvasLabels.wms;
-    } else if (currentPage.includes("orgtree")) {
+        offCanvasItems[1].textContent = offCanvasLabels.glos;
+        offCanvasItems[2].textContent = offCanvasLabels.orgtree;
+        offCanvasItems[3].textContent = offCanvasLabels.document;
+        offCanvasItems[4].textContent = offCanvasLabels.wms;
+    } else if (currentPage.includes("glos")) {
+        breadcrumb.textContent = offCanvasLabels.glos;
+        offCanvasItems[0].textContent = offCanvasLabels.system;
+        offCanvasItems[1].textContent = offCanvasLabels.glos;
+        offCanvasItems[2].textContent = offCanvasLabels.orgtree;
+        offCanvasItems[3].textContent = offCanvasLabels.document;
+        offCanvasItems[4].textContent = offCanvasLabels.wms;
+    }else if (currentPage.includes("orgtree")) {
         breadcrumb.textContent = offCanvasLabels.orgtree;
         offCanvasItems[0].textContent = offCanvasLabels.system;
-        offCanvasItems[1].textContent = offCanvasLabels.orgtree;
-        offCanvasItems[2].textContent = offCanvasLabels.document;
-        offCanvasItems[3].textContent = offCanvasLabels.wms;
+        offCanvasItems[1].textContent = offCanvasLabels.glos;
+        offCanvasItems[2].textContent = offCanvasLabels.orgtree;
+        offCanvasItems[3].textContent = offCanvasLabels.document;
+        offCanvasItems[4].textContent = offCanvasLabels.wms;
     } else if (currentPage.includes("document")) {
         breadcrumb.textContent = offCanvasLabels.document;
         offCanvasItems[0].textContent = offCanvasLabels.system;
-        offCanvasItems[1].textContent = offCanvasLabels.orgtree;
-        offCanvasItems[2].textContent = offCanvasLabels.document;
-        offCanvasItems[3].textContent = offCanvasLabels.wms;
+        offCanvasItems[1].textContent = offCanvasLabels.glos;
+        offCanvasItems[2].textContent = offCanvasLabels.orgtree;
+        offCanvasItems[3].textContent = offCanvasLabels.document;
+        offCanvasItems[4].textContent = offCanvasLabels.wms;
     } else if (currentPage.includes("wms")) {
         breadcrumb.textContent = offCanvasLabels.wms;
         offCanvasItems[0].textContent = offCanvasLabels.system;
-        offCanvasItems[1].textContent = offCanvasLabels.orgtree;
-        offCanvasItems[2].textContent = offCanvasLabels.document;
-        offCanvasItems[3].textContent = offCanvasLabels.wms;
+        offCanvasItems[1].textContent = offCanvasLabels.glos;
+        offCanvasItems[2].textContent = offCanvasLabels.orgtree;
+        offCanvasItems[3].textContent = offCanvasLabels.document;
+        offCanvasItems[4].textContent = offCanvasLabels.wms;
     } else if (currentPage.includes("network")) {
         breadcrumb.textContent = offCanvasLabels.network;
         offCanvasItems[0].textContent = offCanvasLabels.config;

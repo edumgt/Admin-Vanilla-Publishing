@@ -60,6 +60,7 @@ const createTanslations = {
         },
         offCanvas: {
             system: "Code Management",
+            glos: "Dict. Management",
             orgtree: "Permission Management",
             document: "Document Management",
             wms: "WMS",
@@ -111,6 +112,7 @@ const createTanslations = {
 
 
             system: "코드관리",
+            glos: "용어관리",
             orgtree: "권한관리",
             document: "문서관리",
             wms: "WMS",
@@ -164,6 +166,7 @@ const createTanslations = {
         },
         offCanvas: {
             system: "コード管理",
+            glos: "Dict. 管理",
             orgtree: "権限管理",
             document: "文書管理",
             wms: "WMS",
