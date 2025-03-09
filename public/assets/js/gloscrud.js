@@ -1,11 +1,13 @@
-import { 
-    createAddButton, 
-    createDelButton, 
-    createSaveButton, 
+import {
+    createAddButton,
+    createDelButton,
+    createSaveButton,
     createSearchButton,
     createResetSearchButton,
-    createTanslations, 
-    createBadgeRenderer } from './common.js';
+    createTanslations,
+    createBadgeRenderer,
+    createSaveRenderer
+} from './common.js';
 
 let rowsPerPage = 1000;
 let gridBodyHeight = 630;
@@ -61,6 +63,7 @@ function saveData(data) {
 
 
 const BadgeRenderer = createBadgeRenderer;
+const SaveRenderer = createSaveRenderer;
 
 const grid = new tui.Grid({
     el: document.getElementById('grid'),
@@ -76,12 +79,12 @@ const grid = new tui.Grid({
     rowHeight: 42,
     minRowHeight: 42,
     columns: [
-        { header: 'SeqNo', name: 'id', width: 250, align: 'left', sortable: true, resizable: true, width: 100, minWidth: 80 },
+        { header: 'Key', name: 'id', width: 250, align: 'left', sortable: true, resizable: true, width: 100, minWidth: 80 },
         { header: '영문단어', name: 'en', editor: 'text', validation: { required: true }, sortable: true, filter: 'text', resizable: true, width: 150 },
         { header: '한글', name: 'ko', editor: 'text', sortable: true, filter: 'text', resizable: true, width: 200 },
         { header: '설명', name: 'desc', editor: 'text', sortable: true, filter: 'text', resizable: true, },
-        { header: 'Image', name: 'img', editor: 'text', sortable: true, filter: 'text', resizable: true, width: 200},
-        
+        { header: 'Image', name: 'img', editor: 'text', sortable: true, filter: 'text', resizable: true, width: 200 },
+
         { header: 'CreateDT', name: 'createdAt', width: 150, align: 'center', sortable: true },
         {
             header: 'View',
@@ -93,14 +96,25 @@ const grid = new tui.Grid({
             },
             width: 60,
             resizable: false
-        }
+        },
+        {
+            header: 'Save',
+            name: 'save',
+            align: 'center',
+            width: 60,
+            resizable: false,
+            // (옵션) 직접 렌더러 사용 가능. 아래는 간단히 'S' 표시
+            renderer: {
+              type: SaveRenderer // 이미 사용 중인 함수 재활용 가능
+            }
+          }
+          
     ],
     data: loadPageData(1, rowsPerPage),
     columnOptions: {
         frozenCount: 2,
         frozenBorderWidth: 2
-    },
-    draggable: true
+    }
 });
 
 
@@ -184,6 +198,12 @@ grid.on('click', (ev) => {
     if (ev.columnName === 'Key') {
         showToast('auto-key', 'info', lang);
     }
+
+    if (columnName === 'save') {
+        const rowData = grid.getRow(rowKey);
+        // 실제로 DB UPDATE를 보내는 함수
+        saveRowEdit(rowData);
+      }
 });
 
 
@@ -245,50 +265,76 @@ function toggleModal(show, rowData = {}, rowKey = null) {
     currentRowKey = rowKey;
 
     if (show) {
+        // 모달 열기 전에, 기존 내용 비움
         modalForm.innerHTML = '';
 
         for (const [key, value] of Object.entries(rowData)) {
+            // (1) formGroup 생성
             const formGroup = document.createElement('div');
             formGroup.className = 'flex flex-col';
 
+            // (2) label
             const label = document.createElement('label');
             label.className = 'text-sm text-gray-700';
-            label.textContent = key;
+            label.textContent = key; // 예: 'img', 'desc' 등
 
+            // (3) input (text) - 기본적으로 rowData[key]를 표시
             const input = document.createElement('input');
             input.type = 'text';
             input.className = 'border rounded px-3 py-2 mt-1 text-gray-900';
             input.name = key;
-            input.value = value;
+            input.value = value || '';
 
             formGroup.appendChild(label);
             formGroup.appendChild(input);
+
+            // (4) 추가: 만약 key가 'img'라면, 아래에 실제 이미지 태그를 추가
+            if (key === 'img') {
+                // 이미지 미리보기
+                const imgPreview = document.createElement('img');
+                imgPreview.style.width = '300px';  // 적절한 크기로
+                imgPreview.style.height = 'auto';
+                imgPreview.style.marginTop = '0.5rem';
+                // img src 할당 (없으면 빈 값)
+                imgPreview.src = value || '';
+
+                // formGroup에 이미지 태그도 함께 넣기
+                formGroup.appendChild(imgPreview);
+            }
+
             modalForm.appendChild(formGroup);
         }
 
+        // 모달 열기
         modal.classList.remove('hidden');
     } else {
+        // 모달 닫기
         modal.classList.add('hidden');
     }
 }
+
 
 
 searchButton.addEventListener('click', function () {
 
     const gridData = loadData();
 
-    const selectedDate = document.getElementById('datePicker').value;
-    const groupCode = document.getElementById('groupCode').value.toLowerCase();
-    const codeName = document.getElementById('codeName').value.toLowerCase();
-    const description = document.getElementById('description').value.toLowerCase();
+    // 2) 검색창 값 읽기 (소문자로 변환)
+    const enVal = document.getElementById('en').value.toLowerCase().trim();
+    const koVal = document.getElementById('ko').value.toLowerCase().trim();
+    const descVal = document.getElementById('desc').value.toLowerCase().trim();
 
+    const selectedDate = document.getElementById('datePicker').value;
     const filteredData = gridData.filter(row => {
-        const matchesDate = selectedDate ? row.createdAt === selectedDate : true;
-        const matchesGroupCode = groupCode ? row.tpCd.toLowerCase().includes(groupCode) : true;
-        const matchesCodeName = codeName ? row.tpNm.toLowerCase().includes(codeName) : true;
-        const matchesDescription = description ? row.descCntn.toLowerCase().includes(description) : true;
-        return matchesDate && matchesGroupCode && matchesCodeName && matchesDescription;
+        // row.en, row.ko, row.desc가 존재해야 함
+        // (row.en이 없는 경우도 있을 수 있으니, 대비로 ''+row.en 처리하기도 함)
+        const enMatch = enVal ? (row.en || '').toLowerCase().includes(enVal) : true;
+        const koMatch = koVal ? (row.ko || '').toLowerCase().includes(koVal) : true;
+        const descMatch = descVal ? (row.desc || '').toLowerCase().includes(descVal) : true;
+        return enMatch && koMatch && descMatch;
     });
+
+
 
     grid.resetData(filteredData);
 
@@ -308,9 +354,9 @@ resetSearchButton.addEventListener('click', function () {
 
     const gridData = loadData();
 
-    document.getElementById('groupCode').value = '';
-    document.getElementById('codeName').value = '';
-    document.getElementById('description').value = '';
+    document.getElementById('en').value = '';
+    document.getElementById('ko').value = '';
+    document.getElementById('desc').value = '';
     document.getElementById('datePicker').value = '';
 
     grid.resetData(gridData);
@@ -333,33 +379,38 @@ if (rows.length > 0) {
     lastRow.style.borderBottom = '1px solid #8f8f8f';
 }
 
+function saveRowEdit(rowData) {
+    // rowData 예: { id, en, ko, desc, img, createdAt, ... }
+    if (!rowData.id) {
+      alert("id가 없습니다. 저장 불가");
+      return;
+    }
+  
+    fetch("/api/glos/" + rowData.id, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        en: rowData.en,
+        ko: rowData.ko,
+        desc: rowData.desc,
+        img: rowData.img
+      })
+    })
+      .then(res => res.json())
+      .then(result => {
+        if (result.success) {
+          alert("DB 업데이트 성공: " + JSON.stringify(rowData));
+        } else {
+          alert("DB 업데이트 실패: " + result.message);
+        }
+      })
+      .catch(err => {
+        console.error("업데이트 에러:", err);
+        alert("업데이트 중 오류가 발생했습니다.");
+      });
+  }
+  
+  
 
-
-
-
-const translations = createTanslations;
-
-languageSwitcher.addEventListener("click", function (event) {
-    let lang = event.target.getAttribute("data-lang");
-    localStorage.setItem('lang', lang);
-    if (!lang || !translations[lang]) return;
-
-    let buttonLabels = translations[lang].buttons;
-    searchButton.innerHTML = `<i class="fas fa-search"></i><span>` + buttonLabels.search + `</span>`;
-    addButton.innerHTML = `<i class="fas fa-plus"></i><span>` + buttonLabels.new + `</span>`;
-    deleteButton.innerHTML = `<i class="fas fa-trash"></i><span>` + buttonLabels.delete + `</span>`;
-    saveButton.innerHTML = `<i class="fas fa-save"></i><span>` + buttonLabels.save + `</span>`;
-    resetSearchButton.innerHTML = `<i class="fas fa-undo"></i><span>` + buttonLabels.reset + `</span>`;
-});
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    let lang = localStorage.getItem('lang');
-
-    let buttonLabels = translations[lang].buttons;
-    searchButton.innerHTML = `<i class="fas fa-search"></i><span>` + buttonLabels.search + `</span>`;
-    addButton.innerHTML = `<i class="fas fa-plus"></i><span>` + buttonLabels.new + `</span>`;
-    deleteButton.innerHTML = `<i class="fas fa-trash"></i><span>` + buttonLabels.delete + `</span>`;
-    saveButton.innerHTML = `<i class="fas fa-save"></i><span>` + buttonLabels.save + `</span>`;
-    resetSearchButton.innerHTML = `<i class="fas fa-undo"></i><span>` + buttonLabels.reset + `</span>`;
-});

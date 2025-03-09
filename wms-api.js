@@ -625,19 +625,54 @@ router.get('/glos', (req, res) => {
 router.post("/glos_req", (req, res) => {
     const { glos_id, req_msg } = req.body;
     if (!glos_id || !req_msg) {
-      return res.status(400).json({ success: false, message: "Missing fields" });
+        return res.status(400).json({ success: false, message: "Missing fields" });
     }
-  
+
     // INSERT
     const sql = `INSERT INTO glos_req (glos_id, req_msg, req_date) VALUES (?, ?, CURDATE())`;
     db.query(sql, [glos_id, req_msg], (err, result) => {
-      if (err) {
-        console.error("DB insert error:", err);
-        return res.status(500).json({ success: false, message: "DB Error" });
-      }
-      return res.json({ success: true, message: "정정 요청이 DB에 저장되었습니다.", insertId: result.insertId });
+        if (err) {
+            console.error("DB insert error:", err);
+            return res.status(500).json({ success: false, message: "DB Error" });
+        }
+        return res.json({ success: true, message: "정정 요청이 DB에 저장되었습니다.", insertId: result.insertId });
     });
-  });
-  
+});
+
+
+router.put("/glos/:id", (req, res) => {
+    const { id } = req.params; // URL 파라미터 (:id)
+    const { en, ko, desc, img } = req.body; // 수정할 필드들
+
+    // 간단 검증
+    if (!id) {
+        return res.status(400).json({ success: false, message: "Missing id param" });
+    }
+    if (!en && !ko && !desc && !img) {
+        return res
+            .status(400)
+            .json({ success: false, message: "No fields to update" });
+    }
+
+    // UPDATE SQL (필요한 필드만 업데이트하는 로직도 가능)
+    const sql = `UPDATE glos 
+                 SET en=?, ko=?, \`desc\`=?, img=? 
+                 WHERE id=?`;
+
+    const values = [en, ko, desc, img, id];
+
+    db.query(sql, values, (err, result) => {
+        if (err) {
+            console.error("DB update error:", err);
+            return res.status(500).json({ success: false, message: "DB Error" });
+        }
+        if (result.affectedRows === 0) {
+            return res
+                .status(404)
+                .json({ success: false, message: "No row updated (id not found)" });
+        }
+        return res.json({ success: true, message: "Row updated successfully" });
+    });
+});
 
 module.exports = router;

@@ -222,6 +222,33 @@ class createBadgeRenderer {
     }
 }
 
+class createSaveRenderer {
+    constructor(props) {
+      // 1) span or div 생성
+      const el = document.createElement('span');
+      // 2) 원하는 스타일/클래스
+      el.className = 'text-blue-900 rounded cursor-pointer flex items-center justify-center';
+      el.innerHTML = '<i class="fas fa-save"></i>'; // 저장 아이콘 (fa-save)
+      
+      el.style.display = 'inline-block';
+      el.style.textAlign = 'center';
+  
+      this.el = el;
+      this.props = props;
+    }
+  
+    // TUI Grid에서 DOM 엘리먼트를 얻을 때 사용
+    getElement() {
+      return this.el;
+    }
+  
+    // 렌더 호출 시, props 갱신
+    render(props) {
+      this.props = props;
+    }
+  }
+  
+
 
 
 export {
@@ -232,5 +259,6 @@ export {
     createSearchButton,
     createResetSearchButton,
     createTanslations,
-    createBadgeRenderer
+    createBadgeRenderer,
+    createSaveRenderer
 };
