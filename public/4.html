@@ -2,10 +2,10 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>학원 사물함 관리</title>
+  <title>학원 사물함 관리 (CRUD, JSON, localStorage)</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- TUI Grid CSS -->
+  <!-- TUI Grid CSS (사용이력 모달용) -->
   <link rel="stylesheet" href="https://uicdn.toast.com/tui-grid/latest/tui-grid.css">
 </head>
 <body class="bg-gray-100">
@@ -14,26 +14,45 @@
   <!-- 사용이력 모달 팝업 -->
   <div id="usageHistoryModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
     <div class="bg-white rounded-lg shadow-lg w-11/12 md:w-3/4 lg:w-1/2 relative p-4">
-      <button id="closeModal" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-2xl">&times;</button>
+      <button id="closeUsageModal" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-2xl">&times;</button>
       <h2 class="text-xl font-bold mb-4">사용이력</h2>
       <div id="usageGrid"></div>
     </div>
   </div>
 
-  <!-- TUI Grid JS -->
+  <!-- 사용자 배정 모달 팝업 -->
+  <div id="assignmentModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-lg shadow-lg w-11/12 md:w-3/4 lg:w-1/2 relative p-4">
+      <button id="closeAssignmentModal" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-2xl">&times;</button>
+      <h2 class="text-xl font-bold mb-4">사용자 배정</h2>
+      <input type="text" id="userSearchInput" placeholder="사용자 검색" class="w-full p-2 border border-gray-300 rounded mb-4" />
+      <div id="userSearchResults" class="max-h-60 overflow-y-auto"></div>
+    </div>
+  </div>
+
+  <!-- TUI Grid JS (사용이력 모달용) -->
   <script src="https://uicdn.toast.com/tui-grid/latest/tui-grid.js"></script>
   <script type="module">
     import LockerManager from '/assets/js/lockerManager.js';
-    // container id, 행 수, 열 수 옵션을 전달하여 초기화 (50개 사물함)
     const lockerManager = new LockerManager({
       containerId: 'lockerContainer',
       rows: 5,
       cols: 10
     });
 
-    // 모달 닫기 버튼 이벤트 리스너
-    document.getElementById('closeModal').addEventListener('click', () => {
+    // 사용이력 모달 닫기 버튼 이벤트
+    document.getElementById('closeUsageModal').addEventListener('click', () => {
       document.getElementById('usageHistoryModal').classList.add('hidden');
+    });
+    // 사용자 배정 모달 닫기 버튼 이벤트
+    document.getElementById('closeAssignmentModal').addEventListener('click', () => {
+      document.getElementById('assignmentModal').classList.add('hidden');
+    });
+    // 사용자 검색 입력 이벤트: 입력값에 따라 사용자 목록 필터링
+    document.getElementById('userSearchInput').addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase();
+      const filteredUsers = lockerManager.users.filter(user => user.toLowerCase().includes(query));
+      lockerManager.renderUserSearchResults(filteredUsers);
     });
   </script>
 </body>
