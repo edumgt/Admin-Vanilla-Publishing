@@ -186,9 +186,9 @@ export default class LockerManager {
       lockerDiv.dataset.id = locker.id;
 
       // Locker 번호 타이틀 디자인
-      const title = document.createElement('h3');
+      const title = document.createElement('h5');
       title.textContent = `Locker ${locker.id}`;
-      title.className = 'text-xl font-bold border-b pb-2 mb-2';
+      title.className = 'text-md border-b pb-2 mb-2';
 
       // 상태 뱃지: "사용중"이면 배정된 사용자명을 왼쪽에 표시
       const statusBadge = document.createElement('span');

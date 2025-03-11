@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="assets/css/default.css" rel="stylesheet">
+</head>
+
+<body>
+  <div id="cmmContainer"></div>
+
+  <nav class="breadcrumb"></nav>
+
+  <div id="content">
+
+    <div id="lockerContainer" class="mx-auto my-4"></div>
+
+    <!-- 사용이력 모달 팝업 -->
+    <div id="usageHistoryModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+      <div class="bg-white rounded-lg shadow-lg w-11/12 md:w-3/4 lg:w-1/2 relative p-4">
+        <button id="closeUsageModal"
+          class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-2xl">&times;</button>
+        <h2 class="text-xl font-bold mb-4">사용이력</h2>
+        <div id="usageGrid"></div>
+      </div>
+    </div>
+
+    <!-- 사용자 배정 모달 팝업 -->
+    <div id="assignmentModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+      <div class="bg-white rounded-lg shadow-lg w-11/12 md:w-3/4 lg:w-1/2 relative p-4">
+        <button id="closeAssignmentModal"
+          class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-2xl">&times;</button>
+        <h2 class="text-xl font-bold mb-4">사용자 배정</h2>
+        <input type="text" id="userSearchInput" placeholder="사용자 검색"
+          class="w-full p-2 border border-gray-300 rounded mb-4" />
+        <div id="userSearchResults" class="max-h-60 overflow-y-auto"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <script type="module" src="assets/vendor/tui-pagination/dist/tui-pagination.js"></script>
+  <script type="module" src="assets/vendor/tui-grid/dist/tui-grid.js"></script>
+  <script type="text/javascript" src="assets/vendor/pikaday/pikaday.js"></script>
+
+  <script type="module" src="assets/js/logomodule.js"></script>
+  <script type="module" src="assets/js/locker.js"></script>
+
+</body>
+
+</html>

@@ -170,6 +170,7 @@ const iconMapping = {
 
     "WMS": "fa-cubes",
     "용어관리": "fa-book",
+    "사물함": "fa-archive",
 };
 
 
@@ -206,7 +207,8 @@ const menuConfigurations = {
     'config.html': [
         { href: 'config.html', text: '시스템로그' },
         { href: 'network.html', text: '컨설팅지정' },
-        { href: 'survey.html', text: '서베이' }
+        { href: 'survey.html', text: '서베이' },
+        { href: 'locker.html', text: '사물함' }
     ],
 
     'document.html': [
@@ -240,6 +242,13 @@ const menuConfigurations = {
         { href: 'city.html', text: '행정구역정보' }
     ],
 
+    'locker.html': [
+        { href: 'config.html', text: '시스템로그' },
+        { href: 'network.html', text: '컨설팅지정' },
+        { href: 'survey.html', text: '서베이' },
+        { href: 'locker.html', text: '사물함' }
+    ],
+
     'lectures.html': [
         { href: 'work.html', text: '예약관리' },
         { href: 'meeting.html', text: '회의실관리' },
@@ -260,7 +269,8 @@ const menuConfigurations = {
     'network.html': [
         { href: 'config.html', text: '시스템로그' },
         { href: 'network.html', text: '컨설팅지정' },
-        { href: 'survey.html', text: '서베이' }
+        { href: 'survey.html', text: '서베이' },
+        { href: 'locker.html', text: '사물함' }
     ],
 
     'orgni.html': [
@@ -289,7 +299,8 @@ const menuConfigurations = {
     'survey.html': [
         { href: 'config.html', text: '시스템로그' },
         { href: 'network.html', text: '컨설팅지정' },
-        { href: 'survey.html', text: '서베이' }
+        { href: 'survey.html', text: '서베이' },
+        { href: 'locker.html', text: '사물함' }
     ],
 
     'system.html': [
@@ -678,7 +689,7 @@ if (statiPages.includes(currentPage)) {
     });
 }
 
-const configPages = ["config.html", "network.html", "survey.html"];
+const configPages = ["config.html", "network.html", "survey.html", "locker.html"];
 if (configPages.includes(currentPage)) {
     menuLinks2.forEach((link) => {
         if (link.getAttribute("href") === currentPage) {
@@ -1006,16 +1017,25 @@ languageSwitcher.addEventListener("click", function (event) {
         offCanvasItems[0].textContent = offCanvasLabels.config;
         offCanvasItems[1].textContent = offCanvasLabels.network;
         offCanvasItems[2].textContent = offCanvasLabels.survey;
+        offCanvasItems[3].textContent = offCanvasLabels.locker;
     } else if (currentPage.includes("survey")) {
         breadcrumb.textContent = offCanvasLabels.survey;
         offCanvasItems[0].textContent = offCanvasLabels.config;
         offCanvasItems[1].textContent = offCanvasLabels.network;
         offCanvasItems[2].textContent = offCanvasLabels.survey;
+        offCanvasItems[3].textContent = offCanvasLabels.locker;
     } else if (currentPage.includes("config")) {
         breadcrumb.textContent = offCanvasLabels.config;
         offCanvasItems[0].textContent = offCanvasLabels.config;
         offCanvasItems[1].textContent = offCanvasLabels.network;
         offCanvasItems[2].textContent = offCanvasLabels.survey;
+        offCanvasItems[3].textContent = offCanvasLabels.locker;
+    } else if (currentPage.includes("locker")) {
+        breadcrumb.textContent = offCanvasLabels.locker;
+        offCanvasItems[0].textContent = offCanvasLabels.config;
+        offCanvasItems[1].textContent = offCanvasLabels.network;
+        offCanvasItems[2].textContent = offCanvasLabels.survey;
+        offCanvasItems[3].textContent = offCanvasLabels.locker;
     } else if (currentPage.includes("work")) {
         breadcrumb.textContent = offCanvasLabels.work;
         offCanvasItems[0].textContent = offCanvasLabels.work;
@@ -1153,16 +1173,25 @@ document.addEventListener('DOMContentLoaded', () => {
         offCanvasItems[0].textContent = offCanvasLabels.config;
         offCanvasItems[1].textContent = offCanvasLabels.network;
         offCanvasItems[2].textContent = offCanvasLabels.survey;
+        offCanvasItems[3].textContent = offCanvasLabels.locker;
     } else if (currentPage.includes("survey")) {
         breadcrumb.textContent = offCanvasLabels.survey;
         offCanvasItems[0].textContent = offCanvasLabels.config;
         offCanvasItems[1].textContent = offCanvasLabels.network;
         offCanvasItems[2].textContent = offCanvasLabels.survey;
+        offCanvasItems[3].textContent = offCanvasLabels.locker;
     } else if (currentPage.includes("config")) {
         breadcrumb.textContent = offCanvasLabels.config;
         offCanvasItems[0].textContent = offCanvasLabels.config;
         offCanvasItems[1].textContent = offCanvasLabels.network;
         offCanvasItems[2].textContent = offCanvasLabels.survey;
+        offCanvasItems[3].textContent = offCanvasLabels.locker;
+    } else if (currentPage.includes("locker")) {
+        breadcrumb.textContent = offCanvasLabels.locker;
+        offCanvasItems[0].textContent = offCanvasLabels.config;
+        offCanvasItems[1].textContent = offCanvasLabels.network;
+        offCanvasItems[2].textContent = offCanvasLabels.survey;
+        offCanvasItems[3].textContent = offCanvasLabels.locker;
     } else if (currentPage.includes("work")) {
         breadcrumb.textContent = offCanvasLabels.work;
         offCanvasItems[0].textContent = offCanvasLabels.work;

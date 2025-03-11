@@ -66,6 +66,9 @@ const createTanslations = {
             wms: "WMS",
             config: "System log",
             network: "Consultant",
+
+            locker: "Locker",
+
             survey: "Survey",
             work: "Reservation Management",
             meeting: "Meeting Room Management",
@@ -117,6 +120,8 @@ const createTanslations = {
             document: "문서관리",
             wms: "WMS",
             config: "시스템 로그",
+
+            locker: "사물함",
 
             network: "컨설팅 지정",
             survey: "서베이",
@@ -172,6 +177,9 @@ const createTanslations = {
             wms: "WMS",
             config: "システムログ",
             network: "コンサルティングの指定",
+
+            locker: "사물함",
+
             survey: "サーベイ",
             work: "予約管理",
             meeting: "会議室管理",
