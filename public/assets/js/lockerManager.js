@@ -222,13 +222,6 @@ export default class LockerManager {
   }
 }
 
-/*  
-  ─────────────────────────────────────────────
-   가상 API 구현 (localStorage 기반, JSON 데이터 CRUD)
-  ─────────────────────────────────────────────
-*/
-
-// LockerAPI: localStorage에 저장된 locker 데이터를 JSON으로 관리
 class LockerAPI {
   static getLockers() {
     return new Promise((resolve, reject) => {
@@ -315,9 +308,29 @@ function fakeFetch(url, options = {}) {
     setTimeout(() => {
       if (url === '/api/lockers') {
         if (!options.method || options.method === 'GET') {
-          LockerAPI.getLockers().then(data => {
-            resolve(new FakeResponse(JSON.stringify(data)));
-          });
+
+          // LockerAPI.getLockers().then(data => {
+          //   resolve(new FakeResponse(JSON.stringify(data)));
+          // });
+
+          fetch('/api/lockers')
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              return response.json();
+            })
+            .then(data => {
+              resolve(new FakeResponse(JSON.stringify(data)));
+              console.log(JSON.stringify(data));
+            })
+            .catch(error => {
+
+              showToast('loading-error', 'error', lang);
+
+              console.log(error);
+            });
+
         } else if (options.method === 'PUT') {
           const locker = JSON.parse(options.body);
           LockerAPI.updateLocker(locker).then(data => {

@@ -16,12 +16,10 @@
 
 
 -- bbs 데이터베이스 구조 내보내기
-DROP DATABASE IF EXISTS `bbs`;
 CREATE DATABASE IF NOT EXISTS `bbs` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
 USE `bbs`;
 
 -- 테이블 bbs.bbs 구조 내보내기
-DROP TABLE IF EXISTS `bbs`;
 CREATE TABLE IF NOT EXISTS `bbs` (
   `seq` int(11) NOT NULL AUTO_INCREMENT,
   `id` varchar(50) DEFAULT NULL,
@@ -59,7 +57,6 @@ INSERT INTO `bbs` (`seq`, `id`, `ref`, `step`, `depth`, `title`, `content`, `cre
 	(2, 'test0004', '2', '0', '0', 'adaasdasd', 'asdasdasdasd', '2023-08-18 06:30:56', '0', '1');
 
 -- 테이블 bbs.booking 구조 내보내기
-DROP TABLE IF EXISTS `booking`;
 CREATE TABLE IF NOT EXISTS `booking` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `room_number` varchar(10) NOT NULL,
@@ -93,7 +90,6 @@ INSERT INTO `booking` (`id`, `room_number`, `guest_name`, `check_in_date`, `chec
 	(15, '2-2', 'Eve', '2025-02-20', '2025-02-25', '17:00:00', '10:00:00', 250000, '2025-02-16 12:19:00');
 
 -- 테이블 bbs.category 구조 내보내기
-DROP TABLE IF EXISTS `category`;
 CREATE TABLE IF NOT EXISTS `category` (
   `category_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -105,7 +101,6 @@ CREATE TABLE IF NOT EXISTS `category` (
 DELETE FROM `category`;
 
 -- 테이블 bbs.checkout 구조 내보내기
-DROP TABLE IF EXISTS `checkout`;
 CREATE TABLE IF NOT EXISTS `checkout` (
   `checkout_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `order_time` datetime(6) NOT NULL,
@@ -117,7 +112,6 @@ CREATE TABLE IF NOT EXISTS `checkout` (
 DELETE FROM `checkout`;
 
 -- 테이블 bbs.checkout_item 구조 내보내기
-DROP TABLE IF EXISTS `checkout_item`;
 CREATE TABLE IF NOT EXISTS `checkout_item` (
   `checkout_id` bigint(20) NOT NULL,
   `item_id` bigint(20) NOT NULL,
@@ -131,7 +125,6 @@ CREATE TABLE IF NOT EXISTS `checkout_item` (
 DELETE FROM `checkout_item`;
 
 -- 테이블 bbs.comment 구조 내보내기
-DROP TABLE IF EXISTS `comment`;
 CREATE TABLE IF NOT EXISTS `comment` (
   `seq` int(11) NOT NULL AUTO_INCREMENT,
   `id` varchar(50) DEFAULT NULL,
@@ -165,12 +158,11 @@ INSERT INTO `comment` (`seq`, `id`, `content`, `bbs_seq`, `created_at`, `del`) V
 	(2, 'string', 'asdasdasd\nㅁㄴㅇㅁㄴㅇㅁㅇㅁㄴㅇ', '1', '2023-12-20 16:04:50', '0');
 
 -- 테이블 bbs.dates 구조 내보내기
-DROP TABLE IF EXISTS `dates`;
 CREATE TABLE IF NOT EXISTS `dates` (
   `date_id` int(11) NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
   PRIMARY KEY (`date_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- 테이블 데이터 bbs.dates:~61 rows (대략적) 내보내기
 DELETE FROM `dates`;
@@ -235,10 +227,10 @@ INSERT INTO `dates` (`date_id`, `date`) VALUES
 	(58, '2025-02-12'),
 	(59, '2025-02-14'),
 	(60, '2025-02-07'),
-	(61, '2025-02-14');
+	(61, '2025-02-14'),
+	(62, '2025-03-12');
 
 -- 테이블 bbs.employees 구조 내보내기
-DROP TABLE IF EXISTS `employees`;
 CREATE TABLE IF NOT EXISTS `employees` (
   `name` varchar(255) NOT NULL,
   `id` char(36) NOT NULL,
@@ -268,7 +260,6 @@ INSERT INTO `employees` (`name`, `id`, `employeeId`, `team`, `joinYear`, `addres
 	('Charlie', 'f8216608-00dd-4ad4-a8d2-69e9abf101af', 'B2001', 'Consulting', 2014, 'Seoul, South Korea', 'charlie@example.com');
 
 -- 테이블 bbs.events 구조 내보내기
-DROP TABLE IF EXISTS `events`;
 CREATE TABLE IF NOT EXISTS `events` (
   `event_id` varchar(50) NOT NULL DEFAULT '',
   `date_id` int(11) DEFAULT NULL,
@@ -286,12 +277,12 @@ INSERT INTO `events` (`event_id`, `date_id`, `time`, `description`) VALUES
 	('1111', 1, '16:30:00', '네트웍 점검'),
 	('1212', 1, '16:30:00', '공공 입찰/투찰 계획안 협의'),
 	('999', 1, '16:30:00', '디자인팀 회의'),
+	('hQezRN7pal', 62, '08:00:00', 'test 테스트 입니다.'),
 	('ms3FVtdtR2', 60, '15:30:00', 'qeqwe'),
 	('nNW7WRhV50', 59, '08:00:00', 'qweqwe'),
 	('TUCZ3Pfqz6', 56, '15:30:00', '테스트 당');
 
 -- 테이블 bbs.glos 구조 내보내기
-DROP TABLE IF EXISTS `glos`;
 CREATE TABLE IF NOT EXISTS `glos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `en` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -543,7 +534,6 @@ INSERT INTO `glos` (`id`, `en`, `ko`, `desc`, `img`, `created_dt`) VALUES
 	(236, 'Elasto-Plastic Vibration', '탄소성 진동', '재료가 탄성 한계를 넘어 소성 범위에서도 반복하중을 받아 진동하는 현상', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09');
 
 -- 테이블 bbs.glos_req 구조 내보내기
-DROP TABLE IF EXISTS `glos_req`;
 CREATE TABLE IF NOT EXISTS `glos_req` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `glos_id` int(11) NOT NULL DEFAULT 0,
@@ -566,7 +556,6 @@ INSERT INTO `glos_req` (`id`, `glos_id`, `req_msg`, `req_date`) VALUES
 	(9, 1, '테스트 입니다.', '2025-03-09');
 
 -- 테이블 bbs.inbound_data 구조 내보내기
-DROP TABLE IF EXISTS `inbound_data`;
 CREATE TABLE IF NOT EXISTS `inbound_data` (
   `id` varchar(50) NOT NULL DEFAULT '0',
   `date` varchar(20) NOT NULL DEFAULT '',
@@ -588,7 +577,6 @@ INSERT INTO `inbound_data` (`id`, `date`, `title`, `quantity`, `isbn`) VALUES
 	('UHJDY77gnD', '2025-02-13', '22', 0, '11');
 
 -- 테이블 bbs.item 구조 내보내기
-DROP TABLE IF EXISTS `item`;
 CREATE TABLE IF NOT EXISTS `item` (
   `item_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -605,8 +593,108 @@ CREATE TABLE IF NOT EXISTS `item` (
 -- 테이블 데이터 bbs.item:~0 rows (대략적) 내보내기
 DELETE FROM `item`;
 
+-- 테이블 bbs.lockers 구조 내보내기
+CREATE TABLE IF NOT EXISTS `lockers` (
+  `id` int(11) NOT NULL,
+  `status` enum('사용중','사용가능','일시중지','수리중') NOT NULL,
+  `assigned_user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `assigned_user_id` (`assigned_user_id`),
+  CONSTRAINT `lockers_ibfk_1` FOREIGN KEY (`assigned_user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- 테이블 데이터 bbs.lockers:~0 rows (대략적) 내보내기
+DELETE FROM `lockers`;
+INSERT INTO `lockers` (`id`, `status`, `assigned_user_id`) VALUES
+	(1, '사용중', 1),
+	(2, '사용가능', NULL),
+	(3, '일시중지', NULL),
+	(4, '수리중', NULL),
+	(5, '사용가능', NULL),
+	(6, '사용중', 2),
+	(7, '사용가능', NULL),
+	(8, '사용가능', NULL),
+	(9, '수리중', NULL),
+	(10, '사용가능', NULL),
+	(11, '사용중', 3),
+	(12, '일시중지', NULL),
+	(13, '사용가능', NULL),
+	(14, '수리중', NULL),
+	(15, '사용중', 4),
+	(16, '사용가능', NULL),
+	(17, '사용중', 5),
+	(18, '사용가능', NULL),
+	(19, '일시중지', NULL),
+	(20, '사용중', 6),
+	(21, '사용가능', NULL),
+	(22, '사용가능', NULL),
+	(23, '사용가능', NULL),
+	(24, '수리중', NULL),
+	(25, '사용중', 7),
+	(26, '사용가능', NULL),
+	(27, '일시중지', NULL),
+	(28, '사용중', 8),
+	(29, '사용가능', NULL),
+	(30, '사용가능', NULL),
+	(31, '사용중', 9),
+	(32, '사용가능', NULL),
+	(33, '수리중', NULL),
+	(34, '사용중', 10),
+	(35, '사용가능', NULL),
+	(36, '사용가능', NULL),
+	(37, '사용가능', NULL),
+	(38, '사용가능', NULL),
+	(39, '사용중', 11),
+	(40, '사용가능', NULL),
+	(41, '사용가능', NULL),
+	(42, '일시중지', NULL),
+	(43, '사용중', 12),
+	(44, '수리중', NULL),
+	(45, '사용중', 13),
+	(46, '사용가능', NULL),
+	(47, '사용가능', NULL),
+	(48, '사용중', 14),
+	(49, '사용가능', NULL),
+	(50, '사용가능', NULL);
+
+-- 테이블 bbs.locker_usage_history 구조 내보내기
+CREATE TABLE IF NOT EXISTS `locker_usage_history` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `locker_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `usage_date` date NOT NULL,
+  `remarks` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `locker_id` (`locker_id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `locker_usage_history_ibfk_1` FOREIGN KEY (`locker_id`) REFERENCES `lockers` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `locker_usage_history_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- 테이블 데이터 bbs.locker_usage_history:~0 rows (대략적) 내보내기
+DELETE FROM `locker_usage_history`;
+INSERT INTO `locker_usage_history` (`id`, `locker_id`, `user_id`, `usage_date`, `remarks`) VALUES
+	(1, 1, 1, '2024-03-01', '배정됨'),
+	(2, 1, 1, '2024-03-05', '반납됨'),
+	(3, 6, 2, '2024-02-20', '배정됨'),
+	(4, 6, 2, '2024-02-25', '반납됨'),
+	(5, 11, 3, '2024-03-02', '배정됨'),
+	(6, 11, 3, '2024-03-10', '반납됨'),
+	(7, 15, 4, '2024-03-05', '배정됨'),
+	(8, 15, 4, '2024-03-12', '반납됨'),
+	(9, 17, 5, '2024-02-28', '배정됨'),
+	(10, 17, 5, '2024-03-08', '반납됨'),
+	(11, 20, 6, '2024-03-06', '배정됨'),
+	(12, 25, 7, '2024-03-09', '배정됨'),
+	(13, 28, 8, '2024-03-10', '배정됨'),
+	(14, 31, 9, '2024-03-11', '배정됨'),
+	(15, 34, 10, '2024-03-12', '배정됨'),
+	(16, 39, 11, '2024-03-14', '배정됨'),
+	(17, 43, 12, '2024-03-15', '배정됨'),
+	(18, 45, 13, '2024-03-16', '배정됨'),
+	(19, 48, 14, '2024-03-17', '배정됨');
+
 -- 테이블 bbs.member 구조 내보내기
-DROP TABLE IF EXISTS `member`;
 CREATE TABLE IF NOT EXISTS `member` (
   `id` varchar(50) NOT NULL,
   `pwd` varchar(200) DEFAULT NULL,
@@ -627,7 +715,6 @@ INSERT INTO `member` (`id`, `pwd`, `name`, `email`) VALUES
 	('test0004', '$2a$10$wXs4gYfkpaN.tV2S1hJb.OqMmj0H4LJj2.Xx8cBmfvpHguV4XrYW6', '노도가', 'aa@aa.com');
 
 -- 테이블 bbs.outbound_data 구조 내보내기
-DROP TABLE IF EXISTS `outbound_data`;
 CREATE TABLE IF NOT EXISTS `outbound_data` (
   `id` char(36) NOT NULL,
   `date` date NOT NULL DEFAULT curdate(),
@@ -648,7 +735,6 @@ INSERT INTO `outbound_data` (`id`, `date`, `title`, `quantity`, `isbn`) VALUES
 	('f6114592-7a33-45dc-80b3-97dabf622c1d', '2025-01-03', '123123123123123', 11, '978-498-21606-9');
 
 -- 테이블 bbs.read_history 구조 내보내기
-DROP TABLE IF EXISTS `read_history`;
 CREATE TABLE IF NOT EXISTS `read_history` (
   `latest_access_at` varchar(50) DEFAULT NULL,
   `bbs_seq` varchar(50) DEFAULT NULL,
@@ -723,7 +809,6 @@ INSERT INTO `read_history` (`latest_access_at`, `bbs_seq`, `id`) VALUES
 	('2023-12-20 16:04:51', '1', 'string');
 
 -- 테이블 bbs.reservations 구조 내보내기
-DROP TABLE IF EXISTS `reservations`;
 CREATE TABLE IF NOT EXISTS `reservations` (
   `id` varchar(50) NOT NULL,
   `name` varchar(50) DEFAULT NULL,
@@ -748,7 +833,6 @@ INSERT INTO `reservations` (`id`, `name`, `departmentId`, `date`, `time`) VALUES
 	('9', '윤아름', 9, '2025-01-11', '09:00:00');
 
 -- 테이블 bbs.stock 구조 내보내기
-DROP TABLE IF EXISTS `stock`;
 CREATE TABLE IF NOT EXISTS `stock` (
   `stock_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -760,7 +844,6 @@ CREATE TABLE IF NOT EXISTS `stock` (
 DELETE FROM `stock`;
 
 -- 테이블 bbs.user 구조 내보내기
-DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `email` varchar(255) DEFAULT NULL,
@@ -773,6 +856,38 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 -- 테이블 데이터 bbs.user:~0 rows (대략적) 내보내기
 DELETE FROM `user`;
+
+-- 테이블 bbs.users 구조 내보내기
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- 테이블 데이터 bbs.users:~0 rows (대략적) 내보내기
+DELETE FROM `users`;
+INSERT INTO `users` (`id`, `name`) VALUES
+	(8, '강호진'),
+	(13, '권태형'),
+	(20, '김도윤'),
+	(2, '김영희'),
+	(16, '문지훈'),
+	(4, '박지영'),
+	(9, '배수진'),
+	(12, '서민호'),
+	(14, '송다은'),
+	(6, '오민준'),
+	(11, '유지은'),
+	(17, '이서연'),
+	(10, '이정환'),
+	(3, '이철수'),
+	(7, '정윤아'),
+	(18, '조민기'),
+	(19, '차수현'),
+	(5, '최수민'),
+	(15, '한지성'),
+	(1, '홍길동');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
