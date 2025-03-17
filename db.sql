@@ -603,7 +603,7 @@ CREATE TABLE IF NOT EXISTS `lockers` (
   CONSTRAINT `lockers_ibfk_1` FOREIGN KEY (`assigned_user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- 테이블 데이터 bbs.lockers:~0 rows (대략적) 내보내기
+-- 테이블 데이터 bbs.lockers:~50 rows (대략적) 내보내기
 DELETE FROM `lockers`;
 INSERT INTO `lockers` (`id`, `status`, `assigned_user_id`) VALUES
 	(1, '사용중', 1),
@@ -671,7 +671,7 @@ CREATE TABLE IF NOT EXISTS `locker_usage_history` (
   CONSTRAINT `locker_usage_history_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- 테이블 데이터 bbs.locker_usage_history:~0 rows (대략적) 내보내기
+-- 테이블 데이터 bbs.locker_usage_history:~19 rows (대략적) 내보내기
 DELETE FROM `locker_usage_history`;
 INSERT INTO `locker_usage_history` (`id`, `locker_id`, `user_id`, `usage_date`, `remarks`) VALUES
 	(1, 1, 1, '2024-03-01', '배정됨'),
@@ -865,7 +865,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- 테이블 데이터 bbs.users:~0 rows (대략적) 내보내기
+-- 테이블 데이터 bbs.users:~20 rows (대략적) 내보내기
 DELETE FROM `users`;
 INSERT INTO `users` (`id`, `name`) VALUES
 	(8, '강호진'),

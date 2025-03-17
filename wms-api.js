@@ -737,7 +737,7 @@ router.get("/getGlosReq", (req, res) => {
 
 
 router.get("/lockers", (req, res) => {
-   
+
     const sql = `SELECT 
     JSON_ARRAYAGG(
         JSON_OBJECT(
@@ -767,7 +767,7 @@ LEFT JOIN users u ON l.assigned_user_id = u.id;
         } else {
             const jsonResult = results[0].locker_data;
             res.json(JSON.parse(jsonResult));
-            
+
         }
     });
 });
