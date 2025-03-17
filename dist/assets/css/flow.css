@@ -1,0 +1,81 @@
+@import url('../vendor/handsontable/dist/handsontable.css');
+@import url('../vendor/apexcharts/dist/apexcharts.css');
+
+@import url('default.css');
+
+.ht-wrapper 
+.handsontable 
+.htRowHeaders 
+.htColumnHeaders {
+    z-index:10 !important;
+}
+
+
+.handsontable .htCore td,
+.handsontable .htCore th {
+    background-color: #f9f9f9;
+    border-color: #ddd;
+    z-index:10 !important;
+}
+
+.handsontable .htCore th {
+    background-color: #f1f1f1;
+    font-weight: bold;
+    z-index:10 !important;
+}
+
+/* Custom styles for a modern look */
+.handsontable .ht_master .htCore td,
+.handsontable .ht_master .htCore th {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    color: #333;
+    font-size: 14px;
+    text-align: center;
+    z-index:10 !important;
+}
+
+.handsontable .ht_master .htCore th {
+    background-color: #0058a3;
+    color: white;
+    font-weight: bold;
+    width: 100px;
+    z-index:10 !important
+}
+
+.handsontable .ht_master .htCore td:hover {
+    background-color: #f1f1f1;
+}
+
+.handsontable .ht_master .htCore td.highlight {
+    background-color: #dff0d8;
+}
+
+.handsontable .ht_master .htCore td.invalid {
+    background-color: #f2dede;
+}
+
+.handsontable .ht_master .htCore .currentRow {
+    background-color: #e9ecef;
+}
+
+.handsontable .ht_master .htCore .currentCol {
+    background-color: #e9ecef;
+}
+
+.ht_clone_top .htCore th {
+    background-color: #0058a3;
+    color: white;
+}
+
+.handsontable .ht_master .htCore input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.handsontable .ht_master .htCore .htDimmed {
+    color: #999;
+}

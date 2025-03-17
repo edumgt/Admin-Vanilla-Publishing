@@ -1,0 +1,42 @@
+[
+    {
+        "title": "세금계산서",
+        "type": "pdf",
+        "uploadDate": "2025-01-10",
+        "url": "sample/sample.pdf",
+        "permissions": "read",
+        "uploader": "user001"
+    },
+    {
+        "title": "거래명세서",
+        "type": "excel",
+        "uploadDate": "2025-01-09",
+        "url": "sample/sample.xlsx",
+        "permissions": "read",
+        "uploader": "user002"
+    },
+    {
+        "title": "재무제표",
+        "type": "word",
+        "uploadDate": "2025-01-08",
+        "url": "sample/sample.docx",
+        "permissions": "read",
+        "uploader": "user003"
+    },
+    {
+        "title": "원천징수영수증",
+        "type": "pdf",
+        "uploadDate": "2025-01-07",
+        "url": "sample/sample.pdf",
+        "permissions": "none",
+        "uploader": "user004"
+    },
+    {
+        "title": "부가세신고서",
+        "type": "word",
+        "uploadDate": "2025-01-06",
+        "url": "sample/sample.docx",
+        "permissions": "read",
+        "uploader": "user005"
+    }
+]

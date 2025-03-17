@@ -1,0 +1,104 @@
+@import url('default.css');
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.timeline-header {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 10px 0;
+    margin-bottom: 10px;
+}
+
+.timeline-header .day {
+    flex: 1;
+    text-align: center;
+    border-right: 1px solid #ddd;
+}
+
+.timeline-header .day:last-child {
+    border-right: none;
+}
+
+.timeline-header .today {
+    background-color: red;
+    color: white;
+}
+
+.timeline {
+    position: relative;
+    border: 1px solid #ddd;
+    overflow: hidden;
+    height: 600px;
+    background-size: 100% 70px;
+    background-image: linear-gradient(to bottom, #ddd 1px, transparent 1px);
+}
+
+.event {
+    position: absolute;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: move;
+    margin: 5px 0;
+}
+
+.event:active {
+    cursor: move;
+}
+
+.carousel-btn {
+    cursor: pointer;
+    background: #0058a3;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 6px;
+    margin: 0 5px;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+    z-index: 50;
+}
+
+.popup.active {
+    display: block;
+}
+
+.popup input {
+    display: block;
+    margin-bottom: 10px;
+    padding: 3px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+    display: none;
+}
+
+.event-date {
+    display: block;
+    font-size: 12px;
+    color: white;
+    opacity: 0.9;
+    text-align: right;
+    margin-bottom: 2px;
+}
