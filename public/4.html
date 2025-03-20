@@ -1,0 +1,134 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <title>AG Grid DB Admin</title>
+
+  <!-- ag-Grid Community CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-grid.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-alpine.css" />
+</head>
+<body>
+  <h1>AG Grid DB Admin Tool</h1>
+
+  <!-- DB 연결 입력 폼 -->
+  <div>
+    <label>Host:
+      <input type="text" id="host" value="localhost">
+    </label>
+    <label>User:
+      <input type="text" id="user" value="sa">
+    </label>
+    <label>Password:
+      <input type="password" id="password" value="password">
+    </label>
+    <label>Database:
+      <input type="text" id="database" value="testdb">
+    </label>
+    <button id="btnConnect">Connect DB</button>
+  </div>
+  <hr />
+
+  <!-- 쿼리 입력 폼 -->
+  <div>
+    <label>Query:</label>
+    <br />
+    <textarea id="query" rows="5" cols="50">SELECT * FROM SomeTable</textarea>
+    <br />
+    <button id="btnQuery">Run Query (Default Config)</button>
+  </div>
+  <hr />
+
+  <!-- ag-Grid 출력 영역 -->
+  <div id="myGrid" class="ag-theme-alpine" style="height: 400px; width: 800px;"></div>
+
+  <!-- ag-Grid Community JS -->
+  <script src="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
+
+  <script>
+    // HTML 요소 참조
+    const hostInput = document.getElementById('host');
+    const userInput = document.getElementById('user');
+    const passwordInput = document.getElementById('password');
+    const dbInput = document.getElementById('database');
+    const queryInput = document.getElementById('query');
+    const btnConnect = document.getElementById('btnConnect');
+    const btnQuery = document.getElementById('btnQuery');
+
+    // ag-Grid 초기 설정
+    const gridDiv = document.getElementById('myGrid');
+    const gridOptions = {
+      columnDefs: [],
+      rowData: []
+    };
+
+    // ag-Grid Grid 인스턴스 생성
+    new agGrid.Grid(gridDiv, gridOptions);
+
+    // DB 연결 테스트 (Dynamic Connect)
+    btnConnect.addEventListener('click', async () => {
+      const payload = {
+        host: hostInput.value,
+        user: userInput.value,
+        password: passwordInput.value,
+        database: dbInput.value
+      };
+
+      try {
+        const response = await fetch('/db/dynamicConnect', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const result = await response.json();
+        if (result.success) {
+          alert('DB Connection Succeeded!\n' + JSON.stringify(result.data));
+        } else {
+          alert('DB Connection Failed:\n' + result.message + '\n' + result.error);
+        }
+      } catch (err) {
+        alert('Fetch Error: ' + err.message);
+      }
+    });
+
+    // 쿼리 실행 (기본 dbConfig 사용)
+    btnQuery.addEventListener('click', async () => {
+      const payload = {
+        query: queryInput.value
+      };
+
+      try {
+        const response = await fetch('/db/query', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const result = await response.json();
+        if (result.success) {
+          // result.data는 [{colA: valA, colB: valB, ...}, {...}, ...] 형식
+          const rows = result.data;
+          // 컬럼 정의 동적 생성
+          const columnDefs = createColumnDefsFromData(rows);
+
+          // ag-Grid에 컬럼/데이터 적용
+          gridOptions.api.setColumnDefs(columnDefs);
+          gridOptions.api.setRowData(rows);
+        } else {
+          alert('Query Failed:\n' + result.message + '\n' + result.error);
+        }
+      } catch (err) {
+        alert('Fetch Error: ' + err.message);
+      }
+    });
+
+    // 레코드 결과를 바탕으로 컬럼 정의 자동 생성
+    function createColumnDefsFromData(data) {
+      if (!Array.isArray(data) || data.length === 0) {
+        return [];
+      }
+      return Object.keys(data[0]).map(key => ({ field: key }));
+    }
+  </script>
+</body>
+</html>
