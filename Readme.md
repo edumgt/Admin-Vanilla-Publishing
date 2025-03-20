@@ -39,3 +39,6 @@
 # });
 
 # app.use(express.static('dist'));
+
+## npm run dev
+## 127.0.0.1:3000
