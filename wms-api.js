@@ -19,6 +19,9 @@ db.connect(err => {
     }
 });
 
+
+const pool = require('./db'); // 위에서 만든 db.js
+
 /**
  * @swagger
  * /inbound:
@@ -771,6 +774,59 @@ LEFT JOIN users u ON l.assigned_user_id = u.id;
         }
     });
 });
+
+
+router.get('/menu', function (req, res) {
+    // 콜백 방식으로 pool.getConnection
+    pool.getConnection(function (err, connection) {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'DB Connection Error' });
+      }
+  
+      // connection.query(쿼리문, 콜백)
+      const sql = `
+        SELECT
+          mp.page_name,
+          mi.href,
+          mi.label,
+          im.icon_class
+        FROM menu_page mp
+        JOIN menu_item mi ON mp.id = mi.menu_page_id
+        LEFT JOIN icon_mapping im ON mi.label = im.label
+        ORDER BY mp.page_name, mi.id
+      `;
+      connection.query(sql, function (err, rows) {
+        // 커넥션은 반드시 반환
+        connection.release();
+  
+        if (err) {
+          console.error(err);
+          return res.status(500).json({ error: 'Query Error' });
+        }
+  
+        // rows 를 menuConfigurations 형태로 가공
+        const menuData = {};
+        rows.forEach(function (row) {
+          const pageName = row.page_name;
+          if (!menuData[pageName]) {
+            menuData[pageName] = [];
+          }
+          menuData[pageName].push({
+            href: row.href,
+            text: row.label,
+            icon: row.icon_class || null
+          });
+        });
+  
+        // JSON 응답
+        res.json(menuData);
+      });
+    });
+  });
+  
+ 
+
 
 
 module.exports = router;

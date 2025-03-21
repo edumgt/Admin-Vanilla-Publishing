@@ -107,7 +107,7 @@ function renderOffCanvasMenu(menuItems) {
         span.className = 'menu-text';
         span.textContent = item.text;
 
-        
+
         if (item.href === currentPage) {
             icon.classList.remove('text-blue-400');
             icon.classList.add('text-gray-800');
@@ -349,6 +349,28 @@ const menuConfigurations = {
     ],
 
 };
+
+fetch('/api/menu')
+    .then(res => res.json())
+    .then(data => {
+
+        /**
+         * Object.assign 사용 예시
+         */
+        Object.assign(menuConfigurations, data);
+        // => menuConfigurations 안에 data 내용을 합침 (병합)
+
+        /**
+         * 전개 연산자 사용 예시
+         */
+        Object.keys(data).forEach(key => {
+            menuConfigurations[key] = data[key];
+        });
+
+    })
+    .catch(console.error);
+
+
 
 const defaultMenuItems = [];
 const menuItems = (menuConfigurations[currentPage] || defaultMenuItems).map(item => ({
@@ -763,7 +785,7 @@ memberMenu.innerHTML = `<div class="bg-white shadow-lg p-3 rounded-md border">
                 </div>`;
 
 memberIcon.addEventListener('click', function (event) {
-    event.stopPropagation(); 
+    event.stopPropagation();
 
     memberMenu.style.position = `absolute`;
     memberMenu.style.top = `45px`;
@@ -1147,7 +1169,7 @@ document.addEventListener('DOMContentLoaded', () => {
         offCanvasItems[2].textContent = offCanvasLabels.orgtree;
         offCanvasItems[3].textContent = offCanvasLabels.document;
         offCanvasItems[4].textContent = offCanvasLabels.wms;
-    }else if (currentPage.includes("orgtree")) {
+    } else if (currentPage.includes("orgtree")) {
         breadcrumb.textContent = offCanvasLabels.orgtree;
         offCanvasItems[0].textContent = offCanvasLabels.system;
         offCanvasItems[1].textContent = offCanvasLabels.glos;
