@@ -1,53 +1,70 @@
-<!-- public/index.html -->
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="utf-8" />
-  <title>AG Grid DB Admin</title>
+  <title>TUI Grid DB Admin</title>
 
-  <!-- ag-Grid Community CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-grid.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-alpine.css" />
+  <link href="assets/css/default.css" rel="stylesheet">
+
+  <!-- TUI Grid JS (필수) -->
+  <script src="https://uicdn.toast.com/tui-grid/latest/tui-grid.js"></script>
+
 </head>
+
 <body>
-  <h1>AG Grid DB Admin Tool</h1>
+  <div id="cmmContainer"></div>
 
-  <!-- DB 연결 입력 폼 -->
-  <div>
-    <label>Host:
-      <input type="text" id="host" value="localhost">
-    </label>
-    <label>User:
-      <input type="text" id="user" value="sa">
-    </label>
-    <label>Password:
-      <input type="password" id="password" value="password">
-    </label>
-    <label>Database:
-      <input type="text" id="database" value="testdb">
-    </label>
-    <button id="btnConnect">Connect DB</button>
+  <nav class="breadcrumb"></nav>
+
+  <div id="content">
+
+
+    <!-- DB 연결 입력 폼 -->
+    <div>
+      <label>Host:
+        <input type="text" id="host" value="localhost">
+      </label>
+      <label>User:
+        <input type="text" id="user" value="sa">
+      </label>
+      <label>Password:
+        <input type="text" id="password" value="123456">
+      </label>
+      <label>Database:
+        <input type="text" id="database" value="WiseJiwon">
+      </label>
+      <button id="btnConnect">Connect DB</button>
+    </div>
+    <hr />
+
+    <!-- 쿼리 입력 폼 -->
+    <div>
+      <label>Query:</label>
+      <br />
+      <textarea id="query" rows="3" cols="50">SELECT * FROM wisejiwon.dbo.univ</textarea>
+      <br />
+      <button id="btnQuery">Run Query (Default Config)</button>
+    </div>
+    <hr />
+
+    <!-- TUI Grid 출력 영역 -->
+    <div id="myGrid" style="width: 100%; height: 600px;"></div>
   </div>
-  <hr />
-
-  <!-- 쿼리 입력 폼 -->
-  <div>
-    <label>Query:</label>
-    <br />
-    <textarea id="query" rows="5" cols="50">SELECT * FROM SomeTable</textarea>
-    <br />
-    <button id="btnQuery">Run Query (Default Config)</button>
-  </div>
-  <hr />
-
-  <!-- ag-Grid 출력 영역 -->
-  <div id="myGrid" class="ag-theme-alpine" style="height: 400px; width: 800px;"></div>
-
-  <!-- ag-Grid Community JS -->
-  <script src="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
 
   <script>
-    // HTML 요소 참조
+    // 1) TUI Grid 인스턴스 생성
+    // 초기에는 빈 컬럼/빈 데이터로 시작
+    const grid = new tui.Grid({
+      el: document.getElementById('myGrid'),
+      data: [],
+      columns: [],
+      // scrollX / scrollY 옵션, viewport 옵션 등은 필요에 따라 추가
+      scrollX: false,
+      scrollY: true
+    });
+
+    // 2) HTML 요소 참조
     const hostInput = document.getElementById('host');
     const userInput = document.getElementById('user');
     const passwordInput = document.getElementById('password');
@@ -56,17 +73,7 @@
     const btnConnect = document.getElementById('btnConnect');
     const btnQuery = document.getElementById('btnQuery');
 
-    // ag-Grid 초기 설정
-    const gridDiv = document.getElementById('myGrid');
-    const gridOptions = {
-      columnDefs: [],
-      rowData: []
-    };
-
-    // ag-Grid Grid 인스턴스 생성
-    new agGrid.createGrid(gridDiv, gridOptions);
-
-    // DB 연결 테스트 (Dynamic Connect)
+    // [Connect DB] 버튼: 동적 DB 연결 테스트
     btnConnect.addEventListener('click', async () => {
       const payload = {
         host: hostInput.value,
@@ -79,7 +86,7 @@
         const response = await fetch('/db/dynamicConnect', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
+          body: JSON.stringify(payload),
         });
         const result = await response.json();
         if (result.success) {
@@ -92,28 +99,25 @@
       }
     });
 
-    // 쿼리 실행 (기본 dbConfig 사용)
+    // [Run Query] 버튼: 기본 dbConfig로 쿼리 실행
     btnQuery.addEventListener('click', async () => {
-      const payload = {
-        query: queryInput.value
-      };
+      const payload = { query: queryInput.value };
 
       try {
         const response = await fetch('/db/query', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
+          body: JSON.stringify(payload),
         });
         const result = await response.json();
         if (result.success) {
-          // result.data는 [{colA: valA, colB: valB, ...}, {...}, ...] 형식
+          // rows: [{colA: valA, colB: valB, ...}, {...}, ...]
           const rows = result.data;
-          // 컬럼 정의 동적 생성
-          const columnDefs = createColumnDefsFromData(rows);
-
-          // ag-Grid에 컬럼/데이터 적용
-          gridOptions.api.setColumnDefs(columnDefs);
-          gridOptions.api.setRowData(rows);
+          // (1) 동적 컬럼 생성
+          const columns = createDynamicColumns(rows);
+          // (2) TUI Grid에 컬럼 / 데이터 적용
+          grid.setColumns(columns);
+          grid.resetData(rows); // 기존 데이터 지우고 새로 세팅
         } else {
           alert('Query Failed:\n' + result.message + '\n' + result.error);
         }
@@ -122,13 +126,23 @@
       }
     });
 
-    // 레코드 결과를 바탕으로 컬럼 정의 자동 생성
-    function createColumnDefsFromData(data) {
-      if (!Array.isArray(data) || data.length === 0) {
+    /**
+     * 레코드 결과를 바탕으로 TUI Grid 컬럼 정의 배열을 동적으로 생성
+     * @param {Array} rows - [{colA: valA, colB: valB, ...}, {...}, ...]
+     * @returns {Array} - [{header: 'colA', name: 'colA'}, ...]
+     */
+    function createDynamicColumns(rows) {
+      if (!Array.isArray(rows) || rows.length === 0) {
         return [];
       }
-      return Object.keys(data[0]).map(key => ({ field: key }));
+      const keys = Object.keys(rows[0]);
+      return keys.map(key => ({
+        header: key,
+        name: key
+      }));
     }
   </script>
+  <script type="module" src="assets/js/logomodule.js"></script>
 </body>
+
 </html>
