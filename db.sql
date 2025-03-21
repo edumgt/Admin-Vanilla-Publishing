@@ -14,11 +14,6 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-
--- bbs 데이터베이스 구조 내보내기
-CREATE DATABASE IF NOT EXISTS `bbs` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
-USE `bbs`;
-
 -- 테이블 bbs.bbs 구조 내보내기
 CREATE TABLE IF NOT EXISTS `bbs` (
   `seq` int(11) NOT NULL AUTO_INCREMENT,
@@ -555,6 +550,41 @@ INSERT INTO `glos_req` (`id`, `glos_id`, `req_msg`, `req_date`) VALUES
 	(8, 119, '내용을 ~~ 바꿔 주세요', '2025-03-09'),
 	(9, 1, '테스트 입니다.', '2025-03-09');
 
+-- 테이블 bbs.icon_mapping 구조 내보내기
+CREATE TABLE IF NOT EXISTS `icon_mapping` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `label` varchar(100) NOT NULL,
+  `icon_class` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- 테이블 데이터 bbs.icon_mapping:~23 rows (대략적) 내보내기
+DELETE FROM `icon_mapping`;
+INSERT INTO `icon_mapping` (`id`, `label`, `icon_class`) VALUES
+	(1, '조직도구성', 'fa-sitemap'),
+	(2, '근태관리', 'fa-user-clock'),
+	(3, '인센티브', 'fa-gift'),
+	(4, '업무일정', 'fa-calendar-alt'),
+	(5, '프로젝트일정', 'fa-tasks'),
+	(6, '생산일정', 'fa-industry'),
+	(7, '회원통계', 'fa-user'),
+	(8, '매출통계', 'fa-chart-line'),
+	(9, '체인운영', 'fa-store-alt'),
+	(10, '예약관리', 'fa-calendar-plus'),
+	(11, '회의실관리', 'fa-door-open'),
+	(12, '병원예약', 'fa-hospital'),
+	(13, '강의일정', 'fa-chalkboard-teacher'),
+	(14, '행정구역정보', 'fa-map-marked-alt'),
+	(15, '시스템로그', 'fa-clipboard-list'),
+	(16, '컨설팅지정', 'fa-network-wired'),
+	(17, '서베이', 'fa-poll'),
+	(18, '코드관리', 'fa-server'),
+	(19, '권한관리', 'fa-user-shield'),
+	(20, '문서관리', 'fa-file-alt'),
+	(21, 'WMS', 'fa-cubes'),
+	(22, '용어관리', 'fa-book'),
+	(23, '사물함', 'fa-archive');
+
 -- 테이블 bbs.inbound_data 구조 내보내기
 CREATE TABLE IF NOT EXISTS `inbound_data` (
   `id` varchar(50) NOT NULL DEFAULT '0',
@@ -713,6 +743,149 @@ INSERT INTO `member` (`id`, `pwd`, `name`, `email`) VALUES
 	('test0002', '$2a$10$EAsVdOzTN3mttYSmyh1lWO8TD3H/e0hRPnWxdcWaoRJT/m1eK5aW.', '김장성', 'a@a.com'),
 	('test0003', '$2a$10$eyy06XA.kAoGX/RUr4dHGOmYgphsZQqkdx8oEhcUjkTmzo4zlLmJC', '박덩그', 'pa@aa.com'),
 	('test0004', '$2a$10$wXs4gYfkpaN.tV2S1hJb.OqMmj0H4LJj2.Xx8cBmfvpHguV4XrYW6', '노도가', 'aa@aa.com');
+
+-- 테이블 bbs.menu_item 구조 내보내기
+CREATE TABLE IF NOT EXISTS `menu_item` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `menu_page_id` int(11) NOT NULL,
+  `href` varchar(100) NOT NULL,
+  `label` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_menu_page` (`menu_page_id`),
+  CONSTRAINT `fk_menu_page` FOREIGN KEY (`menu_page_id`) REFERENCES `menu_page` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- 테이블 데이터 bbs.menu_item:~93 rows (대략적) 내보내기
+DELETE FROM `menu_item`;
+INSERT INTO `menu_item` (`id`, `menu_page_id`, `href`, `label`) VALUES
+	(1, 1, 'orgni.html', '조직도구성'),
+	(2, 1, 'attend.html', '근태관리'),
+	(3, 1, 'total.html', '인센티브'),
+	(4, 2, 'calendar.html', '업무일정'),
+	(5, 2, 'trello.html', '프로젝트일정'),
+	(6, 2, 'timeline.html', '생산일정'),
+	(7, 3, 'stati.html', '회원통계'),
+	(8, 3, 'flow.html', '매출통계'),
+	(9, 3, 'chain.html', '체인운영'),
+	(10, 4, 'work.html', '예약관리'),
+	(11, 4, 'meeting.html', '회의실관리'),
+	(12, 4, 'hospital.html', '병원예약'),
+	(13, 4, 'lectures.html', '강의일정'),
+	(14, 4, 'city.html', '행정구역정보'),
+	(15, 5, 'config.html', '시스템로그'),
+	(16, 5, 'network.html', '컨설팅지정'),
+	(17, 5, 'survey.html', '서베이'),
+	(18, 5, 'locker.html', '사물함'),
+	(19, 6, 'system.html', '코드관리'),
+	(20, 6, 'glos.html', '용어관리'),
+	(21, 6, 'orgtree.html', '권한관리'),
+	(22, 6, 'document.html', '문서관리'),
+	(23, 6, 'wms.html', 'WMS'),
+	(24, 7, 'stati.html', '회원통계'),
+	(25, 7, 'flow.html', '매출통계'),
+	(26, 7, 'chain.html', '체인운영'),
+	(27, 8, 'system.html', '코드관리'),
+	(28, 8, 'glos.html', '용어관리'),
+	(29, 8, 'orgtree.html', '권한관리'),
+	(30, 8, 'document.html', '문서관리'),
+	(31, 8, 'wms.html', 'WMS'),
+	(32, 9, 'work.html', '예약관리'),
+	(33, 9, 'meeting.html', '회의실관리'),
+	(34, 9, 'hospital.html', '병원예약'),
+	(35, 9, 'lectures.html', '강의일정'),
+	(36, 9, 'city.html', '행정구역정보'),
+	(37, 10, 'config.html', '시스템로그'),
+	(38, 10, 'network.html', '컨설팅지정'),
+	(39, 10, 'survey.html', '서베이'),
+	(40, 10, 'locker.html', '사물함'),
+	(41, 11, 'work.html', '예약관리'),
+	(42, 11, 'meeting.html', '회의실관리'),
+	(43, 11, 'hospital.html', '병원예약'),
+	(44, 11, 'lectures.html', '강의일정'),
+	(45, 11, 'city.html', '행정구역정보'),
+	(46, 12, 'work.html', '예약관리'),
+	(47, 12, 'meeting.html', '회의실관리'),
+	(48, 12, 'hospital.html', '병원예약'),
+	(49, 12, 'lectures.html', '강의일정'),
+	(50, 12, 'city.html', '행정구역정보'),
+	(51, 13, 'config.html', '시스템로그'),
+	(52, 13, 'network.html', '컨설팅지정'),
+	(53, 13, 'survey.html', '서베이'),
+	(54, 13, 'locker.html', '사물함'),
+	(55, 14, 'orgni.html', '조직도구성'),
+	(56, 14, 'attend.html', '근태관리'),
+	(57, 14, 'total.html', '인센티브'),
+	(58, 15, 'system.html', '코드관리'),
+	(59, 15, 'glos.html', '용어관리'),
+	(60, 15, 'orgtree.html', '권한관리'),
+	(61, 15, 'document.html', '문서관리'),
+	(62, 15, 'wms.html', 'WMS'),
+	(63, 16, 'stati.html', '회원통계'),
+	(64, 16, 'flow.html', '매출통계'),
+	(65, 16, 'chain.html', '체인운영'),
+	(66, 17, 'config.html', '시스템로그'),
+	(67, 17, 'network.html', '컨설팅지정'),
+	(68, 17, 'survey.html', '서베이'),
+	(69, 17, 'locker.html', '사물함'),
+	(70, 18, 'system.html', '코드관리'),
+	(71, 18, 'glos.html', '용어관리'),
+	(72, 18, 'orgtree.html', '권한관리'),
+	(73, 18, 'document.html', '문서관리'),
+	(74, 18, 'wms.html', 'WMS'),
+	(75, 19, 'calendar.html', '업무일정'),
+	(76, 19, 'trello.html', '프로젝트일정'),
+	(77, 19, 'timeline.html', '생산일정'),
+	(78, 20, 'orgni.html', '조직도구성'),
+	(79, 20, 'attend.html', '근태관리'),
+	(80, 20, 'total.html', '인센티브'),
+	(81, 21, 'calendar.html', '업무일정'),
+	(82, 21, 'trello.html', '프로젝트일정'),
+	(83, 21, 'timeline.html', '생산일정'),
+	(84, 22, 'system.html', '코드관리'),
+	(85, 22, 'glos.html', '용어관리'),
+	(86, 22, 'orgtree.html', '권한관리'),
+	(87, 22, 'document.html', '문서관리'),
+	(88, 22, 'wms.html', 'WMS'),
+	(89, 23, 'work.html', '예약관리'),
+	(90, 23, 'meeting.html', '회의실관리'),
+	(91, 23, 'hospital.html', '병원예약'),
+	(92, 23, 'lectures.html', '강의일정'),
+	(93, 23, 'city.html', '행정구역정보');
+
+-- 테이블 bbs.menu_page 구조 내보내기
+CREATE TABLE IF NOT EXISTS `menu_page` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `page_name` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `page_name` (`page_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- 테이블 데이터 bbs.menu_page:~23 rows (대략적) 내보내기
+DELETE FROM `menu_page`;
+INSERT INTO `menu_page` (`id`, `page_name`) VALUES
+	(1, 'attend.html'),
+	(2, 'calendar.html'),
+	(3, 'chain.html'),
+	(4, 'city.html'),
+	(5, 'config.html'),
+	(6, 'document.html'),
+	(7, 'flow.html'),
+	(8, 'glos.html'),
+	(9, 'hospital.html'),
+	(11, 'lectures.html'),
+	(10, 'locker.html'),
+	(12, 'meeting.html'),
+	(13, 'network.html'),
+	(14, 'orgni.html'),
+	(15, 'orgtree.html'),
+	(16, 'stati.html'),
+	(17, 'survey.html'),
+	(18, 'system.html'),
+	(19, 'timeline.html'),
+	(20, 'total.html'),
+	(21, 'trello.html'),
+	(22, 'wms.html'),
+	(23, 'work.html');
 
 -- 테이블 bbs.outbound_data 구조 내보내기
 CREATE TABLE IF NOT EXISTS `outbound_data` (
