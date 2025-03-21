@@ -174,201 +174,211 @@ const iconMapping = {
 };
 
 
-const menuConfigurations = {
-    'attend.html': [
-        { href: 'orgni.html', text: '조직도구성' },
-        { href: 'attend.html', text: '근태관리' },
-        { href: 'total.html', text: '인센티브' },
+// const menuConfigurations = {
+//     'attend.html': [
+//         { href: 'orgni.html', text: '조직도구성' },
+//         { href: 'attend.html', text: '근태관리' },
+//         { href: 'total.html', text: '인센티브' },
 
-    ],
+//     ],
 
-    'calendar.html': [
-        { href: 'calendar.html', text: '업무일정' },
-        { href: 'trello.html', text: '프로젝트일정' },
-        { href: 'timeline.html', text: '생산일정' },
+//     'calendar.html': [
+//         { href: 'calendar.html', text: '업무일정' },
+//         { href: 'trello.html', text: '프로젝트일정' },
+//         { href: 'timeline.html', text: '생산일정' },
 
-    ],
+//     ],
 
-    'chain.html': [
-        { href: 'stati.html', text: '회원통계' },
-        { href: 'flow.html', text: '매출통계' },
-        { href: 'chain.html', text: '체인운영' },
+//     'chain.html': [
+//         { href: 'stati.html', text: '회원통계' },
+//         { href: 'flow.html', text: '매출통계' },
+//         { href: 'chain.html', text: '체인운영' },
 
-    ],
+//     ],
 
-    'city.html': [
-        { href: 'work.html', text: '예약관리' },
-        { href: 'meeting.html', text: '회의실관리' },
-        { href: 'hospital.html', text: '병원예약' },
-        { href: 'lectures.html', text: '강의일정' },
-        { href: 'city.html', text: '행정구역정보' }
-    ],
+//     'city.html': [
+//         { href: 'work.html', text: '예약관리' },
+//         { href: 'meeting.html', text: '회의실관리' },
+//         { href: 'hospital.html', text: '병원예약' },
+//         { href: 'lectures.html', text: '강의일정' },
+//         { href: 'city.html', text: '행정구역정보' }
+//     ],
 
-    'config.html': [
-        { href: 'config.html', text: '시스템로그' },
-        { href: 'network.html', text: '컨설팅지정' },
-        { href: 'survey.html', text: '서베이' },
-        { href: 'locker.html', text: '사물함' }
-    ],
+//     'config.html': [
+//         { href: 'config.html', text: '시스템로그' },
+//         { href: 'network.html', text: '컨설팅지정' },
+//         { href: 'survey.html', text: '서베이' },
+//         { href: 'locker.html', text: '사물함' }
+//     ],
 
-    'document.html': [
-        { href: 'system.html', text: '코드관리' },
-        { href: 'glos.html', text: '용어관리' },
-        { href: 'orgtree.html', text: '권한관리' },
-        { href: 'document.html', text: '문서관리' },
-        { href: 'wms.html', text: 'WMS' }
-    ],
+//     'document.html': [
+//         { href: 'system.html', text: '코드관리' },
+//         { href: 'glos.html', text: '용어관리' },
+//         { href: 'orgtree.html', text: '권한관리' },
+//         { href: 'document.html', text: '문서관리' },
+//         { href: 'wms.html', text: 'WMS' }
+//     ],
 
-    'flow.html': [
-        { href: 'stati.html', text: '회원통계' },
-        { href: 'flow.html', text: '매출통계' },
-        { href: 'chain.html', text: '체인운영' },
+//     'flow.html': [
+//         { href: 'stati.html', text: '회원통계' },
+//         { href: 'flow.html', text: '매출통계' },
+//         { href: 'chain.html', text: '체인운영' },
 
-    ],
+//     ],
 
-    'glos.html': [
-        { href: 'system.html', text: '코드관리' },
-        { href: 'glos.html', text: '용어관리' },
-        { href: 'orgtree.html', text: '권한관리' },
-        { href: 'document.html', text: '문서관리' },
-        { href: 'wms.html', text: 'WMS' }
-    ],
+//     'glos.html': [
+//         { href: 'system.html', text: '코드관리' },
+//         { href: 'glos.html', text: '용어관리' },
+//         { href: 'orgtree.html', text: '권한관리' },
+//         { href: 'document.html', text: '문서관리' },
+//         { href: 'wms.html', text: 'WMS' }
+//     ],
 
-    'hospital.html': [
-        { href: 'work.html', text: '예약관리' },
-        { href: 'meeting.html', text: '회의실관리' },
-        { href: 'hospital.html', text: '병원예약' },
-        { href: 'lectures.html', text: '강의일정' },
-        { href: 'city.html', text: '행정구역정보' }
-    ],
+//     'hospital.html': [
+//         { href: 'work.html', text: '예약관리' },
+//         { href: 'meeting.html', text: '회의실관리' },
+//         { href: 'hospital.html', text: '병원예약' },
+//         { href: 'lectures.html', text: '강의일정' },
+//         { href: 'city.html', text: '행정구역정보' }
+//     ],
 
-    'locker.html': [
-        { href: 'config.html', text: '시스템로그' },
-        { href: 'network.html', text: '컨설팅지정' },
-        { href: 'survey.html', text: '서베이' },
-        { href: 'locker.html', text: '사물함' }
-    ],
+//     'locker.html': [
+//         { href: 'config.html', text: '시스템로그' },
+//         { href: 'network.html', text: '컨설팅지정' },
+//         { href: 'survey.html', text: '서베이' },
+//         { href: 'locker.html', text: '사물함' }
+//     ],
 
-    'lectures.html': [
-        { href: 'work.html', text: '예약관리' },
-        { href: 'meeting.html', text: '회의실관리' },
-        { href: 'hospital.html', text: '병원예약' },
-        { href: 'lectures.html', text: '강의일정' },
-        { href: 'city.html', text: '행정구역정보' }
-    ],
+//     'lectures.html': [
+//         { href: 'work.html', text: '예약관리' },
+//         { href: 'meeting.html', text: '회의실관리' },
+//         { href: 'hospital.html', text: '병원예약' },
+//         { href: 'lectures.html', text: '강의일정' },
+//         { href: 'city.html', text: '행정구역정보' }
+//     ],
 
-    'meeting.html': [
-        { href: 'work.html', text: '예약관리' },
-        { href: 'meeting.html', text: '회의실관리' },
-        { href: 'hospital.html', text: '병원예약' },
-        { href: 'lectures.html', text: '강의일정' },
-        { href: 'city.html', text: '행정구역정보' }
-    ],
-
-
-    'network.html': [
-        { href: 'config.html', text: '시스템로그' },
-        { href: 'network.html', text: '컨설팅지정' },
-        { href: 'survey.html', text: '서베이' },
-        { href: 'locker.html', text: '사물함' }
-    ],
-
-    'orgni.html': [
-        { href: 'orgni.html', text: '조직도구성' },
-        { href: 'attend.html', text: '근태관리' },
-        { href: 'total.html', text: '인센티브' },
-
-    ],
-
-    'orgtree.html': [
-        { href: 'system.html', text: '코드관리' },
-        { href: 'glos.html', text: '용어관리' },
-        { href: 'orgtree.html', text: '권한관리' },
-        { href: 'document.html', text: '문서관리' },
-        { href: 'wms.html', text: 'WMS' }
-    ],
+//     'meeting.html': [
+//         { href: 'work.html', text: '예약관리' },
+//         { href: 'meeting.html', text: '회의실관리' },
+//         { href: 'hospital.html', text: '병원예약' },
+//         { href: 'lectures.html', text: '강의일정' },
+//         { href: 'city.html', text: '행정구역정보' }
+//     ],
 
 
-    'stati.html': [
-        { href: 'stati.html', text: '회원통계' },
-        { href: 'flow.html', text: '매출통계' },
-        { href: 'chain.html', text: '체인운영' },
+//     'network.html': [
+//         { href: 'config.html', text: '시스템로그' },
+//         { href: 'network.html', text: '컨설팅지정' },
+//         { href: 'survey.html', text: '서베이' },
+//         { href: 'locker.html', text: '사물함' }
+//     ],
 
-    ],
+//     'orgni.html': [
+//         { href: 'orgni.html', text: '조직도구성' },
+//         { href: 'attend.html', text: '근태관리' },
+//         { href: 'total.html', text: '인센티브' },
 
-    'survey.html': [
-        { href: 'config.html', text: '시스템로그' },
-        { href: 'network.html', text: '컨설팅지정' },
-        { href: 'survey.html', text: '서베이' },
-        { href: 'locker.html', text: '사물함' }
-    ],
+//     ],
 
-    'system.html': [
-        { href: 'system.html', text: '코드관리' },
-        { href: 'glos.html', text: '용어관리' },
-        { href: 'orgtree.html', text: '권한관리' },
-        { href: 'document.html', text: '문서관리' },
-        { href: 'wms.html', text: 'WMS' }
-    ],
+//     'orgtree.html': [
+//         { href: 'system.html', text: '코드관리' },
+//         { href: 'glos.html', text: '용어관리' },
+//         { href: 'orgtree.html', text: '권한관리' },
+//         { href: 'document.html', text: '문서관리' },
+//         { href: 'wms.html', text: 'WMS' }
+//     ],
 
-    'timeline.html': [
-        { href: 'calendar.html', text: '업무일정' },
-        { href: 'trello.html', text: '프로젝트일정' },
-        { href: 'timeline.html', text: '생산일정' },
 
-    ],
+//     'stati.html': [
+//         { href: 'stati.html', text: '회원통계' },
+//         { href: 'flow.html', text: '매출통계' },
+//         { href: 'chain.html', text: '체인운영' },
 
-    'total.html': [
-        { href: 'orgni.html', text: '조직도구성' },
-        { href: 'attend.html', text: '근태관리' },
-        { href: 'total.html', text: '인센티브' },
+//     ],
 
-    ],
+//     'survey.html': [
+//         { href: 'config.html', text: '시스템로그' },
+//         { href: 'network.html', text: '컨설팅지정' },
+//         { href: 'survey.html', text: '서베이' },
+//         { href: 'locker.html', text: '사물함' }
+//     ],
 
-    'trello.html': [
-        { href: 'calendar.html', text: '업무일정' },
-        { href: 'trello.html', text: '프로젝트일정' },
-        { href: 'timeline.html', text: '생산일정' },
+//     'system.html': [
+//         { href: 'system.html', text: '코드관리' },
+//         { href: 'glos.html', text: '용어관리' },
+//         { href: 'orgtree.html', text: '권한관리' },
+//         { href: 'document.html', text: '문서관리' },
+//         { href: 'wms.html', text: 'WMS' }
+//     ],
 
-    ],
+//     'timeline.html': [
+//         { href: 'calendar.html', text: '업무일정' },
+//         { href: 'trello.html', text: '프로젝트일정' },
+//         { href: 'timeline.html', text: '생산일정' },
 
-    'wms.html': [
-        { href: 'system.html', text: '코드관리' },
-        { href: 'glos.html', text: '용어관리' },
-        { href: 'orgtree.html', text: '권한관리' },
-        { href: 'document.html', text: '문서관리' },
-        { href: 'wms.html', text: 'WMS' }
-    ],
+//     ],
 
-    'work.html': [
-        { href: 'work.html', text: '예약관리' },
-        { href: 'meeting.html', text: '회의실관리' },
-        { href: 'hospital.html', text: '병원예약' },
-        { href: 'lectures.html', text: '강의일정' },
-        { href: 'city.html', text: '행정구역정보' }
-    ],
+//     'total.html': [
+//         { href: 'orgni.html', text: '조직도구성' },
+//         { href: 'attend.html', text: '근태관리' },
+//         { href: 'total.html', text: '인센티브' },
 
-};
+//     ],
 
+//     'trello.html': [
+//         { href: 'calendar.html', text: '업무일정' },
+//         { href: 'trello.html', text: '프로젝트일정' },
+//         { href: 'timeline.html', text: '생산일정' },
+
+//     ],
+
+//     'wms.html': [
+//         { href: 'system.html', text: '코드관리' },
+//         { href: 'glos.html', text: '용어관리' },
+//         { href: 'orgtree.html', text: '권한관리' },
+//         { href: 'document.html', text: '문서관리' },
+//         { href: 'wms.html', text: 'WMS' }
+//     ],
+
+//     'work.html': [
+//         { href: 'work.html', text: '예약관리' },
+//         { href: 'meeting.html', text: '회의실관리' },
+//         { href: 'hospital.html', text: '병원예약' },
+//         { href: 'lectures.html', text: '강의일정' },
+//         { href: 'city.html', text: '행정구역정보' }
+//     ],
+
+// };
+
+ // (1) localStorage에서 가져오기
+const storedData = localStorage.getItem('menuConfigurations');
+let menuConfigurations = storedData ? JSON.parse(storedData) : {};
+
+// (2) 서버 fetch
 fetch('/api/menu')
-    .then(res => res.json())
-    .then(data => {
+  .then(res => res.json())
+  .then(data => {
+    // localStorage에 저장
+    localStorage.setItem('menuConfigurations', JSON.stringify(data));
+    
+    // 기존 menuConfigurations 객체에 병합 / 재할당
+    // 방법 1) 재할당:
+    // menuConfigurations = data;
 
-        /**
-         * Object.assign 사용 예시
-         */
-        Object.assign(menuConfigurations, data);
-        // => menuConfigurations 안에 data 내용을 합침 (병합)
+    // 방법 2) 기존 객체에 병합(Object.assign)
+    Object.assign(menuConfigurations, data);
 
-        /**
-         * 전개 연산자 사용 예시
-         */
-        Object.keys(data).forEach(key => {
-            menuConfigurations[key] = data[key];
-        });
+    // 방법 3) key별로 갱신
+    Object.keys(data).forEach(key => {
+      menuConfigurations[key] = data[key];
+    });
 
-    })
-    .catch(console.error);
+    console.log('Updated menuConfigurations from server:', menuConfigurations);
+  })
+  .catch(console.error);
+
+// 이후 menuConfigurations 사용 (주의: fetch는 비동기)
+
 
 
 
