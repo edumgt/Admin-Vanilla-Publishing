@@ -9,9 +9,9 @@
     <div id="cmmContainer"></div>
 
     <nav class="breadcrumb"></nav>
-    
+
     <div id="content">
-        
+
 
         <div id="workarea">
             <button class="flex-1 tablinks bg-gray-300 hover:bg-gray-100 "
@@ -46,10 +46,21 @@
 
             <div class="flex">
                 <div id="questionsList" class="border p-4 w-1/2 overflow-auto"></div>
+
+
+
+
                 <div id="surveyContainer" class="drop-zone p-4 w-1/2 dropdown-scroll-container overflow-auto">
                     <div class="flex">
-                        <h3 class="mb-2 flex-1">구성 설문지</h3>
-                        <p class="flex-1"><button onclick="saveSurvey()" class="bg-green-500 text-white ">설문지 저장</button></p>
+                        <h3 class="mb-2 flex-1"><div class="my-2">
+                            <label for="surveyTitleInput" class="mr-2">설문지명:</label>
+                            <input type="text" id="surveyTitleInput" class="border p-1" placeholder="설문지 이름을 입력하세요." />
+                        </div></h3>
+
+                        
+
+                        <p class="flex-1"><button onclick="saveSurvey()" class="bg-green-500 text-white ">설문지
+                                저장</button></p>
                     </div>
                 </div>
 
@@ -80,10 +91,10 @@
     <script type="module" src="assets/vendor/tui-grid/dist/tui-grid.js"></script>
 
     <script type="module" src="assets/js/logomodule.js"></script>
-    
+
     <script type="module" src="assets/js/chart.js"></script>
     <script type="text/javascript" src="assets/js/survey.js"></script>
-    
+
 
 
 

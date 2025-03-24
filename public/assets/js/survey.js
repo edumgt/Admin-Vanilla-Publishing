@@ -318,24 +318,46 @@ function createSurveyQuestionBox(question, isRemovable) {
 }
 
 
-// 설문 저장 함수
 function saveSurvey() {
+    // 설문지명 가져오기
+    const surveyTitleInput = document.getElementById('surveyTitleInput');
+    const surveyTitle = surveyTitleInput.value.trim();
+
+    // 설문지명 검증 (미입력 시 알림)
+    if (!surveyTitle) {
+        showToast("설문지명을 입력해주세요.", "warning", lang);
+        return;
+    }
+
+    // 실제 설문 문항(questions) 구성 읽어오기
     const surveyContainer = document.getElementById('surveyContainer');
-    const surveyQuestions = Array.from(surveyContainer.getElementsByClassName('question-box')).map(box => parseInt(box.dataset.id));
+    const surveyQuestions = Array.from(
+        surveyContainer.getElementsByClassName('question-box')
+    ).map(box => parseInt(box.dataset.id));
+
+    // 새로운 설문 객체
     const newSurvey = {
         id: Date.now(),
-        title: "Custom Survey",
+        title: surveyTitle,  // 입력받은 설문지명
         description: "문항을 드래그 앤 드롭 하여 설문지를 구성 합니다.",
         questions: surveyQuestions
     };
 
+    // 로컬 스토리지에서 기존 설문 목록 가져오기
     const surveys = JSON.parse(localStorage.getItem('surveys')) || [];
     surveys.push(newSurvey);
     localStorage.setItem('surveys', JSON.stringify(surveys));
 
-    showToast('survey-add','success',lang);
+    // 저장 후 사용자에게 안내
+    showToast('survey-add', 'success', lang);
+
+    // 저장 완료 후, 설문 제목 필드 초기화
+    surveyTitleInput.value = '';
+
+    // 설문 목록 Select 갱신
     populateSurveySelect();
 }
+
 
 // 설문지 선택 목록 업데이트 함수
 function populateSurveySelect() {
