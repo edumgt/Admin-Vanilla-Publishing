@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8" />
   <title>강의 시간표 (다양한 색상)</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    html, body {
+    html,
+    body {
       margin: 0;
       padding: 0;
       width: 100%;
       height: 100%;
       overflow: auto;
     }
+
     .root-container {
       width: 100%;
       margin: 0 auto;
       background: #F5F5F5;
       position: relative;
     }
+
     .calendar-container {
       position: relative;
       background: #FFFFFF;
@@ -26,6 +30,7 @@
       margin: 60px auto;
       overflow: hidden;
     }
+
     .lecture {
       position: absolute;
       color: #FFFFFF;
@@ -35,7 +40,11 @@
       padding: 4px;
       font-size: 0.75rem;
     }
-    .time-cell, .empty-cell, .day-cell, .room-cell {
+
+    .time-cell,
+    .empty-cell,
+    .day-cell,
+    .room-cell {
       position: absolute;
       box-sizing: border-box;
       border: 1px solid #DDDDDD;
@@ -45,77 +54,79 @@
       font-size: 0.75rem;
       overflow: hidden;
     }
+
     .day-cell {
       background: #0058A3;
       color: #FFFFFF;
       border: 1px solid #00457C;
     }
+
     .room-cell {
       background: #FFD900;
       color: #000000;
       border: 1px solid #CCAA00;
     }
+
     .time-cell {
       background: #FFFFFF;
       color: #000000;
       border: 1px solid #CCCCCC;
     }
+
     .empty-cell {
       background: #FFFFFF;
     }
+
     .lecture-content {
       text-align: left;
     }
+
     /* Modal styles */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
-}
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
 
-.modal-content {
-  background-color: #fff;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-}
+    .modal-content {
+      background-color: #fff;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+    }
 
-.close-btn {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
+    .close-btn {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
 
-.close-btn:hover,
-.close-btn:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
+    .close-btn:hover,
+    .close-btn:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
   </style>
 </head>
+
 <body>
-  <div id="week-display" 
-       class="text-center text-lg font-bold my-4"
-       style="position:absolute; left:400px; z-index:2;">
+  <div id="week-display" class="text-center text-lg font-bold my-4" style="position:absolute; left:400px; z-index:2;">
   </div>
-  <button id="prev-week"
-          class="bg-blue-700 text-white px-4 py-2 rounded"
-          style="position:absolute; top:10px; left:100px; z-index:2;">
+  <button id="prev-week" class="bg-blue-700 text-white px-4 py-2 rounded"
+    style="position:absolute; top:10px; left:100px; z-index:2;">
     이전 주
   </button>
-  <button id="next-week"
-          class="bg-blue-700 text-white px-4 py-2 rounded"
-          style="position:absolute; top:10px; left:800px; z-index:2;">
+  <button id="next-week" class="bg-blue-700 text-white px-4 py-2 rounded"
+    style="position:absolute; top:10px; left:800px; z-index:2;">
     다음 주
   </button>
 
@@ -124,12 +135,12 @@
   </div>
 
   <!-- Modal Structure -->
-<div id="lecture-modal" class="modal">
-  <div class="modal-content">
-    <span class="close-btn">&times;</span>
-    <div id="modal-lecture-details"></div>
+  <div id="lecture-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <div id="modal-lecture-details"></div>
+    </div>
   </div>
-</div>
 
 
   <script>
@@ -389,8 +400,8 @@
           `;
 
           // Add click event listener to open modal
-  div.addEventListener('click', () => {
-    document.getElementById('modal-lecture-details').innerHTML = `
+          div.addEventListener('click', () => {
+            document.getElementById('modal-lecture-details').innerHTML = `
       <strong>강의명: </strong> ${lec.course}<br>
       <strong>강사: </strong> ${lec.instructor}<br>
       <strong>정원: </strong> ${lec.capacity}명<br>
@@ -401,16 +412,16 @@
       <strong>시작 시간: </strong> ${lec.startHour}:${lec.startMinute}<br>
       <strong>종료 시간: </strong> ${lec.endHour}:${lec.endMinute}
     `;
-    document.getElementById('lecture-modal').style.display = 'block';
-  });
+            document.getElementById('lecture-modal').style.display = 'block';
+          });
 
           calendar.appendChild(div);
         });
 
         // Modal close function
-document.querySelector('.close-btn').addEventListener('click', () => {
-  document.getElementById('lecture-modal').style.display = 'none';
-});
+        document.querySelector('.close-btn').addEventListener('click', () => {
+          document.getElementById('lecture-modal').style.display = 'none';
+        });
 
         // 동적 높이 조정
         let maxBottom = 0;
@@ -443,4 +454,5 @@ document.querySelector('.close-btn').addEventListener('click', () => {
     });
   </script>
 </body>
+
 </html>
