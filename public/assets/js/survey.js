@@ -245,11 +245,13 @@ function handleDragOver(event) {
 function handleDragLeave(event) {
     event.target.classList.remove('bg-gray-200');
 }
-
 function handleDrop(event) {
     event.preventDefault();
-    event.target.classList.remove('bg-gray-200');
-
+    event.currentTarget.classList.remove('bg-gray-200');
+    
+    // 실제 드롭 영역이 'surveyContainer' 인지 확인(바인딩된 요소를 사용하는 방법)
+    const dropContainer = event.currentTarget; // = document.getElementById('surveyContainer');
+    
     const questionId = event.dataTransfer.getData('text/plain');
     const questions = JSON.parse(localStorage.getItem('questions')) || [];
     const question = questions.find(q => q.id == questionId);
@@ -257,16 +259,17 @@ function handleDrop(event) {
     if (!question) return;
 
     // 드롭된 컨테이너에서 중복 검사
-    const existingItem = event.target.querySelector(`[data-id="${questionId}"]`);
+    const existingItem = dropContainer.querySelector(`[data-id="${questionId}"]`);
     if (existingItem) {
-        showToast("already-add",'warning',lang);
+        showToast("already-add", "warning", lang);
         return;
     }
 
     // 새로운 문항 박스 추가
     const surveyQuestionBox = createSurveyQuestionBox(question, true);
-    event.target.appendChild(surveyQuestionBox);
+    dropContainer.appendChild(surveyQuestionBox);
 }
+
 
 // 문항 박스를 생성하는 함수
 function createSurveyQuestionBox(question, draggable = false) {
