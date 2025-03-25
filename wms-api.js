@@ -810,7 +810,7 @@ router.get('/menu', function (req, res) {
 });
 
 router.get("/data", (req, res) => {
-    db.query("SELECT * FROM departments", (deptErr, deptRows) => {
+    db.query("SELECT * FROM departments order by row_key desc", (deptErr, deptRows) => {
         if (deptErr) {
             console.error("departments 쿼리 실패:", deptErr);
             return res.status(500).json({ error: "Failed to fetch departments" });
