@@ -24,7 +24,6 @@ let gridBodyHeight = 630;
 const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
 const currentDate = new Date().toLocaleDateString('ko-KR', options).replace(/[\.]/g, '-').replace(/[\s]/g, '').substring(0, 10);
 
-// 페이지 로딩 시 실행
 fetch('/api/data')
     .then(response => {
         if (!response.ok) {
@@ -33,17 +32,12 @@ fetch('/api/data')
         return response.json();
     })
     .then(data => {
-        // ✅ 항상 최신 데이터로 화면 렌더링
         loadData(data);
-
-        // ✅ localStorage에 캐시용 저장
         localStorage.setItem('gridData', JSON.stringify(data));
     })
     .catch(error => {
         console.error('Fetch error:', error);
         showToast('loading-error', 'error', lang);
-
-        // ✅ fetch 실패 시 localStorage에 있는 데이터로 fallback
         const storedData = localStorage.getItem('gridData');
         if (storedData) {
             const cachedData = JSON.parse(storedData);
@@ -79,8 +73,6 @@ function saveData(data) {
 }
 
 
-
-
 const grid = new tui.Grid({
     el: document.getElementById('grid'),
     rowHeaders: [{
@@ -90,8 +82,6 @@ const grid = new tui.Grid({
             type: rowNumRenderer
         }
     }, 'checkbox'],
-
-
 
     editingEvent: 'click',
     scrollX: true,
@@ -155,20 +145,20 @@ deleteButton.addEventListener('click', function () {
     const chkArray = grid.getCheckedRowKeys();
 
     if (chkArray.length > 0) {
-        // ✅ 먼저 UI에서 제거
+
         grid.removeCheckedRows();
 
-        // ✅ localStorage에서 기존 데이터 불러옴
+
         const storedData = localStorage.getItem('gridData');
         let parsedData = storedData ? JSON.parse(storedData) : [];
 
-        // ✅ rowKey 기반으로 localStorage에서도 제거
+
         parsedData = parsedData.filter(row => !chkArray.includes(row.rowKey));
 
-        // ✅ localStorage 갱신
+
         localStorage.setItem('gridData', JSON.stringify(parsedData));
 
-        // ✅ 백엔드 API 호출
+
         fetch('/api/delete', {
             method: 'POST',
             headers: {
@@ -226,24 +216,11 @@ addButton.addEventListener('click', function () {
         return;
     }
 
-    // const newRow = {
-    //     Key: generateNanoId(),
-    //     tpCd: '',
-    //     tpNm: '',
-    //     descCntn: '',
-    //     useYn: 'Y',
-    //     createdAt: currentDate
-    // };
-    // const newData = [newRow, ...data];
-
-    //grid.resetData(newData);
-
     initNew();
 
-    // ✅ 1페이지로 강제 이동
     setTimeout(() => {
-        grid.setPage(1);             // 페이지 이동
-        grid.scrollToRow(0);         // 맨 위로 이동
+        grid.setPage(1);             
+        grid.scrollToRow(0);         
         const rowKey = grid.getRow(0)?.rowKey;
         if (rowKey !== undefined) {
             grid.focus(rowKey, 'tpCd');
@@ -251,7 +228,6 @@ addButton.addEventListener('click', function () {
         }
     }, 10);
 
-    // 저장 로직
     saveData(newData);
     updateDataCount();
 });
