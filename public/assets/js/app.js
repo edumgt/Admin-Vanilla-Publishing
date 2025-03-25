@@ -13,8 +13,8 @@ let gridBodyHeight = 630;
 const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
 const currentDate = new Date().toLocaleDateString('ko-KR', options).replace(/[\.]/g, '-').replace(/[\s]/g, '').substring(0, 10);
 
-//fetch('https://your-backend-api.com/data')
-fetch('assets/mock/mock.json')
+fetch('/api/data')
+//fetch('assets/mock/mock.json')
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -140,10 +140,10 @@ saveButton.addEventListener('click', function () {
     const data = grid.getData();
     const validData = data.filter(row => row.Key && row.Key.trim() !== '');
 
-    saveData(validData);
-    updateDataCount();
+    // saveData(validData); // 필요 시 삭제 가능
+    // updateDataCount();   // 필요 시 삭제 가능
 
-    fetch('https://your-backend-api.com/save', {
+    fetch('/api/save', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -155,8 +155,8 @@ saveButton.addEventListener('click', function () {
             showToast('well-done', 'success', lang);
         })
         .catch((error) => {
+            console.error(error);
             showToast('save-error', 'warning', lang);
-
         });
 });
 

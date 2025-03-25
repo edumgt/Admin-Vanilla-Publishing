@@ -819,4 +819,129 @@ router.get('/menu', function (req, res) {
     });
 });
 
+router.get("/data", (req, res) => {
+    db.query("SELECT * FROM departments", (deptErr, deptRows) => {
+        if (deptErr) {
+            console.error("departments 쿼리 실패:", deptErr);
+            return res.status(500).json({ error: "Failed to fetch departments" });
+        }
+
+        db.query("SELECT * FROM department_attributes", (attrErr, attrRows) => {
+            if (attrErr) {
+                console.error("attributes 쿼리 실패:", attrErr);
+                return res.status(500).json({ error: "Failed to fetch attributes" });
+            }
+
+            const attrMap = {};
+            attrRows.forEach((attr) => {
+                attrMap[attr.row_key] = {
+                    rowNum: attr.row_num,
+                    checked: !!attr.checked,
+                    disabled: !!attr.disabled,
+                    checkDisabled: !!attr.check_disabled,
+                    className: {
+                        row: JSON.parse(attr.class_name_row || "[]"),
+                        column: JSON.parse(attr.class_name_col || "{}")
+                    }
+                };
+            });
+
+            const result = deptRows.map((dept) => ({
+                Key: dept.id,
+                tpCd: dept.tp_cd,
+                tpNm: dept.tp_nm,
+                descCntn: dept.desc_cntn,
+                useYn: dept.use_yn,
+                createdAt: dept.created_at,
+                view: dept.view,
+                rowKey: dept.row_key,
+                _attributes: attrMap[dept.row_key] || {}
+            }));
+
+            res.json(result);
+        });
+    });
+});
+
+
+
+
+// 저장 API
+router.post("/save", (req, res) => {
+    const dataList = req.body;
+
+    if (!Array.isArray(dataList)) {
+        return res.status(400).json({ error: "Invalid data format" });
+    }
+
+    const deptQuery = `
+      REPLACE INTO departments (id, tp_cd, tp_nm, desc_cntn, use_yn)
+      VALUES (?, ?, ?, ?, ?)
+    `;
+
+    const attrQuery = `
+      REPLACE INTO department_attributes (row_key, row_num, checked, disabled, check_disabled, class_name_row, class_name_col)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    let completed = 0;
+    let skipped = [];
+
+    const validData = dataList.filter(item => {
+        const valid = item.tpCd && item.tpCd.trim() !== '' && item.tpNm && item.tpNm.trim() !== '';
+        if (!valid) skipped.push(item.rowKey || null);
+        return valid;
+    });
+
+    // 저장할 유효한 데이터가 없는 경우
+    if (validData.length === 0) {
+        return res.status(400).json({ error: "No valid data to save", skipped });
+    }
+
+    for (let item of validData) {
+        const deptValues = [
+            item.Key,
+            item.tpCd,
+            item.tpNm,
+            item.descCntn,
+            item.useYn
+        ];
+
+        db.query(deptQuery, deptValues, (err) => {
+            if (err) {
+                console.error("Department insert error:", err);
+                return res.status(500).json({ error: "Department insert error" });
+            }
+
+            const attr = item._attributes || {};
+            const attrValues = [
+                item.rowKey,
+                attr.rowNum || 0,
+                attr.checked ? 1 : 0,
+                attr.disabled ? 1 : 0,
+                attr.checkDisabled ? 1 : 0,
+                JSON.stringify(attr.className?.row || []),
+                JSON.stringify(attr.className?.column || {})
+            ];
+
+            db.query(attrQuery, attrValues, (attrErr) => {
+                if (attrErr) {
+                    console.error("Attribute insert error:", attrErr);
+                    return res.status(500).json({ error: "Attribute insert error" });
+                }
+
+                completed++;
+                if (completed === validData.length) {
+                    res.json({
+                        message: "Data saved successfully",
+                        saved: validData.length,
+                        skipped: skipped.length > 0 ? skipped : undefined
+                    });
+                }
+            });
+        });
+    }
+});
+
+
 module.exports = router;
