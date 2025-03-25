@@ -9,6 +9,10 @@ import {
     RowNumRenderer
 } from './common.js';
 
+
+const BadgeRenderer = createBadgeRenderer;
+const rowNumRenderer = RowNumRenderer;
+
 document.body.classList.add('loading'); // fetch 시작 시
 document.body.classList.remove('loading'); // fetch 끝나면
 localStorage.setItem('gridCacheTimestamp', new Date().toISOString());
@@ -63,9 +67,7 @@ function updateDataCount() {
     dataCountElement.textContent = `Total : ${allData.length}`;
 }
 
-// function loadData(data) {
-//     grid.setData(data);
-// }
+
 function loadData() {
     const data = localStorage.getItem('gridData');
     return data ? JSON.parse(data) : [];
@@ -77,8 +79,7 @@ function saveData(data) {
 }
 
 
-const BadgeRenderer = createBadgeRenderer;
-const rowNumRenderer = RowNumRenderer;
+
 
 const grid = new tui.Grid({
     el: document.getElementById('grid'),
