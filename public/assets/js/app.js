@@ -6,12 +6,14 @@ import {
     createResetSearchButton,
     createTanslations,
     createBadgeRenderer,
-    RowNumRenderer
+    RowNumRenderer,
+    createSaveRenderer
 } from './common.js';
 
 
 const BadgeRenderer = createBadgeRenderer;
 const rowNumRenderer = RowNumRenderer;
+const SaveRenderer = createSaveRenderer;
 
 document.body.classList.add('loading'); // fetch 시작 시
 document.body.classList.remove('loading'); // fetch 끝나면
@@ -42,8 +44,6 @@ fetch('/api/data')
         console.error('Fetch error:', error);
         showToast('loading-error', 'error', lang);
     });
-
-
 
 
 function loadPageData(page, perPage) {
@@ -121,6 +121,17 @@ const grid = new tui.Grid({
             },
             width: 60,
             resizable: false
+        },
+        {
+            header: '저장',
+            name: 'save',
+            align: 'center',
+            width: 60,
+            resizable: false,
+
+            renderer: {
+                type: SaveRenderer
+            }
         }
     ],
     data: loadPageData(1, rowsPerPage),
@@ -140,11 +151,7 @@ deleteButton.addEventListener('click', function () {
 
     if (chkArray.length > 0) {
 
-        grid.removeCheckedRows();
-        const storedData = localStorage.getItem('gridData');
-        let parsedData = storedData ? JSON.parse(storedData) : [];
-        parsedData = parsedData.filter(row => !chkArray.includes(row.rowKey));
-        localStorage.setItem('gridData', JSON.stringify(parsedData));
+
 
         fetch('/api/delete', {
             method: 'POST',
@@ -157,38 +164,23 @@ deleteButton.addEventListener('click', function () {
             .then(result => {
                 showToast('select-delete', 'success', lang);
                 updateDataCount();
+
+                grid.removeCheckedRows();
+                // const storedData = localStorage.getItem('gridData');
+                // let parsedData = storedData ? JSON.parse(storedData) : [];
+                // parsedData = parsedData.filter(row => !chkArray.includes(row.rowKey));
+                // localStorage.setItem('gridData', JSON.stringify(parsedData));
+
             })
             .catch(error => {
                 console.error("Delete error:", error);
                 showToast('delete-failed', 'warning', lang);
             });
+
+
     } else {
         showToast('delete-not', 'warning', lang);
     }
-});
-
-
-const saveButton = createSaveButton();
-saveButton.addEventListener('click', function () {
-    const data = grid.getData();
-    saveData(data);
-    const validData = data.filter(row => row.Key && row.Key.trim() !== '');
-
-    fetch('/api/save', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(validData)
-    })
-        .then(response => response.json())
-        .then(data => {
-            showToast('well-done', 'success', lang);
-        })
-        .catch((error) => {
-            console.error(error);
-            showToast('save-error', 'warning', lang);
-        });
 });
 
 
@@ -203,18 +195,8 @@ addButton.addEventListener('click', function () {
 
     initNew();
 
-    setTimeout(() => {
-        grid.setPage(1);
-        grid.scrollToRow(0);
-        const rowKey = grid.getRow(0)?.rowKey;
-        if (rowKey !== undefined) {
-            grid.focus(rowKey, 'tpCd');
-            grid.startEditing(rowKey, 'tpCd');
-        }
-    }, 10);
 
-    saveData(newData);
-    updateDataCount();
+
 });
 
 
@@ -223,7 +205,6 @@ const searchButton = createSearchButton();
 btnContainer.appendChild(searchButton);
 btnContainer.appendChild(addButton);
 btnContainer.appendChild(deleteButton);
-btnContainer.appendChild(saveButton);
 
 const resetSearchButton = createResetSearchButton();
 resetSearchButton.classList.add("ml-2")
@@ -232,6 +213,28 @@ btnContainer.appendChild(resetSearchButton);
 
 grid.on('click', (ev) => {
     const { columnName, rowKey } = ev;
+
+    if (columnName === 'save') {
+        const row = grid.getRow(rowKey);
+        console.log("rowKey: " + rowKey);
+
+        try {
+            const response = fetch('/api/save', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(row)
+            });
+
+            if (!response.ok) throw new Error('Save failed');
+
+            const result = response.json();
+
+        } catch (err) {
+
+            //showToast('save-error', 'warning', lang);
+        }
+        showToast('well-done', 'success', lang);
+    }
     if (columnName === 'view') {
         const row = grid.getRow(rowKey);
         toggleModal(true, row, rowKey);
@@ -346,10 +349,6 @@ searchButton.addEventListener('click', function () {
 
     grid.resetData(filteredData);
 
-    saveButton.disabled = true;
-    saveButton.classList.add('bg-gray-400', 'cursor-not-allowed');
-    saveButton.classList.remove('bg-gray-700', 'hover:bg-gray-600');
-
     addButton.disabled = true;
     addButton.classList.add('bg-gray-400', 'cursor-not-allowed');
     addButton.classList.remove('bg-gray-700', 'hover:bg-gray-600');
@@ -368,10 +367,6 @@ resetSearchButton.addEventListener('click', function () {
     document.getElementById('datePicker').value = '';
 
     grid.resetData(gridData);
-
-    saveButton.disabled = false;
-    saveButton.classList.remove('bg-gray-400', 'cursor-not-allowed');
-    saveButton.classList.add('bg-gray-700', 'hover:bg-gray-600');
 
     addButton.disabled = false;
     addButton.classList.remove('bg-gray-400', 'cursor-not-allowed');
@@ -398,7 +393,6 @@ languageSwitcher.addEventListener("click", function (event) {
     searchButton.innerHTML = `<i class="fas fa-search"></i><span>` + buttonLabels.search + `</span>`;
     addButton.innerHTML = `<i class="fas fa-plus"></i><span>` + buttonLabels.new + `</span>`;
     deleteButton.innerHTML = `<i class="fas fa-trash"></i><span>` + buttonLabels.delete + `</span>`;
-    saveButton.innerHTML = `<i class="fas fa-save"></i><span>` + buttonLabels.save + `</span>`;
     resetSearchButton.innerHTML = `<i class="fas fa-undo"></i><span>` + buttonLabels.reset + `</span>`;
 });
 
@@ -410,6 +404,5 @@ document.addEventListener('DOMContentLoaded', () => {
     searchButton.innerHTML = `<i class="fas fa-search"></i><span>` + buttonLabels.search + `</span>`;
     addButton.innerHTML = `<i class="fas fa-plus"></i><span>` + buttonLabels.new + `</span>`;
     deleteButton.innerHTML = `<i class="fas fa-trash"></i><span>` + buttonLabels.delete + `</span>`;
-    saveButton.innerHTML = `<i class="fas fa-save"></i><span>` + buttonLabels.save + `</span>`;
     resetSearchButton.innerHTML = `<i class="fas fa-undo"></i><span>` + buttonLabels.reset + `</span>`;
 });

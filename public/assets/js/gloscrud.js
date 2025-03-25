@@ -98,7 +98,7 @@ const grid = new tui.Grid({
             resizable: false
         },
         {
-            header: '수정',
+            header: '저장',
             name: 'save',
             align: 'center',
             width: 60,

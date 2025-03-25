@@ -853,116 +853,94 @@ router.get("/data", (req, res) => {
     });
 });
 
-
-
-
-// 저장 API
 router.post("/save", (req, res) => {
-    const dataList = req.body;
+    const item = req.body;
+    const { rowKey, tpCd, tpNm, descCntn, useYn, id = null,Key } = item;
 
-    if (!Array.isArray(dataList)) {
-        return res.status(400).json({ error: "Invalid data format" });
+    if (!rowKey || !tpCd || !tpNm) {
+        return res.status(400).json({ error: "rowKey, tpCd, tpNm are required." });
     }
 
-    const deptQuery = `
-      REPLACE INTO departments (id, tp_cd, tp_nm, desc_cntn, use_yn)
-      VALUES (?, ?, ?, ?, ?)
+    const selectQuery = `SELECT 1 FROM departments WHERE row_key = ?`;
+
+    const insertQuery = `
+        INSERT INTO departments (id, tp_cd, tp_nm, desc_cntn, use_yn)
+        VALUES (?, ?, ?, ?, ?)
     `;
 
-    const attrQuery = `
-      REPLACE INTO department_attributes (row_key, row_num, checked, disabled, check_disabled, class_name_row, class_name_col)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
+    const updateQuery = `
+        UPDATE departments
+        SET tp_cd = ?, tp_nm = ?, desc_cntn = ?, use_yn = ?
+        WHERE row_key = ?
     `;
 
-    let completed = 0;
-    let skipped = [];
+    db.query(selectQuery, [rowKey], (selectErr, results) => {
+        if (selectErr) {
+            console.error("Select error:", selectErr);
+            return res.status(500).json({ error: "Database select error" });
+        }
 
-    const validData = dataList.filter(item => {
-        const valid = item.tpCd && item.tpCd.trim() !== '' && item.tpNm && item.tpNm.trim() !== '';
-        if (!valid) skipped.push(item.rowKey || null);
-        return valid;
-    });
+        const exists = results.length > 0;
 
-    // 저장할 유효한 데이터가 없는 경우
-    if (validData.length === 0) {
-        return res.status(400).json({ error: "No valid data to save", skipped });
-    }
-
-    for (let item of validData) {
-        const deptValues = [
-            item.Key,
-            item.tpCd,
-            item.tpNm,
-            item.descCntn,
-            item.useYn
-        ];
-
-        db.query(deptQuery, deptValues, (err) => {
-            if (err) {
-                console.error("Department insert error:", err);
-                return res.status(500).json({ error: "Department insert error" });
-            }
-
-            const attr = item._attributes || {};
-            const attrValues = [
-                item.rowKey,
-                attr.rowNum || 0,
-                attr.checked ? 1 : 0,
-                attr.disabled ? 1 : 0,
-                attr.checkDisabled ? 1 : 0,
-                JSON.stringify(attr.className?.row || []),
-                JSON.stringify(attr.className?.column || {})
-            ];
-
-            db.query(attrQuery, attrValues, (attrErr) => {
-                if (attrErr) {
-                    console.error("Attribute insert error:", attrErr);
-                    return res.status(500).json({ error: "Attribute insert error" });
+        if (exists) {
+            // 기존 레코드 → UPDATE
+            db.query(updateQuery, [tpCd, tpNm, descCntn, useYn,rowKey], (updateErr) => {
+                if (updateErr) {
+                    console.error("Update error:", updateErr);
+                    return res.status(500).json({ error: "Update failed" });
                 }
-
-                completed++;
-                if (completed === validData.length) {
-                    res.json({
-                        message: "Data saved successfully",
-                        saved: validData.length,
-                        skipped: skipped.length > 0 ? skipped : undefined
-                    });
-                }
+                return res.json({ message: "Updated successfully", type: "update" });
             });
-        });
-    }
+        } else {
+            // 신규 레코드 → INSERT
+            db.query(insertQuery, [Key, tpCd, tpNm, descCntn, useYn], (insertErr) => {
+                if (insertErr) {
+                    console.error("Insert error:", insertErr);
+                    return res.status(500).json({ error: "Insert failed" });
+                }
+                return res.json({ message: "Inserted successfully", type: "insert" });
+            });
+        }
+    });
 });
+
+
+
+
 
 // 여러 rowKey 기반 삭제 API
 router.post("/delete", (req, res) => {
     const { rowKeys } = req.body;
-  
+
     if (!Array.isArray(rowKeys) || rowKeys.length === 0) {
-      return res.status(400).json({ error: "rowKeys must be a non-empty array" });
+        return res.status(400).json({ error: "rowKeys must be a non-empty array" });
     }
-  
+
     // 삭제 쿼리
     const placeholders = rowKeys.map(() => '?').join(',');
     const deleteDeptQuery = `DELETE FROM departments WHERE row_key IN (${placeholders})`;
+
+
     const deleteAttrQuery = `DELETE FROM department_attributes WHERE row_key IN (${placeholders})`;
-  
+
     // 먼저 attributes 삭제 → 이후 departments 삭제
     db.query(deleteAttrQuery, rowKeys, (err1) => {
-      if (err1) {
-        console.error("Failed to delete attributes:", err1);
-        return res.status(500).json({ error: "Failed to delete attributes" });
-      }
-  
-      db.query(deleteDeptQuery, rowKeys, (err2) => {
-        if (err2) {
-          console.error("Failed to delete departments:", err2);
-          return res.status(500).json({ error: "Failed to delete departments" });
+        if (err1) {
+            console.error("Failed to delete attributes:", err1);
+            return res.status(500).json({ error: "Failed to delete attributes" });
         }
-  
-        res.json({ message: "Rows deleted successfully", deleted: rowKeys });
-      });
+
+        db.query(deleteDeptQuery, rowKeys, (err2) => {
+
+            if (err2) {
+                console.error("Failed to delete departments:", err2);
+                return res.status(500).json({ error: "Failed to delete departments" });
+            }
+
+            res.json({ message: "Rows deleted successfully", deleted: rowKeys });
+        });
     });
-  });
+});
 
 
 module.exports = router;
