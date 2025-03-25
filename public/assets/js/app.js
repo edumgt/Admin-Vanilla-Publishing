@@ -38,14 +38,14 @@ fetch('/api/data')
     .catch(error => {
         console.error('Fetch error:', error);
         showToast('loading-error', 'error', lang);
-        const storedData = localStorage.getItem('gridData');
-        if (storedData) {
-            const cachedData = JSON.parse(storedData);
-            loadData(cachedData);
-            showToast('loaded-from-cache', 'info', lang);
-        } else {
-            console.warn('No cached data found in localStorage.');
-        }
+        // const storedData = localStorage.getItem('gridData');
+        // if (storedData) {
+        //     const cachedData = JSON.parse(storedData);
+        //     loadData(cachedData);
+        //     showToast('loaded-from-cache', 'info', lang);
+        // } else {
+        //     console.warn('No cached data found in localStorage.');
+        // }
     });
 
 
@@ -137,8 +137,6 @@ const grid = new tui.Grid({
 });
 
 
-
-
 updateDataCount();
 
 const deleteButton = createDelButton();
@@ -148,17 +146,10 @@ deleteButton.addEventListener('click', function () {
     if (chkArray.length > 0) {
 
         grid.removeCheckedRows();
-
-
         const storedData = localStorage.getItem('gridData');
         let parsedData = storedData ? JSON.parse(storedData) : [];
-
-
         parsedData = parsedData.filter(row => !chkArray.includes(row.rowKey));
-
-
         localStorage.setItem('gridData', JSON.stringify(parsedData));
-
 
         fetch('/api/delete', {
             method: 'POST',
@@ -180,8 +171,6 @@ deleteButton.addEventListener('click', function () {
         showToast('delete-not', 'warning', lang);
     }
 });
-
-
 
 
 const saveButton = createSaveButton();
@@ -220,8 +209,8 @@ addButton.addEventListener('click', function () {
     initNew();
 
     setTimeout(() => {
-        grid.setPage(1);             
-        grid.scrollToRow(0);         
+        grid.setPage(1);
+        grid.scrollToRow(0);
         const rowKey = grid.getRow(0)?.rowKey;
         if (rowKey !== undefined) {
             grid.focus(rowKey, 'tpCd');
@@ -237,7 +226,6 @@ addButton.addEventListener('click', function () {
 
 const searchButton = createSearchButton();
 btnContainer.appendChild(searchButton);
-
 btnContainer.appendChild(addButton);
 btnContainer.appendChild(deleteButton);
 btnContainer.appendChild(saveButton);
