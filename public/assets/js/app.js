@@ -24,6 +24,9 @@ let gridBodyHeight = 630;
 const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
 const currentDate = new Date().toLocaleDateString('ko-KR', options).replace(/[\.]/g, '-').replace(/[\s]/g, '').substring(0, 10);
 
+
+
+
 fetch('/api/data')
     .then(response => {
         if (!response.ok) {
@@ -38,14 +41,6 @@ fetch('/api/data')
     .catch(error => {
         console.error('Fetch error:', error);
         showToast('loading-error', 'error', lang);
-        // const storedData = localStorage.getItem('gridData');
-        // if (storedData) {
-        //     const cachedData = JSON.parse(storedData);
-        //     loadData(cachedData);
-        //     showToast('loaded-from-cache', 'info', lang);
-        // } else {
-        //     console.warn('No cached data found in localStorage.');
-        // }
     });
 
 
