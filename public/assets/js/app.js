@@ -87,11 +87,11 @@ const grid = new tui.Grid({
         type: 'rowNum',
         header: 'No.',
         renderer: {
-          type: rowNumRenderer
+            type: rowNumRenderer
         }
-      }, 'checkbox'],
+    }, 'checkbox'],
 
-    
+
 
     editingEvent: 'click',
     scrollX: true,
@@ -147,7 +147,7 @@ const grid = new tui.Grid({
 
 
 
-  
+
 updateDataCount();
 
 const deleteButton = createDelButton();
