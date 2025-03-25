@@ -1,11 +1,18 @@
-import { 
-    createAddButton, 
-    createDelButton, 
-    createSaveButton, 
+import {
+    createAddButton,
+    createDelButton,
+    createSaveButton,
     createSearchButton,
     createResetSearchButton,
-    createTanslations, 
-    createBadgeRenderer } from './common.js';
+    createTanslations,
+    createBadgeRenderer,
+    RowNumRenderer
+} from './common.js';
+
+document.body.classList.add('loading'); // fetch 시작 시
+document.body.classList.remove('loading'); // fetch 끝나면
+localStorage.setItem('gridCacheTimestamp', new Date().toISOString());
+
 
 let rowsPerPage = 20;
 let gridBodyHeight = 630;
@@ -13,8 +20,8 @@ let gridBodyHeight = 630;
 const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
 const currentDate = new Date().toLocaleDateString('ko-KR', options).replace(/[\.]/g, '-').replace(/[\s]/g, '').substring(0, 10);
 
+// 페이지 로딩 시 실행
 fetch('/api/data')
-//fetch('assets/mock/mock.json')
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -22,26 +29,32 @@ fetch('/api/data')
         return response.json();
     })
     .then(data => {
+        // ✅ 항상 최신 데이터로 화면 렌더링
         loadData(data);
+
+        // ✅ localStorage에 캐시용 저장
         localStorage.setItem('gridData', JSON.stringify(data));
     })
     .catch(error => {
-
+        console.error('Fetch error:', error);
         showToast('loading-error', 'error', lang);
 
+        // ✅ fetch 실패 시 localStorage에 있는 데이터로 fallback
         const storedData = localStorage.getItem('gridData');
         if (storedData) {
-            loadData(JSON.parse(storedData));
+            const cachedData = JSON.parse(storedData);
+            loadData(cachedData);
+            showToast('loaded-from-cache', 'info', lang);
         } else {
-            console.log('No data available in local storage');
+            console.warn('No cached data found in localStorage.');
         }
     });
 
+
+
+
 function loadPageData(page, perPage) {
-    const allData = loadData();
-    const start = (page - 1) * perPage;
-    const end = start + perPage;
-    return allData.slice(start, end);
+    return loadData();
 }
 
 function updateDataCount() {
@@ -50,6 +63,9 @@ function updateDataCount() {
     dataCountElement.textContent = `Total : ${allData.length}`;
 }
 
+// function loadData(data) {
+//     grid.setData(data);
+// }
 function loadData() {
     const data = localStorage.getItem('gridData');
     return data ? JSON.parse(data) : [];
@@ -62,10 +78,20 @@ function saveData(data) {
 
 
 const BadgeRenderer = createBadgeRenderer;
+const rowNumRenderer = RowNumRenderer;
 
 const grid = new tui.Grid({
     el: document.getElementById('grid'),
-    rowHeaders: ['rowNum', 'checkbox'],
+    rowHeaders: [{
+        type: 'rowNum',
+        header: 'No.',
+        renderer: {
+          type: rowNumRenderer
+        }
+      }, 'checkbox'],
+
+    
+
     editingEvent: 'click',
     scrollX: true,
     scrollY: true,
@@ -119,29 +145,58 @@ const grid = new tui.Grid({
 });
 
 
+
+  
 updateDataCount();
 
 const deleteButton = createDelButton();
 deleteButton.addEventListener('click', function () {
     const chkArray = grid.getCheckedRowKeys();
+
     if (chkArray.length > 0) {
+        // ✅ 먼저 UI에서 제거
         grid.removeCheckedRows();
-        saveData(grid.getData());
-        showToast('select-delete', 'success', lang);
-        updateDataCount();
+
+        // ✅ localStorage에서 기존 데이터 불러옴
+        const storedData = localStorage.getItem('gridData');
+        let parsedData = storedData ? JSON.parse(storedData) : [];
+
+        // ✅ rowKey 기반으로 localStorage에서도 제거
+        parsedData = parsedData.filter(row => !chkArray.includes(row.rowKey));
+
+        // ✅ localStorage 갱신
+        localStorage.setItem('gridData', JSON.stringify(parsedData));
+
+        // ✅ 백엔드 API 호출
+        fetch('/api/delete', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ rowKeys: chkArray })
+        })
+            .then(response => response.json())
+            .then(result => {
+                showToast('select-delete', 'success', lang);
+                updateDataCount();
+            })
+            .catch(error => {
+                console.error("Delete error:", error);
+                showToast('delete-failed', 'warning', lang);
+            });
     } else {
         showToast('delete-not', 'warning', lang);
     }
 });
 
 
+
+
 const saveButton = createSaveButton();
 saveButton.addEventListener('click', function () {
     const data = grid.getData();
+    saveData(data);
     const validData = data.filter(row => row.Key && row.Key.trim() !== '');
-
-    // saveData(validData); // 필요 시 삭제 가능
-    // updateDataCount();   // 필요 시 삭제 가능
 
     fetch('/api/save', {
         method: 'POST',
@@ -170,12 +225,37 @@ addButton.addEventListener('click', function () {
         return;
     }
 
-    const newRow = { Key: generateNanoId(), tpCd: '', tpNm: '', descCntn: '', useYn: 'Y', createdAt: currentDate };
-    grid.prependRow(newRow, { focus: true });
+    // const newRow = {
+    //     Key: generateNanoId(),
+    //     tpCd: '',
+    //     tpNm: '',
+    //     descCntn: '',
+    //     useYn: 'Y',
+    //     createdAt: currentDate
+    // };
+    // const newData = [newRow, ...data];
 
-    saveData([...data, newRow]);
+    //grid.resetData(newData);
+
+    initNew();
+
+    // ✅ 1페이지로 강제 이동
+    setTimeout(() => {
+        grid.setPage(1);             // 페이지 이동
+        grid.scrollToRow(0);         // 맨 위로 이동
+        const rowKey = grid.getRow(0)?.rowKey;
+        if (rowKey !== undefined) {
+            grid.focus(rowKey, 'tpCd');
+            grid.startEditing(rowKey, 'tpCd');
+        }
+    }, 10);
+
+    // 저장 로직
+    saveData(newData);
     updateDataCount();
 });
+
+
 
 const searchButton = createSearchButton();
 btnContainer.appendChild(searchButton);
@@ -215,9 +295,7 @@ grid.on('editingFinish', (ev) => {
 function initNew() {
     const rowData = { Key: generateNanoId(), tpCd: '', tpNm: '', descCntn: '', useYn: 'Y', createdAt: currentDate };
     grid.prependRow(rowData, { focus: true });
-    updateDataCount();
 }
-
 initNew();
 
 new Pikaday({

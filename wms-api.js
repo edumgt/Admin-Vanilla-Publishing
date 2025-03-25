@@ -681,8 +681,6 @@ router.put("/glos/:id", (req, res) => {
 
 router.post("/setGlos", (req, res) => {
     const { en, ko, desc, img } = req.body;
-
-    // 간단 검증
     if (!en || !ko) {
         return res.status(400).json({ success: false, message: "en, ko 필수" });
     }
@@ -695,7 +693,6 @@ router.post("/setGlos", (req, res) => {
             console.error("INSERT error:", err);
             return res.status(500).json({ success: false, message: "DB Error" });
         }
-        // 새로 생성된 ID (AUTO_INCREMENT)
         const newId = result.insertId;
         return res.json({ success: true, message: "New row inserted", id: newId });
     });
@@ -706,8 +703,6 @@ router.post("/glos/delete", (req, res) => {
     if (!Array.isArray(ids) || ids.length === 0) {
         return res.status(400).json({ success: false, message: "No IDs provided" });
     }
-
-    // DELETE FROM glos WHERE id IN (1,4,7)
     const placeholder = ids.map(() => '?').join(',');
     const sql = `DELETE FROM glos WHERE id IN (${placeholder})`;
 
@@ -726,8 +721,6 @@ router.get("/getGlosReq", (req, res) => {
     if (!glos_id) {
         return res.status(400).json({ success: false, message: "Missing glos_id" });
     }
-
-    // 예: glos_req 테이블 (id, glos_id, req_msg, req_date)
     const sql = "SELECT * FROM glos_req WHERE glos_id = ?";
     db.query(sql, [glos_id], (err, rows) => {
         if (err) {
@@ -777,9 +770,6 @@ LEFT JOIN users u ON l.assigned_user_id = u.id;
 
 
 router.get('/menu', function (req, res) {
-    // 콜백 방식으로 pool.getConnection
-
-    // connection.query(쿼리문, 콜백)
     const sql = `
         SELECT
           mp.page_name,
@@ -942,6 +932,37 @@ router.post("/save", (req, res) => {
         });
     }
 });
+
+// 여러 rowKey 기반 삭제 API
+router.post("/delete", (req, res) => {
+    const { rowKeys } = req.body;
+  
+    if (!Array.isArray(rowKeys) || rowKeys.length === 0) {
+      return res.status(400).json({ error: "rowKeys must be a non-empty array" });
+    }
+  
+    // 삭제 쿼리
+    const placeholders = rowKeys.map(() => '?').join(',');
+    const deleteDeptQuery = `DELETE FROM departments WHERE row_key IN (${placeholders})`;
+    const deleteAttrQuery = `DELETE FROM department_attributes WHERE row_key IN (${placeholders})`;
+  
+    // 먼저 attributes 삭제 → 이후 departments 삭제
+    db.query(deleteAttrQuery, rowKeys, (err1) => {
+      if (err1) {
+        console.error("Failed to delete attributes:", err1);
+        return res.status(500).json({ error: "Failed to delete attributes" });
+      }
+  
+      db.query(deleteDeptQuery, rowKeys, (err2) => {
+        if (err2) {
+          console.error("Failed to delete departments:", err2);
+          return res.status(500).json({ error: "Failed to delete departments" });
+        }
+  
+        res.json({ message: "Rows deleted successfully", deleted: rowKeys });
+      });
+    });
+  });
 
 
 module.exports = router;

@@ -285,7 +285,30 @@ class createSaveRenderer {
       }
   }
   
-
+  class RowNumRenderer {
+    constructor(props) {
+      const el = document.createElement('span');
+      this.el = el;
+  
+      const { grid, rowKey } = props;
+      const row = grid.getRow(rowKey);
+      const allRows = grid.getData();
+      const rowIndex = allRows.findIndex(r => r.rowKey === rowKey);
+  
+      if (row?.tpCd === '' && row?.tpNm === '') {
+        el.innerText = 'New';
+        el.style.color = "#ee3333";
+      } else {
+        el.innerText = String(rowIndex + 1); // ✅ 항상 1부터 시작
+      }
+    }
+  
+    getElement() {
+      return this.el;
+    }
+  }
+  
+  
 
 
 export {
@@ -297,5 +320,6 @@ export {
     createResetSearchButton,
     createTanslations,
     createBadgeRenderer,
-    createSaveRenderer
+    createSaveRenderer,
+    RowNumRenderer
 };
