@@ -19,7 +19,7 @@
         "chart.js": "^4.4.7",
         "cors": "^2.8.5",
         "express": "^4.21.2",
-        "express-api-server": "file:",
+        
         "fs": "^0.0.1-security",
         "fullcalendar": "^6.1.15",
         "handsontable": "^15.0.1",

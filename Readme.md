@@ -42,3 +42,8 @@
 
 ## npm run dev
 ## 127.0.0.1:3000
+
+## nvm ls
+## nvm use 22
+## docker build -t express-api-server .
+## docker run -d -p 3000:3000 --name my-express express-api-server
