@@ -943,4 +943,57 @@ router.post("/delete", (req, res) => {
 });
 
 
+// GET /api/permissions?memberId=test0001&menuPath=system.html
+router.get('/permissions', function (req, res) {
+    const { memberId, menuPath } = req.query;
+
+    db.query(
+        'SELECT id FROM menu_page WHERE page_name = ?',
+        [menuPath],
+        function (err, menuRows) {
+            if (err) {
+                console.error('메뉴 조회 실패:', err);
+                return res.status(500).json({ message: 'Internal server error' });
+            }
+
+            if (!menuRows || menuRows.length === 0) {
+                return res.status(404).json({ message: 'Menu not found' });
+            }
+
+            const menuId = menuRows[0].id;
+
+            db.query(
+                `SELECT can_search, can_add, can_delete, can_reset_search
+                 FROM member_menu_permission
+                 WHERE member_id = ? AND menu_page_id = ?`,
+                [memberId, menuId],
+                function (err, permRows) {
+                    if (err) {
+                        console.error('권한 조회 실패:', err);
+                        return res.status(500).json({ message: 'Internal server error' });
+                    }
+
+                    if (!permRows || permRows.length === 0) {
+                        return res.json({
+                            canSearch: false,
+                            canAdd: false,
+                            canDelete: false,
+                            canResetSearch: false
+                        });
+                    }
+
+                    const perm = permRows[0];
+                    return res.json({
+                        canSearch: !!perm.can_search,
+                        canAdd: !!perm.can_add,
+                        canDelete: !!perm.can_delete,
+                        canResetSearch: !!perm.can_reset_search
+                    });
+                }
+            );
+        }
+    );
+});
+
+
 module.exports = router;

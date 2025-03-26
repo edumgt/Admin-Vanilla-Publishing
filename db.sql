@@ -237,15 +237,12 @@ CREATE TABLE IF NOT EXISTS `departments` (
   `row_key` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`),
   UNIQUE KEY `row_key` (`row_key`)
-) ENGINE=InnoDB AUTO_INCREMENT=3951 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3952 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- 테이블 데이터 bbs.departments:~57 rows (대략적) 내보내기
+-- 테이블 데이터 bbs.departments:~53 rows (대략적) 내보내기
 DELETE FROM `departments`;
 INSERT INTO `departments` (`id`, `tp_cd`, `tp_nm`, `desc_cntn`, `use_yn`, `created_at`, `view`, `row_key`) VALUES
-	('1b7c297a-0918-11f0-a063-0c9a3ce197c1', 'CODE-1004', 'ㅁㅇㄴㅁ', 'ㄴㅇㅁㅇㅁㅇㅁㄴㅇ', 'Y', '2025-03-25', NULL, 3942),
-	('1b7c2a07-0918-11f0-a063-0c9a3ce197c1', 'CODE-1008', 'ㅂㅈㄷㅂㅈㄷ', 'ㅈㄷㅂㅈㄷㅂㅈㄷㅂㅈㄷ', 'Y', '2025-03-25', NULL, 3909),
 	('1b7c2a25-0918-11f0-a063-0c9a3ce197c1', 'CODE-1009', 'Unit', 'Measurement Unit', 'Y', '2025-03-25', NULL, 3908),
-	('1b7c2a42-0918-11f0-a063-0c9a3ce197c1', 'CODE-1010', 'asdasdad', 'asdasdasdads', 'Y', '2025-03-25', NULL, 3907),
 	('1b7c2a5e-0918-11f0-a063-0c9a3ce197c1', 'CODE-1011', 'City', 'City Code', 'Y', '2025-03-25', NULL, 3906),
 	('1b7c2a7a-0918-11f0-a063-0c9a3ce197c1', 'CODE-1012', 'Position', 'Job Position Code', 'Y', '2025-03-25', NULL, 3905),
 	('1b7c2a95-0918-11f0-a063-0c9a3ce197c1', 'CODE-1013', 'Grade', 'Grade Level', 'Y', '2025-03-25', NULL, 3904),
@@ -295,7 +292,6 @@ INSERT INTO `departments` (`id`, `tp_cd`, `tp_nm`, `desc_cntn`, `use_yn`, `creat
 	('92ba1bb3-2555-41f4-b6e1-c1cbf7591271', 'DPT-1002', 'Finance', 'Jasmine Lewis', 'Y', '2025-03-25', NULL, 3860),
 	('a808d647-affb-45a8-8eb7-722913b963ed', 'CITY-1004', '용인', '에버랜드 테마파크가 있는 도시', 'Y', '2025-03-25', NULL, 3859),
 	('b3a97a52-e73c-4341-b359-da5f8252b8f3', 'DPT-1006', 'Sales', 'Ethan Martinez', 'Y', '2025-03-25', NULL, 3858),
-	('dpRa0lcpzg', 'ㅁㄴㅇㅁ', 'ㅇㅁㄴㅇㅁㅇ', 'ㅁㅇㅁㅇㅁㄴㅇ', 'Y', '2025-03-25', NULL, 3950),
 	('e7c8ecbd-a20c-44fa-8a5a-251755200976', 'DPT-1004', 'IT', 'George Wilson', 'Y', '2025-03-25', NULL, 3857),
 	('f7db73bc-08a6-4d1e-8a81-945ab49b485d', 'DPT-1008', 'Legal', 'Charlie Davis', 'Y', '2025-03-25', NULL, 3856),
 	('fa23efa7-3f47-4e04-90c7-678842ece210', 'CITY-1003', '고양', '일산 호수공원으로 유명한 도시', 'Y', '2025-03-25', NULL, 3855);
@@ -312,7 +308,7 @@ CREATE TABLE IF NOT EXISTS `department_attributes` (
   PRIMARY KEY (`row_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- 테이블 데이터 bbs.department_attributes:~930 rows (대략적) 내보내기
+-- 테이블 데이터 bbs.department_attributes:~929 rows (대략적) 내보내기
 DELETE FROM `department_attributes`;
 INSERT INTO `department_attributes` (`row_key`, `row_num`, `checked`, `disabled`, `check_disabled`, `class_name_row`, `class_name_col`) VALUES
 	(1, 2, 0, 0, 0, '[]', '{}'),
@@ -1243,7 +1239,6 @@ INSERT INTO `department_attributes` (`row_key`, `row_num`, `checked`, `disabled`
 	(3788, 3, 0, 0, 0, '[]', '{}'),
 	(3789, 2, 0, 0, 0, '[]', '{}'),
 	(3790, 1, 0, 0, 0, '[]', '{}'),
-	(3907, 8, 0, 0, 0, '[]', '{}'),
 	(3914, 2, 0, 0, 0, '[]', '{}');
 
 -- 테이블 bbs.employees 구조 내보내기
@@ -1763,6 +1758,26 @@ INSERT INTO `member` (`id`, `pwd`, `name`, `email`) VALUES
 	('test0002', '$2a$10$EAsVdOzTN3mttYSmyh1lWO8TD3H/e0hRPnWxdcWaoRJT/m1eK5aW.', '김장성', 'a@a.com'),
 	('test0003', '$2a$10$eyy06XA.kAoGX/RUr4dHGOmYgphsZQqkdx8oEhcUjkTmzo4zlLmJC', '박덩그', 'pa@aa.com'),
 	('test0004', '$2a$10$wXs4gYfkpaN.tV2S1hJb.OqMmj0H4LJj2.Xx8cBmfvpHguV4XrYW6', '노도가', 'aa@aa.com');
+
+-- 테이블 bbs.member_menu_permission 구조 내보내기
+CREATE TABLE IF NOT EXISTS `member_menu_permission` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `member_id` varchar(100) NOT NULL,
+  `menu_page_id` int(11) NOT NULL,
+  `can_search` tinyint(1) DEFAULT 0,
+  `can_add` tinyint(1) DEFAULT 0,
+  `can_delete` tinyint(1) DEFAULT 0,
+  `can_reset_search` tinyint(1) DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `member_id` (`member_id`),
+  KEY `FK_member_menu_permission_menu_page` (`menu_page_id`) USING BTREE,
+  CONSTRAINT `member_menu_permission_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `member` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- 테이블 데이터 bbs.member_menu_permission:~1 rows (대략적) 내보내기
+DELETE FROM `member_menu_permission`;
+INSERT INTO `member_menu_permission` (`id`, `member_id`, `menu_page_id`, `can_search`, `can_add`, `can_delete`, `can_reset_search`) VALUES
+	(1, 'test0001', 18, 0, 0, 1, 1);
 
 -- 테이블 bbs.menu_item 구조 내보내기
 CREATE TABLE IF NOT EXISTS `menu_item` (

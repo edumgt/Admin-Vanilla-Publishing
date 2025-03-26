@@ -11,23 +11,15 @@ import {
 } from './common.js';
 
 
+
 const BadgeRenderer = createBadgeRenderer;
 const rowNumRenderer = RowNumRenderer;
 const SaveRenderer = createSaveRenderer;
-
-document.body.classList.add('loading'); // fetch 시작 시
-document.body.classList.remove('loading'); // fetch 끝나면
 localStorage.setItem('gridCacheTimestamp', new Date().toISOString());
-
-
 let rowsPerPage = 20;
 let gridBodyHeight = 630;
-
 const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
 const currentDate = new Date().toLocaleDateString('ko-KR', options).replace(/[\.]/g, '-').replace(/[\s]/g, '').substring(0, 10);
-
-
-
 
 fetch('/api/data')
     .then(response => {
@@ -66,8 +58,6 @@ function saveData(data) {
     const filteredData = data.filter(row => row.tpCd && row.tpNm);
     localStorage.setItem('gridData', JSON.stringify(filteredData));
 }
-
-
 
 const grid = new tui.Grid({
     el: document.getElementById('grid'),
@@ -142,7 +132,6 @@ const grid = new tui.Grid({
     draggable: true
 });
 
-
 updateDataCount();
 
 const deleteButton = createDelButton();
@@ -150,8 +139,6 @@ deleteButton.addEventListener('click', function () {
     const chkArray = grid.getCheckedRowKeys();
 
     if (chkArray.length > 0) {
-
-
 
         fetch('/api/delete', {
             method: 'POST',
@@ -166,10 +153,6 @@ deleteButton.addEventListener('click', function () {
                 updateDataCount();
 
                 grid.removeCheckedRows();
-                // const storedData = localStorage.getItem('gridData');
-                // let parsedData = storedData ? JSON.parse(storedData) : [];
-                // parsedData = parsedData.filter(row => !chkArray.includes(row.rowKey));
-                // localStorage.setItem('gridData', JSON.stringify(parsedData));
 
             })
             .catch(error => {
@@ -192,14 +175,9 @@ addButton.addEventListener('click', function () {
         showToast('input-allowed', 'info', lang);
         return;
     }
-
     initNew();
 
-
-
 });
-
-
 
 const searchButton = createSearchButton();
 btnContainer.appendChild(searchButton);
@@ -209,7 +187,6 @@ btnContainer.appendChild(deleteButton);
 const resetSearchButton = createResetSearchButton();
 resetSearchButton.classList.add("ml-2")
 btnContainer.appendChild(resetSearchButton);
-
 
 grid.on('click', (ev) => {
     const { columnName, rowKey } = ev;
@@ -231,7 +208,6 @@ grid.on('click', (ev) => {
 
         } catch (err) {
 
-            //showToast('save-error', 'warning', lang);
         }
         showToast('well-done', 'success', lang);
     }
@@ -247,12 +223,12 @@ grid.on('click', (ev) => {
 
 
 grid.on('editingStart', (ev) => {
-    showToast('data-possible', 'info', lang);
+    //showToast('data-possible', 'info', lang);
 });
 
 grid.on('editingFinish', (ev) => {
-    saveData(grid.getData());
-    showToast('auto-save', 'info', lang);
+    // saveData(grid.getData());
+    // showToast('auto-save', 'info', lang);
 });
 
 
@@ -331,7 +307,6 @@ function toggleModal(show, rowData = {}, rowKey = null) {
 
 
 searchButton.addEventListener('click', function () {
-
     const gridData = loadData();
 
     const selectedDate = document.getElementById('datePicker').value;
@@ -405,4 +380,61 @@ document.addEventListener('DOMContentLoaded', () => {
     addButton.innerHTML = `<i class="fas fa-plus"></i><span>` + buttonLabels.new + `</span>`;
     deleteButton.innerHTML = `<i class="fas fa-trash"></i><span>` + buttonLabels.delete + `</span>`;
     resetSearchButton.innerHTML = `<i class="fas fa-undo"></i><span>` + buttonLabels.reset + `</span>`;
+
+
 });
+
+function applyButtonPermissions(permissions) {
+    const toggleButton = function (button, allowed) {
+        button.disabled = !allowed;
+        if (!allowed) {
+            button.classList.add('bg-gray-300', 'cursor-not-allowed');
+            button.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+        } else {
+            button.classList.remove('bg-gray-300', 'cursor-not-allowed');
+            button.classList.add('bg-gray-700', 'hover:bg-gray-600');
+        }
+    };
+
+    toggleButton(searchButton, permissions.canSearch);
+    toggleButton(addButton, permissions.canAdd);
+    toggleButton(deleteButton, permissions.canDelete);
+    toggleButton(resetSearchButton, permissions.canResetSearch);
+}
+
+
+function fetchPermissionsByMenuPath(memberId, menuPath, callback) {
+    fetch('/api/permissions?memberId=' + memberId + '&menuPath=' + encodeURIComponent(menuPath.replace("\/","")))
+        .then(function (res) {
+            if (!res.ok) {
+                throw new Error('권한 조회 실패');
+            }
+            return res.json();
+        })
+        .then(function (permissions) {
+            callback(null, permissions);
+        })
+        .catch(function (err) {
+            callback(err, null);
+        });
+}
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    
+    localStorage.setItem('memberId','test0001');
+
+    var memberId = localStorage.getItem('memberId'); // 예: 로그인 후 저장된 사용자 ID
+    var menuPath = location.pathname;
+
+    fetchPermissionsByMenuPath(memberId, menuPath, function (err, permissions) {
+        if (err) {
+            console.error('권한 정보 로딩 실패:', err);
+            showToast('권한 정보 로딩 실패', 'error', 'ko');
+            return;
+        }
+
+        applyButtonPermissions(permissions);
+    });
+});
+
