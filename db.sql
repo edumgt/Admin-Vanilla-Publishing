@@ -159,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `dates` (
   PRIMARY KEY (`date_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- 테이블 데이터 bbs.dates:~62 rows (대략적) 내보내기
+-- 테이블 데이터 bbs.dates:~61 rows (대략적) 내보내기
 DELETE FROM `dates`;
 INSERT INTO `dates` (`date_id`, `date`) VALUES
 	(1, '2025-01-02'),
@@ -1281,7 +1281,7 @@ CREATE TABLE IF NOT EXISTS `events` (
   CONSTRAINT `events_ibfk_1` FOREIGN KEY (`date_id`) REFERENCES `dates` (`date_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- 테이블 데이터 bbs.events:~8 rows (대략적) 내보내기
+-- 테이블 데이터 bbs.events:~7 rows (대략적) 내보내기
 DELETE FROM `events`;
 INSERT INTO `events` (`event_id`, `date_id`, `time`, `description`) VALUES
 	('1000', 1, '17:00:00', '개발자 인터뷰'),
