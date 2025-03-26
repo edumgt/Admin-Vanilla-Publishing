@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8" />
+  <title>TUI Grid DB Admin</title>
+  <link href="assets/css/default.css" rel="stylesheet">
+  <script src="https://uicdn.toast.com/tui-grid/latest/tui-grid.js"></script>
+</head>
+
+<body>
+  <div id="cmmContainer"></div>
+
+  <nav class="breadcrumb"></nav>
+
+  <div id="content">
+
+    <div style="margin-bottom: 10px;">
+      <label for="apiUrl">API 주소:</label>
+      <input type="text" id="apiUrl" value="/api/member-permissions" style="width: 400px;">
+      <button id="btnLoad" class="history-button">API 데이터 불러오기</button>
+    </div>
+
+    <div id="myGrid" style="width: 100%; height: 600px;"></div>
+  </div>
+
+  <script>
+    // TUI Grid 초기화
+    const grid = new tui.Grid({
+      el: document.getElementById('myGrid'),
+      data: [],
+      columns: [],
+      scrollX: false,
+      scrollY: true,
+      rowHeight: 40,
+      bodyHeight: 600
+    });
+
+    const btnLoad = document.getElementById('btnLoad');
+    const apiUrlInput = document.getElementById('apiUrl');
+
+    // 버튼 클릭 → 사용자가 입력한 API 주소로 호출
+    btnLoad.addEventListener('click', function () {
+      const url = apiUrlInput.value.trim();
+      if (!url) {
+        alert('API 주소를 입력하세요.');
+        return;
+      }
+
+      fetch(url)
+        .then(res => {
+          if (!res.ok) throw new Error('API 호출 실패 (' + res.status + ')');
+          return res.json();
+        })
+        .then(data => {
+          const columns = createDynamicColumns(data);
+          grid.setColumns(columns);
+          grid.resetData(data);
+        })
+        .catch(err => {
+          alert('데이터 로딩 실패: ' + err.message);
+          console.error(err);
+        });
+    });
+
+    // 컬럼 자동 생성기
+    function createDynamicColumns(rows) {
+      if (!Array.isArray(rows) || rows.length === 0) return [];
+      return Object.keys(rows[0]).map(key => ({
+        header: key,
+        name: key,
+        sortable: true,
+        resizable: true
+      }));
+    }
+  </script>
+
+  <script type="module" src="assets/js/logomodule.js"></script>
+</body>
+
+</html>

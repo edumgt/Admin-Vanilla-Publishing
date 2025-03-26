@@ -32,9 +32,9 @@
         <input type="text" id="password" value="123456">
       </label>
       <label>Database:
-        <input type="text" id="database" value="WiseJiwon">
+        <input type="text" id="database" value="kegtest">
       </label>
-      <button id="btnConnect">Connect DB</button>
+      <input type="button" id="btnConnect" class="history-button" value="CONNECT">
     </div>
     <hr />
 
@@ -42,9 +42,9 @@
     <div>
       <label>Query:</label>
       <br />
-      <textarea id="query" rows="3" cols="50">SELECT * FROM wisejiwon.dbo.univ</textarea>
+      <textarea id="query" rows="2" style="width:100%">SELECT * FROM kegtest.dbo.T_code where groupcode like 'BD%'</textarea>
       <br />
-      <button id="btnQuery">Run Query (Default Config)</button>
+      <input type="button" id="btnQuery" class="history-button" value="RUN">
     </div>
     <hr />
 
