@@ -996,4 +996,36 @@ router.get('/permissions', function (req, res) {
 });
 
 
+
+
+// GET /api/member-permissions
+router.get('/member-permissions', function (req, res) {
+    const query = `
+        SELECT 
+            mmp.id AS permission_id,
+            mmp.member_id,
+            mem.name AS member_name,
+            mp.id AS menu_page_id,
+            mp.page_name,
+            mmp.can_search,
+            mmp.can_add,
+            mmp.can_delete,
+            mmp.can_reset_search
+        FROM member_menu_permission mmp
+        JOIN member mem ON mmp.member_id = mem.id
+        JOIN menu_page mp ON mmp.menu_page_id = mp.id
+        ORDER BY mem.name, mp.page_name
+    `;
+
+    db.query(query, function (err, results) {
+        if (err) {
+            console.error('권한 목록 조회 실패:', err);
+            return res.status(500).json({ message: 'Internal server error' });
+        }
+
+        res.json(results);
+    });
+});
+
+
 module.exports = router;
