@@ -188,10 +188,18 @@ const resetSearchButton = createResetSearchButton();
 resetSearchButton.classList.add("ml-2")
 btnContainer.appendChild(resetSearchButton);
 
+let savePermission = true; // 전역 변수로 선언
+let viewPermission = true; // 전역 변수로 선언
+
 grid.on('click', (ev) => {
     const { columnName, rowKey } = ev;
 
     if (columnName === 'save') {
+        if (!savePermission) {
+            showToast('권한이 없습니다.', 'warning', lang);
+            return;
+        }
+
         const row = grid.getRow(rowKey);
         console.log("rowKey: " + rowKey);
 
@@ -207,11 +215,17 @@ grid.on('click', (ev) => {
             const result = response.json();
 
         } catch (err) {
-
+            console.error('Save failed:', err);
+            showToast('save-failed', 'error', lang);
         }
+
         showToast('well-done', 'success', lang);
     }
     if (columnName === 'view') {
+        if (!viewPermission) {
+            showToast('권한이 없습니다.', 'warning', lang);
+            return;
+        }
         const row = grid.getRow(rowKey);
         toggleModal(true, row, rowKey);
     }
@@ -220,17 +234,6 @@ grid.on('click', (ev) => {
         showToast('auto-key', 'info', lang);
     }
 });
-
-
-grid.on('editingStart', (ev) => {
-    //showToast('data-possible', 'info', lang);
-});
-
-grid.on('editingFinish', (ev) => {
-    // saveData(grid.getData());
-    // showToast('auto-save', 'info', lang);
-});
-
 
 function initNew() {
     const rowData = { Key: generateNanoId(), tpCd: '', tpNm: '', descCntn: '', useYn: 'Y', createdAt: currentDate };
@@ -400,6 +403,9 @@ function applyButtonPermissions(permissions) {
     toggleButton(addButton, permissions.canAdd);
     toggleButton(deleteButton, permissions.canDelete);
     toggleButton(resetSearchButton, permissions.canResetSearch);
+
+    savePermission = permissions.canSave;
+    viewPermission = permissions.canView;
 }
 
 

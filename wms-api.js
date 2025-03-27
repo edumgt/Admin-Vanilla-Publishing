@@ -963,7 +963,7 @@ router.get('/permissions', function (req, res) {
             const menuId = menuRows[0].id;
 
             db.query(
-                `SELECT can_search, can_add, can_delete, can_reset_search
+                `SELECT can_search, can_add, can_delete, can_reset_search, can_save, can_view
                  FROM member_menu_permission
                  WHERE member_id = ? AND menu_page_id = ?`,
                 [memberId, menuId],
@@ -978,7 +978,9 @@ router.get('/permissions', function (req, res) {
                             canSearch: false,
                             canAdd: false,
                             canDelete: false,
-                            canResetSearch: false
+                            canResetSearch: false,
+                            canSave: false,
+                            canView: false
                         });
                     }
 
@@ -987,7 +989,9 @@ router.get('/permissions', function (req, res) {
                         canSearch: !!perm.can_search,
                         canAdd: !!perm.can_add,
                         canDelete: !!perm.can_delete,
-                        canResetSearch: !!perm.can_reset_search
+                        canResetSearch: !!perm.can_reset_search,
+                        canSave: !!perm.can_save,
+                        canView: !!perm.can_view,
                     });
                 }
             );
@@ -1010,7 +1014,9 @@ router.get('/member-permissions', function (req, res) {
             mmp.can_search,
             mmp.can_add,
             mmp.can_delete,
-            mmp.can_reset_search
+            mmp.can_reset_search,
+            mmp.can_save,
+            mmp.can_view
         FROM member_menu_permission mmp
         JOIN member mem ON mmp.member_id = mem.id
         JOIN menu_page mp ON mmp.menu_page_id = mp.id
