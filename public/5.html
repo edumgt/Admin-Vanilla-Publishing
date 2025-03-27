@@ -6,6 +6,12 @@
   <title>TUI Grid DB Admin</title>
   <link href="assets/css/default.css" rel="stylesheet">
   <script src="https://uicdn.toast.com/tui-grid/latest/tui-grid.js"></script>
+  <style>
+    #loading {
+      display: none;
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 
 <body>
@@ -16,16 +22,50 @@
   <div id="content">
 
     <div style="margin-bottom: 10px;">
-      <label for="apiUrl">API 주소:</label>
-      <input type="text" id="apiUrl" value="/api/member-permissions" style="width: 400px;">
-      <button id="btnLoad" class="history-button">API 데이터 불러오기</button>
+      <label for="apiSelect">API 목록:</label>
+      <select id="apiSelect" style="width: 400px;"></select>
+      <input type="button" id="btnLoad" value="API 데이터 불러오기">
     </div>
 
-    <div id="myGrid" style="width: 100%; height: 600px;"></div>
+    
+
+    <!-- JSON 데이터 표시 영역 -->
+    <div style="margin-bottom: 4px;">
+      <label for="jsonData">JSON 데이터:</label><br>
+      <textarea id="jsonData" style="width: 100%; height: 80px;" readonly></textarea>
+    </div>
+
+    <!-- Row 수 표시 -->
+    <div id="rowCount" style="margin-bottom: 10px; font-weight: bold;"></div>
+
+    <div class="grid-wrapper" style="position: relative; width: 100%; height: 320px;">
+      <!-- 로딩 이미지 오버레이 -->
+      <div id="loading" style="
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.7);
+        display: none;
+        z-index: 10;
+        justify-content: center;
+        align-items: center;
+      ">
+        <img src="assets/img/loading.gif" alt="로딩 중..." />
+      </div>
+    
+      <!-- TUI Grid -->
+      <div id="myGrid" style="width: 100%; height: 100%;"></div>
+    </div>
   </div>
 
   <script>
-    // TUI Grid 초기화
+    const apiSelect = document.getElementById('apiSelect');
+    const btnLoad = document.getElementById('btnLoad');
+    const jsonDataTextarea = document.getElementById('jsonData');
+    const loading = document.getElementById('loading');
+    const rowCount = document.getElementById('rowCount');
+
     const grid = new tui.Grid({
       el: document.getElementById('myGrid'),
       data: [],
@@ -36,18 +76,36 @@
       bodyHeight: 600
     });
 
-    const btnLoad = document.getElementById('btnLoad');
-    const apiUrlInput = document.getElementById('apiUrl');
+    // API 목록 가져오기
+    fetch('/api/list')
+      .then(res => res.json())
+      .then(apiList => {
+        apiList.forEach(path => {
+          const option = document.createElement('option');
+          option.value = path;
+          option.textContent = path;
+          apiSelect.appendChild(option);
+        });
+      })
+      .catch(err => {
+        alert('API 목록을 불러오는 데 실패했습니다: ' + err.message);
+        console.error(err);
+      });
 
-    // 버튼 클릭 → 사용자가 입력한 API 주소로 호출
-    btnLoad.addEventListener('click', function () {
-      const url = apiUrlInput.value.trim();
-      if (!url) {
-        alert('API 주소를 입력하세요.');
+    // API 호출 및 Grid + JSON 렌더링
+    btnLoad.addEventListener('click', () => {
+      const path = apiSelect.value;
+      if (!path) {
+        alert('API 경로를 선택하세요.');
         return;
       }
 
-      fetch(url)
+      // 로딩 시작
+      loading.style.display = 'block';
+      rowCount.textContent = '';
+      jsonDataTextarea.value = '';
+
+      fetch(path)
         .then(res => {
           if (!res.ok) throw new Error('API 호출 실패 (' + res.status + ')');
           return res.json();
@@ -56,14 +114,22 @@
           const columns = createDynamicColumns(data);
           grid.setColumns(columns);
           grid.resetData(data);
+
+          jsonDataTextarea.value = JSON.stringify(data, null, 2);
+
+          // Row 수 표기
+          rowCount.textContent = `총 ${data.length}건`;
         })
         .catch(err => {
           alert('데이터 로딩 실패: ' + err.message);
           console.error(err);
+        })
+        .finally(() => {
+          // 로딩 끝
+          loading.style.display = 'none';
         });
     });
 
-    // 컬럼 자동 생성기
     function createDynamicColumns(rows) {
       if (!Array.isArray(rows) || rows.length === 0) return [];
       return Object.keys(rows[0]).map(key => ({

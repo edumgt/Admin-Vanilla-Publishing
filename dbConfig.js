@@ -1,9 +1,9 @@
 // dbConfig.js
 module.exports = {
     user: process.env.DB_USER || 'sa',
-    password: process.env.DB_PASSWORD || '123456',
+    password: process.env.DB_PASSWORD || 'YourStrong!Passw0rd',
     server: process.env.DB_HOST || 'localhost',
-    database: process.env.DB_NAME || 'bbs',
+    database: process.env.DB_NAME || 'kegtest',
     // MSSQL에 필요한 추가 설정
     options: {
       encrypt: false,  // 클라이언트에서 암호화 여부 (MSSQL 환경에 따라 변경)

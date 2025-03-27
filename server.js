@@ -114,6 +114,36 @@ app.post('/db/query', async (req, res) => {
 });
 
 
+////////////////////////////////////
+app.get('/db/codes', async (req, res) => {
+  try {
+    let pool = await sql.connect(dbConfig);
+    let result = await pool.request().query('select * from t_code');
+
+    res.json(result.recordset);
+  } catch (err) {
+    console.error('Query Execution Error:', err);
+    res.status(500).json({
+      success: false,
+      message: 'Query execution failed',
+      error: err.message
+    });
+  }
+});
+////////////////////////////////////
+
+const apiList = [
+  '/api/member-permissions',
+  '/db/codes',
+  '/api/data'
+];
+
+// API 목록 제공
+app.get('/api/list', (req, res) => {
+  res.json(apiList);
+});
+
+
 app.use(cors({
     origin: '*',
     methods: ['GET', 'POST', 'DELETE'],
