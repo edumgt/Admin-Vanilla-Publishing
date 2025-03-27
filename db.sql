@@ -237,9 +237,9 @@ CREATE TABLE IF NOT EXISTS `departments` (
   `row_key` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`),
   UNIQUE KEY `row_key` (`row_key`)
-) ENGINE=InnoDB AUTO_INCREMENT=3952 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3953 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- 테이블 데이터 bbs.departments:~53 rows (대략적) 내보내기
+-- 테이블 데이터 bbs.departments:~54 rows (대략적) 내보내기
 DELETE FROM `departments`;
 INSERT INTO `departments` (`id`, `tp_cd`, `tp_nm`, `desc_cntn`, `use_yn`, `created_at`, `view`, `row_key`) VALUES
 	('1b7c2a25-0918-11f0-a063-0c9a3ce197c1', 'CODE-1009', 'Unit', 'Measurement Unit', 'Y', '2025-03-25', NULL, 3908),
@@ -288,6 +288,7 @@ INSERT INTO `departments` (`id`, `tp_cd`, `tp_nm`, `desc_cntn`, `use_yn`, `creat
 	('5ae7b721-5b39-465a-af08-e23b151562ba', 'CITY-1006', '화성111', '빠르게 성장하는 도시1111', 'Y', '2025-03-25', NULL, 3864),
 	('5e7dacc4-a9d6-49c6-afba-f41f89d52931', 'DPT-1001', 'Operations', 'Fiona Brown', 'Y', '2025-03-25', NULL, 3863),
 	('65beddce-9bcc-45f8-941e-2c4303d8a73b', 'DPT-1005', 'Human Resources', 'Diana Garcia', 'Y', '2025-03-25', NULL, 3862),
+	('6eze2WGJvE', 'ㅁㄴㅇ', 'ㅁㄴㅇㅁ', 'ㅇㅁㄴㅇㅁㄴㅇ', 'Y', '2025-03-27', NULL, 3952),
 	('872e4910-3e5a-4f50-8261-fb5361a620d4', 'DPT-1009', 'R&D', 'Hannah Lee', 'Y', '2025-03-25', NULL, 3861),
 	('92ba1bb3-2555-41f4-b6e1-c1cbf7591271', 'DPT-1002', 'Finance', 'Jasmine Lewis', 'Y', '2025-03-25', NULL, 3860),
 	('a808d647-affb-45a8-8eb7-722913b963ed', 'CITY-1004', '용인', '에버랜드 테마파크가 있는 도시', 'Y', '2025-03-25', NULL, 3859),
@@ -1768,6 +1769,8 @@ CREATE TABLE IF NOT EXISTS `member_menu_permission` (
   `can_add` tinyint(1) DEFAULT 0,
   `can_delete` tinyint(1) DEFAULT 0,
   `can_reset_search` tinyint(1) DEFAULT 0,
+  `can_save` tinyint(1) DEFAULT 0,
+  `can_view` tinyint(1) DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `member_id` (`member_id`),
   KEY `FK_member_menu_permission_menu_page` (`menu_page_id`) USING BTREE,
@@ -1776,8 +1779,8 @@ CREATE TABLE IF NOT EXISTS `member_menu_permission` (
 
 -- 테이블 데이터 bbs.member_menu_permission:~1 rows (대략적) 내보내기
 DELETE FROM `member_menu_permission`;
-INSERT INTO `member_menu_permission` (`id`, `member_id`, `menu_page_id`, `can_search`, `can_add`, `can_delete`, `can_reset_search`) VALUES
-	(1, 'test0001', 18, 0, 0, 1, 1);
+INSERT INTO `member_menu_permission` (`id`, `member_id`, `menu_page_id`, `can_search`, `can_add`, `can_delete`, `can_reset_search`, `can_save`, `can_view`) VALUES
+	(1, 'test0001', 18, 1, 0, 0, 1, 0, 1);
 
 -- 테이블 bbs.menu_item 구조 내보내기
 CREATE TABLE IF NOT EXISTS `menu_item` (
