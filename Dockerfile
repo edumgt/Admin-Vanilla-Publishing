@@ -1,5 +1,5 @@
-# Step 1: 빌드 (Vite + React 등)
-FROM node:18-alpine AS builder
+# Step 1: 빌드 (Node 22 + Vite + React 등)
+FROM node:22-alpine AS builder
 
 WORKDIR /app
 
