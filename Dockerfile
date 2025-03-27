@@ -1,25 +1,18 @@
-# Step 1: 빌드 (Node 22 + Vite + React 등)
-FROM node:22-alpine AS builder
+# Step 1: Node.js 22 환경 설정
+FROM node:22-alpine
 
-WORKDIR /app
+# 작업 디렉토리 생성
+WORKDIR /usr/src/app
 
+# package.json, package-lock.json 복사 및 의존성 설치
 COPY package*.json ./
 RUN npm install
 
+# 소스 코드 전체 복사
 COPY . .
-RUN npm run build
 
+# 포트 열기
+EXPOSE 3000
 
-# Step 2: Nginx에 빌드 결과 복사
-FROM nginx:stable-alpine
-
-# Nginx 설정 파일 복사 (선택)
-COPY nginx.conf /etc/nginx/nginx.conf
-
-# 빌드된 정적 파일 복사
-COPY --from=builder /app/dist /usr/share/nginx/html
-
-# 포트 80 노출
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+# 애플리케이션 실행
+CMD ["node", "server.js"]
