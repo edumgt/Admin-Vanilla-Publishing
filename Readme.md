@@ -47,3 +47,7 @@
 ## nvm use 22
 ## docker build -t express-api-server .
 ## docker run -d -p 3000:3000 --name my-express express-api-server
+
+
+## docker build -t my-nginx-web .
+## docker run -d -p 80:80 --name web-app my-nginx-web
