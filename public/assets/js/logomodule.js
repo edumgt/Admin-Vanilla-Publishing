@@ -350,32 +350,32 @@ const iconMapping = {
 
 // };
 
- // (1) localStorage에서 가져오기
+// (1) localStorage에서 가져오기
 const storedData = localStorage.getItem('menuConfigurations');
 let menuConfigurations = storedData ? JSON.parse(storedData) : {};
 
 // (2) 서버 fetch
 fetch('/api/menu')
-  .then(res => res.json())
-  .then(data => {
-    // localStorage에 저장
-    localStorage.setItem('menuConfigurations', JSON.stringify(data));
-    
-    // 기존 menuConfigurations 객체에 병합 / 재할당
-    // 방법 1) 재할당:
-    // menuConfigurations = data;
+    .then(res => res.json())
+    .then(data => {
+        // localStorage에 저장
+        localStorage.setItem('menuConfigurations', JSON.stringify(data));
 
-    // 방법 2) 기존 객체에 병합(Object.assign)
-    Object.assign(menuConfigurations, data);
+        // 기존 menuConfigurations 객체에 병합 / 재할당
+        // 방법 1) 재할당:
+        // menuConfigurations = data;
 
-    // 방법 3) key별로 갱신
-    Object.keys(data).forEach(key => {
-      menuConfigurations[key] = data[key];
-    });
+        // 방법 2) 기존 객체에 병합(Object.assign)
+        Object.assign(menuConfigurations, data);
 
-    console.log('Updated menuConfigurations from server:', menuConfigurations);
-  })
-  .catch(console.error);
+        // 방법 3) key별로 갱신
+        Object.keys(data).forEach(key => {
+            menuConfigurations[key] = data[key];
+        });
+
+        console.log('Updated menuConfigurations from server:', menuConfigurations);
+    })
+    .catch(console.error);
 
 // 이후 menuConfigurations 사용 (주의: fetch는 비동기)
 
@@ -784,6 +784,50 @@ memberMenu.innerHTML = `<div class="bg-white shadow-lg p-3 rounded-md border">
                            <span>Settings</span>
                         </div>
                      </a>
+
+                     <div class="dropdown-divider"></div>
+
+                     
+                        <a href="1.html" class="dropdown-item modal-link">
+                            <div class="d-flex align-items-center gap-3">
+                            <i class="fas fa-cog fs-5"></i>
+                            <span>시간표</span>
+                            </div>
+                        </a>
+
+                        <a href="2.html" class="dropdown-item modal-link">
+                            <div class="d-flex align-items-center gap-3">
+                            <i class="fas fa-cog fs-5"></i>
+                            <span>수강신청</span>
+                            </div>
+                        </a>
+
+                        <a href="3.html" class="dropdown-item  modal-link">
+                            <div class="d-flex align-items-center gap-3">
+                            <i class="fas fa-cog fs-5"></i>
+                            <span>용어사전</span>
+                            </div>
+                        </a>
+
+                        <a href="4.html" class="dropdown-item modal-link">
+                            <div class="d-flex align-items-center gap-3">
+                            <i class="fas fa-cog fs-5"></i>
+                            <span>DB Test</span>
+                            </div>
+                        </a>
+
+                        <a href="5.html" class="dropdown-item modal-link">
+                            <div class="d-flex align-items-center gap-3">
+                            <i class="fas fa-cog fs-5"></i>
+                            <span>API Test</span>
+                            </div>
+                        </a>
+                     
+
+                     
+
+                     
+
                      <div class="dropdown-divider"></div>
                      <a href="#" class="dropdown-item" id="logoutButton">
                         <div class="d-flex align-items-center gap-3">
@@ -1277,3 +1321,59 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+//////////////////////////////////////
+// 모달 생성
+const modal = document.createElement('div');
+modal.id = 'fullscreenModal';
+Object.assign(modal.style, {
+  display: 'none',
+  position: 'fixed',
+  top: '10px',
+  left: '10px',
+  width: '100%',
+  height: '100%',
+  background: 'rgba(255, 252, 252, 0.95)',
+  zIndex: 9999
+});
+
+// 닫기 버튼 생성
+const closeBtn = document.createElement('button');
+closeBtn.innerHTML = 'Close';
+Object.assign(closeBtn.style, {
+  position: 'absolute',
+  top: '20px',
+  right: '30px',
+  zIndex: 10000,
+  fontSize: '16px',
+  color: 'red',
+  background: 'none',
+  border: 'none',
+  cursor: 'pointer'
+});
+closeBtn.onclick = () => {
+  iframe.src = '';
+  modal.style.display = 'none';
+};
+
+// iframe 생성
+const iframe = document.createElement('iframe');
+iframe.id = 'modalIframe';
+Object.assign(iframe.style, {
+  width: '96%',
+  height: '96%',
+  border: 'none'
+});
+
+// 구성 요소 삽입
+modal.appendChild(closeBtn);
+modal.appendChild(iframe);
+document.body.appendChild(modal);
+
+// 링크 이벤트 바인딩
+document.querySelectorAll('.modal-link').forEach(link => {
+  link.addEventListener('click', function (e) {
+    e.preventDefault();
+    iframe.src = this.getAttribute('href');
+    modal.style.display = 'block';
+  });
+});
