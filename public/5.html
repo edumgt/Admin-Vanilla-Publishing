@@ -15,8 +15,8 @@
 </head>
 
 <body>
-  <div class="px-4 py-4">
-    <h1 style="margin-bottom:0.25rem;">API Get Test</h1>
+  <div class="px-4 py-2">
+
 
     <div class="flex gap-4 py-4">
       <label for="apiSelect">API 목록:</label>
@@ -39,6 +39,14 @@
     <div id="rowCount" style="margin-bottom: 10px; font-weight: bold;"></div>
 
     <div class="grid-wrapper" style="position: relative; width: 100%; height: 320px;">
+
+      <!-- listbox select 출력 영역 -->
+      <div id="listboxContainer" style="margin-top: 10px; display: none;">
+        <label for="dynamicSelect"><b>리스트박스 결과:</b></label>
+        <select id="dynamicSelect" style="width: 300px; height: 40px;"></select>
+      </div>
+
+
       <!-- 로딩 이미지 오버레이 -->
       <div id="loading" style="
         position: absolute;
@@ -88,9 +96,11 @@
         apiList.forEach(api => {
           const option = document.createElement('option');
           option.value = api.url;
-          option.textContent = `[${api.method}] ${api.url}`;
+          option.textContent = `[${api.method}] ${api.url} - ${api.description || ''}`;
+          option.title = api.description || '';
           apiSelect.appendChild(option);
         });
+
 
         // 초기 파라미터 필드 생성
         updateParamsUI();
@@ -120,7 +130,6 @@
       }
     }
 
-    // API 호출 버튼
     btnLoad.addEventListener('click', () => {
       const path = apiSelect.value;
       const selectedApi = fullApiList.find(api => api.url === path);
@@ -156,14 +165,28 @@
           return res.json();
         })
         .then(res => {
-          // POST API가 { data: [...] } 형태로 내려오는 경우도 처리
           const data = Array.isArray(res) ? res : res.data || [];
-          const columns = createDynamicColumns(data);
-          grid.setColumns(columns);
-          grid.resetData(data);
+
+          // listbox 전용 처리
+          const isListbox = path.startsWith('/listbox/');
+          if (isListbox) {
+            // 리스트박스용 select 구성
+            buildSelectBox(data);
+            document.getElementById('listboxContainer').style.display = 'block';
+            document.getElementById('myGrid').style.display = 'none';
+            rowCount.textContent = `총 ${data.length}건`;
+          } else {
+            // Grid 구성
+            const columns = createDynamicColumns(data);
+            grid.setColumns(columns);
+            grid.resetData(data);
+
+            document.getElementById('listboxContainer').style.display = 'none';
+            document.getElementById('myGrid').style.display = 'block';
+            rowCount.textContent = `총 ${data.length}건`;
+          }
 
           jsonDataTextarea.value = JSON.stringify(res, null, 2);
-          rowCount.textContent = `총 ${data.length}건`;
         })
         .catch(err => {
           alert('데이터 로딩 실패: ' + err.message);
@@ -173,6 +196,19 @@
           loading.style.display = 'none';
         });
     });
+
+    function buildSelectBox(data) {
+      const select = document.getElementById('dynamicSelect');
+      select.innerHTML = '';
+
+      data.forEach(item => {
+        const option = document.createElement('option');
+        option.text = item.val || '';
+        option.value = item.opt || '';
+        select.appendChild(option);
+      });
+    }
+
 
     function createDynamicColumns(rows) {
       if (!Array.isArray(rows) || rows.length === 0) return [];

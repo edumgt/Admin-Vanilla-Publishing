@@ -209,13 +209,120 @@ app.post('/db/SiteUser', async (req, res) => {
   }
 });
 
+app.post('/db/PlaceUser', async (req, res) => {
+  const userid = req.body.userid || 'test0001';
+
+  try {
+      const pool = await sql.connect(dbConfig);
+      const result = await pool.request()
+          .input('userid', sql.VarChar, userid)
+          .query('SELECT * FROM vwPlaceUser WHERE userid = @userid');
+
+      res.json({
+          success: true,
+          data: result.recordset
+      });
+  } catch (err) {
+      console.error('DB Query Error:', err);
+      res.status(500).json({
+          success: false,
+          message: 'Database query failed',
+          error: err.message
+      });
+  }
+});
+
+app.post('/db/SitePlace', async (req, res) => {
+  const sitecode = req.body.sitecode || '01';
+
+  try {
+      const pool = await sql.connect(dbConfig);
+      const result = await pool.request()
+          .input('sitecode', sql.VarChar, sitecode)
+          .query('SELECT * FROM vwSitePlace WHERE sitecode = @sitecode');
+      
+
+      res.json({
+          success: true,
+          data: result.recordset
+      });
+  } catch (err) {
+      console.error('DB Query Error:', err);
+      res.status(500).json({
+          success: false,
+          message: 'Database query failed',
+          error: err.message
+      });
+  }
+});
+
+app.post('/listbox/SitePlace', async (req, res) => {
+  const sitecode = req.body.sitecode || '01';
+
+  try {
+      const pool = await sql.connect(dbConfig);
+      const result = await pool.request()
+          .input('sitecode', sql.VarChar, sitecode)
+          .query('SELECT placeseq opt,placename val FROM vwSitePlace WHERE sitecode = @sitecode');
+      
+
+      res.json({
+          success: true,
+          data: result.recordset
+      });
+  } catch (err) {
+      console.error('DB Query Error:', err);
+      res.status(500).json({
+          success: false,
+          message: 'Database query failed',
+          error: err.message
+      });
+  }
+});
+
+
+/**
+ * @api /db/SiteUser
+ * @method POST
+ * @description 사이트 사용자 조회 API
+ * @params userid (string) - 사용자 ID (미입력 시 기본값 'test0001')
+ */
+app.post('/listbox/SiteUser', async (req, res) => {
+  const userid = req.body.userid || 'test0001';
+
+  try {
+      const pool = await sql.connect(dbConfig);
+      const result = await pool.request()
+          .input('userid', sql.VarChar, userid)
+          .query('SELECT sitecode opt, sitename val FROM vwSiteUser WHERE userid = @userid');
+
+      res.json({
+          success: true,
+          data: result.recordset
+      });
+  } catch (err) {
+      console.error('DB Query Error:', err);
+      res.status(500).json({
+          success: false,
+          message: 'Database query failed',
+          error: err.message
+      });
+  }
+});
+
+
 const apiList = [
-  { "url": "/api/member-permissions", "method": "GET" },
-  { "url": "/db/codes", "method": "GET" },
-  { "url": "/api/data", "method": "GET" },
-  { "url": "/db/SurveyQstn", "method": "GET" },
-  { "url": "/db/SurveyRslt", "method": "GET" },
-  { "url": "/db/SiteUser", "method": "POST", "params": ["userid"] }
+  { "url": "/api/member-permissions", "method": "GET" ,description: '권한 목록'},
+  { "url": "/db/codes", "method": "GET" ,description: '권한 목록'},
+  { "url": "/api/data", "method": "GET" ,description: '권한 목록'},
+  { "url": "/api/glos", "method": "GET" ,description: '권한 목록'},
+  { "url": "/db/SurveyQstn", "method": "GET" ,description: '권한 목록'},
+  { "url": "/db/SurveyRslt", "method": "GET" ,description: '권한 목록'},
+  { "url": "/db/SiteUser", "method": "POST", "params": ["userid"] ,description: '권한 목록'},
+  { "url": "/db/PlaceUser", "method": "POST", "params": ["userid"] ,description: '권한 목록'},
+  { "url": "/db/SitePlace", "method": "POST", "params": ["sitecode"] ,description: '권한 목록'},
+  { "url": "/listbox/SitePlace", "method": "POST", "params": ["sitecode"] ,description: '계열-지점 목록'},
+  { "url": "/listbox/SiteUser", "method": "POST", "params": ["userid"] ,description: '사용자별 Site 접근 목록'},
 ]
 
 

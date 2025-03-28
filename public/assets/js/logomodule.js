@@ -626,6 +626,16 @@ memberMenu.innerHTML = `<div class="bg-white shadow-lg p-3 rounded-md border">
                             </div>
                         </a>
 
+                        <a href="/api-docs" class="dropdown-item modal-link">
+                            <div class="d-flex align-items-center gap-3">
+                            <i class="fas fa-cog fs-5"></i>
+                            <span>Front End Swagger</span>
+                            </div>
+                        </a>
+
+
+                        
+
                      <div class="dropdown-divider"></div>
                      <a href="#" class="dropdown-item" id="logoutButton">
                         <div class="d-flex align-items-center gap-3">
