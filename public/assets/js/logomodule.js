@@ -1124,11 +1124,11 @@ modal.id = 'fullscreenModal';
 Object.assign(modal.style, {
   display: 'none',
   position: 'fixed',
-  top: '10px',
-  left: '10px',
-  width: '99%',
-  height: '99%',
-  background: 'rgba(255, 252, 252, 0.95)',
+  top: '0px',
+  left: '0px',
+  width: '100%',
+  height: '100%',
+  background: 'white',
   zIndex: 9999
 });
 
@@ -1140,11 +1140,12 @@ Object.assign(closeBtn.style, {
   top: '15px',
   right: '15px',
   zIndex: 10000,
-  fontSize: '20px',
-  color: 'red',
-  background: 'rgba(255, 252, 252, 0.95)',
+  fontSize: '15px',
+  color: 'yellow',
+  background: 'blue',
   border: 'none',
-  cursor: 'pointer'
+  cursor: 'pointer',
+  paddingBottom:'15px'
 });
 closeBtn.onclick = () => {
   iframe.src = '';
@@ -1155,8 +1156,8 @@ closeBtn.onclick = () => {
 const iframe = document.createElement('iframe');
 iframe.id = 'modalIframe';
 Object.assign(iframe.style, {
-  width: '96%',
-  height: '96%',
+  width: '99%',
+  height: '99%',
   border: 'none'
 });
 
