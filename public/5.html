@@ -16,15 +16,18 @@
 
 <body>
   <div class="px-4 py-4">
-    <h1 style="margin-bottom:0.25rem;">API Test</h1>
+    <h1 style="margin-bottom:0.25rem;">API Get Test</h1>
 
     <div class="flex gap-4 py-4">
       <label for="apiSelect">API 목록:</label>
       <select id="apiSelect" style="width: 400px;"></select>
+
+      <div id="paramsContainer" style="flex-wrap: wrap;"></div>
+
       <input type="button" id="btnLoad" value="API 데이터 불러오기">
     </div>
 
-    
+
 
     <!-- JSON 데이터 표시 영역 -->
     <div style="margin-bottom: 4px;">
@@ -50,7 +53,7 @@
       ">
         <img src="assets/img/loading.gif" alt="로딩 중..." />
       </div>
-    
+
       <!-- TUI Grid -->
       <div id="myGrid" style="width: 100%; height: 320px;"></div>
     </div>
@@ -62,6 +65,9 @@
     const jsonDataTextarea = document.getElementById('jsonData');
     const loading = document.getElementById('loading');
     const rowCount = document.getElementById('rowCount');
+    const paramsContainer = document.getElementById('paramsContainer');
+
+    let fullApiList = [];
 
     const grid = new tui.Grid({
       el: document.getElementById('myGrid'),
@@ -77,44 +83,86 @@
     fetch('/api/list')
       .then(res => res.json())
       .then(apiList => {
-        apiList.forEach(path => {
+        fullApiList = apiList; // 전체 정보 저장
+
+        apiList.forEach(api => {
           const option = document.createElement('option');
-          option.value = path;
-          option.textContent = path;
+          option.value = api.url;
+          option.textContent = `[${api.method}] ${api.url}`;
           apiSelect.appendChild(option);
         });
+
+        // 초기 파라미터 필드 생성
+        updateParamsUI();
       })
       .catch(err => {
         alert('API 목록을 불러오는 데 실패했습니다: ' + err.message);
         console.error(err);
       });
 
-    // API 호출 및 Grid + JSON 렌더링
+    // API 선택 변경 시 파라미터 입력 필드 갱신
+    apiSelect.addEventListener('change', updateParamsUI);
+
+    function updateParamsUI() {
+      paramsContainer.innerHTML = '';
+      const selected = apiSelect.value;
+      const selectedApi = fullApiList.find(api => api.url === selected);
+
+      if (selectedApi?.method === 'POST' && Array.isArray(selectedApi.params)) {
+        selectedApi.params.forEach(param => {
+          const input = document.createElement('input');
+          input.type = 'text';
+          input.placeholder = param;
+          input.name = param;
+          input.className = 'param-input border rounded px-2 py-1 text-sm';
+          paramsContainer.appendChild(input);
+        });
+      }
+    }
+
+    // API 호출 버튼
     btnLoad.addEventListener('click', () => {
       const path = apiSelect.value;
-      if (!path) {
-        alert('API 경로를 선택하세요.');
+      const selectedApi = fullApiList.find(api => api.url === path);
+
+      if (!selectedApi) {
+        alert('올바른 API를 선택하세요.');
         return;
       }
 
-      // 로딩 시작
-      loading.style.display = 'block';
+      loading.style.display = 'flex';
       rowCount.textContent = '';
       jsonDataTextarea.value = '';
 
-      fetch(path)
+      const fetchOptions = {
+        method: selectedApi.method,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+
+      if (selectedApi.method === 'POST') {
+        const inputs = paramsContainer.querySelectorAll('.param-input');
+        const bodyData = {};
+        inputs.forEach(input => {
+          bodyData[input.name] = input.value;
+        });
+        fetchOptions.body = JSON.stringify(bodyData);
+      }
+
+      fetch(path, fetchOptions)
         .then(res => {
           if (!res.ok) throw new Error('API 호출 실패 (' + res.status + ')');
           return res.json();
         })
-        .then(data => {
+        .then(res => {
+          // POST API가 { data: [...] } 형태로 내려오는 경우도 처리
+          const data = Array.isArray(res) ? res : res.data || [];
           const columns = createDynamicColumns(data);
           grid.setColumns(columns);
           grid.resetData(data);
 
-          jsonDataTextarea.value = JSON.stringify(data, null, 2);
-
-          // Row 수 표기
+          jsonDataTextarea.value = JSON.stringify(res, null, 2);
           rowCount.textContent = `총 ${data.length}건`;
         })
         .catch(err => {
@@ -122,7 +170,6 @@
           console.error(err);
         })
         .finally(() => {
-          // 로딩 끝
           loading.style.display = 'none';
         });
     });
@@ -137,6 +184,7 @@
       }));
     }
   </script>
+
 
   <script type="module" src="assets/js/logomodule.js"></script>
 </body>

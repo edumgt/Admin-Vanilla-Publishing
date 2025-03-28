@@ -185,21 +185,41 @@ app.get('/db/SurveyDate', async (req, res) => {
     });
   }
 });
-////////////////////////////////////
 
+app.post('/db/SiteUser', async (req, res) => {
+  const userid = req.body.userid || 'test0001';
 
+  try {
+      const pool = await sql.connect(dbConfig);
+      const result = await pool.request()
+          .input('userid', sql.VarChar, userid)
+          .query('SELECT * FROM vwSiteUser WHERE userid = @userid');
 
+      res.json({
+          success: true,
+          data: result.recordset
+      });
+  } catch (err) {
+      console.error('DB Query Error:', err);
+      res.status(500).json({
+          success: false,
+          message: 'Database query failed',
+          error: err.message
+      });
+  }
+});
 
 const apiList = [
-  '/api/member-permissions',
-  '/db/codes',
-  '/api/data',
-  '/db/SurveyQstn',
-  '/db/SurveyRslt',
-  '/db/SurveyDate'
-];
+  { "url": "/api/member-permissions", "method": "GET" },
+  { "url": "/db/codes", "method": "GET" },
+  { "url": "/api/data", "method": "GET" },
+  { "url": "/db/SurveyQstn", "method": "GET" },
+  { "url": "/db/SurveyRslt", "method": "GET" },
+  { "url": "/db/SiteUser", "method": "POST", "params": ["userid"] }
+]
 
-// API 목록 제공
+
+
 app.get('/api/list', (req, res) => {
   res.json(apiList);
 });
@@ -212,9 +232,6 @@ app.use(cors({
 }));
 
 
-
-
-// 📌 데이터베이스 API 연동
 app.use('/api', databaseRoutes);
 
 // Swagger setup

@@ -174,201 +174,14 @@ const iconMapping = {
 };
 
 
-// const menuConfigurations = {
-//     'attend.html': [
-//         { href: 'orgni.html', text: '조직도구성' },
-//         { href: 'attend.html', text: '근태관리' },
-//         { href: 'total.html', text: '인센티브' },
-
-//     ],
-
-//     'calendar.html': [
-//         { href: 'calendar.html', text: '업무일정' },
-//         { href: 'trello.html', text: '프로젝트일정' },
-//         { href: 'timeline.html', text: '생산일정' },
-
-//     ],
-
-//     'chain.html': [
-//         { href: 'stati.html', text: '회원통계' },
-//         { href: 'flow.html', text: '매출통계' },
-//         { href: 'chain.html', text: '체인운영' },
-
-//     ],
-
-//     'city.html': [
-//         { href: 'work.html', text: '예약관리' },
-//         { href: 'meeting.html', text: '회의실관리' },
-//         { href: 'hospital.html', text: '병원예약' },
-//         { href: 'lectures.html', text: '강의일정' },
-//         { href: 'city.html', text: '행정구역정보' }
-//     ],
-
-//     'config.html': [
-//         { href: 'config.html', text: '시스템로그' },
-//         { href: 'network.html', text: '컨설팅지정' },
-//         { href: 'survey.html', text: '서베이' },
-//         { href: 'locker.html', text: '사물함' }
-//     ],
-
-//     'document.html': [
-//         { href: 'system.html', text: '코드관리' },
-//         { href: 'glos.html', text: '용어관리' },
-//         { href: 'orgtree.html', text: '권한관리' },
-//         { href: 'document.html', text: '문서관리' },
-//         { href: 'wms.html', text: 'WMS' }
-//     ],
-
-//     'flow.html': [
-//         { href: 'stati.html', text: '회원통계' },
-//         { href: 'flow.html', text: '매출통계' },
-//         { href: 'chain.html', text: '체인운영' },
-
-//     ],
-
-//     'glos.html': [
-//         { href: 'system.html', text: '코드관리' },
-//         { href: 'glos.html', text: '용어관리' },
-//         { href: 'orgtree.html', text: '권한관리' },
-//         { href: 'document.html', text: '문서관리' },
-//         { href: 'wms.html', text: 'WMS' }
-//     ],
-
-//     'hospital.html': [
-//         { href: 'work.html', text: '예약관리' },
-//         { href: 'meeting.html', text: '회의실관리' },
-//         { href: 'hospital.html', text: '병원예약' },
-//         { href: 'lectures.html', text: '강의일정' },
-//         { href: 'city.html', text: '행정구역정보' }
-//     ],
-
-//     'locker.html': [
-//         { href: 'config.html', text: '시스템로그' },
-//         { href: 'network.html', text: '컨설팅지정' },
-//         { href: 'survey.html', text: '서베이' },
-//         { href: 'locker.html', text: '사물함' }
-//     ],
-
-//     'lectures.html': [
-//         { href: 'work.html', text: '예약관리' },
-//         { href: 'meeting.html', text: '회의실관리' },
-//         { href: 'hospital.html', text: '병원예약' },
-//         { href: 'lectures.html', text: '강의일정' },
-//         { href: 'city.html', text: '행정구역정보' }
-//     ],
-
-//     'meeting.html': [
-//         { href: 'work.html', text: '예약관리' },
-//         { href: 'meeting.html', text: '회의실관리' },
-//         { href: 'hospital.html', text: '병원예약' },
-//         { href: 'lectures.html', text: '강의일정' },
-//         { href: 'city.html', text: '행정구역정보' }
-//     ],
-
-
-//     'network.html': [
-//         { href: 'config.html', text: '시스템로그' },
-//         { href: 'network.html', text: '컨설팅지정' },
-//         { href: 'survey.html', text: '서베이' },
-//         { href: 'locker.html', text: '사물함' }
-//     ],
-
-//     'orgni.html': [
-//         { href: 'orgni.html', text: '조직도구성' },
-//         { href: 'attend.html', text: '근태관리' },
-//         { href: 'total.html', text: '인센티브' },
-
-//     ],
-
-//     'orgtree.html': [
-//         { href: 'system.html', text: '코드관리' },
-//         { href: 'glos.html', text: '용어관리' },
-//         { href: 'orgtree.html', text: '권한관리' },
-//         { href: 'document.html', text: '문서관리' },
-//         { href: 'wms.html', text: 'WMS' }
-//     ],
-
-
-//     'stati.html': [
-//         { href: 'stati.html', text: '회원통계' },
-//         { href: 'flow.html', text: '매출통계' },
-//         { href: 'chain.html', text: '체인운영' },
-
-//     ],
-
-//     'survey.html': [
-//         { href: 'config.html', text: '시스템로그' },
-//         { href: 'network.html', text: '컨설팅지정' },
-//         { href: 'survey.html', text: '서베이' },
-//         { href: 'locker.html', text: '사물함' }
-//     ],
-
-//     'system.html': [
-//         { href: 'system.html', text: '코드관리' },
-//         { href: 'glos.html', text: '용어관리' },
-//         { href: 'orgtree.html', text: '권한관리' },
-//         { href: 'document.html', text: '문서관리' },
-//         { href: 'wms.html', text: 'WMS' }
-//     ],
-
-//     'timeline.html': [
-//         { href: 'calendar.html', text: '업무일정' },
-//         { href: 'trello.html', text: '프로젝트일정' },
-//         { href: 'timeline.html', text: '생산일정' },
-
-//     ],
-
-//     'total.html': [
-//         { href: 'orgni.html', text: '조직도구성' },
-//         { href: 'attend.html', text: '근태관리' },
-//         { href: 'total.html', text: '인센티브' },
-
-//     ],
-
-//     'trello.html': [
-//         { href: 'calendar.html', text: '업무일정' },
-//         { href: 'trello.html', text: '프로젝트일정' },
-//         { href: 'timeline.html', text: '생산일정' },
-
-//     ],
-
-//     'wms.html': [
-//         { href: 'system.html', text: '코드관리' },
-//         { href: 'glos.html', text: '용어관리' },
-//         { href: 'orgtree.html', text: '권한관리' },
-//         { href: 'document.html', text: '문서관리' },
-//         { href: 'wms.html', text: 'WMS' }
-//     ],
-
-//     'work.html': [
-//         { href: 'work.html', text: '예약관리' },
-//         { href: 'meeting.html', text: '회의실관리' },
-//         { href: 'hospital.html', text: '병원예약' },
-//         { href: 'lectures.html', text: '강의일정' },
-//         { href: 'city.html', text: '행정구역정보' }
-//     ],
-
-// };
-
-// (1) localStorage에서 가져오기
 const storedData = localStorage.getItem('menuConfigurations');
 let menuConfigurations = storedData ? JSON.parse(storedData) : {};
 
-// (2) 서버 fetch
 fetch('/api/menu')
     .then(res => res.json())
     .then(data => {
-        // localStorage에 저장
         localStorage.setItem('menuConfigurations', JSON.stringify(data));
-
-        // 기존 menuConfigurations 객체에 병합 / 재할당
-        // 방법 1) 재할당:
-        // menuConfigurations = data;
-
-        // 방법 2) 기존 객체에 병합(Object.assign)
         Object.assign(menuConfigurations, data);
-
-        // 방법 3) key별로 갱신
         Object.keys(data).forEach(key => {
             menuConfigurations[key] = data[key];
         });
@@ -376,10 +189,6 @@ fetch('/api/menu')
         console.log('Updated menuConfigurations from server:', menuConfigurations);
     })
     .catch(console.error);
-
-// 이후 menuConfigurations 사용 (주의: fetch는 비동기)
-
-
 
 
 const defaultMenuItems = [];
@@ -390,7 +199,6 @@ const menuItems = (menuConfigurations[currentPage] || defaultMenuItems).map(item
 
 renderOffCanvasMenu(menuItems);
 
-/* Dynamically create modals */
 export function createModal(modalId, title, content, buttons) {
     const modal = document.createElement('div');
     modal.id = modalId;
@@ -412,7 +220,6 @@ export function createModal(modalId, title, content, buttons) {
 
 window.createModal = createModal;
 
-// Create specific modals
 createModal(
     'modal',
     '상세정보',
@@ -558,7 +365,6 @@ class AppBrand {
 
 const appBrand = new AppBrand('logo', 'EDUMGT');
 
-/* gearIcon */
 const button = document.createElement('div');
 createTooltip(button, "다국어를 지정 합니다.");
 
@@ -574,13 +380,11 @@ document.getElementById('gearIcon').addEventListener('click', () => {
 });
 
 
-/* floaingNav */
 document.getElementById('closeFloatingNav').addEventListener('click', () => {
     const floatingNav = document.getElementById('floatingNav');
     floatingNav.classList.add('hidden');
 });
 
-/* LNB Left Menu */
 const offCanvas = document.getElementById('offCanvas');
 offCanvas.classList.remove('hidden', '-translate-x-full');
 offCanvas.classList.add('collapsed');
@@ -746,7 +550,6 @@ export function generateNanoId(length = 10) {
 }
 window.generateNanoId = generateNanoId;
 
-/* dropdown.js */
 const memberIcon = document.getElementById('memberIcon');
 const memberMenu = document.getElementById('memberMenu');
 memberMenu.classList.add("hidden");
@@ -822,11 +625,6 @@ memberMenu.innerHTML = `<div class="bg-white shadow-lg p-3 rounded-md border">
                             <span>API Test</span>
                             </div>
                         </a>
-                     
-
-                     
-
-                     
 
                      <div class="dropdown-divider"></div>
                      <a href="#" class="dropdown-item" id="logoutButton">
@@ -858,7 +656,6 @@ document.addEventListener('click', function (event) {
     }
 });
 
-// 로그아웃 버튼 클릭 시 모달 표시
 const logoutButton = document.getElementById('logoutButton');
 logoutButton.addEventListener('click', function () {
     logoutModal.classList.remove('hidden');
@@ -1004,7 +801,6 @@ createTooltip(fav1, "현재 페이지를 로그인 후 바로가기로 저장합
 const fav2 = document.getElementById("fav2");
 createTooltip(fav2, "현재 페이지를 바로가기 목록에 저장합니다.");
 
-///////////////////////////////////////////////////////////////////////
 import { createTanslations } from './common.js';
 const translations = createTanslations;
 
@@ -1330,8 +1126,8 @@ Object.assign(modal.style, {
   position: 'fixed',
   top: '10px',
   left: '10px',
-  width: '100%',
-  height: '100%',
+  width: '99%',
+  height: '99%',
   background: 'rgba(255, 252, 252, 0.95)',
   zIndex: 9999
 });
@@ -1341,12 +1137,12 @@ const closeBtn = document.createElement('button');
 closeBtn.innerHTML = 'Close';
 Object.assign(closeBtn.style, {
   position: 'absolute',
-  top: '20px',
-  right: '30px',
+  top: '15px',
+  right: '15px',
   zIndex: 10000,
-  fontSize: '16px',
+  fontSize: '20px',
   color: 'red',
-  background: 'none',
+  background: 'rgba(255, 252, 252, 0.95)',
   border: 'none',
   cursor: 'pointer'
 });
