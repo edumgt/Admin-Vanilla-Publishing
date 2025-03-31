@@ -24,7 +24,7 @@ db.connect(err => {
 
 /**
  * @swagger
- * /inbound:
+ * /api/inbound:
  *   get:
  *     summary: Fetch inbound data
  *     responses:
@@ -49,7 +49,7 @@ router.get('/inbound', (req, res) => {
 
 /**
  * @swagger
- * /inbound/add:
+ * /api/inbound/add:
  *   post:
  *     summary: Add new inbound record
  *     requestBody:
@@ -91,7 +91,7 @@ router.post('/inbound/add', (req, res) => {
 
 /**
  * @swagger
- * /inbound/update:
+ * /api/inbound/update:
  *   post:
  *     summary: Update inbound data
  *     requestBody:
@@ -146,7 +146,7 @@ router.post('/inbound/update', (req, res) => {
 
 /**
  * @swagger
- * /inbound/delete:
+ * /api/inbound/delete:
  *   delete:
  *     summary: Delete inbound records
  *     requestBody:
@@ -183,7 +183,7 @@ router.delete('/inbound/delete', (req, res) => {
 
 /**
  * @swagger
- * /outbound:
+ * /api/outbound:
  *   get:
  *     summary: Fetch outbound data
  *     responses:
@@ -208,7 +208,7 @@ router.get('/outbound', (req, res) => {
 
 /**
  * @swagger
- * /outbound/add:
+ * /api/outbound/add:
  *   post:
  *     summary: Add new outbound record
  *     requestBody:
@@ -250,7 +250,7 @@ router.post('/outbound/add', (req, res) => {
 
 /**
  * @swagger
- * /outbound/update:
+ * /api/outbound/update:
  *   post:
  *     summary: Update outbound data
  *     requestBody:
@@ -305,7 +305,7 @@ router.post('/outbound/update', (req, res) => {
 
 /**
  * @swagger
- * /outbound/delete:
+ * /api/outbound/delete:
  *   delete:
  *     summary: Delete outbound records
  *     requestBody:
@@ -342,7 +342,7 @@ router.delete('/outbound/delete', (req, res) => {
 
 /**
  * @swagger
- * /calendar:
+ * /api/calendar:
  *   get:
  *     summary: Fetch calendar list
  *     responses:
@@ -393,7 +393,7 @@ router.get('/calendar', (req, res) => {
 
 /**
  * @swagger
- * /addDate:
+ * /api/addDate:
  *   post:
  *     summary: Add new date
  *     requestBody:
@@ -437,7 +437,7 @@ router.post('/addDate', (req, res) => {
 
 /**
  * @swagger
- * /addEvent:
+ * /api/addEvent:
  *   post:
  *     summary: Add new event
  *     requestBody:
@@ -488,7 +488,7 @@ router.post('/addEvent', (req, res) => {
 
 /**
  * @swagger
- * /deleteEvent/{eventId}:
+ * /api/deleteEvent/{eventId}:
  *   delete:
  *     summary: Delete event
  *     parameters:
@@ -531,7 +531,7 @@ router.delete('/deleteEvent/:eventId', (req, res) => {
 
 /**
  * @swagger
- * /reservations:
+ * /api/reservations:
  *   get:
  *     summary: Fetch reservations data
  *     responses:
@@ -558,7 +558,7 @@ router.get('/reservations', (req, res) => {
 
 /**
  * @swagger
- * /members:
+ * /api/members:
  *   get:
  *     summary: Fetch members data
  *     responses:

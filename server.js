@@ -22,8 +22,18 @@ const SECRET_KEY = 'edumgtedumgt'; // JWT 서명에 사용할 비밀 키
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-/* MSSQL */
-// 1) DB 연결 테스트용 (GET)
+/**
+ * @swagger
+ * /db/connect:
+ *   get:
+ *     summary: DB 연결 테스트
+ *     description: 기본 설정된 DB에 연결한 후 현재 시간을 반환합니다.
+ *     responses:
+ *       200:
+ *         description: 연결 성공
+ *       500:
+ *         description: 연결 실패
+ */
 app.get('/db/connect', async (req, res) => {
   try {
     // 1. 데이터베이스 커넥션 생성
@@ -88,7 +98,29 @@ app.post('/db/dynamicConnect', async (req, res) => {
   }
 });
 
-// 3) 쿼리 실행 예시 (POST)
+/**
+ * @swagger
+ * /db/query:
+ *   post:
+ *     summary: DB 쿼리 실행
+ *     description: 요청 본문에 포함된 SQL 쿼리를 실행합니다.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               query:
+ *                 type: string
+ *                 example: SELECT * FROM some_table
+ *     responses:
+ *       200:
+ *         description: 쿼리 실행 결과 반환
+ *       500:
+ *         description: 쿼리 실행 실패
+ */
+
 app.post('/db/query', async (req, res) => {
   const { query } = req.body;  // 실행할 쿼리를 요청 body에서 받아온다고 가정
 
@@ -186,6 +218,31 @@ app.get('/db/SurveyDate', async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /db/SiteUser:
+ *   post:
+ *     summary: 사이트 사용자 조회
+ *     description: 사용자 ID를 기반으로 해당 사용자의 사이트 목록을 조회합니다.
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - in: body
+ *         name: body
+ *         description: 사용자 ID
+ *         required: false
+ *         schema:
+ *           type: object
+ *           properties:
+ *             userid:
+ *               type: string
+ *               example: test0001
+ *     responses:
+ *       200:
+ *         description: 조회 성공
+ *       500:
+ *         description: 조회 실패
+ */
 app.post('/db/SiteUser', async (req, res) => {
   const userid = req.body.userid || 'test0001';
 
@@ -281,12 +338,6 @@ app.post('/listbox/SitePlace', async (req, res) => {
 });
 
 
-/**
- * @api /db/SiteUser
- * @method POST
- * @description 사이트 사용자 조회 API
- * @params userid (string) - 사용자 ID (미입력 시 기본값 'test0001')
- */
 app.post('/listbox/SiteUser', async (req, res) => {
   const userid = req.body.userid || 'test0001';
 
@@ -334,8 +385,8 @@ app.get('/api/list', (req, res) => {
 
 app.use(cors({
   origin: '*',
-  methods: ['GET', 'POST', 'DELETE'],
-  allowedHeaders: ['Content-Type']
+  methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],  // ← OPTIONS 추가
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 
@@ -344,7 +395,7 @@ app.use('/api', databaseRoutes);
 // Swagger setup
 const options = {
   swaggerDefinition: swaggerDocument,
-  apis: ['./wms-api.js'], // Path to the API docs
+  apis: ['./wms-api.js','./server.js'], // Path to the API docs
 };
 const specs = swaggerJsdoc(options);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
