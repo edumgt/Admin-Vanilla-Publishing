@@ -420,11 +420,6 @@ app.use(express.static('dist'));
 // 로그인 엔드포인트 (토큰 생성)
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
-
-  // console.log(username);
-  // console.log(password);
-
-  // 실제로는 데이터베이스에서 사용자 인증을 해야 합니다.
   if (username === 'admin' && password === '1111') {
     const token = jwt.sign({ username }, SECRET_KEY, { expiresIn: '1h' });
     return res.json({ token });
