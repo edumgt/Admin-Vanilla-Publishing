@@ -97,16 +97,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
     async function deleteData(url, deletedRows) {
-        console.log(deletedRows);
+        console.log("Sending deletedRows:", deletedRows);
         if (deletedRows.length > 0) {
+            const ids = deletedRows.map(row => row.id); // ✅ id 값만 추출
             await fetch(url, {
-                method: 'DELETE',
+                method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(deletedRows)
+                body: JSON.stringify({ ids }) // ✅ 서버가 원하는 구조로 보냄
             });
         }
         showToast('well-done', 'success', lang);
     }
+    
 
 
     const root = document.getElementById('root');
@@ -160,16 +162,20 @@ document.addEventListener('DOMContentLoaded', async () => {
             setTimeout(async () => {
                 let newInboundData, newOutboundData;
                 if (button.id === 'tab-inbound') {
-                    newInboundData = await fetchJson(apiurl+"/api/inbound");
+                    //newInboundData = await fetchJson(apiurl+"/api/inbound");
+                    newInboundData = await fetchJson(apiurl+"/db/inbound");
+
                     hideLoading(section);
                     populateInbound(section, newInboundData);
                 } else if (button.id === 'tab-outbound') {
-                    newOutboundData = await fetchJson(apiurl+"/api/outbound");
+                    newOutboundData = await fetchJson(apiurl+"/db/outbound");
                     hideLoading(section);
                     populateOutbound(section, newOutboundData);
                 } else if (button.id === 'tab-dashboard') {
-                    newInboundData = await fetchJson(apiurl+"/api/inbound");
-                    newOutboundData = await fetchJson(apiurl+"/api/outbound");
+                    //newInboundData = await fetchJson(apiurl+"/api/inbound");
+                    newInboundData = await fetchJson(apiurl+"/db/inbound");
+
+                    newOutboundData = await fetchJson(apiurl+"/db/outbound");
                     hideLoading(section);
                     populateDashboard(section, newInboundData, newOutboundData);
                 }
@@ -324,12 +330,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
 
-
-
-
-
-
-
         grid.on('afterChange', (ev) => {
 
             if (preventAfterChange) {
@@ -346,10 +346,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 [change.columnName]: change.value
             }));
             if (sectionId === "tab-inbound-section") {
-                updateData(apiurl+'/api/inbound/update', updatedRows);
+                updateData(apiurl+'/db/inbound/update', updatedRows);
             }
             else {
-                updateData(apiurl+'/api/outbound/update', updatedRows);
+                updateData(apiurl+'/db/outbound/update', updatedRows);
             }
 
 
@@ -410,8 +410,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const addButton = createAddButton();
 
-
-
         addButton.addEventListener('click', () => {
             const newRow = {
                 id: generateNanoId(),
@@ -425,10 +423,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             grid.prependRow(newRow);
 
             if (sectionId === "tab-inbound-section") {
-                addData(apiurl+'/api/inbound/add', newRow);
+                addData(apiurl+'/db/inbound/add', newRow);
             }
             else {
-                addData(apiurl+'/api/outbound/add', newRow);
+                addData(apiurl+'/db/outbound/add', newRow);
             }
         });
 
@@ -447,10 +445,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             grid.removeCheckedRows();
 
             if (sectionId === "tab-inbound-section") {
-                deleteData(apiurl+'/api/inbound/delete', checkedRows);
+                deleteData(apiurl+'/db/inbound/delete', checkedRows);
             }
             else {
-                deleteData(apiurl+'/api/outbound/delete', checkedRows);
+                deleteData(apiurl+'/db/outbound/delete', checkedRows);
             }
 
         });
@@ -464,7 +462,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             section.innerHTML = `<div class="text-center text-lg font-semibold">데이터를 불러오는데 실패했습니다.</div>`;
             return;
         }
-        createGrid(section.id, newInboundData, apiurl+"/api/inbound");
+        createGrid(section.id, newInboundData, apiurl+"/db/inbound");
     }
 
     function populateOutbound(section, newOutboundData) {
@@ -530,8 +528,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     }
 
-    const inboundData = await fetchJson(apiurl+"/api/inbound");
-    const outboundData = await fetchJson(apiurl+"/api/outbound");
+    const inboundData = await fetchJson(apiurl+"/db/inbound");
+    const outboundData = await fetchJson(apiurl+"/db/outbound");
 
 
     populateInbound(sections['tab-inbound'], inboundData);

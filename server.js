@@ -162,6 +162,250 @@ app.get('/db/codes', async (req, res) => {
     });
   }
 });
+
+app.get('/db/inbound', async (req, res) => {
+  try {
+    let pool = await sql.connect(dbConfig);
+    let result = await pool.request().query('SELECT * FROM inbound_data ORDER BY date DESC');
+    res.json(result.recordset);
+  } catch (err) {
+    console.error('Query Execution Error:', err);
+    res.status(500).json({
+      success: false,
+      message: 'Query execution failed',
+      error: err.message
+    });
+  }
+});
+
+app.get('/db/outbound', async (req, res) => {
+  try {
+    let pool = await sql.connect(dbConfig);
+    let result = await pool.request().query('SELECT * FROM outbound_data ORDER BY date DESC');
+    res.json(result.recordset);
+  } catch (err) {
+    console.error('Query Execution Error:', err);
+    res.status(500).json({
+      success: false,
+      message: 'Query execution failed',
+      error: err.message
+    });
+  }
+});
+
+app.post('/db/inbound/add', async (req, res) => {
+  const { id, date, title, quantity, isbn } = req.body;
+
+  try {
+    const pool = await sql.connect(dbConfig);
+    await pool.request()
+      .input('id', sql.VarChar(50), id)
+      .input('date', sql.VarChar(20), date)
+      .input('title', sql.VarChar(255), title)
+      .input('quantity', sql.Int, quantity)
+      .input('isbn', sql.VarChar(20), isbn)
+      .query(`
+        INSERT INTO inbound_data (id, date, title, quantity, isbn)
+        VALUES (@id, @date, @title, @quantity, @isbn)
+      `);
+
+    res.json({
+      success: true,
+      message: 'Inbound data added successfully',
+    });
+  } catch (err) {
+    console.error('Insert Error:', err);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to add inbound data',
+      error: err.message,
+    });
+  }
+});
+
+app.post('/db/inbound/update', async (req, res) => {
+  const updates = req.body;
+
+  if (!Array.isArray(updates) || updates.length === 0) {
+    return res.status(400).json({
+      success: false,
+      message: 'Invalid request format. Expected an array of updates.'
+    });
+  }
+
+  try {
+    const pool = await sql.connect(dbConfig);
+
+    for (const update of updates) {
+      const { id, changes } = update;
+      const fields = Object.keys(changes);
+
+      if (!id || fields.length === 0) continue;
+
+      const setClause = fields.map((field, index) => `${field} = @val${index}`).join(', ');
+      const query = `UPDATE inbound_data SET ${setClause} WHERE id = @id`;
+
+      const request = pool.request().input('id', sql.VarChar(50), id);
+      fields.forEach((field, index) => {
+        const value = changes[field];
+        const type = typeof value === 'number' ? sql.Int : sql.VarChar;
+        request.input(`val${index}`, type, value);
+      });
+
+      await request.query(query);
+    }
+
+    res.json({ success: true, message: 'Inbound data updated' });
+  } catch (err) {
+    console.error('Update Error:', err);
+    res.status(500).json({ success: false, message: 'Update failed', error: err.message });
+  }
+});
+
+
+
+app.post('/db/outbound/add', async (req, res) => {
+  const { id, date, title, quantity, isbn } = req.body;
+
+  try {
+    const pool = await sql.connect(dbConfig);
+    await pool.request()
+      .input('id', sql.VarChar(50), id)
+      .input('date', sql.VarChar(20), date)
+      .input('title', sql.VarChar(255), title)
+      .input('quantity', sql.Int, quantity)
+      .input('isbn', sql.VarChar(20), isbn)
+      .query(`
+        INSERT INTO outbound_data (id, date, title, quantity, isbn)
+        VALUES (@id, @date, @title, @quantity, @isbn)
+      `);
+
+    res.json({
+      success: true,
+      message: 'Outbound data added successfully',
+    });
+  } catch (err) {
+    console.error('Insert Error:', err);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to add inbound data',
+      error: err.message,
+    });
+  }
+});
+
+app.post('/db/outbound/update', async (req, res) => {
+  const updates = req.body;
+
+  if (!Array.isArray(updates) || updates.length === 0) {
+    return res.status(400).json({
+      success: false,
+      message: 'Invalid request format. Expected an array of updates.'
+    });
+  }
+
+  try {
+    const pool = await sql.connect(dbConfig);
+
+    for (const update of updates) {
+      const { id, changes } = update;
+      const fields = Object.keys(changes);
+
+      if (!id || fields.length === 0) continue;
+
+      const setClause = fields.map((field, index) => `${field} = @val${index}`).join(', ');
+      const query = `UPDATE outbound_data SET ${setClause} WHERE id = @id`;
+
+      const request = pool.request().input('id', sql.VarChar(50), id);
+      fields.forEach((field, index) => {
+        const value = changes[field];
+        const type = typeof value === 'number' ? sql.Int : sql.VarChar;
+        request.input(`val${index}`, type, value);
+      });
+
+      await request.query(query);
+    }
+
+    res.json({ success: true, message: 'Outbound data updated' });
+  } catch (err) {
+    console.error('Update Error:', err);
+    res.status(500).json({ success: false, message: 'Update failed', error: err.message });
+  }
+});
+
+app.post('/db/inbound/delete', async (req, res) => {
+  const { ids } = req.body;
+
+  console.log('Received IDs for deletion:', ids);
+
+  if (!Array.isArray(ids) || ids.length === 0) {
+    return res.status(400).json({
+      success: false,
+      message: 'Invalid request. "ids" must be a non-empty array.'
+    });
+  }
+
+  try {
+    const pool = await sql.connect(dbConfig);
+
+    for (const id of ids) {
+      const result = await pool.request()
+        .input('id', sql.VarChar(50), id)
+        .query('DELETE FROM inbound_data WHERE id = @id');
+
+      console.log(`Deleted rows for ID ${id}:`, result.rowsAffected);
+    }
+
+    res.json({
+      success: true,
+      message: 'Selected inbound data deleted successfully'
+    });
+  } catch (err) {
+    console.error('Delete Error:', err);
+    res.status(500).json({
+      success: false,
+      message: 'Delete failed',
+      error: err.message
+    });
+  }
+});
+
+
+app.post('/db/outbound/delete', async (req, res) => {
+  const { ids } = req.body;
+
+  if (!Array.isArray(ids) || ids.length === 0) {
+    return res.status(400).json({
+      success: false,
+      message: 'Invalid request. "ids" must be a non-empty array.'
+    });
+  }
+
+  try {
+    const pool = await sql.connect(dbConfig);
+    const deletePromises = ids.map((id) => {
+      return pool.request()
+        .input('id', sql.VarChar(50), id)
+        .query('DELETE FROM outbound_data WHERE id = @id');
+    });
+
+    await Promise.all(deletePromises);
+
+    res.json({
+      success: true,
+      message: 'Selected outbound data deleted successfully'
+    });
+  } catch (err) {
+    console.error('Delete Error:', err);
+    res.status(500).json({
+      success: false,
+      message: 'Delete failed',
+      error: err.message
+    });
+  }
+});
+
+
 app.get('/db/SurveyQstn', async (req, res) => {
   try {
     let pool = await sql.connect(dbConfig);
@@ -364,6 +608,12 @@ app.post('/listbox/SiteUser', async (req, res) => {
 
 const apiList = [
   { "url": "/api/member-permissions", "method": "GET" ,description: '권한 목록'},
+  { "url": "/db/inbound", "method": "GET" ,description: '입고 목록 2'},
+  { "url": "/db/outbound", "method": "GET" ,description: '출고 목록 2'},
+
+  { "url": "/db/inbound/delete", "method": "POST" ,"params": ["id"], description: 'inbound 삭제'},
+  
+
   { "url": "/db/codes", "method": "GET" ,description: '권한 목록'},
   { "url": "/api/data", "method": "GET" ,description: '권한 목록'},
   { "url": "/api/glos", "method": "GET" ,description: '권한 목록'},
@@ -409,12 +659,12 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 
 // 정적 파일을 서빙하기 위해 'public' 디렉토리를 사용
-// app.use(express.static(path.join(__dirname, 'public')));
-// app.get('/', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'public', 'index.html'));
-// });
+app.use(express.static(path.join(__dirname, 'public')));
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
-app.use(express.static('dist'));
+// app.use(express.static('dist'));
 
 
 // 로그인 엔드포인트 (토큰 생성)
