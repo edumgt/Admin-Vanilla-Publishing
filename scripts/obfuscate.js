@@ -1,10 +1,3 @@
-// import fs from 'fs';
-// import path from 'path';
-// import { minify } from 'terser';
-// import { execSync } from 'child_process';
-// import htmlMinifier from 'html-minifier';
-
-
 const fs = require('fs');
 const path = require('path');
 const { minify } = require('terser');
@@ -31,7 +24,7 @@ const obfuscateJS = async () => {
             mangle: true 
         });
         fs.writeFileSync(file, result.code, 'utf8');
-        console.log(`JS 난독화 완료: ${file}`);
+        //console.log(`JS 난독화 완료: ${file}`);
     }
 };
 
@@ -56,7 +49,7 @@ const obfuscateHTML = () => {
             minifyCSS: true
         });
         fs.writeFileSync(file, minified, 'utf8');
-        console.log(`HTML 난독화 완료: ${file}`);
+        //console.log(`HTML 난독화 완료: ${file}`);
     }
 };
 

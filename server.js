@@ -384,8 +384,15 @@ app.get('/api/list', (req, res) => {
 
 
 app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],  // ← OPTIONS 추가
+  origin: function (origin, callback) {
+    const allowedOrigins = ['http://localhost:3000', 'http://127.0.0.1:3000'];
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
@@ -452,5 +459,5 @@ app.get('/protected', authenticateJWT, (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log("#");
+  console.log('Server is running at: http://localhost:3000');
 });
