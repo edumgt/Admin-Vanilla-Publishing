@@ -53,3 +53,5 @@
 ## docker run -d -p 80:80 --name web-app my-nginx-web
 
 ## git switch features-bitione
+
+## RDS 로 연결
