@@ -1,8 +1,16 @@
-import fs from 'fs';
-import path from 'path';
-import { minify } from 'terser';
-import { execSync } from 'child_process';
-import htmlMinifier from 'html-minifier';
+// import fs from 'fs';
+// import path from 'path';
+// import { minify } from 'terser';
+// import { execSync } from 'child_process';
+// import htmlMinifier from 'html-minifier';
+
+
+const fs = require('fs');
+const path = require('path');
+const { minify } = require('terser');
+const { execSync } = require('child_process');
+const htmlMinifier = require('html-minifier');
+
 
 const DIST_DIR = 'dist';
 
