@@ -608,8 +608,11 @@ app.post('/listbox/SiteUser', async (req, res) => {
 
 const apiList = [
   { "url": "/api/member-permissions", "method": "GET" ,description: '권한 목록'},
-  { "url": "/db/inbound", "method": "GET" ,description: '입고 목록 2'},
-  { "url": "/db/outbound", "method": "GET" ,description: '출고 목록 2'},
+  { "url": "/db/inbound", "method": "GET" ,description: 'Local 입고 목록'},
+  { "url": "http://127.0.0.1:8080/api/inbound", "method": "GET" ,description: 'Boot 입고 목록, 토큰 필요'},
+  { "url": "/db/outbound", "method": "GET" ,description: '출고 목록'},
+
+  
 
   { "url": "/db/inbound/delete", "method": "POST" ,"params": ["id"], description: 'inbound 삭제'},
   
