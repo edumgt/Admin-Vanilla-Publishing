@@ -11,18 +11,27 @@ function showLoading(section) {
 function hideLoading(section) {
   section.innerHTML = "";
 }
-
 async function fetchJson(url) {
   try {
     const response = await fetch(url);
-    if (!response.ok) throw new Error(`Failed to fetch ${url} - Status: ${response.status}`);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch ${url} - Status: ${response.status}`);
+    }
     return await response.json();
   } catch (error) {
     console.error('Fetch error:', error);
-    showToast('process-error', 'error', lang);
+
+    // CORS 오류일 수 있는 경우도 포함하여 toast 메시지 출력
+    if (error instanceof TypeError) {
+      showToast('cors-error', 'error', lang); // 예: "CORS 오류입니다." 같은 메시지 키 사용
+    } else {
+      showToast('process-error', 'error', lang); // 일반적인 에러
+    }
+
     return null;
   }
 }
+
 
 async function updateData(url, updatedRows) {
   if (updatedRows.length === 0) return;

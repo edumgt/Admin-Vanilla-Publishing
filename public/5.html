@@ -143,12 +143,14 @@
       rowCount.textContent = '';
       jsonDataTextarea.value = '';
 
+     
       const fetchOptions = {
         method: selectedApi.method,
         headers: {
           'Content-Type': 'application/json'
         }
       };
+
 
       if (selectedApi.method === 'POST') {
         const inputs = paramsContainer.querySelectorAll('.param-input');
