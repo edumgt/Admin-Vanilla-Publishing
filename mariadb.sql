@@ -1426,82 +1426,6 @@ INSERT INTO `glos` (`id`, `en`, `ko`, `desc`, `img`, `created_dt`) VALUES
 	(90, 'Compliance', '컴플라이언스', '동역학 해석에서 스프링 상수의 역수에 해당하는 값으로 변위/힘', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
 	(91, 'Radiation Efficiency', '방사 효율', '진동하는 구조물이 소리를 얼마나 효율적으로 방사하는지를 나타내는 척도', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
 	(92, 'Tip Clearance Flow', '팁 간극 유동', '터보기계의 블레이드 팁과 하우징 사이의 간극으로 유동이 누설되어 발생하는 소음·손실', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(93, 'Pulsation', '맥동', '펌프나 압축기 등에서 유량·압력이 주기적으로 변동해 발생하는 진동 또는 소음', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(94, 'Standing Wave', '정재파', '반사된 파동이 원래 파동과 간섭하여 마치 공간에 정지해 있는 것처럼 보이는 파형', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(95, 'Waveguide', '도파관', '파동(음향, 전자파 등)을 특정 경로로 전파시키는 구조로, 모드 전파특성이 중요', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(96, 'Resonant Frequency', '공진 주파수', '시스템이 특정 주파수에서 최대 진폭의 진동·음향 응답을 보이는 지점', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(97, 'Transient Vibration', '과도 진동', '충격, 스텝 입력 등 순간적 가진에 의해 발생하는 일시적 진동', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(98, 'Acoustic Scattering', '음향 산란', '음파가 물체나 불연속 면에 부딪혀 여러 방향으로 재분포되는 현상', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(99, 'MEMS Microphone', 'MEMS 마이크로폰', '반도체 공정을 이용해 제작된 소형 마이크로폰으로, 소음계·휴대폰 등에 활용', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(100, 'Anechoic Chamber', '무향실', '내부 벽면이 음을 완전히 흡수해 반사가 거의 없는 실험실', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(101, 'Reverberation Chamber', '잔향실', '내부 벽면이 매우 반사적이어 다중 반사가 일어나도록 설계된 음향 실험실', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(102, 'Mode Shape', '모드 형상', '고유진동수에서 구조물이 진동하는 공간적 분포 패턴', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(103, 'Finite Element Analysis (FEA)', '유한요소 해석', '연속체나 구조물을 요소로 분할해 근사해를 구하는 대표적 수치해석 기법', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(104, 'Sound Power Level (PWL)', '음향 파워 레벨', '음원 자체가 방사하는 음향 에너지를 dB 단위로 나타낸 값', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(105, 'Acoustic Impedance', '음향 임피던스', '소리의 진행에 대한 매질의 저항 특성으로 압력과 유속의 비로 정의', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(106, 'Impact Hammer Test', '충격 해머 시험', '해머로 구조물에 충격을 가해 진동 응답(주파수 응답 함수 등)을 측정하는 방법', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(107, 'Repeatability', '재현성', '측정이나 실험을 여러 번 수행했을 때 결과가 일관되게 나오는 정도', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(108, 'Resolution', '분해능', '계측 장치가 구분할 수 있는 최소 신호 차이', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(109, 'Harmonic Excitation', '조화 가진', '사인파 형태의 힘이나 변위로 시스템을 가진하여 진동 응답을 유발', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(110, 'Hysteresis Damping', '이력 감쇠', '재료 내부에서 변형-복원 과정의 이력 특성으로 에너지가 소실되는 현상', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(111, 'Tuned Mass Damper (TMD)', '동조 질량 감쇠기', '구조물의 공진 주파수에 맞춰 추가 질량-스프링-감쇠기로 진동을 크게 줄이는 장치', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(112, 'Knocking', '노킹', '엔진 실린더 내에서 이상 연소로 인해 발생하는 충격 소음 및 진동', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(113, 'Flutter', '플러터', '유동과 구조물이 상호작용하여 자율적으로 발생·증폭되는 진동 불안정 현상', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(114, 'Shock Mount', '충격 방지 마운트', '기계가 받는 충격을 완화하거나 격리시키기 위해 사용하는 방진 부품', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(115, 'Contact Stiffness', '접촉 강성', '두 물체가 맞닿은 면에서의 변형 저항으로, 베어링·기어 등에서 중요한 특성', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(116, 'Pseudo-Static Analysis', '의사정적 해석', '동적 하중을 등가 정적 하중으로 간주해 단순화하여 해석하는 방법', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(117, 'Viscoelastic Material', '점탄성 재료', '탄성 특성과 점성 특성을 동시에 가져 시간·주파수 의존적인 감쇠 성능을 보임', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(118, 'Acoustic Leak Detection', '음향 누설 탐지', '파이프나 탱크 등에서 발생하는 누설음을 감지해 위치와 크기를 추정하는 기법', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(119, 'Phononic Crystal', '포노닉 결정', '주기구조를 통해 특정 주파수의 음파를 반사·굴절·제어하는 고기능성 소재', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(120, 'Partial Discharge Noise', '부분 방전 소음', '고전압 장비 내부에서 부분방전 시 발생하는 초음파나 가청 소음', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(121, 'PVDF Sensor', 'PVDF 센서', '압전특성을 가진 폴리머로 만든 진동·충격 센서 (Polyvinylidene fluoride)', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(122, 'RMS Value', 'RMS 값', '시간신호의 에너지 등가값을 나타내는 Root Mean Square', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(123, 'Acoustic Streaming', '음향 유동', '강한 음장이 매질에 운동량을 부여해 소규모 유동이 발생하는 현상', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(124, 'Self-Excited Vibration', '자려 진동', '시스템 내부 에너지원으로 인해 스스로 발생·증폭하는 진동 (플러터, 채터 등)', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(125, 'Chatter', '채터', '절삭 공정 등에서 공구와 공작물 사이 상호작용으로 발생하는 고주파 진동', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(126, 'Thermoacoustics', '열음향학', '열원과 음향이 상호작용하여 압력진동·열전달 등이 복합적으로 일어나는 학문', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(127, 'Soundscape', '사운드스케이프', '인간이 인지하는 음환경 전체를 종합적으로 다루는 개념으로, 도시·자연의 소리 등 포함', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(128, 'Strouhal Number', '스트로할 수', '유동-진동 상관관계를 나타내는 무차원 수로, 와류 박리 등 현상 분석에 사용', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(129, 'Cremer Impedance', '크레머 임피던스', '채널 내 음의 감쇠량을 최소화하도록 설계된 이론적 최적 임피던스', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(130, 'Beat Frequency', '비트 주파수', '가까운 두 주파수 간 간섭으로 발생하는 진폭의 주기적 증감 현상', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(131, 'Sloshing', '슬로싱', '액체가 탱크 안에서 출렁거리며 발생하는 동적 거동 및 소음 진동', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(132, 'Flow Noise', '유동 소음', '액체·가스 흐름이 경계나 장애물을 만나면서 발생하는 난류 소음', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(133, 'Baffle', '배플', '소리나 흐름을 제어하기 위해 설치되는 판이나 격벽', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(134, 'Acoustic Diode', '음향 다이오드', '소리가 일방향으로만 전파되도록 설계된 비선형 음향 소자', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(135, 'Flutter Echo', '플러터 에코', '두 개의 평행면에서 소리가 반복 반사되어 갑작스러운 딜레이 음을 내는 현상', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(136, 'Creep', '크리프', '재료가 장시간 작은 응력에도 서서히 변형이 누적되는 현상으로 진동 특성에도 영향', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(137, 'Impedance Tube', '임피던스 관', '재료의 흡음율이나 전송 손실 등을 측정하기 위해 사용되는 실험 장치', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(138, 'Acoustic Resonance', '음향 공진', '폐관이나 캐비티 내에서 특정 주파수의 음파가 크게 증폭되는 현상', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(139, 'Sound Field Control', '음장 제어', '스피커 배열, 능동 제어 등을 통해 공간 내 음장의 분포를 원하는 형태로 조절', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(140, 'LMS Algorithm', 'LMS 알고리즘', '능동 소음 제어나 적응 필터에서 오차를 최소화하기 위해 사용되는 적응 알고리즘', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(141, 'Vacuum Pump Noise', '진공 펌프 소음', '펌프 내부에서 유체(기체)가 이송되며 발생하는 소음, 배출구 등에서 측정 가능', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(142, 'Convergence Ratio', '수렴 비율', '적응제어나 반복 알고리즘이 목표값에 도달하는 속도를 나타내는 지표', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(143, 'Structural Resonance', '구조 공진', '빔·판·쉘 구조물이 고유 주파수에서 큰 진폭의 진동을 일으키는 현상', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(144, 'Active Mount', '능동 마운트', '센서·액추에이터를 탑재해 실시간으로 진동을 상쇄하거나 조절하는 지지 부품', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(145, 'Transfer Function Synthesis', '전달함수 합성', '여러 경로를 통해 전달되는 진동·소음을 합성 분석해 전체 응답을 구하는 기법', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(146, 'Optical Interferometry', '광 간섭계 측정', '광 간섭 현상을 이용해 미세 변위나 진동을 정밀 계측하는 비접촉 방식', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(147, 'Strain Gage Rosette', '로제트 게이지', '여러 방향으로 배치된 변형률 게이지를 통해 2D 변형장(주응력 등)을 측정', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(148, 'Curved Beam Theory', '곡선 보 이론', '곡률이 큰 보(beam)의 응력·변형 해석을 위해 사용하는 확장된 보 해석 이론', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(149, 'Energy Method', '에너지 해법', '계의 변형 에너지·운동 에너지를 이용해 고유치 문제나 변형을 해석하는 방법', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(150, 'Spectral Density', '스펙트럼 밀도', '신호나 진동·소음의 에너지를 주파수 영역에서 분포로 나타낸 함수', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(151, 'Pseudo-Excitation Method', '의사 가진 기법', '랜덤 진동 해석에서 가상의 단일 사인 가진을 중첩해 응답을 효율적으로 구하는 방법', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(152, 'Piezoelectric Actuator', '압전 액추에이터', '압전 소재에 전압을 인가해 미세 변위를 생성, 진동 제어 등에 사용', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(153, 'Conductive Hearing Loss', '전도성 난청', '음이 외이도·중이 전달 과정에서 문제가 생겨 청각 손실이 발생하는 현상', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(154, 'ANC Headphone', '능동 소음제거 헤드폰', '착용 시 반대 위상의 음원을 삽입해 외부 소음을 상쇄하는 헤드폰', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(155, 'Anechoic Termination', '무향 종단', '도관 끝에 음이 반사되지 않도록 설계된 경계 조건으로, 측정 시 반사 파동 최소화', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(156, 'Finite Difference Method (FDM)', '유한차분법', '연속 방정식을 이산 격자로 변환해 근사해를 구하는 수치해석 기법', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(157, 'Acoustic Grating', '음향 격자', '주기적 구조로 음파의 회절·산란을 제어해 원하는 음향 효과를 얻는 배열', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(158, 'A-weighted Sound Level (dBA)', 'A-가중 음압 레벨', '인간 청각 특성을 고려한 A-가중 필터 적용 음압 레벨', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(159, 'Back-Propagation', '역전파', '신경망 훈련 등에 사용되는 알고리즘으로, 음향 패턴 인식 등에도 활용 가능', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(160, 'Digital Signal Processing (DSP)', '디지털 신호 처리', '진동·음향 등을 디지털로 샘플링해 필터링, 분석, 합성하는 전산적 방법', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(161, 'Aeroelastic Flutter', '공력 탄성 플러터', '날개나 구조물이 유동과 상호작용해 자려진동이 발생하고 공진이 증폭되는 현상', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(162, 'Tonal Pressure Fluctuation', '음조성 압력 변동', '특정 주파수대가 두드러진 톤으로 나타나는 압력 변동', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(163, 'Hybrid Silencer', '하이브리드 소음기', '반응형+흡음형을 결합하거나 능동+수동 방식을 결합해 광대역 소음을 제어하는 소음기', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(164, 'Acutance', '에큐턴스', '음향·영상에서 경계선 선예도를 나타내는 지표 (영상 분야에서 주로 사용되나, 확장 가능)', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(165, 'Vinyl Sound Barrier', '비닐 차음재', '방음 공사에 사용되는 무거운 비닐 소재로, 저주파대 차음에 효과', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(166, 'Torsional Damper', '비틀림 댐퍼', '회전체의 축 비틀림 진동을 흡수·감쇠시키는 장치', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(167, 'Creep Vibration', '크리프 진동', '고온·고응력 환경에서 재료에 크리프 변형이 누적되어 나타나는 진동 특성 변화', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(168, 'Sound Transmission Class (STC)', '음 전달 손실 등급', '건축물 벽, 문 등의 차음 성능을 등급화한 지수', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
 	(169, 'High Cycle Fatigue (HCF)', '고사이클 피로', '응력이 상대적으로 작지만 진동 횟수가 매우 많을 때 발생하는 피로 현상', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
 	(170, 'Low Cycle Fatigue (LCF)', '저사이클 피로', '응력이 큰 상태에서 반복 변형 횟수가 적어도 재료에 피로 손상이 누적되는 현상', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
 	(171, 'Bending Wave', '굽힘 파', '판이나 보에서 횡방향 변형으로 전파되는 파동 형태', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
@@ -1531,33 +1455,7 @@ INSERT INTO `glos` (`id`, `en`, `ko`, `desc`, `img`, `created_dt`) VALUES
 	(195, 'Structure-Borne Vibration', '구조 전달 진동', '기계나 충격이 구조물에 전달되어 다른 지점에서 재방사되는 진동', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
 	(196, 'Acoustic Absorption Coefficient', '음향 흡음률', '재료가 입사된 음향 에너지를 얼마나 흡수하는지 나타내는 비율', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
 	(197, 'Dipole Source', '이중극 음원', '방향성이 강한 두 개의 극성이 반대인 음원 쌍으로, 특정 방향 분포의 소음을 설명', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(198, 'Directivity Pattern', '방사 지향 특성', '음원이나 마이크가 특정 각도에서 어떻게 소리를 방사·수음하는지 나타낸 분포', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(199, 'Phase Angle', '위상각', '진동이나 파동에서 기준 시점과 실제 신호가 얼마나 어긋나 있는지를 나타내는 값', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(200, 'Loudness Level', '음의 크기 레벨', '청각학적으로 인지되는 소리의 크기를 평가하는 척도로 폰(phon) 단위 사용', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(201, 'Weber-Fechner Law', '베버-페히너 법칙', '자극의 물리적 세기가 로그 스케일로 지각된다는 심리음향 법칙', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(202, 'Ultrasonic Welding', '초음파 용접', '고주파 진동을 이용해 금속·플라스틱 등을 마찰 가열로 접합하는 공정', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(203, 'Ray Tracing', '레이 추적', '음향 또는 빛이 반사·굴절·회절되는 경로를 추적하는 시뮬레이션 방법', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(204, 'Pseudo-Noise Sequence', '의사 잡음 신호', '랜덤한 듯 보이지만 재현 가능한 수열로, TPA나 응답 식별 등에 활용', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(205, 'Isolation Forest', '아이솔레이션 포레스트', '이상치(Outlier) 탐지 알고리즘으로, 진동·소음 데이터 이상 검출에도 사용 가능', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(206, 'Adaptive Filter', '적응 필터', '실시간으로 환경 변화에 맞춰 계수를 조정해 원하는 신호만 통과 혹은 제거', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(207, 'Kalman Filter', '칼만 필터', '동적 시스템 상태 추정에 쓰이는 재귀적 알고리즘으로 잡음 신호가 있는 시스템에 적용', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(208, 'Sensor Fusion', '센서 융합', '다양한 센서에서 얻은 정보를 결합해 보다 정확한 측정·평가 결과를 도출', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(209, 'Magnetostrictive Actuator', '자왜 액추에이터', '자기장에 의해 변형을 일으키는 자성재료를 사용해 진동 제어나 구동에 활용', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(210, 'Ultrasonic Spray', '초음파 분무', '초음파 진동을 이용해 액체를 미세한 에어로졸 형태로 분무하는 기술', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(211, 'Piezoresistive Sensor', '압저항 센서', '압력·응력 변화에 따라 전기저항이 달라지는 소재를 활용한 센서', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(212, 'Vibration Criterion (VC)', '진동 기준 (VC)', '반도체·정밀가공 장비 등 민감도가 높은 설비의 진동 허용 기준', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(213, 'Seismic Mass', '관성 질량', '진동 계측이나 방진 시스템에서 기준이 되는 질량체', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(214, 'Elastomer', '엘라스토머', '탄성 특성이 우수한 고분자 재료로, 방진재·진동 절연재로 널리 사용됨', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(215, 'Exponential Window', '지수 윈도우', '신호 분석 시 과도구간 또는 끝부분 영향을 줄이기 위해 적용하는 가중 함수', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(216, 'Hanning Window', '해닝 윈도우', '스펙트럼 분석에서 누출(leakage)을 완화하기 위해 사용되는 윈도우 함수', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(217, 'Leakage', '누출', 'FFT 등 이산 변환에서 분석 구간 밖으로 에너지가 퍼지는 현상', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(218, 'Trigger Level', '트리거 레벨', '신호 계측 시 측정 시작·종료를 결정하기 위한 임계 크기', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(219, 'DAQ (Data Acquisition)', '데이터 수집', '센서나 측정 장치로부터 진동·음향 등의 아날로그 신호를 디지털화해 저장하는 과정', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(220, 'Bandpass Filter', '대역통과 필터', '특정 주파수 구간만 통과시키고 그 외는 감쇠시키는 필터', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(221, 'Bandstop Filter', '대역저지 필터', '특정 주파수 구간만 제거하고 나머지는 통과시키는 필터', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(222, 'Shock Pulse Method', '충격 펄스 기법', '베어링 등 구름접촉부 결함 진단 시, 충격성 펄스를 강조해 측정하는 방법', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(223, 'Unbalance', '불평형', '회전체 질량이 균일하지 않아 원심력이 발생해 진동이 유발되는 상태', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-	(224, 'Magnification Factor', '증폭 계수', '공진 근처에서 진폭이 얼마나 증폭되는지를 나타내는 지표', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
+
 	(225, 'Coriolis Flow Meter', '코리올리 유량계', '관을 진동시키고 질량유량에 따른 고유 주파수 변화를 측정해 유량을 계측', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
 	(226, 'Grating Lobe', '그레이팅 로브', '마이크 배열 빔포밍에서 배열 주기가 길 때 생기는 기생적 측방향 빔', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
 	(227, 'Infrasonic', '초저주파', '20Hz 미만의 낮은 주파수 음파로, 지진파나 대기 중 저주파 소음 등에 해당', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
@@ -1632,29 +1530,6 @@ INSERT INTO `icon_mapping` (`id`, `label`, `icon_class`) VALUES
 	(22, '용어관리', 'fa-book'),
 	(23, '사물함', 'fa-archive');
 /*!40000 ALTER TABLE `icon_mapping` ENABLE KEYS */;
-
--- 테이블 bbs.inbound_data 구조 내보내기
-CREATE TABLE IF NOT EXISTS `inbound_data` (
-  `id` varchar(50) NOT NULL DEFAULT '0',
-  `date` varchar(20) NOT NULL DEFAULT '',
-  `title` varchar(255) NOT NULL DEFAULT '''''',
-  `quantity` int(10) unsigned NOT NULL DEFAULT 0,
-  `isbn` varchar(20) NOT NULL DEFAULT '''''',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- 테이블 데이터 bbs.inbound_data:~7 rows (대략적) 내보내기
-DELETE FROM `inbound_data`;
-/*!40000 ALTER TABLE `inbound_data` DISABLE KEYS */;
-INSERT INTO `inbound_data` (`id`, `date`, `title`, `quantity`, `isbn`) VALUES
-	('88632b4f-207c-46ba-a9ff-1181c178c330', '2025-01-02', 'Fahrenheit 451', 111, '978-718-76697-8'),
-	('c1655f88-8206-4e31-ae2c-a75ac05ca069', '2025-01-01', 'The Great Gatsby', 136, '978-228-11889-2'),
-	('c895c4af-8121-4b70-b11c-1006fa16d3f0', '2025-01-09', 'The Grapes of Wrath 111', 125, '978-257-39654-1'),
-	('e76d177f-1409-4f5f-83e0-c31874f4e6c0', '2025-01-10', 'Brave New World', 111, '978-691-41538-9'),
-	('f3761280-bee4-430a-84bc-15d5b9600452', '2025-01-04', 'Pride and Prejudice', 146, '978-787-82570-8'),
-	('f6114592-7a33-45dc-80b3-97dabf622c1d', '2025-01-03', '123123123123123', 111, '978-498-21606-9'),
-	('UHJDY77gnD', '2025-02-13', '22', 0, '11');
-/*!40000 ALTER TABLE `inbound_data` ENABLE KEYS */;
 
 -- 테이블 bbs.item 구조 내보내기
 CREATE TABLE IF NOT EXISTS `item` (
@@ -1972,27 +1847,6 @@ INSERT INTO `menu_page` (`id`, `page_name`) VALUES
 	(23, 'work.html');
 /*!40000 ALTER TABLE `menu_page` ENABLE KEYS */;
 
--- 테이블 bbs.outbound_data 구조 내보내기
-CREATE TABLE IF NOT EXISTS `outbound_data` (
-  `id` char(36) NOT NULL,
-  `date` date NOT NULL DEFAULT curdate(),
-  `title` varchar(255) NOT NULL DEFAULT '''''',
-  `quantity` int(10) unsigned NOT NULL DEFAULT 0,
-  `isbn` varchar(20) NOT NULL DEFAULT '''''',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- 테이블 데이터 bbs.outbound_data:~6 rows (대략적) 내보내기
-DELETE FROM `outbound_data`;
-/*!40000 ALTER TABLE `outbound_data` DISABLE KEYS */;
-INSERT INTO `outbound_data` (`id`, `date`, `title`, `quantity`, `isbn`) VALUES
-	('88632b4f-207c-46ba-a9ff-1181c178c330', '2025-01-15', 'Fahrenheit 451', 11, '978-718-76697-8'),
-	('c1655f88-8206-4e31-ae2c-a75ac05ca069', '2025-01-01', 'The Great Gatsby', 36, '978-228-11889-2'),
-	('c895c4af-8121-4b70-b11c-1006fa16d3f0', '2025-01-15', 'The Grapes of Wrath', 25, '978-257-39654-1'),
-	('e76d177f-1409-4f5f-83e0-c31874f4e6c0', '2025-01-11', 'Brave New World', 11, '978-691-41538-9'),
-	('f3761280-bee4-430a-84bc-15d5b9600452', '2025-01-04', 'Pride and Prejudice', 46, '978-787-82570-8'),
-	('f6114592-7a33-45dc-80b3-97dabf622c1d', '2025-01-03', '123123123123123', 11, '978-498-21606-9');
-/*!40000 ALTER TABLE `outbound_data` ENABLE KEYS */;
 
 -- 테이블 bbs.read_history 구조 내보내기
 CREATE TABLE IF NOT EXISTS `read_history` (
