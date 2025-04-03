@@ -634,7 +634,7 @@ app.get('/api/list', (req, res) => {
 
 app.use(cors({
   origin: function (origin, callback) {
-    const allowedOrigins = ['http://localhost:3000', 'http://127.0.0.1:3000'];
+    const allowedOrigins = ['http://localhost:3000', 'http://127.0.0.1:3000' , 'http://kegdemo.edumgt.co.kr:3000'];
     console.log('CORS Origin Check:', origin);
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
