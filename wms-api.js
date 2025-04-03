@@ -4,9 +4,9 @@ const express = require('express');
 const router = express.Router();
 
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '123456',
+    host: 'edumgtmariadb.cg0ugoglztrn.ap-northeast-2.rds.amazonaws.com',
+    user: 'edumgt',
+    password: 'edumgt2250!',
     database: 'bbs'
 });
 
