@@ -4,7 +4,7 @@
     "description": "An Express.js server for handling inbound and outbound data",
     "main": "server.js",
     "scripts": {
-        "start": "node server.js",
+        "start": "nohup node server.js > output.log 2>&1 &",
         "dev": "nodemon server.js",
         "build": "vite build",
         "postbuild": "node scripts/obfuscate.js",
