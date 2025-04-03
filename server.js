@@ -634,20 +634,20 @@ app.get('/api/list', (req, res) => {
 app.use(cors({
   origin: function (origin, callback) {
     const allowedOrigins = ['http://localhost:3000', 'http://127.0.0.1:3000'];
+    console.log('CORS Origin Check:', origin);
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-
 app.use('/api', databaseRoutes);
 
-// Swagger setup
+
 const options = {
   swaggerDefinition: swaggerDocument,
   apis: ['./wms-api.js','./server.js'], // Path to the API docs
