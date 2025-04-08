@@ -1,3 +1,6 @@
+import { createTanslations } from './common.js';
+const translations = createTanslations;
+
 export const cmmContainer = document.getElementById('cmmContainer');
 cmmContainer.innerHTML = `
     <div class="gnb-menu">
@@ -43,14 +46,14 @@ export function createTooltip(element, text) {
     document.body.appendChild(tooltip);
 
     element.addEventListener("mouseenter", function (event) {
-        tooltip.style.left = `${event.clientX - 160}px`;
+        tooltip.style.left = `${event.clientX - 200}px`;
         tooltip.style.top = `${event.clientY - 40}px`;
         tooltip.style.visibility = "visible";
         tooltip.style.opacity = "1";
     });
 
     element.addEventListener("mousemove", function (event) {
-        tooltip.style.left = `${event.clientX - 160}px`;
+        tooltip.style.left = `${event.clientX - 200}px`;
         tooltip.style.top = `${event.clientY - 40}px`;
     });
 
@@ -82,7 +85,7 @@ function saveModal() {
 function renderOffCanvasMenu(menuItems) {
     const offCanvas = document.createElement('div');
     offCanvas.id = 'offCanvas';
-    offCanvas.className = 'fixed top-14 h-full bg-gray-100 border-r z-50 overflow-y-auto transition-all duration-300';
+    offCanvas.className = 'fixed top-14 h-full bg-gray-100 z-50 overflow-y-auto';
 
     const flexContainer = document.createElement('div');
     flexContainer.className = 'flex flex-col h-full';
@@ -92,7 +95,7 @@ function renderOffCanvasMenu(menuItems) {
 
     menuItems.forEach((item, index) => {
         const li = document.createElement('li');
-        li.classList.add('relative'); // 화살표 위치 지정 가능
+        li.classList.add('relative');
 
         const a = document.createElement('a');
         a.href = item.href || "#";
@@ -113,7 +116,6 @@ function renderOffCanvasMenu(menuItems) {
         a.appendChild(leftDiv);
         li.appendChild(a);
 
-        // 🔽 서브메뉴가 있는 경우
         if (item.children && item.children.length > 0) {
             const toggleBtn = document.createElement('button');
             toggleBtn.innerHTML = '<i class="fas fa-chevron-down text-xs ml-2"></i>';
@@ -127,7 +129,7 @@ function renderOffCanvasMenu(menuItems) {
 
             subUl.style.border = 'none';
 
-            subUl.className = 'hidden'; // border 제거
+            subUl.className = 'hidden'; 
             subUl.id = `submenu-${index}`;
 
             item.children.forEach(subItem => {
@@ -159,7 +161,7 @@ function renderOffCanvasMenu(menuItems) {
 
             toggleBtn.addEventListener('click', (e) => {
                 e.preventDefault();
-                e.stopPropagation(); 
+                e.stopPropagation();
                 subUl.classList.toggle('hidden');
             });
         }
@@ -236,8 +238,6 @@ fetch('/api/menu')
         Object.keys(data).forEach(key => {
             menuConfigurations[key] = data[key];
         });
-
-        console.log('Updated menuConfigurations from server:', menuConfigurations);
     })
     .catch(console.error);
 
@@ -527,9 +527,6 @@ offCanvas.classList.remove('hidden', '-translate-x-full');
 offCanvas.classList.add('collapsed');
 offCanvas.classList.remove('expanded');
 
-
-
-
 function loadMessages() {
     fetch('assets/mock/messages.json')
         .then(response => response.json())
@@ -759,9 +756,7 @@ memberMenu.innerHTML = `<div class="bg-white shadow-lg p-3 rounded-md border">
                             <span>Front End Swagger</span>
                             </div>
                         </a>
-
-
-                        
+              
 
                      <div class="dropdown-divider"></div>
                      <a href="#" class="dropdown-item" id="logoutButton">
@@ -938,8 +933,7 @@ createTooltip(fav1, "현재 페이지를 로그인 후 바로가기로 저장합
 const fav2 = document.getElementById("fav2");
 createTooltip(fav2, "현재 페이지를 바로가기 목록에 저장합니다.");
 
-import { createTanslations } from './common.js';
-const translations = createTanslations;
+
 
 languageSwitcher.addEventListener("click", function (event) {
 

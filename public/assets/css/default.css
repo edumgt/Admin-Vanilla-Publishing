@@ -1041,16 +1041,6 @@ label {
   background-color: var(--highlight-color);
 }
 
-/* .modal-content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 6px;
-    width: 600px !important;
-    height: 400px !important;
-    display: flex;
-    flex-direction: column;
-} */
-
 .modal-content {
   background: #fff;
   padding: 10px;
