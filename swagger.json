@@ -5,7 +5,7 @@
     "title": "Express API Server",
     "description": "An Express.js server for handling inbound and outbound data"
   },
-  "host": "localhost:3000",
+  "host": "kegdemo.edumgt.co.kr:3000",
   "basePath": [
     "/"
   ],
