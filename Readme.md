@@ -49,3 +49,7 @@
 ## git switch features-bitione
 
 ## RDS 로 연결
+
+## EC2 실행
+## tmux
+## sudo npm run dev
