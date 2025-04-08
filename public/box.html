@@ -2,62 +2,52 @@
 <html lang="ko">
 
 <head>
-    <meta charset="UTF-8">
-    <title>3D 종이박스</title>
-    <link rel="stylesheet" href="assets/css/box.css">
+  <meta charset="UTF-8">
+  <title>3D 종이박스</title>
+  <link rel="stylesheet" href="assets/css/box.css">
 </head>
 
 <body>
-    <h2>종이 박스 시뮬레이터</h2>
+  <h2>종이 박스 시뮬레이터</h2>
 
-    <div class="controls">
-        가로: <input type="range" id="width" min="10" max="100" value="30"> <span id="wVal">30</span>cm<br>
-        세로: <input type="range" id="height" min="10" max="100" value="20"> <span id="hVal">20</span>cm<br>
-        높이: <input type="range" id="depth" min="10" max="100" value="15"> <span id="dVal">15</span>cm<br><br>
+  <div class="controls">
+    가로: <input type="range" id="width" min="10" max="100" value="30"> <span id="wVal">30</span>cm<br>
+    세로: <input type="range" id="height" min="10" max="100" value="20"> <span id="hVal">20</span>cm<br>
+    높이: <input type="range" id="depth" min="10" max="100" value="15"> <span id="dVal">15</span>cm<br><br>
+    색상: <input type="color" id="colorPicker" value="#b48c5a"><br><br>
+    텍스처 이미지: <input type="file" id="texturePicker" accept="image/*">
+  </div>
 
-        색상: <input type="color" id="colorPicker" value="#b48c5a"><br><br>
-        텍스처 이미지: <input type="file" id="texturePicker" accept="image/*">
-
+  <div class="wrapper">
+    <div class="scene">
+      <div class="box" id="box">
+        <div class="face front"></div>
+        <div class="face back"></div>
+        <div class="face right"></div>
+        <div class="face left"></div>
+        <div class="face top"></div>
+        <div class="face bottom"></div>
+      </div>
     </div>
 
-
-
-
-    <div class="wrapper">
-        <div class="scene">
-            <div class="box" id="box">
-                <div class="face front"></div>
-                <div class="face back"></div>
-                <div class="face right"></div>
-                <div class="face left"></div>
-                <div class="face top"></div>
-                <div class="face bottom"></div>
-            </div>
-        </div>
-
-        <div class="flat-net" id="flatNet">
-            <div class="row center">
-              <div class="face1 top" data-label="윗면">TOP</div>
-            </div>
-            <div class="row full">
-              <div class="face1 tab">TAB</div>
-              <div class="face1 left" data-label="좌측면">LEFT</div>
-              <div class="face1 front" data-label="전면">FRONT</div>
-              <div class="face1 right" data-label="우측면">RIGHT</div>
-              <div class="face1 back" data-label="뒷면">BACK</div>
-            </div>
-            <div class="row center">
-              <div class="face1 bottom" data-label="바닥면">BOTTOM</div>
-            </div>
-          </div>
-          
-          
-          
-          
+    <div class="flat-net" id="flatNet">
+      <div class="row center">
+        <div class="face1 top" data-label="윗면">TOP</div>
+      </div>
+      <div class="row full">
+        <div class="face1 tab">TAB</div>
+        <div class="face1 left" data-label="좌측면">LEFT</div>
+        <div class="face1 front" data-label="전면">FRONT</div>
+        <div class="face1 right" data-label="우측면">RIGHT</div>
+        <div class="face1 back" data-label="뒷면">BACK</div>
+      </div>
+      <div class="row center">
+        <div class="face1 bottom" data-label="바닥면">BOTTOM</div>
+      </div>
     </div>
+  </div>
 
-
-    <script src="assets/js/box.js"></script>
+  <script src="assets/js/box.js"></script>
 </body>
 
 </html>
