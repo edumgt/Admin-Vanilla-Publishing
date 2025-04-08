@@ -1480,3 +1480,13 @@ label {
 #offCanvas.collapsed .submenu-toggle {
   display: none !important;
 }
+
+#offCanvas.collapsed ul li ul {
+  background-color: white;
+  min-width: 140px;
+  border-radius: 4px;
+}
+
+#offCanvas.collapsed ul li ul li {
+  padding: 5px 10px;
+}

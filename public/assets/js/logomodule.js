@@ -170,6 +170,26 @@ function renderOffCanvasMenu(menuItems) {
                 e.stopPropagation();
                 subUl.classList.toggle('hidden');
             });
+
+            // li.addEventListener("mouseenter", () => {
+            //     if (document.getElementById('offCanvas').classList.contains('collapsed')) {
+            //         subUl.classList.remove("hidden");
+            //         subUl.style.position = 'absolute';
+            //         subUl.style.left = '100%';
+            //         subUl.style.top = '0';
+            //         subUl.style.background = '#fff';
+            //         subUl.style.boxShadow = '0 0 6px rgba(0,0,0,0.2)';
+            //         subUl.style.padding = '5px';
+            //         subUl.style.borderRadius = '4px';
+            //         subUl.style.zIndex = '999';
+            //     }
+            // });
+        
+            // li.addEventListener("mouseleave", () => {
+            //     if (document.getElementById('offCanvas').classList.contains('collapsed')) {
+            //         subUl.classList.add("hidden");
+            //     }
+            // });
         }
 
         ul.appendChild(li);
