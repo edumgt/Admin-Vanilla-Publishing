@@ -79,45 +79,96 @@ function saveModal() {
     saveData(grid.getData());
     showToast('well-done', 'success', 'en');
 }
-
-
 function renderOffCanvasMenu(menuItems) {
-
     const offCanvas = document.createElement('div');
     offCanvas.id = 'offCanvas';
-    offCanvas.className = 'fixed top-14 h-full bg-gray-100 border-r z-50';
+    offCanvas.className = 'fixed top-14 h-full bg-gray-100 border-r z-50 overflow-y-auto transition-all duration-300';
 
     const flexContainer = document.createElement('div');
     flexContainer.className = 'flex flex-col h-full';
 
     const ul = document.createElement('ul');
-    ul.className = 'flex-grow p-4 space-y-4';
+    ul.className = 'flex-grow p-4 space-y-2';
 
-    menuItems.forEach(item => {
+    menuItems.forEach((item, index) => {
         const li = document.createElement('li');
+        li.classList.add('relative'); // 화살표 위치 지정 가능
 
         const a = document.createElement('a');
-        a.href = item.href;
-        a.className = 'menu-item block text-gray-800 hover:text-blue-500 text-center p-2 rounded-md';
+        a.href = item.href || "#";
+        a.className = 'menu-item flex items-center justify-between p-2 rounded-md text-gray-600 hover:text-blue-500';
+
+        const leftDiv = document.createElement('div');
+        leftDiv.className = 'flex items-center';
 
         const icon = document.createElement('i');
-        icon.className = `fas ${item.icon} menu-icon text-blue-400`;
+        icon.className = `fas ${item.icon} mr-2`;
 
         const span = document.createElement('span');
         span.className = 'menu-text';
         span.textContent = item.text;
 
+        leftDiv.appendChild(icon);
+        leftDiv.appendChild(span);
+        a.appendChild(leftDiv);
+        li.appendChild(a);
 
-        if (item.href === currentPage) {
-            icon.classList.remove('text-blue-400');
-            icon.classList.add('text-gray-800');
+        // 🔽 서브메뉴가 있는 경우
+        if (item.children && item.children.length > 0) {
+            const toggleBtn = document.createElement('button');
+            toggleBtn.innerHTML = '<i class="fas fa-chevron-down text-xs ml-2"></i>';
+            toggleBtn.className = 'submenu-toggle text-gray-400 hover:text-blue-500';
+
+
+
+            a.appendChild(toggleBtn);
+
+            const subUl = document.createElement('ul');
+
+            subUl.style.border = 'none';
+
+            subUl.className = 'hidden'; // border 제거
+            subUl.id = `submenu-${index}`;
+
+            item.children.forEach(subItem => {
+                const subLi = document.createElement('li');
+                subLi.style.height = '28px';
+                subLi.style.paddingLeft = '10px';
+
+
+                const subA = document.createElement('a');
+                subA.href = subItem.href;
+
+                subA.className = 'block text-gray-500 hover:text-blue-500';
+                subA.fontSize = '14px';
+
+                const subIcon = document.createElement('i');
+                subIcon.className = `fas ${subItem.icon || 'fa-circle'} text-xs mr-2`;
+
+                const subSpan = document.createElement('span');
+                subSpan.className = 'menu-text';
+                subSpan.textContent = subItem.text;
+
+                subA.appendChild(subIcon);
+                subA.appendChild(subSpan);
+                subLi.appendChild(subA);
+                subUl.appendChild(subLi);
+            });
+
+            li.appendChild(subUl);
+
+            // 🔄 토글 버튼으로만 서브 메뉴 열고 닫기
+            toggleBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation(); // a 태그 클릭 이벤트와 분리
+                subUl.classList.toggle('hidden');
+            });
         }
 
-        a.appendChild(icon);
-        a.appendChild(span);
-        li.appendChild(a);
         ul.appendChild(li);
     });
+
+
 
     const buttonsContainer = document.createElement('div');
     buttonsContainer.className = 'flex flex-col space-y-4 pb-4';
@@ -141,6 +192,68 @@ function renderOffCanvasMenu(menuItems) {
 
     document.getElementById('offCanvasContainer').appendChild(offCanvas);
 }
+
+
+// function renderOffCanvasMenu(menuItems) {
+
+//     const offCanvas = document.createElement('div');
+//     offCanvas.id = 'offCanvas';
+//     offCanvas.className = 'fixed top-14 h-full bg-gray-100 border-r z-50';
+
+//     const flexContainer = document.createElement('div');
+//     flexContainer.className = 'flex flex-col h-full';
+
+//     const ul = document.createElement('ul');
+//     ul.className = 'flex-grow p-4 space-y-4';
+
+//     menuItems.forEach(item => {
+//         const li = document.createElement('li');
+
+//         const a = document.createElement('a');
+//         a.href = item.href;
+//         a.className = 'menu-item block text-gray-800 hover:text-blue-500 text-center p-2 rounded-md';
+
+//         const icon = document.createElement('i');
+//         icon.className = `fas ${item.icon} menu-icon text-blue-400`;
+
+//         const span = document.createElement('span');
+//         span.className = 'menu-text';
+//         span.textContent = item.text;
+
+
+//         if (item.href === currentPage) {
+//             icon.classList.remove('text-blue-400');
+//             icon.classList.add('text-gray-800');
+//         }
+
+//         a.appendChild(icon);
+//         a.appendChild(span);
+//         li.appendChild(a);
+//         ul.appendChild(li);
+//     });
+
+//     const buttonsContainer = document.createElement('div');
+//     buttonsContainer.className = 'flex flex-col space-y-4 pb-4';
+
+//     const expandButton = document.createElement('button');
+//     expandButton.id = 'expandOffCanvas';
+//     expandButton.className = 'text-gray-800 hover:text-blue-500 text-xl';
+//     expandButton.innerHTML = '<i class="fas fa-chevron-right"></i>';
+
+//     const collapseButton = document.createElement('button');
+//     collapseButton.id = 'collapseOffCanvas';
+//     collapseButton.className = 'text-gray-800 hover:text-blue-500 text-xl';
+//     collapseButton.innerHTML = '<i class="fas fa-chevron-left"></i>';
+
+//     buttonsContainer.appendChild(expandButton);
+//     buttonsContainer.appendChild(collapseButton);
+
+//     flexContainer.appendChild(ul);
+//     flexContainer.appendChild(buttonsContainer);
+//     offCanvas.appendChild(flexContainer);
+
+//     document.getElementById('offCanvasContainer').appendChild(offCanvas);
+// }
 
 const iconMapping = {
 
@@ -190,12 +303,80 @@ fetch('/api/menu')
     })
     .catch(console.error);
 
+const defaultMenuItems = [
+    {
+        id: "2",
+        text: '업무일정',
+        icon: 'fa-calendar-alt',
+        href: 'calendar.html',
+        children: [
+            { id: "21", text: '프로젝트일정', href: 'trello.html', icon: 'fa-tasks' },
+            { id: "19", text: '생산일정', href: 'timeline.html', icon: 'fa-industry' }
+        ]
+    },
+    {
+        id: "14",
+        text: '조직도구성',
+        icon: 'fa-sitemap',
+        href: 'orgni.html',
+        children: [
+            { id: "1", text: '근태관리', href: 'attend.html', icon: 'fa-user-clock' },
+            { id: "20", text: '인센티브', href: 'total.html', icon: 'fa-gift' }
+        ]
+    },
+    {
+        id: "16",
+        text: '회원통계',
+        icon: 'fa-user',
+        href: 'stati.html',
+        children: [
+            { id: "7", text: '매출통계', href: 'flow.html', icon: 'fa-chart-line' },
+            { id: "3", text: '체인운영', href: 'chain.html', icon: 'fa-store-alt' }
+        ]
+    },
+    {
+        id: "23",
+        text: '예약관리',
+        icon: 'fa-calendar-plus',
+        href: 'work.html',
+        children: [
+            { id: "12", text: '회의실관리', href: 'meeting.html', icon: 'fa-door-open' },
+            { id: "9", text: '병원예약', href: 'hospital.html', icon: 'fa-hospital' },
+            { id: "11", text: '강의일정', href: 'lectures.html', icon: 'fa-chalkboard-teacher' },
+            { id: "4", text: '행정구역정보', href: 'city.html', icon: 'fa-map-marked-alt' }
+        ]
+    },
+    {
+        id: "5",
+        text: '시스템로그',
+        icon: 'fa-clipboard-list',
+        href: 'config.html',
+        children: [
+            { id: "13", text: '컨설팅지정', href: 'network.html', icon: 'fa-network-wired' },
+            { id: "17", text: '서베이', href: 'survey.html', icon: 'fa-poll' },
+            { id: "10", text: '사물함', href: 'locker.html', icon: 'fa-archive' }
+        ]
+    },
+    {
+        id: "18",
+        text: '코드관리',
+        icon: 'fa-server',
+        href: 'system.html',
+        children: [
+            { id: "8", text: '용어관리', href: 'glos.html', icon: 'fa-book' },
+            { id: "15", text: '권한관리', href: 'orgtree.html', icon: 'fa-user-shield' },
+            { id: "6", text: '문서관리', href: 'document.html', icon: 'fa-file-alt' },
+            { id: "22", text: 'WMS', href: 'wms.html', icon: 'fa-cubes' }
+        ]
+    }
+];
 
-const defaultMenuItems = [];
-const menuItems = (menuConfigurations[currentPage] || defaultMenuItems).map(item => ({
+
+const menuItems = (menuConfigurations[currentPage] ? defaultMenuItems : []).map(item => ({
     ...item,
     icon: iconMapping[item.text]
 }));
+
 
 renderOffCanvasMenu(menuItems);
 
@@ -386,22 +567,30 @@ document.getElementById('closeFloatingNav').addEventListener('click', () => {
 });
 
 const offCanvas = document.getElementById('offCanvas');
-offCanvas.classList.remove('hidden', '-translate-x-full');
-offCanvas.classList.add('collapsed');
-offCanvas.classList.remove('expanded');
 
 const expandOffCanvas = document.getElementById('expandOffCanvas');
 const collapseOffCanvas = document.getElementById('collapseOffCanvas');
+
 expandOffCanvas.addEventListener('click', function () {
     offCanvas.classList.remove('collapsed');
     offCanvas.classList.add('expanded');
     expandOffCanvas.classList.add('hidden');
+    collapseOffCanvas.classList.remove('hidden');
 });
+
 collapseOffCanvas.addEventListener('click', function () {
     offCanvas.classList.add('collapsed');
     offCanvas.classList.remove('expanded');
     collapseOffCanvas.classList.add('hidden');
+    expandOffCanvas.classList.remove('hidden');
 });
+
+offCanvas.classList.remove('hidden', '-translate-x-full');
+offCanvas.classList.add('collapsed');
+offCanvas.classList.remove('expanded');
+
+
+
 
 function loadMessages() {
     fetch('assets/mock/messages.json')
@@ -1132,43 +1321,43 @@ document.addEventListener('DOMContentLoaded', () => {
 const modal = document.createElement('div');
 modal.id = 'fullscreenModal';
 Object.assign(modal.style, {
-  display: 'none',
-  position: 'fixed',
-  top: '0px',
-  left: '0px',
-  width: '100%',
-  height: '100%',
-  background: 'white',
-  zIndex: 9999
+    display: 'none',
+    position: 'fixed',
+    top: '0px',
+    left: '0px',
+    width: '100%',
+    height: '100%',
+    background: 'white',
+    zIndex: 9999
 });
 
 // 닫기 버튼 생성
 const closeBtn = document.createElement('button');
 closeBtn.innerHTML = 'Close';
 Object.assign(closeBtn.style, {
-  position: 'absolute',
-  top: '15px',
-  right: '15px',
-  zIndex: 10000,
-  fontSize: '15px',
-  color: 'yellow',
-  background: 'blue',
-  border: 'none',
-  cursor: 'pointer',
-  paddingBottom:'15px'
+    position: 'absolute',
+    top: '15px',
+    right: '15px',
+    zIndex: 10000,
+    fontSize: '15px',
+    color: 'yellow',
+    background: 'blue',
+    border: 'none',
+    cursor: 'pointer',
+    paddingBottom: '15px'
 });
 closeBtn.onclick = () => {
-  iframe.src = '';
-  modal.style.display = 'none';
+    iframe.src = '';
+    modal.style.display = 'none';
 };
 
 // iframe 생성
 const iframe = document.createElement('iframe');
 iframe.id = 'modalIframe';
 Object.assign(iframe.style, {
-  width: '99%',
-  height: '99%',
-  border: 'none'
+    width: '99%',
+    height: '99%',
+    border: 'none'
 });
 
 // 구성 요소 삽입
@@ -1178,9 +1367,9 @@ document.body.appendChild(modal);
 
 // 링크 이벤트 바인딩
 document.querySelectorAll('.modal-link').forEach(link => {
-  link.addEventListener('click', function (e) {
-    e.preventDefault();
-    iframe.src = this.getAttribute('href');
-    modal.style.display = 'block';
-  });
+    link.addEventListener('click', function (e) {
+        e.preventDefault();
+        iframe.src = this.getAttribute('href');
+        modal.style.display = 'block';
+    });
 });

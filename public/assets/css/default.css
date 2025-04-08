@@ -1488,3 +1488,17 @@ label {
   font-size: 0.9rem;
   padding: 3px 10px 3px 10px;
 }
+
+#offCanvas.collapsed .menu-text {
+  display: none !important;
+}
+#offCanvas.expanded .menu-text {
+  display: inline !important;
+}
+#offCanvas.collapsed ul[id^="submenu-"] {
+  display: none !important;
+}
+/* 일반 CSS 방식 */
+#offCanvas.collapsed .submenu-toggle {
+  display: none !important;
+}
