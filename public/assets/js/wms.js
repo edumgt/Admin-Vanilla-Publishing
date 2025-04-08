@@ -225,7 +225,7 @@ function createGrid(sectionId, data, updateUrl) {
 
 function populateInbound(section, data) {
   if (!data) return section.innerHTML = `<div class="text-center text-lg font-semibold">데이터를 불러오는데 실패했습니다.</div>`;
-  createGrid(section.id, data, 'http://127.0.0.1:8080/api/inbound');
+  createGrid(section.id, data, 'http://kegdemo.edumgt.co.kr:8080/api/inbound');
 }
 
 function populateOutbound(section, data) {
@@ -295,7 +295,7 @@ const sections = {};
 
 setupTabs(tabs, root, sections, async (tabId, section) => {
   if (tabId === 'tab-inbound') {
-    const data = await fetchJson(apiurl + 'http://127.0.0.1:8080/api/inbound');
+    const data = await fetchJson(apiurl + 'http://kegdemo.edumgt.co.kr:8080/api/inbound');
     hideLoading(section);
     populateInbound(section, data);
   } else if (tabId === 'tab-outbound') {
@@ -303,7 +303,7 @@ setupTabs(tabs, root, sections, async (tabId, section) => {
     hideLoading(section);
     populateOutbound(section, data);
   } else if (tabId === 'tab-dashboard') {
-    const inboundData = await fetchJson(apiurl + 'http://127.0.0.1:8080/api/inbound');
+    const inboundData = await fetchJson(apiurl + 'http://kegdemo.edumgt.co.kr:8080/api/inbound');
     const outboundData = await fetchJson(apiurl + '/db/outbound');
     hideLoading(section);
     populateDashboard(section, inboundData, outboundData);
@@ -311,7 +311,7 @@ setupTabs(tabs, root, sections, async (tabId, section) => {
 });
 
 (async () => {
-  const inboundData = await fetchJson(apiurl + 'http://127.0.0.1:8080/api/inbound');
+  const inboundData = await fetchJson(apiurl + 'http://kegdemo.edumgt.co.kr:8080/api/inbound');
   const outboundData = await fetchJson(apiurl + '/db/outbound');
   populateInbound(sections['tab-inbound'], inboundData);
   populateOutbound(sections['tab-outbound'], outboundData);
