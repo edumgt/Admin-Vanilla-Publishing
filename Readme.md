@@ -2,12 +2,6 @@
 # docker exec -it mysql-container bash
 # docker cp ./db.sql 83205902c571:/
 
-# keep_alive.sh
-# while true; do
-#    echo "Keeping Codespace alive..."
-#    sleep 300  # 5분마다 메시지 출력
-# done
-
 # common 처리대상 : modal, grid, button, calendar
 
 # modal 을 js 하나로
@@ -51,3 +45,7 @@
 
 ## docker build -t my-nginx-web .
 ## docker run -d -p 80:80 --name web-app my-nginx-web
+
+## git switch features-bitione
+
+## RDS 로 연결

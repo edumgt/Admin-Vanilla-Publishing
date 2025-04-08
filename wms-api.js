@@ -1,13 +1,12 @@
 const mysql = require('mysql2');
-const { v4: uuidv4 } = require('uuid');
 const express = require('express');
 
 const router = express.Router();
 
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '123456',
+    host: 'edumgtmariadb.cg0ugoglztrn.ap-northeast-2.rds.amazonaws.com',
+    user: 'edumgt',
+    password: 'edumgt2250!',
     database: 'bbs'
 });
 
@@ -20,329 +19,9 @@ db.connect(err => {
 });
 
 
-
-
 /**
  * @swagger
- * /inbound:
- *   get:
- *     summary: Fetch inbound data
- *     responses:
- *       200:
- *         description: Inbound data fetched successfully
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 type: object
- */
-router.get('/inbound', (req, res) => {
-    db.query('SELECT * FROM inbound_data ORDER BY date DESC', (err, results) => {
-        if (err) {
-            res.status(500).json({ error: err.message });
-        } else {
-            res.json(results);
-        }
-    });
-});
-
-/**
- * @swagger
- * /inbound/add:
- *   post:
- *     summary: Add new inbound record
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               date:
- *                 type: string
- *                 format: date-time
- *               title:
- *                 type: string
- *               quantity:
- *                 type: integer
- *               isbn:
- *                 type: string
- *     responses:
- *       200:
- *         description: New inbound record added
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- */
-router.post('/inbound/add', (req, res) => {
-    const newItem = { id: uuidv4(), ...req.body };
-    const query = 'INSERT INTO inbound_data (id, date, title, quantity, isbn) VALUES (?, ?, ?, ?, ?)';
-
-    db.query(query, [newItem.id, newItem.date, newItem.title, newItem.quantity, newItem.isbn], (err) => {
-        if (err) {
-            res.status(500).json({ error: err.message });
-        } else {
-            res.json({ success: true, message: 'New inbound record added', item: newItem });
-        }
-    });
-});
-
-/**
- * @swagger
- * /inbound/update:
- *   post:
- *     summary: Update inbound data
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: array
- *             items:
- *               type: object
- *               properties:
- *                 id:
- *                   type: string
- *                 changes:
- *                   type: object
- *     responses:
- *       200:
- *         description: Inbound data updated
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- */
-router.post('/inbound/update', (req, res) => {
-    const updates = req.body;
-    if (!Array.isArray(updates) || updates.length === 0) {
-        return res.status(400).json({ error: "Invalid request format. Expected an array of updates." });
-    }
-
-    const updatePromises = updates.map(update => {
-        return new Promise((resolve, reject) => {
-            const fields = Object.keys(update.changes);
-            if (fields.length === 0) return resolve();
-
-            const setClause = fields.map(field => `${field} = ?`).join(', ');
-            const values = fields.map(field => update.changes[field]);
-            values.push(update.id);
-
-            const query = `UPDATE inbound_data SET ${setClause} WHERE id = ?`;
-
-            db.query(query, values, (err) => {
-                if (err) reject(err);
-                else resolve();
-            });
-        });
-    });
-
-    Promise.all(updatePromises)
-        .then(() => res.json({ success: true, message: 'Inbound data updated' }))
-        .catch(err => res.status(500).json({ error: err.message }));
-});
-
-/**
- * @swagger
- * /inbound/delete:
- *   delete:
- *     summary: Delete inbound records
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: array
- *             items:
- *               type: object
- *               properties:
- *                 id:
- *                   type: string
- *     responses:
- *       200:
- *         description: Inbound records deleted
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- */
-router.delete('/inbound/delete', (req, res) => {
-    const idsToDelete = req.body.map(item => item.id);
-    const query = 'DELETE FROM inbound_data WHERE id IN (?)';
-
-    db.query(query, [idsToDelete], (err) => {
-        if (err) {
-            res.status(500).json({ error: err.message });
-        } else {
-            res.json({ success: true, message: 'Inbound records deleted' });
-        }
-    });
-});
-
-/**
- * @swagger
- * /outbound:
- *   get:
- *     summary: Fetch outbound data
- *     responses:
- *       200:
- *         description: Outbound data fetched successfully
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 type: object
- */
-router.get('/outbound', (req, res) => {
-    db.query('SELECT * FROM outbound_data ORDER BY date DESC', (err, results) => {
-        if (err) {
-            res.status(500).json({ error: err.message });
-        } else {
-            res.json(results);
-        }
-    });
-});
-
-/**
- * @swagger
- * /outbound/add:
- *   post:
- *     summary: Add new outbound record
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               date:
- *                 type: string
- *                 format: date-time
- *               title:
- *                 type: string
- *               quantity:
- *                 type: integer
- *               isbn:
- *                 type: string
- *     responses:
- *       200:
- *         description: New outbound record added
- *         content:
- *           application/json:
- *             schema: 
- *               type: object
- */
-router.post('/outbound/add', (req, res) => {
-    const newItem = { id: uuidv4(), ...req.body };
-    const query = 'INSERT INTO outbound_data (id, date, title, quantity, isbn) VALUES (?, ?, ?, ?, ?)';
-
-    db.query(query, [newItem.id, newItem.date, newItem.title, newItem.quantity, newItem.isbn], (err) => {
-        if (err) {
-            res.status(500).json({ error: err.message });
-        } else {
-            res.json({ success: true, message: 'New outbound record added', item: newItem });
-        }
-    });
-});
-
-/**
- * @swagger
- * /outbound/update:
- *   post:
- *     summary: Update outbound data
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: array
- *             items:
- *               type: object
- *               properties:
- *                 id:
- *                   type: string
- *                 changes:
- *                   type: object
- *     responses:
- *       200:
- *         description: Outbound data updated
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- */
-router.post('/outbound/update', (req, res) => {
-    const updates = req.body;
-    if (!Array.isArray(updates) || updates.length === 0) {
-        return res.status(400).json({ error: "Invalid request format. Expected an array of updates." });
-    }
-
-    const updatePromises = updates.map(update => {
-        return new Promise((resolve, reject) => {
-            const fields = Object.keys(update.changes);
-            if (fields.length === 0) return resolve();
-
-            const setClause = fields.map(field => `${field} = ?`).join(', ');
-            const values = fields.map(field => update.changes[field]);
-            values.push(update.id);
-
-            const query = `UPDATE outbound_data SET ${setClause} WHERE id = ?`;
-
-            db.query(query, values, (err) => {
-                if (err) reject(err);
-                else resolve();
-            });
-        });
-    });
-
-    Promise.all(updatePromises)
-        .then(() => res.json({ success: true, message: 'Outbound data updated' }))
-        .catch(err => res.status(500).json({ error: err.message }));
-});
-
-/**
- * @swagger
- * /outbound/delete:
- *   delete:
- *     summary: Delete outbound records
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: array
- *             items:
- *               type: object
- *               properties:
- *                 id:
- *                   type: string
- *     responses:
- *       200:
- *         description: Outbound records deleted
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- */
-router.delete('/outbound/delete', (req, res) => {
-    const idsToDelete = req.body.map(item => item.id);
-    const query = 'DELETE FROM outbound_data WHERE id IN (?)';
-
-    db.query(query, [idsToDelete], (err) => {
-        if (err) {
-            res.status(500).json({ error: err.message });
-        } else {
-            res.json({ success: true, message: 'Outbound records deleted' });
-        }
-    });
-});
-
-/**
- * @swagger
- * /calendar:
+ * /api/calendar:
  *   get:
  *     summary: Fetch calendar list
  *     responses:
@@ -393,7 +72,7 @@ router.get('/calendar', (req, res) => {
 
 /**
  * @swagger
- * /addDate:
+ * /api/addDate:
  *   post:
  *     summary: Add new date
  *     requestBody:
@@ -437,7 +116,7 @@ router.post('/addDate', (req, res) => {
 
 /**
  * @swagger
- * /addEvent:
+ * /api/addEvent:
  *   post:
  *     summary: Add new event
  *     requestBody:
@@ -488,7 +167,7 @@ router.post('/addEvent', (req, res) => {
 
 /**
  * @swagger
- * /deleteEvent/{eventId}:
+ * /api/deleteEvent/{eventId}:
  *   delete:
  *     summary: Delete event
  *     parameters:
@@ -531,7 +210,7 @@ router.delete('/deleteEvent/:eventId', (req, res) => {
 
 /**
  * @swagger
- * /reservations:
+ * /api/reservations:
  *   get:
  *     summary: Fetch reservations data
  *     responses:
@@ -558,7 +237,7 @@ router.get('/reservations', (req, res) => {
 
 /**
  * @swagger
- * /members:
+ * /api/members:
  *   get:
  *     summary: Fetch members data
  *     responses:

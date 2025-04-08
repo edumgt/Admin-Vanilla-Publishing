@@ -1,66 +1,45 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
   <meta charset="utf-8" />
   <title>TUI Grid DB Admin</title>
-
   <link href="assets/css/default.css" rel="stylesheet">
-
-
   <script src="https://uicdn.toast.com/tui-grid/latest/tui-grid.js"></script>
-
 </head>
-
 <body>
-
-  <div class="px-4 py-4">
-    <h1 style="margin-bottom:0.25rem;">DB Test</h1>
-
+  <div class="px-4 py-2">
     <div class="flex gap-4 py-4">
       <label>Host:
-        <input type="text" id="host" value="localhost">
+        <input type="text" id="host" value="edumgtmssql2019.cg0ugoglztrn.ap-northeast-2.rds.amazonaws.com">
       </label>
       <label>User:
-        <input type="text" id="user" value="sa">
+        <input type="text" id="user" value="edumgt">
       </label>
       <label>Password:
-        <input type="text" id="password" value="YourStrong!Passw0rd">
+        <input type="text" id="password" value="edumgt2250!">
       </label>
       <label>Database:
         <input type="text" id="database" value="kegtest">
       </label>
       <input type="button" id="btnConnect" class="history-button" value="CONNECT">
     </div>
-    
-
-    <!-- 쿼리 입력 폼 -->
     <div class="flex gap-4 py-4">
       <label>Query:</label>
-      
       <textarea id="query" rows="1"
         style="width:800px">SELECT * FROM kegtest.dbo.T_code where groupcode like 'BD%'</textarea>
-      
       <input type="button" id="btnQuery" class="history-button" value="RUN">
     </div>
-    
-
     <div id="myGrid" style="width: 100%; height: 320px;"></div>
   </div>
-
   <script>
-    // 1) TUI Grid 인스턴스 생성
-    // 초기에는 빈 컬럼/빈 데이터로 시작
     const grid = new tui.Grid({
       el: document.getElementById('myGrid'),
       data: [],
       columns: [],
-      // scrollX / scrollY 옵션, viewport 옵션 등은 필요에 따라 추가
       scrollX: false,
       scrollY: true
     });
 
-    // 2) HTML 요소 참조
     const hostInput = document.getElementById('host');
     const userInput = document.getElementById('user');
     const passwordInput = document.getElementById('password');
@@ -68,8 +47,6 @@
     const queryInput = document.getElementById('query');
     const btnConnect = document.getElementById('btnConnect');
     const btnQuery = document.getElementById('btnQuery');
-
-    // [Connect DB] 버튼: 동적 DB 연결 테스트
     btnConnect.addEventListener('click', async () => {
       const payload = {
         host: hostInput.value,
@@ -95,7 +72,6 @@
       }
     });
 
-    // [Run Query] 버튼: 기본 dbConfig로 쿼리 실행
     btnQuery.addEventListener('click', async () => {
       const payload = { query: queryInput.value };
 
@@ -107,13 +83,10 @@
         });
         const result = await response.json();
         if (result.success) {
-          // rows: [{colA: valA, colB: valB, ...}, {...}, ...]
           const rows = result.data;
-          // (1) 동적 컬럼 생성
           const columns = createDynamicColumns(rows);
-          // (2) TUI Grid에 컬럼 / 데이터 적용
           grid.setColumns(columns);
-          grid.resetData(rows); // 기존 데이터 지우고 새로 세팅
+          grid.resetData(rows); 
         } else {
           alert('Query Failed:\n' + result.message + '\n' + result.error);
         }
@@ -121,12 +94,6 @@
         alert('Fetch Error: ' + err.message);
       }
     });
-
-    /**
-     * 레코드 결과를 바탕으로 TUI Grid 컬럼 정의 배열을 동적으로 생성
-     * @param {Array} rows - [{colA: valA, colB: valB, ...}, {...}, ...]
-     * @returns {Array} - [{header: 'colA', name: 'colA'}, ...]
-     */
     function createDynamicColumns(rows) {
       if (!Array.isArray(rows) || rows.length === 0) {
         return [];
@@ -138,7 +105,5 @@
       }));
     }
   </script>
-  <script type="module" src="assets/js/logomodule.js"></script>
 </body>
-
 </html>
