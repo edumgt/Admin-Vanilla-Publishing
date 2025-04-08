@@ -157,10 +157,9 @@ function renderOffCanvasMenu(menuItems) {
 
             li.appendChild(subUl);
 
-            // 🔄 토글 버튼으로만 서브 메뉴 열고 닫기
             toggleBtn.addEventListener('click', (e) => {
                 e.preventDefault();
-                e.stopPropagation(); // a 태그 클릭 이벤트와 분리
+                e.stopPropagation(); 
                 subUl.classList.toggle('hidden');
             });
         }

@@ -22,10 +22,12 @@
   --scrollbar-color: hsl(240, 25%, 100%);
   --scrollbar-thumb-color: var(--secondary-color);
   --gnb-height: 55px;
+
   --gnb-item-color: #e3e7ee;
-  --gnb-item-font-size: 1rem;
-  --gnb-item-font-weight: 700;
+  --gnb-item-font-size: 0.8rem;
+  --gnb-item-font-weight: 600;
   --gnb-item-padding: 0.5rem 1rem;
+  
   --input-color: #333;
   
   --border-radius: 0.375rem;
@@ -80,7 +82,7 @@ body {
   color: var(--primary-color);
   text-transform: uppercase;
   position:absolute;
-  left:90px;
+  left:80px;
   top:75px;
 }
 
@@ -91,7 +93,7 @@ body {
 }
 
 .collapsed {
-  width: 65px;
+  width: 55px;
 }
 
 .collapsed .menu-text {
@@ -99,7 +101,7 @@ body {
 }
 
 .collapsed .menu-icon {
-  font-size: 22px;
+  font-size: 20px;
   text-align: center;
 }
 
@@ -126,7 +128,6 @@ body {
   display: block;
 }
 
-/* Menu Item */
 .menu-item {
   display: flex;
   align-items: center;
@@ -153,7 +154,7 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 49;
+  z-index: 50;
 }
 
 /* GNB Item */
@@ -165,7 +166,7 @@ body {
   color: var(--gnb-item-color);
   padding: var(--gnb-item-padding);
   border-radius: 0.375rem;
-  transition: all 0.3s ease;
+  /* transition: all 0.3s ease; */
   position: relative;
   overflow: hidden;
 }
@@ -174,7 +175,7 @@ body {
   font-size: 1rem;
   margin-right: 0.6rem;
   color: #718096;
-  transition: color 0.3s ease;
+  /* transition: color 0.3s ease; */
 }
 
 .gnb-item:hover {
@@ -244,7 +245,7 @@ body {
 /* Logo Text */
 .logo-text {
   color: var(--text-color);
-  font-size: 1.4rem;
+  font-size: 1.1rem;
   font-weight: var(--gnb-item-font-weight);
 }
 
@@ -259,8 +260,8 @@ body {
 
 /* Language Switcher */
 #languageSwitcher img {
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   object-fit: cover;
   border-radius: 4px;
   border: 1px solid #ccc;
@@ -272,24 +273,6 @@ body {
   transform: scale(1.1);
 }
 
-/* Card Hover Effect */
-/* .card {
-  flex: 1 1 calc(25% - 1rem);
-  box-shadow: 0 0px 3x rgba(0, 0, 0, 0.3);
-  border-radius: 0.5rem;
-  padding: 1.5rem;
-
-  border: 1px solid #999;
-  display: flex;
-  justify-content: space-between;
-}
-
-.card:hover {
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
-  transition: transform 0.3s, box-shadow 0.3s;
-} */
-
-/* Media Queries */
 @media (max-width: 1550px) {
   .flex-col {
     flex-direction: column;
