@@ -87,6 +87,7 @@ function renderOffCanvasMenu(menuItems) {
     offCanvas.id = 'offCanvas';
     offCanvas.className = 'fixed top-14 h-full bg-gray-100 z-50 overflow-y-auto';
 
+
     const flexContainer = document.createElement('div');
     flexContainer.className = 'flex flex-col h-full';
 
@@ -95,11 +96,12 @@ function renderOffCanvasMenu(menuItems) {
 
     menuItems.forEach((item, index) => {
         const li = document.createElement('li');
-        li.classList.add('relative');
+        li.style.width = '120px';
+        //li.classList.add('relative');
 
         const a = document.createElement('a');
         a.href = item.href || "#";
-        a.className = 'menu-item flex items-center justify-between p-2 rounded-md text-gray-600 hover:text-blue-500';
+        a.className = 'menu-item flex items-center justify-between rounded-md text-gray-600 hover:text-blue-500';
 
         const leftDiv = document.createElement('div');
         leftDiv.className = 'flex items-center';
@@ -108,7 +110,7 @@ function renderOffCanvasMenu(menuItems) {
         icon.className = `fas ${item.icon} mr-2`;
 
         const span = document.createElement('span');
-        span.className = 'menu-text';
+        span.className = 'menu-text mr-2';
         span.textContent = item.text;
 
         leftDiv.appendChild(icon);
@@ -118,8 +120,10 @@ function renderOffCanvasMenu(menuItems) {
 
         if (item.children && item.children.length > 0) {
             const toggleBtn = document.createElement('button');
-            toggleBtn.innerHTML = '<i class="fas fa-chevron-down text-xs ml-2"></i>';
+            toggleBtn.innerHTML = '<i class="fas fa-chevron-down text-xs "></i>';
             toggleBtn.className = 'submenu-toggle text-gray-400 hover:text-blue-500';
+            toggleBtn.style.marginRight = '-32px'; // 추가된 부분
+            toggleBtn.style.marginLeft = '-32px'; // 추가된 부분
 
 
 
@@ -134,9 +138,11 @@ function renderOffCanvasMenu(menuItems) {
 
             item.children.forEach(subItem => {
                 const subLi = document.createElement('li');
-                subLi.style.height = '28px';
+                subLi.style.height = '26px';
                 subLi.style.paddingLeft = '10px';
-
+                // subLi.style.paddingRight = '0px';
+                // subLi.style.border = '1px solid #333';
+                subLi.style.width = '120px';
 
                 const subA = document.createElement('a');
                 subA.href = subItem.href;
@@ -172,17 +178,18 @@ function renderOffCanvasMenu(menuItems) {
 
 
     const buttonsContainer = document.createElement('div');
-    buttonsContainer.className = 'flex flex-col space-y-4 pb-4';
-
     const expandButton = document.createElement('button');
     expandButton.id = 'expandOffCanvas';
-    expandButton.className = 'text-gray-800 hover:text-blue-500 text-xl';
+    expandButton.className = 'text-gray-600 hover:text-blue-500 text-md';
     expandButton.innerHTML = '<i class="fas fa-chevron-right"></i>';
+    expandButton.style.border = '1px solid #333';
 
     const collapseButton = document.createElement('button');
     collapseButton.id = 'collapseOffCanvas';
-    collapseButton.className = 'text-gray-800 hover:text-blue-500 text-xl';
+    collapseButton.className = 'text-gray-600 hover:text-blue-500 text-md';
     collapseButton.innerHTML = '<i class="fas fa-chevron-left"></i>';
+    collapseButton.style.border = '1px solid #333';
+
 
     buttonsContainer.appendChild(expandButton);
     buttonsContainer.appendChild(collapseButton);

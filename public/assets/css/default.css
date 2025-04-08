@@ -62,8 +62,8 @@ body {
 
 #content {
   margin-top: 20px;
-  margin-left: 20px;
-  padding: 75px 30px 0px 70px;
+  margin-left: 10px;
+  padding: 75px 30px 0px 60px;
 }
 
 
@@ -88,12 +88,17 @@ body {
 
 /* OffCanvas - LNB */
 .menu-text {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: var(--gnb-item-font-weight);
 }
 
 .collapsed {
   width: 55px;
+}
+
+.expanded {
+  width: 160px;
+  
 }
 
 .collapsed .menu-text {
@@ -108,7 +113,7 @@ body {
 #expandOffCanvas,
 #collapseOffCanvas {
   position: absolute;
-  bottom: 110px;
+  bottom: 50px;
   right: 10px;
 }
 
@@ -132,11 +137,11 @@ body {
   display: flex;
   align-items: center;
   padding: 10px 0px;
-  transition: all 0.3s ease;
+  /* transition: all 0.3s ease; */
 }
 
 .menu-item i {
-  margin-right: 12px;
+  margin-right: 14px;
 }
 
 .collapsed .menu-item i {
