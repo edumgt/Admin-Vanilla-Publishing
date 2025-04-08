@@ -194,67 +194,6 @@ function renderOffCanvasMenu(menuItems) {
 }
 
 
-// function renderOffCanvasMenu(menuItems) {
-
-//     const offCanvas = document.createElement('div');
-//     offCanvas.id = 'offCanvas';
-//     offCanvas.className = 'fixed top-14 h-full bg-gray-100 border-r z-50';
-
-//     const flexContainer = document.createElement('div');
-//     flexContainer.className = 'flex flex-col h-full';
-
-//     const ul = document.createElement('ul');
-//     ul.className = 'flex-grow p-4 space-y-4';
-
-//     menuItems.forEach(item => {
-//         const li = document.createElement('li');
-
-//         const a = document.createElement('a');
-//         a.href = item.href;
-//         a.className = 'menu-item block text-gray-800 hover:text-blue-500 text-center p-2 rounded-md';
-
-//         const icon = document.createElement('i');
-//         icon.className = `fas ${item.icon} menu-icon text-blue-400`;
-
-//         const span = document.createElement('span');
-//         span.className = 'menu-text';
-//         span.textContent = item.text;
-
-
-//         if (item.href === currentPage) {
-//             icon.classList.remove('text-blue-400');
-//             icon.classList.add('text-gray-800');
-//         }
-
-//         a.appendChild(icon);
-//         a.appendChild(span);
-//         li.appendChild(a);
-//         ul.appendChild(li);
-//     });
-
-//     const buttonsContainer = document.createElement('div');
-//     buttonsContainer.className = 'flex flex-col space-y-4 pb-4';
-
-//     const expandButton = document.createElement('button');
-//     expandButton.id = 'expandOffCanvas';
-//     expandButton.className = 'text-gray-800 hover:text-blue-500 text-xl';
-//     expandButton.innerHTML = '<i class="fas fa-chevron-right"></i>';
-
-//     const collapseButton = document.createElement('button');
-//     collapseButton.id = 'collapseOffCanvas';
-//     collapseButton.className = 'text-gray-800 hover:text-blue-500 text-xl';
-//     collapseButton.innerHTML = '<i class="fas fa-chevron-left"></i>';
-
-//     buttonsContainer.appendChild(expandButton);
-//     buttonsContainer.appendChild(collapseButton);
-
-//     flexContainer.appendChild(ul);
-//     flexContainer.appendChild(buttonsContainer);
-//     offCanvas.appendChild(flexContainer);
-
-//     document.getElementById('offCanvasContainer').appendChild(offCanvas);
-// }
-
 const iconMapping = {
 
     "조직도구성": "fa-sitemap",
