@@ -7,8 +7,12 @@ const db = mysql.createConnection({
     host: 'edumgtmariadb.cg0ugoglztrn.ap-northeast-2.rds.amazonaws.com',
     user: 'edumgt',
     password: 'edumgt2250!',
-    database: 'bbs'
+    database: 'bbs',
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
 });
+
 
 db.connect(err => {
     if (err) {
