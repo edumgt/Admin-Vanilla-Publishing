@@ -764,10 +764,17 @@ memberMenu.innerHTML = `<div class="bg-white shadow-lg p-3 rounded-md border">
                             </div>
                         </a>
 
-                        <a href="/calendar2/index.html" class="dropdown-item modal-link">
+                        <a href="/calendar3/index.html" class="dropdown-item modal-link">
                             <div class="d-flex align-items-center gap-3">
                             <i class="fas fa-cog fs-5"></i>
-                            <span>일정표</span>
+                            <span>일정표1</span>
+                            </div>
+                        </a>
+
+                        <a href="/calendar/00.html" class="dropdown-item modal-link">
+                            <div class="d-flex align-items-center gap-3">
+                            <i class="fas fa-cog fs-5"></i>
+                            <span>일정표2</span>
                             </div>
                         </a>
 
