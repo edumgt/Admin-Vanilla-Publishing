@@ -82,6 +82,9 @@ function saveModal() {
     saveData(grid.getData());
     showToast('well-done', 'success', 'en');
 }
+
+const allMenuButton = document.createElement('button');
+
 function renderOffCanvasMenu(menuItems) {
     const offCanvas = document.createElement('div');
     offCanvas.id = 'offCanvas';
@@ -133,7 +136,7 @@ function renderOffCanvasMenu(menuItems) {
 
             subUl.style.border = 'none';
 
-            subUl.className = 'hidden'; 
+            subUl.className = 'hidden';
             subUl.id = `submenu-${index}`;
 
             item.children.forEach(subItem => {
@@ -171,25 +174,7 @@ function renderOffCanvasMenu(menuItems) {
                 subUl.classList.toggle('hidden');
             });
 
-            // li.addEventListener("mouseenter", () => {
-            //     if (document.getElementById('offCanvas').classList.contains('collapsed')) {
-            //         subUl.classList.remove("hidden");
-            //         subUl.style.position = 'absolute';
-            //         subUl.style.left = '100%';
-            //         subUl.style.top = '0';
-            //         subUl.style.background = '#fff';
-            //         subUl.style.boxShadow = '0 0 6px rgba(0,0,0,0.2)';
-            //         subUl.style.padding = '5px';
-            //         subUl.style.borderRadius = '4px';
-            //         subUl.style.zIndex = '999';
-            //     }
-            // });
-        
-            // li.addEventListener("mouseleave", () => {
-            //     if (document.getElementById('offCanvas').classList.contains('collapsed')) {
-            //         subUl.classList.add("hidden");
-            //     }
-            // });
+
         }
 
         ul.appendChild(li);
@@ -198,6 +183,10 @@ function renderOffCanvasMenu(menuItems) {
 
 
     const buttonsContainer = document.createElement('div');
+
+
+
+
     const expandButton = document.createElement('button');
     expandButton.id = 'expandOffCanvas';
     expandButton.className = 'text-gray-600 hover:text-blue-500 text-md';
@@ -211,8 +200,33 @@ function renderOffCanvasMenu(menuItems) {
     collapseButton.style.border = '1px solid #333';
 
 
+
     buttonsContainer.appendChild(expandButton);
     buttonsContainer.appendChild(collapseButton);
+
+    
+    allMenuButton.id = 'showAllMenu';
+    allMenuButton.className = 'text-gray-600 hover:text-blue-500 text-md';
+    allMenuButton.innerHTML = '<i class="fas fa-th-large"></i>';
+    allMenuButton.style.border = '1px solid #333';
+    allMenuButton.style.marginBottom = '10px';
+    allMenuButton.style.position = 'absolute';
+    allMenuButton.style.left = '8px';
+    allMenuButton.style.bottom = '80px';
+    allMenuButton.style.width = '36px';
+    allMenuButton.style.padding = '0px';
+
+    allMenuButton.addEventListener('click', () => {
+        let modal = document.getElementById('allMenuModal');
+        if (!modal) {
+            createAllMenuModal(defaultMenuItems);
+            modal = document.getElementById('allMenuModal');
+        }
+        modal.classList.remove('hidden');
+    });
+
+
+    buttonsContainer.insertBefore(allMenuButton, expandButton);
 
     flexContainer.appendChild(ul);
     flexContainer.appendChild(buttonsContainer);
@@ -336,14 +350,13 @@ const defaultMenuItems = [
     }
 ];
 
-
+// Dev Data 연동 안될 경우 
 const menuItems = (menuConfigurations[currentPage] ? defaultMenuItems : []).map(item => ({
     ...item,
     icon: iconMapping[item.text]
 }));
-
-
-renderOffCanvasMenu(menuItems);
+renderOffCanvasMenu(defaultMenuItems);
+//////////////////////////////////////
 
 export function createModal(modalId, title, content, buttons) {
     const modal = document.createElement('div');
@@ -541,6 +554,7 @@ expandOffCanvas.addEventListener('click', function () {
     offCanvas.classList.add('expanded');
     expandOffCanvas.classList.add('hidden');
     collapseOffCanvas.classList.remove('hidden');
+    allMenuButton.classList.add('hidden');
 });
 
 collapseOffCanvas.addEventListener('click', function () {
@@ -548,6 +562,7 @@ collapseOffCanvas.addEventListener('click', function () {
     offCanvas.classList.remove('expanded');
     collapseOffCanvas.classList.add('hidden');
     expandOffCanvas.classList.remove('hidden');
+    allMenuButton.classList.remove('hidden');
 });
 
 offCanvas.classList.remove('hidden', '-translate-x-full');
@@ -1332,3 +1347,63 @@ document.querySelectorAll('.modal-link').forEach(link => {
         modal.style.display = 'block';
     });
 });
+
+
+function createAllMenuModal(menuItems) {
+    const modal = document.createElement('div');
+    modal.id = 'allMenuModal';
+    modal.className = 'fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50 hidden';
+
+    const content = document.createElement('div');
+    content.className = 'bg-white rounded-lg shadow-md p-6 max-h-[80%] overflow-y-auto w-2/3';
+
+    const closeBtn = document.createElement('button');
+    closeBtn.innerHTML = '&times;';
+    closeBtn.className = 'text-gray-500 hover:text-red-600 text-lg absolute top-4 right-6';
+    closeBtn.onclick = () => modal.classList.add('hidden');
+
+    const title = document.createElement('h2');
+    title.className = 'text-xl mb-4 font-bold';
+    title.textContent = '전체 메뉴';
+
+    const menuList = document.createElement('div');
+    menuList.className = 'grid grid-cols-3 gap-4';
+
+    menuItems.forEach(item => {
+        const box = document.createElement('div');
+        box.className = 'border p-4 rounded hover:bg-gray-100 cursor-pointer';
+
+        const link = document.createElement('a');
+        link.href = item.href || '#';
+        link.className = 'text-blue-600 font-semibold flex items-center';
+        link.innerHTML = `<i class="fas ${item.icon} mr-2"></i> ${item.text}`;
+
+        box.appendChild(link);
+
+        if (item.children && item.children.length > 0) {
+            const subList = document.createElement('ul');
+            subList.className = 'ml-5 mt-2 list-disc text-sm text-gray-600';
+
+            item.children.forEach(sub => {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = sub.href;
+                a.textContent = sub.text;
+                a.className = 'hover:underline';
+                li.appendChild(a);
+                subList.appendChild(li);
+            });
+
+            box.appendChild(subList);
+        }
+
+        menuList.appendChild(box);
+    });
+
+    content.appendChild(closeBtn);
+    content.appendChild(title);
+    content.appendChild(menuList);
+    modal.appendChild(content);
+    document.body.appendChild(modal);
+}
+
