@@ -36,8 +36,9 @@
     <div id="grid-right" class="ag-theme-alpine" style="height: 300px; flex: 1;"></div>
   </div>
 
-  <!-- 에디터 영역 -->
-  <div id="editor" style="margin-top: 30px;"></div>
+  <div id="content">
+    <div id="editor" style="margin-top: 30px;"></div>
+  </div>
 
   <script>
     const editor = new toastui.Editor({
@@ -49,32 +50,52 @@
         ['heading', 'bold', 'italic', 'strike'],
         ['hr', 'quote'],
         ['ul', 'ol', 'task'],
-        ['table', 'image', 'link']
+        ['indent', 'outdent'],
+        ['table', 'image', 'link'],
+        ['code', 'codeblock'],
+        ['scrollSync', 'fullscreen', 'help']
       ],
       hooks: {
-        addImageBlobHook: (blob, callback) => {
-          const reader = new FileReader();
-          reader.onload = () => {
-            const imageUrl = reader.result;
-            const html = `<img src="${imageUrl}" class="resizable-image" style="width:300px;height:auto;" />`;
-            callback(imageUrl, html);
-            setTimeout(enableImageResizing, 50); // 이미지 렌더링 후 리사이징 적용
-          };
-          reader.readAsDataURL(blob);
-          return false;
+        addImageBlobHook: async (blob, callback) => {
+          const formData = new FormData();
+          formData.append('image', blob);
+
+          try {
+            const res = await fetch('/upload/image', {
+              method: 'POST',
+              body: formData
+            });
+
+            const data = await res.json();
+            const imageUrl = data.url;
+
+            // 서버 URL 기반으로 이미지 삽입
+            const html = `<img src="${imageUrl}" class="resizable-element" style="width: 300px;" />`;
+            callback(imageUrl, html); // 마크다운 URL / HTML 삽입
+            setTimeout(enableElementResizing, 100);
+          } catch (err) {
+            alert('이미지 업로드 실패');
+            console.error(err);
+          }
+
+          return false; // 기본 처리 방지
         }
       }
+
+
     });
 
-    function enableImageResizing() {
-      const images = document.querySelectorAll('.toastui-editor-contents img.resizable-image');
-      images.forEach((img) => {
-        if (img.dataset.resizable) return;
-        img.dataset.resizable = 'true';
+    function enableElementResizing() {
+      const elements = document.querySelectorAll('.toastui-editor-contents .resizable-element');
+      console.log(elements);
 
-        interact(img).resizable({
+      elements.forEach((el) => {
+        if (el.dataset.resizable) return;
+        el.dataset.resizable = 'true';
+
+        interact(el).resizable({
           edges: { left: true, right: true, bottom: true, top: true },
-          preserveAspectRatio: true,
+          preserveAspectRatio: false,
           listeners: {
             move(event) {
               const target = event.target;
@@ -85,6 +106,7 @@
         });
       });
     }
+
   </script>
 
   <!-- 기타 모듈 -->
