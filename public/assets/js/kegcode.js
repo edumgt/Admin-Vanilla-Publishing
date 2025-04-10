@@ -17,15 +17,12 @@ async function fetchJson(url) {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const data = await fetchJson("http://127.0.0.1:8080/api/codegroup");
+  const groupList = await fetchJson("http://127.0.0.1:8080/api/codegroup");
 
-  if (data) {
-    console.log("✅ 데이터 수신 완료:", data);
-    localStorage.setItem("codegroupData", JSON.stringify(data));
-    setupMasterGrid(data);
-    setupDetailGrid([]); // 초기 빈 상세 그리드
-  } else {
-    console.warn("⚠️ 데이터를 가져올 수 없어 그리드가 렌더링되지 않습니다.");
+  if (groupList) {
+    localStorage.setItem("codegroupData", JSON.stringify(groupList));
+    setupMasterGrid(groupList);
+    setupDetailGrid([]); // 초기 빈 오른쪽 그리드
   }
 });
 
@@ -46,18 +43,27 @@ function setupMasterGrid(data) {
       sortable: true,
       filter: true
     },
-    onRowClicked: event => {
-      const selectedGroup = event.data;
-      console.log("🔍 선택된 그룹:", selectedGroup.groupcode);
-      showDetailGrid(selectedGroup);
+    onRowClicked: async event => {
+      const groupcode = event.data.groupcode;
+      console.log("👉 선택된 groupcode:", groupcode);
+      const detailList = await fetchJson(`http://127.0.0.1:8080/api/code?groupcode=${groupcode}`);
+      if (detailList) {
+        updateDetailGrid(detailList);
+      }
     }
   };
 
   agGrid.createGrid(document.getElementById("grid-left"), gridOptions);
 }
 
+
+// ✅ 최초 1회만 new agGrid.Grid 사용해서 API를 받아옴
+let detailGridApi = null;
+
 function setupDetailGrid(rowData) {
   const columnDefs = [
+    { headerName: "코드값", field: "codevalue" },
+    { headerName: "코드명", field: "codename" },
     { headerName: "등록자", field: "regemp" },
     { headerName: "등록일자", field: "regdate", valueFormatter: dateFormatter },
     { headerName: "수정자", field: "modemp" },
@@ -76,17 +82,16 @@ function setupDetailGrid(rowData) {
     }
   };
 
-  agGrid.createGrid(document.getElementById("grid-right"), gridOptions);
+  const gridDiv = document.getElementById("grid-right");
+  const gridInstance = new agGrid.createGrid(gridDiv, gridOptions);
+  detailGridApi = gridOptions.api;
 }
 
-function showDetailGrid(group) {
-  // 상세 데이터 생성 (여기서는 단일 그룹 데이터 구조 기준)
-  const detailData = [group];
 
-  // 기존 그리드 파괴 후 다시 생성 (또는 update 가능)
-  const container = document.getElementById("grid-right");
-  container.innerHTML = ""; // 초기화
-  setupDetailGrid(detailData);
+function updateDetailGrid(rowData) {
+  const gridDiv = document.getElementById("grid-right");
+  gridDiv.innerHTML = ""; // 기존 grid 제거
+  setupDetailGrid(rowData); // 새로운 데이터로 재생성
 }
 
 function dateFormatter(params) {
