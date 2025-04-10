@@ -35,6 +35,7 @@
         "react-dom": "^18.2.0",
         "swagger-jsdoc": "^6.2.8",
         "swagger-ui-express": "^5.0.1",
+        "tinymce": "^4.3.2",
         "tui-calendar": "^1.13.1",
         "tui-date-picker": "^4.3.3",
         "tui-grid": "^4.21.2",

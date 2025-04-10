@@ -1,0 +1,53 @@
+<script src="./assets/vendor/tinymce/tinymce.js"></script>
+
+<textarea id="editor"></textarea>
+
+<script>
+  tinymce.init({
+    selector: '#editor',
+    theme: 'modern',
+    skin: 'lightgray',
+    height: 400,
+    menubar: false,
+    plugins: [
+      'advlist autolink lists link image charmap print preview anchor',
+      'searchreplace visualblocks code fullscreen',
+      'insertdatetime media table contextmenu paste'
+    ],
+    toolbar: 'undo redo | formatselect | bold italic underline | ' +
+      'alignleft aligncenter alignright alignjustify | ' +
+      'bullist numlist outdent indent | link image media | code',
+    branding: false,
+    image_advtab: true,
+    paste_data_images: false, // 서버에 올릴 것이므로 false
+
+    file_picker_types: 'image',
+    file_picker_callback: function (callback, value, meta) {
+      if (meta.filetype === 'image') {
+        const input = document.createElement('input');
+        input.setAttribute('type', 'file');
+        input.setAttribute('accept', 'image/*');
+
+        input.onchange = function () {
+          const file = this.files[0];
+          const formData = new FormData();
+          formData.append('image', file);
+
+          fetch('/upload/image', {
+            method: 'POST',
+            body: formData
+          })
+          .then(res => res.json())
+          .then(data => {
+            callback(data.url, { alt: file.name });
+          })
+          .catch(err => {
+            console.error('이미지 업로드 실패:', err);
+          });
+        };
+
+        input.click();
+      }
+    }
+  });
+</script>
