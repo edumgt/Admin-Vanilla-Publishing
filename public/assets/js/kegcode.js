@@ -66,8 +66,6 @@ function setupDetailGrid(rowData) {
     { headerName: "코드명", field: "codename" },
     { headerName: "등록자", field: "regemp" },
     { headerName: "등록일자", field: "regdate", valueFormatter: dateFormatter },
-    { headerName: "수정자", field: "modemp" },
-    { headerName: "수정일자", field: "moddate", valueFormatter: dateFormatter },
     { headerName: "비고", field: "remark" }
   ];
 
@@ -100,3 +98,8 @@ function dateFormatter(params) {
   const date = new Date(value);
   return date.toLocaleString("ko-KR");
 }
+
+const content = document.getElementById("content");
+content.style.marginTop = "40px";
+
+breadcrumb.textContent = "KEG-Code"
