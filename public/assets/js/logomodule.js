@@ -301,7 +301,8 @@ const defaultMenuItems = [
         children: [
             { id: "1", text: '근태관리', href: 'attend.html', icon: 'fa-user-clock' },
             { id: "20", text: '인센티브', href: 'total.html', icon: 'fa-gift' },
-            { id: "24", text: 'KEG-Code', href: 'kegcode.html', icon: 'fa-gift' }
+            { id: "24", text: 'KEG-Code', href: 'kegcode.html', icon: 'fa-gift' },
+            { id: "24", text: 'KEG-Editor', href: 'kegeditor.html', icon: 'fa-gift' }
         ]
     },
     {
@@ -617,7 +618,7 @@ window.offCanvasItems = offCanvasItems;
 const menuLinks = document.querySelectorAll(".gnb-item");
 const menuLinks2 = document.querySelectorAll(".menu-item");
 
-const orgniPages = ["orgni.html", "attend.html", "total.html", "kegcode.html"];
+const orgniPages = ["orgni.html", "attend.html", "total.html", "kegcode.html", "kegeditor.html"];
 if (orgniPages.includes(currentPage)) {
     menuLinks2.forEach((link) => {
         if (link.getAttribute("href") === currentPage) {

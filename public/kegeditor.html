@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="assets/css/default.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="cmmContainer"></div>
+
+    <nav class="breadcrumb"></nav>
+
+    <div id="content" style="display: flex; gap: 20px; ">
+        <div id="grid-left" class="ag-theme-alpine" style="height: 300px; flex: 1;"></div>
+        <div id="grid-right" class="ag-theme-alpine" style="height: 300px; flex: 1;"></div>
+    </div>
+
+    <div id="content" >
+        <!-- CSS / JS -->
+        <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+        <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+
+        <!-- 에디터 영역 -->
+        <div id="editor"></div>
+
+        <script>
+            // 이미지 업로드 핸들러 정의
+            function customImageUpload(blob, callback) {
+                const formData = new FormData();
+                formData.append('image', blob);
+
+                fetch('/upload/image', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        const imageUrl = data.url; // 서버에서 이미지 URL 반환
+                        const width = 400;  // 원하는 기본값
+                        const height = 300;
+
+                        // 커스텀 HTML 삽입 (img 태그에 width/height 포함)
+                        const html = `<img src="${imageUrl}" width="${width}" height="${height}" />`;
+                        callback(imageUrl, html); // 첫 번째는 마크다운용 URL, 두 번째는 HTML 삽입
+                    })
+                    .catch(err => {
+                        console.error('Upload failed:', err);
+                    });
+            }
+
+            // 에디터 초기화
+            const editor = new toastui.Editor({
+                el: document.querySelector('#editor'),
+                height: '500px',
+                initialEditType: 'wysiwyg',
+                previewStyle: 'vertical',
+                hooks: {
+                    addImageBlobHook: (blob, callback) => {
+                        customImageUpload(blob, callback);
+                        return false; // 기본 업로드 처리 방지
+                    }
+                }
+            });
+        </script>
+
+
+
+    </div>
+
+    <script type="module" src="assets/vendor/ag-grid-community/dist/ag-grid-community.noStyle.js"></script>
+    <script type="module" src="assets/js/logomodule.js"></script>
+    <script type="module" src="assets/js/kegcode.js"></script>
+</body>
+
+</html>
