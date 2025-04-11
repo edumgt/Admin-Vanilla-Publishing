@@ -1,13 +1,15 @@
 -- --------------------------------------------------------
--- 호스트:                          localhost
--- 서버 버전:                        10.9.5-MariaDB - mariadb.org binary distribution
--- 서버 OS:                        Win64
--- HeidiSQL 버전:                  11.3.0.6295
+-- 호스트:                          edumgtmariadb.cg0ugoglztrn.ap-northeast-2.rds.amazonaws.com
+-- 서버 버전:                        11.4.4-MariaDB-log - managed by https://aws.amazon.com/rds/
+-- 서버 OS:                        Linux
+-- HeidiSQL 버전:                  12.10.0.7000
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET NAMES utf8 */;
 /*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
@@ -34,7 +36,6 @@ CREATE TABLE IF NOT EXISTS `bbs` (
 
 -- 테이블 데이터 bbs.bbs:~18 rows (대략적) 내보내기
 DELETE FROM `bbs`;
-/*!40000 ALTER TABLE `bbs` DISABLE KEYS */;
 INSERT INTO `bbs` (`seq`, `id`, `ref`, `step`, `depth`, `title`, `content`, `created_at`, `del`, `read_count`) VALUES
 	(1, 'test0002', '1', '0', '0', '하가다가라라자다아라랄', '거러러거아라랄\n가라가가가가', '2023-08-13 11:12:26', '0', '6'),
 	(2, 'test0004', '2', '0', '0', 'adaasdasd', 'asdasdasdasd', '2023-08-18 06:30:56', '0', '1'),
@@ -54,7 +55,6 @@ INSERT INTO `bbs` (`seq`, `id`, `ref`, `step`, `depth`, `title`, `content`, `cre
 	(2, 'test0004', '2', '0', '0', 'adaasdasd', 'asdasdasdasd', '2023-08-18 06:30:56', '0', '1'),
 	(1, 'test0002', '1', '0', '0', '하가다가라라자다아라랄', '거러러거아라랄\n가라가가가가', '2023-08-13 11:12:26', '0', '6'),
 	(2, 'test0004', '2', '0', '0', 'adaasdasd', 'asdasdasdasd', '2023-08-18 06:30:56', '0', '1');
-/*!40000 ALTER TABLE `bbs` ENABLE KEYS */;
 
 -- 테이블 bbs.booking 구조 내보내기
 CREATE TABLE IF NOT EXISTS `booking` (
@@ -72,7 +72,6 @@ CREATE TABLE IF NOT EXISTS `booking` (
 
 -- 테이블 데이터 bbs.booking:~15 rows (대략적) 내보내기
 DELETE FROM `booking`;
-/*!40000 ALTER TABLE `booking` DISABLE KEYS */;
 INSERT INTO `booking` (`id`, `room_number`, `guest_name`, `check_in_date`, `check_out_date`, `arrival_time`, `departure_time`, `cost`, `created_at`) VALUES
 	(1, '1-1', '홍길동', '2025-01-05', '2025-01-07', '15:30:00', '18:30:00', 200000, '2025-02-16 20:55:42'),
 	(2, '1-1', 'Tom', '2025-01-05', '2025-01-10', '15:30:00', '18:30:00', 100000, '2025-02-16 20:55:42'),
@@ -89,7 +88,6 @@ INSERT INTO `booking` (`id`, `room_number`, `guest_name`, `check_in_date`, `chec
 	(13, '2-2', '찰스박', '2025-01-15', '2025-01-20', '14:00:00', '12:00:00', 300000, '2025-02-16 21:19:00'),
 	(14, '2-2', 'Bob', '2025-02-11', '2025-02-12', '16:00:00', '11:00:00', 150000, '2025-02-16 21:19:00'),
 	(15, '2-2', 'Eve', '2025-02-20', '2025-02-25', '17:00:00', '10:00:00', 250000, '2025-02-16 21:19:00');
-/*!40000 ALTER TABLE `booking` ENABLE KEYS */;
 
 -- 테이블 bbs.category 구조 내보내기
 CREATE TABLE IF NOT EXISTS `category` (
@@ -101,8 +99,6 @@ CREATE TABLE IF NOT EXISTS `category` (
 
 -- 테이블 데이터 bbs.category:~0 rows (대략적) 내보내기
 DELETE FROM `category`;
-/*!40000 ALTER TABLE `category` DISABLE KEYS */;
-/*!40000 ALTER TABLE `category` ENABLE KEYS */;
 
 -- 테이블 bbs.checkout 구조 내보내기
 CREATE TABLE IF NOT EXISTS `checkout` (
@@ -114,8 +110,6 @@ CREATE TABLE IF NOT EXISTS `checkout` (
 
 -- 테이블 데이터 bbs.checkout:~0 rows (대략적) 내보내기
 DELETE FROM `checkout`;
-/*!40000 ALTER TABLE `checkout` DISABLE KEYS */;
-/*!40000 ALTER TABLE `checkout` ENABLE KEYS */;
 
 -- 테이블 bbs.checkout_item 구조 내보내기
 CREATE TABLE IF NOT EXISTS `checkout_item` (
@@ -129,8 +123,6 @@ CREATE TABLE IF NOT EXISTS `checkout_item` (
 
 -- 테이블 데이터 bbs.checkout_item:~0 rows (대략적) 내보내기
 DELETE FROM `checkout_item`;
-/*!40000 ALTER TABLE `checkout_item` DISABLE KEYS */;
-/*!40000 ALTER TABLE `checkout_item` ENABLE KEYS */;
 
 -- 테이블 bbs.comment 구조 내보내기
 CREATE TABLE IF NOT EXISTS `comment` (
@@ -143,9 +135,8 @@ CREATE TABLE IF NOT EXISTS `comment` (
   KEY `인덱스 1` (`seq`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- 테이블 데이터 bbs.comment:~18 rows (대략적) 내보내기
+-- 테이블 데이터 bbs.comment:~16 rows (대략적) 내보내기
 DELETE FROM `comment`;
-/*!40000 ALTER TABLE `comment` DISABLE KEYS */;
 INSERT INTO `comment` (`seq`, `id`, `content`, `bbs_seq`, `created_at`, `del`) VALUES
 	(1, 'test0003', '한글 테스트 입니다.', '1', '2023-08-13 15:24:59', '0'),
 	(2, 'string', 'asdasdasd\nㅁㄴㅇㅁㄴㅇㅁㅇㅁㄴㅇ', '1', '2023-12-20 16:04:50', '0'),
@@ -165,18 +156,16 @@ INSERT INTO `comment` (`seq`, `id`, `content`, `bbs_seq`, `created_at`, `del`) V
 	(2, 'string', 'asdasdasd\nㅁㄴㅇㅁㄴㅇㅁㅇㅁㄴㅇ', '1', '2023-12-20 16:04:50', '0'),
 	(1, 'test0003', '한글 테스트 입니다.', '1', '2023-08-13 15:24:59', '0'),
 	(2, 'string', 'asdasdasd\nㅁㄴㅇㅁㄴㅇㅁㅇㅁㄴㅇ', '1', '2023-12-20 16:04:50', '0');
-/*!40000 ALTER TABLE `comment` ENABLE KEYS */;
 
 -- 테이블 bbs.dates 구조 내보내기
 CREATE TABLE IF NOT EXISTS `dates` (
   `date_id` int(11) NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
   PRIMARY KEY (`date_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- 테이블 데이터 bbs.dates:~62 rows (대략적) 내보내기
+-- 테이블 데이터 bbs.dates:~67 rows (대략적) 내보내기
 DELETE FROM `dates`;
-/*!40000 ALTER TABLE `dates` DISABLE KEYS */;
 INSERT INTO `dates` (`date_id`, `date`) VALUES
 	(1, '2025-01-02'),
 	(2, '2025-01-03'),
@@ -239,8 +228,13 @@ INSERT INTO `dates` (`date_id`, `date`) VALUES
 	(59, '2025-02-14'),
 	(60, '2025-02-07'),
 	(61, '2025-02-14'),
-	(62, '2025-03-12');
-/*!40000 ALTER TABLE `dates` ENABLE KEYS */;
+	(62, '2025-03-12'),
+	(63, '2025-04-08'),
+	(64, '2025-04-09'),
+	(65, '2025-04-16'),
+	(66, '2025-04-09'),
+	(67, '2025-04-09'),
+	(68, '2025-04-10');
 
 -- 테이블 bbs.departments 구조 내보내기
 CREATE TABLE IF NOT EXISTS `departments` (
@@ -256,9 +250,8 @@ CREATE TABLE IF NOT EXISTS `departments` (
   UNIQUE KEY `row_key` (`row_key`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3953 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- 테이블 데이터 bbs.departments:~54 rows (대략적) 내보내기
+-- 테이블 데이터 bbs.departments:~14 rows (대략적) 내보내기
 DELETE FROM `departments`;
-/*!40000 ALTER TABLE `departments` DISABLE KEYS */;
 INSERT INTO `departments` (`id`, `tp_cd`, `tp_nm`, `desc_cntn`, `use_yn`, `created_at`, `view`, `row_key`) VALUES
 	('1b7c2a25-0918-11f0-a063-0c9a3ce197c1', 'CODE-1009', 'Unit', 'Measurement Unit', 'Y', '2025-03-25', NULL, 3908),
 	('1b7c2a5e-0918-11f0-a063-0c9a3ce197c1', 'CODE-1011', 'City', 'City Code', 'Y', '2025-03-25', NULL, 3906),
@@ -314,7 +307,6 @@ INSERT INTO `departments` (`id`, `tp_cd`, `tp_nm`, `desc_cntn`, `use_yn`, `creat
 	('e7c8ecbd-a20c-44fa-8a5a-251755200976', 'DPT-1004', 'IT', 'George Wilson', 'Y', '2025-03-25', NULL, 3857),
 	('f7db73bc-08a6-4d1e-8a81-945ab49b485d', 'DPT-1008', 'Legal', 'Charlie Davis', 'Y', '2025-03-25', NULL, 3856),
 	('fa23efa7-3f47-4e04-90c7-678842ece210', 'CITY-1003', '고양', '일산 호수공원으로 유명한 도시', 'Y', '2025-03-25', NULL, 3855);
-/*!40000 ALTER TABLE `departments` ENABLE KEYS */;
 
 -- 테이블 bbs.department_attributes 구조 내보내기
 CREATE TABLE IF NOT EXISTS `department_attributes` (
@@ -330,7 +322,6 @@ CREATE TABLE IF NOT EXISTS `department_attributes` (
 
 -- 테이블 데이터 bbs.department_attributes:~929 rows (대략적) 내보내기
 DELETE FROM `department_attributes`;
-/*!40000 ALTER TABLE `department_attributes` DISABLE KEYS */;
 INSERT INTO `department_attributes` (`row_key`, `row_num`, `checked`, `disabled`, `check_disabled`, `class_name_row`, `class_name_col`) VALUES
 	(1, 2, 0, 0, 0, '[]', '{}'),
 	(2, 16, 0, 0, 0, '[]', '{}'),
@@ -1261,7 +1252,6 @@ INSERT INTO `department_attributes` (`row_key`, `row_num`, `checked`, `disabled`
 	(3789, 2, 0, 0, 0, '[]', '{}'),
 	(3790, 1, 0, 0, 0, '[]', '{}'),
 	(3914, 2, 0, 0, 0, '[]', '{}');
-/*!40000 ALTER TABLE `department_attributes` ENABLE KEYS */;
 
 -- 테이블 bbs.employees 구조 내보내기
 CREATE TABLE IF NOT EXISTS `employees` (
@@ -1279,7 +1269,6 @@ CREATE TABLE IF NOT EXISTS `employees` (
 
 -- 테이블 데이터 bbs.employees:~11 rows (대략적) 내보내기
 DELETE FROM `employees`;
-/*!40000 ALTER TABLE `employees` DISABLE KEYS */;
 INSERT INTO `employees` (`name`, `id`, `employeeId`, `team`, `joinYear`, `address`, `email`) VALUES
 	('Liam', '2240b84a-709e-4b98-bcb7-dfae5ce2655d', 'A1004', 'Engineering', 2016, 'Daegu, South Korea', 'liam@example.com'),
 	('Alice', '5704179e-92b9-4c7e-bd36-2c4758db4ea7', 'A1001', 'Engineering', 2015, 'Seoul, South Korea', 'alice@example.com'),
@@ -1292,7 +1281,6 @@ INSERT INTO `employees` (`name`, `id`, `employeeId`, `team`, `joinYear`, `addres
 	('Emma', 'd356030d-c2e9-4e93-a392-6418ac31f32a', 'A1003', 'Engineering', 2018, 'Incheon, South Korea', 'emma@example.com'),
 	('홍길동', 'f25df27c-6332-45b0-b045-86fee2ea00c3', 'B2003', 'Marketing', 2019, 'Jeonju, South Korea', 'hong@example.com'),
 	('Charlie', 'f8216608-00dd-4ad4-a8d2-69e9abf101af', 'B2001', 'Consulting', 2014, 'Seoul, South Korea', 'charlie@example.com');
-/*!40000 ALTER TABLE `employees` ENABLE KEYS */;
 
 -- 테이블 bbs.events 구조 내보내기
 CREATE TABLE IF NOT EXISTS `events` (
@@ -1305,19 +1293,22 @@ CREATE TABLE IF NOT EXISTS `events` (
   CONSTRAINT `events_ibfk_1` FOREIGN KEY (`date_id`) REFERENCES `dates` (`date_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- 테이블 데이터 bbs.events:~8 rows (대략적) 내보내기
+-- 테이블 데이터 bbs.events:~13 rows (대략적) 내보내기
 DELETE FROM `events`;
-/*!40000 ALTER TABLE `events` DISABLE KEYS */;
 INSERT INTO `events` (`event_id`, `date_id`, `time`, `description`) VALUES
 	('1000', 1, '17:00:00', '개발자 인터뷰'),
 	('1111', 1, '16:30:00', '네트웍 점검'),
 	('1212', 1, '16:30:00', '공공 입찰/투찰 계획안 협의'),
+	('8xBTex550W', 63, '08:00:00', 'asdad asdasdasd'),
 	('999', 1, '16:30:00', '디자인팀 회의'),
 	('hQezRN7pal', 62, '08:00:00', 'test 테스트 입니다.'),
+	('i10U5FehoA', 68, '16:00:00', 'dfgdfg dfgdfgdfg'),
+	('lWCvAn6KXp', 65, '08:00:00', 'dfgdfgdfgdf fg'),
 	('ms3FVtdtR2', 60, '15:30:00', 'qeqwe'),
 	('nNW7WRhV50', 59, '08:00:00', 'qweqwe'),
-	('TUCZ3Pfqz6', 56, '15:30:00', '테스트 당');
-/*!40000 ALTER TABLE `events` ENABLE KEYS */;
+	('tC5b2l3bz1', 67, '08:00:00', 'dfgdfgg'),
+	('TUCZ3Pfqz6', 56, '15:30:00', '테스트 당'),
+	('y4wShGzRtA', 66, '08:00:00', 'dfgdfgg');
 
 -- 테이블 bbs.glos 구조 내보내기
 CREATE TABLE IF NOT EXISTS `glos` (
@@ -1330,9 +1321,8 @@ CREATE TABLE IF NOT EXISTS `glos` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=249 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- 테이블 데이터 bbs.glos:~236 rows (대략적) 내보내기
+-- 테이블 데이터 bbs.glos:~133 rows (대략적) 내보내기
 DELETE FROM `glos`;
-/*!40000 ALTER TABLE `glos` DISABLE KEYS */;
 INSERT INTO `glos` (`id`, `en`, `ko`, `desc`, `img`, `created_dt`) VALUES
 	(1, 'Acoustic Fatigue', '음향 피로', '강한 음장이나 진동 음압에 장시간 노출돼 구조물이 미세 균열·파손에 이르는 현상', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
 	(2, 'Modal Analysis', '모달 해석', '구조물의 고유진동수와 모드 형상을 파악해 동특성을 분석하는 기법', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
@@ -1455,7 +1445,6 @@ INSERT INTO `glos` (`id`, `en`, `ko`, `desc`, `img`, `created_dt`) VALUES
 	(195, 'Structure-Borne Vibration', '구조 전달 진동', '기계나 충격이 구조물에 전달되어 다른 지점에서 재방사되는 진동', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
 	(196, 'Acoustic Absorption Coefficient', '음향 흡음률', '재료가 입사된 음향 에너지를 얼마나 흡수하는지 나타내는 비율', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
 	(197, 'Dipole Source', '이중극 음원', '방향성이 강한 두 개의 극성이 반대인 음원 쌍으로, 특정 방향 분포의 소음을 설명', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
-
 	(225, 'Coriolis Flow Meter', '코리올리 유량계', '관을 진동시키고 질량유량에 따른 고유 주파수 변화를 측정해 유량을 계측', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
 	(226, 'Grating Lobe', '그레이팅 로브', '마이크 배열 빔포밍에서 배열 주기가 길 때 생기는 기생적 측방향 빔', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
 	(227, 'Infrasonic', '초저주파', '20Hz 미만의 낮은 주파수 음파로, 지진파나 대기 중 저주파 소음 등에 해당', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
@@ -1468,7 +1457,6 @@ INSERT INTO `glos` (`id`, `en`, `ko`, `desc`, `img`, `created_dt`) VALUES
 	(234, 'Particle Velocity', '입자 속도', '음향장에서 매질 입자가 진동하는 속도의 크기와 방향', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
 	(235, 'Noise Certification', '소음 인증 wrw', '항공기,   됴됻 차량 등이 규정된 소음 기준을 만족하는지 확인하기 위한 제도', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09'),
 	(236, 'Elasto-Plastic Vibration', '탄소성 진동', '재료가 탄성 한계를 넘어 소성 범위에서도 반복하중을 받아 진동하는 현상', 'http://www.ktword.co.kr/img_data/4477_1.jpg', '2025-03-09');
-/*!40000 ALTER TABLE `glos` ENABLE KEYS */;
 
 -- 테이블 bbs.glos_req 구조 내보내기
 CREATE TABLE IF NOT EXISTS `glos_req` (
@@ -1481,7 +1469,6 @@ CREATE TABLE IF NOT EXISTS `glos_req` (
 
 -- 테이블 데이터 bbs.glos_req:~9 rows (대략적) 내보내기
 DELETE FROM `glos_req`;
-/*!40000 ALTER TABLE `glos_req` DISABLE KEYS */;
 INSERT INTO `glos_req` (`id`, `glos_id`, `req_msg`, `req_date`) VALUES
 	(1, 16, '내용을 ~~ 바꿔 주세요', '2025-03-08'),
 	(2, 13, '내용을 ~~ 바꿔 주세요', '2025-03-08'),
@@ -1492,7 +1479,6 @@ INSERT INTO `glos_req` (`id`, `glos_id`, `req_msg`, `req_date`) VALUES
 	(7, 95, '내용을 ~~ 바꿔 주세요', '2025-03-08'),
 	(8, 119, '내용을 ~~ 바꿔 주세요', '2025-03-09'),
 	(9, 1, '테스트 입니다.', '2025-03-09');
-/*!40000 ALTER TABLE `glos_req` ENABLE KEYS */;
 
 -- 테이블 bbs.icon_mapping 구조 내보내기
 CREATE TABLE IF NOT EXISTS `icon_mapping` (
@@ -1500,11 +1486,10 @@ CREATE TABLE IF NOT EXISTS `icon_mapping` (
   `label` varchar(100) NOT NULL,
   `icon_class` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- 테이블 데이터 bbs.icon_mapping:~23 rows (대략적) 내보내기
 DELETE FROM `icon_mapping`;
-/*!40000 ALTER TABLE `icon_mapping` DISABLE KEYS */;
 INSERT INTO `icon_mapping` (`id`, `label`, `icon_class`) VALUES
 	(1, '조직도구성', 'fa-sitemap'),
 	(2, '근태관리', 'fa-user-clock'),
@@ -1528,8 +1513,9 @@ INSERT INTO `icon_mapping` (`id`, `label`, `icon_class`) VALUES
 	(20, '문서관리', 'fa-file-alt'),
 	(21, 'WMS', 'fa-cubes'),
 	(22, '용어관리', 'fa-book'),
-	(23, '사물함', 'fa-archive');
-/*!40000 ALTER TABLE `icon_mapping` ENABLE KEYS */;
+	(23, '사물함', 'fa-archive'),
+	(24, 'KEG-Code', 'fa-user'),
+	(25, 'KEG-Editor', 'fa-user');
 
 -- 테이블 bbs.item 구조 내보내기
 CREATE TABLE IF NOT EXISTS `item` (
@@ -1547,8 +1533,6 @@ CREATE TABLE IF NOT EXISTS `item` (
 
 -- 테이블 데이터 bbs.item:~0 rows (대략적) 내보내기
 DELETE FROM `item`;
-/*!40000 ALTER TABLE `item` DISABLE KEYS */;
-/*!40000 ALTER TABLE `item` ENABLE KEYS */;
 
 -- 테이블 bbs.lockers 구조 내보내기
 CREATE TABLE IF NOT EXISTS `lockers` (
@@ -1562,7 +1546,6 @@ CREATE TABLE IF NOT EXISTS `lockers` (
 
 -- 테이블 데이터 bbs.lockers:~50 rows (대략적) 내보내기
 DELETE FROM `lockers`;
-/*!40000 ALTER TABLE `lockers` DISABLE KEYS */;
 INSERT INTO `lockers` (`id`, `status`, `assigned_user_id`) VALUES
 	(1, '사용중', 1),
 	(2, '사용가능', NULL),
@@ -1614,7 +1597,6 @@ INSERT INTO `lockers` (`id`, `status`, `assigned_user_id`) VALUES
 	(48, '사용중', 14),
 	(49, '사용가능', NULL),
 	(50, '사용가능', NULL);
-/*!40000 ALTER TABLE `lockers` ENABLE KEYS */;
 
 -- 테이블 bbs.locker_usage_history 구조 내보내기
 CREATE TABLE IF NOT EXISTS `locker_usage_history` (
@@ -1632,7 +1614,6 @@ CREATE TABLE IF NOT EXISTS `locker_usage_history` (
 
 -- 테이블 데이터 bbs.locker_usage_history:~18 rows (대략적) 내보내기
 DELETE FROM `locker_usage_history`;
-/*!40000 ALTER TABLE `locker_usage_history` DISABLE KEYS */;
 INSERT INTO `locker_usage_history` (`id`, `locker_id`, `user_id`, `usage_date`, `remarks`) VALUES
 	(1, 1, 1, '2024-03-01', '배정됨'),
 	(2, 1, 1, '2024-03-05', '반납됨'),
@@ -1652,7 +1633,6 @@ INSERT INTO `locker_usage_history` (`id`, `locker_id`, `user_id`, `usage_date`, 
 	(17, 43, 12, '2024-03-15', '배정됨'),
 	(18, 45, 13, '2024-03-16', '배정됨'),
 	(19, 48, 14, '2024-03-17', '배정됨');
-/*!40000 ALTER TABLE `locker_usage_history` ENABLE KEYS */;
 
 -- 테이블 bbs.member 구조 내보내기
 CREATE TABLE IF NOT EXISTS `member` (
@@ -1666,7 +1646,6 @@ CREATE TABLE IF NOT EXISTS `member` (
 
 -- 테이블 데이터 bbs.member:~6 rows (대략적) 내보내기
 DELETE FROM `member`;
-/*!40000 ALTER TABLE `member` DISABLE KEYS */;
 INSERT INTO `member` (`id`, `pwd`, `name`, `email`) VALUES
 	('aaaaaa', '$2a$10$WuAoYsZCNSPjIpSfyzA8LuI1jwWAeK4KYdqEHlOQS9hl5jAeREY12', '가나다', 'aaaaa@aa.com'),
 	('aaaaaaa', '$2a$10$je84beDucImRGv4mFY6eA.wfE61GAXLFFRLCemQA9UimwLc2Yk5uq', '다가가', 'aaaaaaa@a.com'),
@@ -1674,7 +1653,6 @@ INSERT INTO `member` (`id`, `pwd`, `name`, `email`) VALUES
 	('test0002', '$2a$10$EAsVdOzTN3mttYSmyh1lWO8TD3H/e0hRPnWxdcWaoRJT/m1eK5aW.', '김장성', 'a@a.com'),
 	('test0003', '$2a$10$eyy06XA.kAoGX/RUr4dHGOmYgphsZQqkdx8oEhcUjkTmzo4zlLmJC', '박덩그', 'pa@aa.com'),
 	('test0004', '$2a$10$wXs4gYfkpaN.tV2S1hJb.OqMmj0H4LJj2.Xx8cBmfvpHguV4XrYW6', '노도가', 'aa@aa.com');
-/*!40000 ALTER TABLE `member` ENABLE KEYS */;
 
 -- 테이블 bbs.member_menu_permission 구조 내보내기
 CREATE TABLE IF NOT EXISTS `member_menu_permission` (
@@ -1693,12 +1671,10 @@ CREATE TABLE IF NOT EXISTS `member_menu_permission` (
   CONSTRAINT `member_menu_permission_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `member` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- 테이블 데이터 bbs.member_menu_permission:~1 rows (대략적) 내보내기
+-- 테이블 데이터 bbs.member_menu_permission:~0 rows (대략적) 내보내기
 DELETE FROM `member_menu_permission`;
-/*!40000 ALTER TABLE `member_menu_permission` DISABLE KEYS */;
 INSERT INTO `member_menu_permission` (`id`, `member_id`, `menu_page_id`, `can_search`, `can_add`, `can_delete`, `can_reset_search`, `can_save`, `can_view`) VALUES
 	(2, 'test0001', 18, 1, 1, 1, 0, 0, 0);
-/*!40000 ALTER TABLE `member_menu_permission` ENABLE KEYS */;
 
 -- 테이블 bbs.menu_item 구조 내보내기
 CREATE TABLE IF NOT EXISTS `menu_item` (
@@ -1709,11 +1685,10 @@ CREATE TABLE IF NOT EXISTS `menu_item` (
   PRIMARY KEY (`id`),
   KEY `fk_menu_page` (`menu_page_id`),
   CONSTRAINT `fk_menu_page` FOREIGN KEY (`menu_page_id`) REFERENCES `menu_page` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=98 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- 테이블 데이터 bbs.menu_item:~93 rows (대략적) 내보내기
+-- 테이블 데이터 bbs.menu_item:~97 rows (대략적) 내보내기
 DELETE FROM `menu_item`;
-/*!40000 ALTER TABLE `menu_item` DISABLE KEYS */;
 INSERT INTO `menu_item` (`id`, `menu_page_id`, `href`, `label`) VALUES
 	(1, 1, 'orgni.html', '조직도구성'),
 	(2, 1, 'attend.html', '근태관리'),
@@ -1807,8 +1782,11 @@ INSERT INTO `menu_item` (`id`, `menu_page_id`, `href`, `label`) VALUES
 	(90, 23, 'meeting.html', '회의실관리'),
 	(91, 23, 'hospital.html', '병원예약'),
 	(92, 23, 'lectures.html', '강의일정'),
-	(93, 23, 'city.html', '행정구역정보');
-/*!40000 ALTER TABLE `menu_item` ENABLE KEYS */;
+	(93, 23, 'city.html', '행정구역정보'),
+	(94, 1, 'kegcode.html', 'KEG-Code'),
+	(95, 1, 'kegeditor.html', 'KEG-Editor'),
+	(96, 1, 'kegeditor2.html', 'KEG-Editor2'),
+	(97, 8, 'box.html', '3D도안');
 
 -- 테이블 bbs.menu_page 구조 내보내기
 CREATE TABLE IF NOT EXISTS `menu_page` (
@@ -1816,13 +1794,13 @@ CREATE TABLE IF NOT EXISTS `menu_page` (
   `page_name` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `page_name` (`page_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- 테이블 데이터 bbs.menu_page:~23 rows (대략적) 내보내기
+-- 테이블 데이터 bbs.menu_page:~27 rows (대략적) 내보내기
 DELETE FROM `menu_page`;
-/*!40000 ALTER TABLE `menu_page` DISABLE KEYS */;
 INSERT INTO `menu_page` (`id`, `page_name`) VALUES
 	(1, 'attend.html'),
+	(27, 'box.html'),
 	(2, 'calendar.html'),
 	(3, 'chain.html'),
 	(4, 'city.html'),
@@ -1831,6 +1809,9 @@ INSERT INTO `menu_page` (`id`, `page_name`) VALUES
 	(7, 'flow.html'),
 	(8, 'glos.html'),
 	(9, 'hospital.html'),
+	(24, 'kegcode.html'),
+	(25, 'kegeditor.html'),
+	(26, 'kegeditor2.html'),
 	(11, 'lectures.html'),
 	(10, 'locker.html'),
 	(12, 'meeting.html'),
@@ -1845,8 +1826,6 @@ INSERT INTO `menu_page` (`id`, `page_name`) VALUES
 	(21, 'trello.html'),
 	(22, 'wms.html'),
 	(23, 'work.html');
-/*!40000 ALTER TABLE `menu_page` ENABLE KEYS */;
-
 
 -- 테이블 bbs.read_history 구조 내보내기
 CREATE TABLE IF NOT EXISTS `read_history` (
@@ -1857,7 +1836,6 @@ CREATE TABLE IF NOT EXISTS `read_history` (
 
 -- 테이블 데이터 bbs.read_history:~63 rows (대략적) 내보내기
 DELETE FROM `read_history`;
-/*!40000 ALTER TABLE `read_history` DISABLE KEYS */;
 INSERT INTO `read_history` (`latest_access_at`, `bbs_seq`, `id`) VALUES
 	('2023-08-13 11:12:28', '1', 'test0002'),
 	('2023-08-13 15:24:49', '1', 'test0003'),
@@ -1922,7 +1900,6 @@ INSERT INTO `read_history` (`latest_access_at`, `bbs_seq`, `id`) VALUES
 	('2023-08-18 06:30:57', '2', 'test0004'),
 	('2023-12-20 16:04:41', '1', 'string'),
 	('2023-12-20 16:04:51', '1', 'string');
-/*!40000 ALTER TABLE `read_history` ENABLE KEYS */;
 
 -- 테이블 bbs.reservations 구조 내보내기
 CREATE TABLE IF NOT EXISTS `reservations` (
@@ -1936,7 +1913,6 @@ CREATE TABLE IF NOT EXISTS `reservations` (
 
 -- 테이블 데이터 bbs.reservations:~10 rows (대략적) 내보내기
 DELETE FROM `reservations`;
-/*!40000 ALTER TABLE `reservations` DISABLE KEYS */;
 INSERT INTO `reservations` (`id`, `name`, `departmentId`, `date`, `time`) VALUES
 	('1', '최유리', 1, '2025-01-10', '09:00:00'),
 	('10', '최준호', 10, '2025-01-11', '10:00:00'),
@@ -1948,7 +1924,6 @@ INSERT INTO `reservations` (`id`, `name`, `departmentId`, `date`, `time`) VALUES
 	('7', '김나현', 7, '2025-01-10', '16:00:00'),
 	('8', '이정훈', 8, '2025-01-10', '17:00:00'),
 	('9', '윤아름', 9, '2025-01-11', '09:00:00');
-/*!40000 ALTER TABLE `reservations` ENABLE KEYS */;
 
 -- 테이블 bbs.stock 구조 내보내기
 CREATE TABLE IF NOT EXISTS `stock` (
@@ -1960,8 +1935,6 @@ CREATE TABLE IF NOT EXISTS `stock` (
 
 -- 테이블 데이터 bbs.stock:~0 rows (대략적) 내보내기
 DELETE FROM `stock`;
-/*!40000 ALTER TABLE `stock` DISABLE KEYS */;
-/*!40000 ALTER TABLE `stock` ENABLE KEYS */;
 
 -- 테이블 bbs.user 구조 내보내기
 CREATE TABLE IF NOT EXISTS `user` (
@@ -1976,8 +1949,6 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 -- 테이블 데이터 bbs.user:~0 rows (대략적) 내보내기
 DELETE FROM `user`;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 -- 테이블 bbs.users 구조 내보내기
 CREATE TABLE IF NOT EXISTS `users` (
@@ -1989,7 +1960,6 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 -- 테이블 데이터 bbs.users:~20 rows (대략적) 내보내기
 DELETE FROM `users`;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `name`) VALUES
 	(13, '권태형'),
 	(20, '김도윤'),
@@ -2011,8 +1981,8 @@ INSERT INTO `users` (`id`, `name`) VALUES
 	(8, '테스트'),
 	(15, '한지성'),
 	(1, '홍길동');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

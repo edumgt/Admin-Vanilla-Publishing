@@ -302,8 +302,8 @@ const defaultMenuItems = [
             { id: "1", text: '근태관리', href: 'attend.html', icon: 'fa-user-clock' },
             { id: "20", text: '인센티브', href: 'total.html', icon: 'fa-gift' },
             { id: "24", text: 'KEG-Code', href: 'kegcode.html', icon: 'fa-gift' },
-            { id: "24", text: 'KEG-Editor', href: 'kegeditor.html', icon: 'fa-gift' },
-            { id: "24", text: 'KEG-Editor2', href: 'kegeditor2.html', icon: 'fa-gift' }
+            { id: "25", text: 'KEG-Editor', href: 'kegeditor.html', icon: 'fa-gift' },
+            { id: "26", text: 'KEG-Editor2', href: 'kegeditor2.html', icon: 'fa-gift' }
         ]
     },
     {
@@ -348,7 +348,8 @@ const defaultMenuItems = [
             { id: "8", text: '용어관리', href: 'glos.html', icon: 'fa-book' },
             { id: "15", text: '권한관리', href: 'orgtree.html', icon: 'fa-user-shield' },
             { id: "6", text: '문서관리', href: 'document.html', icon: 'fa-file-alt' },
-            { id: "22", text: 'WMS', href: 'wms.html', icon: 'fa-cubes' }
+            { id: "22", text: 'WMS', href: 'wms.html', icon: 'fa-cubes' },
+            { id: "27", text: '3D도안', href: 'box.html', icon: 'fa-cubes' }
         ]
     }
 ];
