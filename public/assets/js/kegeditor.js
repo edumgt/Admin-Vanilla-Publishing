@@ -1,33 +1,21 @@
-async function fetchJson(url) {
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch ${url} - Status: ${response.status}`);
-    }
-    return await response.json();
-  } catch (error) {
-    console.error('Fetch error:', error);
-    if (error instanceof TypeError) {
-      showToast('cors-error', 'error', lang);
-    } else {
-      showToast('process-error', 'error', lang);
-    }
-    return null;
-  }
-}
+const mockGroupList = [
+  { groupcode: "A01", groupname: "공통코드", enabletype: "Y", regsitecode: "MAIN" },
+  { groupcode: "B02", groupname: "상태코드", enabletype: "N", regsitecode: "SUB" },
+  { groupcode: "A02", groupname: "모모모코드", enabletype: "Y", regsitecode: "MAIN" },
+  { groupcode: "B03", groupname: "상태고고고", enabletype: "N", regsitecode: "SUB" }
+];
 
-document.addEventListener("DOMContentLoaded", async () => {
-  const groupList = await fetchJson("http://kegdemo.edumgt.co.kr:8080/api/codegroup");
+let leftGridApi = null;
+let rightGridApi = null;
 
-  if (groupList) {
-    localStorage.setItem("codegroupData", JSON.stringify(groupList));
-    setupMasterGrid(groupList);
-    setupDetailGrid([]); // 초기 빈 오른쪽 그리드
-  }
+document.addEventListener("DOMContentLoaded", () => {
+  setupMasterGrid(mockGroupList);
+  setupDetailGrid([]);
 });
 
 function setupMasterGrid(data) {
   const columnDefs = [
+    { checkboxSelection: true, headerCheckboxSelection: true, width: 40 },
     { headerName: "그룹코드", field: "groupcode" },
     { headerName: "그룹명", field: "groupname" },
     { headerName: "사용여부", field: "enabletype" },
@@ -37,69 +25,101 @@ function setupMasterGrid(data) {
   const gridOptions = {
     columnDefs,
     rowData: data,
+    rowSelection: "multiple",
     defaultColDef: {
       flex: 1,
       resizable: true,
       sortable: true,
       filter: true
     },
-    onRowClicked: async event => {
-      const groupcode = event.data.groupcode;
-      console.log("👉 선택된 groupcode:", groupcode);
-      const detailList = await fetchJson(`http://kegdemo.edumgt.co.kr:8080/api/code?groupcode=${groupcode}`);
-      if (detailList) {
-        updateDetailGrid(detailList);
-      }
+    onGridReady: params => {
+      leftGridApi = params.api;
     }
   };
 
-  agGrid.createGrid(document.getElementById("grid-left"), gridOptions);
+  const gridDiv = document.getElementById("grid-left");
+  gridDiv.innerHTML = "";
+  agGrid.createGrid(gridDiv, gridOptions);
 }
 
-
-// ✅ 최초 1회만 new agGrid.Grid 사용해서 API를 받아옴
-let detailGridApi = null;
-
-function setupDetailGrid(rowData) {
+function setupDetailGrid(data) {
   const columnDefs = [
-    { headerName: "코드값", field: "codevalue" },
-    { headerName: "코드명", field: "codename" },
-    { headerName: "등록자", field: "regemp" },
-    { headerName: "등록일자", field: "regdate", valueFormatter: dateFormatter },
-    { headerName: "비고", field: "remark" }
+    { checkboxSelection: true, headerCheckboxSelection: true, width: 40 },
+    { headerName: "그룹코드", field: "groupcode" },
+    { headerName: "그룹명", field: "groupname" },
+    { headerName: "사용여부", field: "enabletype" },
+    { headerName: "등록사이트", field: "regsitecode" }
   ];
 
   const gridOptions = {
     columnDefs,
-    rowData,
+    rowData: data,
+    rowSelection: "multiple",
     defaultColDef: {
       flex: 1,
       resizable: true,
       sortable: true,
       filter: true
+    },
+    onGridReady: params => {
+      rightGridApi = params.api;
     }
   };
 
   const gridDiv = document.getElementById("grid-right");
-  const gridInstance = new agGrid.createGrid(gridDiv, gridOptions);
-  detailGridApi = gridOptions.api;
+  gridDiv.innerHTML = "";
+  agGrid.createGrid(gridDiv, gridOptions);
 }
 
-
-function updateDetailGrid(rowData) {
-  const gridDiv = document.getElementById("grid-right");
-  gridDiv.innerHTML = ""; // 기존 grid 제거
-  setupDetailGrid(rowData); // 새로운 데이터로 재생성
+function getCurrentRowData(api) {
+  const rowData = [];
+  api.forEachNode(node => rowData.push(node.data));
+  return rowData;
 }
 
-function dateFormatter(params) {
-  const value = params.value;
-  if (!value) return "-";
-  const date = new Date(value);
-  return date.toLocaleString("ko-KR");
+function removeSelectedFromSource(sourceData, selected) {
+  const selectedKeys = new Set(selected.map(row => row.groupcode));
+  return sourceData.filter(row => !selectedKeys.has(row.groupcode));
 }
 
-const content = document.getElementById("content");
-content.style.marginTop = "40px";
+function mergeUniqueRows(target, added) {
+  const map = new Map();
+  [...target, ...added].forEach(row => {
+    map.set(row.groupcode, row); // groupcode 기준으로 중복 제거
+  });
+  return Array.from(map.values());
+}
+
+// 👉 왼쪽 → 오른쪽
+document.getElementById("btn-move-right").addEventListener("click", () => {
+  const selected = leftGridApi.getSelectedRows();
+  if (selected.length === 0) return;
+
+  const leftData = getCurrentRowData(leftGridApi);
+  const rightData = getCurrentRowData(rightGridApi);
+
+  const newLeft = removeSelectedFromSource(leftData, selected);
+  const newRight = mergeUniqueRows(rightData, selected);
+
+  setupMasterGrid(newLeft);
+  setupDetailGrid(newRight);
+});
+
+// 👉 오른쪽 → 왼쪽
+document.getElementById("btn-move-left").addEventListener("click", () => {
+  const selected = rightGridApi.getSelectedRows();
+  if (selected.length === 0) return;
+
+  const leftData = getCurrentRowData(leftGridApi);
+  const rightData = getCurrentRowData(rightGridApi);
+
+  const newRight = removeSelectedFromSource(rightData, selected);
+  const newLeft = mergeUniqueRows(leftData, selected);
+
+  setupMasterGrid(newLeft);
+  setupDetailGrid(newRight);
+});
+
+
 
 breadcrumb.textContent = "KEG-Editor"

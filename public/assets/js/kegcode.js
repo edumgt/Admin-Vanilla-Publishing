@@ -99,7 +99,6 @@ function dateFormatter(params) {
   return date.toLocaleString("ko-KR");
 }
 
-const content = document.getElementById("content");
-content.style.marginTop = "40px";
+
 
 breadcrumb.textContent = "KEG-Code"
