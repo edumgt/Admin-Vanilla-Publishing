@@ -148,8 +148,6 @@ function registerDropZones() {
 
 
 function moveRows(draggedRows, from) {
-
-  
   const sourceApi = from === "left" ? leftGridApi : rightGridApi;
   const targetApi = from === "left" ? rightGridApi : leftGridApi;
 
@@ -157,7 +155,11 @@ function moveRows(draggedRows, from) {
   const targetData = getCurrentRowData(targetApi);
 
   const filteredSource = removeSelectedFromSource(sourceData, draggedRows);
+
+
+
   const mergedTarget = mergeUniqueRows(targetData, draggedRows);
+
 
   if (from === "left") {
     setupMasterGrid(filteredSource);
@@ -185,15 +187,18 @@ function removeSelectedFromSource(sourceData, selected) {
 
 
 function mergeUniqueRows(target, added) {
+  console.log("target.type: ", target.type);
+  console.log("added.type: ", added.type);
+
   const map = new Map();
-
-    [...target, ...added].forEach(row => {
-      map.set(row.groupcode, row); // groupcode 기준으로 중복 제거
-    });
-
-
+  [...added,...target].forEach(row => {
+    if (row && typeof row === 'object' && 'groupcode' in row) {
+      map.set(row.groupcode, row);
+    }
+  });
   return Array.from(map.values());
 }
+
 
 
 breadcrumb.textContent = "KEG-Editor"
