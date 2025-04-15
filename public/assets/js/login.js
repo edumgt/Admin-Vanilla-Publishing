@@ -1,3 +1,4 @@
+const backendUrl = 'http://localhost:8080';
 const tabs = document.querySelectorAll('button[id$="-tab"]');
 const forms = document.querySelectorAll('.tab-content');
 tabs.forEach(tab => {
@@ -38,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = Object.fromEntries(formData.entries());
 
         try {
-            const response = await fetch('/login', {
+            const response = await fetch(`${backendUrl}/api/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
