@@ -5,9 +5,9 @@ const router = express.Router();
 
 const db = mysql.createConnection({
     // host: 'edumgtmariadb.cg0ugoglztrn.ap-northeast-2.rds.amazonaws.com',
-    host: 'localhost',
-    user: 'edumgt',
-    password: 'edumgt2250!',
+    host: '127.0.0.1',
+    user: 'root',
+    password: '123456',
     database: 'bbs'
 });
 

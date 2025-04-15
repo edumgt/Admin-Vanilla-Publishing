@@ -17,7 +17,7 @@ async function fetchJson(url) {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const groupList = await fetchJson("http://kegdemo.edumgt.co.kr:8080/api/codegroup");
+  const groupList = await fetchJson("http://127.0.0.1:8080/api/codegroup");
 
   if (groupList) {
     localStorage.setItem("codegroupData", JSON.stringify(groupList));
@@ -46,7 +46,7 @@ function setupMasterGrid(data) {
     onRowClicked: async event => {
       const groupcode = event.data.groupcode;
       console.log("👉 선택된 groupcode:", groupcode);
-      const detailList = await fetchJson(`http://kegdemo.edumgt.co.kr:8080/api/code?groupcode=${groupcode}`);
+      const detailList = await fetchJson(`http://127.0.0.1:8080/api/code?groupcode=${groupcode}`);
       if (detailList) {
         updateDetailGrid(detailList);
       }
