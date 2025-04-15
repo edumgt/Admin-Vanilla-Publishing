@@ -3,13 +3,12 @@
 
 <head>
     <link href="assets/css/default.css" rel="stylesheet">
+    
     <style>
-        .tree-toggle {
-          cursor: pointer;
-          font-weight: bold;
-          user-select: none;
-        }
-      </style>
+      .child-row-white {
+        background-color: white !important;
+      }
+    </style>
       
 </head>
 
@@ -18,7 +17,9 @@
     <nav class="breadcrumb"></nav>
 
     <div id="content" style="margin-top: 40px;">
-        <div id="myGrid" class="ag-theme-alpine" style="height: 720px; width: 100%;"></div>
+
+      <div id="myGrid"></div>  
+      
     </div>
     <script type="module" src="assets/vendor/tui-grid/dist/tui-grid.js"></script>
     <script type="module" src="assets/js/logomodule.js"></script>
