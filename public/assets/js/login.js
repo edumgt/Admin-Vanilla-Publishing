@@ -51,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const result = await response.json();
                 // 토큰을 로컬 스토리지에 저장
                 localStorage.setItem('token', result.token);
+                localStorage.setItem('userId',result.userId);
                 // index.html로 리다이렉트
                 window.location.href = firstPage;
             } else {
