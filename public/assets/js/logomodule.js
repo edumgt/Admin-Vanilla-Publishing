@@ -303,7 +303,8 @@ const defaultMenuItems = [
             { id: "20", text: '인센티브', href: 'total.html', icon: 'fa-gift' },
             { id: "24", text: 'KEG-Code', href: 'kegcode.html', icon: 'fa-gift' },
             { id: "25", text: 'KEG-Editor', href: 'kegeditor.html', icon: 'fa-gift' },
-            { id: "26", text: 'KEG-Editor2', href: 'kegeditor2.html', icon: 'fa-gift' }
+            { id: "26", text: 'KEG-Editor2', href: 'kegeditor2.html', icon: 'fa-gift' },
+            { id: "27", text: 'KEG-Tree', href: 'orgsel.html', icon: 'fa-gift' }
         ]
     },
     {
