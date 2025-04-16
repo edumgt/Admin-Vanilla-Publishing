@@ -13,7 +13,7 @@
     },
     "dependencies": {
         "@toast-ui/calendar": "^2.0.1",
-        "@toast-ui/editor": "^3.2.2",
+        "@toast-ui/editor": "^3.1.0",
         "@wissakib/fontawesome-free-5.15.4-web": "^1.0.0",
         "ag-grid-community": "^33.1.0",
         "apexcharts": "^4.4.0",
@@ -35,7 +35,7 @@
         "react-dom": "^18.2.0",
         "swagger-jsdoc": "^6.2.8",
         "swagger-ui-express": "^5.0.1",
-        "tinymce": "^4.3.2",
+        "tinymce": "^7.8.0",
         "tui-calendar": "^1.13.1",
         "tui-date-picker": "^4.3.3",
         "tui-grid": "^4.21.2",
