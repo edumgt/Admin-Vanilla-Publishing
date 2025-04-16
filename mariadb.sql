@@ -1,7 +1,7 @@
 -- --------------------------------------------------------
--- 호스트:                          edumgtmariadb.cg0ugoglztrn.ap-northeast-2.rds.amazonaws.com
--- 서버 버전:                        11.4.4-MariaDB-log - managed by https://aws.amazon.com/rds/
--- 서버 OS:                        Linux
+-- 호스트:                          127.0.0.1
+-- 서버 버전:                        11.7.2-MariaDB - mariadb.org binary distribution
+-- 서버 OS:                        Win64
 -- HeidiSQL 버전:                  12.10.0.7000
 -- --------------------------------------------------------
 
@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
   KEY `인덱스 1` (`seq`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- 테이블 데이터 bbs.comment:~16 rows (대략적) 내보내기
+-- 테이블 데이터 bbs.comment:~18 rows (대략적) 내보내기
 DELETE FROM `comment`;
 INSERT INTO `comment` (`seq`, `id`, `content`, `bbs_seq`, `created_at`, `del`) VALUES
 	(1, 'test0003', '한글 테스트 입니다.', '1', '2023-08-13 15:24:59', '0'),
@@ -162,9 +162,9 @@ CREATE TABLE IF NOT EXISTS `dates` (
   `date_id` int(11) NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
   PRIMARY KEY (`date_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- 테이블 데이터 bbs.dates:~67 rows (대략적) 내보내기
+-- 테이블 데이터 bbs.dates:~69 rows (대략적) 내보내기
 DELETE FROM `dates`;
 INSERT INTO `dates` (`date_id`, `date`) VALUES
 	(1, '2025-01-02'),
@@ -234,7 +234,8 @@ INSERT INTO `dates` (`date_id`, `date`) VALUES
 	(65, '2025-04-16'),
 	(66, '2025-04-09'),
 	(67, '2025-04-09'),
-	(68, '2025-04-10');
+	(68, '2025-04-10'),
+	(69, '2025-04-08');
 
 -- 테이블 bbs.departments 구조 내보내기
 CREATE TABLE IF NOT EXISTS `departments` (
@@ -250,12 +251,10 @@ CREATE TABLE IF NOT EXISTS `departments` (
   UNIQUE KEY `row_key` (`row_key`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3953 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- 테이블 데이터 bbs.departments:~14 rows (대략적) 내보내기
+-- 테이블 데이터 bbs.departments:~52 rows (대략적) 내보내기
 DELETE FROM `departments`;
 INSERT INTO `departments` (`id`, `tp_cd`, `tp_nm`, `desc_cntn`, `use_yn`, `created_at`, `view`, `row_key`) VALUES
 	('1b7c2a25-0918-11f0-a063-0c9a3ce197c1', 'CODE-1009', 'Unit', 'Measurement Unit', 'Y', '2025-03-25', NULL, 3908),
-	('1b7c2a5e-0918-11f0-a063-0c9a3ce197c1', 'CODE-1011', 'City', 'City Code', 'Y', '2025-03-25', NULL, 3906),
-	('1b7c2a7a-0918-11f0-a063-0c9a3ce197c1', 'CODE-1012', 'Position', 'Job Position Code', 'Y', '2025-03-25', NULL, 3905),
 	('1b7c2a95-0918-11f0-a063-0c9a3ce197c1', 'CODE-1013', 'Grade', 'Grade Level', 'Y', '2025-03-25', NULL, 3904),
 	('1b7c2ab1-0918-11f0-a063-0c9a3ce197c1', 'CODE-1014', 'Industry', 'Industry Type', 'Y', '2025-03-25', NULL, 3903),
 	('1b7c2acb-0918-11f0-a063-0c9a3ce197c1', 'CODE-1015', 'ContractType', 'Type of Contract', 'Y', '2025-03-25', NULL, 3902),
@@ -1287,13 +1286,13 @@ CREATE TABLE IF NOT EXISTS `events` (
   `event_id` varchar(50) NOT NULL DEFAULT '',
   `date_id` int(11) DEFAULT NULL,
   `time` time NOT NULL,
-  `description` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `description` varchar(255) NOT NULL,
   PRIMARY KEY (`event_id`),
   KEY `date_id` (`date_id`),
   CONSTRAINT `events_ibfk_1` FOREIGN KEY (`date_id`) REFERENCES `dates` (`date_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- 테이블 데이터 bbs.events:~13 rows (대략적) 내보내기
+-- 테이블 데이터 bbs.events:~14 rows (대략적) 내보내기
 DELETE FROM `events`;
 INSERT INTO `events` (`event_id`, `date_id`, `time`, `description`) VALUES
 	('1000', 1, '17:00:00', '개발자 인터뷰'),
@@ -1308,18 +1307,19 @@ INSERT INTO `events` (`event_id`, `date_id`, `time`, `description`) VALUES
 	('nNW7WRhV50', 59, '08:00:00', 'qweqwe'),
 	('tC5b2l3bz1', 67, '08:00:00', 'dfgdfgg'),
 	('TUCZ3Pfqz6', 56, '15:30:00', '테스트 당'),
+	('wR1lW3duCf', 69, '16:30:00', 'ㅁㄴㅇㅁㄴㅇ'),
 	('y4wShGzRtA', 66, '08:00:00', 'dfgdfgg');
 
 -- 테이블 bbs.glos 구조 내보내기
 CREATE TABLE IF NOT EXISTS `glos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `en` varchar(255) NOT NULL,
-  `ko` varchar(255) NOT NULL,
-  `desc` varchar(1000) DEFAULT NULL,
-  `img` varchar(500) DEFAULT NULL,
-  `created_dt` varchar(20) DEFAULT curdate(),
+  `en` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `ko` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `desc` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `img` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `created_dt` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT curdate(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=249 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=238 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 -- 테이블 데이터 bbs.glos:~133 rows (대략적) 내보내기
 DELETE FROM `glos`;
@@ -1465,7 +1465,7 @@ CREATE TABLE IF NOT EXISTS `glos_req` (
   `req_msg` varchar(500) NOT NULL DEFAULT '0',
   `req_date` varchar(20) NOT NULL DEFAULT curdate(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- 테이블 데이터 bbs.glos_req:~9 rows (대략적) 내보내기
 DELETE FROM `glos_req`;
@@ -1488,7 +1488,7 @@ CREATE TABLE IF NOT EXISTS `icon_mapping` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- 테이블 데이터 bbs.icon_mapping:~23 rows (대략적) 내보내기
+-- 테이블 데이터 bbs.icon_mapping:~25 rows (대략적) 내보내기
 DELETE FROM `icon_mapping`;
 INSERT INTO `icon_mapping` (`id`, `label`, `icon_class`) VALUES
 	(1, '조직도구성', 'fa-sitemap'),
@@ -1516,6 +1516,25 @@ INSERT INTO `icon_mapping` (`id`, `label`, `icon_class`) VALUES
 	(23, '사물함', 'fa-archive'),
 	(24, 'KEG-Code', 'fa-user'),
 	(25, 'KEG-Editor', 'fa-user');
+
+-- 테이블 bbs.inbound_data 구조 내보내기
+CREATE TABLE IF NOT EXISTS `inbound_data` (
+  `id` varchar(50) NOT NULL DEFAULT '0',
+  `date` varchar(20) NOT NULL DEFAULT '',
+  `title` varchar(255) NOT NULL DEFAULT '''''',
+  `quantity` int(10) unsigned NOT NULL DEFAULT 0,
+  `isbn` varchar(20) NOT NULL DEFAULT '''''',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- 테이블 데이터 bbs.inbound_data:~5 rows (대략적) 내보내기
+DELETE FROM `inbound_data`;
+INSERT INTO `inbound_data` (`id`, `date`, `title`, `quantity`, `isbn`) VALUES
+	('88632b4f-207c-46ba-a9ff-1181c178c330', '2025-01-02', 'Fahrenheit 451', 111, '978-718-76697-8'),
+	('c1655f88-8206-4e31-ae2c-a75ac05ca069', '2025-01-01', 'The Great Gatsby', 136, '978-228-11889-2'),
+	('c895c4af-8121-4b70-b11c-1006fa16d3f0', '2025-01-09', 'The Grapes of Wrath 111', 125, '978-257-39654-1'),
+	('f3761280-bee4-430a-84bc-15d5b9600452', '2025-01-04', 'Pride and Prejudice', 146, '978-787-82570-8'),
+	('f6114592-7a33-45dc-80b3-97dabf622c1d', '2025-01-03', '123123123123123', 111, '978-498-21606-9');
 
 -- 테이블 bbs.item 구조 내보내기
 CREATE TABLE IF NOT EXISTS `item` (
@@ -1663,18 +1682,18 @@ CREATE TABLE IF NOT EXISTS `member_menu_permission` (
   `can_add` tinyint(1) DEFAULT 0,
   `can_delete` tinyint(1) DEFAULT 0,
   `can_reset_search` tinyint(1) DEFAULT 0,
-  `can_save` int(1) DEFAULT 0,
-  `can_view` int(1) DEFAULT 0,
+  `can_save` tinyint(1) DEFAULT 0,
+  `can_view` tinyint(1) DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `member_id` (`member_id`),
   KEY `FK_member_menu_permission_menu_page` (`menu_page_id`) USING BTREE,
   CONSTRAINT `member_menu_permission_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `member` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- 테이블 데이터 bbs.member_menu_permission:~0 rows (대략적) 내보내기
+-- 테이블 데이터 bbs.member_menu_permission:~1 rows (대략적) 내보내기
 DELETE FROM `member_menu_permission`;
 INSERT INTO `member_menu_permission` (`id`, `member_id`, `menu_page_id`, `can_search`, `can_add`, `can_delete`, `can_reset_search`, `can_save`, `can_view`) VALUES
-	(2, 'test0001', 18, 1, 1, 1, 0, 0, 0);
+	(2, 'test0001', 18, 1, 1, 1, 1, 1, 1);
 
 -- 테이블 bbs.menu_item 구조 내보내기
 CREATE TABLE IF NOT EXISTS `menu_item` (
@@ -1685,9 +1704,9 @@ CREATE TABLE IF NOT EXISTS `menu_item` (
   PRIMARY KEY (`id`),
   KEY `fk_menu_page` (`menu_page_id`),
   CONSTRAINT `fk_menu_page` FOREIGN KEY (`menu_page_id`) REFERENCES `menu_page` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=98 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- 테이블 데이터 bbs.menu_item:~97 rows (대략적) 내보내기
+-- 테이블 데이터 bbs.menu_item:~98 rows (대략적) 내보내기
 DELETE FROM `menu_item`;
 INSERT INTO `menu_item` (`id`, `menu_page_id`, `href`, `label`) VALUES
 	(1, 1, 'orgni.html', '조직도구성'),
@@ -1786,7 +1805,8 @@ INSERT INTO `menu_item` (`id`, `menu_page_id`, `href`, `label`) VALUES
 	(94, 1, 'kegcode.html', 'KEG-Code'),
 	(95, 1, 'kegeditor.html', 'KEG-Editor'),
 	(96, 1, 'kegeditor2.html', 'KEG-Editor2'),
-	(97, 8, 'box.html', '3D도안');
+	(97, 8, 'box.html', '3D도안'),
+	(98, 1, 'orgsel.html', 'KEG-Tree');
 
 -- 테이블 bbs.menu_page 구조 내보내기
 CREATE TABLE IF NOT EXISTS `menu_page` (
@@ -1794,9 +1814,9 @@ CREATE TABLE IF NOT EXISTS `menu_page` (
   `page_name` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `page_name` (`page_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- 테이블 데이터 bbs.menu_page:~27 rows (대략적) 내보내기
+-- 테이블 데이터 bbs.menu_page:~28 rows (대략적) 내보내기
 DELETE FROM `menu_page`;
 INSERT INTO `menu_page` (`id`, `page_name`) VALUES
 	(1, 'attend.html'),
@@ -1817,6 +1837,7 @@ INSERT INTO `menu_page` (`id`, `page_name`) VALUES
 	(12, 'meeting.html'),
 	(13, 'network.html'),
 	(14, 'orgni.html'),
+	(28, 'orgsel.html'),
 	(15, 'orgtree.html'),
 	(16, 'stati.html'),
 	(17, 'survey.html'),
@@ -1826,6 +1847,26 @@ INSERT INTO `menu_page` (`id`, `page_name`) VALUES
 	(21, 'trello.html'),
 	(22, 'wms.html'),
 	(23, 'work.html');
+
+-- 테이블 bbs.outbound_data 구조 내보내기
+CREATE TABLE IF NOT EXISTS `outbound_data` (
+  `id` char(36) NOT NULL,
+  `date` date NOT NULL DEFAULT curdate(),
+  `title` varchar(255) NOT NULL DEFAULT '''''',
+  `quantity` int(10) unsigned NOT NULL DEFAULT 0,
+  `isbn` varchar(20) NOT NULL DEFAULT '''''',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- 테이블 데이터 bbs.outbound_data:~6 rows (대략적) 내보내기
+DELETE FROM `outbound_data`;
+INSERT INTO `outbound_data` (`id`, `date`, `title`, `quantity`, `isbn`) VALUES
+	('88632b4f-207c-46ba-a9ff-1181c178c330', '2025-01-15', 'Fahrenheit 451', 11, '978-718-76697-8'),
+	('c1655f88-8206-4e31-ae2c-a75ac05ca069', '2025-01-01', 'The Great Gatsby', 36, '978-228-11889-2'),
+	('c895c4af-8121-4b70-b11c-1006fa16d3f0', '2025-01-15', 'The Grapes of Wrath', 25, '978-257-39654-1'),
+	('e76d177f-1409-4f5f-83e0-c31874f4e6c0', '2025-01-11', 'Brave New World', 11, '978-691-41538-9'),
+	('f3761280-bee4-430a-84bc-15d5b9600452', '2025-01-04', 'Pride and Prejudice', 46, '978-787-82570-8'),
+	('f6114592-7a33-45dc-80b3-97dabf622c1d', '2025-01-03', '123123123123123', 11, '978-498-21606-9');
 
 -- 테이블 bbs.read_history 구조 내보내기
 CREATE TABLE IF NOT EXISTS `read_history` (
@@ -1903,8 +1944,8 @@ INSERT INTO `read_history` (`latest_access_at`, `bbs_seq`, `id`) VALUES
 
 -- 테이블 bbs.reservations 구조 내보내기
 CREATE TABLE IF NOT EXISTS `reservations` (
-  `id` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `id` varchar(50) NOT NULL,
+  `name` varchar(50) DEFAULT NULL,
   `departmentId` int(11) DEFAULT NULL,
   `date` date DEFAULT NULL,
   `time` time DEFAULT NULL,
