@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="utf-8" />
   <title>TUI Grid DB Admin</title>
   <link href="assets/css/default.css" rel="stylesheet">
-  <script src="https://uicdn.toast.com/tui-grid/latest/tui-grid.js"></script>
+
+
 </head>
+
 <body>
   <div class="px-4 py-2">
     <div class="flex gap-4 py-4">
       <label>Host:
-        <input type="text" id="host" value="edumgtmssql2019.cg0ugoglztrn.ap-northeast-2.rds.amazonaws.com">
+        <input type="text" id="host" value="127.0.0.1">
       </label>
       <label>User:
         <input type="text" id="user" value="edumgt">
@@ -29,81 +32,35 @@
         style="width:800px">SELECT * FROM kegtest.dbo.T_code where groupcode like 'BD%'</textarea>
       <input type="button" id="btnQuery" class="history-button" value="RUN">
     </div>
-    <div id="myGrid" style="width: 100%; height: 320px;"></div>
+    <div class="flex items-center gap-1 py-2">
+      <label for="perPage">Rows per page:</label>
+      <select id="perPage" class="border border-gray-300 rounded px-2 py-1">
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </div>
+
+    <div id="myGrid" style="width: 100%; height: 650px;"></div>
   </div>
-  <script>
-    const grid = new tui.Grid({
-      el: document.getElementById('myGrid'),
-      data: [],
-      columns: [],
-      scrollX: false,
-      scrollY: true
-    });
 
-    const hostInput = document.getElementById('host');
-    const userInput = document.getElementById('user');
-    const passwordInput = document.getElementById('password');
-    const dbInput = document.getElementById('database');
-    const queryInput = document.getElementById('query');
-    const btnConnect = document.getElementById('btnConnect');
-    const btnQuery = document.getElementById('btnQuery');
-    btnConnect.addEventListener('click', async () => {
-      const payload = {
-        host: hostInput.value,
-        user: userInput.value,
-        password: passwordInput.value,
-        database: dbInput.value
-      };
+<!-- 기존 모달 요소를 아래처럼 수정 -->
+<div id="columnModal" class="absolute bg-white border shadow-md rounded p-4 hidden z-50 w-80">
+  <h2 class="text-lg font-bold mb-3">표시할 컬럼 선택</h2>
+  <div id="columnCheckboxContainer" class="max-h-60 overflow-y-auto mb-4"></div>
+  <div class="flex justify-end gap-2">
+    <button id="applyColumnToggle" class="px-3 py-1 bg-blue-600 text-white rounded">적용</button>
+    <button id="closeColumnModal" class="px-3 py-1 bg-gray-400 text-white rounded">닫기</button>
+  </div>
+</div>
 
-      try {
-        const response = await fetch('/db/dynamicConnect', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
-        const result = await response.json();
-        if (result.success) {
-          alert('DB Connection Succeeded!\n' + JSON.stringify(result.data));
-        } else {
-          alert('DB Connection Failed:\n' + result.message + '\n' + result.error);
-        }
-      } catch (err) {
-        alert('Fetch Error: ' + err.message);
-      }
-    });
 
-    btnQuery.addEventListener('click', async () => {
-      const payload = { query: queryInput.value };
+  <script type="module" src="assets/vendor/tui-pagination/dist/tui-pagination.js"></script>
+  <script type="module" src="assets/vendor/tui-grid/dist/tui-grid.js"></script>
+  <script type="module" src="assets/js/4.js"></script>
 
-      try {
-        const response = await fetch('/db/query', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
-        const result = await response.json();
-        if (result.success) {
-          const rows = result.data;
-          const columns = createDynamicColumns(rows);
-          grid.setColumns(columns);
-          grid.resetData(rows); 
-        } else {
-          alert('Query Failed:\n' + result.message + '\n' + result.error);
-        }
-      } catch (err) {
-        alert('Fetch Error: ' + err.message);
-      }
-    });
-    function createDynamicColumns(rows) {
-      if (!Array.isArray(rows) || rows.length === 0) {
-        return [];
-      }
-      const keys = Object.keys(rows[0]);
-      return keys.map(key => ({
-        header: key,
-        name: key
-      }));
-    }
   </script>
 </body>
+
 </html>
