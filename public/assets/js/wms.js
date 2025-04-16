@@ -1,9 +1,5 @@
-// import 외부 유틸
 import { createAddButton, createDelButton } from './common.js';
-
 const apiurl = "";
-
-// 공통 함수 정의
 function showLoading(section) {
   section.innerHTML = `<div class="text-center text-lg font-semibold mt-4">데이터를 불러오는 중...</div>`;
 }
@@ -21,11 +17,10 @@ async function fetchJson(url) {
   } catch (error) {
     console.error('Fetch error:', error);
 
-    // CORS 오류일 수 있는 경우도 포함하여 toast 메시지 출력
     if (error instanceof TypeError) {
-      showToast('cors-error', 'error', lang); // 예: "CORS 오류입니다." 같은 메시지 키 사용
+      showToast('cors-error', 'error', lang); 
     } else {
-      showToast('process-error', 'error', lang); // 일반적인 에러
+      showToast('process-error', 'error', lang); 
     }
 
     return null;
@@ -50,7 +45,7 @@ async function updateData(url, updatedRows) {
     }
     console.log(result);
   } catch (error) {
-    console.error('Update error:', error);
+    //console.error('Update error:', error);
     showToast('process-error', 'error', lang);
   }
 }
@@ -71,7 +66,7 @@ async function addData(url, newRow) {
     }
     console.log("Server response:", result);
   } catch (error) {
-    console.error("Fetch error:", error);
+    //console.error("Fetch error:", error);
     showToast('process-error', 'error', lang);
   }
 }
@@ -91,12 +86,11 @@ async function deleteData(url, deletedRows) {
       showToast('server-warning', 'warning', lang);
     }
   } catch (error) {
-    console.error('Delete error:', error);
+    //console.error('Delete error:', error);
     showToast('process-error', 'error', lang);
   }
 }
 
-// 탭 및 섹션 렌더링
 function setupTabs(tabs, root, sections, populateTabContent) {
   const tabContainer = document.createElement('div');
   tabContainer.className = 'flex border-b';
@@ -116,7 +110,6 @@ function setupTabs(tabs, root, sections, populateTabContent) {
     sections[tab.id] = section;
   });
 
-  // 기본 탭 선택
   sections['tab-inbound'].classList.remove('hidden');
   document.getElementById('tab-inbound').classList.add('active-tab');
 
@@ -280,8 +273,6 @@ function populateDashboard(section, inboundData, outboundData) {
   const lineChart = new ApexCharts(document.querySelector("#monthly-outbound-chart"), lineOptions);
   lineChart.render();
 }
-
-// DOMContentLoaded 초기 실행
 
 const tabs = [
   { id: 'tab-inbound', name: '입고 관리' },

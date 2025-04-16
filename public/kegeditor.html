@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Toast UI Editor with Image Resize</title>
+
+  <!-- 기본 스타일 -->
+  <link href="assets/css/default.css" rel="stylesheet">
+
+  <!-- Toast UI Editor v2 CDN (정확히 로딩) -->
+  <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+  <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+
+  <!-- Interact.js for image resize -->
+  <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+
+  <style>
+    .resizable-image {
+      display: block;
+      max-width: 100%;
+    }
+
+    .resizable-image.resizing {
+      outline: 2px dashed #1E90FF;
+    }
+
+    #grid-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+  
+    #grid-left, #grid-right {
+      width: 45%;
+      height: 400px;
+      
+    }
+  
+    #grid-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .grid-btn {
+      width: 40px;
+      height: 40px;
+      background-color: #f5f5f5;
+      border: 1px solid #aaa;
+      border-radius: 5px;
+      font-size: 20px;
+      cursor: pointer;
+      text-align: center;
+      line-height: 36px;
+      user-select: none;
+    }
+  
+    .grid-btn:hover {
+      background-color: #e0e0e0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="cmmContainer"></div>
+  <nav class="breadcrumb"></nav>
+
+  <div id="content" style="display: flex; gap: 20px;margin-top: 40px;">
+    <div id="grid-left" class="ag-theme-alpine" style="height: 300px; flex: 1;"></div>
+    <div id="grid-controls">
+      <div class="grid-btn" id="btn-move-right">&gt;</div>
+      <div class="grid-btn" id="btn-move-left">&lt;</div>
+    </div>
+    <div id="grid-right" class="ag-theme-alpine" style="height: 300px; flex: 1;"></div>
+  </div>
+
+  <div id="content">
+    <p>Tui 2.x Editor</p>
+    <div id="editor" style="margin-top: 30px;"></div>
+  </div>
+
+  <script>
+    const editor = new toastui.Editor({
+      el: document.querySelector('#editor'),
+      height: '500px',
+      initialEditType: 'wysiwyg',
+      previewStyle: 'vertical',
+      toolbar: [
+        ['heading', 'bold', 'italic', 'strike'],
+        ['hr', 'quote'],
+        ['ul', 'ol', 'task'],
+        ['indent', 'outdent'],
+        ['table', 'image', 'link'],
+        ['code', 'codeblock'],
+        ['scrollSync', 'fullscreen', 'help']
+      ],
+      hooks: {
+        addImageBlobHook: async (blob, callback) => {
+          const formData = new FormData();
+          formData.append('image', blob);
+
+          try {
+            const res = await fetch('/upload/image', {
+              method: 'POST',
+              body: formData
+            });
+
+            const data = await res.json();
+            const imageUrl = data.url;
+
+            // 서버 URL 기반으로 이미지 삽입
+            const html = `<img src="${imageUrl}" class="resizable-element" style="width: 300px;" />`;
+            callback(imageUrl, html); // 마크다운 URL / HTML 삽입
+            setTimeout(enableElementResizing, 100);
+          } catch (err) {
+            alert('이미지 업로드 실패');
+            console.error(err);
+          }
+
+          return false; // 기본 처리 방지
+        }
+      }
+
+
+    });
+
+    function enableElementResizing() {
+      const elements = document.querySelectorAll('.toastui-editor-contents .resizable-element');
+      console.log(elements);
+
+      elements.forEach((el) => {
+        if (el.dataset.resizable) return;
+        el.dataset.resizable = 'true';
+
+        interact(el).resizable({
+          edges: { left: true, right: true, bottom: true, top: true },
+          preserveAspectRatio: false,
+          listeners: {
+            move(event) {
+              const target = event.target;
+              target.style.width = `${event.rect.width}px`;
+              target.style.height = `${event.rect.height}px`;
+            }
+          }
+        });
+      });
+    }
+
+  </script>
+
+  <!-- 기타 모듈 -->
+  <script type="module" src="assets/vendor/ag-grid-community/dist/ag-grid-community.noStyle.js"></script>
+  <script type="module" src="assets/js/logomodule.js"></script>
+  <script type="module" src="assets/js/kegeditor.js"></script>
+</body>
+
+</html>

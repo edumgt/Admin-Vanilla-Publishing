@@ -18,9 +18,32 @@ const app = express();
 const PORT = 3000;
 const SECRET_KEY = 'edumgtedumgt'; // JWT 서명에 사용할 비밀 키
 
+const multer = require('multer');
+
 // JSON 바디 파싱 미들웨어
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+
+// 이미지 저장 경로 및 파일명 설정
+const storage = multer.diskStorage({
+  destination: './public/uploads/',
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname)); // 예: 1674737462.jpg
+  }
+});
+
+const upload = multer({ storage });
+
+// 정적 파일 제공 (이미지 접근을 위해)
+app.use('/uploads', express.static('public/uploads'));
+
+// 이미지 업로드 라우트
+app.post('/upload/image', upload.single('image'), (req, res) => {
+  const imageUrl = `/uploads/${req.file.filename}`;
+  res.json({ url: imageUrl });
+});
+
 
 /**
  * @swagger
@@ -610,7 +633,7 @@ const apiList = [
   { "url": "/api/member-permissions", "method": "GET" ,description: '권한 목록'},
   { "url": "/db/inbound", "method": "GET" ,description: 'Local 입고 목록'},
   { "url": "http://127.0.0.1:8080/api/inbound", "method": "GET" ,description: 'Spring Boot 로컬 입고 목록'},
-  { "url": "http://kegdemo.edumgt.co.kr:8080/api/inbound", "method": "GET" ,description: 'Spring Boot 서버 입고 목록'},
+  { "url": "http://127.0.0.1:8080/api/inbound", "method": "GET" ,description: 'Spring Boot 서버 입고 목록'},
   { "url": "/db/outbound", "method": "GET" ,description: '출고 목록'},
   { "url": "/db/inbound/delete", "method": "POST" ,"params": ["id"], description: 'inbound 삭제'},
   { "url": "/db/codes", "method": "GET" ,description: '권한 목록'},
@@ -634,8 +657,8 @@ app.get('/api/list', (req, res) => {
 
 app.use(cors({
   origin: function (origin, callback) {
-    const allowedOrigins = ['http://localhost:3000', 'http://127.0.0.1:3000' , 'http://kegdemo.edumgt.co.kr:3000' , 'http://localhost:8080' , 'http://127.0.0.1:8080'];
-    console.log('CORS Origin Check:', origin);
+    const allowedOrigins = ['http://localhost:3000', 'http://127.0.0.1:3000' , 'http://kegdemo.edumgt.co.kr:3000'];
+    //console.log('CORS Origin Check:', origin);
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
@@ -667,15 +690,15 @@ app.get('/', (req, res) => {
 
 
 // 로그인 엔드포인트 (토큰 생성)
-// app.post('/login', (req, res) => {
-//   const { username, password } = req.body;
-//   if (username === 'admin' && password === '1111') {
-//     const token = jwt.sign({ username }, SECRET_KEY, { expiresIn: '1h' });
-//     return res.json({ token });
-//   }
-//
-//   return res.status(401).json({ message: 'Invalid credentials' });
-// });
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+  if (username === 'admin' && password === '1111') {
+    const token = jwt.sign({ username }, SECRET_KEY, { expiresIn: '1h' });
+    return res.json({ token });
+  }
+
+  return res.status(401).json({ message: 'Invalid credentials' });
+});
 
 // JWT 검증 미들웨어
 const authenticateJWT = (req, res, next) => {

@@ -4,16 +4,12 @@ const express = require('express');
 const router = express.Router();
 
 const db = mysql.createConnection({
-    host: 'localhost',
-    port: 3307,
+    // host: 'edumgtmariadb.cg0ugoglztrn.ap-northeast-2.rds.amazonaws.com',
+    host: '127.0.0.1',
     user: 'root',
-    password: '1234',
-    database: 'bbs',
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0
+    password: '123456',
+    database: 'bbs'
 });
-
 
 db.connect(err => {
     if (err) {

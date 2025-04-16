@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Tinymce Editor</title>
+
+  <!-- 기본 스타일 -->
+  <link href="assets/css/default.css" rel="stylesheet">
+  <style>
+    .ag-row-drag {
+      cursor: grab;
+    }
+
+    .ag-row-dragging {
+      cursor: grabbing;
+    }
+
+    .dragging-row-highlight {
+      background-color: #e0f7fa !important;
+    }
+  </style>
+  <script src="assets/vendor/tinymce/tinymce.js"></script>
+
+</head>
+
+<body>
+  <div id="cmmContainer"></div>
+  <nav class="breadcrumb"></nav>
+
+  <div id="content" style="display: flex; gap: 20px;margin-top: 40px;">
+    <div id="grid-left" class="ag-theme-alpine" style="height: 300px; flex: 1;"></div>
+    <div id="grid-right" class="ag-theme-alpine" style="height: 300px; flex: 1;"></div>
+  </div>
+
+  <div id="content">
+    <p>Tinymce 4.3.2 Editor</p>
+    <textarea id="editor"></textarea>
+
+  </div>
+
+  <script>
+    tinymce.init({
+      selector: '#editor',
+      theme: 'modern',
+      skin: 'lightgray',
+      height: 400,
+      menubar: false,
+      plugins: [
+        'advlist autolink lists link image charmap print preview anchor',
+        'searchreplace visualblocks code fullscreen',
+        'insertdatetime media table contextmenu paste'
+      ],
+      toolbar: 'undo redo | formatselect | bold italic underline | ' +
+        'alignleft aligncenter alignright alignjustify | ' +
+        'bullist numlist outdent indent | link image media | code',
+      branding: false,
+      image_advtab: true,
+      paste_data_images: false, // 서버에 올릴 것이므로 false
+
+      file_picker_types: 'image',
+      file_picker_callback: function (callback, value, meta) {
+        if (meta.filetype === 'image') {
+          const input = document.createElement('input');
+          input.setAttribute('type', 'file');
+          input.setAttribute('accept', 'image/*');
+
+          input.onchange = function () {
+            const file = this.files[0];
+            const formData = new FormData();
+            formData.append('image', file);
+
+            tinymce.activeEditor.focus(); // 포커스 유지
+
+            fetch('/upload/image', {
+              method: 'POST',
+              body: formData
+            })
+              .then(res => res.json())
+              .then(data => {
+                // 약간의 지연 후 삽입
+                setTimeout(() => {
+                  callback(data.url, { alt: file.name });
+                }, 0);
+              })
+              .catch(err => {
+                console.error('이미지 업로드 오류:', err);
+              });
+          };
+
+          input.click();
+        }
+      }
+
+    });
+  </script>
+
+  <!-- 기타 모듈 -->
+  <script type="module" src="assets/vendor/ag-grid-community/dist/ag-grid-community.noStyle.js"></script>
+  <script type="module" src="assets/js/logomodule.js"></script>
+  <script type="module" src="assets/js/kegeditor2.js"></script>
+</body>
+
+</html>

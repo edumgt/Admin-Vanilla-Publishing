@@ -1,3 +1,6 @@
+import { createTanslations } from './common.js';
+const translations = createTanslations;
+
 export const cmmContainer = document.getElementById('cmmContainer');
 cmmContainer.innerHTML = `
     <div class="gnb-menu">
@@ -43,14 +46,14 @@ export function createTooltip(element, text) {
     document.body.appendChild(tooltip);
 
     element.addEventListener("mouseenter", function (event) {
-        tooltip.style.left = `${event.clientX - 160}px`;
+        tooltip.style.left = `${event.clientX - 200}px`;
         tooltip.style.top = `${event.clientY - 40}px`;
         tooltip.style.visibility = "visible";
         tooltip.style.opacity = "1";
     });
 
     element.addEventListener("mousemove", function (event) {
-        tooltip.style.left = `${event.clientX - 160}px`;
+        tooltip.style.left = `${event.clientX - 200}px`;
         tooltip.style.top = `${event.clientY - 40}px`;
     });
 
@@ -80,60 +83,150 @@ function saveModal() {
     showToast('well-done', 'success', 'en');
 }
 
+const allMenuButton = document.createElement('button');
 
 function renderOffCanvasMenu(menuItems) {
-
     const offCanvas = document.createElement('div');
     offCanvas.id = 'offCanvas';
-    offCanvas.className = 'fixed top-14 h-full bg-gray-100 border-r z-50';
+    offCanvas.className = 'fixed top-14 h-full bg-gray-100 z-50 overflow-y-auto';
+
 
     const flexContainer = document.createElement('div');
     flexContainer.className = 'flex flex-col h-full';
 
     const ul = document.createElement('ul');
-    ul.className = 'flex-grow p-4 space-y-4';
+    ul.className = 'flex-grow p-4 space-y-2';
 
-    menuItems.forEach(item => {
+    menuItems.forEach((item, index) => {
         const li = document.createElement('li');
+        li.style.width = '120px';
+        //li.classList.add('relative');
 
         const a = document.createElement('a');
-        a.href = item.href;
-        a.className = 'menu-item block text-gray-800 hover:text-blue-500 text-center p-2 rounded-md';
+        a.href = item.href || "#";
+        a.className = 'menu-item flex items-center justify-between rounded-md text-gray-600 hover:text-blue-500';
+
+        const leftDiv = document.createElement('div');
+        leftDiv.className = 'flex items-center';
 
         const icon = document.createElement('i');
-        icon.className = `fas ${item.icon} menu-icon text-blue-400`;
+        icon.className = `fas ${item.icon} mr-2`;
 
         const span = document.createElement('span');
-        span.className = 'menu-text';
+        span.className = 'menu-text mr-2';
         span.textContent = item.text;
 
+        leftDiv.appendChild(icon);
+        leftDiv.appendChild(span);
+        a.appendChild(leftDiv);
+        li.appendChild(a);
 
-        if (item.href === currentPage) {
-            icon.classList.remove('text-blue-400');
-            icon.classList.add('text-gray-800');
+        if (item.children && item.children.length > 0) {
+            const toggleBtn = document.createElement('button');
+            toggleBtn.innerHTML = '<i class="fas fa-chevron-down text-xs "></i>';
+            toggleBtn.className = 'submenu-toggle text-gray-400 hover:text-blue-500';
+            toggleBtn.style.marginRight = '-32px'; // 추가된 부분
+            toggleBtn.style.marginLeft = '-32px'; // 추가된 부분
+
+
+
+            a.appendChild(toggleBtn);
+
+            const subUl = document.createElement('ul');
+
+            subUl.style.border = 'none';
+
+            subUl.className = 'hidden';
+            subUl.id = `submenu-${index}`;
+
+            item.children.forEach(subItem => {
+                const subLi = document.createElement('li');
+                subLi.style.height = '26px';
+                subLi.style.paddingLeft = '10px';
+                // subLi.style.paddingRight = '0px';
+                // subLi.style.border = '1px solid #333';
+                subLi.style.width = '120px';
+
+                const subA = document.createElement('a');
+                subA.href = subItem.href;
+
+                subA.className = 'block text-gray-500 hover:text-blue-500';
+                subA.fontSize = '14px';
+
+                const subIcon = document.createElement('i');
+                subIcon.className = `fas ${subItem.icon || 'fa-circle'} text-xs mr-2`;
+
+                const subSpan = document.createElement('span');
+                subSpan.className = 'menu-text';
+                subSpan.textContent = subItem.text;
+
+                subA.appendChild(subIcon);
+                subA.appendChild(subSpan);
+                subLi.appendChild(subA);
+                subUl.appendChild(subLi);
+            });
+
+            li.appendChild(subUl);
+
+            toggleBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                subUl.classList.toggle('hidden');
+            });
+
+
         }
 
-        a.appendChild(icon);
-        a.appendChild(span);
-        li.appendChild(a);
         ul.appendChild(li);
     });
 
+
+
     const buttonsContainer = document.createElement('div');
-    buttonsContainer.className = 'flex flex-col space-y-4 pb-4';
+
+
+
 
     const expandButton = document.createElement('button');
     expandButton.id = 'expandOffCanvas';
-    expandButton.className = 'text-gray-800 hover:text-blue-500 text-xl';
+    expandButton.className = 'text-gray-600 hover:text-blue-500 text-md';
     expandButton.innerHTML = '<i class="fas fa-chevron-right"></i>';
+    expandButton.style.border = '1px solid #333';
 
     const collapseButton = document.createElement('button');
     collapseButton.id = 'collapseOffCanvas';
-    collapseButton.className = 'text-gray-800 hover:text-blue-500 text-xl';
+    collapseButton.className = 'text-gray-600 hover:text-blue-500 text-md';
     collapseButton.innerHTML = '<i class="fas fa-chevron-left"></i>';
+    collapseButton.style.border = '1px solid #333';
+
+
 
     buttonsContainer.appendChild(expandButton);
     buttonsContainer.appendChild(collapseButton);
+
+    
+    allMenuButton.id = 'showAllMenu';
+    allMenuButton.className = 'text-gray-600 hover:text-blue-500 text-md';
+    allMenuButton.innerHTML = '<i class="fas fa-th-large"></i>';
+    allMenuButton.style.border = '1px solid #333';
+    allMenuButton.style.marginBottom = '10px';
+    allMenuButton.style.position = 'absolute';
+    allMenuButton.style.left = '8px';
+    allMenuButton.style.bottom = '80px';
+    allMenuButton.style.width = '36px';
+    allMenuButton.style.padding = '0px';
+
+    allMenuButton.addEventListener('click', () => {
+        let modal = document.getElementById('allMenuModal');
+        if (!modal) {
+            createAllMenuModal(defaultMenuItems);
+            modal = document.getElementById('allMenuModal');
+        }
+        modal.classList.remove('hidden');
+    });
+
+
+    buttonsContainer.insertBefore(allMenuButton, expandButton);
 
     flexContainer.appendChild(ul);
     flexContainer.appendChild(buttonsContainer);
@@ -141,6 +234,7 @@ function renderOffCanvasMenu(menuItems) {
 
     document.getElementById('offCanvasContainer').appendChild(offCanvas);
 }
+
 
 const iconMapping = {
 
@@ -185,19 +279,89 @@ fetch('/api/menu')
         Object.keys(data).forEach(key => {
             menuConfigurations[key] = data[key];
         });
-
-        console.log('Updated menuConfigurations from server:', menuConfigurations);
     })
     .catch(console.error);
 
+const defaultMenuItems = [
+    {
+        id: "2",
+        text: '업무일정',
+        icon: 'fa-calendar-alt',
+        href: 'calendar.html',
+        children: [
+            { id: "21", text: '프로젝트일정', href: 'trello.html', icon: 'fa-tasks' },
+            { id: "19", text: '생산일정', href: 'timeline.html', icon: 'fa-industry' }
+        ]
+    },
+    {
+        id: "14",
+        text: '조직도구성',
+        icon: 'fa-sitemap',
+        href: 'orgni.html',
+        children: [
+            { id: "1", text: '근태관리', href: 'attend.html', icon: 'fa-user-clock' },
+            { id: "20", text: '인센티브', href: 'total.html', icon: 'fa-gift' },
+            { id: "24", text: 'KEG-Code', href: 'kegcode.html', icon: 'fa-gift' },
+            { id: "25", text: 'KEG-Editor', href: 'kegeditor.html', icon: 'fa-gift' },
+            { id: "26", text: 'KEG-Editor2', href: 'kegeditor2.html', icon: 'fa-gift' },
+            { id: "28", text: 'KEG-Tree', href: 'orgsel.html', icon: 'fa-gift' }
+        ]
+    },
+    {
+        id: "16",
+        text: '회원통계',
+        icon: 'fa-user',
+        href: 'stati.html',
+        children: [
+            { id: "7", text: '매출통계', href: 'flow.html', icon: 'fa-chart-line' },
+            { id: "3", text: '체인운영', href: 'chain.html', icon: 'fa-store-alt' }
+        ]
+    },
+    {
+        id: "23",
+        text: '예약관리',
+        icon: 'fa-calendar-plus',
+        href: 'work.html',
+        children: [
+            { id: "12", text: '회의실관리', href: 'meeting.html', icon: 'fa-door-open' },
+            { id: "9", text: '병원예약', href: 'hospital.html', icon: 'fa-hospital' },
+            { id: "11", text: '강의일정', href: 'lectures.html', icon: 'fa-chalkboard-teacher' },
+            { id: "4", text: '행정구역정보', href: 'city.html', icon: 'fa-map-marked-alt' }
+        ]
+    },
+    {
+        id: "5",
+        text: '시스템로그',
+        icon: 'fa-clipboard-list',
+        href: 'config.html',
+        children: [
+            { id: "13", text: '컨설팅지정', href: 'network.html', icon: 'fa-network-wired' },
+            { id: "17", text: '서베이', href: 'survey.html', icon: 'fa-poll' },
+            { id: "10", text: '사물함', href: 'locker.html', icon: 'fa-archive' }
+        ]
+    },
+    {
+        id: "18",
+        text: '코드관리',
+        icon: 'fa-server',
+        href: 'system.html',
+        children: [
+            { id: "8", text: '용어관리', href: 'glos.html', icon: 'fa-book' },
+            { id: "15", text: '권한관리', href: 'orgtree.html', icon: 'fa-user-shield' },
+            { id: "6", text: '문서관리', href: 'document.html', icon: 'fa-file-alt' },
+            { id: "22", text: 'WMS', href: 'wms.html', icon: 'fa-cubes' },
+            { id: "27", text: '3D도안', href: 'box.html', icon: 'fa-cubes' }
+        ]
+    }
+];
 
-const defaultMenuItems = [];
-const menuItems = (menuConfigurations[currentPage] || defaultMenuItems).map(item => ({
+// Dev Data 연동 안될 경우 
+const menuItems = (menuConfigurations[currentPage] ? defaultMenuItems : []).map(item => ({
     ...item,
     icon: iconMapping[item.text]
 }));
-
-renderOffCanvasMenu(menuItems);
+renderOffCanvasMenu(defaultMenuItems);
+//////////////////////////////////////
 
 export function createModal(modalId, title, content, buttons) {
     const modal = document.createElement('div');
@@ -386,22 +550,29 @@ document.getElementById('closeFloatingNav').addEventListener('click', () => {
 });
 
 const offCanvas = document.getElementById('offCanvas');
-offCanvas.classList.remove('hidden', '-translate-x-full');
-offCanvas.classList.add('collapsed');
-offCanvas.classList.remove('expanded');
 
 const expandOffCanvas = document.getElementById('expandOffCanvas');
 const collapseOffCanvas = document.getElementById('collapseOffCanvas');
+
 expandOffCanvas.addEventListener('click', function () {
     offCanvas.classList.remove('collapsed');
     offCanvas.classList.add('expanded');
     expandOffCanvas.classList.add('hidden');
+    collapseOffCanvas.classList.remove('hidden');
+    allMenuButton.classList.add('hidden');
 });
+
 collapseOffCanvas.addEventListener('click', function () {
     offCanvas.classList.add('collapsed');
     offCanvas.classList.remove('expanded');
     collapseOffCanvas.classList.add('hidden');
+    expandOffCanvas.classList.remove('hidden');
+    allMenuButton.classList.remove('hidden');
 });
+
+offCanvas.classList.remove('hidden', '-translate-x-full');
+offCanvas.classList.add('collapsed');
+offCanvas.classList.remove('expanded');
 
 function loadMessages() {
     fetch('assets/mock/messages.json')
@@ -450,7 +621,7 @@ window.offCanvasItems = offCanvasItems;
 const menuLinks = document.querySelectorAll(".gnb-item");
 const menuLinks2 = document.querySelectorAll(".menu-item");
 
-const orgniPages = ["orgni.html", "attend.html", "total.html"];
+const orgniPages = ["orgni.html", "attend.html", "total.html", "kegcode.html", "kegeditor.html", "kegeditor2.html"];
 if (orgniPages.includes(currentPage)) {
     menuLinks2.forEach((link) => {
         if (link.getAttribute("href") === currentPage) {
@@ -598,6 +769,20 @@ memberMenu.innerHTML = `<div class="bg-white shadow-lg p-3 rounded-md border">
                             </div>
                         </a>
 
+                        <a href="/calendar3/index.html" class="dropdown-item modal-link">
+                            <div class="d-flex align-items-center gap-3">
+                            <i class="fas fa-cog fs-5"></i>
+                            <span>일정표1</span>
+                            </div>
+                        </a>
+
+                        <a href="/calendar/00.html" class="dropdown-item modal-link">
+                            <div class="d-flex align-items-center gap-3">
+                            <i class="fas fa-cog fs-5"></i>
+                            <span>일정표2</span>
+                            </div>
+                        </a>
+
                         <a href="2.html" class="dropdown-item modal-link">
                             <div class="d-flex align-items-center gap-3">
                             <i class="fas fa-cog fs-5"></i>
@@ -625,17 +810,14 @@ memberMenu.innerHTML = `<div class="bg-white shadow-lg p-3 rounded-md border">
                             <span>API Test</span>
                             </div>
                         </a>
-                     
+
                         <a href="/api-docs" class="dropdown-item modal-link">
                             <div class="d-flex align-items-center gap-3">
                             <i class="fas fa-cog fs-5"></i>
                             <span>Front End Swagger</span>
                             </div>
                         </a>
-                     
-
-
-                        
+              
 
                      <div class="dropdown-divider"></div>
                      <a href="#" class="dropdown-item" id="logoutButton">
@@ -812,8 +994,7 @@ createTooltip(fav1, "현재 페이지를 로그인 후 바로가기로 저장합
 const fav2 = document.getElementById("fav2");
 createTooltip(fav2, "현재 페이지를 바로가기 목록에 저장합니다.");
 
-import { createTanslations } from './common.js';
-const translations = createTanslations;
+
 
 languageSwitcher.addEventListener("click", function (event) {
 
@@ -1133,43 +1314,43 @@ document.addEventListener('DOMContentLoaded', () => {
 const modal = document.createElement('div');
 modal.id = 'fullscreenModal';
 Object.assign(modal.style, {
-  display: 'none',
-  position: 'fixed',
-  top: '0px',
-  left: '0px',
-  width: '100%',
-  height: '100%',
-  background: 'white',
-  zIndex: 9999
+    display: 'none',
+    position: 'fixed',
+    top: '0px',
+    left: '0px',
+    width: '100%',
+    height: '100%',
+    background: 'white',
+    zIndex: 9999
 });
 
 // 닫기 버튼 생성
 const closeBtn = document.createElement('button');
 closeBtn.innerHTML = 'Close';
 Object.assign(closeBtn.style, {
-  position: 'absolute',
-  top: '15px',
-  right: '15px',
-  zIndex: 10000,
-  fontSize: '15px',
-  color: 'yellow',
-  background: 'blue',
-  border: 'none',
-  cursor: 'pointer',
-  paddingBottom:'15px'
+    position: 'absolute',
+    top: '15px',
+    right: '15px',
+    zIndex: 10000,
+    fontSize: '15px',
+    color: 'yellow',
+    background: 'blue',
+    border: 'none',
+    cursor: 'pointer',
+    paddingBottom: '15px'
 });
 closeBtn.onclick = () => {
-  iframe.src = '';
-  modal.style.display = 'none';
+    iframe.src = '';
+    modal.style.display = 'none';
 };
 
 // iframe 생성
 const iframe = document.createElement('iframe');
 iframe.id = 'modalIframe';
 Object.assign(iframe.style, {
-  width: '99%',
-  height: '99%',
-  border: 'none'
+    width: '99%',
+    height: '99%',
+    border: 'none'
 });
 
 // 구성 요소 삽입
@@ -1179,9 +1360,69 @@ document.body.appendChild(modal);
 
 // 링크 이벤트 바인딩
 document.querySelectorAll('.modal-link').forEach(link => {
-  link.addEventListener('click', function (e) {
-    e.preventDefault();
-    iframe.src = this.getAttribute('href');
-    modal.style.display = 'block';
-  });
+    link.addEventListener('click', function (e) {
+        e.preventDefault();
+        iframe.src = this.getAttribute('href');
+        modal.style.display = 'block';
+    });
 });
+
+
+function createAllMenuModal(menuItems) {
+    const modal = document.createElement('div');
+    modal.id = 'allMenuModal';
+    modal.className = 'fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50 hidden';
+
+    const content = document.createElement('div');
+    content.className = 'bg-white rounded-lg shadow-md p-6 max-h-[80%] overflow-y-auto w-2/3';
+
+    const closeBtn = document.createElement('button');
+    closeBtn.innerHTML = '&times;';
+    closeBtn.className = 'text-gray-500 hover:text-red-600 text-lg absolute top-4 right-6';
+    closeBtn.onclick = () => modal.classList.add('hidden');
+
+    const title = document.createElement('h2');
+    title.className = 'text-xl mb-4 font-bold';
+    title.textContent = '전체 메뉴';
+
+    const menuList = document.createElement('div');
+    menuList.className = 'grid grid-cols-3 gap-4';
+
+    menuItems.forEach(item => {
+        const box = document.createElement('div');
+        box.className = 'border p-4 rounded hover:bg-gray-100 cursor-pointer';
+
+        const link = document.createElement('a');
+        link.href = item.href || '#';
+        link.className = 'text-blue-600 font-semibold flex items-center';
+        link.innerHTML = `<i class="fas ${item.icon} mr-2"></i> ${item.text}`;
+
+        box.appendChild(link);
+
+        if (item.children && item.children.length > 0) {
+            const subList = document.createElement('ul');
+            subList.className = 'ml-5 mt-2 list-disc text-sm text-gray-600';
+
+            item.children.forEach(sub => {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = sub.href;
+                a.textContent = sub.text;
+                a.className = 'hover:underline';
+                li.appendChild(a);
+                subList.appendChild(li);
+            });
+
+            box.appendChild(subList);
+        }
+
+        menuList.appendChild(box);
+    });
+
+    content.appendChild(closeBtn);
+    content.appendChild(title);
+    content.appendChild(menuList);
+    modal.appendChild(content);
+    document.body.appendChild(modal);
+}
+
