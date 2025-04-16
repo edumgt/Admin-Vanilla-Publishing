@@ -39,17 +39,29 @@ function setupMasterGrid(data) {
     rowData: data,
     defaultColDef: {
       flex: 1,
+      editable: true,
       resizable: true,
       sortable: true,
-      filter: true
+      filter: true,
+      minWidth: 120
     },
+    rowSelection: "single",
+    enableRangeSelection: true,
+    suppressRowClickSelection: false,
+    animateRows: true,
+    pagination: true,
+    paginationPageSize: 10,
     onRowClicked: async event => {
       const groupcode = event.data.groupcode;
-      console.log("👉 선택된 groupcode:", groupcode);
       const detailList = await fetchJson(`http://127.0.0.1:8080/api/code?groupcode=${groupcode}`);
-      if (detailList) {
-        updateDetailGrid(detailList);
-      }
+      if (detailList) updateDetailGrid(detailList);
+    },
+    onCellEditingStopped: params => {
+      console.log("🔧 편집 완료:", params.data);
+      // TODO: 변경된 데이터 서버 전송 처리
+    },
+    onGridReady: params => {
+      params.api.sizeColumnsToFit();
     }
   };
 

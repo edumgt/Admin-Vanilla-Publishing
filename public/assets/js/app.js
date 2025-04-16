@@ -410,7 +410,7 @@ function applyButtonPermissions(permissions) {
 
 
 function fetchPermissionsByMenuPath(memberId, menuPath, callback) {
-    fetch('/api/permissions?memberId=' + memberId + '&menuPath=' + encodeURIComponent(menuPath.replace("\/","")))
+    fetch('/api/permissions?memberId=' + memberId + '&menuPath=' + encodeURIComponent(menuPath.replace("\/", "")))
         .then(function (res) {
             if (!res.ok) {
                 throw new Error('권한 조회 실패');
@@ -427,8 +427,8 @@ function fetchPermissionsByMenuPath(memberId, menuPath, callback) {
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    
-    localStorage.setItem('memberId','test0001');
+
+    localStorage.setItem('memberId', 'test0001');
 
     var memberId = localStorage.getItem('memberId'); // 예: 로그인 후 저장된 사용자 ID
     var menuPath = location.pathname;
