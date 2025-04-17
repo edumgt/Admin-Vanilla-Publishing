@@ -80,7 +80,7 @@ const grid = new tui.Grid({
     rowHeight: 42,
     minRowHeight: 42,
     columns: [
-        { header: 'Key', name: 'Key', width: 250, align: 'left', sortable: true, resizable: true, width: 100, minWidth: 80 },
+        { header: 'Key', name: 'Key', align: 'left', sortable: true, resizable: true, width: 100, minWidth: 80 },
         { header: 'Group', name: 'tpCd', editor: 'text', validation: { required: true }, sortable: true, filter: 'text', resizable: true, width: 150 },
         { header: 'Name', name: 'tpNm', editor: 'text', sortable: true, filter: 'text', resizable: true, width: 200 },
         { header: 'Desc.', name: 'descCntn', editor: 'text', sortable: true, filter: 'text', resizable: true, },
@@ -410,9 +410,8 @@ function applyButtonPermissions(permissions) {
 
 
 function fetchPermissionsByMenuPath(userId, menuPath, callback) {
-    fetch('http://localhost:8080/api/permissions?userId=' + userId + '&menuPath=' + encodeURIComponent(menuPath.replace("\/","")))
+    fetch(`${ backendUrl}/api/permissions?userId=${userId}&menuPath=${encodeURIComponent(menuPath.replace("/", ""))}`)
         .then(function (res) {
-            console.log(res);
             if (!res.ok) {
                 throw new Error('권한 조회 실패');
             }
