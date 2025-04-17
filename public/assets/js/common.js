@@ -1,51 +1,53 @@
-function createSearchButton() {
-    const searchButton = document.createElement('button');
-    searchButton.className = "items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2 mr-2";
-    searchButton.innerHTML = `<i class="fas fa-search"></i><span>검색</span>`;
+// 📁 common.js
 
-    return searchButton;
+// 버튼 하나를 만드는 핵심 함수
+export function createButton({ icon, label, className = "", onClick = null, allowed = true }) {
+    const button = document.createElement("button");
+
+    // 공통 기본 클래스
+    button.className = className || "items-center px-3 py-1 text-white rounded space-x-2 mr-2";
+    button.innerHTML = `<i class="${icon}"></i><span>${label}</span>`;
+
+    // 권한에 따라 스타일 및 동작 제어
+    if (!allowed) {
+        button.classList.add('bg-gray-300', 'cursor-not-allowed');
+        button.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+        button.disabled = true;
+    } else {
+        button.classList.add('bg-gray-700', 'hover:bg-gray-600');
+        button.disabled = false;
+        if (onClick) {
+            button.addEventListener('click', onClick);
+        }
+    }
+
+    return button;
 }
 
-function createAddButton() {
-    const addButton = document.createElement('button');
-    addButton.className = "items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2 mr-2";
-    addButton.innerHTML = `<i class="fas fa-plus"></i><span>신규</span>`;
-
-    return addButton;
+// 버튼별로 쉽게 만드는 래퍼 함수
+function createSearchButton(allowed = true, onClick = null) {
+    return createButton({ icon: "fas fa-search", label: "검색", allowed, onClick });
 }
 
-function createDelButton() {
-    const deleteButton = document.createElement('button');
-    deleteButton.className = "items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2 mr-2";
-    deleteButton.innerHTML = `<i class="fas fa-trash"></i><span>삭제</span>`;
-
-    return deleteButton;
+function createAddButton(allowed = true, onClick = null) {
+    return createButton({ icon: "fas fa-plus", label: "신규", allowed, onClick });
 }
 
-function createCloseButton() {
-    const closeButton = document.createElement('button');
-    closeButton.className = "items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2";
-    closeButton.innerHTML = `<i class="fas fa-times"></i><span>닫기</span>`;
-
-    return closeButton;
+function createDelButton(allowed = true, onClick = null) {
+    return createButton({ icon: "fas fa-trash", label: "삭제", allowed, onClick });
 }
 
-function createSaveButton() {
-    const saveButton = document.createElement('button');
-    saveButton.className = "items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2";
-    saveButton.innerHTML = `<i class="fas fa-save"></i><span>저장</span>`;
-
-    return saveButton;
+function createCloseButton(allowed = true, onClick = null) {
+    return createButton({ icon: "fas fa-times", label: "닫기", allowed, onClick });
 }
 
-function createResetSearchButton() {
-    const resetSearchButton = document.createElement('button');
-    resetSearchButton.className = "items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2";
-    resetSearchButton.innerHTML = `<i class="fas fa-undo"></i><span>검색 초기화</span>`;
-
-    return resetSearchButton;
+function createSaveButton(allowed = true, onClick = null) {
+    return createButton({ icon: "fas fa-save", label: "저장", allowed, onClick });
 }
 
+function createResetSearchButton(allowed = true, onClick = null) {
+    return createButton({ icon: "fas fa-undo", label: "검색 초기화", allowed, onClick });
+}
 
 const createTanslations = {
     en: {

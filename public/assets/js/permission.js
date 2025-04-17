@@ -2,7 +2,7 @@ let leftGridApi = null;
 let rightGridApi = null;
 let selectedUserId = null;
 
-const permissionFields = ["canSearch", "canAdd", "canDelete", "canResetSearch", "canSave", "canView"];
+const permissionFields = ["canSearch", "canAdd", "canDelete", "canResetSearch", "canSave", "canView", "canEdit"];
 
 document.addEventListener("DOMContentLoaded", () => {
     injectDragStyles();
