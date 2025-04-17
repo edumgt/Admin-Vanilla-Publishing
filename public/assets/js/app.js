@@ -9,6 +9,7 @@ import {
     RowNumRenderer,
     createSaveRenderer
 } from './common.js';
+import {backendDomain} from "./logomodule";
 
 
 
@@ -410,7 +411,7 @@ function applyButtonPermissions(permissions) {
 
 
 function fetchPermissionsByMenuPath(userId, menuPath, callback) {
-    fetch(`${ backendUrl}/api/permissions?userId=${userId}&menuPath=${encodeURIComponent(menuPath.replace("/", ""))}`)
+    fetch(`${ backendDomain}/api/permissions?userId=${userId}&menuPath=${encodeURIComponent(menuPath.replace("/", ""))}`)
         .then(function (res) {
             if (!res.ok) {
                 throw new Error('권한 조회 실패');
