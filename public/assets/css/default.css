@@ -75,7 +75,6 @@ body {
   transform: scale(1.05);
 }
 
-/* title */
 .breadcrumb {
   font-size: 1.1rem;
   font-weight: var(--gnb-item-font-weight);
@@ -86,7 +85,6 @@ body {
   top:75px;
 }
 
-/* OffCanvas - LNB */
 .menu-text {
   font-size: 0.8rem;
   font-weight: var(--gnb-item-font-weight);
@@ -137,7 +135,6 @@ body {
   display: flex;
   align-items: center;
   padding: 10px 0px;
-  /* transition: all 0.3s ease; */
 }
 
 .menu-item i {
@@ -148,7 +145,6 @@ body {
   margin-right: 0;
 }
 
-/* GNB Menu */
 .gnb-menu {
   height: var(--gnb-height);
   background: var(--bg-dark);
@@ -162,7 +158,6 @@ body {
   z-index: 50;
 }
 
-/* GNB Item */
 .gnb-item {
   display: flex;
   font-size: var(--gnb-item-font-size);
@@ -171,7 +166,6 @@ body {
   color: var(--gnb-item-color);
   padding: var(--gnb-item-padding);
   border-radius: 0.375rem;
-  /* transition: all 0.3s ease; */
   position: relative;
   overflow: hidden;
 }
@@ -180,7 +174,6 @@ body {
   font-size: 1rem;
   margin-right: 0.6rem;
   color: #718096;
-  /* transition: color 0.3s ease; */
 }
 
 .gnb-item:hover {
@@ -217,7 +210,6 @@ body {
   width: 80%;
 }
 
-/* Tabs */
 .tabs {
   display: flex;
   gap: 25px;
@@ -229,7 +221,6 @@ body {
   line-height: calc(1.5rem - 3px);
 }
 
-/* Member Icon */
 #memberIcon {
   position: absolute;
   right: 20px;
@@ -237,8 +228,6 @@ body {
   font-size: 1.25rem;
   background: var(--bg-dark);
   border-radius: 50%;
-  /* padding: 0.4rem; */
-  /* transition: background 0.3s ease; */
   cursor: pointer;
 }
 
@@ -247,14 +236,12 @@ body {
   color: var(--text-color);
 }
 
-/* Logo Text */
 .logo-text {
   color: var(--text-color);
   font-size: 1.1rem;
   font-weight: var(--gnb-item-font-weight);
 }
 
-/* Menu Icon */
 .menu-icon {
   transition: color 0.3s ease;
 }
@@ -263,7 +250,6 @@ body {
   color: var(--primary-color);
 }
 
-/* Language Switcher */
 #languageSwitcher img {
   width: 30px;
   height: 30px;
@@ -320,7 +306,6 @@ body {
   }
 }
 
-/* Utility Classes */
 .cursor-not-allowed {
   cursor: not-allowed;
 }
@@ -341,7 +326,6 @@ body {
   border: 1px solid #888;
 }
 
-/* DropDown */
 .dropdown {
   position: absolute;
   top: 15px;
@@ -434,7 +418,6 @@ body {
   border-bottom: 1px solid var(--border-color);
 }
 
-/* Toast */
 .toast {
   position: fixed;
   top: 10px;
@@ -472,7 +455,6 @@ body {
   background-color: #e53e3e;
 }
 
-/* TUI Grid */
 .tui-grid-cell.tui-grid-cell-row-header,
 .tui-grid-cell.tui-grid-cell-header {
 
@@ -495,9 +477,7 @@ body {
   font-weight: 600;
   font-size: 1rem !important;
   padding: 1px !important;
-  /* 내부 여백 */
   margin: 0 !important;
-  /* 외부 여백 제거 */
 }
 
 .tui-grid-layer-editing input:focus {
@@ -527,12 +507,10 @@ input[type="checkbox"] {
   background-color: #e1e1e1 !important;
 }
 
-/* Filters */
 .tui-grid-filter-container {
   background-color: var(--filter-bg) !important;
 }
 
-.tui-grid-filter-container {
   font-family: var(--font-family) !important;
   width: 250px;
   height: 130px;
@@ -565,12 +543,10 @@ input[type="checkbox"] {
 }
 
 
-/* Modal */
 .modal {
   background-color: var(--modal-bg);
 }
 
-.modal {
   display: none;
   position: fixed;
   top: 0;
@@ -615,7 +591,6 @@ input[type="checkbox"] {
   background-color: var(--primary-color) !important;
 }
 
-/* tailwind overload */
 .shadow-md {
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
 }
@@ -628,7 +603,6 @@ input[type="checkbox"] {
   cursor: pointer;
 }
 
-/* calendar , trello */
 .time-select-icon {
   position: relative;
 }
@@ -655,7 +629,6 @@ input[type="checkbox"] {
   border: 2px dashed #ccc;
 }
 
-/* grid */
 .grid-container {
 
   background-color: #fefefe;
@@ -668,31 +641,26 @@ input[type="checkbox"] {
   display: none;
 }
 
-/* status */
 .inProgress {
   border-color: var(--primary-color);
 }
 
 .pending {
   border-color: #ffcc00;
-  /* yellow */
 }
 
 .risk {
   border-color: #ef4444;
-  /* red */
 }
 
 .success {
   border-color: #10b981;
-  /* green */
 }
 
 .fail {
   color: var(--input-color);
 }
 
-/* badge */
 .badge {
   position: absolute;
   top: 5px;
@@ -718,7 +686,6 @@ input[type="checkbox"] {
   border: 1px solid #ddd;
 }
 
-/* default html component */
 select {
   width: 150px;
   height: calc(1.5em + 6px);
@@ -761,8 +728,6 @@ button[type="submit"],
 button[type="button"],
 input[type="button"],
 button {
-  /* border: 1px solid var(--primary-color) !important; */
-  /* height: calc(1.5rem + 6px); */
   height: 29px;
   padding-left: .75rem;
   padding-right: .75rem;
@@ -802,10 +767,8 @@ label {
   background-color: #f1f1f1;
 }
 
-/* city.html 용도 */
 #panelContainer {
   display: flex;
-  /* justify-content: space-between; */
   margin-top: 20px;
   height: 400px;
   overflow-x: auto;
@@ -830,7 +793,6 @@ label {
 
 
 
-/* calnedar */
 .day-header {
   border: 1px solid #333;
   color: #333;
@@ -849,34 +811,28 @@ label {
   justify-content: space-between;
 }
 
-/* Handsontable 기본 컨테이너 */
 .handsontable {
   z-index: 41 !important;
 }
 
-/* Handsontable의 헤더 */
 .ht_clone_top,
 .ht_clone_left,
 .ht_clone_top_left_corner {
   z-index: 41 !important;
 }
 
-/* Handsontable 컨텍스트 메뉴 */
 .htContextMenu {
   z-index: 41 !important;
 }
 
-/* Handsontable 셀 편집기 */
 .handsontable .ht_editor {
   z-index: 41 !important;
 }
 
-/* Handsontable 툴팁 */
 .handsontable .htTooltip {
   z-index: 41 !important;
 }
 
-/* card */
 .card {
   display: flex;
   flex-direction: column;
@@ -887,32 +843,24 @@ label {
 .tab-link {
   display: flex;
   align-items: center;
-  /* 아이콘과 텍스트를 수직 정렬 */
   padding: 10px 15px;
   text-decoration: none;
   font-size: 16px;
-  /* 텍스트 크기 */
 }
 
 .tab-link i {
   font-size: 16px;
-  /* 아이콘 크기 */
   display: flex;
-  /* 아이콘을 정렬 */
   align-items: center;
   justify-content: center;
   width: 20px;
-  /* 아이콘 너비 */
   height: 20px;
-  /* 아이콘 높이 */
 }
 
 .tab-link span {
   display: flex;
   align-items: center;
-  /* 아이콘과 동일한 높이 유지 */
   line-height: 1;
-  /* 텍스트 라인 높이 조정 */
 }
 
 .dropdown-divider {
@@ -1054,7 +1002,6 @@ label {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* network.html */
 .status-box {
   border: 2px solid;
   padding: 10px;
@@ -1099,7 +1046,6 @@ label {
   color: #666;
 }
 
-/* work.html */
 #hotel-container {
   display: flex;
   flex-direction: column;
@@ -1201,7 +1147,6 @@ label {
   background-color: #f9f9f9;
 }
 
-/* chain.html */
 .custom-grid {
   height: 40vh;
   width: 100%;
@@ -1222,7 +1167,6 @@ label {
 .history-button {
   background-color: #0058a3;
   color: #ffcc00;
-  /* border: none; */
   padding: 0px 5px 35px 5px;
   cursor: pointer;
   font-size: 0.9rem;
@@ -1234,7 +1178,6 @@ label {
   background-color: #004080;
 }
 
-/* 수정 이력 모달 스타일 */
 #historyModal {
   display: none;
   position: fixed;
@@ -1243,7 +1186,6 @@ label {
   transform: translate(-50%, -20%);
   background: white;
   padding: 1rem;
-  /* border: 1px solid #ccc; */
   z-index: 50;
   
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
@@ -1273,7 +1215,6 @@ label {
   border: 1px solid #ccc;
 }
 
-/* hospital.html , chatbot */
 .chat-bot {
   position: fixed;
   bottom: 75px;
@@ -1326,7 +1267,6 @@ label {
 
 .tab-hos {
   color: #555;
-  /* padding:0.5rem; */
   border: 1px solid #efefef;
 }
 
@@ -1344,36 +1284,6 @@ label {
   display: block;
 }
 
-/* 
-.calendar {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 10px;
-}
-
-.calendar .day {
-  background-color: #f3f4f6;
-  border: 1px solid #e5e7eb;
-  border-radius: 6px;
-  padding: 10px;
-  text-align: center;
-}
-
-.calendar .day .date {
-  font-weight: bold;
-}
-
-.calendar .day .schedule {
-  margin-top: 5px;
-}
-
-.calendar .day .schedule .working {
-  color: green;
-}
-
-.calendar .day .schedule .vacation {
-  color: red;
-} */
 
 .scroll-x {
   overflow-x: scroll;
@@ -1391,7 +1301,6 @@ label {
   overflow-y: auto
 }
 
-/* survey.html */
 .dropdown-scroll-container {
   height: calc(100vh - 30px);
   overflow-x: hidden;
@@ -1399,9 +1308,7 @@ label {
   scrollbar-width: thin;
 }
 
-/* 모달 팝업 스타일 */
 #mobileSurveyModal {
-  /* display: none;  */
   position: fixed;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.75);
@@ -1410,19 +1317,16 @@ label {
   z-index: 50;
 }
 
-/* 모바일 설문 컨텐츠 스타일 */
 #mobileSurveyContent {
   width: 400px;
   height: 700px;
   padding: 10px;
   background-color: white;
   border-radius: 20px;
-  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
   overflow: hidden;
   position: relative;
 }
 
-/* 상단 바 스타일 */
 #mobileSurveyContent::before {
   content: '';
   display: block;
@@ -1435,7 +1339,6 @@ label {
   left: 0;
 }
 
-/* 하단 바 스타일 */
 #mobileSurveyContent::after {
   content: '';
   display: block;
@@ -1448,14 +1351,12 @@ label {
   left: 0;
 }
 
-/* 컨텐츠 내부 패딩 */
 #mobileSurveyContent .content {
   padding: 50px 20px 50px 20px;
   height: calc(100% - 100px);
   overflow-y: auto;
 }
 
-/* work.html 사용 */
 .tab-button2 {
   padding: 0.5rem 1rem;
   border-radius: 0.375rem;
@@ -1476,7 +1377,6 @@ label {
 #offCanvas.collapsed ul[id^="submenu-"] {
   display: none !important;
 }
-/* 일반 CSS 방식 */
 #offCanvas.collapsed .submenu-toggle {
   display: none !important;
 }
