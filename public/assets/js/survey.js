@@ -1,3 +1,8 @@
+import { createSaveRenderer } from './common.js';
+
+let surveyGrid;
+let questionsGrid;
+
 document.addEventListener('DOMContentLoaded', () => {
     const workarea = document.getElementById('workarea');
     workarea.classList.add('flex', 'mb-4', 'mt-4', 'gap-2');
@@ -10,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // JSON 데이터를 불러오는 함수 (최대 3번 재시도)
     function fetchQuestions(retryCount = 0) {
-        //console.log(`Fetching questions... Attempt: ${retryCount + 1}`);
+        // console.log(`Fetching questions... Attempt: ${retryCount + 1}`);
 
         fetch('assets/mock/questions.json')
             .then(response => {
@@ -30,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.error("Failed to fetch questions after multiple attempts.");
                 }
             });
-    }
+    }   
 
     if (!rowData) {
         fetchQuestions(); // 최초 데이터 로드 시도
@@ -40,9 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function initializeGrid(data) {
 
-        
 
-        window.grid = new tui.Grid({
+        questionsGrid = new tui.Grid({
             el: questionsContainer,
             data: data,
             columns: [
@@ -82,18 +86,14 @@ document.addEventListener('DOMContentLoaded', () => {
             bodyHeight: 500,
             scrollX: true,
             scrollY: true
-        });
-
+        });     
         
-        
-        
-
-        grid.on('afterChange', ({ changes }) => {
+        questionsGrid.on('afterChange', ({ changes }) => {
             let storedData = JSON.parse(localStorage.getItem("questions")) || [];
 
             changes.forEach(change => {
                 const { rowKey, columnName, value } = change;
-                let updatedRow = grid.getRow(rowKey);
+                let updatedRow = questionsGrid.getRow(rowKey);
 
                 let existingIndex = storedData.findIndex(q => q.id === updatedRow.id);
                 if (existingIndex !== -1) {
@@ -134,8 +134,8 @@ function addQuestion() {
     localStorage.setItem('questions', JSON.stringify(questions));
     createQuestionBox(newQuestion, document.getElementById('questionsList'));
 
-    if (window.grid) {
-        window.grid.appendRow(newQuestion); // 새로운 행 추가
+    if (questionsGrid) {
+        questionsGrid.appendRow(newQuestion); // 새로운 행 추가
 
     }
 
@@ -161,6 +161,15 @@ function openTab(evt, tabName) {
 
     if (tabName === 'SurveyResponse') {
         populateSurveySelect();
+    }
+    if (tabName === 'SurveyCreation') {
+        setTimeout(() => {
+            surveyGrid.refreshLayout(); // 또는 resetLayout()
+        }, 100);
+    }else if (tabName === 'QuestionCreation') {
+        setTimeout(() => {
+            questionsGrid.refreshLayout(); // 또는 resetLayout()
+        }, 100);
     }
 }
 
@@ -288,7 +297,7 @@ function createSurveyQuestionBox(question, draggable = false) {
 
 
 // 설문 문항 생성 함수
-function createSurveyQuestionBox(question, isRemovable) {
+function createSurveyQuestionBox2(question, isRemovable) {
     const questionBox = document.createElement('div');
     questionBox.className = 'question-box border p-2 my-2 relative';
     questionBox.textContent = question.text;
@@ -607,3 +616,328 @@ function startMobileSurvey() {
     showQuestion(currentQuestionIndex);
     document.getElementById('mobileSurveyModal').classList.remove('hidden');
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    // 설문지 관리
+    fillYearCombo();
+    initializeSurveyGrid();
+    loadSurveys();
+});
+
+
+// 설문지 관리 탭_그리드 초기화 
+function initializeSurveyGrid(){
+ 
+    surveyGrid = new tui.Grid({
+        el: document.getElementById('surveyGrid'),
+        rowHeaders: ['rowNum', 'checkbox'],
+        editingEvent: 'click',
+        scrollX: true,
+        scrollY: true,
+        bodyHeight: 250,
+        columns: [
+            { header: '년도', name: 'year', width: 80,  align: 'center'
+                , editor: {
+                    type: 'datePicker',
+                    options: {
+                      format: 'yyyy',
+                      type: 'year'
+                    }
+                }
+            },
+            { header: '분기', name: 'qt', width: 60, align: 'center'
+                , editor: {
+                    type: 'select',
+                    options: {
+                    listItems: [
+                        { text: '1', value: '1' },
+                        { text: '2', value: '2' },
+                        { text: '3', value: '3' },
+                        { text: '4', value: '4' }
+                    ]
+                    }
+                }},
+            { header: '설문시작일', name: 'sdate', align: 'center', formatter: ({ value }) => formatDate(value), editable: true
+                , editor: {
+                    type: 'datePicker',
+                    options: {
+                        format: 'yyyy-MM-dd'  // 서버 전송용 포맷
+                    }
+                }
+            },
+            { header: '설문종료일', name: 'edate', align: 'center', formatter: ({ value }) => formatDate(value), editable: true
+                , editor: {
+                    type: 'datePicker',
+                    options: {
+                        format: 'yyyy-MM-dd'  // 서버 전송용 포맷
+                    }
+                }
+            },
+            {
+                header: '저장', name: 'saveBtn', width: 80, align: 'center',
+                renderer: {
+                  type: createSaveRenderer
+                }
+            }
+        ]
+    });
+
+    // const questionGrid = new tui.Grid({
+    //     el: document.getElementById('questionGrid'),
+    //     columns: [
+    //         { header: '번호', name: 'sort', width: 50 },
+    //         { header: '문항', name: 'question' },
+    //         { header: '유형', name: 'type' },
+    //     ],
+    //     bodyHeight: 250
+    // });
+
+    surveyGrid.on('click', (ev) => {
+        //const row = surveyGrid.getRow(ev.rowKey);
+        //handleSurveyClick(row);
+      
+        const { rowKey, columnName } = ev;
+        const row = surveyGrid.getRow(rowKey);
+
+        if (columnName === 'saveBtn') {
+
+            // 🔍 필수 입력값 확인
+            const requiredFields = ['year', 'qt', 'sdate', 'edate'];
+            const emptyField = requiredFields.find(field => !row[field] || row[field].toString().trim() === '');
+
+            const fieldLabels = {
+                year: '년도',
+                qt: '분기',
+                sdate: '설문 시작일',
+                edate: '설문 종료일'
+            };
+
+            if (emptyField) {
+                const label = fieldLabels[emptyField] || emptyField; // 매핑이 없으면 그대로 출력
+                showToast(`"${label}" 항목을 입력해주세요.`, 'warning', lang);
+                return;
+              }
+
+            if(row.isNew == true) {
+                // 날짜 필드를 SQL 서버 형식으로 가공
+                row.pollSdate = formatDateTimeToSQL(row.sdate);
+                row.pollEdate = formatDateTimeToSQL(row.edate);
+
+                //console.log('🔸 저장할 행 데이터:', row);
+    
+                // 실제 저장 처리 예시 (Ajax 호출 등)
+                fetch('http://localhost:8080/api/surveys', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(row)
+                })
+                .then(res => res.json())
+                .then(result => {
+                    if (result > 0) {
+                        showToast('저장 성공', 'success', lang);
+    
+                        // 👉 저장 성공 시 그리드 데이터 새로 불러오기
+                        loadSurveys();
+                    } else {
+                        showToast('저장 실패', 'error', lang);
+                    }
+                })
+                .catch(err => {
+                    console.error('저장 오류:', err);
+                    showToast('저장 오류', 'error', lang);
+                });
+            } else {
+                // 날짜 필드를 SQL 서버 형식으로 가공
+                row.pollSdate = formatDateTimeToSQL(row.sdate);
+                row.pollEdate = formatDateTimeToSQL(row.edate);
+                
+                //console.log('🔸 저장할 행 데이터:', row);
+
+                // 실제 저장 처리 예시 (Ajax 호출 등)
+                fetch(`http://localhost:8080/api/surveys/${row.seq}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(row)
+                })
+                .then(res => res.json())
+                .then(result => {
+                    if (result > 0) {
+                        showToast('저장 성공', 'success', lang);
+    
+                        // 👉 저장 성공 시 그리드 데이터 새로 불러오기
+                        loadSurveys();
+                    } else {
+                        showToast('저장 실패', 'error', lang);
+                    }
+                })
+                .catch(err => {
+                    console.error('저장 오류:', err);
+                    showToast('저장 오류', 'error', lang);
+                });
+            }
+
+        }
+
+    });
+      
+}
+
+// 날짜 필드를 SQL 서버 형식으로 가공
+function formatDateTimeToSQL(dateStr) {
+    const date = new Date(dateStr);
+    if (isNaN(date)) return null;
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    const hh = '00';
+    const mi = '00';
+    return `${yyyy}-${mm}-${dd} ${hh}:${mi}:00`;
+}
+  
+// 연도 콤보 채우기
+function fillYearCombo() {
+    const yearSelect = document.getElementById('searchYear');
+
+    // 전체 옵션 추가
+    const allOption = document.createElement('option');
+    allOption.value = '';
+    allOption.text = '전체';
+    yearSelect.appendChild(allOption);
+    
+    const currentYear = new Date().getFullYear();
+    for (let y = currentYear; y >= currentYear - 5; y--) {
+        const option = document.createElement('option');
+        option.value = y;
+        option.text = `${y}년`;
+        yearSelect.appendChild(option);
+    }
+}
+
+// 날짜 문자열 → yyyy-mm-dd 형식으로 포맷팅
+function formatDate(dateStr) {
+    if (!dateStr) return '';
+    const date = new Date(dateStr);
+    if (isNaN(date)) return dateStr; // 유효하지 않은 날짜면 원본 출력
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
+// 설문 목록 로딩
+function loadSurveys() {
+    const year = document.getElementById('searchYear').value;
+    const qt = document.getElementById('searchQt').value;
+
+    const query = new URLSearchParams({ year, qt });
+    fetch(`http://localhost:8080/api/surveys/search?${query}`)
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`서버 응답 오류: ${res.status}`);
+            }
+            return res.json();
+        })
+        .then(data => {
+            surveyGrid.resetData(data);
+            //document.getElementById('detailPanelLeft').classList.add('hidden');
+            //document.getElementById('detailPanelRight').classList.add('hidden');
+        })
+        .catch(err => {
+            console.error('❌ Fetch 오류:', err.message);
+            alert('설문 데이터를 불러오는 중 오류가 발생했습니다.');
+        });
+}
+
+// 설문 선택 시 문항/요약 패널 열기
+function handleSurveyClick(rowData) {
+    document.getElementById('detailPanelLeft').classList.remove('hidden');
+    document.getElementById('detailPanelRight').classList.remove('hidden');
+
+    // 문항 불러오기
+    fetch(`/api/surveys/${rowData.seq}/questions`)
+        .then(res => res.json())
+        .then(data => questionGrid.resetData(data));
+
+    // 통계/응답 수 불러오기
+    fetch(`/api/surveys/${rowData.seq}/summary`)
+        .then(res => res.json())
+        .then(summary => {
+        document.getElementById('summaryContent').innerHTML = `
+            <p><strong>응답 수:</strong> ${summary.total}</p>
+            <p><strong>평균 점수:</strong> ${summary.avgScore}</p>
+        `;
+        });
+}
+
+// 신규 행 추가
+function addQuesionSurvey() {
+    const data = surveyGrid.getData();
+    const hasEmptyRow = data.some(row => row.year === ''|| row.year === null || row.qt === '' || row.qt === null);
+    if (hasEmptyRow) {
+        showToast('input-allowed', 'info', lang);       
+    } else {
+        surveyGrid.prependRow({
+            year: '',
+            qt: '',
+            sdate: '',
+            edate: '',
+            isNew: true   // 신규 여부 커스텀 속성
+        });
+    }
+
+    
+}
+
+// 행 삭제
+function delQuesionSurvey() {
+    const selectedKeys = surveyGrid.getCheckedRowKeys();
+
+    if (selectedKeys.length === 0) {
+        showToast('삭제할 항목을 선택하세요.', 'warning', lang);
+        return;
+    }
+
+    selectedKeys.forEach(rowKey => {
+        const row = surveyGrid.getRow(rowKey);
+
+        // 아직 저장되지 않은 신규행이면 바로 삭제
+        if(row.isNew == true) {
+            surveyGrid.removeRow(rowKey);
+        } else {
+            // 서버 API 호출
+            fetch(`http://localhost:8080/api/surveys/${row.seq}`, {
+                method: 'DELETE'
+            })
+            .then(res => {
+                if (!res.ok) throw new Error(`서버 오류: ${res.status}`);
+                return res.json(); // 삭제 결과 (성공 시 정수 반환 기대)
+            })
+            .then(result => {
+                if (result > 0) {
+                    showToast('삭제 성공', 'success', lang);
+                    surveyGrid.removeRow(rowKey);
+                } else {
+                    showToast('삭제 실패', 'error', lang);
+                }
+            })
+            .catch(err => {
+                console.error('삭제 오류:', err);
+                showToast('삭제 중 오류 발생', 'error', lang);
+            });
+        }
+    });
+}
+
+const exports = {
+    openTab,
+    loadSurveys,
+    addQuesionSurvey,
+    delQuesionSurvey,
+    addQuestion,
+    saveSurvey,
+    handleSurveyClick
+};
+
+Object.entries(exports).forEach(([key, fn]) => {
+    window[key] = fn;
+  });
