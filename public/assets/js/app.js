@@ -409,8 +409,10 @@ function applyButtonPermissions(permissions) {
 }
 
 
-function fetchPermissionsByMenuPath(userId, menuPath, callback) {
-    fetch('http://localhost:8080/api/permissions?userId=' + userId + '&menuPath=' + encodeURIComponent(menuPath.replace("\/","")))
+
+function fetchPermissionsByMenuPath(memberId, menuPath, callback) {
+    fetch('/api/permissions?memberId=' + memberId + '&menuPath=' + encodeURIComponent(menuPath.replace("\/", "")))
+
         .then(function (res) {
             console.log(res);
             if (!res.ok) {
@@ -428,7 +430,12 @@ function fetchPermissionsByMenuPath(userId, menuPath, callback) {
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    var userId = localStorage.getItem('userId'); // 예: 로그인 후 저장된 사용자 ID
+
+
+    localStorage.setItem('memberId', 'test0001');
+
+    var memberId = localStorage.getItem('memberId'); // 예: 로그인 후 저장된 사용자 ID
+
     var menuPath = location.pathname;
 
     fetchPermissionsByMenuPath(userId, menuPath, function (err, permissions) {

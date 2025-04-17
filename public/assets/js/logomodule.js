@@ -180,12 +180,7 @@ function renderOffCanvasMenu(menuItems) {
         ul.appendChild(li);
     });
 
-
-
     const buttonsContainer = document.createElement('div');
-
-
-
 
     const expandButton = document.createElement('button');
     expandButton.id = 'expandOffCanvas';
@@ -199,12 +194,10 @@ function renderOffCanvasMenu(menuItems) {
     collapseButton.innerHTML = '<i class="fas fa-chevron-left"></i>';
     collapseButton.style.border = '1px solid #333';
 
-
-
     buttonsContainer.appendChild(expandButton);
     buttonsContainer.appendChild(collapseButton);
 
-    
+
     allMenuButton.id = 'showAllMenu';
     allMenuButton.className = 'text-gray-600 hover:text-blue-500 text-md';
     allMenuButton.innerHTML = '<i class="fas fa-th-large"></i>';
@@ -760,8 +753,7 @@ memberMenu.innerHTML = `<div class="bg-white shadow-lg p-3 rounded-md border">
                      </a>
 
                      <div class="dropdown-divider"></div>
-
-                     
+                    
                         <a href="1.html" class="dropdown-item modal-link">
                             <div class="d-flex align-items-center gap-3">
                             <i class="fas fa-cog fs-5"></i>
@@ -993,8 +985,6 @@ const fav1 = document.getElementById("fav1");
 createTooltip(fav1, "현재 페이지를 로그인 후 바로가기로 저장합니다.");
 const fav2 = document.getElementById("fav2");
 createTooltip(fav2, "현재 페이지를 바로가기 목록에 저장합니다.");
-
-
 
 languageSwitcher.addEventListener("click", function (event) {
 
@@ -1367,50 +1357,61 @@ document.querySelectorAll('.modal-link').forEach(link => {
     });
 });
 
-
 function createAllMenuModal(menuItems) {
     const modal = document.createElement('div');
     modal.id = 'allMenuModal';
     modal.className = 'fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50 hidden';
 
     const content = document.createElement('div');
-    content.className = 'bg-white rounded-lg shadow-md p-6 max-h-[80%] overflow-y-auto w-2/3';
+    content.className = 'relative bg-white rounded-lg shadow-md p-6 max-h-[80%] overflow-y-auto w-2/3';
 
     const closeBtn = document.createElement('button');
     closeBtn.innerHTML = '&times;';
-    closeBtn.className = 'text-gray-500 hover:text-red-600 text-lg absolute top-4 right-6';
+    closeBtn.className = 'absolute top-2 right-4 text-gray-500 hover:text-red-600 text-2xl font-bold';
     closeBtn.onclick = () => modal.classList.add('hidden');
 
     const title = document.createElement('h2');
-    title.className = 'text-xl mb-4 font-bold';
+    title.className = 'text-xl font-bold mb-6';
     title.textContent = '전체 메뉴';
 
     const menuList = document.createElement('div');
-    menuList.className = 'grid grid-cols-3 gap-4';
+    menuList.className = 'grid grid-cols-3 gap-6';
 
     menuItems.forEach(item => {
         const box = document.createElement('div');
-        box.className = 'border p-4 rounded hover:bg-gray-100 cursor-pointer';
+        box.className = 'border border-gray-200 rounded p-4 hover:bg-gray-50 transition';
 
         const link = document.createElement('a');
         link.href = item.href || '#';
-        link.className = 'text-blue-600 font-semibold flex items-center';
-        link.innerHTML = `<i class="fas ${item.icon} mr-2"></i> ${item.text}`;
+        link.className = 'text-blue-600 font-semibold flex items-start gap-2 mb-2';
+
+        link.innerHTML = `
+            <i class="fas ${item.icon} mt-1 text-base"></i>
+            <div class="flex flex-col leading-tight">
+                <span>${item.text}</span>
+                <span class="text-xs text-gray-400">${item.href || '-'}</span>
+            </div>
+        `;
 
         box.appendChild(link);
 
-        if (item.children && item.children.length > 0) {
+        if (item.children?.length) {
             const subList = document.createElement('ul');
-            subList.className = 'ml-5 mt-2 list-disc text-sm text-gray-600';
+            subList.className = 'mt-2 space-y-1 text-sm';
 
             item.children.forEach(sub => {
-                const li = document.createElement('li');
-                const a = document.createElement('a');
-                a.href = sub.href;
-                a.textContent = sub.text;
-                a.className = 'hover:underline';
-                li.appendChild(a);
-                subList.appendChild(li);
+                const subItem = document.createElement('li');
+                const subLink = document.createElement('a');
+                subLink.href = sub.href || '#';
+                subLink.className = 'flex justify-between text-gray-600 hover:text-blue-500';
+
+                subLink.innerHTML = `
+                    <span>${sub.text}</span>
+                    <span class="text-xs text-gray-400">${sub.href || '-'}</span>
+                `;
+
+                subItem.appendChild(subLink);
+                subList.appendChild(subItem);
             });
 
             box.appendChild(subList);
