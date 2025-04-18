@@ -42,7 +42,7 @@ function getColumnDefs() {
   return [
     {
       field: "",
-      rowDrag: canEdit,
+      rowDrag: true,
       checkboxSelection: true,
       headerCheckboxSelection: true,
       width: 60
@@ -69,7 +69,7 @@ function setupMasterGrid(data, canEdit) {
       filter: true
     },
     rowDragManaged: canEdit,
-    suppressRowDrag: !canEdit,
+    suppressRowDrag: false,
     animateRows: true,
     onGridReady: params => {
       leftGridApi = params.api;
@@ -112,7 +112,7 @@ function setupDetailGrid(data, canEdit) {
       filter: true
     },
     rowDragManaged: canEdit,
-    suppressRowDrag: !canEdit,
+    suppressRowDrag: false,
     animateRows: true,
     onGridReady: params => {
       rightGridApi = params.api;
@@ -124,11 +124,14 @@ function setupDetailGrid(data, canEdit) {
 }
 
 function registerDropZones() {
-  if (!canDrag()) return;
-
   if (leftGridApi && rightGridApi) {
     const toRight = rightGridApi.getRowDropZoneParams({
       onDragStop: event => {
+        if (!canDrag()) {
+          showToast("드래그 권한이 없습니다.", "warning", "ko");
+          return;
+        }
+
         const dragged = event.node.data;
         const selected = leftGridApi.getSelectedRows();
         const isMulti = selected.length > 1 && selected.some(r => r.groupcode === dragged.groupcode);
@@ -141,6 +144,11 @@ function registerDropZones() {
 
     const toLeft = leftGridApi.getRowDropZoneParams({
       onDragStop: event => {
+        if (!canDrag()) {
+          showToast("드래그 권한이 없습니다.", "warning", "ko");
+          return;
+        }
+
         const dragged = event.node.data;
         const selected = rightGridApi.getSelectedRows();
         const isMulti = selected.length > 1 && selected.some(r => r.groupcode === dragged.groupcode);
