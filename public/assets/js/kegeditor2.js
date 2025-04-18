@@ -1,4 +1,5 @@
-import { initPageUI } from './accessControl.js';
+import {fetchPermissions, initPageUI} from './accessControl.js';
+import { createDropZoneWithPermission } from './common.js';
 
 const mockGroupList = [
   { groupcode: "A01", groupname: "공통코드", enabletype: "Y", regsitecode: "MAIN" },
@@ -19,18 +20,27 @@ document.addEventListener("DOMContentLoaded", () => {
   `;
   document.head.appendChild(style);
 
-  // 권한 기반으로 초기화
-  initPageUI("btnContainer", localStorage.getItem("userId"), location.pathname, {
-    buttonOrder: [],
-    gridInstance: null,
-    gridOptions: {
-      editableCols: ['groupcode', 'groupname', 'enabletype', 'regsitecode']
-    },
-    onLoad: (permissions) => {
-      const canEdit = !!permissions.canEdit;
-      setupMasterGrid(mockGroupList, canEdit);
-      setupDetailGrid([], canEdit);
-    }
+  setupMasterGrid(mockGroupList, window.canEdit);
+  setupDetailGrid([], window.canEdit);
+
+  fetchPermissions().then((permissions) => {
+    initPageUI("", {
+      gridInstance: leftGridApi,
+      gridOptions: {
+        editableCols: ['groupcode', 'groupname', 'enabletype', 'regsitecode']
+      },
+      buttonOrder: [],
+      permissions
+    });
+
+    initPageUI("", {
+      gridInstance: rightGridApi,
+      gridOptions: {
+        editableCols: []
+      },
+      buttonOrder: [],
+      permissions
+    });
   });
 });
 
@@ -73,20 +83,6 @@ function setupMasterGrid(data, canEdit) {
     animateRows: true,
     onGridReady: params => {
       leftGridApi = params.api;
-
-      // ✅ 권한 적용
-      initPageUI("btnContainer", localStorage.getItem("userId"), location.pathname, {
-        buttonOrder: [],
-        gridInstance: {
-          api: leftGridApi,
-          columnApi: leftGridApi.columnController,
-          columnDefs: leftGridApi.getColumnDefs()
-        },
-        gridOptions: {
-          editableCols: ['groupcode', 'groupname', 'enabletype', 'regsitecode']
-        }
-      });
-
       registerDropZones();
     },
     getRowClass: params => {
@@ -125,37 +121,21 @@ function setupDetailGrid(data, canEdit) {
 
 function registerDropZones() {
   if (leftGridApi && rightGridApi) {
-    const toRight = rightGridApi.getRowDropZoneParams({
-      onDragStop: event => {
-        if (!canDrag()) {
-          showToast("드래그 권한이 없습니다.", "warning", "ko");
-          return;
-        }
-
-        const dragged = event.node.data;
-        const selected = leftGridApi.getSelectedRows();
-        const isMulti = selected.length > 1 && selected.some(r => r.groupcode === dragged.groupcode);
-        const rows = isMulti ? selected : [dragged];
-
-        moveRows(rows, "left");
-      }
+    const toRight = createDropZoneWithPermission({
+      fromGridApi: leftGridApi,
+      toGridApi: rightGridApi,
+      direction: 'left',
+      moveRows
     });
+
+    const toLeft = createDropZoneWithPermission({
+      fromGridApi: rightGridApi,
+      toGridApi: leftGridApi,
+      direction: 'right',
+      moveRows
+    });
+
     leftGridApi.addRowDropZone(toRight);
-
-    const toLeft = leftGridApi.getRowDropZoneParams({
-      onDragStop: event => {
-        if (!canDrag()) {
-          showToast("드래그 권한이 없습니다.", "warning", "ko");
-          return;
-        }
-
-        const dragged = event.node.data;
-        const selected = rightGridApi.getSelectedRows();
-        const isMulti = selected.length > 1 && selected.some(r => r.groupcode === dragged.groupcode);
-        const rows = isMulti ? selected : [dragged];
-        moveRows(rows, "right");
-      }
-    });
     rightGridApi.addRowDropZone(toLeft);
   }
 }

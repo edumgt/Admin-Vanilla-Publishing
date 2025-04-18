@@ -249,47 +249,69 @@ class createBadgeRenderer {
 
 class createSaveRenderer {
     constructor(props) {
-      // 1) span or div 생성
-      const el = document.createElement('span');
-      // 2) 원하는 스타일/클래스
-      el.className = 'text-blue-900 rounded cursor-pointer flex items-center justify-center';
-      el.innerHTML = '<i class="fas fa-save"></i>'; // 저장 아이콘 (fa-save)
-      
-      el.style.display = 'inline-block';
-      el.style.textAlign = 'center';
-  
-      this.el = el;
-      this.props = props;
+        const el = document.createElement('span');
+        el.className = 'text-blue-900 rounded cursor-pointer flex items-center justify-center';
+        el.innerHTML = '<i class="fas fa-save"></i>';
+        el.style.display = 'inline-block';
+        el.style.textAlign = 'center';
+
+        el.addEventListener('click', (ev) => {
+            if (!window.canSave) {
+                ev.stopPropagation();
+                showToast('저장 권한이 없습니다.', 'warning', 'ko');
+                return;
+            }
+        });
+
+        this.el = el;
+        this.props = props;
     }
-  
-    // TUI Grid에서 DOM 엘리먼트를 얻을 때 사용
+
     getElement() {
-      return this.el;
+        return this.el;
     }
-  
+
     render(props) {
         this.props = props;
-    
-        // rowKey, grid
-        const { rowKey, grid } = props;
-        // 해당 행 전체 데이터
-        const rowData = grid.getRow(rowKey);
-    
-        // (핵심) id 유무에 따라 disabled
-        if (!rowData.id) {
-          // id == null, undefined, 0 등 falsy
-          this.el.style.pointerEvents = 'none'; // 클릭 불가
-          this.el.style.opacity = '0.5';       // 반투명
-        } else {
-          this.el.style.pointerEvents = 'auto'; // 클릭 가능
-          this.el.style.opacity = '1';          // 완전 표시
-        }
-      }
-  }
 
-  
-  
-  class RowNumRenderer {
+        const { rowKey, grid } = props;
+        const rowData = grid.getRow(rowKey);
+
+        if (!rowData.id) {
+            this.el.style.pointerEvents = 'none';
+            this.el.style.opacity = '0.5';
+        } else {
+            this.el.style.pointerEvents = 'auto';
+            this.el.style.opacity = '1';
+        }
+    }
+}
+
+export function createDropZoneWithPermission({
+     fromGridApi,
+     toGridApi,
+     direction,
+     moveRows,
+     canDrag = () => window.canEdit // 기본값으로 공통 권한 사용
+ }) {
+    return toGridApi.getRowDropZoneParams({
+        onDragStop: event => {
+            if (!canDrag()) {
+                showToast('드래그 권한이 없습니다.', 'warning', 'ko');
+                return;
+            }
+
+            const dragged = event.node.data;
+            const selected = fromGridApi.getSelectedRows();
+            const isMulti = selected.length > 1 && selected.some(r => r.groupcode === dragged.groupcode);
+            const rows = isMulti ? selected : [dragged];
+
+            moveRows(rows, direction);
+        }
+    });
+}
+
+class RowNumRenderer {
     constructor(props) {
       const el = document.createElement('span');
       this.el = el;

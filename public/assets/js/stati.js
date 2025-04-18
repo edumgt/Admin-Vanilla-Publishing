@@ -79,7 +79,7 @@ fetch('/api/members')
         });
 
 document.addEventListener('DOMContentLoaded', () => {
-    initPageUI("btnContainer", localStorage.getItem("userId"), location.pathname, {
+    initPageUI("btnContainer", {
         onSearch: () => {
             const gridData = loadData();
             const team = document.getElementById('team').value.toLowerCase();
@@ -182,20 +182,10 @@ grid.on('click', (ev) => {
 });
 
 grid.on('editingStart', (ev) => {
-    if (!window.canEdit) {
-        ev.stop(); // TUI Grid 방식: 수정을 막음
-        showToast('수정 권한이 없습니다.', 'warning', 'ko');
-        return;
-    }
     showToast('data-possible', 'info', 'ko');
 });
 
 grid.on('editingFinish', (ev) => {
-    if (!window.canEdit) {
-        ev.stop(); // TUI Grid 방식: 수정을 막음
-        showToast('수정 권한이 없습니다.', 'warning', 'ko');
-        return;
-    }
     saveData(grid.getData());
     showToast('well-done', 'info', 'ko');
 });

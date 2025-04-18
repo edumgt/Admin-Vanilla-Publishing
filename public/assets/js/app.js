@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 showToast('loading-error', 'error', 'ko');
             });
 
-    initPageUI("btnContainer", localStorage.getItem("userId"), location.pathname, {
+    initPageUI("btnContainer", {
         onSearch: () => document.getElementById('searchForm').dispatchEvent(new Event('submit')),
         onAdd: () => initNew(),
         onDelete: () => {

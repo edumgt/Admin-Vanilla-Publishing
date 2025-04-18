@@ -8,8 +8,14 @@ import {
 	createResetSearchButton
 } from './common.js';
 
-// 권한 호출
-function fetchPermissions(userId, menuPath) {
+// ✅ 권한 호출 함수 (userId, menuPath를 내부에서 자동 처리)
+export function fetchPermissions() {
+	const userId = localStorage.getItem("userId");
+	const menuPath = location.pathname;
+
+	if (!userId) throw new Error("userId가 localStorage에 없습니다.");
+	if (!menuPath) throw new Error("menuPath가 유효하지 않습니다.");
+
 	const cleanPath = encodeURIComponent(menuPath.replace("/", ""));
 	return fetch(`${backendDomain}/api/permissions?userId=${userId}&menuPath=${cleanPath}`)
 			.then((res) => {
@@ -18,11 +24,9 @@ function fetchPermissions(userId, menuPath) {
 			});
 }
 
-// 버튼 + 그리드 권한 렌더링
+// ✅ 버튼 + 그리드 권한 렌더링 함수
 export function initPageUI(
 		containerId,
-		userId,
-		menuPath,
 		{
 			onSearch,
 			onAdd,
@@ -32,11 +36,12 @@ export function initPageUI(
 			gridInstance,
 			gridOptions = {},
 			buttonOrder = ['search', 'add', 'delete', 'save', 'close', 'resetSearch'],
-			onLoad // ✅ 리팩토링: 권한 로딩 후 콜백
+			onLoad,
+			permissions: externalPermissions // 외부에서 전달받은 권한 (optional)
 		}
 ) {
-	fetchPermissions(userId, menuPath).then((permissions) => {
-		// 전역 권한 세팅
+	const applyUI = (permissions) => {
+		// 전역 권한 저장
 		if (typeof window !== 'undefined') {
 			window.canSearch = permissions.canSearch;
 			window.canAdd = permissions.canAdd;
@@ -47,16 +52,15 @@ export function initPageUI(
 			window.canResetSearch = permissions.canResetSearch;
 		}
 
-		// ✅ onLoad 콜백 존재 시 실행
+		// onLoad 콜백 실행
 		if (typeof onLoad === 'function') {
 			onLoad(permissions);
 		}
 
-		// ✅ 버튼 렌더링은 container가 존재할 때만
+		// 버튼 렌더링
 		const container = containerId ? document.getElementById(containerId) : null;
 		if (container) {
 			container.innerHTML = '';
-
 			const buttonMap = {
 				search: () => createSearchButton(window.canSearch, onSearch),
 				add: () => createAddButton(window.canAdd, onAdd),
@@ -67,22 +71,23 @@ export function initPageUI(
 			};
 
 			buttonOrder.forEach((key) => {
-				const buttonFactory = buttonMap[key];
-				if (buttonFactory) {
-					const btn = buttonFactory();
-					if (btn) container.appendChild(btn);
-				}
+				const btn = buttonMap[key]?.();
+				if (btn) container.appendChild(btn);
 			});
 		}
 
-		// ✅ 그리드 권한 처리
+		// 그리드 권한 처리
 		if (gridInstance && gridOptions.editableCols) {
 			const canEdit = !!permissions.canEdit;
 
 			// ✅ ag-Grid
-			if (gridInstance?.api && gridInstance?.columnApi && Array.isArray(gridInstance.columnDefs)) {
-				const updatedDefs = gridInstance.columnDefs.map((col) => {
-					// 필드 이름이 editableCols에 포함되거나 rowDrag가 true면 유지
+			if (typeof gridInstance.getRowNode === 'function' &&
+					typeof gridInstance.addRowDropZone === 'function') {
+				const currentDefs = typeof gridInstance.getColumnDefs === 'function'
+						? gridInstance.getColumnDefs()
+						: gridOptions.columnDefs;
+
+				const updatedDefs = currentDefs.map((col) => {
 					if (gridOptions.editableCols.includes(col.field) || col.rowDrag) {
 						return {
 							...col,
@@ -92,9 +97,23 @@ export function initPageUI(
 					}
 					return col;
 				});
-				gridInstance.api.setColumnDefs(updatedDefs);
-				gridInstance.api.setGridOption('suppressRowDrag', !canEdit);
-				gridInstance.api.setGridOption('rowDragManaged', canEdit);
+				gridInstance.setColumnDefs?.(updatedDefs);
+				gridInstance.setGridOption('rowDragManaged', canEdit);
+				gridInstance.setGridOption('suppressRowDrag', false);
+
+				// ✅ 편집 이벤트 차단
+				if (!canEdit && !gridInstance.__permissionListenersRegistered) {
+					gridInstance.__permissionListenersRegistered = true;
+
+					gridInstance.addEventListener('cellEditingStarted', (event) => {
+						event.api.stopEditing();
+						showToast('편집 권한이 없습니다.', 'warning', 'ko');
+					});
+
+					gridInstance.addEventListener('rowDragMove', (event) => {
+						showToast('드래그 권한이 없습니다.', 'warning', 'ko');
+					});
+				}
 			}
 
 			// ✅ TUI Grid
@@ -104,16 +123,32 @@ export function initPageUI(
 						return {
 							...col,
 							editor: 'text',
-							editable: !!window.canEdit
+							editable: canEdit
 						};
 					}
 					return col;
 				});
 				gridInstance.setColumns(updatedCols);
+
+				gridInstance.on('editingStart', (ev) => {
+					if (!permissions.canEdit) {
+						ev.stop(); // TUI Grid 방식: 수정을 막음
+						showToast('수정 권한이 없습니다.', 'warning', 'ko');
+					}
+				});
 			}
 		}
-	}).catch((err) => {
-		console.error("initPageUI 실패:", err);
-		showToast('권한 로딩 실패', 'error', 'ko');
-	});
+	};
+
+	// 외부에서 전달된 권한이 있으면 바로 적용, 아니면 fetch
+	if (externalPermissions) {
+		applyUI(externalPermissions);
+	} else {
+		fetchPermissions()
+				.then(applyUI)
+				.catch((err) => {
+					console.error("initPageUI 실패:", err);
+					showToast('권한 로딩 실패', 'error', 'ko');
+				});
+	}
 }
