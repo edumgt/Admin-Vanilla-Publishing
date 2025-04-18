@@ -31,7 +31,8 @@ export function initPageUI(
 			onClose,
 			gridInstance,
 			gridOptions = {},
-			buttonOrder = ['search', 'add', 'delete', 'save', 'close', 'resetSearch']
+			buttonOrder = ['search', 'add', 'delete', 'save', 'close', 'resetSearch'],
+			onLoad // ✅ 리팩토링: 권한 로딩 후 콜백
 		}
 ) {
 	fetchPermissions(userId, menuPath).then((permissions) => {
@@ -46,45 +47,54 @@ export function initPageUI(
 			window.canResetSearch = permissions.canResetSearch;
 		}
 
-		const container = document.getElementById(containerId);
-		if (!container) {
-			console.warn(`${containerId} 엘리먼트를 찾을 수 없습니다.`);
-			return;
+		// ✅ onLoad 콜백 존재 시 실행
+		if (typeof onLoad === 'function') {
+			onLoad(permissions);
 		}
 
-		container.innerHTML = '';
+		// ✅ 버튼 렌더링은 container가 존재할 때만
+		const container = containerId ? document.getElementById(containerId) : null;
+		if (container) {
+			container.innerHTML = '';
 
-		const buttonMap = {
-			search: () => createSearchButton(window.canSearch, onSearch),
-			add: () => createAddButton(window.canAdd, onAdd),
-			delete: () => createDelButton(window.canDelete, onDelete),
-			save: () => createSaveButton(window.canSave, onSave),
-			close: () => createCloseButton(true, onClose),
-			resetSearch: () => createResetSearchButton(window.canResetSearch)
-		};
+			const buttonMap = {
+				search: () => createSearchButton(window.canSearch, onSearch),
+				add: () => createAddButton(window.canAdd, onAdd),
+				delete: () => createDelButton(window.canDelete, onDelete),
+				save: () => createSaveButton(window.canSave, onSave),
+				close: () => createCloseButton(true, onClose),
+				resetSearch: () => createResetSearchButton(window.canResetSearch)
+			};
 
-		buttonOrder.forEach((key) => {
-			const buttonFactory = buttonMap[key];
-			if (buttonFactory) {
-				const btn = buttonFactory();
-				if (btn) container.appendChild(btn);
-			}
-		});
+			buttonOrder.forEach((key) => {
+				const buttonFactory = buttonMap[key];
+				if (buttonFactory) {
+					const btn = buttonFactory();
+					if (btn) container.appendChild(btn);
+				}
+			});
+		}
 
-		// 그리드 권한 적용
+		// ✅ 그리드 권한 처리
 		if (gridInstance && gridOptions.editableCols) {
+			const canEdit = !!permissions.canEdit;
+
 			// ✅ ag-Grid
 			if (gridInstance?.api && gridInstance?.columnApi && Array.isArray(gridInstance.columnDefs)) {
 				const updatedDefs = gridInstance.columnDefs.map((col) => {
-					if (gridOptions.editableCols?.includes(col.field)) {
+					// 필드 이름이 editableCols에 포함되거나 rowDrag가 true면 유지
+					if (gridOptions.editableCols.includes(col.field) || col.rowDrag) {
 						return {
 							...col,
-							editable: !!window.canEdit  // ✅ 수정 가능 여부만 토글
+							editable: canEdit,
+							rowDrag: col.rowDrag ? canEdit : false
 						};
 					}
 					return col;
 				});
 				gridInstance.api.setColumnDefs(updatedDefs);
+				gridInstance.api.setGridOption('suppressRowDrag', !canEdit);
+				gridInstance.api.setGridOption('rowDragManaged', canEdit);
 			}
 
 			// ✅ TUI Grid
@@ -93,8 +103,8 @@ export function initPageUI(
 					if (gridOptions.editableCols.includes(col.name)) {
 						return {
 							...col,
-							editor: 'text',                      // 항상 editor는 유지
-							editable: !!window.canEdit           // editable로만 제어
+							editor: 'text',
+							editable: !!window.canEdit
 						};
 					}
 					return col;
@@ -102,7 +112,6 @@ export function initPageUI(
 				gridInstance.setColumns(updatedCols);
 			}
 		}
-
 	}).catch((err) => {
 		console.error("initPageUI 실패:", err);
 		showToast('권한 로딩 실패', 'error', 'ko');
