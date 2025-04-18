@@ -4,6 +4,7 @@ import { createSaveRenderer } from './common.js';
 let surveyGrid;
 let surveyQuestionGrid;
 let questionsGrid;
+let staticsGrid;
 
 document.addEventListener('DOMContentLoaded', () => {
     const workarea = document.getElementById('workarea');
@@ -117,6 +118,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeSurveyGrid();
     loadSurveys();
 
+    // 설문 통계
+    initializeStaticsGrid();
+
     fetchPermissions().then((permissions) => {
         initPageUI("btnContainer", {
             onAdd: addQuesionSurvey,
@@ -125,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
             gridOptions: {
                 editableCols: ['sdate', 'edate']
             },
-            buttonOrder: ['add', 'save'],
+            buttonOrder: ['add', 'delete'],
             permissions
         });
 
@@ -136,7 +140,13 @@ document.addEventListener('DOMContentLoaded', () => {
             gridOptions: {
                 editableCols: ['question', 'type']
             },
-            buttonOrder: ['add', 'save'],
+            buttonOrder: ['add', 'delete'],
+            permissions
+        });
+
+        initPageUI("btnContainer3", {
+            onSearch: loadStatics,
+            buttonOrder: ['search'],
             permissions
         });
     });
@@ -195,11 +205,15 @@ function openTab(evt, tabName) {
     }
     if (tabName === 'SurveyCreation') {
         setTimeout(() => {
-            surveyGrid.refreshLayout(); // 또는 resetLayout()
+            surveyGrid.refreshLayout();
         }, 100);
     }else if (tabName === 'QuestionCreation') {
         setTimeout(() => {
-            questionsGrid.refreshLayout(); // 또는 resetLayout()
+            questionsGrid.refreshLayout();
+        }, 100);
+    }else if (tabName === 'ResponseStatics') {
+        setTimeout(() => {
+            staticsGrid.refreshLayout(); 
         }, 100);
     }
 }
@@ -675,7 +689,7 @@ class RowNumRenderer {
 
 // 설문지 관리 탭_그리드 초기화 
 function initializeSurveyGrid(){
-
+ 
     // 설문지 목록
     surveyGrid = new tui.Grid({
         el: document.getElementById('surveyGrid'),
@@ -688,28 +702,29 @@ function initializeSurveyGrid(){
         scrollY: true,
         bodyHeight: 500,
         columns: [
-            { header: '년도', name: 'year', width: 80,  align: 'center'
+            { header: '년도', name: 'year', width: 80,  align: 'center', sortable: true, resizable: true
                 , editor: {
                     type: 'datePicker',
                     options: {
-                        format: 'yyyy',
-                        type: 'year'
+                      format: 'yyyy',
+                      type: 'year'
                     }
                 }
             },
-            { header: '분기', name: 'qt', width: 60, align: 'center'
+            { header: '분기', name: 'qt', width: 60, align: 'center', sortable: true, resizable: true
                 , editor: {
                     type: 'select',
                     options: {
-                        listItems: [
-                            { text: '1', value: '1' },
-                            { text: '2', value: '2' },
-                            { text: '3', value: '3' },
-                            { text: '4', value: '4' }
-                        ]
+                    listItems: [
+                        { text: '1', value: '1' },
+                        { text: '2', value: '2' },
+                        { text: '3', value: '3' },
+                        { text: '4', value: '4' }
+                    ]
                     }
                 }},
-            { header: '설문시작일', name: 'sdate', align: 'center', formatter: ({ value }) => formatDate(value)
+            { header: '설문시작일', name: 'sdate', align: 'center', sortable: true, resizable: true
+                , formatter: ({ value }) => formatDate(value)
                 , editor: {
                     type: 'datePicker',
                     options: {
@@ -717,7 +732,8 @@ function initializeSurveyGrid(){
                     }
                 }
             },
-            { header: '설문종료일', name: 'edate', align: 'center', formatter: ({ value }) => formatDate(value)
+            { header: '설문종료일', name: 'edate', align: 'center', sortable: true, resizable: true
+                , formatter: ({ value }) => formatDate(value)
                 , editor: {
                     type: 'datePicker',
                     options: {
@@ -728,7 +744,7 @@ function initializeSurveyGrid(){
             {
                 header: '저장', name: 'saveBtn', width: 80, align: 'center',
                 renderer: {
-                    type: createSaveRenderer
+                  type: createSaveRenderer
                 }
             }
         ]
@@ -784,11 +800,11 @@ function initializeSurveyGrid(){
             //console.log('🔸 저장할 행 데이터:', row);
 
             if(row.isNew == true) {
-                saveSurveyRow(row, 'http://localhost:8080/api/surveys/survey', 'POST', () => {
+                saveSurveyRow(row, `${backendDomain}/api/surveys/survey`, 'POST', () => {
                     loadSurveys(); // 성공 시에만 호출됨
                 });
             } else {
-                saveSurveyRow(row, `http://localhost:8080/api/surveys/survey/${row.seq}`, 'PUT', () => {
+                saveSurveyRow(row, `${backendDomain}/api/surveys/survey/${row.seq}`, 'PUT', () => {
                     loadSurveys(); // 성공 시에만 호출됨
                 });
             }
@@ -808,8 +824,8 @@ function initializeSurveyGrid(){
         bodyHeight: 500,
         //draggable: true,
         columns: [
-            { header: '문항', name: 'question', editor: "text", },
-            { header: '유형', name: 'type', width: 50
+            { header: '문항', name: 'question', editor: "text", sortable: true, resizable: true },
+            { header: '유형', name: 'type', width: 50, sortable: true, resizable: true
                 , editor: {
                     type: 'select',
                     options: {
@@ -854,11 +870,11 @@ function initializeSurveyGrid(){
             console.log('🔸 저장할 행 데이터:', row);
 
             if(row.isNew == true) {
-                saveSurveyRow(row, 'http://localhost:8080/api/surveys/question', 'POST', () => {
+                saveSurveyRow(row, `http://localhost:8080/api/surveys/question`, 'POST', () => {
                     handleSurveyClick(); // 성공 시에만 호출됨
                 });
             } else {
-                saveSurveyRow(row, `http://localhost:8080/api/surveys/question/${row.seq}`, 'PUT', () => {
+                saveSurveyRow(row, `${backendDomain}/api/surveys/question/${row.seq}`, 'PUT', () => {
                     handleSurveyClick(); // 성공 시에만 호출됨
                 });
             }
@@ -915,7 +931,7 @@ function loadSurveys() {
     const qt = document.getElementById('searchQt').value;
 
     const query = new URLSearchParams({ year, qt });
-    fetch(`http://localhost:8080/api/surveys/survey/search?${query}`)
+    fetch(`${backendDomain}/api/surveys/survey/search?${query}`)
             .then(res => {
                 if (!res.ok) {
                     throw new Error(`서버 응답 오류: ${res.status}`);
@@ -1002,7 +1018,7 @@ function delQuesionSurvey() {
             surveyGrid.removeRow(rowKey);
         } else {
             // 서버 API 호출
-            fetch(`http://localhost:8080/api/surveys/survey/${row.seq}`, {
+            fetch(`${backendDomain}/api/surveys/survey/${row.seq}`, {
                 method: 'DELETE'
             })
                     .then(res => {
@@ -1036,7 +1052,7 @@ function handleSurveyClick() {
     const rdSeq = row.seq;
     const query = new URLSearchParams({ rdSeq });
 
-    fetch(`http://localhost:8080/api/surveys/question/search?${query}`)
+    fetch(`${backendDomain}/api/surveys/question/search?${query}`)
             .then(res => {
                 if (!res.ok) {
                     throw new Error(`서버 응답 오류: ${res.status}`);
@@ -1098,7 +1114,7 @@ function delQuesionSurvey2() {
             surveyQuestionGrid.removeRow(rowKey);
         } else {
             // 서버 API 호출
-            fetch(`http://localhost:8080/api/surveys/question/${row.seq}`, {
+            fetch(`${backendDomain}/api/surveys/question/${row.seq}`, {
                 method: 'DELETE'
             })
                     .then(res => {
@@ -1119,6 +1135,60 @@ function delQuesionSurvey2() {
                     });
         }
     });
+}
+
+//설문통계 텝_그리드 초기화
+function initializeStaticsGrid(){
+    staticsGrid = new tui.Grid({
+        el: document.getElementById('staticsGrid'),
+        rowHeaders: [{
+            type: 'rowNum',
+            header: 'No.'
+        }, 'checkbox'],
+        scrollX: true,
+        scrollY: true,
+        bodyHeight: 630,
+        rowHeight: 42,
+        minRowHeight: 42,
+        columns: [
+            // { header: '계열', name: 'siteName', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true, rowSpan: true },
+            { header: '지점명', name: 'placeName', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true, rowSpan: true },
+            { header: '강사명', name: 'teachername', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true, rowSpan: true },
+            { header: '수업명', name: 'shortname', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true },
+            { header: '평일/주말', name: 'weekName', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true },
+            { header: '강의시간', name: 'begintime', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true },
+            { header: '설문학생수', name: 'studentCnt', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true },
+            { header: '설문점수', name: 'avgScore', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true
+                , formatter: ({ value }) => Number(value).toFixed(2) 
+            },            
+        ],
+        //data: loadStatics(),
+        //columnOptions: { frozenCount: 2, frozenBorderWidth: 2 },
+    });
+}
+
+// 설문 목록 로딩
+function loadStatics() {
+    const siteCode = '';
+    const placeSeq = '';
+
+    const query = new URLSearchParams({ siteCode, placeSeq });
+    fetch(`${backendDomain}/api/surveys/statics/search?${query}`)
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`서버 응답 오류: ${res.status}`);
+            }
+            return res.json();
+        })
+        .then(data => {
+            staticsGrid.resetData(data);
+            const dataCountElement = document.getElementById('staticsDataCount');
+            dataCountElement.textContent = `Total : ${data?.length}`;
+        })
+        .catch(err => {
+            console.error('❌ Fetch 오류:', err.message);
+            alert('설문 데이터를 불러오는 중 오류가 발생했습니다.');
+        });
 }
 
 const exports = {
