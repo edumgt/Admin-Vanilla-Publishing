@@ -120,6 +120,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 설문 통계
     initializeStaticsGrid();
+    fetchSiteCodes(); 
+
+    document.getElementById('siteCode').addEventListener('change', () => {
+        const siteCode = document.getElementById('siteCode').value;
+        fetchPlaceList(siteCode);
+    });
 
     fetchPermissions().then((permissions) => {
         initPageUI("btnContainer", {
@@ -866,8 +872,7 @@ function initializeSurveyGrid(){
                 showToast(`"${label}" 항목을 입력해주세요.`, 'warning', lang);
                 return;
             }
-
-            console.log('🔸 저장할 행 데이터:', row);
+            //console.log('저장할 행 데이터:', row);
 
             if(row.isNew == true) {
                 saveSurveyRow(row, `http://localhost:8080/api/surveys/question`, 'POST', () => {
@@ -912,6 +917,7 @@ function fillYearCombo() {
         option.text = `${y}년`;
         yearSelect.appendChild(option);
     }
+    yearSelect.value = currentYear;
 }
 
 // 날짜 문자열 → yyyy-mm-dd 형식으로 포맷팅
@@ -989,13 +995,13 @@ function addQuesionSurvey() {
         const currentYear = now.getFullYear();
         const currentMonth = now.getMonth() + 1; // JS는 0부터 시작
         const currentQuarter = Math.floor((currentMonth - 1) / 3) + 1;
-        const todayStr = now.toISOString().split('T')[0]; // yyyy-mm-dd
+        //const todayStr = now.toISOString().split('T')[0]; // yyyy-mm-dd
 
         surveyGrid.prependRow({
             year: currentYear.toString(),
             qt: currentQuarter.toString(),
-            sdate: todayStr,
-            edate: todayStr,
+            sdate: '',
+            edate: '',
             isNew: true  // 신규 여부 커스텀 속성
         });
     }
@@ -1117,61 +1123,113 @@ function delQuesionSurvey2() {
             fetch(`${backendDomain}/api/surveys/question/${row.seq}`, {
                 method: 'DELETE'
             })
-                    .then(res => {
-                        if (!res.ok) throw new Error(`서버 오류: ${res.status}`);
-                        return res.json(); // 삭제 결과 (성공 시 정수 반환 기대)
-                    })
-                    .then(result => {
-                        if (result > 0) {
-                            showToast('삭제 성공', 'success', lang);
-                            surveyQuestionGrid.removeRow(rowKey);
-                        } else {
-                            showToast('삭제 실패', 'error', lang);
-                        }
-                    })
-                    .catch(err => {
-                        console.error('삭제 오류:', err);
-                        showToast('삭제 중 오류 발생', 'error', lang);
-                    });
+            .then(res => {
+                if (!res.ok) throw new Error(`서버 오류: ${res.status}`);
+                return res.json(); // 삭제 결과 (성공 시 정수 반환 기대)
+            })
+            .then(result => {
+                if (result > 0) {
+                    showToast('삭제 성공', 'success', lang);
+                    surveyQuestionGrid.removeRow(rowKey);
+                } else {
+                    showToast('삭제 실패', 'error', lang);
+                }
+            })
+            .catch(err => {
+                console.error('삭제 오류:', err);
+                showToast('삭제 중 오류 발생', 'error', lang);
+            });
         }
     });
 }
 
-//설문통계 텝_그리드 초기화
+//설문통계 탭_조회조건_계열
+function fetchSiteCodes() {
+    fetch(`${backendDomain}/api/surveys/site/search`)
+        .then(res => {
+            if (!res.ok) {
+                throw new Error('서버 오류');
+            }
+            return res.json();
+        })
+        .then(data => {
+            const select = document.getElementById('siteCode');
+            data.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.sitecode;    // 또는 item.siteCode 등 실제 키명에 맞게
+                option.textContent = item.siteName; // 또는 item.siteName
+                select.appendChild(option);
+            });
+
+            // 첫 번째 siteCode 선택 + 지점 목록 호출
+            if (data.length > 0) {
+                select.value = data[0].sitecode;
+                fetchPlaceList(data[0].sitecode);
+            }
+        })
+        .catch(err => {
+            console.error('siteCode 목록 로딩 실패:', err);
+            alert('계열 목록을 불러오는 중 오류가 발생했습니다.');
+        });
+}
+
+//설문통계 탭_조회조건_지점
+function fetchPlaceList(siteCode) {
+    const placeSelect = document.getElementById('placeSeq');
+    placeSelect.innerHTML = '<option value="">전체</option>'; // 초기화
+
+    if (!siteCode) return;
+
+    fetch(`${backendDomain}/api/surveys/place/search?siteCode=${siteCode}`)
+        .then(res => {
+            if (!res.ok) throw new Error('지점 목록 불러오기 실패');
+            return res.json();
+        })
+        .then(data => {
+            data.forEach(place => {
+                const option = document.createElement('option');
+                option.value = place.placeseq; // 필드명은 서버에 따라 맞춤
+                option.textContent = place.placeName;
+                placeSelect.appendChild(option);
+            });
+        })
+        .catch(err => {
+            console.error('지점 목록 오류:', err);
+        });
+}
+
+//설문통계 탭_그리드 초기화
 function initializeStaticsGrid(){
     staticsGrid = new tui.Grid({
         el: document.getElementById('staticsGrid'),
         rowHeaders: [{
             type: 'rowNum',
             header: 'No.'
-        }, 'checkbox'],
+        }],
         scrollX: true,
         scrollY: true,
         bodyHeight: 630,
         rowHeight: 42,
         minRowHeight: 42,
         columns: [
-            // { header: '계열', name: 'siteName', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true, rowSpan: true },
             { header: '지점명', name: 'placeName', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true, rowSpan: true },
             { header: '강사명', name: 'teachername', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true, rowSpan: true },
-            { header: '수업명', name: 'shortname', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true },
+            { header: '수업명', name: 'shortname', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true, minWidth: 350 },
             { header: '평일/주말', name: 'weekName', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true },
             { header: '강의시간', name: 'begintime', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true },
             { header: '설문학생수', name: 'studentCnt', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true },
             { header: '설문점수', name: 'avgScore', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true
                 , formatter: ({ value }) => Number(value).toFixed(2) 
             },            
-        ],
-        //data: loadStatics(),
-        //columnOptions: { frozenCount: 2, frozenBorderWidth: 2 },
+        ]
     });
 }
 
 // 설문 목록 로딩
 function loadStatics() {
-    const siteCode = '';
-    const placeSeq = '';
-
+    const siteCode = document.getElementById('siteCode').value;
+    const placeSeq = document.getElementById('placeSeq').value;
+   
     const query = new URLSearchParams({ siteCode, placeSeq });
     fetch(`${backendDomain}/api/surveys/statics/search?${query}`)
         .then(res => {
