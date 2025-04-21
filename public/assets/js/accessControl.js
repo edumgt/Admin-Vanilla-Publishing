@@ -107,28 +107,17 @@ export function initPageUI(
 
 					gridInstance.addEventListener('cellEditingStarted', (event) => {
 						event.api.stopEditing();
-						showToast('편집 권한이 없습니다.', 'warning', 'ko');
+						showToast('수정 권한이 없습니다.', 'warning', 'ko');
 					});
 
 					gridInstance.addEventListener('rowDragMove', (event) => {
-						showToast('드래그 권한이 없습니다.', 'warning', 'ko');
+						showToast('수정 권한이 없습니다.', 'warning', 'ko');
 					});
 				}
 			}
 
 			// ✅ TUI Grid
 			else if (typeof gridInstance?.setColumns === 'function') {
-				const updatedCols = gridInstance.getColumns().map((col) => {
-					if (gridOptions.editableCols.includes(col.name)) {
-						return {
-							...col,
-							editable: canEdit
-						};
-					}
-					return col;
-				});
-				gridInstance.setColumns(updatedCols);
-
 				gridInstance.on('editingStart', (ev) => {
 					if (!permissions.canEdit) {
 						ev.stop(); // TUI Grid 방식: 수정을 막음
