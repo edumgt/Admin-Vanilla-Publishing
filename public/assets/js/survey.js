@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 설문 통계
     initializeStaticsGrid();
-    fetchSiteCodes(); 
+    fetchSiteCodes();
 
     document.getElementById('siteCode').addEventListener('change', () => {
         const siteCode = document.getElementById('siteCode').value;
@@ -777,8 +777,13 @@ function initializeSurveyGrid(){
         const { rowKey, columnName } = ev;
         const row = surveyGrid.getRow(rowKey);
 
-        if (row && row.isNew !== true) {
-            handleSurveyClick();  // 문항 목록 불러오기
+        if (row) {
+            if(row.isNew === true){
+                surveyQuestionGrid.resetData([]);
+            } else if (surveyQuestionGrid) {
+                handleSurveyClick();  // 문항 목록 불러오기              
+            }
+            
         }
 
         // row 저장
@@ -830,20 +835,24 @@ function initializeSurveyGrid(){
         bodyHeight: 500,
         //draggable: true,
         columns: [
-            { header: '문항', name: 'question', editor: "text", sortable: true, resizable: true },
-            { header: '유형', name: 'type', width: 50, sortable: true, resizable: true
+            { header: '문항', name: 'question', align: 'left', sortable: true, resizable: true, minWidth: 300, editor: "text" },
+            { header: '유형', name: 'type', align: 'center', sortable: true, resizable: true, minWidth: 150
+                , formatter: ({ value }) => {
+                    const strVal = String(value); // 명시적 string 변환
+                    return strVal === '1' ? '선택형' : strVal === '2' ? '서술형' : '';
+                }
                 , editor: {
                     type: 'select',
                     options: {
                         listItems: [
-                            { text: '1', value: '1' },
-                            { text: '2', value: '2' }
+                            { text: '선택형', value: '1' },
+                            { text: '서술형', value: '2' }
                         ]
                     }
                 }
             },
             {
-                header: '저장', name: 'saveBtn', width: 80, align: 'center',
+                header: '저장', name: 'saveBtn', align: 'center', width: 60, minWidth: 60,
                 renderer: {
                     type: createSaveRenderer
                 }
@@ -851,7 +860,7 @@ function initializeSurveyGrid(){
         ]
     });
 
-    // 설문지 목록 클릭 이벤트
+    // 설문지 문항 목록 클릭 이벤트
     surveyQuestionGrid.on('click', (ev) => {
         const { rowKey, columnName } = ev;
         const row = surveyQuestionGrid.getRow(rowKey);
@@ -872,6 +881,29 @@ function initializeSurveyGrid(){
                 showToast(`"${label}" 항목을 입력해주세요.`, 'warning', lang);
                 return;
             }
+
+            // 현재 저장 대상 type
+            const currentType = String(row.type);
+
+            // 전체 rows 가져오기
+            const allRows = surveyQuestionGrid.getData();
+
+            // 같은 유형(type)이 몇 개인지 체크 (수정 중인 row 제외 또는 신규인 경우 포함)
+            const sameTypeCount = allRows.filter(r =>
+                String(r.type) === currentType &&
+                (r.seq !== row.seq || row.isNew)
+            ).length;
+
+            if (currentType === '1' && sameTypeCount > 10) {
+                showToast('선택형 문항은 최대 10개까지만 저장할 수 있습니다.', 'warning', lang);
+                return;
+            }
+
+            if (currentType === '2' && sameTypeCount > 1) {
+                showToast('서술형 문항은 최대 1개까지만 저장할 수 있습니다.', 'warning', lang);
+                return;
+            }
+            
             //console.log('저장할 행 데이터:', row);
 
             if(row.isNew == true) {
@@ -1221,7 +1253,42 @@ function initializeStaticsGrid(){
             { header: '설문점수', name: 'avgScore', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true
                 , formatter: ({ value }) => Number(value).toFixed(2) 
             },            
-        ]
+        ],
+        summary: {
+          height: 40,
+          position: 'bottom', // or 'top'
+          columnContent: {
+            studentCnt: {
+                template: function(valueMap) {
+                  // 👉 소계(_isSubtotal) 행을 제외한 학생 수 합계
+                  if(staticsGrid){
+                    const rows = staticsGrid.getData().filter(row => !row._isSubtotal);
+                    const total = rows.reduce((sum, row) => sum + Number(row.studentCnt || 0), 0);
+                    return `TOTAL: ${total}`;
+                  }
+
+                }
+              },
+              avgScore: {
+                template: function(valueMap) {
+                    if(staticsGrid){
+                        // 👉 소계(_isSubtotal) 행을 제외한 설문점수 평균/최소/최대 계산
+                        const rows = staticsGrid.getData().filter(row => !row._isSubtotal);
+                        const scores = rows.map(r => Number(r.avgScore)).filter(n => !isNaN(n));
+                        return `MAX: ${Math.max(...scores).toFixed(2)}<br>MIN: ${Math.min(...scores).toFixed(2)}
+                                <br>AVG: ${(scores.reduce((sum, n) => sum + n, 0) / scores.length).toFixed(2)}`;                    
+                    }
+
+                }
+              }
+          }
+        },
+        rowClass: (row) => {
+            if (row.value._isSubtotal) {
+                return 'row-subtotal';
+            }
+            return '';
+        }
     });
 }
 
@@ -1239,7 +1306,8 @@ function loadStatics() {
             return res.json();
         })
         .then(data => {
-            staticsGrid.resetData(data);
+            addPlaceNameSubtotals(data);
+
             const dataCountElement = document.getElementById('staticsDataCount');
             dataCountElement.textContent = `Total : ${data?.length}`;
         })
@@ -1248,6 +1316,52 @@ function loadStatics() {
             alert('설문 데이터를 불러오는 중 오류가 발생했습니다.');
         });
 }
+
+/**
+ * 설문 통계 데이터에 지점별 평균 소계 행을 추가하는 함수
+ * @param {Array} gridData - 서버에서 받은 원본 설문 통계 데이터 배열
+ */
+function addPlaceNameSubtotals(data) {
+    const grouped = {};      // 지점별로 데이터를 분류할 객체
+    const newData = [];      // 최종적으로 그리드에 설정할 새 데이터 배열
+
+    // 1. 지점명(placeName)을 기준으로 데이터 그룹화
+    data.forEach((row) => {
+        const place = row.placeName || '기타';
+        grouped[place] = grouped[place] || [];
+        grouped[place].push(row);
+    });
+
+    // 2. 각 지점 그룹별 원래 데이터 + 소계 row 추가
+    Object.entries(grouped).forEach(([placeName, rows]) => {
+        newData.push(...rows); // 기존 row 그대로 추가
+
+        // 해당 지점의 총 학생 수와 평균 점수 계산
+        const totalStudents = rows.reduce((sum, r) => sum + Number(r.studentCnt), 0);
+        const avgScore = rows.reduce((sum, r) => sum + Number(r.avgScore), 0) / rows.length;
+
+        // 소계 row 구성
+        const subtotalRow = {
+            placeName: `${placeName} 소계`, // 지점명 + '소계' 표시
+            studentCnt: totalStudents,
+            avgScore: avgScore.toFixed(2),
+            _isSubtotal: true // 👉 나중에 스타일 적용을 위한 플래그
+        };
+
+        newData.push(subtotalRow); // 소계 행 추가
+    });
+
+    // 3. TUI Grid에 새 데이터 반영
+    staticsGrid.resetData(newData);
+
+    // 4. 소계 행 스타일 지정: _isSubtotal 플래그가 있는 row에 CSS 클래스 적용
+    newData.forEach((row, index) => {
+        if (row._isSubtotal) {
+            staticsGrid.addRowClassName(index, 'subtotal-row'); // CSS에서 .subtotal-row 스타일 정의 필요
+        }
+    });
+}
+
 
 const exports = {
     openTab,
