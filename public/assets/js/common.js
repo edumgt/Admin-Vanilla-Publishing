@@ -229,22 +229,22 @@ class createBadgeRenderer {
     }
     render(props) {
         this.props = props;
-    
+
         // rowKey, grid
         const { rowKey, grid } = props;
         // 해당 행 전체 데이터
         const rowData = grid.getRow(rowKey);
-    
+
         // (핵심) id 유무에 따라 disabled
         if (!rowData.id) {
-          // id == null, undefined, 0 등 falsy
-          this.el.style.pointerEvents = 'none'; // 클릭 불가
-          this.el.style.opacity = '0.5';       // 반투명
+            // id == null, undefined, 0 등 falsy
+            this.el.style.pointerEvents = 'none'; // 클릭 불가
+            this.el.style.opacity = '0.5';       // 반투명
         } else {
-          this.el.style.pointerEvents = 'auto'; // 클릭 가능
-          this.el.style.opacity = '1';          // 완전 표시
+            this.el.style.pointerEvents = 'auto'; // 클릭 가능
+            this.el.style.opacity = '1';          // 완전 표시
         }
-      }
+    }
 }
 
 class createSaveRenderer {
@@ -288,12 +288,12 @@ class createSaveRenderer {
 }
 
 export function createDropZoneWithPermission({
-     fromGridApi,
-     toGridApi,
-     direction,
-     moveRows,
-     canDrag = () => window.canEdit // 기본값으로 공통 권한 사용
- }) {
+                                                 fromGridApi,
+                                                 toGridApi,
+                                                 direction,
+                                                 moveRows,
+                                                 canDrag = () => window.canEdit // 기본값으로 공통 권한 사용
+                                             }) {
     return toGridApi.getRowDropZoneParams({
         onDragStop: event => {
             if (!canDrag()) {
@@ -313,28 +313,28 @@ export function createDropZoneWithPermission({
 
 class RowNumRenderer {
     constructor(props) {
-      const el = document.createElement('span');
-      this.el = el;
-  
-      const { grid, rowKey } = props;
-      const row = grid.getRow(rowKey);
-      const allRows = grid.getData();
-      const rowIndex = allRows.findIndex(r => r.rowKey === rowKey);
-  
-      if (row?.tpCd === '' && row?.tpNm === '') {
-        el.innerText = 'New';
-        el.style.color = "#ee3333";
-      } else {
-        el.innerText = String(rowIndex + 1); // ✅ 항상 1부터 시작
-      }
+        const el = document.createElement('span');
+        this.el = el;
+
+        const { grid, rowKey } = props;
+        const row = grid.getRow(rowKey);
+        const allRows = grid.getData();
+        const rowIndex = allRows.findIndex(r => r.rowKey === rowKey);
+
+        if (row?.tpCd === '' && row?.tpNm === '') {
+            el.innerText = 'New';
+            el.style.color = "#ee3333";
+        } else {
+            el.innerText = String(rowIndex + 1); // ✅ 항상 1부터 시작
+        }
     }
-  
+
     getElement() {
-      return this.el;
+        return this.el;
     }
-  }
-  
-  
+}
+
+
 
 
 export {
