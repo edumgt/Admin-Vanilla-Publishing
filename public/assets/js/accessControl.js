@@ -122,7 +122,6 @@ export function initPageUI(
 					if (gridOptions.editableCols.includes(col.name)) {
 						return {
 							...col,
-							editor: 'text',
 							editable: canEdit
 						};
 					}
