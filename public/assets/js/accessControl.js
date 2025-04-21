@@ -118,13 +118,15 @@ export function initPageUI(
 
 			// ✅ TUI Grid
 			else if (typeof gridInstance?.setColumns === 'function') {
+				// 편집 이벤트 차단
 				gridInstance.on('editingStart', (ev) => {
 					if (!permissions.canEdit) {
-						ev.stop(); // TUI Grid 방식: 수정을 막음
+						ev.stop();
 						showToast('수정 권한이 없습니다.', 'warning', 'ko');
 					}
 				});
 			}
+
 		}
 	};
 

@@ -218,32 +218,23 @@ class createBadgeRenderer {
     constructor(props) {
         const el = document.createElement('span');
         el.className = 'text-blue-900 rounded cursor-pointer flex items-center justify-center';
-        el.innerHTML = '<i class="fas fa-pencil-alt"></i>';
+        el.innerHTML = '<i class="fas fa-pencil-alt btn-view grid-renderer-button"></i>';
         el.style.display = 'inline-block';
         el.style.textAlign = 'center';
+
+        el.addEventListener('click', (ev) => {
+            if (!window.canView) {
+                ev.stopPropagation();
+                showToast('보기 권한이 없습니다.', 'warning', 'ko');
+                return;
+            }
+        });
+
         this.el = el;
         this.props = props;
     }
     getElement() {
         return this.el;
-    }
-    render(props) {
-        this.props = props;
-
-        // rowKey, grid
-        const { rowKey, grid } = props;
-        // 해당 행 전체 데이터
-        const rowData = grid.getRow(rowKey);
-
-        // (핵심) id 유무에 따라 disabled
-        if (!rowData.id) {
-            // id == null, undefined, 0 등 falsy
-            this.el.style.pointerEvents = 'none'; // 클릭 불가
-            this.el.style.opacity = '0.5';       // 반투명
-        } else {
-            this.el.style.pointerEvents = 'auto'; // 클릭 가능
-            this.el.style.opacity = '1';          // 완전 표시
-        }
     }
 }
 
@@ -251,7 +242,7 @@ class createSaveRenderer {
     constructor(props) {
         const el = document.createElement('span');
         el.className = 'text-blue-900 rounded cursor-pointer flex items-center justify-center';
-        el.innerHTML = '<i class="fas fa-save"></i>';
+        el.innerHTML = '<i class="fas fa-save btn-save grid-renderer-button"></i>';
         el.style.display = 'inline-block';
         el.style.textAlign = 'center';
 
@@ -269,21 +260,6 @@ class createSaveRenderer {
 
     getElement() {
         return this.el;
-    }
-
-    render(props) {
-        this.props = props;
-
-        const { rowKey, grid } = props;
-        const rowData = grid.getRow(rowKey);
-
-        if (!rowData.id) {
-            this.el.style.pointerEvents = 'none';
-            this.el.style.opacity = '0.5';
-        } else {
-            this.el.style.pointerEvents = 'auto';
-            this.el.style.opacity = '1';
-        }
     }
 }
 

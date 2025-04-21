@@ -1,24 +1,13 @@
-let leftGridApi = null;
-let rightGridApi = null;
+let leftGrid = null;
+let rightGrid = null;
 let selectedUserId = null;
 
 const permissionFields = ["canSearch", "canAdd", "canDelete", "canResetSearch", "canSave", "canView", "canEdit"];
 
 document.addEventListener("DOMContentLoaded", () => {
-    injectDragStyles();
     fetchUsers();
-    setupDetailGrid([]); // 초기 우측 그리드 비워두기
-    breadcrumb.textContent = "사용자별 권한관리";
+    setupDetailGrid([]);
 });
-
-function injectDragStyles() {
-    const style = document.createElement("style");
-    style.textContent = `
-        .ag-row-drag { cursor: grab; }
-        .ag-row-dragging { cursor: grabbing !important; }
-    `;
-    document.head.appendChild(style);
-}
 
 function fetchUsers() {
     fetch(`${backendDomain}/api/users`)
@@ -35,141 +24,132 @@ function fetchPermissions(userId) {
 }
 
 function setupUserGrid(data) {
-    const columnDefs = [
-        { headerName: "ID", field: "id", width: 80, cellStyle: { textAlign: 'left' } },
-        { headerName: "사용자명", field: "username", cellStyle: { textAlign: 'left' } },
-        { headerName: "이메일", field: "email", cellStyle: { textAlign: 'left' } }
-    ];
+    if (leftGrid) leftGrid.destroy();
 
-    const gridOptions = {
-        columnDefs,
-        rowData: data,
-        rowSelection: "single",
-        defaultColDef: {
-            flex: 1,
-            resizable: true,
-            sortable: true,
-            filter: true
-        },
-        animateRows: true,
-        onGridReady: params => leftGridApi = params.api,
-        onRowClicked: event => {
-            selectedUserId = event.data.id;
-            fetchPermissions(selectedUserId);
+    leftGrid = new tui.Grid({
+        el: document.getElementById("grid-left"),
+        data: data,
+        rowHeaders: ['rowNum'],
+        columns: [
+            { header: "ID", name: "id", width: 60 },
+            { header: "사용자명", name: "username" },
+            { header: "이메일", name: "email" }
+        ],
+        bodyHeight: "fitToParent",
+        onGridMounted() {
+            leftGrid.on('click', ev => {
+                const row = ev.rowKey;
+                if (row !== undefined) {
+                    selectedUserId = leftGrid.getValue(row, 'id');
+                    fetchPermissions(selectedUserId);
+                }
+            });
         }
-    };
-
-    agGrid.createGrid(document.getElementById("grid-left"), gridOptions);
+    });
 }
 
 function setupDetailGrid(data) {
-    const columnDefs = [
+    if (rightGrid) rightGrid.destroy();
+
+    const columns = [
         {
-            headerName: "",
-            field: "hasPermission",
-            width: 60,
-            cellStyle: { textAlign: 'center' },
-            cellRenderer: params => {
-                const checked = params.data.hasPermission === 1 ? 'checked' : '';
-                return `<input type="checkbox" ${checked} />`;
-            },
-            onCellClicked: toggleHasPermission
+            header: "", name: "hasPermission", width: 120, align: 'center',
+            formatter: ({ value }) => `<input type="checkbox" ${value === 1 ? "checked" : ""} />`
         },
         {
-            headerName: "페이지명",
-            field: "pageName",
-            cellStyle: { textAlign: 'left' }
+            header: "페이지명", name: "pageName", align: 'left'
         },
         ...permissionFields.map(field => ({
-            headerName: field.replace("can", "").replace(/([A-Z])/g, " $1").trim(),
-            field,
+            header: field.replace("can", "").replace(/([A-Z])/g, " $1").trim(),
+            name: field,
             width: field === "canResetSearch" ? 100 : 80,
-            cellStyle: { textAlign: 'center' },
-            cellRenderer: params => {
-                const disabled = params.data.hasPermission !== 1 ? 'disabled' : '';
-                const checked = params.value == 1 ? 'checked' : '';
+            align: 'center',
+            formatter: ({ row, column }) => {
+                const checked = row[column.name] === 1 ? "checked" : "";
+                const disabled = row.hasPermission !== 1 ? "disabled" : "";
                 return `<input type="checkbox" ${checked} ${disabled} />`;
-            },
-            onCellClicked: updatePermissionField
+            }
         }))
     ];
 
-    const gridOptions = {
-        columnDefs,
-        rowData: data,
-        defaultColDef: {
-            flex: 1,
-            resizable: true,
-            sortable: true,
-            filter: true
-        },
-        animateRows: true,
-        onGridReady: params => rightGridApi = params.api
-    };
+    rightGrid = new tui.Grid({
+        el: document.getElementById("grid-right"),
+        data: data,
+        rowHeaders: ['rowNum'],
+        columns: columns,
+        bodyHeight: "fitToParent"
+    });
 
-    const gridDiv = document.getElementById("grid-right");
-    gridDiv.innerHTML = ""; // ✅ 이 줄이 중요합니다.
-    agGrid.createGrid(gridDiv, gridOptions);
+    rightGrid.on('click', ev => {
+        const { rowKey, columnName } = ev;
+        if (columnName === "hasPermission") {
+            toggleHasPermission(rowKey);
+        } else if (permissionFields.includes(columnName)) {
+            updatePermissionField(rowKey, columnName);
+        }
+    });
 }
 
-function toggleHasPermission(params) {
-    const userId = selectedUserId;
-    const menuPageId = params.data.menuPageId;
-    const newValue = params.data.hasPermission === 1 ? 0 : 1;
-    params.data.hasPermission = newValue;
+function toggleHasPermission(rowKey) {
+    const row = rightGrid.getRow(rowKey);
+    const newValue = row.hasPermission === 1 ? 0 : 1;
 
-    const url = `${backendDomain}/api/permissions/users/${userId}`;
-    const method = newValue === 1 ? "POST" : "DELETE";
-    const payload = { menuPageId };
+    const payload = { menuPageId: row.menuPageId };
 
-    fetch(url, {
-        method,
+    fetch(`${backendDomain}/api/permissions/users/${selectedUserId}`, {
+        method: newValue === 1 ? "POST" : "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
     })
             .then(res => {
                 if (!res.ok) throw new Error("API 실패");
 
+                // hasPermission 필드만 업데이트
+                rightGrid.setValue(rowKey, "hasPermission", newValue);
+
+                // hasPermission이 0이면 나머지 필드도 모두 0으로 설정
                 if (newValue === 0) {
-                    permissionFields.forEach(field => params.data[field] = 0);
+                    permissionFields.forEach(field => {
+                        rightGrid.setValue(rowKey, field, 0);
+                    });
                 }
 
-                params.api.redrawRows({ rowNodes: [params.node] });
                 showToast(newValue === 1 ? "권한 부여 완료" : "권한 제거 완료", 'success', lang);
             })
             .catch(err => {
                 showToast("API 오류: " + err, 'error', lang);
-                console.error("API 오류:", err);
-                params.data.hasPermission = newValue === 1 ? 0 : 1;
-                params.api.redrawRows({ rowNodes: [params.node] });
+                console.error(err);
             });
 }
 
-function updatePermissionField(params) {
-    if (params.data.hasPermission !== 1) return;
+function updatePermissionField(rowKey, field) {
+    const row = rightGrid.getRow(rowKey);
+    if (!row || row.hasPermission !== 1) return;
 
-    const newValue = params.data[params.colDef.field] === 1 ? 0 : 1;
-    params.data[params.colDef.field] = newValue;
-    params.api.refreshCells({ rowNodes: [params.node] });
-
-    const updatePayload = {
-        menuPageId: params.data.menuPageId,
-        field: params.colDef.field,
+    const newValue = row[field] === 1 ? 0 : 1;
+    const payload = {
+        menuPageId: row.menuPageId,
+        field,
         value: newValue
     };
 
     fetch(`${backendDomain}/api/permissions/users/${selectedUserId}/field`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatePayload)
+        body: JSON.stringify(payload)
     })
             .then(res => {
                 if (!res.ok) throw new Error("업데이트 실패");
-                showToast(`[${params.colDef.field}] 필드 업데이트 완료`, 'success', lang);
+
+                // ✅ setValue로 바로 반영
+                rightGrid.setValue(rowKey, field, newValue);
+
+                showToast(`[${field}] 필드 업데이트 완료`, 'success', lang);
             })
             .catch(err => {
                 showToast("API 오류: " + err, 'error', lang);
-                params.data[params.colDef.field] = newValue === 1 ? 0 : 1;
-                params.api.refreshCells({ rowNodes: [params.node] });
+                console.error(err);
             });
 }
+
+breadcrumb.textContent = "사용자별 권한관리"
