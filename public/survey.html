@@ -4,6 +4,20 @@
 <head>
     <meta charset="utf-8">
     <link href="assets/css/default.css" rel="stylesheet">
+    <style>
+    .tui-grid-cell.subtotal-row {
+        background-color: #fdf6d9 !important;  /* 연한 노란색 배경 */
+        font-weight: bold;
+        color: #333;
+    }
+    .tui-grid-cell-summary {
+        background-color: #e0f7fa !important;  /* 연한 청록색 */
+        font-weight: bold;
+        color: #333;
+        text-align: center;
+        vertical-align: middle;
+    }
+    </style>
 </head>
 
 <body>
@@ -146,6 +160,8 @@
             </div>
     
             <div id="staticsGrid"></div>
+
+            <div id="chart-area"></div> <!-- 차트 샘플 -->
         </div>
         <div id="ResponseResults" class="tabcontent hidden">
             <div id="reportContainer"></div>
