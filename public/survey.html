@@ -44,20 +44,6 @@
         </div>
 
         <div id="SurveyCreation" class="tabcontent hidden">
-            <div class="flex items-center space-x-2">
-                <label for="searchYear" class="mr-2">년도:</label>
-                <select id="searchYear" class="mr-4 border rounded p-1"></select>
-            
-                <label for="searchQt" class="mr-2">분기:</label>
-                <select id="searchQt" class="mr-4 border rounded p-1">
-                    <option value="">전체</option>
-                    <option value="1">1분기</option>
-                    <option value="2">2분기</option>
-                    <option value="3">3분기</option>
-                    <option value="4">4분기</option>
-                </select>                
-                <button id="searchBtn" class="bg-blue-500 text-white px-4 py-1 rounded" onclick="loadSurveys()">검색</button>
-            </div>
             <div class="flex space-x-4">
                 <div id="detailPanelLeft" class="flex-1 border p-2">
                     <h2 class="text-lg font-semibold mb-2">설문지 목록</h2>
@@ -65,6 +51,17 @@
                         <div class="flex flex2 flex-col lg:flex-row items-center space-y-2 lg:space-y-0 lg:space-x-2">
                             
                             <div class="flex items-center space-x-2">
+                                <label for="searchYear" class="mr-2">년도:</label>
+                                <select id="searchYear" class="mr-4 border rounded p-1"></select>
+                            
+                                <label for="searchQt" class="mr-2">분기:</label>
+                                <select id="searchQt" class="mr-4 border rounded p-1">
+                                    <option value="">전체</option>
+                                    <option value="1">1분기</option>
+                                    <option value="2">2분기</option>
+                                    <option value="3">3분기</option>
+                                    <option value="4">4분기</option>
+                                </select>                
                                 <div id="btnContainer"></div>
                             </div>
                         </div>
@@ -84,9 +81,6 @@
                                 <div id="btnContainer2"></div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="flex items-center space-x-2">                       
                     </div>
                     <div id="surveyQuestionGrid"></div>
                 </div>
@@ -161,7 +155,14 @@
     
             <div id="staticsGrid"></div>
 
-            <div id="chart-area"></div> <!-- 차트 샘플 -->
+            <!-- 차트 샘플 -->
+            <div id="chart-area">
+                <!-- 수업별 설문 차트 -->
+                <canvas id="surveyChart" width="400" height="200"></canvas>
+
+                <!-- 지점별 평균 점수 차트 -->
+                <canvas id="placeAvgChart" width="400" height="200" class="mt-4"></canvas>
+            </div> 
         </div>
         <div id="ResponseResults" class="tabcontent hidden">
             <div id="reportContainer"></div>
