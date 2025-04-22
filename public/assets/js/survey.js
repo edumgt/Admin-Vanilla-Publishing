@@ -1,5 +1,5 @@
 import { fetchPermissions, initPageUI } from './accessControl.js';
-import { createSaveRenderer } from './common.js';
+import { createSaveRenderer, createBadgeRenderer } from './common.js';
 
 let surveyGrid;
 let surveyQuestionGrid;
@@ -834,7 +834,7 @@ function initializeSurveyGrid(){
         scrollX: true,
         scrollY: true,
         bodyHeight: 500,
-        //draggable: true,
+        draggable: true,
         columns: [
             { header: '문항', name: 'question', align: 'left', sortable: true, resizable: true, minWidth: 300, editor: "text" },
             { header: '유형', name: 'type', align: 'center', sortable: true, resizable: true, minWidth: 100
@@ -852,6 +852,7 @@ function initializeSurveyGrid(){
                     }
                 }
             },
+            { header: '순서', name: 'sort', align: 'center', sortable: true, resizable: true, width: 60, minWidth: 60 },
             {
                 header: '저장', name: 'saveBtn', align: 'center', width: 60, minWidth: 60,
                 renderer: {
@@ -905,6 +906,29 @@ function initializeSurveyGrid(){
                 return;
             }
             
+            // ✅ sort 할당 로직
+            if (row.isNew || row.sort == null) {
+                if (currentType === '1') {
+                    // 선택형 → 현재 선택형들 중 max sort 찾기
+                    const maxSort = Math.max(
+                        0,
+                        ...allRows
+                            .filter(r => String(r.type) === '1' && r.sort)
+                            .map(r => Number(r.sort))
+                    );
+                    row.sort = maxSort + 1;
+                } else if (currentType === '2') {
+                    // 서술형 → 무조건 11 이상 (선택형 최대 10개까지)
+                    const maxSort = Math.max(
+                        10,
+                        ...allRows
+                            .filter(r => String(r.type) === '2' && r.sort)
+                            .map(r => Number(r.sort))
+                    );
+                    row.sort = maxSort + 1;
+                }
+            }
+
             //console.log('저장할 행 데이터:', row);
 
             if(row.isNew == true) {
@@ -917,6 +941,52 @@ function initializeSurveyGrid(){
                 });
             }
         }
+    });
+
+    surveyQuestionGrid.on('dragStart', (ev) => {
+        const { rowKey } = ev;
+        const row = surveyQuestionGrid.getRow(rowKey);
+    
+        // 서술형(type === '2')이면 드래그 중단
+        if (String(row.type) === '2') {
+            showToast('서술형 문항은 이동할 수 없습니다.', 'warning');
+            ev.stop(); // ✅ 드래그 취소
+        }
+    });
+
+    surveyQuestionGrid.on('drop', () => {
+        const rows = surveyQuestionGrid.getData();
+
+        // 선택형(type: '1')과 서술형(type: '2') 분리
+        const choiceRows = rows.filter(r => String(r.type) === '1');
+        const essayRows = rows.filter(r => String(r.type) === '2');
+    
+        // ✅ 선택형 sort 재배정 (1부터 시작)
+        choiceRows.forEach((row, idx) => {
+            const newSort = idx + 1;
+            if (row.sort !== newSort) {
+                row.sort = newSort;
+                // API 호출
+                saveSurveyRow(row, `${backendDomain}/api/surveys/question/${row.seq}`, 'PUT', () => {
+                    console.log(`[선택형] ${row.question} → sort ${row.sort} 저장 완료`);
+                });
+            }
+        });
+    
+        // ✅ 서술형은 항상 드래그 제외 & sort는 11번 이상
+        essayRows.forEach((row, idx) => {
+            const newSort = 11 + idx;
+            if (row.sort !== newSort) {
+                row.sort = newSort;
+                saveSurveyRow(row, `${backendDomain}/api/surveys/question/${row.seq}`, 'PUT', () => {
+                    console.log(`[서술형] ${row.question} → sort ${row.sort} 저장 완료`);
+                });
+            }
+        });
+    
+        // ✅ 드래그 후 그리드 리렌더링
+        const finalData = [...choiceRows, ...essayRows];
+        surveyQuestionGrid.resetData(finalData);
     });
 
 }
@@ -1131,6 +1201,7 @@ function addQuesionSurvey2() {
             rdSeq: selectedRow.seq, // 설문지 seq 연동
             question: '',
             type: '1',
+            kind: '',
             isNew: true   // 신규 여부 커스텀 속성
         });
     }
@@ -1231,6 +1302,18 @@ function fetchPlaceList(siteCode) {
         });
 }
 
+//설문통계 탭_의견 view 팝업 생성
+createModal3(
+    'tmpModal',
+    '설문 기타의견',
+    `<div id="historyModal" class="rounded">
+            <h3 class="text-xl font-bold mb-4">설문결과 기타의견</h3>
+            <pre id="historyContent" style="width:1000px; white-space:pre-wrap; word-wrap:break-word;"></pre>
+            <button id="closeHistoryBtn" class="bg-gray-500 text-white mt-2">닫기</button>
+        </div>`,
+    []
+);
+
 //설문통계 탭_그리드 초기화
 function initializeStaticsGrid(){
     staticsGrid = new tui.Grid({
@@ -1251,9 +1334,39 @@ function initializeStaticsGrid(){
             { header: '평일/주말', name: 'weekName', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true },
             { header: '강의시간', name: 'begintime', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true },
             { header: '설문학생수', name: 'studentCnt', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true },
-            { header: '설문점수', name: 'avgScore', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true
-                , formatter: ({ value }) => Number(value).toFixed(2) 
-            },            
+            // { header: '설문점수', name: 'avgScore', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true
+            //     , formatter: ({ value }) => Number(value).toFixed(2) 
+            // },       // 단순 점수 합
+            { header: '설문점수', name: 'percentScore', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true
+                , formatter: ({ value }) => Number(value).toFixed(2)    
+            },  // 백분율 점수 계산 결과    
+            {
+                header: '기타의견',
+                name: 'view',
+                align: 'center',
+                text: 'V',
+                renderer: {
+                    type: class {
+                        constructor(props) {
+                            const el = document.createElement('div');
+            
+                            // 소계 row는 렌더링 생략
+                            if (!props?.row?._isSubtotal) {
+                                el.innerHTML = `<button class="btn btn-sm btn-outline-primary">V</button>`;
+                                el.style.cursor = 'pointer';
+                                el.style.textAlign = 'center';
+                            }
+            
+                            this.el = el;
+                        }
+                        getElement() {
+                            return this.el;
+                        }
+                    }
+                },
+                width: 60,
+                resizable: false
+            },        
         ],
         summary: {
           height: 40,
@@ -1291,7 +1404,68 @@ function initializeStaticsGrid(){
             return '';
         }
     });
+
+    staticsGrid.on('click', (ev) => {
+        const { columnName, rowKey } = ev;
+
+        if (columnName === 'view') {
+            const row = staticsGrid.getRow(rowKey);
+
+            const placeseq = row.placeseq;
+            const teacherseq = row.teacherseq;
+            const shortname = row.shortname;
+            const weektype = row.weektype;
+            const begintime = row.begintime;
+        
+            const query = new URLSearchParams({ placeseq, teacherseq, shortname, weektype, begintime });
+            fetch(`${backendDomain}/api/surveys/statics/result?${query}`)
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error(`서버 응답 오류: ${res.status}`);
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    console.log(data);
+                    const historyContent = document.getElementById('historyContent');
+
+                    if (!data || data.length === 0) {
+                        historyContent.innerHTML = '<p>No data.</p>';
+                        return;
+                    }
+
+                    // edText가 존재하는 항목만 출력
+                    const filtered = data.filter(item => item.edText && item.edText.trim() !== '');
+
+                    if (filtered.length === 0) {
+                        historyContent.innerHTML = '<p>No data.</p>';
+                        return;
+                    }
+    
+                    const html = filtered
+                        .map((item, idx) => `<div style="margin-bottom: 8px;"><strong>${idx + 1}. </strong>${item.edText}</div>`)
+                        .join('');
+
+                    historyContent.innerHTML = html;
+                })
+                .catch(err => {
+                    console.error('❌ Fetch 오류:', err.message);
+                    alert('설문 데이터를 불러오는 중 오류가 발생했습니다.');
+                });
+
+                // modal 오픈
+
+                document.getElementById('tmpModal').style.display = 'block';
+                document.getElementById('historyModal').style.display = 'block';
+        }
+    });
 }
+
+// 설문통계_modal 닫기
+document.getElementById('closeHistoryBtn').addEventListener('click', function () {
+    document.getElementById('tmpModal').style.display = 'none';
+    document.getElementById('historyModal').style.display = 'none';
+});
 
 // 설문통계 목록 로딩
 function loadStatics() {
@@ -1476,7 +1650,6 @@ function drawPlaceAvgChart(data) {
         }
     });
 }
-
 
 const exports = {
     openTab,
