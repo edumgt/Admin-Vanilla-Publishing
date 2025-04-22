@@ -129,13 +129,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     fetchPermissions().then((permissions) => {
         initPageUI("btnContainer", {
+            onSearch: loadSurveys,
             onAdd: addQuesionSurvey,
             onDelete: delQuesionSurvey,
             gridInstance: surveyGrid,
             gridOptions: {
                 editableCols: ['sdate', 'edate']
             },
-            buttonOrder: ['add', 'delete'],
+            buttonOrder: ['search', 'add', 'delete'],
             permissions
         });
 
@@ -836,7 +837,7 @@ function initializeSurveyGrid(){
         //draggable: true,
         columns: [
             { header: '문항', name: 'question', align: 'left', sortable: true, resizable: true, minWidth: 300, editor: "text" },
-            { header: '유형', name: 'type', align: 'center', sortable: true, resizable: true, minWidth: 150
+            { header: '유형', name: 'type', align: 'center', sortable: true, resizable: true, minWidth: 100
                 , formatter: ({ value }) => {
                     const strVal = String(value); // 명시적 string 변환
                     return strVal === '1' ? '선택형' : strVal === '2' ? '서술형' : '';
@@ -1292,7 +1293,7 @@ function initializeStaticsGrid(){
     });
 }
 
-// 설문 목록 로딩
+// 설문통계 목록 로딩
 function loadStatics() {
     const siteCode = document.getElementById('siteCode').value;
     const placeSeq = document.getElementById('placeSeq').value;
@@ -1306,10 +1307,14 @@ function loadStatics() {
             return res.json();
         })
         .then(data => {
+            // 👉 TUI Grid 표시
             addPlaceNameSubtotals(data);
 
             const dataCountElement = document.getElementById('staticsDataCount');
             dataCountElement.textContent = `Total : ${data?.length}`;
+
+            drawSurveyChart(staticsGrid.getData());  // 수업별 차트
+            drawPlaceAvgChart(staticsGrid.getData()); // 지점별 소계 차트         
         })
         .catch(err => {
             console.error('❌ Fetch 오류:', err.message);
@@ -1358,6 +1363,116 @@ function addPlaceNameSubtotals(data) {
     newData.forEach((row, index) => {
         if (row._isSubtotal) {
             staticsGrid.addRowClassName(index, 'subtotal-row'); // CSS에서 .subtotal-row 스타일 정의 필요
+        }
+    });
+}
+
+// 수업별 바 차트를 생성하는 함수
+function drawSurveyChart(data) {
+    const ctx = document.getElementById('surveyChart').getContext('2d');
+
+    // 👉 기존 차트 제거
+    if (window.surveyChartInstance) {
+        window.surveyChartInstance.destroy();
+    }
+
+    // 👉 소계가 아닌 실제 수업 데이터만 필터링
+    const realRows = data.filter(row => !row._isSubtotal);
+
+    // 👉 라벨 및 점수 추출
+    const labels = realRows.map(item => `${item.teachername}_${item.shortname}`);
+    const avgScores = realRows.map(item => Number(item.avgScore));
+
+    // 👉 차트 생성
+    window.surveyChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: '수업별 설문 평균 점수',
+                data: avgScores,
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100  // 예: 5점 만점 기준
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `평균 점수: ${context.raw.toFixed(2)}`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+/**
+ * 지점별 소계(avgScore)를 기반으로 바 차트를 생성하는 함수
+ * @param {Array} data - TUI Grid에 표시된 전체 데이터 (소계 포함)
+ */
+function drawPlaceAvgChart(data) {
+    // 1. 캔버스 컨텍스트 가져오기
+    const ctx = document.getElementById('placeAvgChart').getContext('2d');
+
+    // 2. 이전에 생성된 차트 인스턴스가 있다면 제거
+    if (window.placeAvgChartInstance) {
+        window.placeAvgChartInstance.destroy();
+    }
+
+    // 3. 소계 플래그가 있는 행만 필터링 (지점별 요약 데이터)
+    const subtotalRows = data.filter(row => row._isSubtotal);
+
+    // 4. 라벨은 '지점명', 데이터는 'avgScore'에서 추출
+    const labels = subtotalRows.map(row => row.placeName.replace(' 소계', '')); // '강남 소계' → '강남'
+    const scores = subtotalRows.map(row => Number(row.avgScore));
+
+    // 5. Chart.js로 막대 차트 생성
+    window.placeAvgChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: '지점별 설문 평균 점수',
+                data: scores,
+                backgroundColor: 'rgba(255, 159, 64, 0.6)',   // 밝은 오렌지
+                borderColor: 'rgba(255, 159, 64, 1)',         // 진한 오렌지
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true, // 반응형 크기
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100 // 100점 만점 기준
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `평균 점수: ${context.raw.toFixed(2)}`;
+                        }
+                    }
+                }
+            }
         }
     });
 }
