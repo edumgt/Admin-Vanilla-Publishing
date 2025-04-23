@@ -209,51 +209,15 @@ function applyPermissionToChildren(parentMenuId, permissionValue) {
 }
 
 function updateMenuPermissionField(rowKey, field) {
-    // row가 null인 경우 처리
-    if (rowKey === null || rowKey === undefined) {
-        return;
-    }
+    if (rowKey === null || rowKey === undefined) return;
 
     const row = rightGrid.getRow(rowKey);
-
-    // row가 null이거나 undefined인 경우, 또는 부모 메뉴이거나 기본 권한이 없는 경우
-    if (!row || row.hasChildren ||
-            (typeof row._children === 'string' && row._children.toLowerCase() === 'true') ||
-            row.hasPermission !== 1) {
-        return;
-    }
+    if (!row || row.hasChildren || row.hasPermission !== 1) return;
 
     const newValue = row[field] === 1 ? 0 : 1;
 
-    // 서버로 전송할 필드명 변환 (camelCase -> snake_case)
-    const serverField = field
-            .replace(/([A-Z])/g, "_$1")
-            .toLowerCase()
-            .replace(/^_/, "");
-
-    const payload = {
-        menuId: row.menu_id,
-        field: field,
-        value: newValue
-    };
-
-    fetch(`${backendDomain}/api/permissions/users/${selectedUserId}/menu/field`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-    })
-            .then(res => {
-                if (!res.ok) throw new Error("업데이트 실패");
-
-                // ✅ setValue로 바로 반영
-                rightGrid.setValue(rowKey, field, newValue);
-
-                showToast(`[${field}] 필드 업데이트 완료`, 'success', lang);
-            })
-            .catch(err => {
-                showToast("API 오류: " + err, 'error', lang);
-                console.error(err);
-            });
+    // ✅ DB 요청 제거 → UI에만 값 반영
+    rightGrid.setValue(rowKey, field, newValue);
 }
 
 function saveAllPermissions() {
@@ -276,11 +240,6 @@ function saveAllPermissions() {
             payload.push(item);
         }
     });
-
-    if (payload.length === 0) {
-        showToast("저장할 권한이 없습니다.", "warning", lang);
-        return;
-    }
 
     fetch(`${backendDomain}/api/permissions/users/${selectedUserId}/menu/bulk`, {
         method: "POST",
