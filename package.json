@@ -41,7 +41,8 @@
         "tui-grid": "^4.21.2",
         "tui-pagination": "^3.4.1",
         "uuid": "^9.0.1",
-        "ws": "^8.18.0"
+        "ws": "^8.18.0",
+        "sortablejs": "^1.15.6"
     },
     "devDependencies": {
         "@babel/core": "^7.22.0",

@@ -1,14 +1,19 @@
-import {fetchPermissions, initPageUI} from "./accessControl.js";
+import { fetchPermissions, initPageUI } from "../accessControl.js";
 
 let leftGrid = null;
 let rightGrid = null;
 let selectedUserId = null;
 
-const permissionFields = ["canSearch", "canAdd", "canDelete", "canResetSearch", "canSave", "canView", "canEdit"];
+const permissionFields = [
+    "canSearch", "canAdd", "canDelete", "canResetSearch",
+    "canSave", "canView", "canEdit"
+];
 
-document.addEventListener("DOMContentLoaded", () => {
-    fetchUsers();
-    setupMenuTreeGrid([]); // 초기 빈 데이터로 트리 그리드 설정
+export function initPermissionTab() {
+    if (window.__permissionTabInitialized) return;
+    window.__permissionTabInitialized = true;
+
+    breadcrumb.textContent = "사용자별 메뉴 권한관리";
 
     fetchPermissions().then((permissions) => {
         initPageUI("btnContainer2", {
@@ -18,7 +23,10 @@ document.addEventListener("DOMContentLoaded", () => {
             permissions
         });
     });
-});
+
+    fetchUsers();
+    setupMenuTreeGrid([]); // 초기 빈 데이터
+}
 
 function fetchUsers() {
     fetch(`${backendDomain}/api/users`)
@@ -39,7 +47,7 @@ function setupUserGrid(data) {
 
     leftGrid = new tui.Grid({
         el: document.getElementById("grid-left"),
-        data: data,
+        data,
         rowHeaders: ['rowNum'],
         columns: [
             { header: "사용자명", name: "username" },
@@ -60,72 +68,40 @@ function setupUserGrid(data) {
 
 function setupMenuTreeGrid(data) {
     if (rightGrid) rightGrid.destroy();
+    if (!Array.isArray(data)) data = [];
 
-    if (!data || !Array.isArray(data) || data.length === 0) {
-        data = [];
-    }
+    const processedData = data.map(item => ({
+        ...item,
+        menu_id: item.menuId,
+        parent_menu_id: item.parentMenuId,
+        level: Number(item.level),
+        ...Object.fromEntries(permissionFields.map(f => [f, item[f] || 0])),
+        hasPermission: item.hasPermission,
+        _children: []
+    }));
 
-    // Step 1. 필드 변환 및 권한 설정
-    const processedData = data.map(item => {
-        return {
-            ...item,
-            menu_id: item.menuId,
-            parent_menu_id: item.parentMenuId,
-            level: Number(item.level),
-            canSearch: item.canSearch || 0,
-            canAdd: item.canAdd || 0,
-            canDelete: item.canDelete || 0,
-            canResetSearch: item.canResetSearch || 0,
-            canSave: item.canSave || 0,
-            canView: item.canView || 0,
-            canEdit: item.canEdit || 0,
-            hasPermission: item.hasPermission,  // ✅ 여기만 변경됨
-            _children: [] // 자식 노드를 위한 배열
-            // ⚠️ hasChildren은 일단 설정하지 않고 나중에 계산
-        };
-    });
-
-    // Step 2. ID 매핑
-    const idMap = {};
-    processedData.forEach(item => {
-        idMap[item.menu_id] = item;
-    });
-
-    // Step 3. 부모-자식 연결
+    const idMap = Object.fromEntries(processedData.map(item => [item.menu_id, item]));
     processedData.forEach(item => {
         if (item.parent_menu_id && idMap[item.parent_menu_id]) {
             idMap[item.parent_menu_id]._children.push(item);
         }
     });
 
-    // 자식 연결 이후 정확하게 hasChildren 재계산
     Object.values(idMap).forEach(item => {
         const isLeaf = !item._children || item._children.length === 0;
         item.hasChildren = !isLeaf;
-
-        // TUI Grid에서 leaf로 판단되게 하려면 _children을 null로 설정
-        if (isLeaf) {
-            item._children = null; // ✅ 핵심!
-        }
+        if (isLeaf) item._children = null;
     });
 
-    // Step 5. 루트 노드 필터링 (level === 1)
     const rootItems = processedData.filter(item => item.level === 1);
 
-    // Step 6. 컬럼 정의
     const columns = [
         {
             header: "메뉴 권한", name: "hasPermission", width: 80, align: 'center',
-            formatter: ({ value, row }) => {
-                return `<input type="checkbox" ${value === 1 ? "checked" : ""} />`;
-            }
+            formatter: ({ value }) => `<input type="checkbox" ${value === 1 ? "checked" : ""} />`
         },
-        {
-            header: "메뉴명", name: "label", align: 'left'
-        },
-        {
-            header: "메뉴 ID", name: "menu_id", width: 100, align: 'center'
-        },
+        { header: "메뉴명", name: "label", align: 'left' },
+        { header: "메뉴 ID", name: "menu_id", width: 100, align: 'center' },
         ...permissionFields.map(field => ({
             header: field.replace("can", "").replace(/([A-Z])/g, " $1").trim(),
             name: field,
@@ -138,45 +114,31 @@ function setupMenuTreeGrid(data) {
         }))
     ];
 
-    // Step 7. 트리뷰 구성
     rightGrid = new tui.Grid({
         el: document.getElementById("grid-right"),
         data: rootItems,
         rowHeaders: ['rowNum'],
-        columns: columns,
+        columns,
         bodyHeight: "fitToParent",
         treeColumnOptions: {
             name: 'label',
-            useIcon: true, // 부모만 폴더 아이콘 표시됨
+            useIcon: true,
             useCascadingCheckbox: false
         }
     });
 
-    // Step 8. 클릭 이벤트 처리
     rightGrid.on('click', ev => {
         const { rowKey, columnName } = ev;
         if (rowKey == null) return;
-
         const row = rightGrid.getRow(rowKey);
         if (!row) return;
 
         if (columnName === "hasPermission") {
-            const row = rightGrid.getRow(rowKey);
-            if (!row) return;
-
             const newValue = row.hasPermission === 1 ? 0 : 1;
-
-            // 부모 체크
             rightGrid.setValue(rowKey, "hasPermission", newValue);
-
-            // 체크 해제 시 권한 모두 초기화
             if (newValue === 0) {
-                permissionFields.forEach(field => {
-                    rightGrid.setValue(rowKey, field, 0);
-                });
+                permissionFields.forEach(field => rightGrid.setValue(rowKey, field, 0));
             }
-
-            // 자식 전체 재귀 반영
             applyPermissionToChildren(row.menu_id, newValue);
         }
 
@@ -188,20 +150,14 @@ function setupMenuTreeGrid(data) {
 
 function applyPermissionToChildren(parentMenuId, permissionValue) {
     const allRows = rightGrid.getData();
-
-    allRows.forEach((row, index) => {
+    allRows.forEach(row => {
         if (row.parent_menu_id === parentMenuId) {
             const rowKey = rightGrid.getIndexOfRow(row.rowKey);
             if (rowKey !== -1) {
                 rightGrid.setValue(rowKey, "hasPermission", permissionValue);
-
                 if (permissionValue === 0) {
-                    permissionFields.forEach(field => {
-                        rightGrid.setValue(rowKey, field, 0);
-                    });
+                    permissionFields.forEach(field => rightGrid.setValue(rowKey, field, 0));
                 }
-
-                // 자식이 또 부모인 경우 재귀
                 applyPermissionToChildren(row.menu_id, permissionValue);
             }
         }
@@ -209,37 +165,20 @@ function applyPermissionToChildren(parentMenuId, permissionValue) {
 }
 
 function updateMenuPermissionField(rowKey, field) {
-    if (rowKey === null || rowKey === undefined) return;
-
     const row = rightGrid.getRow(rowKey);
     if (!row || row.hasChildren || row.hasPermission !== 1) return;
-
     const newValue = row[field] === 1 ? 0 : 1;
-
-    // ✅ DB 요청 제거 → UI에만 값 반영
     rightGrid.setValue(rowKey, field, newValue);
 }
 
 function saveAllPermissions() {
-    const allRows = rightGrid.getData();
-    const payload = [];
-
-    allRows.forEach(row => {
-        if (row.hasPermission === 1) {
-            const item = {
+    const payload = rightGrid.getData()
+            .filter(row => row.hasPermission === 1)
+            .map(row => ({
                 userId: selectedUserId,
                 menuId: row.menu_id,
-                canSearch: row.canSearch,
-                canAdd: row.canAdd,
-                canDelete: row.canDelete,
-                canResetSearch: row.canResetSearch,
-                canSave: row.canSave,
-                canView: row.canView,
-                canEdit: row.canEdit
-            };
-            payload.push(item);
-        }
-    });
+                ...Object.fromEntries(permissionFields.map(f => [f, row[f]]))
+            }));
 
     fetch(`${backendDomain}/api/permissions/users/${selectedUserId}/menu/bulk`, {
         method: "POST",
@@ -254,5 +193,3 @@ function saveAllPermissions() {
                 showToast("저장 중 오류가 발생했습니다: " + err.message, "error", lang);
             });
 }
-
-breadcrumb.textContent = "사용자별 메뉴 권한관리"
