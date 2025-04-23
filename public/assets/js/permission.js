@@ -1,3 +1,5 @@
+import {fetchPermissions, initPageUI} from "./accessControl.js";
+
 let leftGrid = null;
 let rightGrid = null;
 let selectedUserId = null;
@@ -7,6 +9,15 @@ const permissionFields = ["canSearch", "canAdd", "canDelete", "canResetSearch", 
 document.addEventListener("DOMContentLoaded", () => {
     fetchUsers();
     setupMenuTreeGrid([]); // 초기 빈 데이터로 트리 그리드 설정
+
+    fetchPermissions().then((permissions) => {
+        initPageUI("btnContainer2", {
+            onSave: saveAllPermissions,
+            gridInstance: rightGrid,
+            buttonOrder: ['save'],
+            permissions
+        });
+    });
 });
 
 function fetchUsers() {
@@ -31,7 +42,6 @@ function setupUserGrid(data) {
         data: data,
         rowHeaders: ['rowNum'],
         columns: [
-            { header: "ID", name: "id", width: 60 },
             { header: "사용자명", name: "username" },
             { header: "이메일", name: "email" }
         ],
@@ -107,8 +117,7 @@ function setupMenuTreeGrid(data) {
         {
             header: "메뉴 권한", name: "hasPermission", width: 80, align: 'center',
             formatter: ({ value, row }) => {
-                const disabled = row.hasChildren ? "disabled" : "";
-                return `<input type="checkbox" ${value === 1 ? "checked" : ""} ${disabled} />`;
+                return `<input type="checkbox" ${value === 1 ? "checked" : ""} />`;
             }
         },
         {
@@ -151,64 +160,52 @@ function setupMenuTreeGrid(data) {
         const row = rightGrid.getRow(rowKey);
         if (!row) return;
 
-        if (row.hasChildren && columnName !== 'label') return;
-
         if (columnName === "hasPermission") {
-            toggleMenuPermission(rowKey);
-        } else if (permissionFields.includes(columnName)) {
+            const row = rightGrid.getRow(rowKey);
+            if (!row) return;
+
+            const newValue = row.hasPermission === 1 ? 0 : 1;
+
+            // 부모 체크
+            rightGrid.setValue(rowKey, "hasPermission", newValue);
+
+            // 체크 해제 시 권한 모두 초기화
+            if (newValue === 0) {
+                permissionFields.forEach(field => {
+                    rightGrid.setValue(rowKey, field, 0);
+                });
+            }
+
+            // 자식 전체 재귀 반영
+            applyPermissionToChildren(row.menu_id, newValue);
+        }
+
+        if (permissionFields.includes(columnName)) {
             updateMenuPermissionField(rowKey, columnName);
         }
     });
 }
 
-function toggleMenuPermission(rowKey) {
-    // row가 null인 경우 처리
-    if (rowKey === null || rowKey === undefined) {
-        return;
-    }
+function applyPermissionToChildren(parentMenuId, permissionValue) {
+    const allRows = rightGrid.getData();
 
-    const row = rightGrid.getRow(rowKey);
+    allRows.forEach((row, index) => {
+        if (row.parent_menu_id === parentMenuId) {
+            const rowKey = rightGrid.getIndexOfRow(row.rowKey);
+            if (rowKey !== -1) {
+                rightGrid.setValue(rowKey, "hasPermission", permissionValue);
 
-    // row가 null이거나 undefined인 경우 처리
-    if (!row) {
-        return;
-    }
-
-    // 부모 메뉴는 토글 불가
-    if (row.hasChildren || (typeof row._children === 'string' && row._children.toLowerCase() === 'true')) {
-        return;
-    }
-
-    const newValue = row.hasPermission === 1 ? 0 : 1;
-
-    const payload = {
-        menuId: row.menu_id
-    };
-
-    fetch(`${backendDomain}/api/permissions/users/${selectedUserId}/menu`, {
-        method: newValue === 1 ? "POST" : "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-    })
-            .then(res => {
-                if (!res.ok) throw new Error("API 실패");
-
-                // hasPermission 필드만 업데이트
-                rightGrid.setValue(rowKey, "hasPermission", newValue);
-
-                // hasPermission이 0이면 나머지 필드도 모두 0으로 설정
-                if (newValue === 0) {
+                if (permissionValue === 0) {
                     permissionFields.forEach(field => {
                         rightGrid.setValue(rowKey, field, 0);
                     });
                 }
 
-                showToast(newValue === 1 ? "메뉴 권한 부여 완료" : "메뉴 권한 제거 완료", 'success', lang);
-            })
-            .catch(err => {
-                showToast("API 오류: " + err, 'error', lang);
-                console.error(err);
-            });
+                // 자식이 또 부모인 경우 재귀
+                applyPermissionToChildren(row.menu_id, permissionValue);
+            }
+        }
+    });
 }
 
 function updateMenuPermissionField(rowKey, field) {
@@ -236,7 +233,7 @@ function updateMenuPermissionField(rowKey, field) {
 
     const payload = {
         menuId: row.menu_id,
-        field: serverField,
+        field: field,
         value: newValue
     };
 
@@ -259,39 +256,44 @@ function updateMenuPermissionField(rowKey, field) {
             });
 }
 
-// 모든 자식 메뉴의 권한을 재귀적으로 업데이트하는 함수 (현재는 사용되지 않음)
-// DB에서 _children 필드가 'true'/'false' 문자열로 오는 경우에 대비한 처리
-function updateChildrenPermissions(parentId, permissionValue) {
-    if (!parentId) return;
+function saveAllPermissions() {
+    const allRows = rightGrid.getData();
+    const payload = [];
 
-    // 자식 메뉴 찾기
-    const children = rightGrid.getData().filter(item =>
-            item.parent_menu_id === parentId
-    );
-
-    if (!children || children.length === 0) return;
-
-    children.forEach(child => {
-        const rowKey = rightGrid.getIndexOfRow(child.rowKey);
-        if (rowKey !== -1) {
-            rightGrid.setValue(rowKey, "hasPermission", permissionValue);
-            rightGrid.setValue(rowKey, "canView", permissionValue);
-
-            if (permissionValue === 0) {
-                permissionFields.forEach(field => {
-                    rightGrid.setValue(rowKey, field, 0);
-                });
-            }
-
-            // 이 자식이 부모인 경우 재귀적으로 처리
-            const isParent = child.hasChildren ||
-                    (typeof child._children === 'string' && child._children.toLowerCase() === 'true');
-
-            if (isParent) {
-                updateChildrenPermissions(child.menu_id, permissionValue);
-            }
+    allRows.forEach(row => {
+        if (row.hasPermission === 1) {
+            const item = {
+                userId: selectedUserId,
+                menuId: row.menu_id,
+                canSearch: row.canSearch,
+                canAdd: row.canAdd,
+                canDelete: row.canDelete,
+                canResetSearch: row.canResetSearch,
+                canSave: row.canSave,
+                canView: row.canView,
+                canEdit: row.canEdit
+            };
+            payload.push(item);
         }
     });
+
+    if (payload.length === 0) {
+        showToast("저장할 권한이 없습니다.", "warning", lang);
+        return;
+    }
+
+    fetch(`${backendDomain}/api/permissions/users/${selectedUserId}/menu/bulk`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+    })
+            .then(res => {
+                if (!res.ok) throw new Error("저장 실패");
+                showToast("권한이 성공적으로 저장되었습니다.", "success", lang);
+            })
+            .catch(err => {
+                showToast("저장 중 오류가 발생했습니다: " + err.message, "error", lang);
+            });
 }
 
 breadcrumb.textContent = "사용자별 메뉴 권한관리"
