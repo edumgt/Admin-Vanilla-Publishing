@@ -1328,16 +1328,16 @@ function initializeStaticsGrid(){
         rowHeight: 42,
         minRowHeight: 42,
         columns: [
-            { header: '지점명', name: 'placeName', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true, rowSpan: true },
-            { header: '강사명', name: 'teachername', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true, rowSpan: true },
-            { header: '수업명', name: 'shortname', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true, minWidth: 350 },
-            { header: '평일/주말', name: 'weekName', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true },
-            { header: '강의시간', name: 'begintime', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true },
-            { header: '설문학생수', name: 'studentCnt', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true },
-            // { header: '설문점수', name: 'avgScore', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true
+            { header: '지점명', name: 'placeName', align: 'center', sortable: true, filter: 'text', resizable: true, rowSpan: true },
+            { header: '강사명', name: 'teachername', align: 'center', sortable: true, filter: 'text', resizable: true, rowSpan: true },
+            { header: '수업명', name: 'shortname', align: 'center', sortable: true, filter: 'text', resizable: true, minWidth: 350 },
+            { header: '평일/주말', name: 'weekName', align: 'center', sortable: true, filter: 'text', resizable: true },
+            { header: '강의시간', name: 'begintime', align: 'center', sortable: true, filter: 'text', resizable: true },
+            { header: '설문학생수', name: 'studentCnt', align: 'center', sortable: true, filter: 'text', resizable: true },
+            // { header: '설문점수', name: 'avgScore', ealign: 'center', sortable: true, filter: 'text', resizable: true
             //     , formatter: ({ value }) => Number(value).toFixed(2) 
             // },       // 단순 점수 합
-            { header: '설문점수', name: 'percentScore', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true
+            { header: '설문점수', name: 'percentScore', align: 'center', sortable: true, filter: 'text', resizable: true
                 , formatter: ({ value }) => Number(value).toFixed(2)    
             },  // 백분율 점수 계산 결과    
             {
@@ -1349,9 +1349,9 @@ function initializeStaticsGrid(){
                     type: class {
                         constructor(props) {
                             const el = document.createElement('div');
-            
-                            // 소계 row는 렌더링 생략
-                            if (!props?.row?._isSubtotal) {
+                            const row = props.grid.getRow(props.rowKey);
+
+                            if (!row?._isSubtotal) {
                                 el.innerHTML = `<button class="btn btn-sm btn-outline-primary">V</button>`;
                                 el.style.cursor = 'pointer';
                                 el.style.textAlign = 'center';
@@ -1383,12 +1383,12 @@ function initializeStaticsGrid(){
 
                 }
               },
-              avgScore: {
+              percentScore: {
                 template: function(valueMap) {
                     if(staticsGrid){
                         // 👉 소계(_isSubtotal) 행을 제외한 설문점수 평균/최소/최대 계산
                         const rows = staticsGrid.getData().filter(row => !row._isSubtotal);
-                        const scores = rows.map(r => Number(r.avgScore)).filter(n => !isNaN(n));
+                        const scores = rows.map(r => Number(r.percentScore)).filter(n => !isNaN(n));
                         return `MAX: ${Math.max(...scores).toFixed(2)}<br>MIN: ${Math.min(...scores).toFixed(2)}
                                 <br>AVG: ${(scores.reduce((sum, n) => sum + n, 0) / scores.length).toFixed(2)}`;                    
                     }
@@ -1407,10 +1407,9 @@ function initializeStaticsGrid(){
 
     staticsGrid.on('click', (ev) => {
         const { columnName, rowKey } = ev;
+        const row = staticsGrid.getRow(rowKey);
 
-        if (columnName === 'view') {
-            const row = staticsGrid.getRow(rowKey);
-
+        if (columnName === 'view' && !row?._isSubtotal) {
             const placeseq = row.placeseq;
             const teacherseq = row.teacherseq;
             const shortname = row.shortname;
@@ -1517,13 +1516,13 @@ function addPlaceNameSubtotals(data) {
 
         // 해당 지점의 총 학생 수와 평균 점수 계산
         const totalStudents = rows.reduce((sum, r) => sum + Number(r.studentCnt), 0);
-        const avgScore = rows.reduce((sum, r) => sum + Number(r.avgScore), 0) / rows.length;
+        const percentScore = rows.reduce((sum, r) => sum + Number(r.percentScore), 0) / rows.length;
 
         // 소계 row 구성
         const subtotalRow = {
             placeName: `${placeName} 소계`, // 지점명 + '소계' 표시
             studentCnt: totalStudents,
-            avgScore: avgScore.toFixed(2),
+            percentScore: percentScore.toFixed(2),
             _isSubtotal: true // 👉 나중에 스타일 적용을 위한 플래그
         };
 
@@ -1555,7 +1554,7 @@ function drawSurveyChart(data) {
 
     // 👉 라벨 및 점수 추출
     const labels = realRows.map(item => `${item.teachername}_${item.shortname}`);
-    const avgScores = realRows.map(item => Number(item.avgScore));
+    const percentScores = realRows.map(item => Number(item.percentScore));
 
     // 👉 차트 생성
     window.surveyChartInstance = new Chart(ctx, {
@@ -1564,7 +1563,7 @@ function drawSurveyChart(data) {
             labels: labels,
             datasets: [{
                 label: '수업별 설문 평균 점수',
-                data: avgScores,
+                data: percentScores,
                 backgroundColor: 'rgba(54, 162, 235, 0.6)',
                 borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1
@@ -1595,7 +1594,7 @@ function drawSurveyChart(data) {
 }
 
 /**
- * 지점별 소계(avgScore)를 기반으로 바 차트를 생성하는 함수
+ * 지점별 소계(percentScore)를 기반으로 바 차트를 생성하는 함수
  * @param {Array} data - TUI Grid에 표시된 전체 데이터 (소계 포함)
  */
 function drawPlaceAvgChart(data) {
@@ -1610,13 +1609,13 @@ function drawPlaceAvgChart(data) {
     // 3. 소계 플래그가 있는 행만 필터링 (지점별 요약 데이터)
     const subtotalRows = data.filter(row => row._isSubtotal);
 
-    // 4. 라벨은 '지점명', 데이터는 'avgScore'에서 추출
+    // 4. 라벨은 '지점명', 데이터는 'percentScore'에서 추출
     const labels = subtotalRows.map(row => row.placeName.replace(' 소계', '')); // '강남 소계' → '강남'
-    const scores = subtotalRows.map(row => Number(row.avgScore));
+    const scores = subtotalRows.map(row => Number(row.percentScore));
 
     // 5. Chart.js로 막대 차트 생성
     window.placeAvgChartInstance = new Chart(ctx, {
-        type: 'bar',
+        type: 'line',
         data: {
             labels: labels,
             datasets: [{
