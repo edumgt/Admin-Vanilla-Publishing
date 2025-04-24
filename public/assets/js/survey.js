@@ -955,38 +955,8 @@ function initializeSurveyGrid(){
     });
 
     surveyQuestionGrid.on('drop', () => {
-        const rows = surveyQuestionGrid.getData();
-
-        // 선택형(type: '1')과 서술형(type: '2') 분리
-        const choiceRows = rows.filter(r => String(r.type) === '1');
-        const essayRows = rows.filter(r => String(r.type) === '2');
-    
-        // ✅ 선택형 sort 재배정 (1부터 시작)
-        choiceRows.forEach((row, idx) => {
-            const newSort = idx + 1;
-            if (row.sort !== newSort) {
-                row.sort = newSort;
-                // API 호출
-                saveSurveyRow(row, `${backendDomain}/api/surveys/question/${row.seq}`, 'PUT', () => {
-                    console.log(`[선택형] ${row.question} → sort ${row.sort} 저장 완료`);
-                });
-            }
-        });
-    
-        // ✅ 서술형은 항상 드래그 제외 & sort는 11번 이상
-        essayRows.forEach((row, idx) => {
-            const newSort = 11 + idx;
-            if (row.sort !== newSort) {
-                row.sort = newSort;
-                saveSurveyRow(row, `${backendDomain}/api/surveys/question/${row.seq}`, 'PUT', () => {
-                    console.log(`[서술형] ${row.question} → sort ${row.sort} 저장 완료`);
-                });
-            }
-        });
-    
-        // ✅ 드래그 후 그리드 리렌더링
-        const finalData = [...choiceRows, ...essayRows];
-        surveyQuestionGrid.resetData(finalData);
+        // 설문 문항목록 순서 재배치 저장
+        reOrderQuestionSurvey();
     });
 
 }
@@ -1041,24 +1011,24 @@ function loadSurveys() {
 
     const query = new URLSearchParams({ year, qt });
     fetch(`${backendDomain}/api/surveys/survey/search?${query}`)
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error(`서버 응답 오류: ${res.status}`);
-                }
-                return res.json();
-            })
-            .then(data => {
-                surveyGrid.resetData(data);
+    .then(res => {
+        if (!res.ok) {
+            throw new Error(`서버 응답 오류: ${res.status}`);
+        }
+        return res.json();
+    })
+    .then(data => {
+        surveyGrid.resetData(data);
 
-                // 설문지 재조회 시 문항 목록도 초기화
-                if (surveyQuestionGrid) {
-                    surveyQuestionGrid.resetData([]);
-                }
-            })
-            .catch(err => {
-                console.error('❌ Fetch 오류:', err.message);
-                alert('설문 데이터를 불러오는 중 오류가 발생했습니다.');
-            });
+        // 설문지 재조회 시 문항 목록도 초기화
+        if (surveyQuestionGrid) {
+            surveyQuestionGrid.resetData([]);
+        }
+    })
+    .catch(err => {
+        console.error('❌ Fetch 오류:', err.message);
+        alert('설문 데이터를 불러오는 중 오류가 발생했습니다.');
+    });
 }
 
 // 저장 api 호출
@@ -1069,21 +1039,21 @@ function saveSurveyRow(row, url, method, callback) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(row)
     })
-            .then(res => res.json())
-            .then(result => {
-                if (result > 0) {
-                    showToast('저장 성공', 'success', lang);
-                    if (typeof callback === 'function') {
-                        callback(); // 👉 콜백 함수 실행
-                    }
-                } else {
-                    showToast('저장 실패', 'error', lang);
-                }
-            })
-            .catch(err => {
-                console.error('저장 오류:', err);
-                showToast('저장 오류', 'error', lang);
-            });
+    .then(res => res.json())
+    .then(result => {
+        if (result > 0) {
+            showToast('저장 성공', 'success', lang);
+            if (typeof callback === 'function') {
+                callback(); // 👉 콜백 함수 실행
+            }
+        } else {
+            showToast('저장 실패', 'error', lang);
+        }
+    })
+    .catch(err => {
+        console.error('저장 오류:', err);
+        showToast('저장 오류', 'error', lang);
+    });
 }
 
 
@@ -1130,22 +1100,22 @@ function delQuesionSurvey() {
             fetch(`${backendDomain}/api/surveys/survey/${row.seq}`, {
                 method: 'DELETE'
             })
-                    .then(res => {
-                        if (!res.ok) throw new Error(`서버 오류: ${res.status}`);
-                        return res.json(); // 삭제 결과 (성공 시 정수 반환 기대)
-                    })
-                    .then(result => {
-                        if (result > 0) {
-                            showToast('삭제 성공', 'success', lang);
-                            surveyGrid.removeRow(rowKey);
-                        } else {
-                            showToast('삭제 실패', 'error', lang);
-                        }
-                    })
-                    .catch(err => {
-                        console.error('삭제 오류:', err);
-                        showToast('삭제 중 오류 발생', 'error', lang);
-                    });
+            .then(res => {
+                if (!res.ok) throw new Error(`서버 오류: ${res.status}`);
+                return res.json(); // 삭제 결과 (성공 시 정수 반환 기대)
+            })
+            .then(result => {
+                if (result > 0) {
+                    showToast('삭제 성공', 'success', lang);
+                    surveyGrid.removeRow(rowKey);
+                } else {
+                    showToast('삭제 실패', 'error', lang);
+                }
+            })
+            .catch(err => {
+                console.error('삭제 오류:', err);
+                showToast('삭제 중 오류 발생', 'error', lang);
+            });
         }
     });
 }
@@ -1162,19 +1132,19 @@ function handleSurveyClick() {
     const query = new URLSearchParams({ rdSeq });
 
     fetch(`${backendDomain}/api/surveys/question/search?${query}`)
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error(`서버 응답 오류: ${res.status}`);
-                }
-                return res.json();
-            })
-            .then(data => {
-                surveyQuestionGrid.resetData(data);
-            })
-            .catch(err => {
-                console.error('❌ Fetch 오류:', err.message);
-                alert('문항 데이터를 불러오는 중 오류가 발생했습니다.');
-            });
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`서버 응답 오류: ${res.status}`);
+            }
+            return res.json();
+        })
+        .then(data => {
+            surveyQuestionGrid.resetData(data);
+        })
+        .catch(err => {
+            console.error('❌ Fetch 오류:', err.message);
+            alert('문항 데이터를 불러오는 중 오류가 발생했습니다.');
+        });
 }
 
 // 문항목록 행 추가
@@ -1235,6 +1205,9 @@ function delQuesionSurvey2() {
                 if (result > 0) {
                     showToast('삭제 성공', 'success', lang);
                     surveyQuestionGrid.removeRow(rowKey);
+
+                    // 설문 문항목록 순서 재배치 저장
+                    reOrderQuestionSurvey();
                 } else {
                     showToast('삭제 실패', 'error', lang);
                 }
@@ -1245,6 +1218,41 @@ function delQuesionSurvey2() {
             });
         }
     });
+}
+
+function reOrderQuestionSurvey(){
+    const rows = surveyQuestionGrid.getData();
+
+    // 선택형(type: '1')과 서술형(type: '2') 분리
+    const choiceRows = rows.filter(r => String(r.type) === '1');
+    const essayRows = rows.filter(r => String(r.type) === '2');
+
+    // ✅ 선택형 sort 재배정 (1부터 시작)
+    choiceRows.forEach((row, idx) => {
+        const newSort = idx + 1;
+        if (row.sort !== newSort) {
+            row.sort = newSort;
+            // API 호출
+            saveSurveyRow(row, `${backendDomain}/api/surveys/question/${row.seq}`, 'PUT', () => {
+                //console.log(`[선택형] ${row.question} → sort ${row.sort} 저장 완료`);
+            });
+        }
+    });
+
+    // ✅ 서술형은 항상 드래그 제외 & sort는 11번 이상
+    essayRows.forEach((row, idx) => {
+        const newSort = 11 + idx;
+        if (row.sort !== newSort) {
+            row.sort = newSort;
+            saveSurveyRow(row, `${backendDomain}/api/surveys/question/${row.seq}`, 'PUT', () => {
+                //console.log(`[서술형] ${row.question} → sort ${row.sort} 저장 완료`);
+            });
+        }
+    });
+
+    // ✅ 드래그 후 그리드 리렌더링
+    const finalData = [...choiceRows, ...essayRows];
+    surveyQuestionGrid.resetData(finalData);
 }
 
 //설문통계 탭_조회조건_계열
@@ -1328,16 +1336,16 @@ function initializeStaticsGrid(){
         rowHeight: 42,
         minRowHeight: 42,
         columns: [
-            { header: '지점명', name: 'placeName', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true, rowSpan: true },
-            { header: '강사명', name: 'teachername', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true, rowSpan: true },
-            { header: '수업명', name: 'shortname', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true, minWidth: 350 },
-            { header: '평일/주말', name: 'weekName', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true },
-            { header: '강의시간', name: 'begintime', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true },
-            { header: '설문학생수', name: 'studentCnt', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true },
-            // { header: '설문점수', name: 'avgScore', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true
+            { header: '지점명', name: 'placeName', align: 'center', sortable: true, filter: 'text', resizable: true, rowSpan: true },
+            { header: '강사명', name: 'teachername', align: 'center', sortable: true, filter: 'text', resizable: true, rowSpan: true },
+            { header: '수업명', name: 'shortname', align: 'center', sortable: true, filter: 'text', resizable: true, minWidth: 350 },
+            { header: '평일/주말', name: 'weekName', align: 'center', sortable: true, filter: 'text', resizable: true },
+            { header: '강의시간', name: 'begintime', align: 'center', sortable: true, filter: 'text', resizable: true },
+            { header: '설문학생수', name: 'studentCnt', align: 'center', sortable: true, filter: 'text', resizable: true },
+            // { header: '설문점수', name: 'avgScore', ealign: 'center', sortable: true, filter: 'text', resizable: true
             //     , formatter: ({ value }) => Number(value).toFixed(2) 
             // },       // 단순 점수 합
-            { header: '설문점수', name: 'percentScore', editor: 'text', align: 'center', sortable: true, filter: 'text', resizable: true
+            { header: '설문점수', name: 'percentScore', align: 'center', sortable: true, filter: 'text', resizable: true
                 , formatter: ({ value }) => Number(value).toFixed(2)    
             },  // 백분율 점수 계산 결과    
             {
@@ -1349,9 +1357,9 @@ function initializeStaticsGrid(){
                     type: class {
                         constructor(props) {
                             const el = document.createElement('div');
-            
-                            // 소계 row는 렌더링 생략
-                            if (!props?.row?._isSubtotal) {
+                            const row = props.grid.getRow(props.rowKey);
+
+                            if (!row?._isSubtotal) {
                                 el.innerHTML = `<button class="btn btn-sm btn-outline-primary">V</button>`;
                                 el.style.cursor = 'pointer';
                                 el.style.textAlign = 'center';
@@ -1383,12 +1391,12 @@ function initializeStaticsGrid(){
 
                 }
               },
-              avgScore: {
+              percentScore: {
                 template: function(valueMap) {
                     if(staticsGrid){
                         // 👉 소계(_isSubtotal) 행을 제외한 설문점수 평균/최소/최대 계산
                         const rows = staticsGrid.getData().filter(row => !row._isSubtotal);
-                        const scores = rows.map(r => Number(r.avgScore)).filter(n => !isNaN(n));
+                        const scores = rows.map(r => Number(r.percentScore)).filter(n => !isNaN(n));
                         return `MAX: ${Math.max(...scores).toFixed(2)}<br>MIN: ${Math.min(...scores).toFixed(2)}
                                 <br>AVG: ${(scores.reduce((sum, n) => sum + n, 0) / scores.length).toFixed(2)}`;                    
                     }
@@ -1407,10 +1415,9 @@ function initializeStaticsGrid(){
 
     staticsGrid.on('click', (ev) => {
         const { columnName, rowKey } = ev;
+        const row = staticsGrid.getRow(rowKey);
 
-        if (columnName === 'view') {
-            const row = staticsGrid.getRow(rowKey);
-
+        if (columnName === 'view' && !row?._isSubtotal) {
             const placeseq = row.placeseq;
             const teacherseq = row.teacherseq;
             const shortname = row.shortname;
@@ -1517,13 +1524,13 @@ function addPlaceNameSubtotals(data) {
 
         // 해당 지점의 총 학생 수와 평균 점수 계산
         const totalStudents = rows.reduce((sum, r) => sum + Number(r.studentCnt), 0);
-        const avgScore = rows.reduce((sum, r) => sum + Number(r.avgScore), 0) / rows.length;
+        const percentScore = rows.reduce((sum, r) => sum + Number(r.percentScore), 0) / rows.length;
 
         // 소계 row 구성
         const subtotalRow = {
             placeName: `${placeName} 소계`, // 지점명 + '소계' 표시
             studentCnt: totalStudents,
-            avgScore: avgScore.toFixed(2),
+            percentScore: percentScore.toFixed(2),
             _isSubtotal: true // 👉 나중에 스타일 적용을 위한 플래그
         };
 
@@ -1555,7 +1562,7 @@ function drawSurveyChart(data) {
 
     // 👉 라벨 및 점수 추출
     const labels = realRows.map(item => `${item.teachername}_${item.shortname}`);
-    const avgScores = realRows.map(item => Number(item.avgScore));
+    const percentScores = realRows.map(item => Number(item.percentScore));
 
     // 👉 차트 생성
     window.surveyChartInstance = new Chart(ctx, {
@@ -1564,7 +1571,7 @@ function drawSurveyChart(data) {
             labels: labels,
             datasets: [{
                 label: '수업별 설문 평균 점수',
-                data: avgScores,
+                data: percentScores,
                 backgroundColor: 'rgba(54, 162, 235, 0.6)',
                 borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1
@@ -1595,7 +1602,7 @@ function drawSurveyChart(data) {
 }
 
 /**
- * 지점별 소계(avgScore)를 기반으로 바 차트를 생성하는 함수
+ * 지점별 소계(percentScore)를 기반으로 라인 차트를 생성하는 함수
  * @param {Array} data - TUI Grid에 표시된 전체 데이터 (소계 포함)
  */
 function drawPlaceAvgChart(data) {
@@ -1610,13 +1617,13 @@ function drawPlaceAvgChart(data) {
     // 3. 소계 플래그가 있는 행만 필터링 (지점별 요약 데이터)
     const subtotalRows = data.filter(row => row._isSubtotal);
 
-    // 4. 라벨은 '지점명', 데이터는 'avgScore'에서 추출
+    // 4. 라벨은 '지점명', 데이터는 'percentScore'에서 추출
     const labels = subtotalRows.map(row => row.placeName.replace(' 소계', '')); // '강남 소계' → '강남'
-    const scores = subtotalRows.map(row => Number(row.avgScore));
+    const scores = subtotalRows.map(row => Number(row.percentScore));
 
     // 5. Chart.js로 막대 차트 생성
     window.placeAvgChartInstance = new Chart(ctx, {
-        type: 'bar',
+        type: 'line',
         data: {
             labels: labels,
             datasets: [{
@@ -1624,7 +1631,11 @@ function drawPlaceAvgChart(data) {
                 data: scores,
                 backgroundColor: 'rgba(255, 159, 64, 0.6)',   // 밝은 오렌지
                 borderColor: 'rgba(255, 159, 64, 1)',         // 진한 오렌지
-                borderWidth: 1
+                borderWidth: 2,
+                //fill: true,           // 배경 채우기 여부
+                //tension: 0.3,         // 선의 곡선 정도 (0이면 직선)
+                pointRadius: 5,       // 점 크기
+                pointBackgroundColor: 'rgba(255, 99, 132, 1)'
             }]
         },
         options: {
