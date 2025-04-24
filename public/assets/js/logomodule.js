@@ -340,7 +340,7 @@ const defaultMenuItems = [
         href: 'system.html',
         children: [
             { id: "8", text: '용어관리', href: 'glos.html', icon: 'fa-book' },
-            { id: "28", text: '사용자별 권한관리', href: 'permission.html', icon: 'fa-user-shield' },
+            { id: "28", text: '사용자별 권한관리', href: 'menu-permission.html', icon: 'fa-user-shield' },
             { id: "15", text: '권한관리', href: 'orgtree.html', icon: 'fa-user-shield' },
             { id: "6", text: '문서관리', href: 'document.html', icon: 'fa-file-alt' },
             { id: "22", text: 'WMS', href: 'wms.html', icon: 'fa-cubes' },
