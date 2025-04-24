@@ -1,4 +1,4 @@
-// 📁 tabController.js
+// 📁 tab-controller.js
 
 const tabButtons = document.querySelectorAll('.tab-hos');
 const tabContents = document.querySelectorAll('.tab-content2');
@@ -20,13 +20,13 @@ function activateTab(tabId) {
 	// 탭별 모듈 동적 import
 	switch (tabId) {
 		case 'menu-tab':
-			import('./menu.js').then(mod => {
+			import('./menu-handler.js').then(mod => {
 				if (mod?.initMenuTab) mod.initMenuTab();
 			});
 			break;
 
 		case 'permission-tab':
-			import('./permission.js').then(mod => {
+			import('./menu-permission.js').then(mod => {
 				if (mod?.initPermissionTab) mod.initPermissionTab();
 			});
 			break;

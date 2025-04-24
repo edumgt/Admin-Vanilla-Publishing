@@ -17,7 +17,7 @@ export function fetchPermissions() {
 	if (!menuPath) throw new Error("menuPath가 유효하지 않습니다.");
 
 	const cleanPath = encodeURIComponent(menuPath.replace("/", ""));
-	return fetch(`${backendDomain}/api/permissions?userId=${userId}&menuPath=${cleanPath}`)
+	return fetch(`${backendDomain}/api/authorization/permissions?userId=${userId}&menuPath=${cleanPath}`)
 			.then((res) => {
 				if (!res.ok) throw new Error("권한 조회 실패");
 				return res.json();

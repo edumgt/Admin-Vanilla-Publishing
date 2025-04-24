@@ -36,7 +36,7 @@ function fetchUsers() {
 }
 
 function fetchMenuPermissions(userId) {
-    fetch(`${backendDomain}/api/permissions/users/${userId}/menu`)
+    fetch(`${backendDomain}/api/menu/permission/users/${userId}/menu`)
             .then(res => res.json())
             .then(setupMenuTreeGrid)
             .catch(err => console.error("사용자 메뉴 권한 조회 실패:", err));
@@ -180,7 +180,7 @@ function saveAllPermissions() {
                 ...Object.fromEntries(permissionFields.map(f => [f, row[f]]))
             }));
 
-    fetch(`${backendDomain}/api/permissions/users/${selectedUserId}/menu/bulk`, {
+    fetch(`${backendDomain}/api/menu/permission/users/${selectedUserId}/menu/bulk`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
