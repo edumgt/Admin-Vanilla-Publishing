@@ -1,12 +1,31 @@
 // 📁 common.js
 
-// 버튼 하나를 만드는 핵심 함수
-export function createButton({ icon, label, className = "", onClick = null, allowed = true }) {
+// 버튼 하나를 만드는 핵심 함수 - 커스터마이징 기능 추가
+export function createButton({
+                                 icon,
+                                 label,
+                                 className = "",
+                                 onClick = null,
+                                 allowed = true,
+                                 id = null,
+                                 customText = null
+                             }) {
     const button = document.createElement("button");
+
+    // ID 설정 (필요한 경우)
+    if (id) {
+        button.id = id;
+    }
 
     // 공통 기본 클래스
     button.className = className || "items-center px-3 py-1 text-white rounded space-x-2 mr-2";
-    button.innerHTML = `<i class="${icon}"></i><span>${label}</span>`;
+
+    // HTML 내용 설정 (customText가 있으면 그대로 사용, 없으면 아이콘+라벨 조합)
+    if (customText) {
+        button.innerHTML = customText;
+    } else {
+        button.innerHTML = `<i class="${icon}"></i><span>${label}</span>`;
+    }
 
     // 권한에 따라 스타일 및 동작 제어
     if (!allowed) {
@@ -24,29 +43,87 @@ export function createButton({ icon, label, className = "", onClick = null, allo
     return button;
 }
 
-// 버튼별로 쉽게 만드는 래퍼 함수
-function createSearchButton(allowed = true, onClick = null) {
-    return createButton({ icon: "fas fa-search", label: "검색", allowed, onClick });
+// 버튼별로 쉽게 만드는 래퍼 함수 - 옵션 추가
+function createSearchButton(allowed = true, onClick = null, options = {}) {
+    return createButton({
+        icon: "fas fa-search",
+        label: "검색",
+        allowed,
+        onClick,
+        ...options // 추가 옵션 (id, className, customText 등)
+    });
 }
 
-function createAddButton(allowed = true, onClick = null) {
-    return createButton({ icon: "fas fa-plus", label: "신규", allowed, onClick });
+function createAddButton(allowed = true, onClick = null, options = {}) {
+    return createButton({
+        icon: "fas fa-plus",
+        label: "신규",
+        allowed,
+        onClick,
+        ...options
+    });
 }
 
-function createDelButton(allowed = true, onClick = null) {
-    return createButton({ icon: "fas fa-trash", label: "삭제", allowed, onClick });
+function createDelButton(allowed = true, onClick = null, options = {}) {
+    return createButton({
+        icon: "fas fa-trash",
+        label: "삭제",
+        allowed,
+        onClick,
+        ...options
+    });
 }
 
-function createCloseButton(allowed = true, onClick = null) {
-    return createButton({ icon: "fas fa-times", label: "닫기", allowed, onClick });
+function createCloseButton(allowed = true, onClick = null, options = {}) {
+    return createButton({
+        icon: "fas fa-times",
+        label: "닫기",
+        allowed,
+        onClick,
+        ...options
+    });
 }
 
-function createSaveButton(allowed = true, onClick = null) {
-    return createButton({ icon: "fas fa-save", label: "저장", allowed, onClick });
+function createSaveButton(allowed = true, onClick = null, options = {}) {
+    return createButton({
+        icon: "fas fa-save",
+        label: "저장",
+        allowed,
+        onClick,
+        ...options
+    });
 }
 
-function createResetSearchButton(allowed = true, onClick = null) {
-    return createButton({ icon: "fas fa-undo", label: "검색 초기화", allowed, onClick });
+function createResetSearchButton(allowed = true, onClick = null, options = {}) {
+    return createButton({
+        icon: "fas fa-undo",
+        label: "검색 초기화",
+        allowed,
+        onClick,
+        ...options
+    });
+}
+
+// 추가: 새로고침 버튼 생성 함수
+function createRefreshButton(allowed = true, onClick = null, options = {}) {
+    return createButton({
+        icon: "fas fa-sync-alt",
+        label: "새로고침",
+        allowed,
+        onClick,
+        ...options
+    });
+}
+
+// 추가: 커스텀 버튼 생성 함수
+function createCustomButton(icon, label, allowed = true, onClick = null, options = {}) {
+    return createButton({
+        icon,
+        label,
+        allowed,
+        onClick,
+        ...options
+    });
 }
 
 const createTanslations = {
@@ -320,6 +397,8 @@ export {
     createSaveButton,
     createSearchButton,
     createResetSearchButton,
+    createRefreshButton,
+    createCustomButton,
     createTanslations,
     createBadgeRenderer,
     createSaveRenderer,

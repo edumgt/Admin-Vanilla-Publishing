@@ -61,18 +61,74 @@ export function initPageUI(
 		const container = containerId ? document.getElementById(containerId) : null;
 		if (container) {
 			container.innerHTML = '';
+
+			// 기본 버튼 생성 함수 정의
 			const buttonMap = {
-				search: () => createSearchButton(window.canSearch, onSearch),
-				add: () => createAddButton(window.canAdd, onAdd),
-				delete: () => createDelButton(window.canDelete, onDelete),
-				save: () => createSaveButton(window.canSave, onSave),
-				close: () => createCloseButton(true, onClose),
-				resetSearch: () => createResetSearchButton(window.canResetSearch)
+				search: (customOpts = {}) => {
+					const btn = createSearchButton(
+							customOpts.allowed !== undefined ? customOpts.allowed : window.canSearch,
+							customOpts.onClick || onSearch
+					);
+					applyCustomButtonProps(btn, customOpts);
+					return btn;
+				},
+				add: (customOpts = {}) => {
+					const btn = createAddButton(
+							customOpts.allowed !== undefined ? customOpts.allowed : window.canAdd,
+							customOpts.onClick || onAdd
+					);
+					applyCustomButtonProps(btn, customOpts);
+					return btn;
+				},
+				delete: (customOpts = {}) => {
+					const btn = createDelButton(
+							customOpts.allowed !== undefined ? customOpts.allowed : window.canDelete,
+							customOpts.onClick || onDelete
+					);
+					applyCustomButtonProps(btn, customOpts);
+					return btn;
+				},
+				save: (customOpts = {}) => {
+					const btn = createSaveButton(
+							customOpts.allowed !== undefined ? customOpts.allowed : window.canSave,
+							customOpts.onClick || onSave
+					);
+					applyCustomButtonProps(btn, customOpts);
+					return btn;
+				},
+				close: (customOpts = {}) => {
+					const btn = createCloseButton(
+							customOpts.allowed !== undefined ? customOpts.allowed : true,
+							customOpts.onClick || onClose
+					);
+					applyCustomButtonProps(btn, customOpts);
+					return btn;
+				},
+				resetSearch: (customOpts = {}) => {
+					const btn = createResetSearchButton(
+							customOpts.allowed !== undefined ? customOpts.allowed : window.canResetSearch,
+							customOpts.onClick
+					);
+					applyCustomButtonProps(btn, customOpts);
+					return btn;
+				}
 			};
 
-			buttonOrder.forEach((key) => {
-				const btn = buttonMap[key]?.();
-				if (btn) container.appendChild(btn);
+			// 버튼을 순회하면서 생성 및 추가
+			buttonOrder.forEach((item) => {
+				// 문자열인 경우 (기존 방식)
+				if (typeof item === 'string') {
+					const btn = buttonMap[item]?.();
+					if (btn) container.appendChild(btn);
+				}
+				// 객체인 경우 (확장된 방식)
+				else if (typeof item === 'object' && item !== null) {
+					const { type, ...customOpts } = item;
+					if (buttonMap[type]) {
+						const btn = buttonMap[type](customOpts);
+						if (btn) container.appendChild(btn);
+					}
+				}
 			});
 		}
 
@@ -126,7 +182,6 @@ export function initPageUI(
 					}
 				});
 			}
-
 		}
 	};
 
@@ -141,4 +196,40 @@ export function initPageUI(
 					showToast('권한 로딩 실패', 'error', 'ko');
 				});
 	}
+}
+
+// 커스텀 버튼 속성 적용 함수
+function applyCustomButtonProps(button, customOpts) {
+	if (!button || !customOpts) return button;
+
+	// ID 설정
+	if (customOpts.id) {
+		button.id = customOpts.id;
+	}
+
+	// 클래스 설정
+	if (customOpts.className) {
+		button.className = customOpts.className;
+	}
+
+	// 라벨 설정
+	if (customOpts.label) {
+		// 아이콘 유지하면서 텍스트만 변경
+		const iconElement = button.querySelector('i');
+		if (iconElement) {
+			const iconClass = iconElement.className;
+			button.innerHTML = `<i class="${customOpts.icon || iconClass}"></i><span>${customOpts.label}</span>`;
+		} else {
+			button.innerHTML = customOpts.label;
+		}
+	}
+	// 아이콘만 변경
+	else if (customOpts.icon) {
+		const iconElement = button.querySelector('i');
+		if (iconElement) {
+			iconElement.className = customOpts.icon;
+		}
+	}
+
+	return button;
 }
