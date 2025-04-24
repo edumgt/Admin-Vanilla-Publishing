@@ -955,38 +955,8 @@ function initializeSurveyGrid(){
     });
 
     surveyQuestionGrid.on('drop', () => {
-        const rows = surveyQuestionGrid.getData();
-
-        // 선택형(type: '1')과 서술형(type: '2') 분리
-        const choiceRows = rows.filter(r => String(r.type) === '1');
-        const essayRows = rows.filter(r => String(r.type) === '2');
-    
-        // ✅ 선택형 sort 재배정 (1부터 시작)
-        choiceRows.forEach((row, idx) => {
-            const newSort = idx + 1;
-            if (row.sort !== newSort) {
-                row.sort = newSort;
-                // API 호출
-                saveSurveyRow(row, `${backendDomain}/api/surveys/question/${row.seq}`, 'PUT', () => {
-                    console.log(`[선택형] ${row.question} → sort ${row.sort} 저장 완료`);
-                });
-            }
-        });
-    
-        // ✅ 서술형은 항상 드래그 제외 & sort는 11번 이상
-        essayRows.forEach((row, idx) => {
-            const newSort = 11 + idx;
-            if (row.sort !== newSort) {
-                row.sort = newSort;
-                saveSurveyRow(row, `${backendDomain}/api/surveys/question/${row.seq}`, 'PUT', () => {
-                    console.log(`[서술형] ${row.question} → sort ${row.sort} 저장 완료`);
-                });
-            }
-        });
-    
-        // ✅ 드래그 후 그리드 리렌더링
-        const finalData = [...choiceRows, ...essayRows];
-        surveyQuestionGrid.resetData(finalData);
+        // 설문 문항목록 순서 재배치 저장
+        reOrderQuestionSurvey();
     });
 
 }
@@ -1041,24 +1011,24 @@ function loadSurveys() {
 
     const query = new URLSearchParams({ year, qt });
     fetch(`${backendDomain}/api/surveys/survey/search?${query}`)
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error(`서버 응답 오류: ${res.status}`);
-                }
-                return res.json();
-            })
-            .then(data => {
-                surveyGrid.resetData(data);
+    .then(res => {
+        if (!res.ok) {
+            throw new Error(`서버 응답 오류: ${res.status}`);
+        }
+        return res.json();
+    })
+    .then(data => {
+        surveyGrid.resetData(data);
 
-                // 설문지 재조회 시 문항 목록도 초기화
-                if (surveyQuestionGrid) {
-                    surveyQuestionGrid.resetData([]);
-                }
-            })
-            .catch(err => {
-                console.error('❌ Fetch 오류:', err.message);
-                alert('설문 데이터를 불러오는 중 오류가 발생했습니다.');
-            });
+        // 설문지 재조회 시 문항 목록도 초기화
+        if (surveyQuestionGrid) {
+            surveyQuestionGrid.resetData([]);
+        }
+    })
+    .catch(err => {
+        console.error('❌ Fetch 오류:', err.message);
+        alert('설문 데이터를 불러오는 중 오류가 발생했습니다.');
+    });
 }
 
 // 저장 api 호출
@@ -1069,21 +1039,21 @@ function saveSurveyRow(row, url, method, callback) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(row)
     })
-            .then(res => res.json())
-            .then(result => {
-                if (result > 0) {
-                    showToast('저장 성공', 'success', lang);
-                    if (typeof callback === 'function') {
-                        callback(); // 👉 콜백 함수 실행
-                    }
-                } else {
-                    showToast('저장 실패', 'error', lang);
-                }
-            })
-            .catch(err => {
-                console.error('저장 오류:', err);
-                showToast('저장 오류', 'error', lang);
-            });
+    .then(res => res.json())
+    .then(result => {
+        if (result > 0) {
+            showToast('저장 성공', 'success', lang);
+            if (typeof callback === 'function') {
+                callback(); // 👉 콜백 함수 실행
+            }
+        } else {
+            showToast('저장 실패', 'error', lang);
+        }
+    })
+    .catch(err => {
+        console.error('저장 오류:', err);
+        showToast('저장 오류', 'error', lang);
+    });
 }
 
 
@@ -1130,22 +1100,22 @@ function delQuesionSurvey() {
             fetch(`${backendDomain}/api/surveys/survey/${row.seq}`, {
                 method: 'DELETE'
             })
-                    .then(res => {
-                        if (!res.ok) throw new Error(`서버 오류: ${res.status}`);
-                        return res.json(); // 삭제 결과 (성공 시 정수 반환 기대)
-                    })
-                    .then(result => {
-                        if (result > 0) {
-                            showToast('삭제 성공', 'success', lang);
-                            surveyGrid.removeRow(rowKey);
-                        } else {
-                            showToast('삭제 실패', 'error', lang);
-                        }
-                    })
-                    .catch(err => {
-                        console.error('삭제 오류:', err);
-                        showToast('삭제 중 오류 발생', 'error', lang);
-                    });
+            .then(res => {
+                if (!res.ok) throw new Error(`서버 오류: ${res.status}`);
+                return res.json(); // 삭제 결과 (성공 시 정수 반환 기대)
+            })
+            .then(result => {
+                if (result > 0) {
+                    showToast('삭제 성공', 'success', lang);
+                    surveyGrid.removeRow(rowKey);
+                } else {
+                    showToast('삭제 실패', 'error', lang);
+                }
+            })
+            .catch(err => {
+                console.error('삭제 오류:', err);
+                showToast('삭제 중 오류 발생', 'error', lang);
+            });
         }
     });
 }
@@ -1162,19 +1132,19 @@ function handleSurveyClick() {
     const query = new URLSearchParams({ rdSeq });
 
     fetch(`${backendDomain}/api/surveys/question/search?${query}`)
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error(`서버 응답 오류: ${res.status}`);
-                }
-                return res.json();
-            })
-            .then(data => {
-                surveyQuestionGrid.resetData(data);
-            })
-            .catch(err => {
-                console.error('❌ Fetch 오류:', err.message);
-                alert('문항 데이터를 불러오는 중 오류가 발생했습니다.');
-            });
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`서버 응답 오류: ${res.status}`);
+            }
+            return res.json();
+        })
+        .then(data => {
+            surveyQuestionGrid.resetData(data);
+        })
+        .catch(err => {
+            console.error('❌ Fetch 오류:', err.message);
+            alert('문항 데이터를 불러오는 중 오류가 발생했습니다.');
+        });
 }
 
 // 문항목록 행 추가
@@ -1235,6 +1205,9 @@ function delQuesionSurvey2() {
                 if (result > 0) {
                     showToast('삭제 성공', 'success', lang);
                     surveyQuestionGrid.removeRow(rowKey);
+
+                    // 설문 문항목록 순서 재배치 저장
+                    reOrderQuestionSurvey();
                 } else {
                     showToast('삭제 실패', 'error', lang);
                 }
@@ -1245,6 +1218,41 @@ function delQuesionSurvey2() {
             });
         }
     });
+}
+
+function reOrderQuestionSurvey(){
+    const rows = surveyQuestionGrid.getData();
+
+    // 선택형(type: '1')과 서술형(type: '2') 분리
+    const choiceRows = rows.filter(r => String(r.type) === '1');
+    const essayRows = rows.filter(r => String(r.type) === '2');
+
+    // ✅ 선택형 sort 재배정 (1부터 시작)
+    choiceRows.forEach((row, idx) => {
+        const newSort = idx + 1;
+        if (row.sort !== newSort) {
+            row.sort = newSort;
+            // API 호출
+            saveSurveyRow(row, `${backendDomain}/api/surveys/question/${row.seq}`, 'PUT', () => {
+                //console.log(`[선택형] ${row.question} → sort ${row.sort} 저장 완료`);
+            });
+        }
+    });
+
+    // ✅ 서술형은 항상 드래그 제외 & sort는 11번 이상
+    essayRows.forEach((row, idx) => {
+        const newSort = 11 + idx;
+        if (row.sort !== newSort) {
+            row.sort = newSort;
+            saveSurveyRow(row, `${backendDomain}/api/surveys/question/${row.seq}`, 'PUT', () => {
+                //console.log(`[서술형] ${row.question} → sort ${row.sort} 저장 완료`);
+            });
+        }
+    });
+
+    // ✅ 드래그 후 그리드 리렌더링
+    const finalData = [...choiceRows, ...essayRows];
+    surveyQuestionGrid.resetData(finalData);
 }
 
 //설문통계 탭_조회조건_계열
@@ -1594,7 +1602,7 @@ function drawSurveyChart(data) {
 }
 
 /**
- * 지점별 소계(percentScore)를 기반으로 바 차트를 생성하는 함수
+ * 지점별 소계(percentScore)를 기반으로 라인 차트를 생성하는 함수
  * @param {Array} data - TUI Grid에 표시된 전체 데이터 (소계 포함)
  */
 function drawPlaceAvgChart(data) {
@@ -1623,7 +1631,11 @@ function drawPlaceAvgChart(data) {
                 data: scores,
                 backgroundColor: 'rgba(255, 159, 64, 0.6)',   // 밝은 오렌지
                 borderColor: 'rgba(255, 159, 64, 1)',         // 진한 오렌지
-                borderWidth: 1
+                borderWidth: 2,
+                //fill: true,           // 배경 채우기 여부
+                //tension: 0.3,         // 선의 곡선 정도 (0이면 직선)
+                pointRadius: 5,       // 점 크기
+                pointBackgroundColor: 'rgba(255, 99, 132, 1)'
             }]
         },
         options: {
