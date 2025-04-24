@@ -4,7 +4,7 @@ const tabButtons = document.querySelectorAll('.tab-hos');
 const tabContents = document.querySelectorAll('.tab-content2');
 
 // 기본 탭 ID 설정 (초기 진입 시 표시될 탭)
-const defaultTabId = 'menu-tab';
+const defaultTabId = 'menu-handler-tab';
 
 function activateTab(tabId) {
 	// 탭 버튼 활성화 처리
@@ -19,13 +19,13 @@ function activateTab(tabId) {
 
 	// 탭별 모듈 동적 import
 	switch (tabId) {
-		case 'menu-tab':
+		case 'menu-handler-tab':
 			import('./menu-handler.js').then(mod => {
 				if (mod?.initMenuTab) mod.initMenuTab();
 			});
 			break;
 
-		case 'permission-tab':
+		case 'menu-permission-tab':
 			import('./menu-permission.js').then(mod => {
 				if (mod?.initPermissionTab) mod.initPermissionTab();
 			});
