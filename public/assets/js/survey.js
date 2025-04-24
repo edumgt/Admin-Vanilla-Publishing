@@ -773,6 +773,20 @@ function initializeSurveyGrid(){
         }
     });
 
+    // 설문지 목록 변경시 행에 이벤트
+    surveyGrid.on('afterChange', (ev) => {
+        const { changes } = ev;
+    
+        changes.forEach(change => {
+            const { rowKey, value, prevValue } = change;
+    
+            // 변경된 row에 클래스 추가
+            if (String(value) !== String(prevValue)) {
+                surveyGrid.addRowClassName(rowKey, 'editing-row');
+            }
+        });
+    });
+
     // 설문지 목록 클릭 이벤트
     surveyGrid.on('click', (ev) => {
         const { rowKey, columnName } = ev;
@@ -954,11 +968,25 @@ function initializeSurveyGrid(){
         }
     });
 
+    // 설문 문항 목록 드래그시 이벤트
     surveyQuestionGrid.on('drop', () => {
         // 설문 문항목록 순서 재배치 저장
         reOrderQuestionSurvey();
     });
 
+    // 설문 문항 목록 변경시 행에 이벤트
+    surveyQuestionGrid.on('afterChange', (ev) => {
+        const { changes } = ev;
+    
+        changes.forEach(change => {
+            const { rowKey, value, prevValue } = change;
+    
+            // 변경된 row에 클래스 추가
+            if (String(value) !== String(prevValue)) {
+                surveyQuestionGrid.addRowClassName(rowKey, 'editing-row');
+            }
+        });
+    });
 }
 
 // 날짜 필드를 SQL 서버 형식으로 가공
@@ -1221,36 +1249,40 @@ function delQuesionSurvey2() {
 }
 
 function reOrderQuestionSurvey(){
-    const rows = surveyQuestionGrid.getData();
+    const allRows = surveyQuestionGrid.getData();
 
-    // 선택형(type: '1')과 서술형(type: '2') 분리
-    const choiceRows = rows.filter(r => String(r.type) === '1');
-    const essayRows = rows.filter(r => String(r.type) === '2');
+    // 1. 신규 행 제거
+    const newRows = allRows.filter(row => row.isNew === true);
+    newRows.forEach(row => {
+        surveyQuestionGrid.removeRow(row.rowKey); // 그리드에서 삭제
+    });
 
-    // ✅ 선택형 sort 재배정 (1부터 시작)
+    // 2. 저장된 행만 필터링
+    const savedRows = allRows.filter(row => row.isNew !== true);
+
+    // 3. 선택형과 서술형 분리
+    const choiceRows = savedRows.filter(r => String(r.type) === '1');
+    const essayRows = savedRows.filter(r => String(r.type) === '2');
+
+    // 4. 선택형 sort 재배정 (1부터 시작)
     choiceRows.forEach((row, idx) => {
         const newSort = idx + 1;
         if (row.sort !== newSort) {
             row.sort = newSort;
-            // API 호출
-            saveSurveyRow(row, `${backendDomain}/api/surveys/question/${row.seq}`, 'PUT', () => {
-                //console.log(`[선택형] ${row.question} → sort ${row.sort} 저장 완료`);
-            });
+            saveSurveyRow(row, `${backendDomain}/api/surveys/question/${row.seq}`, 'PUT');
         }
     });
 
-    // ✅ 서술형은 항상 드래그 제외 & sort는 11번 이상
+    // 5. 서술형은 11부터 시작
     essayRows.forEach((row, idx) => {
         const newSort = 11 + idx;
         if (row.sort !== newSort) {
             row.sort = newSort;
-            saveSurveyRow(row, `${backendDomain}/api/surveys/question/${row.seq}`, 'PUT', () => {
-                //console.log(`[서술형] ${row.question} → sort ${row.sort} 저장 완료`);
-            });
+            saveSurveyRow(row, `${backendDomain}/api/surveys/question/${row.seq}`, 'PUT');
         }
     });
 
-    // ✅ 드래그 후 그리드 리렌더링
+    // 6. 리렌더링 (신규 삭제 반영된 기존 row만)
     const finalData = [...choiceRows, ...essayRows];
     surveyQuestionGrid.resetData(finalData);
 }
@@ -1377,33 +1409,38 @@ function initializeStaticsGrid(){
             },        
         ],
         summary: {
-          height: 40,
-          position: 'bottom', // or 'top'
-          columnContent: {
-            studentCnt: {
-                template: function(valueMap) {
-                  // 👉 소계(_isSubtotal) 행을 제외한 학생 수 합계
-                  if(staticsGrid){
-                    const rows = staticsGrid.getData().filter(row => !row._isSubtotal);
-                    const total = rows.reduce((sum, row) => sum + Number(row.studentCnt || 0), 0);
-                    return `TOTAL: ${total}`;
-                  }
+            height: 40,
+            position: 'bottom', // or 'top'
+            columnContent: {
+                studentCnt: {
+                    template: function(valueMap) {
+                        // 👉 소계(_isSubtotal) 행을 제외한 학생 수 합계
+                        if(staticsGrid){
+                            const rows = staticsGrid.getData().filter(row => !row._isSubtotal);
+                            const total = rows.reduce((sum, row) => sum + Number(row.studentCnt || 0), 0);
+                            return `TOTAL: ${total}`;
+                        }
 
-                }
-              },
-              percentScore: {
-                template: function(valueMap) {
-                    if(staticsGrid){
-                        // 👉 소계(_isSubtotal) 행을 제외한 설문점수 평균/최소/최대 계산
-                        const rows = staticsGrid.getData().filter(row => !row._isSubtotal);
-                        const scores = rows.map(r => Number(r.percentScore)).filter(n => !isNaN(n));
-                        return `MAX: ${Math.max(...scores).toFixed(2)}<br>MIN: ${Math.min(...scores).toFixed(2)}
-                                <br>AVG: ${(scores.reduce((sum, n) => sum + n, 0) / scores.length).toFixed(2)}`;                    
                     }
+                },
+                percentScore: {
+                    template: function(valueMap) {
+                        if(staticsGrid){
+                            // 👉 소계(_isSubtotal) 행을 제외한 설문점수 평균/최소/최대 계산
+                            const rows = staticsGrid.getData().filter(row => !row._isSubtotal);
+                            const scores = rows.map(r => Number(r.percentScore)).filter(n => !isNaN(n));
 
+                            if (scores.length === 0) {
+                                return `MAX: -<br>MIN: -<br>AVG: -`;
+                            }
+
+                            return `MAX: ${Math.max(...scores).toFixed(2)}<br>MIN: ${Math.min(...scores).toFixed(2)}
+                                    <br>AVG: ${(scores.reduce((sum, n) => sum + n, 0) / scores.length).toFixed(2)}`;                    
+                        }
+
+                    }
                 }
-              }
-          }
+            }
         },
         rowClass: (row) => {
             if (row.value._isSubtotal) {
