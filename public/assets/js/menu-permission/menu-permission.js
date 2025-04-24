@@ -10,8 +10,8 @@ const permissionFields = [
 ];
 
 export function initPermissionTab() {
-    if (window.__permissionTabInitialized) return;
-    window.__permissionTabInitialized = true;
+    // if (window.__permissionTabInitialized) return;
+    // window.__permissionTabInitialized = true;
 
     breadcrumb.textContent = "사용자별 메뉴 권한관리";
 
