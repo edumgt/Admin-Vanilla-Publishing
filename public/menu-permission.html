@@ -19,17 +19,50 @@
 		
 		<div id="menu-handler-tab" class="tab-content2 active">
 			<div class="w-full px-6 mt-6">
-				<div class="flex items-center justify-between mb-2">
-					<h2 class="text-lg font-semibold"></h2>
-					<!-- 버튼 영역 -->
-					<div class="flex flex-col lg:flex-row items-center space-y-2 lg:space-y-0 lg:space-x-2">
-						<div class="flex items-center space-x-2">
-							<div id="btnContainer"></div>
-						</div>
+				<div class="flex items-center justify-between mb-4">
+					<h2 class="text-lg font-semibold">메뉴 관리</h2>
+					<div class="mb-3">
+						<div id="btnContainer"></div>
 					</div>
 				</div>
 				
-				<div id="menuTree" class="space-y-2"></div>
+				<!-- 좌우 분할 레이아웃 -->
+				<div class="flex flex-row space-x-4">
+					<!-- 왼쪽: 메뉴 트리 영역 (70% 너비) -->
+					<div class="w-8/12">
+						<div id="menuTree" class="space-y-2 border rounded p-3" style="min-height: calc(100vh - 300px); max-height: calc(100vh - 300px); overflow-y: auto;"></div>
+					</div>
+					
+					<!-- 오른쪽: 변경 이력 패널 (30% 너비) -->
+					<div class="w-4/12 border rounded p-3" style="min-height: calc(100vh - 300px); max-height: calc(100vh - 300px);">
+						<div class="flex justify-between items-center mb-3">
+							<h3 class="font-medium">변경 이력</h3>
+							<div>
+								<span id="change-summary" class="text-sm">총 <span class="font-bold">0</span>건</span>
+							</div>
+						</div>
+						
+						<!-- 변경 유형별 카운터 -->
+						<div class="flex flex-wrap gap-2 mb-3">
+							<span class="px-2 py-0.5 bg-green-100 text-green-800 rounded-full text-xs">신규 <span id="newCount">0</span>건</span>
+							<span class="px-2 py-0.5 bg-blue-100 text-blue-800 rounded-full text-xs">수정 <span id="updatedCount">0</span>건</span>
+							<span class="px-2 py-0.5 bg-yellow-100 text-orange-800 rounded-full text-xs">이동 <span id="movedCount">0</span>건</span>
+							<span class="px-2 py-0.5 bg-red-100 text-red-800 rounded-full text-xs">삭제 <span id="deletedCount">0</span>건</span>
+						</div>
+						
+						<!-- 변경 이력 목록 -->
+						<div class="overflow-y-auto mb-3" style="max-height: calc(100vh - 420px);">
+							<ul id="historyList" class="divide-y divide-gray-200">
+								<!-- 변경 이력 항목들이 여기에 동적으로 추가됨 -->
+								<li class="py-2 flex justify-between">
+									<span class="text-sm">기타관리: 이름 변경됨 (기존: 업무관리)</span>
+									<button class="text-blue-600 hover:underline text-xs">실행 취소</button>
+								</li>
+							</ul>
+							<div id="emptyHistory" class="py-3 text-center text-gray-500 text-sm">변경 내역이 없습니다.</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		

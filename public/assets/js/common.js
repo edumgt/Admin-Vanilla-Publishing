@@ -45,8 +45,9 @@ export function createButton({
 
 // 버튼별로 쉽게 만드는 래퍼 함수 - 옵션 추가
 function createSearchButton(allowed = true, onClick = null, options = {}) {
+    const icon = options.icon || "fas fa-search";
     return createButton({
-        icon: "fas fa-search",
+        icon,
         label: "검색",
         allowed,
         onClick,
@@ -55,8 +56,9 @@ function createSearchButton(allowed = true, onClick = null, options = {}) {
 }
 
 function createAddButton(allowed = true, onClick = null, options = {}) {
+    const icon = options.icon || "fas fa-plus";
     return createButton({
-        icon: "fas fa-plus",
+        icon,
         label: "신규",
         allowed,
         onClick,
@@ -65,8 +67,9 @@ function createAddButton(allowed = true, onClick = null, options = {}) {
 }
 
 function createDelButton(allowed = true, onClick = null, options = {}) {
+    const icon = options.icon || "fas fa-trash";
     return createButton({
-        icon: "fas fa-trash",
+        icon,
         label: "삭제",
         allowed,
         onClick,
@@ -75,8 +78,9 @@ function createDelButton(allowed = true, onClick = null, options = {}) {
 }
 
 function createCloseButton(allowed = true, onClick = null, options = {}) {
+    const icon = options.icon || "fas fa-times";
     return createButton({
-        icon: "fas fa-times",
+        icon,
         label: "닫기",
         allowed,
         onClick,
@@ -85,8 +89,9 @@ function createCloseButton(allowed = true, onClick = null, options = {}) {
 }
 
 function createSaveButton(allowed = true, onClick = null, options = {}) {
+    const icon = options.icon || "fas fa-save";
     return createButton({
-        icon: "fas fa-save",
+        icon,
         label: "저장",
         allowed,
         onClick,
@@ -95,8 +100,9 @@ function createSaveButton(allowed = true, onClick = null, options = {}) {
 }
 
 function createResetSearchButton(allowed = true, onClick = null, options = {}) {
+    const icon = options.icon || "fas fa-undo";
     return createButton({
-        icon: "fas fa-undo",
+        icon,
         label: "검색 초기화",
         allowed,
         onClick,
@@ -106,8 +112,9 @@ function createResetSearchButton(allowed = true, onClick = null, options = {}) {
 
 // 추가: 새로고침 버튼 생성 함수
 function createRefreshButton(allowed = true, onClick = null, options = {}) {
+    const icon = options.icon || "fas fa-sync-alt";
     return createButton({
-        icon: "fas fa-sync-alt",
+        icon,
         label: "새로고침",
         allowed,
         onClick,
@@ -116,7 +123,8 @@ function createRefreshButton(allowed = true, onClick = null, options = {}) {
 }
 
 // 추가: 커스텀 버튼 생성 함수
-function createCustomButton(icon, label, allowed = true, onClick = null, options = {}) {
+function createCustomButton(iconClass, label, allowed = true, onClick = null, options = {}) {
+    const icon = options.icon || iconClass || "";
     return createButton({
         icon,
         label,

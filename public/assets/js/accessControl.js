@@ -67,7 +67,10 @@ export function initPageUI(
 				search: (customOpts = {}) => {
 					const btn = createSearchButton(
 							customOpts.allowed !== undefined ? customOpts.allowed : window.canSearch,
-							customOpts.onClick || onSearch
+							customOpts.onClick || onSearch,
+							{
+								icon: customOpts.icon // 아이콘 클래스명 전달
+							}
 					);
 					applyCustomButtonProps(btn, customOpts);
 					return btn;
@@ -75,7 +78,10 @@ export function initPageUI(
 				add: (customOpts = {}) => {
 					const btn = createAddButton(
 							customOpts.allowed !== undefined ? customOpts.allowed : window.canAdd,
-							customOpts.onClick || onAdd
+							customOpts.onClick || onAdd,
+							{
+								icon: customOpts.icon // 아이콘 클래스명 전달
+							}
 					);
 					applyCustomButtonProps(btn, customOpts);
 					return btn;
@@ -83,7 +89,10 @@ export function initPageUI(
 				delete: (customOpts = {}) => {
 					const btn = createDelButton(
 							customOpts.allowed !== undefined ? customOpts.allowed : window.canDelete,
-							customOpts.onClick || onDelete
+							customOpts.onClick || onDelete,
+							{
+								icon: customOpts.icon // 아이콘 클래스명 전달
+							}
 					);
 					applyCustomButtonProps(btn, customOpts);
 					return btn;
@@ -91,7 +100,10 @@ export function initPageUI(
 				save: (customOpts = {}) => {
 					const btn = createSaveButton(
 							customOpts.allowed !== undefined ? customOpts.allowed : window.canSave,
-							customOpts.onClick || onSave
+							customOpts.onClick || onSave,
+							{
+								icon: customOpts.icon // 아이콘 클래스명 전달
+							}
 					);
 					applyCustomButtonProps(btn, customOpts);
 					return btn;
@@ -99,7 +111,10 @@ export function initPageUI(
 				close: (customOpts = {}) => {
 					const btn = createCloseButton(
 							customOpts.allowed !== undefined ? customOpts.allowed : true,
-							customOpts.onClick || onClose
+							customOpts.onClick || onClose,
+							{
+								icon: customOpts.icon // 아이콘 클래스명 전달
+							}
 					);
 					applyCustomButtonProps(btn, customOpts);
 					return btn;
@@ -107,7 +122,10 @@ export function initPageUI(
 				resetSearch: (customOpts = {}) => {
 					const btn = createResetSearchButton(
 							customOpts.allowed !== undefined ? customOpts.allowed : window.canResetSearch,
-							customOpts.onClick
+							customOpts.onClick,
+							{
+								icon: customOpts.icon // 아이콘 클래스명 전달
+							}
 					);
 					applyCustomButtonProps(btn, customOpts);
 					return btn;
