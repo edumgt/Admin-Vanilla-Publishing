@@ -45,92 +45,105 @@ export function createButton({
 
 // 버튼별로 쉽게 만드는 래퍼 함수 - 옵션 추가
 function createSearchButton(allowed = true, onClick = null, options = {}) {
-    const icon = options.icon || "fas fa-search";
+    // 옵션에서 icon을 제외한 나머지 속성을 추출
+    const { icon, ...restOptions } = options;
+
+    // 모든 속성을 createButton에 전달
     return createButton({
-        icon,
+        icon: typeof icon !== 'undefined' ? icon : "fas fa-search",
         label: "검색",
         allowed,
         onClick,
-        ...options // 추가 옵션 (id, className, customText 등)
+        ...restOptions
     });
 }
 
 function createAddButton(allowed = true, onClick = null, options = {}) {
-    const icon = options.icon || "fas fa-plus";
+    const { icon, ...restOptions } = options;
+
     return createButton({
-        icon,
+        icon: typeof icon !== 'undefined' ? icon : "fas fa-plus",
         label: "신규",
         allowed,
         onClick,
-        ...options
+        ...restOptions
     });
 }
 
 function createDelButton(allowed = true, onClick = null, options = {}) {
-    const icon = options.icon || "fas fa-trash";
+    const { icon, ...restOptions } = options;
+
     return createButton({
-        icon,
+        icon: typeof icon !== 'undefined' ? icon : "fas fa-trash",
         label: "삭제",
         allowed,
         onClick,
-        ...options
+        ...restOptions
     });
 }
 
 function createCloseButton(allowed = true, onClick = null, options = {}) {
-    const icon = options.icon || "fas fa-times";
+    const { icon, ...restOptions } = options;
+
     return createButton({
-        icon,
+        icon: typeof icon !== 'undefined' ? icon : "fas fa-times",
         label: "닫기",
         allowed,
         onClick,
-        ...options
+        ...restOptions
     });
 }
 
 function createSaveButton(allowed = true, onClick = null, options = {}) {
-    const icon = options.icon || "fas fa-save";
+    const { icon, ...restOptions } = options;
+
     return createButton({
-        icon,
+        icon: typeof icon !== 'undefined' ? icon : "fas fa-save",
         label: "저장",
         allowed,
         onClick,
-        ...options
+        ...restOptions
     });
 }
 
 function createResetSearchButton(allowed = true, onClick = null, options = {}) {
-    const icon = options.icon || "fas fa-undo";
+    const { icon, ...restOptions } = options;
+
     return createButton({
-        icon,
+        icon: typeof icon !== 'undefined' ? icon : "fas fa-undo",
         label: "검색 초기화",
         allowed,
         onClick,
-        ...options
+        ...restOptions
     });
 }
 
 // 추가: 새로고침 버튼 생성 함수
 function createRefreshButton(allowed = true, onClick = null, options = {}) {
-    const icon = options.icon || "fas fa-sync-alt";
+    const { icon, ...restOptions } = options;
+
     return createButton({
-        icon,
+        icon: typeof icon !== 'undefined' ? icon : "fas fa-sync-alt",
         label: "새로고침",
         allowed,
         onClick,
-        ...options
+        ...restOptions
     });
 }
 
 // 추가: 커스텀 버튼 생성 함수
 function createCustomButton(iconClass, label, allowed = true, onClick = null, options = {}) {
-    const icon = options.icon || iconClass || "";
+    const { icon, ...restOptions } = options;
+
+    // 우선순위: options.icon > iconClass 파라미터
+    const finalIcon = typeof icon !== 'undefined' ? icon : (iconClass || "");
+
     return createButton({
-        icon,
+        icon: finalIcon,
         label,
         allowed,
         onClick,
-        ...options
+        ...restOptions
     });
 }
 
