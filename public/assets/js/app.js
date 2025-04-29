@@ -194,31 +194,33 @@ let viewPermission = true; // 전역 변수로 선언
 grid.on('click', (ev) => {
     const { columnName, rowKey } = ev;
 
-    if (columnName === 'save') {
-        const row = grid.getRow(rowKey);
-        console.log("rowKey: " + rowKey);
+    if (target.classList.contains('grid-renderer-button')) {
+        if (columnName === 'save') {
+            const row = grid.getRow(rowKey);
+            console.log("rowKey: " + rowKey);
 
-        try {
-            const response = fetch('/api/save', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(row)
-            });
+            try {
+                const response = fetch('/api/save', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(row)
+                });
 
-            if (!response.ok) throw new Error('Save failed');
+                if (!response.ok) throw new Error('Save failed');
 
-            const result = response.json();
+                const result = response.json();
 
-        } catch (err) {
-            console.error('Save failed:', err);
-            showToast('save-failed', 'error', lang);
+            } catch (err) {
+                console.error('Save failed:', err);
+                showToast('save-failed', 'error', lang);
+            }
+
+            showToast('well-done', 'success', lang);
         }
-
-        showToast('well-done', 'success', lang);
-    }
-    if (columnName === 'view') {
-        const row = grid.getRow(rowKey);
-        toggleModal(true, row, rowKey);
+        if (columnName === 'view') {
+            const row = grid.getRow(rowKey);
+            toggleModal(true, row, rowKey);
+        }
     }
 
     if (ev.columnName === 'Key') {
