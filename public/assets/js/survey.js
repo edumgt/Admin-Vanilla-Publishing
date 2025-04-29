@@ -877,6 +877,22 @@ function initializeSurveyGrid(){
         ]
     });
 
+    // 설문지 문항 목록 편집 시작 이벤트
+    surveyQuestionGrid.on('editingStart', (ev) => {
+        const { rowKey, columnName, instance } = ev;
+        const row = instance.getRow(rowKey);
+
+        if (!row) {
+            ev.stop();
+            return;
+        }
+
+        // 기존 행인데 type 필드 편집 시도 → 막기
+        if (!row.isNew && ['type'].includes(columnName)) {
+            ev.stop();
+        }
+    });
+
     // 설문지 문항 목록 클릭 이벤트
     surveyQuestionGrid.on('click', (ev) => {
         const { columnName, nativeEvent, rowKey } = ev;
