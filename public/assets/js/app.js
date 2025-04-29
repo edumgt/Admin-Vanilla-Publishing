@@ -192,7 +192,8 @@ let savePermission = true; // 전역 변수로 선언
 let viewPermission = true; // 전역 변수로 선언
 
 grid.on('click', (ev) => {
-    const { columnName, rowKey } = ev;
+    const { columnName, nativeEvent, rowKey } = ev;
+    const target = nativeEvent.target;
 
     if (target.classList.contains('grid-renderer-button')) {
         if (columnName === 'save') {
