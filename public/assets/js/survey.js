@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 설문지 관리
     fillYearCombo();
     initializeSurveyGrid();
-    loadSurveys();
+    //loadSurveys();        //설문지 목록 조회
 
     // 설문 통계
     initializeStaticsGrid();
@@ -789,8 +789,9 @@ function initializeSurveyGrid(){
 
     // 설문지 목록 클릭 이벤트
     surveyGrid.on('click', (ev) => {
-        const { rowKey, columnName } = ev;
+        const { columnName, nativeEvent, rowKey } = ev;
         const row = surveyGrid.getRow(rowKey);
+        const target = nativeEvent.target;
 
         if (row) {
             if(row.isNew === true){
@@ -802,7 +803,7 @@ function initializeSurveyGrid(){
         }
 
         // row 저장
-        if (columnName === 'saveBtn') {
+        if (target.classList.contains('grid-renderer-button') && columnName === 'saveBtn') {
             // 🔍 필수 입력값 확인
             const requiredFields = ['year', 'qt', 'sdate', 'edate'];
             const emptyField = requiredFields.find(field => !row[field] || row[field].toString().trim() === '');
@@ -878,11 +879,13 @@ function initializeSurveyGrid(){
 
     // 설문지 문항 목록 클릭 이벤트
     surveyQuestionGrid.on('click', (ev) => {
-        const { rowKey, columnName } = ev;
+        const { columnName, nativeEvent, rowKey } = ev;
         const row = surveyQuestionGrid.getRow(rowKey);
+        const target = nativeEvent.target;
 
         // row 저장
-        if (columnName === 'saveBtn') {
+        if (target.classList.contains('grid-renderer-button') && 
+                columnName === 'saveBtn') {
             // 🔍 필수 입력값 확인
             const requiredFields = ['question', 'type'];
             const emptyField = requiredFields.find(field => !row[field] || row[field].toString().trim() === '');
