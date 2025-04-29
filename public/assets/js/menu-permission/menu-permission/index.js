@@ -1,4 +1,4 @@
-import { fetchPermissions, initPageUI } from "../accessControl.js";
+import { fetchPermissions, initPageUI } from "../../accessControl.js";
 
 let leftGrid = null;
 let rightGrid = null;
@@ -179,6 +179,8 @@ function saveAllPermissions() {
                 menuId: row.menu_id,
                 ...Object.fromEntries(permissionFields.map(f => [f, row[f]]))
             }));
+
+    console.log(payload);
 
     fetch(`${backendDomain}/api/menu/permission/users/${selectedUserId}/menu/bulk`, {
         method: "POST",

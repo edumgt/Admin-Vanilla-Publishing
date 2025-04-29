@@ -13,10 +13,11 @@
 	
 	<div id="content">
 		<div class="mb-4 mt-4 flex">
-			<button class="flex-1 tab-hos bg-gray-300 hover:bg-gray-100 active-tab" data-tab="menu-handler-tab">메뉴관리</button>
-			<button class="flex-1 tab-hos bg-gray-300 hover:bg-gray-100" data-tab="menu-permission-tab">사용자별 메뉴 권한관리</button>
+			<button class="flex-1 tab-default tab-main bg-gray-300 hover:bg-gray-100 active-tab" data-tab="menu-handler-tab">메뉴 관리</button>
+			<button class="flex-1 tab-default tab-main bg-gray-300 hover:bg-gray-100" data-tab="org-handler-tab">조직 관리</button>
+			<button class="flex-1 tab-default tab-main bg-gray-300 hover:bg-gray-100" data-tab="menu-permission-tab">사용자 별 메뉴 권한 관리</button>
 		</div>
-		
+
 		<div id="menu-handler-tab" class="tab-content2 active">
 			<div class="w-full px-6 mt-6">
 				<div class="flex items-center justify-between mb-4">
@@ -66,9 +67,83 @@
 			</div>
 		</div>
 		
+		<div id="org-handler-tab" class="tab-content2">
+			<div class="flex">
+				
+				<!-- 좌측: 조직 트리 -->
+				<div class="w-1/4 border-r p-2 flex flex-col" style="height: calc(100vh - 250px);">
+					<div class="flex items-center justify-between mb-2">
+						<h2 class="text-lg font-semibold">조직도</h2>
+					</div>
+					<div id="orgTree" class="ag-theme-alpine flex-1 w-full"></div>
+				</div>
+				
+				<!-- 우측: 부서정보/부서원정보 탭 -->
+				<div class="w-3/4 border-r p-2 flex flex-col" style="height: calc(100vh - 250px);">
+					<div class="flex items-center justify-between mb-2">
+						<h2 class="text-lg font-semibold depth-name">부서</h2>
+					</div>
+					
+					<!-- 부서관리 내부 탭 -->
+					<div class="mb-4">
+						<button class="tab-default tab-sub bg-gray-300 hover:bg-gray-100 active-tab" data-tab="dept-info-tab">부서 정보</button>
+						<button class="tab-default tab-sub bg-gray-300 hover:bg-gray-100" data-tab="user-info-tab">부서원 목록</button>
+					</div>
+					
+					<!-- 부서정보 탭 컨텐츠 -->
+					<div id="dept-info-tab" class="tab-content2 active">
+						<div class="bg-white border border-gray-200 rounded-lg p-6 space-y-6" style="height: calc(100vh - 310px);">
+							<!-- Breadcrumb -->
+							<nav class="text-xs text-gray-400" id="deptBreadcrumb">
+								<!-- 본사 > 대구지사 > 동성로캠퍼스 -->
+							</nav>
+							
+							<!-- 조직 상세정보 -->
+							<div class="divide-y divide-gray-200">
+								<div class="flex items-center py-4">
+									<div class="w-32 text-gray-500 text-sm uppercase">조직명</div>
+									<div id="deptName" class="text-gray-800 font-semibold"></div>
+								</div>
+								<div class="flex items-center py-4">
+									<div class="w-32 text-gray-500 text-sm uppercase">조직구분</div>
+									<div id="deptType" class="text-gray-800 font-semibold"></div>
+								</div>
+								<div class="flex items-center py-4">
+									<div class="w-32 text-gray-500 text-sm uppercase">주소</div>
+									<div id="deptAddress" class="text-gray-800 font-semibold"></div>
+								</div>
+								<div class="flex items-center py-4">
+									<div class="w-32 text-gray-500 text-sm uppercase">전화번호</div>
+									<div id="deptPhone" class="text-gray-800 font-semibold"></div>
+								</div>
+								<div class="flex items-center py-4">
+									<div class="w-32 text-gray-500 text-sm uppercase">사용여부</div>
+									<div id="deptUseYn" class="text-gray-800 font-semibold"></div>
+								</div>
+								<div class="flex items-center py-4">
+									<div class="w-32 text-gray-500 text-sm uppercase">설명</div>
+									<div id="deptDescription" class="text-gray-800 font-semibold"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<!-- 부서원정보 탭 컨텐츠 -->
+					<div id="user-info-tab" class="tab-content2">
+						<div class="grid grid-cols-2 gap-6">
+							<div id="userList" class="bg-white rounded-lg shadow-md p-6 overflow-y-auto" style="max-height: calc(100vh - 400px);"></div>
+							<div id="userDetail" class="bg-white rounded-lg shadow-md p-6">
+								<p class="text-center text-gray-400 mt-10">사용자를 선택하세요.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
 		<div id="menu-permission-tab" class="tab-content2">
 			<div class="flex">
-				<div class="w-1/3 border-r p-2 flex flex-col" style="height: calc(100vh - 250px);">
+				<div class="w-1/4 border-r p-2 flex flex-col" style="height: calc(100vh - 250px);">
 					<div class="flex items-center justify-between mb-2">
 						<h2 class="text-lg font-semibold">사용자 목록</h2>
 						
@@ -81,7 +156,7 @@
 					</div>
 					<div id="grid-left" class="ag-theme-alpine flex-1 w-full"></div>
 				</div>
-				<div class="w-2/3 border-r p-2 flex flex-col" style="height: calc(100vh - 250px);">
+				<div class="w-3/4 border-r p-2 flex flex-col" style="height: calc(100vh - 250px);">
 					<div class="flex items-center justify-between mb-2">
 						<h2 class="text-lg font-semibold">권한 목록</h2>
 						

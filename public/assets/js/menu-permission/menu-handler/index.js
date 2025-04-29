@@ -1,5 +1,5 @@
 // 📁 통합 트리 메뉴 UI 코드
-import { fetchPermissions, initPageUI } from "../accessControl.js";
+import { fetchPermissions, initPageUI } from "../../accessControl.js";
 
 let isDirty = false;
 let treeData = [];
@@ -1004,27 +1004,38 @@ function updateParentState(li, rootData) {
 
 	const parentNode = findNodeById(rootData, parentId);
 	if (!parentNode || !parentNode.children) return;
-	const allChildrenY = parentNode.children.every((child) => child.useYn === "Y");
 
-	// 상태가 변경된 경우 변경 이력에 추가
-	if (parentNode.useYn !== (allChildrenY ? "Y" : "N")) {
+	const allChildrenY = parentNode.children.every((child) => child.useYn === "Y");
+	const allChildrenN = parentNode.children.every((child) => child.useYn === "N");
+
+	let newUseYn;
+	if (allChildrenY) {
+		newUseYn = "Y";
+	} else if (allChildrenN) {
+		newUseYn = "N";
+	} else {
+		newUseYn = "Y"; // 혼합일 때는 활성으로 처리
+	}
+
+	if (parentNode.useYn !== newUseYn) {
 		const oldValue = parentNode.useYn;
-		parentNode.useYn = allChildrenY ? "Y" : "N";
+		parentNode.useYn = newUseYn;
 		parentNode._updated = true;
 
 		addToHistory(parentNode, "updated", {
 			field: "useYn",
 			oldValue: oldValue,
-			newValue: parentNode.useYn
+			newValue: newUseYn
 		});
 	} else {
-		parentNode.useYn = allChildrenY ? "Y" : "N";
+		parentNode.useYn = newUseYn;
 	}
 
 	const parentToggle = parentLi.querySelector(
 			"i.fas.fa-toggle-on, i.fas.fa-toggle-off"
 	);
 	if (parentToggle) updateToggleIcon(parentToggle, parentNode.useYn);
+
 	updateParentState(parentLi, rootData);
 }
 
