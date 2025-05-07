@@ -851,7 +851,12 @@ function initializeSurveyGrid(){
         bodyHeight: 500,
         draggable: true,
         columns: [
-            { header: '문항', name: 'question', align: 'left', sortable: true, resizable: true, minWidth: 300, editor: "text" },
+            { header: '문항', name: 'question', align: 'left', sortable: true, resizable: true, minWidth: 300, editor: "text",
+                formatter: ({ value }) => {
+                    if (!value) return '';
+                    return `<div title="${value}">${value}</div>`;   // ✅ title 속성으로 툴팁!
+                  }
+             },
             { header: '유형', name: 'type', align: 'center', sortable: true, resizable: true, minWidth: 100
                 , formatter: ({ value }) => {
                     const strVal = String(value); // 명시적 string 변환
@@ -1155,6 +1160,10 @@ function delQuesionSurvey() {
                 if (result > 0) {
                     showToast('삭제 성공', 'success', lang);
                     surveyGrid.removeRow(rowKey);
+
+                    if (surveyQuestionGrid) {
+                        surveyQuestionGrid.resetData([]);
+                    }
                 } else {
                     showToast('삭제 실패', 'error', lang);
                 }
