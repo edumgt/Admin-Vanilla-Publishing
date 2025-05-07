@@ -14,7 +14,7 @@ export function initMenuTab() {
 	root.innerHTML = "";
 
 	fetchPermissions().then((permissions) => {
-		initPageUI("btnContainer", {
+		initPageUI("menu-handler-btn-container", {
 			onSave: saveTree,
 			onRefresh: reloadMenuTree,
 			buttonOrder: [
@@ -31,6 +31,24 @@ export function initMenuTab() {
 
 	// 초기 메뉴 트리 로드
 	reloadMenuTree();
+
+	document.getElementById("undo-latest-btn")?.addEventListener("click", undoLatestChange);
+}
+
+function undoLatestChange() {
+	if (changeHistory.length === 0) {
+		showToast("실행 취소할 변경 사항이 없습니다.", "warning", lang);
+		return;
+	}
+
+	// 최근 항목부터 순회하면서 수동 변경만 실행취소
+	for (let i = changeHistory.length - 1; i >= 0; i--) {
+		const latest = changeHistory[i];
+		if (!latest.details?.isAuto) {
+			undoChange(latest);
+			break;
+		}
+	}
 }
 
 // 변경 이력 패널 초기화 함수
@@ -75,6 +93,7 @@ function updateChangeCounts() {
 
 // 변경 이력에 항목 추가 함수
 function addToHistory(item, action, details = {}) {
+	const isAuto = details.isAuto || false;
 	// 이동 작업인 경우 같은 항목의 모든 이동 이력을 제거
 	if (action === "moved") {
 		// 같은 항목에 대한 이전 모든 '이동' 기록 제거
@@ -116,7 +135,7 @@ function addToHistory(item, action, details = {}) {
 		label: item.label,
 		state: action,
 		timestamp: new Date().getTime(),
-		details: details
+		details: { ...details, isAuto }
 	};
 
 	// 이력에 추가
@@ -208,49 +227,42 @@ function renderHistoryItem(historyItem) {
 	const historyList = document.getElementById("historyList");
 	const emptyHistory = document.getElementById("emptyHistory");
 
-	// 변경 내역이 없다는 메시지 숨기기
-	if (emptyHistory) {
-		emptyHistory.style.display = "none";
-	}
+	if (emptyHistory) emptyHistory.style.display = "none";
 
-	// 이미 같은 ID를 가진 항목이 있는지 확인
-	const existingItem = document.getElementById(`history-${historyItem.menuId}-${historyItem.state}`);
-
-	// 변경 내역 텍스트 생성
-	const actionText = getActionText(historyItem.state, historyItem.details);
-
-	// 항목이 이미 있으면 내용만 업데이트
-	if (existingItem) {
-		const textSpan = existingItem.querySelector("span");
-		textSpan.textContent = `${historyItem.label}: ${actionText}`;
-		return;
-	}
-
-	// 새 항목 생성
 	const li = document.createElement("li");
-	li.className = "py-2 flex justify-between";
 	li.id = `history-${historyItem.menuId}-${historyItem.state}`;
+	li.className = "bg-white shadow-sm rounded border p-4 mb-2";
 
-	const textSpan = document.createElement("span");
-	textSpan.className = "text-sm";
-	textSpan.textContent = `${historyItem.label}: ${actionText}`;
+	// 🔹 제목 + 시간
+	const header = document.createElement("div");
+	header.className = "flex justify-between items-center mb-2";
 
-	const undoButton = document.createElement("button");
-	undoButton.className = "text-blue-600 hover:underline text-xs";
-	undoButton.textContent = "실행 취소";
-	undoButton.onclick = () => undoChange(historyItem);
+	const label = document.createElement("div");
+	label.className = "text-sm font-semibold text-gray-800";
+	label.textContent = historyItem.label;
 
-	li.appendChild(textSpan);
-	li.appendChild(undoButton);
+	const timestamp = document.createElement("div");
+	timestamp.className = "text-xs text-gray-400 whitespace-nowrap";
+	timestamp.textContent = new Date(historyItem.timestamp).toLocaleTimeString("ko-KR", {
+		hour: "2-digit",
+		minute: "2-digit",
+		second: "2-digit"
+	});
 
-	// 변경 이력 목록에 추가
-	if (historyList) {
-		historyList.appendChild(li);
-	}
+	header.append(label, timestamp);
+
+	// 🔹 설명
+	const description = document.createElement("div");
+	description.className = "text-sm text-gray-600";
+	description.textContent = getActionText(historyItem.state, historyItem.details);
+
+	li.append(header, description);
+	historyList.insertBefore(li, historyList.firstChild);
 }
 
 // 변경 사항 취소 함수
 function undoChange(historyItem) {
+	if (historyItem.details?.isAuto) return;
 	const menuItem = findNodeById(treeData, historyItem.menuId);
 
 	if (!menuItem && historyItem.state !== "deleted") {
@@ -580,7 +592,7 @@ function renderTree(data, parentEl, level = 1, openIds = []) {
 			const oldValue = item.useYn;
 			const newState = item.useYn === "Y" ? "N" : "Y";
 
-			function updateChildren(item, newState) {
+			function updateChildren(item, newState, isAuto = false) {
 				const oldUseYn = item.useYn;
 				item.useYn = newState;
 				item._updated = true;
@@ -588,6 +600,7 @@ function renderTree(data, parentEl, level = 1, openIds = []) {
 				// 값이 변경된 경우 이력에 추가
 				if (oldUseYn !== newState) {
 					addToHistory(item, "updated", {
+						isAuto,
 						field: "useYn",
 						oldValue: oldUseYn,
 						newValue: newState
@@ -600,7 +613,7 @@ function renderTree(data, parentEl, level = 1, openIds = []) {
 					if (toggleEl) updateToggleIcon(toggleEl, newState);
 				}
 				if (item.children?.length > 0) {
-					item.children.forEach((child) => updateChildren(child, newState));
+					item.children.forEach((child) => updateChildren(child, newState, true));
 				}
 			}
 
@@ -874,6 +887,7 @@ function makeEditableWithHistory(el, item, field, originalValue) {
 
 			// 변경 이력에 추가
 			addToHistory(item, "updated", {
+				isAuto,
 				field: field,
 				oldValue: originalValue,
 				newValue: newVal
@@ -1023,6 +1037,7 @@ function updateParentState(li, rootData) {
 		parentNode._updated = true;
 
 		addToHistory(parentNode, "updated", {
+			isAuto: true,
 			field: "useYn",
 			oldValue: oldValue,
 			newValue: newUseYn

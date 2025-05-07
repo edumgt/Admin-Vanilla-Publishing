@@ -1,12 +1,36 @@
+import {fetchPermissions, initPageUI} from "../../accessControl.js";
 import { initInternalTabs } from './internal-tab-controller.js';
 
+const typeLabelMap = {
+	HQ: '본사',
+	BRANCH: '지사',
+	CAMPUS: '캠퍼스'
+};
 let orgData = [];
 
 let selectedDeptId = 1;
 let orgTreeGrid = null;
 const depthName = document.querySelector(".depth-name");
+let tempIdCounter = -1;
+let isAddChildListenerAttached = false;
 
 export function initOrgTab() {
+	fetchPermissions().then((permissions) => {
+		initPageUI("org-handler-btn-container", {
+			buttonOrder: [
+				{ type: 'add', label: '신규 부서 생성', onClick: null }
+			],
+			permissions,
+		});
+
+		initPageUI("dept-info-btn-container", {
+			buttonOrder: [
+				{ type: 'save', label: '저장', onClick: null }
+			],
+			permissions,
+		});
+	});
+
 	fetch(`${backendDomain}/api/org/tree`)
 			.then(response => {
 				if (!response.ok) throw new Error('조직도 조회 실패');
@@ -23,6 +47,21 @@ export function initOrgTab() {
 				console.error(error);
 				alert('조직 정보를 불러오는 데 실패했습니다.');
 			});
+
+	const editableMap = {
+		'deptAddress': 'input',
+		'deptPhone': 'input',
+		'deptDescription': 'textarea'
+	};
+
+	Object.entries(editableMap).forEach(([id, type]) => {
+		const el = document.getElementById(id);
+		if (el) {
+			el.addEventListener('click', () => makeEditable(el, type));
+		}
+	});
+
+	setupAddChildEvent();
 }
 
 function renderOrgTree() {
@@ -67,7 +106,30 @@ function renderOrgTree() {
 			useIcon: true
 		},
 		columns: [
-			{ header: '조직명', name: 'name', sortable: true }
+			{
+				header: '조직명',
+				name: 'name',
+				sortable: true,
+				formatter: ({ row }) => {
+					const orgName = row.name;
+					const orgId = row.id;
+					const isLeaf = row.level < 3;
+
+					return `
+        <div class="flex justify-between items-center w-full pr-2">
+          <span class="truncate">${orgName}</span>
+          ${
+							isLeaf
+									? `<i class="fas fa-plus text-blue-500 hover:text-blue-600 cursor-pointer text-base leading-none ml-2"
+                   title="하위 조직 추가"
+                   data-add-child="${orgId}"
+                   style="margin-right: 10px"></i>`
+									: ''
+					}
+        </div>
+      `;
+				}
+			}
 		],
 		data: rootItems // ✅ 완성된 트리 데이터
 	});
@@ -80,6 +142,74 @@ function renderOrgTree() {
 		renderDeptInfo();
 		// renderUserList();
 	});
+}
+
+function setupAddChildEvent() {
+	if (isAddChildListenerAttached) return; // 이미 등록됐으면 무시
+	isAddChildListenerAttached = true;
+
+	document.addEventListener('click', function (e) {
+		const target = e.target.closest('[data-add-child]');
+		if (target) {
+			const parentId = Number(target.dataset.addChild);
+			if (!isNaN(parentId)) {
+				handleAddChild(e, parentId);
+			}
+		}
+	});
+}
+
+function handleAddChild(e, parentId) {
+	e.stopPropagation();
+
+	const parentRow = orgTreeGrid.getRow(parentId);
+	if (!parentRow) return;
+
+	const parentLevel = parentRow.level || 1;
+	const newLevel = parentLevel + 1;
+
+	if (newLevel > 3) {
+		alert('3단계 이상은 추가할 수 없습니다.');
+		return;
+	}
+
+	const newRow = {
+		id: tempIdCounter--,
+		name: '신규 조직',
+		address: '',
+		phone: '',
+		description: '',
+		type: newLevel === 2 ? 'BRANCH' : 'CAMPUS',
+		useYn: 'Y',
+		parent: parentId,
+		level: newLevel,
+		_children: null,
+		__new: true
+	};
+
+	// 자식이 없으면 _children 생성
+	if (!parentRow._children || !Array.isArray(parentRow._children)) {
+		parentRow._children = [];
+	}
+
+	// 앞에 추가
+	parentRow._children.unshift(newRow);
+
+	// 데이터 갱신
+	orgTreeGrid.resetData([...orgTreeGrid.getData()]);
+
+	// 펼쳐진 상태 아니면 열기
+	if (!orgTreeGrid.isExpanded(parentId)) {
+		orgTreeGrid.expand(parentId);
+	}
+
+	// 포커스 주기 (조금 delay)
+	setTimeout(() => {
+		const newKey = orgTreeGrid.getIndexOfRow(newRow.id);
+		if (newKey >= 0) {
+			orgTreeGrid.focusAt(newKey, 0);
+		}
+	}, 100);
 }
 
 function bindInternalTabs() {
@@ -107,28 +237,97 @@ function renderDeptInfo() {
 	const dept = orgData.find(d => d.id === selectedDeptId);
 	if (!dept) return;
 
-	// ✅ 조직명 등 기본 정보 세팅
-	document.getElementById('deptName').innerText = dept.name || '-';
-	document.getElementById('deptType').innerText = dept.type || '-';
+	// ✅ 타이틀에 조직명 표시
+	depthName.textContent = dept.name || '-';
+
+	// ✅ 소속 (부모조직명) 표시
+	const parentDept = dept.parent ? orgData.find(d => d.id === dept.parent) : null;
+	document.getElementById('deptParent').innerText = parentDept?.name || '-';
+
+	// ✅ 기본 정보 표시
+	document.getElementById('deptType').innerText = typeLabelMap[dept.type] || dept.type || '-';
 	document.getElementById('deptAddress').innerText = dept.address || '-';
 	document.getElementById('deptPhone').innerText = dept.phone || '-';
-	document.getElementById('deptUseYn').innerText = dept.use_yn || '-';
+	document.getElementById('deptUseYn').innerText = dept.useYn || '-';
 	document.getElementById('deptDescription').innerText = dept.description || '-';
 
-	// ✅ Breadcrumb 세팅
-	document.getElementById('deptBreadcrumb').innerText = buildBreadcrumb(selectedDeptId);
+	toggleRow('dept-parent', dept.type !== 'HQ');
+	toggleRow('dept-type', dept.type !== 'HQ');
+	toggleRow('dept-use-yn', dept.type !== 'HQ');
 }
 
-function buildBreadcrumb(deptId) {
-	let path = [];
-	let current = orgData.find(d => d.id === deptId);
+function toggleRow(fieldName, visible) {
+	const row = document.querySelector(`[data-field="${fieldName}"]`);
+	if (!row) return;
 
-	while (current) {
-		path.unshift(current.name); // 가장 상위 조직부터 순서대로
-		current = current.parent ? orgData.find(d => d.id === current.parent) : null;
+	const container = row.parentElement;
+
+	if (visible) {
+		// ✅ 보이기
+		row.classList.remove('hidden');
+	} else {
+		// ✅ 숨기기
+		row.classList.add('hidden');
 	}
 
-	return path.join(' > ');
+	// ✅ 숨기거나 보인 후에 "살아있는 row" 다시 가져오기
+	const visibleRows = Array.from(container.children).filter(child => {
+		return !child.classList.contains('hidden');
+	});
+
+	// ✅ 살아있는 것 중 첫 번째만 border-top 없애고
+	visibleRows.forEach((child, index) => {
+		if (index === 0) {
+			child.style.borderTop = 'none';
+		} else {
+			child.style.borderTop = ''; // 원래대로
+		}
+	});
+}
+
+function makeEditable(element, type = 'input') {
+	if (element.querySelector('input, textarea')) return;
+
+	const currentText = element.innerText.trim();
+	element.innerHTML = '';
+
+	let inputEl;
+	if (type === 'textarea') {
+		inputEl = document.createElement('textarea');
+		inputEl.rows = 3;
+		inputEl.className = 'border rounded p-2';
+		inputEl.style.width = '100%';
+		inputEl.style.resize = 'none'; // ✅ resize 비활성화
+	} else {
+		inputEl = document.createElement('input');
+		inputEl.type = 'text';
+		inputEl.className = 'border rounded p-1';
+		inputEl.style.width = '100%'; // ✅ 고정 너비
+	}
+
+	inputEl.value = currentText === '-' ? '' : currentText;
+	element.appendChild(inputEl);
+	inputEl.focus();
+
+	function save() {
+		const newValue = inputEl.value.trim() || '-';
+		element.innerHTML = newValue;
+	}
+
+	function cancel() {
+		element.innerHTML = currentText;
+	}
+
+	inputEl.addEventListener('blur', save);
+	inputEl.addEventListener('keydown', (e) => {
+		if (e.key === 'Enter' && type !== 'textarea') {
+			e.preventDefault();
+			save();
+		}
+		if (e.key === 'Escape') {
+			cancel();
+		}
+	});
 }
 
 function renderUserList() {

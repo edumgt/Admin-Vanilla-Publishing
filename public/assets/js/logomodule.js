@@ -330,7 +330,8 @@ const defaultMenuItems = [
         children: [
             { id: "13", text: '컨설팅지정', href: 'network.html', icon: 'fa-network-wired' },
             { id: "17", text: '서베이', href: 'survey.html', icon: 'fa-poll' },
-            { id: "10", text: '사물함', href: 'locker.html', icon: 'fa-archive' }
+            { id: "10", text: '사물함', href: 'locker.html', icon: 'fa-archive' },
+            { id: "10", text: 'AG Grid Sample', href: 'ag-grid-sample.html', icon: 'fa-grid' }
         ]
     },
     {
