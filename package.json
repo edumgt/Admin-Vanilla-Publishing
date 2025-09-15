@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "description": "An Express.js server for handling inbound and outbound data",
     "main": "server.js",
-    "type": "module",
+    
     "scripts": {
         "start": "nohup node server.js > output.log 2>&1 &",
         "dev": "nodemon server.js",

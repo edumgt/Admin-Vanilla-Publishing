@@ -1805,7 +1805,7 @@ INSERT INTO `menu_item` (`id`, `menu_page_id`, `href`, `label`) VALUES
 	(94, 1, 'kegcode.html', 'KEG-Code'),
 	(95, 1, 'kegeditor.html', 'KEG-Editor'),
 	(96, 1, 'kegeditor2.html', 'KEG-Editor2'),
-	(97, 8, 'box.html', '3D도안'),
+	(97, 8, 'box.html', '동영상분석'),
 	(98, 1, 'orgsel.html', 'KEG-Tree');
 
 -- 테이블 bbs.menu_page 구조 내보내기

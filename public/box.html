@@ -3,64 +3,162 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>3D 종이박스</title>
+  <title>Mpeg</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- 기본 CSS -->
   <link href="assets/css/default.css" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/box.css">
+  
 </head>
 
-
-
-<body>
+<body class="bg-gray-50 w-full h-full">
+  <!-- 공통 상단/좌측 메뉴 -->
   <div id="cmmContainer"></div>
+  <div id="tnbContainer"></div>
+  <div id="lnbContainer"></div>
 
-  <nav class="breadcrumb"></nav>
+  <!-- 메인 콘텐츠 -->
+  <div id="content" class="ml-[110px] pt-24 px-10">
+    <nav class="breadcrumb text-lg font-semibold text-gray-700">동영상 분석</nav>
 
-  <div id="content">
-
-
-    <div class="controls">
-      가로: <input type="range" id="width" min="10" max="100" value="30"> <span id="wVal">30</span>cm<br>
-      세로: <input type="range" id="height" min="10" max="100" value="20"> <span id="hVal">20</span>cm<br>
-      높이: <input type="range" id="depth" min="10" max="100" value="15"> <span id="dVal">15</span>cm<br><br>
-      색상: <input type="color" id="colorPicker" value="#b48c5a"><br><br>
-      텍스처 이미지: <input type="file" id="texturePicker" accept="image/*">
+    <!-- 파일 업로드 -->
+    <div id="uploadBox"
+      class="border-2 border-dashed border-gray-400 rounded-lg p-10 text-center text-gray-500 cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition mt-6">
+      🎬 Drag & Drop 또는 클릭하여 영상 업로드
+      <input type="file" id="fileInput" accept="video/mp4" hidden />
     </div>
 
-    <div class="wrapper">
-      <div class="scene">
-        <div class="box" id="box">
-          <div class="face front"></div>
-          <div class="face back"></div>
-          <div class="face right"></div>
-          <div class="face left"></div>
-          <div class="face top"></div>
-          <div class="face bottom"></div>
+    <!-- 분석 영역 -->
+    <div class="flex gap-6 mt-8">
+      <!-- 좌측: 동영상 -->
+      <div class="flex-[1.2] max-w-[600px]">
+        <div class="w-full aspect-video bg-gray-200 border border-gray-300 rounded-lg shadow relative overflow-hidden">
+          <video id="videoPlayer"
+            class="w-full h-full object-contain bg-black"
+            controls>
+            브라우저가 video 태그를 지원하지 않습니다.
+          </video>
+          <!-- placeholder -->
+          <div id="videoPlaceholder"
+            class="absolute inset-0 flex items-center justify-center text-gray-500 text-sm bg-gray-200">
+            아직 업로드된 영상이 없습니다
+          </div>
         </div>
       </div>
 
-      <div class="flat-net" id="flatNet">
-        <div class="row center">
-          <div class="face1 top" data-label="윗면">TOP</div>
+      <!-- 우측: 분석 결과 + 차트 -->
+      <div class="flex-[2] flex flex-col justify-start w-full">
+        <div id="result" class="text-lg mb-4">
+          판별 결과: <span id="verdict" class="font-semibold text-gray-800">-</span><br />
+          신뢰도 점수: <span id="confidence" class="font-bold text-blue-600">-</span>
         </div>
-        <div class="row full">
-          <div class="face1 tab">TAB</div>
-          <div class="face1 left" data-label="좌측면">LEFT</div>
-          <div class="face1 front" data-label="전면">FRONT</div>
-          <div class="face1 right" data-label="우측면">RIGHT</div>
-          <div class="face1 back" data-label="뒷면">BACK</div>
-        </div>
-        <div class="row center">
-          <div class="face1 bottom" data-label="바닥면">BOTTOM</div>
+
+        <div id="chart-container" class="w-full h-[420px] bg-white rounded-lg shadow p-8">
+          <div class="flex justify-between items-center mb-2">
+            <span class="font-semibold text-gray-700">프레임별 Confidence Score</span>
+            <button id="toggleChartBtn"
+              class="px-3 py-1 text-sm rounded bg-blue-500 text-white hover:bg-blue-600 transition">
+              Bar 차트로 보기
+            </button>
+          </div>
+          <canvas id="frameChart"></canvas>
         </div>
       </div>
     </div>
   </div>
 
-
+  <!-- 공통 JS -->
   <script type="module" src="assets/js/logomodule.js"></script>
-  <script src="assets/js/box.js"></script>
 
+  <script>
+    const fileInput = document.getElementById("fileInput");
+    const uploadBox = document.getElementById("uploadBox");
+    const videoPlayer = document.getElementById("videoPlayer");
+    const videoPlaceholder = document.getElementById("videoPlaceholder");
+    const verdictEl = document.getElementById("verdict");
+    const confidenceEl = document.getElementById("confidence");
+    const ctx = document.getElementById("frameChart").getContext("2d");
+    const toggleChartBtn = document.getElementById("toggleChartBtn");
 
+    let currentType = "line";
+
+    // Chart 초기화
+    let frameChart = new Chart(ctx, {
+      type: currentType,
+      data: {
+        labels: [],
+        datasets: [{
+          label: "Frame Confidence Score",
+          data: [],
+          borderColor: "#3B82F6",
+          backgroundColor: "rgba(59,130,246,0.4)",
+          borderWidth: 2,
+          pointRadius: 4,
+          pointBackgroundColor: "#2563EB",
+          tension: 0.35
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { position: "top" } },
+        scales: {
+          y: { min: 0, max: 1, ticks: { stepSize: 0.1 } }
+        }
+      }
+    });
+
+    // 차트 타입 토글
+    toggleChartBtn.addEventListener("click", () => {
+      currentType = currentType === "line" ? "bar" : "line";
+      const chartData = JSON.parse(JSON.stringify(frameChart.data));
+      const chartOptions = JSON.parse(JSON.stringify(frameChart.options));
+      frameChart.destroy();
+      frameChart = new Chart(ctx, { type: currentType, data: chartData, options: chartOptions });
+      toggleChartBtn.textContent =
+        currentType === "line" ? "Bar 차트로 보기" : "Line 차트로 보기";
+    });
+
+    // 업로드 이벤트
+    uploadBox.addEventListener("click", () => fileInput.click());
+    uploadBox.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      uploadBox.classList.add("bg-blue-50", "border-blue-500");
+    });
+    uploadBox.addEventListener("dragleave", () => {
+      uploadBox.classList.remove("bg-blue-50", "border-blue-500");
+    });
+    uploadBox.addEventListener("drop", (e) => {
+      e.preventDefault();
+      uploadBox.classList.remove("bg-blue-50", "border-blue-500");
+      handleFile(e.dataTransfer.files[0]);
+    });
+    fileInput.addEventListener("change", (e) => handleFile(e.target.files[0]));
+
+    // 파일 핸들러
+    function handleFile(file) {
+      if (!file) return;
+
+      // 동영상 미리보기
+      const videoURL = URL.createObjectURL(file);
+      videoPlayer.src = videoURL;
+      videoPlaceholder.classList.add("hidden");
+
+      // Mock 결과
+      const randomConfidence = Math.random();
+      verdictEl.textContent = randomConfidence > 0.5 ? "Fake" : "Real";
+      confidenceEl.textContent = (randomConfidence * 100).toFixed(2) + "%";
+
+      const scores = Array.from({ length: 30 }, () => Math.random());
+      const labels = scores.map((_, i) => `Frame ${i + 1}`);
+      frameChart.data.labels = labels;
+      frameChart.data.datasets[0].data = scores;
+      frameChart.update();
+    }
+  </script>
 </body>
-
 </html>

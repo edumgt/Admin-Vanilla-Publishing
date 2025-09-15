@@ -343,7 +343,7 @@ const defaultMenuItems = [
             { id: "15", text: '권한관리', href: 'orgtree.html', icon: 'fa-user-shield' },
             { id: "6", text: '문서관리', href: 'document.html', icon: 'fa-file-alt' },
             { id: "22", text: 'WMS', href: 'wms.html', icon: 'fa-cubes' },
-            { id: "27", text: '3D도안', href: 'box.html', icon: 'fa-cubes' }
+            { id: "27", text: '동영상분석', href: 'box.html', icon: 'fa-cubes' }
         ]
     }
 ];
