@@ -253,7 +253,7 @@ const iconMapping = {
     "서베이": "fa-poll",
     "코드관리": "fa-server",
     "권한관리": "fa-user-shield",
-    "문서관리": "fa-file-alt",
+    "문서분석": "fa-file-alt",
 
     "WMS": "fa-cubes",
     "용어관리": "fa-book",
@@ -341,7 +341,7 @@ const defaultMenuItems = [
         children: [
             { id: "8", text: '용어관리', href: 'glos.html', icon: 'fa-book' },
             { id: "15", text: '권한관리', href: 'orgtree.html', icon: 'fa-user-shield' },
-            { id: "6", text: '문서관리', href: 'document.html', icon: 'fa-file-alt' },
+            { id: "6", text: '문서분석', href: 'document.html', icon: 'fa-file-alt' },
             { id: "22", text: 'WMS', href: 'wms.html', icon: 'fa-cubes' },
             { id: "27", text: '동영상분석', href: 'box.html', icon: 'fa-cubes' }
         ]

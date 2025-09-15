@@ -117,7 +117,7 @@ const createTanslations = {
             system: "코드관리",
             glos: "용어관리",
             orgtree: "권한관리",
-            document: "문서관리",
+            document: "문서분석",
             wms: "WMS",
             config: "시스템 로그",
 
