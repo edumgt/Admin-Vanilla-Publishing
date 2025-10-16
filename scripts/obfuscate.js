@@ -5,7 +5,7 @@ const { execSync } = require('child_process');
 const htmlMinifier = require('html-minifier');
 
 
-const DIST_DIR = 'dist';
+const DIST_DIR = 'public';
 
 // 파일 리스트 가져오기
 const getFiles = (dir, ext) => {
