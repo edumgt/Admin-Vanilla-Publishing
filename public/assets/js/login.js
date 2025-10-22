@@ -1,3 +1,4 @@
+const backendUrl = 'http://localhost:8080';
 const tabs = document.querySelectorAll('button[id$="-tab"]');
 const forms = document.querySelectorAll('.tab-content');
 tabs.forEach(tab => {
@@ -38,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = Object.fromEntries(formData.entries());
 
         try {
-            const response = await fetch('/login', {
+            const response = await fetch(`${backendUrl}/api/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -50,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const result = await response.json();
                 // 토큰을 로컬 스토리지에 저장
                 localStorage.setItem('token', result.token);
+                localStorage.setItem('userId',result.userId);
                 // index.html로 리다이렉트
                 window.location.href = firstPage;
             } else {

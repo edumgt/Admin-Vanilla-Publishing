@@ -330,7 +330,8 @@ const defaultMenuItems = [
         children: [
             { id: "13", text: '컨설팅지정', href: 'network.html', icon: 'fa-network-wired' },
             { id: "17", text: '서베이', href: 'survey.html', icon: 'fa-poll' },
-            { id: "10", text: '사물함', href: 'locker.html', icon: 'fa-archive' }
+            { id: "10", text: '사물함', href: 'locker.html', icon: 'fa-archive' },
+            { id: "10", text: 'AG Grid Sample', href: 'ag-grid-sample.html', icon: 'fa-grid' }
         ]
     },
     {
@@ -340,6 +341,7 @@ const defaultMenuItems = [
         href: 'system.html',
         children: [
             { id: "8", text: '용어관리', href: 'glos.html', icon: 'fa-book' },
+            { id: "28", text: '사용자별 권한관리', href: 'menu-permission.html', icon: 'fa-user-shield' },
             { id: "15", text: '권한관리', href: 'orgtree.html', icon: 'fa-user-shield' },
             { id: "6", text: '문서분석', href: 'document.html', icon: 'fa-file-alt' },
             { id: "22", text: 'WMS', href: 'wms.html', icon: 'fa-cubes' },
@@ -599,6 +601,9 @@ export function showToast(messageKey, type = 'success', lang = 'en') {
 window.showToast = showToast;
 
 const languageSwitcher = document.getElementById("languageSwitcher");
+
+export const backendDomain = "http://localhost:8080";
+window.backendDomain = backendDomain;
 
 export const breadcrumb = document.querySelector(".breadcrumb");
 window.breadcrumb = breadcrumb;

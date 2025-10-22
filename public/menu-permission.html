@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link href="assets/css/default.css" rel="stylesheet">
+</head>
+
+<body>
+	<div id="cmmContainer"></div>
+	
+	<nav class="breadcrumb"></nav>
+	
+	<div id="content">
+		<div class="mb-4 mt-4 flex">
+			<button class="flex-1 tab-default tab-main bg-gray-300 hover:bg-gray-100 active-tab" data-tab="menu-handler-tab">메뉴 관리</button>
+			<button class="flex-1 tab-default tab-main bg-gray-300 hover:bg-gray-100" data-tab="org-handler-tab">조직 관리</button>
+			<button class="flex-1 tab-default tab-main bg-gray-300 hover:bg-gray-100" data-tab="menu-permission-tab">사용자 별 메뉴 권한 관리</button>
+		</div>
+
+		<div id="menu-handler-tab" class="tab-content2 active">
+			<div class="w-full px-6 mt-6">
+				<div class="flex items-center justify-between mb-4">
+					<h2 class="text-lg font-semibold">메뉴 관리</h2>
+					<div class="flex flex-col lg:flex-row items-center space-y-2 lg:space-y-0 lg:space-x-2">
+						<div class="flex items-center space-x-2">
+							<div id="menu-handler-btn-container"></div>
+						</div>
+					</div>
+				</div>
+				
+				<!-- 좌우 분할 레이아웃 -->
+				<div class="flex flex-row space-x-4">
+					<!-- 왼쪽: 메뉴 트리 영역 (70% 너비) -->
+					<div class="w-8/12">
+						<div id="menuTree" class="space-y-2 border rounded p-3" style="min-height: calc(100vh - 300px); max-height: calc(100vh - 300px); overflow-y: auto;"></div>
+					</div>
+					
+					<!-- 오른쪽: 변경 이력 패널 (30% 너비) -->
+					<div class="w-4/12 border rounded p-3" style="min-height: calc(100vh - 300px); max-height: calc(100vh - 300px);">
+						<div class="flex justify-between items-center mb-3">
+							<h3 class="font-medium">변경 이력</h3>
+							<div class="flex items-center gap-2">
+								<span id="change-summary" class="text-sm">총 <span class="font-bold">0</span>건</span>
+								<button id="undo-latest-btn"
+										class="px-3 py-1 text-xs text-blue-600 border border-blue-300 rounded hover:bg-blue-50 hover:text-blue-700 transition">
+									실행 취소
+								</button>
+							</div>
+						</div>
+						
+						<!-- 변경 유형별 카운터 -->
+						<div class="flex flex-wrap gap-2 mb-3">
+							<span class="px-2 py-0.5 bg-green-100 text-green-800 rounded-full text-xs">신규 <span id="newCount">0</span>건</span>
+							<span class="px-2 py-0.5 bg-blue-100 text-blue-800 rounded-full text-xs">수정 <span id="updatedCount">0</span>건</span>
+							<span class="px-2 py-0.5 bg-yellow-100 text-orange-800 rounded-full text-xs">이동 <span id="movedCount">0</span>건</span>
+							<span class="px-2 py-0.5 bg-red-100 text-red-800 rounded-full text-xs">삭제 <span id="deletedCount">0</span>건</span>
+						</div>
+						
+						<!-- 변경 이력 목록 -->
+						<div class="overflow-y-auto mb-3" style="max-height: calc(100vh - 420px);">
+							<ul id="historyList" class="divide-y divide-gray-200">
+								<!-- 변경 이력 항목들이 여기에 동적으로 추가됨 -->
+								<li class="py-2 flex justify-between">
+									<span class="text-sm">기타관리: 이름 변경됨 (기존: 업무관리)</span>
+									<button class="text-blue-600 hover:underline text-xs">실행 취소</button>
+								</li>
+							</ul>
+							<div id="emptyHistory" class="py-3 text-center text-gray-500 text-sm">변경 내역이 없습니다.</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div id="org-handler-tab" class="tab-content2">
+			<div class="flex">
+				
+				<!-- 좌측: 조직 트리 -->
+				<div class="w-1/4 border-r p-2 flex flex-col" style="height: calc(100vh - 250px);">
+					<div class="flex items-center justify-between mb-2">
+						<h2 class="text-lg font-semibold">조직도</h2>
+					</div>
+					<div id="orgTree" class="ag-theme-alpine flex-1 w-full"></div>
+				</div>
+				
+				<!-- 우측: 부서정보/부서원정보 탭 -->
+				<div class="w-3/4 border-r p-2 flex flex-col" style="height: calc(100vh - 250px);">
+					<div class="flex items-center justify-between">
+						<h2 class="text-lg font-semibold depth-name"></h2>
+						<!-- 버튼 영역 -->
+						<div class="flex flex-col lg:flex-row items-center space-y-2 lg:space-y-0 lg:space-x-2">
+							<div class="flex items-center space-x-2">
+								<div id="org-handler-btn-container"></div>
+							</div>
+						</div>
+					</div>
+					
+					<!-- 부서관리 내부 탭 -->
+					<div class="mb-4">
+						<button class="tab-default tab-sub bg-gray-300 hover:bg-gray-100 active-tab" data-tab="dept-info-tab">부서 정보</button>
+						<button class="tab-default tab-sub bg-gray-300 hover:bg-gray-100" data-tab="user-info-tab">부서원 목록</button>
+					</div>
+					
+					<!-- 부서정보 탭 컨텐츠 -->
+					<div id="dept-info-tab" class="tab-content2 active">
+						<div class="mb-3">
+							<div id="dept-info-btn-container"></div>
+						</div>
+						
+						<div class="bg-white border border-gray-200 rounded-lg p-6 space-y-6" style="height: calc(100vh - 310px);">
+							<!-- 조직 상세정보 -->
+							<div class="divide-y divide-gray-200">
+								<div class="flex items-center py-4" data-field="dept-parent">
+									<div class="w-32 text-gray-500 text-sm uppercase">소속</div>
+									<div id="deptParent" class="text-gray-800 font-semibold"></div>
+								</div>
+								<div class="flex items-center py-4" data-field="dept-type">
+									<div class="w-32 text-gray-500 text-sm uppercase">조직구분</div>
+									<div id="deptType" class="text-gray-800 font-semibold"></div>
+								</div>
+								<div class="flex items-center py-4">
+									<div class="w-32 text-gray-500 text-sm uppercase self-start">주소</div>
+									<div id="deptAddress" class="flex-1 text-gray-800 font-semibold editable"></div>
+								</div>
+								<div class="flex items-center py-4">
+									<div class="w-32 text-gray-500 text-sm uppercase self-start">전화번호</div>
+									<div id="deptPhone" class="flex-1 text-gray-800 font-semibold editable"></div>
+								</div>
+								<div class="flex items-center py-4" data-field="dept-use-yn">
+									<div class="w-32 text-gray-500 text-sm uppercase">사용여부</div>
+									<div id="deptUseYn" class="text-gray-800 font-semibold"></div>
+								</div>
+								<div class="flex items-center py-4">
+									<div class="w-32 text-gray-500 text-sm uppercase self-start">설명</div>
+									<div id="deptDescription" class="flex-1 text-gray-800 font-semibold editable"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<!-- 부서원정보 탭 컨텐츠 -->
+					<div id="user-info-tab" class="tab-content2">
+						<div class="grid grid-cols-2 gap-6">
+							<div id="userList" class="bg-white rounded-lg shadow-md p-6 overflow-y-auto" style="max-height: calc(100vh - 400px);"></div>
+							<div id="userDetail" class="bg-white rounded-lg shadow-md p-6">
+								<p class="text-center text-gray-400 mt-10">사용자를 선택하세요.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div id="menu-permission-tab" class="tab-content2">
+			<div class="flex">
+				<div class="w-1/4 border-r p-2 flex flex-col" style="height: calc(100vh - 250px);">
+					<div class="flex items-center justify-between mb-2">
+						<h2 class="text-lg font-semibold">사용자 목록</h2>
+						
+						<!-- 버튼 영역 -->
+						<div class="flex flex-col lg:flex-row items-center space-y-2 lg:space-y-0 lg:space-x-2">
+							<div class="flex items-center space-x-2">
+								<div id="btnContainer1"></div>
+							</div>
+						</div>
+					</div>
+					<div id="grid-left" class="ag-theme-alpine flex-1 w-full"></div>
+				</div>
+				<div class="w-3/4 border-r p-2 flex flex-col" style="height: calc(100vh - 250px);">
+					<div class="flex items-center justify-between mb-2">
+						<h2 class="text-lg font-semibold">권한 목록</h2>
+						
+						<!-- 버튼 영역 -->
+						<div class="flex flex-col lg:flex-row items-center space-y-2 lg:space-y-0 lg:space-x-2">
+							<div class="flex items-center space-x-2">
+								<div id="btnContainer2"></div>
+							</div>
+						</div>
+					</div>
+					<div id="grid-right" class="ag-theme-alpine flex-1 w-full"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script type="module" src="assets/vendor/tui-grid/dist/tui-grid.js"></script>
+	<script type="module" src="assets/vendor/sortablejs/Sortable.js"></script>
+	<script type="module" src="assets/js/logomodule.js"></script>
+	<script type="module" src="assets/js/menu-permission/tab-controller.js"></script>
+</body>
+
+</html>

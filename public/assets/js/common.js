@@ -1,51 +1,151 @@
-function createSearchButton() {
-    const searchButton = document.createElement('button');
-    searchButton.className = "items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2 mr-2";
-    searchButton.innerHTML = `<i class="fas fa-search"></i><span>검색</span>`;
+// 📁 common.js
 
-    return searchButton;
+// 버튼 하나를 만드는 핵심 함수 - 커스터마이징 기능 추가
+export function createButton({
+                                 icon,
+                                 label,
+                                 className = "",
+                                 onClick = null,
+                                 allowed = true,
+                                 id = null,
+                                 customText = null
+                             }) {
+    const button = document.createElement("button");
+
+    // ID 설정 (필요한 경우)
+    if (id) {
+        button.id = id;
+    }
+
+    // 공통 기본 클래스
+    button.className = className || "items-center px-3 py-1 text-white rounded space-x-2 mr-2";
+
+    // HTML 내용 설정 (customText가 있으면 그대로 사용, 없으면 아이콘+라벨 조합)
+    if (customText) {
+        button.innerHTML = customText;
+    } else {
+        button.innerHTML = `<i class="${icon}"></i><span>${label}</span>`;
+    }
+
+    // 권한에 따라 스타일 및 동작 제어
+    if (!allowed) {
+        button.classList.add('bg-gray-300', 'cursor-not-allowed');
+        button.classList.remove('bg-gray-700', 'hover:bg-gray-600');
+        button.disabled = true;
+    } else {
+        button.classList.add('bg-gray-700', 'hover:bg-gray-600');
+        button.disabled = false;
+        if (onClick) {
+            button.addEventListener('click', onClick);
+        }
+    }
+
+    return button;
 }
 
-function createAddButton() {
-    const addButton = document.createElement('button');
-    addButton.className = "items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2 mr-2";
-    addButton.innerHTML = `<i class="fas fa-plus"></i><span>신규</span>`;
+// 버튼별로 쉽게 만드는 래퍼 함수 - 옵션 추가
+function createSearchButton(allowed = true, onClick = null, options = {}) {
+    // 옵션에서 icon을 제외한 나머지 속성을 추출
+    const { icon, ...restOptions } = options;
 
-    return addButton;
+    // 모든 속성을 createButton에 전달
+    return createButton({
+        icon: typeof icon !== 'undefined' ? icon : "fas fa-search",
+        label: "검색",
+        allowed,
+        onClick,
+        ...restOptions
+    });
 }
 
-function createDelButton() {
-    const deleteButton = document.createElement('button');
-    deleteButton.className = "items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2 mr-2";
-    deleteButton.innerHTML = `<i class="fas fa-trash"></i><span>삭제</span>`;
+function createAddButton(allowed = true, onClick = null, options = {}) {
+    const { icon, ...restOptions } = options;
 
-    return deleteButton;
+    return createButton({
+        icon: typeof icon !== 'undefined' ? icon : "fas fa-plus",
+        label: "신규",
+        allowed,
+        onClick,
+        ...restOptions
+    });
 }
 
-function createCloseButton() {
-    const closeButton = document.createElement('button');
-    closeButton.className = "items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2";
-    closeButton.innerHTML = `<i class="fas fa-times"></i><span>닫기</span>`;
+function createDelButton(allowed = true, onClick = null, options = {}) {
+    const { icon, ...restOptions } = options;
 
-    return closeButton;
+    return createButton({
+        icon: typeof icon !== 'undefined' ? icon : "fas fa-trash",
+        label: "삭제",
+        allowed,
+        onClick,
+        ...restOptions
+    });
 }
 
-function createSaveButton() {
-    const saveButton = document.createElement('button');
-    saveButton.className = "items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2";
-    saveButton.innerHTML = `<i class="fas fa-save"></i><span>저장</span>`;
+function createCloseButton(allowed = true, onClick = null, options = {}) {
+    const { icon, ...restOptions } = options;
 
-    return saveButton;
+    return createButton({
+        icon: typeof icon !== 'undefined' ? icon : "fas fa-times",
+        label: "닫기",
+        allowed,
+        onClick,
+        ...restOptions
+    });
 }
 
-function createResetSearchButton() {
-    const resetSearchButton = document.createElement('button');
-    resetSearchButton.className = "items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2";
-    resetSearchButton.innerHTML = `<i class="fas fa-undo"></i><span>검색 초기화</span>`;
+function createSaveButton(allowed = true, onClick = null, options = {}) {
+    const { icon, ...restOptions } = options;
 
-    return resetSearchButton;
+    return createButton({
+        icon: typeof icon !== 'undefined' ? icon : "fas fa-save",
+        label: "저장",
+        allowed,
+        onClick,
+        ...restOptions
+    });
 }
 
+function createResetSearchButton(allowed = true, onClick = null, options = {}) {
+    const { icon, ...restOptions } = options;
+
+    return createButton({
+        icon: typeof icon !== 'undefined' ? icon : "fas fa-undo",
+        label: "검색 초기화",
+        allowed,
+        onClick,
+        ...restOptions
+    });
+}
+
+// 추가: 새로고침 버튼 생성 함수
+function createRefreshButton(allowed = true, onClick = null, options = {}) {
+    const { icon, ...restOptions } = options;
+
+    return createButton({
+        icon: typeof icon !== 'undefined' ? icon : "fas fa-sync-alt",
+        label: "새로고침",
+        allowed,
+        onClick,
+        ...restOptions
+    });
+}
+
+// 추가: 커스텀 버튼 생성 함수
+function createCustomButton(iconClass, label, allowed = true, onClick = null, options = {}) {
+    const { icon, ...restOptions } = options;
+
+    // 우선순위: options.icon > iconClass 파라미터
+    const finalIcon = typeof icon !== 'undefined' ? icon : (iconClass || "");
+
+    return createButton({
+        icon: finalIcon,
+        label,
+        allowed,
+        onClick,
+        ...restOptions
+    });
+}
 
 const createTanslations = {
     en: {
@@ -216,101 +316,99 @@ class createBadgeRenderer {
     constructor(props) {
         const el = document.createElement('span');
         el.className = 'text-blue-900 rounded cursor-pointer flex items-center justify-center';
-        el.innerHTML = '<i class="fas fa-pencil-alt"></i>';
+        el.innerHTML = '<i class="fas fa-pencil-alt btn-view grid-renderer-button"></i>';
         el.style.display = 'inline-block';
         el.style.textAlign = 'center';
+
+        el.addEventListener('click', (ev) => {
+            if (!window.canView) {
+                ev.stopPropagation();
+                showToast('보기 권한이 없습니다.', 'warning', 'ko');
+                return;
+            }
+        });
+
         this.el = el;
         this.props = props;
     }
     getElement() {
         return this.el;
     }
-    render(props) {
-        this.props = props;
-    
-        // rowKey, grid
-        const { rowKey, grid } = props;
-        // 해당 행 전체 데이터
-        const rowData = grid.getRow(rowKey);
-    
-        // (핵심) id 유무에 따라 disabled
-        if (!rowData.id) {
-          // id == null, undefined, 0 등 falsy
-          this.el.style.pointerEvents = 'none'; // 클릭 불가
-          this.el.style.opacity = '0.5';       // 반투명
-        } else {
-          this.el.style.pointerEvents = 'auto'; // 클릭 가능
-          this.el.style.opacity = '1';          // 완전 표시
-        }
-      }
 }
 
 class createSaveRenderer {
     constructor(props) {
-      // 1) span or div 생성
-      const el = document.createElement('span');
-      // 2) 원하는 스타일/클래스
-      el.className = 'text-blue-900 rounded cursor-pointer flex items-center justify-center';
-      el.innerHTML = '<i class="fas fa-save"></i>'; // 저장 아이콘 (fa-save)
-      
-      el.style.display = 'inline-block';
-      el.style.textAlign = 'center';
-  
-      this.el = el;
-      this.props = props;
-    }
-  
-    // TUI Grid에서 DOM 엘리먼트를 얻을 때 사용
-    getElement() {
-      return this.el;
-    }
-  
-    render(props) {
-        this.props = props;
-    
-        // rowKey, grid
-        const { rowKey, grid } = props;
-        // 해당 행 전체 데이터
-        const rowData = grid.getRow(rowKey);
-    
-        // (핵심) id 유무에 따라 disabled
-        if (!rowData.id) {
-          // id == null, undefined, 0 등 falsy
-          this.el.style.pointerEvents = 'none'; // 클릭 불가
-          this.el.style.opacity = '0.5';       // 반투명
-        } else {
-          this.el.style.pointerEvents = 'auto'; // 클릭 가능
-          this.el.style.opacity = '1';          // 완전 표시
-        }
-      }
-  }
+        const el = document.createElement('span');
+        el.className = 'text-blue-900 rounded cursor-pointer flex items-center justify-center';
+        el.innerHTML = '<i class="fas fa-save btn-save grid-renderer-button"></i>';
+        el.style.display = 'inline-block';
+        el.style.textAlign = 'center';
 
-  
-  
-  class RowNumRenderer {
-    constructor(props) {
-      const el = document.createElement('span');
-      this.el = el;
-  
-      const { grid, rowKey } = props;
-      const row = grid.getRow(rowKey);
-      const allRows = grid.getData();
-      const rowIndex = allRows.findIndex(r => r.rowKey === rowKey);
-  
-      if (row?.tpCd === '' && row?.tpNm === '') {
-        el.innerText = 'New';
-        el.style.color = "#ee3333";
-      } else {
-        el.innerText = String(rowIndex + 1); // ✅ 항상 1부터 시작
-      }
+        el.addEventListener('click', (ev) => {
+            if (!window.canSave) {
+                ev.stopPropagation();
+                showToast('저장 권한이 없습니다.', 'warning', 'ko');
+                return;
+            }
+        });
+
+        this.el = el;
+        this.props = props;
     }
-  
+
     getElement() {
-      return this.el;
+        return this.el;
     }
-  }
-  
-  
+}
+
+export function createDropZoneWithPermission({
+                                                 fromGridApi,
+                                                 toGridApi,
+                                                 direction,
+                                                 moveRows,
+                                                 canDrag = () => window.canEdit // 기본값으로 공통 권한 사용
+                                             }) {
+    return toGridApi.getRowDropZoneParams({
+        onDragStop: event => {
+            if (!canDrag()) {
+                showToast('드래그 권한이 없습니다.', 'warning', 'ko');
+                return;
+            }
+
+            const dragged = event.node.data;
+            const selected = fromGridApi.getSelectedRows();
+            const isMulti = selected.length > 1 && selected.some(r => r.groupcode === dragged.groupcode);
+            const rows = isMulti ? selected : [dragged];
+
+            moveRows(rows, direction);
+        }
+    });
+}
+
+class RowNumRenderer {
+    constructor(props) {
+        const el = document.createElement('span');
+        this.el = el;
+
+        const { grid, rowKey } = props;
+        const row = grid.getRow(rowKey);
+        const allRows = grid.getData();
+        const rowIndex = allRows.findIndex(r => r.rowKey === rowKey);
+
+        if (row?.tpCd === '' && row?.tpNm === '') {
+            el.innerText = 'New';
+            el.style.color = "#ee3333";
+        } else {
+            el.innerText = String(rowIndex + 1); // ✅ 항상 1부터 시작
+        }
+    }
+
+    getElement() {
+        return this.el;
+    }
+}
+
+
 
 
 export {
@@ -320,6 +418,8 @@ export {
     createSaveButton,
     createSearchButton,
     createResetSearchButton,
+    createRefreshButton,
+    createCustomButton,
     createTanslations,
     createBadgeRenderer,
     createSaveRenderer,

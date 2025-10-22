@@ -1,13 +1,13 @@
-import { 
-    createAddButton, 
-    createDelButton, 
-    createSaveButton, 
-    createSearchButton,
-    createResetSearchButton,
-    createTanslations, 
-    createBadgeRenderer } from './common.js';
+import {
+    createBadgeRenderer,
+    createTanslations
+} from './common.js';
+
+import { initPageUI } from './accessControl.js';
 
 const translations = createTanslations;
+const BadgeRenderer = createBadgeRenderer;
+let currentRowKey = null;
 
 const workarea = document.getElementById("workarea");
 workarea.classList.add('grid', 'grid-cols-1', 'lg:grid-cols-4', 'gap-4', 'py-1', 'mt-4');
@@ -15,62 +15,21 @@ workarea.classList.add('grid', 'grid-cols-1', 'lg:grid-cols-4', 'gap-4', 'py-1',
 let rowsPerPage = 15;
 let gridBodyHeight = 430;
 
-const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-//const currentDate = new Date().toLocaleDateString('ko-KR', options).replace(/[\.]/g, '-').replace(/[\s]/g, '').substring(0, 10);
-
-fetch('/api/members')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        loadData(data);
-        localStorage.setItem('membersData', JSON.stringify(data));
-    })
-    .catch(error => {
-
-        showToast('loading-error', 'error', lang);
-
-        const storedData = localStorage.getItem('membersData');
-        if (storedData) {
-            loadData(JSON.parse(storedData));
-        } else {
-            //console.log('No data available in local storage');
-        }
-    });
-
-
-// Function to load paginated data
-function loadPageData(page, perPage) {
-    const allData = loadData();
-    const start = (page - 1) * perPage;
-    const end = start + perPage;
-    return allData.slice(start, end);
-}
-
-// Function to update the total count display
-function updateDataCount() {
-    const allData = loadData();
-    const dataCountElement = document.getElementById('dataCount');
-    dataCountElement.textContent = `Total : ${allData.length}`;
-}
-
-// Function to load data from localStorage
 function loadData() {
     const data = localStorage.getItem('membersData');
     return data ? JSON.parse(data) : [];
 }
 
-// Function to save data to localStorage
 function saveData(data) {
     const filteredData = data.filter(row => row.team && row.name);
     localStorage.setItem('membersData', JSON.stringify(filteredData));
 }
 
-const BadgeRenderer = createBadgeRenderer;
-
+function updateDataCount() {
+    const allData = loadData();
+    const dataCountElement = document.getElementById('dataCount');
+    dataCountElement.textContent = `Total : ${allData.length}`;
+}
 
 const grid = new tui.Grid({
     el: document.getElementById('grid'),
@@ -79,206 +38,171 @@ const grid = new tui.Grid({
     scrollX: true,
     scrollY: true,
     bodyHeight: gridBodyHeight,
-    pageOptions: {
-        useClient: true,
-        perPage: rowsPerPage
-    },
+    pageOptions: { useClient: true, perPage: rowsPerPage },
     rowHeight: 42,
     minRowHeight: 42,
-
     columns: [
-        { header: 'Key', name: 'id', align: 'left', sortable: true, resizable: true, width: 250, minWidth: 80 },
+        { header: 'Key', name: 'id', align: 'left', sortable: true, resizable: true, width: 250 },
         { header: 'Team', name: 'team', editor: 'text', validation: { required: true }, sortable: true, filter: 'text', resizable: true, width: 150 },
         { header: 'Name', name: 'name', editor: 'text', sortable: true, filter: 'text', resizable: true, width: 200 },
         { header: 'Email', name: 'email', editor: 'text', sortable: true, filter: 'text', resizable: true },
         { header: 'Address', name: 'address', editor: 'text', sortable: true, filter: 'text', resizable: true },
-
         { header: '입사년도', name: 'joinYear', width: 150, align: 'center', sortable: true },
         {
             header: 'View',
             name: 'view',
             align: 'center',
             text: 'V',
-            renderer: {
-                type: BadgeRenderer
-            },
+            renderer: { type: BadgeRenderer },
             width: 60,
             resizable: false
         }
     ],
-    data: loadPageData(1, rowsPerPage),
-    columnOptions: {
-        frozenCount: 2,
-        frozenBorderWidth: 2
-    },
+    data: loadData(),
+    columnOptions: { frozenCount: 2, frozenBorderWidth: 2 },
     draggable: true
 });
 
-
 updateDataCount();
 
-const deleteButton = createDelButton();
-deleteButton.addEventListener('click', function () {
-    const chkArray = grid.getCheckedRowKeys();
-    if (chkArray.length > 0) {
-        grid.removeCheckedRows();
-        saveData(grid.getData());
-        showToast('select-delete', 'success', lang);
-        updateDataCount();
-    } else {
-        showToast('delete-not', 'warning', lang);
-    }
-});
-
-const saveButton = createSaveButton();
-saveButton.addEventListener('click', function () {
-
-    const data = grid.getData();
-    // Filter out rows without a Key value
-    const validData = data.filter(row => row.Key && row.Key.trim() !== '');
-
-    // Save only rows with valid Key values
-    saveData(validData);
-    updateDataCount();
-
-    //console.log(" validData : " + JSON.stringify(validData));
-
-    // Send the data to the backend API
-    fetch('https://your-backend-api.com/save', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(validData)
-    })
-        .then(response => response.json())
+fetch('/api/members')
+        .then(res => res.json())
         .then(data => {
-            //console.log('Success:', data);
-            showToast('well-done', 'success', lang);
+            grid.resetData(data);
+            localStorage.setItem('membersData', JSON.stringify(data));
+            updateDataCount();
         })
-        .catch((error) => {
-            //console.error('Error:', error);
-            showToast('save-error', 'warning', lang);
-
+        .catch(error => {
+            showToast('loading-error', 'error', 'ko');
+            const storedData = localStorage.getItem('membersData');
+            if (storedData) grid.resetData(JSON.parse(storedData));
         });
-});
 
-const addButton = createAddButton();
-addButton.addEventListener('click', function () {
-    const data = grid.getData();
-    const hasEmptyRow = data.some(row => row.team === '' || row.name === '');
-    if (hasEmptyRow) {
-        showToast('input-allowed', 'info', lang);
-        return;
+document.addEventListener('DOMContentLoaded', () => {
+    initPageUI("btnContainer", {
+        onSearch: () => {
+            const gridData = loadData();
+            const team = document.getElementById('team').value.toLowerCase();
+            const name = document.getElementById('name').value.toLowerCase();
+            const email = document.getElementById('email').value.toLowerCase();
+
+            const filtered = gridData.filter(row => {
+                const t = team ? row.team?.toLowerCase().includes(team) : true;
+                const n = name ? row.name?.toLowerCase().includes(name) : true;
+                const e = email ? row.email?.toLowerCase().includes(email) : true;
+                return t && n && e;
+            });
+
+            grid.resetData(filtered);
+            showToast('search-click', 'info', 'ko');
+        },
+
+        onAdd: () => {
+            const data = grid.getData();
+            const hasEmpty = data.some(row => row.team === '' || row.name === '');
+            if (hasEmpty) {
+                showToast('input-allowed', 'info', 'ko');
+                return;
+            }
+
+            const newRow = { id: generateNanoId(), team: '', name: '', email: '', address: '', joinYear: '' };
+            grid.prependRow(newRow, { focus: true });
+            saveData([...data, newRow]);
+            updateDataCount();
+        },
+
+        onDelete: () => {
+            const chk = grid.getCheckedRowKeys();
+            if (chk.length > 0) {
+                grid.removeCheckedRows();
+                saveData(grid.getData());
+                updateDataCount();
+                showToast('select-delete', 'success', 'ko');
+            } else {
+                showToast('delete-not', 'warning', 'ko');
+            }
+        },
+
+        onSave: () => {
+            if (!window.canSave) {
+                showToast('저장 권한이 없습니다.', 'warning', 'ko');
+                return;
+            }
+
+            const data = grid.getData();
+            const validData = data.filter(row => row.id && row.id.trim() !== '');
+            saveData(validData);
+            updateDataCount();
+
+            fetch('https://your-backend-api.com/save', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(validData)
+            })
+                    .then(res => res.json())
+                    .then(() => showToast('well-done', 'success', 'ko'))
+                    .catch(() => showToast('save-error', 'warning', 'ko'));
+        },
+
+        onClose: () => window.close(),
+
+        gridInstance: grid,
+        gridOptions: {
+            editableCols: ['team', 'name', 'email', 'address']
+        },
+        buttonOrder: ['search', 'add', 'delete', 'save', 'resetSearch']
+    });
+
+    // 수정 권한 없으면 컬럼 editor 제거
+    if (!window.canEdit) {
+        const newCols = grid.getColumns().map(col => {
+            if (col.editor) return { ...col, editor: null };
+            return col;
+        });
+        grid.setColumns(newCols);
     }
-
-    const newRow = { id: generateNanoId(), team: '', name: '', email: '', address: '', joinYear: '' };
-    grid.prependRow(newRow, { focus: true });
-
-    saveData([...data, newRow]);
-    updateDataCount();
 });
 
-const searchButton = createSearchButton();
-btnContainer.appendChild(searchButton);
-
-btnContainer.appendChild(addButton);
-btnContainer.appendChild(deleteButton);
-btnContainer.appendChild(saveButton);
-
-const resetSearchButton = createResetSearchButton();
-resetSearchButton.classList.add("ml-2")
-btnContainer.appendChild(resetSearchButton);
-
-
+// 그리드 클릭 처리
 grid.on('click', (ev) => {
     const { columnName, rowKey } = ev;
 
-    //console.log("rowKey : " + rowKey);
-
     if (columnName === 'view') {
-        const row = grid.getRow(rowKey); // Get the row data
-        toggleModal(true, row, rowKey); // Pass the row data and row key to the modal
+        if (!window.canView) {
+            showToast('조회 권한이 없습니다.', 'warning', 'ko');
+            return;
+        }
+        const row = grid.getRow(rowKey);
+        if (row) toggleModal(true, row, rowKey);
     }
 
-    if (ev.columnName === 'id') {
-        showToast('auto-key', 'info', lang);
+    if (columnName === 'id') {
+        showToast('auto-key', 'info', 'ko');
     }
 });
 
 grid.on('editingStart', (ev) => {
-    showToast('data-possible', 'info', lang);
+    showToast('data-possible', 'info', 'ko');
 });
 
 grid.on('editingFinish', (ev) => {
     saveData(grid.getData());
-    showToast('well-done', 'info', lang);
+    showToast('well-done', 'info', 'ko');
 });
-
-
-// Initialize a new row
-function initNew() {
-    const rowData = { id: generateNanoId(), team: '', name: '', email: '', address: '', joinYear: '' };
-    grid.prependRow(rowData, { focus: true });
-
-    updateDataCount();
-}
-
-initNew();
-
-new Pikaday({
-    field: document.getElementById('datePicker'),
-    format: 'YYYY-MM-DD',
-    toString(date, format) {
-        const day = date.getDate();
-        const month = date.getMonth() + 1;
-        const year = date.getFullYear();
-        return `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`;
-    }
-});
-
-document.getElementById('saveModal').addEventListener('click', () => {
-    const modalForm = document.getElementById('modalForm');
-    const formData = new FormData(modalForm);
-    const updatedData = {};
-
-    // Collect updated values from the form
-    for (const [key, value] of formData.entries()) {
-        updatedData[key] = value;
-    }
-
-    if (currentRowKey !== null) {
-        grid.setValue(currentRowKey, 'team', updatedData.team);
-        grid.setValue(currentRowKey, 'name', updatedData.name);
-        grid.setValue(currentRowKey, 'email', updatedData.email);
-        grid.setValue(currentRowKey, 'address', updatedData.address);
-        grid.setValue(currentRowKey, 'joinYear', updatedData.joinYear);
-    }
-
-    // Hide the modal and show a success toast
-    toggleModal(false);
-    saveData(grid.getData());
-    showToast('well-done', 'success', lang);
-});
-
-let currentRowKey = null; // To track the current row being edited
 
 function toggleModal(show, rowData = {}, rowKey = null) {
     const modal = document.getElementById('modal');
     const modalForm = document.getElementById('modalForm');
-    currentRowKey = rowKey; // Store the row key
+    currentRowKey = rowKey;
 
     if (show) {
-        // Clear the form
         modalForm.innerHTML = '';
-
-        // Populate the form with row data
         for (const [key, value] of Object.entries(rowData)) {
             const formGroup = document.createElement('div');
             formGroup.className = 'flex flex-col';
 
             const label = document.createElement('label');
-            label.className = 'text-sm  text-gray-700';
+            label.className = 'text-sm text-gray-700';
             label.textContent = key;
 
             const input = document.createElement('input');
@@ -292,72 +216,30 @@ function toggleModal(show, rowData = {}, rowKey = null) {
             modalForm.appendChild(formGroup);
         }
 
-        modal.classList.remove('hidden'); // Show modal
+        modal.classList.remove('hidden');
     } else {
-        modal.classList.add('hidden'); // Hide modal
+        modal.classList.add('hidden');
     }
 }
 
+document.getElementById('saveModal').addEventListener('click', () => {
+    const modalForm = document.getElementById('modalForm');
+    const formData = new FormData(modalForm);
+    const updatedData = {};
 
-searchButton.addEventListener('click', function () {
+    for (const [key, value] of formData.entries()) {
+        updatedData[key] = value;
+    }
 
-    const gridData = loadData();
+    if (currentRowKey !== null) {
+        grid.setValue(currentRowKey, 'team', updatedData.team);
+        grid.setValue(currentRowKey, 'name', updatedData.name);
+        grid.setValue(currentRowKey, 'email', updatedData.email);
+        grid.setValue(currentRowKey, 'address', updatedData.address);
+        grid.setValue(currentRowKey, 'joinYear', updatedData.joinYear);
+    }
 
-    const selectedDate = document.getElementById('datePicker').value;
-    const team = document.getElementById('team').value.toLowerCase();
-    const name = document.getElementById('name').value.toLowerCase();
-    const email = document.getElementById('email').value.toLowerCase();
-
-    const filteredData = gridData.filter(row => {
-        //const matchesDate = selectedDate ? row.createdAt === selectedDate : true;
-        const matchesTeam = team ? row.team.toLowerCase().includes(team) : true;
-        const matchesName = name ? row.name.toLowerCase().includes(name) : true;
-        const matchesEmail = email ? row.email.toLowerCase().includes(email) : true;
-        return matchesTeam && matchesName && matchesEmail;
-    });
-
-    grid.resetData(filteredData);
-
-    saveButton.disabled = true;
-    saveButton.classList.add('bg-gray-400', 'cursor-not-allowed');
-    saveButton.classList.remove('bg-gray-700', 'hover:bg-gray-600');
-
-    addButton.disabled = true;
-    addButton.classList.add('bg-gray-400', 'cursor-not-allowed');
-    addButton.classList.remove('bg-gray-700', 'hover:bg-gray-600');
-
-    showToast('search-click', 'info', lang);
-
+    toggleModal(false);
+    saveData(grid.getData());
+    showToast('well-done', 'success', 'ko');
 });
-
-resetSearchButton.addEventListener('click', function () {
-
-    const gridData = loadData();
-
-    // Reset search fields
-    document.getElementById('team').value = '';
-    document.getElementById('name').value = '';
-    document.getElementById('email').value = '';
-    document.getElementById('datePicker').value = '';
-
-    // Reset grid data
-    grid.resetData(gridData);
-
-    saveButton.disabled = false;
-    saveButton.classList.remove('bg-gray-400', 'cursor-not-allowed');
-    saveButton.classList.add('bg-gray-700', 'hover:bg-gray-600');
-
-    addButton.disabled = false;
-    addButton.classList.remove('bg-gray-400', 'cursor-not-allowed');
-    addButton.classList.add('bg-gray-700', 'hover:bg-gray-600');
-
-    showToast('new-save', 'info', lang);
-});
-
-const rows = document.querySelectorAll('.tui-grid-rside-area .tui-grid-body-tbody tr');
-if (rows.length > 0) {
-    const lastRow = rows[rows.length - 1];
-    lastRow.style.backgroundColor = '#fff'; // 마지막 행의 배경색
-    lastRow.style.borderBottom = '1px solid #8f8f8f'; // 마지막 행의 테두리 색
-}
-

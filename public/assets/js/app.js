@@ -10,7 +10,7 @@ import {
     createSaveRenderer
 } from './common.js';
 
-
+import { initPageUI } from './accessControl.js';
 
 const BadgeRenderer = createBadgeRenderer;
 const rowNumRenderer = RowNumRenderer;
@@ -22,20 +22,20 @@ const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
 const currentDate = new Date().toLocaleDateString('ko-KR', options).replace(/[\.]/g, '-').replace(/[\s]/g, '').substring(0, 10);
 
 fetch('/api/data')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        loadData(data);
-        localStorage.setItem('gridData', JSON.stringify(data));
-    })
-    .catch(error => {
-        console.error('Fetch error:', error);
-        showToast('loading-error', 'error', lang);
-    });
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            loadData(data);
+            localStorage.setItem('gridData', JSON.stringify(data));
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+            showToast('loading-error', 'error', lang);
+        });
 
 
 function loadPageData(page, perPage) {
@@ -80,7 +80,7 @@ const grid = new tui.Grid({
     rowHeight: 42,
     minRowHeight: 42,
     columns: [
-        { header: 'Key', name: 'Key', width: 250, align: 'left', sortable: true, resizable: true, width: 100, minWidth: 80 },
+        { header: 'Key', name: 'Key', align: 'left', sortable: true, resizable: true, width: 100, minWidth: 80 },
         { header: 'Group', name: 'tpCd', editor: 'text', validation: { required: true }, sortable: true, filter: 'text', resizable: true, width: 150 },
         { header: 'Name', name: 'tpNm', editor: 'text', sortable: true, filter: 'text', resizable: true, width: 200 },
         { header: 'Desc.', name: 'descCntn', editor: 'text', sortable: true, filter: 'text', resizable: true, },
@@ -147,18 +147,18 @@ deleteButton.addEventListener('click', function () {
             },
             body: JSON.stringify({ rowKeys: chkArray })
         })
-            .then(response => response.json())
-            .then(result => {
-                showToast('select-delete', 'success', lang);
-                updateDataCount();
+                .then(response => response.json())
+                .then(result => {
+                    showToast('select-delete', 'success', lang);
+                    updateDataCount();
 
-                grid.removeCheckedRows();
+                    grid.removeCheckedRows();
 
-            })
-            .catch(error => {
-                console.error("Delete error:", error);
-                showToast('delete-failed', 'warning', lang);
-            });
+                })
+                .catch(error => {
+                    console.error("Delete error:", error);
+                    showToast('delete-failed', 'warning', lang);
+                });
 
 
     } else {
@@ -192,42 +192,36 @@ let savePermission = true; // 전역 변수로 선언
 let viewPermission = true; // 전역 변수로 선언
 
 grid.on('click', (ev) => {
-    const { columnName, rowKey } = ev;
+    const { columnName, nativeEvent, rowKey } = ev;
+    const target = nativeEvent.target;
 
-    if (columnName === 'save') {
-        if (!savePermission) {
-            showToast('권한이 없습니다.', 'warning', lang);
-            return;
+    if (target.classList.contains('grid-renderer-button')) {
+        if (columnName === 'save') {
+            const row = grid.getRow(rowKey);
+            console.log("rowKey: " + rowKey);
+
+            try {
+                const response = fetch('/api/save', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(row)
+                });
+
+                if (!response.ok) throw new Error('Save failed');
+
+                const result = response.json();
+
+            } catch (err) {
+                console.error('Save failed:', err);
+                showToast('save-failed', 'error', lang);
+            }
+
+            showToast('well-done', 'success', lang);
         }
-
-        const row = grid.getRow(rowKey);
-        console.log("rowKey: " + rowKey);
-
-        try {
-            const response = fetch('/api/save', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(row)
-            });
-
-            if (!response.ok) throw new Error('Save failed');
-
-            const result = response.json();
-
-        } catch (err) {
-            console.error('Save failed:', err);
-            showToast('save-failed', 'error', lang);
+        if (columnName === 'view') {
+            const row = grid.getRow(rowKey);
+            toggleModal(true, row, rowKey);
         }
-
-        showToast('well-done', 'success', lang);
-    }
-    if (columnName === 'view') {
-        if (!viewPermission) {
-            showToast('권한이 없습니다.', 'warning', lang);
-            return;
-        }
-        const row = grid.getRow(rowKey);
-        toggleModal(true, row, rowKey);
     }
 
     if (ev.columnName === 'Key') {
@@ -411,18 +405,18 @@ function applyButtonPermissions(permissions) {
 
 function fetchPermissionsByMenuPath(memberId, menuPath, callback) {
     fetch('/api/permissions?memberId=' + memberId + '&menuPath=' + encodeURIComponent(menuPath.replace("\/", "")))
-        .then(function (res) {
-            if (!res.ok) {
-                throw new Error('권한 조회 실패');
-            }
-            return res.json();
-        })
-        .then(function (permissions) {
-            callback(null, permissions);
-        })
-        .catch(function (err) {
-            callback(err, null);
-        });
+            .then(function (res) {
+                if (!res.ok) {
+                    throw new Error('권한 조회 실패');
+                }
+                return res.json();
+            })
+            .then(function (permissions) {
+                callback(null, permissions);
+            })
+            .catch(function (err) {
+                callback(err, null);
+            });
 }
 
 
@@ -433,14 +427,48 @@ document.addEventListener('DOMContentLoaded', function () {
     var memberId = localStorage.getItem('memberId'); // 예: 로그인 후 저장된 사용자 ID
     var menuPath = location.pathname;
 
-    fetchPermissionsByMenuPath(memberId, menuPath, function (err, permissions) {
-        if (err) {
-            console.error('권한 정보 로딩 실패:', err);
-            showToast('권한 정보 로딩 실패', 'error', 'ko');
-            return;
-        }
+    // fetchPermissionsByMenuPath(memberId, menuPath, function (err, permissions) {
+    //     if (err) {
+    //         console.error('권한 정보 로딩 실패:', err);
+    //         showToast('권한 정보 로딩 실패', 'error', 'ko');
+    //         return;
+    //     }
+    //
+    //     applyButtonPermissions(permissions);
+    // });
 
-        applyButtonPermissions(permissions);
+    initPageUI("btnContainer", {
+        onSearch: () => document.getElementById('searchForm').dispatchEvent(new Event('submit')),
+        onAdd: () => initNew(),
+        onDelete: () => {
+            const chkArray = grid.getCheckedRowKeys();
+            if (chkArray.length > 0) {
+                fetch('/api/delete', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ rowKeys: chkArray })
+                })
+                        .then(res => res.json())
+                        .then(() => {
+                            grid.removeCheckedRows();
+                            updateDataCount();
+                            showToast('select-delete', 'success', 'ko');
+                        })
+                        .catch(err => {
+                            console.error("삭제 실패:", err);
+                            showToast('delete-failed', 'warning', 'ko');
+                        });
+            } else {
+                showToast('delete-not', 'warning', 'ko');
+            }
+        },
+        onSave: null,
+        onClose: () => window.close(),
+        gridInstance: grid,
+        gridOptions: {
+            editableCols: ['tpCd', 'tpNm', 'descCntn', 'useYn']
+        },
+        buttonOrder: ['search', 'add', 'delete', 'resetSearch'] // 원하는 순서대로 버튼 표시
     });
 });
 
