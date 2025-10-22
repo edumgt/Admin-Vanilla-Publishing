@@ -53,3 +53,5 @@
 ## EC2 실행
 ## tmux
 ## sudo npm run dev
+
+## local 실행 시 chrome 브라우저 시크릿 모드로 실행
