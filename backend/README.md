@@ -16,3 +16,6 @@ uvicorn backend.main:app --host 0.0.0.0 --port 3000 --reload
 - `/db/*`, `/api/*`, `/login`, `/protected`, 파일 업로드 라우트를 FastAPI로 이관
 - 정적 파일(`public`) 서빙 유지
 - OpenAPI 문서는 FastAPI 기본 `/docs` 사용
+
+- 그리드 화면용 `/db/inbound`, `/db/outbound`, `/api/member-permissions` 데이터는 시작 시 PostgreSQL에 최소 50건 mock 데이터로 자동 보정
+- 수동 보정 엔드포인트: `POST /api/grid/mock-seed`
