@@ -1,5 +1,6 @@
 import json
 import os
+import random
 from datetime import date, datetime, timedelta
 from typing import Any
 
@@ -54,6 +55,7 @@ async def startup() -> None:
             await conn.execute("CREATE EXTENSION IF NOT EXISTS pgcrypto")
         except asyncpg.PostgresError:
             pass
+    await init_grid_mock_data()
 
 
 @app.on_event("shutdown")
@@ -71,6 +73,161 @@ async def execute(query: str, *args: Any) -> str:
     async with app.state.pool.acquire() as conn:
         return await conn.execute(query, *args)
 
+
+
+
+async def init_grid_mock_data() -> dict[str, int]:
+    """Initialize grid demo tables and ensure 50 mock rows per dataset."""
+    async with app.state.pool.acquire() as conn:
+        await conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS inbound_data (
+                id VARCHAR(32) PRIMARY KEY,
+                date DATE NOT NULL,
+                title VARCHAR(255) NOT NULL,
+                quantity INTEGER NOT NULL,
+                isbn VARCHAR(32) NOT NULL
+            )
+            """
+        )
+        await conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS outbound_data (
+                id VARCHAR(32) PRIMARY KEY,
+                date DATE NOT NULL,
+                title VARCHAR(255) NOT NULL,
+                quantity INTEGER NOT NULL,
+                isbn VARCHAR(32) NOT NULL
+            )
+            """
+        )
+        await conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS member (
+                id VARCHAR(32) PRIMARY KEY,
+                name VARCHAR(100) NOT NULL,
+                email VARCHAR(200),
+                pwd VARCHAR(255)
+            )
+            """
+        )
+        await conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS menu_page (
+                id SERIAL PRIMARY KEY,
+                page_name VARCHAR(100) UNIQUE NOT NULL
+            )
+            """
+        )
+        await conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS member_menu_permission (
+                id SERIAL PRIMARY KEY,
+                member_id VARCHAR(32) NOT NULL REFERENCES member(id) ON DELETE CASCADE,
+                menu_page_id INTEGER NOT NULL REFERENCES menu_page(id) ON DELETE CASCADE,
+                can_search BOOLEAN NOT NULL DEFAULT FALSE,
+                can_add BOOLEAN NOT NULL DEFAULT FALSE,
+                can_delete BOOLEAN NOT NULL DEFAULT FALSE,
+                can_reset_search BOOLEAN NOT NULL DEFAULT FALSE,
+                can_save BOOLEAN NOT NULL DEFAULT FALSE,
+                can_view BOOLEAN NOT NULL DEFAULT FALSE,
+                UNIQUE (member_id, menu_page_id)
+            )
+            """
+        )
+
+        inbound_count = await conn.fetchval("SELECT COUNT(*) FROM inbound_data")
+        if inbound_count < 50:
+            await conn.execute("TRUNCATE inbound_data")
+            inbound_rows = [
+                (
+                    f"INB-{idx:03d}",
+                    date.today() - timedelta(days=idx),
+                    f"입고 품목 {idx}",
+                    random.randint(5, 200),
+                    f"97889{idx:07d}",
+                )
+                for idx in range(1, 51)
+            ]
+            await conn.executemany(
+                "INSERT INTO inbound_data (id, date, title, quantity, isbn) VALUES ($1, $2, $3, $4, $5)",
+                inbound_rows,
+            )
+
+        outbound_count = await conn.fetchval("SELECT COUNT(*) FROM outbound_data")
+        if outbound_count < 50:
+            await conn.execute("TRUNCATE outbound_data")
+            outbound_rows = [
+                (
+                    f"OUT-{idx:03d}",
+                    date.today() - timedelta(days=idx - 1),
+                    f"출고 품목 {idx}",
+                    random.randint(3, 180),
+                    f"97910{idx:07d}",
+                )
+                for idx in range(1, 51)
+            ]
+            await conn.executemany(
+                "INSERT INTO outbound_data (id, date, title, quantity, isbn) VALUES ($1, $2, $3, $4, $5)",
+                outbound_rows,
+            )
+
+        member_count = await conn.fetchval("SELECT COUNT(*) FROM member")
+        if member_count < 10:
+            await conn.execute("TRUNCATE member CASCADE")
+            member_rows = [
+                (f"mockuser{idx:02d}", f"모의사용자 {idx}", f"mockuser{idx:02d}@example.com", "1111")
+                for idx in range(1, 11)
+            ]
+            await conn.executemany(
+                "INSERT INTO member (id, name, email, pwd) VALUES ($1, $2, $3, $4)",
+                member_rows,
+            )
+
+        menu_names = [f"/mock-page-{idx:02d}" for idx in range(1, 6)]
+        for menu_name in menu_names:
+            await conn.execute(
+                "INSERT INTO menu_page (page_name) VALUES ($1) ON CONFLICT (page_name) DO NOTHING",
+                menu_name,
+            )
+
+        permission_count = await conn.fetchval("SELECT COUNT(*) FROM member_menu_permission")
+        if permission_count < 50:
+            await conn.execute("TRUNCATE member_menu_permission")
+            members = await conn.fetch("SELECT id FROM member ORDER BY id LIMIT 10")
+            menus = await conn.fetch("SELECT id FROM menu_page ORDER BY id LIMIT 5")
+
+            permission_rows = []
+            for member_idx, member_row in enumerate(members):
+                for menu_idx, menu_row in enumerate(menus):
+                    base = member_idx + menu_idx
+                    permission_rows.append(
+                        (
+                            member_row["id"],
+                            menu_row["id"],
+                            base % 2 == 0,
+                            base % 3 == 0,
+                            base % 4 == 0,
+                            base % 5 == 0,
+                            base % 2 == 1,
+                            True,
+                        )
+                    )
+
+            await conn.executemany(
+                """
+                INSERT INTO member_menu_permission
+                (member_id, menu_page_id, can_search, can_add, can_delete, can_reset_search, can_save, can_view)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+                """,
+                permission_rows,
+            )
+
+        return {
+            "inbound": int(await conn.fetchval("SELECT COUNT(*) FROM inbound_data")),
+            "outbound": int(await conn.fetchval("SELECT COUNT(*) FROM outbound_data")),
+            "permissions": int(await conn.fetchval("SELECT COUNT(*) FROM member_menu_permission")),
+        }
 
 async def authenticate_user(username: str, password: str) -> dict[str, Any] | None:
     """Authenticate user against PostgreSQL member table."""
@@ -294,10 +451,20 @@ async def listbox_site_user(payload: dict[str, Any]) -> dict[str, Any]:
 @app.get("/api/list")
 async def api_list() -> list[dict[str, Any]]:
     return [
-        {"url": "/api/member-permissions", "method": "GET", "description": "권한 목록"},
-        {"url": "/db/inbound", "method": "GET", "description": "Local 입고 목록"},
-        {"url": "/db/outbound", "method": "GET", "description": "출고 목록"},
+        {"url": "/api/member-permissions", "method": "GET", "description": "권한 목록 (50건 mock)"},
+        {"url": "/db/inbound", "method": "GET", "description": "입고 목록 (50건 mock)"},
+        {"url": "/db/outbound", "method": "GET", "description": "출고 목록 (50건 mock)"},
     ]
+
+
+@app.post("/api/grid/mock-seed")
+async def grid_mock_seed() -> dict[str, Any]:
+    counts = await init_grid_mock_data()
+    return {
+        "message": "Grid mock data synchronized",
+        "counts": counts,
+        "target": 50,
+    }
 
 
 @app.get("/api/calendar")
