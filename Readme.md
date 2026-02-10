@@ -128,3 +128,13 @@ npm start
 - 공통 응답 포맷(`success`, `message`, `data`) 유틸 통합
 - `public/assets/js` 파일을 화면 단위 모듈로 재정리
 - 테스트 기반 추가(Jest + supertest)로 API 안정성 강화
+
+
+## 8) FastAPI + PostgreSQL 백엔드(신규)
+
+- FE 연동용 Python 백엔드를 `backend_fastapi/` 경로에 추가했습니다.
+- 주요 파일
+  - `backend_fastapi/app/main.py`
+  - `backend_fastapi/app/database.py`
+  - `backend_fastapi/docker-compose.yml`
+- 자세한 실행 방법은 `backend_fastapi/README.md`를 참고하세요.
