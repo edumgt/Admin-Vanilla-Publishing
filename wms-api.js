@@ -4,19 +4,20 @@ const express = require('express');
 const router = express.Router();
 
 const db = mysql.createConnection({
-    // host: 'edumgtmariadb.cg0ugoglztrn.ap-northeast-2.rds.amazonaws.com',
-    host: '127.0.0.1',
-    user: 'root',
-    password: '123456',
-    database: 'bbs'
+    host: process.env.MYSQL_HOST || '127.0.0.1',
+    user: process.env.MYSQL_USER || 'root',
+    password: process.env.MYSQL_PASSWORD || '123456',
+    database: process.env.MYSQL_DATABASE || 'bbs',
+    port: Number.parseInt(process.env.MYSQL_PORT || '3306', 10)
 });
 
-db.connect(err => {
+db.connect((err) => {
     if (err) {
         console.error('Database connection failed:', err);
-    } else {
-        console.log('Connected to MySQL database');
+        return;
     }
+
+    console.log('Connected to MySQL database');
 });
 
 
