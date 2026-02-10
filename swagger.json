@@ -1,29 +1,3 @@
 {
-  "swagger": "2.0",
-  "info": {
-    "version": "1.0.0",
-    "title": "Express API Server",
-    "description": "An Express.js server for handling inbound and outbound data"
-  },
-  "host": "127.0.0.1:3000",
-  "basePath": [
-    "/"
-  ],
-  "schemes": [
-    "http"
-  ],
-  "paths": {},
-  "securityDefinitions": {
-    "Bearer": {
-      "type": "apiKey",
-      "name": "Authorization",
-      "in": "header",
-      "description": "Enter your bearer token in the format **Bearer &lt;token&gt;**"
-    }
-  },
-  "security": [
-    {
-      "Bearer": []
-    }
-  ]
+  "message": "Swagger spec moved to FastAPI OpenAPI at /openapi.json and /docs"
 }
