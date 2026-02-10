@@ -3,6 +3,34 @@ const express = require('express');
 
 const router = express.Router();
 
+const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+};
+
+const buildMockCalendarEvents = () => {
+    const now = new Date();
+
+    return [
+        { eventId: 'MOCK-CALENDAR-001', offsetDays: 0, time: '09:00', description: '프로젝트 킥오프 회의' },
+        { eventId: 'MOCK-CALENDAR-002', offsetDays: 1, time: '13:30', description: '백엔드 API 연동 점검' },
+        { eventId: 'MOCK-CALENDAR-003', offsetDays: 2, time: '16:00', description: '가상 일정 데모 리허설' }
+    ].map((item) => {
+        const targetDate = new Date(now);
+        targetDate.setDate(now.getDate() + item.offsetDays);
+
+        return {
+            eventId: item.eventId,
+            date: formatDate(targetDate),
+            time: item.time,
+            description: item.description
+        };
+    });
+};
+
 const db = mysql.createPool({
     host: process.env.MYSQL_HOST || '127.0.0.1',
     user: process.env.MYSQL_USER || 'root',
@@ -13,6 +41,9 @@ const db = mysql.createPool({
     connectionLimit: Number.parseInt(process.env.MYSQL_CONNECTION_LIMIT || '10', 10),
     queueLimit: 0
 });
+
+const dbPromise = db.promise();
+
 
 db.getConnection((err, connection) => {
     if (err) {
@@ -69,9 +100,52 @@ router.get('/calendar', (req, res) => {
             res.status(500).json({ error: err.message });
         } else {
             const jsonResult = results[0].json_result;
-            res.json(JSON.parse(jsonResult));
+            res.json(jsonResult ? JSON.parse(jsonResult) : {});
         }
     });
+});
+
+router.post('/calendar/mock-seed', async (req, res) => {
+    const mockEvents = buildMockCalendarEvents();
+    let insertedCount = 0;
+    let skippedCount = 0;
+
+    try {
+        for (const mockEvent of mockEvents) {
+            const [dateRows] = await dbPromise.query('SELECT date_id FROM dates WHERE date = ? LIMIT 1', [mockEvent.date]);
+
+            let dateId;
+            if (dateRows.length > 0) {
+                dateId = dateRows[0].date_id;
+            } else {
+                const [dateInsertResult] = await dbPromise.query('INSERT INTO dates (date) VALUES (?)', [mockEvent.date]);
+                dateId = dateInsertResult.insertId;
+            }
+
+            const [eventRows] = await dbPromise.query('SELECT event_id FROM events WHERE event_id = ? LIMIT 1', [mockEvent.eventId]);
+
+            if (eventRows.length > 0) {
+                skippedCount += 1;
+                continue;
+            }
+
+            await dbPromise.query(
+                'INSERT INTO events (date_id, time, description, event_id) VALUES (?, ?, ?, ?)',
+                [dateId, mockEvent.time, mockEvent.description, mockEvent.eventId]
+            );
+            insertedCount += 1;
+        }
+
+        res.status(200).json({
+            message: 'Mock calendar schedule upsert completed',
+            insertedCount,
+            skippedCount,
+            total: mockEvents.length
+        });
+    } catch (error) {
+        console.error('Error seeding mock calendar schedule:', error);
+        res.status(500).json({ error: 'Failed to seed mock calendar schedule' });
+    }
 });
 
 
@@ -106,17 +180,31 @@ router.post('/addDate', (req, res) => {
         return res.status(400).json({ error: 'Missing required field: date' });
     }
 
-    const query = `
-        INSERT INTO dates (date)
-        VALUES (?)
-    `;
+    const existingDateQuery = 'SELECT date_id FROM dates WHERE date = ? LIMIT 1';
 
-    db.query(query, [date], (err, results) => {
-        if (err) {
-            console.error('Error inserting date:', err);
-            return res.status(500).json({ error: 'Failed to add date' });
+    db.query(existingDateQuery, [date], (existingDateErr, existingDateRows) => {
+        if (existingDateErr) {
+            console.error('Error selecting date:', existingDateErr);
+            return res.status(500).json({ error: 'Failed to load date' });
         }
-        res.status(201).json({ message: 'Date added successfully', dateId: results.insertId });
+
+        if (existingDateRows.length > 0) {
+            return res.status(200).json({ message: 'Date already exists', dateId: existingDateRows[0].date_id });
+        }
+
+        const insertDateQuery = `
+            INSERT INTO dates (date)
+            VALUES (?)
+        `;
+
+        db.query(insertDateQuery, [date], (err, results) => {
+            if (err) {
+                console.error('Error inserting date:', err);
+                return res.status(500).json({ error: 'Failed to add date' });
+            }
+
+            res.status(201).json({ message: 'Date added successfully', dateId: results.insertId });
+        });
     });
 });
 
