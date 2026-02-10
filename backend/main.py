@@ -49,6 +49,11 @@ security = HTTPBearer()
 @app.on_event("startup")
 async def startup() -> None:
     app.state.pool = await asyncpg.create_pool(DATABASE_URL, min_size=1, max_size=10)
+    async with app.state.pool.acquire() as conn:
+        try:
+            await conn.execute("CREATE EXTENSION IF NOT EXISTS pgcrypto")
+        except asyncpg.PostgresError:
+            pass
 
 
 @app.on_event("shutdown")
@@ -65,6 +70,47 @@ async def fetch_all(query: str, *args: Any) -> list[dict[str, Any]]:
 async def execute(query: str, *args: Any) -> str:
     async with app.state.pool.acquire() as conn:
         return await conn.execute(query, *args)
+
+
+async def authenticate_user(username: str, password: str) -> dict[str, Any] | None:
+    """Authenticate user against PostgreSQL member table."""
+    async with app.state.pool.acquire() as conn:
+        try:
+            row = await conn.fetchrow(
+                """
+                SELECT id, name, email
+                FROM member
+                WHERE id = $1
+                  AND pwd = crypt($2, pwd)
+                LIMIT 1
+                """,
+                username,
+                password,
+            )
+            if row:
+                return dict(row)
+        except (asyncpg.UndefinedFunctionError, asyncpg.UndefinedTableError):
+            # pgcrypto 미설치 or member 테이블 미생성 환경 fallback
+            pass
+
+        try:
+            row = await conn.fetchrow(
+                """
+                SELECT id, name, email
+                FROM member
+                WHERE id = $1
+                  AND pwd = $2
+                LIMIT 1
+                """,
+                username,
+                password,
+            )
+            if row:
+                return dict(row)
+        except asyncpg.UndefinedTableError:
+            pass
+
+    return None
 
 
 class SQLQuery(BaseModel):
@@ -583,9 +629,21 @@ async def member_permissions() -> list[dict[str, Any]]:
 
 @app.post("/login")
 async def login(payload: LoginPayload) -> dict[str, str]:
-    if payload.username == "admin" and payload.password == "1111":
-        token = jwt.encode({"username": payload.username, "exp": datetime.utcnow().timestamp() + 3600}, SECRET_KEY, algorithm=ALGORITHM)
+    user = await authenticate_user(payload.username, payload.password)
+
+    if not user and payload.username == "admin" and payload.password == "1111":
+        user = {"id": "admin", "name": "Administrator", "email": None}
+
+    if user:
+        token_payload = {
+            "username": payload.username,
+            "memberId": user["id"],
+            "name": user.get("name"),
+            "exp": datetime.utcnow() + timedelta(hours=1),
+        }
+        token = jwt.encode(token_payload, SECRET_KEY, algorithm=ALGORITHM)
         return {"token": token}
+
     raise HTTPException(status_code=401, detail="Invalid credentials")
 
 
