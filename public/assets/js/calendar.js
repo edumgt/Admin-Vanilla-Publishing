@@ -348,8 +348,22 @@ const calendar = (() => {
         document.body.appendChild(modal);
     };
 
+    const seedMockTasks = async () => {
+        try {
+            await fetch('/api/calendar/mock-seed', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        } catch (error) {
+            console.error('Error seeding mock tasks:', error);
+        }
+    };
+
     const fetchTasks = async () => {
         try {
+            await seedMockTasks();
             const response = await fetch('/api/calendar');
             const data = await response.json();
             console.log(data); // 서버에서 받아온 데이터 구조 확인
