@@ -1,49 +1,73 @@
-function createSearchButton() {
-    const searchButton = document.createElement('button');
-    searchButton.className = "items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2 mr-2";
-    searchButton.innerHTML = `<i class="fas fa-search"></i><span>검색</span>`;
+const COMMON_BUTTON_BASE_CLASS = "items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2";
 
-    return searchButton;
+function createIconButton({
+    iconClass,
+    label,
+    action,
+    marginRight = true,
+    className = COMMON_BUTTON_BASE_CLASS,
+}) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = marginRight ? `${className} mr-2` : className;
+    button.innerHTML = `<i class="${iconClass}"></i><span>${label}</span>`;
+
+    if (action) {
+        button.dataset.action = action;
+    }
+
+    return button;
+}
+
+function createSearchButton() {
+    return createIconButton({
+        iconClass: 'fas fa-search',
+        label: '검색',
+        action: 'search',
+    });
 }
 
 function createAddButton() {
-    const addButton = document.createElement('button');
-    addButton.className = "items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2 mr-2";
-    addButton.innerHTML = `<i class="fas fa-plus"></i><span>신규</span>`;
-
-    return addButton;
+    return createIconButton({
+        iconClass: 'fas fa-plus',
+        label: '신규',
+        action: 'add',
+    });
 }
 
 function createDelButton() {
-    const deleteButton = document.createElement('button');
-    deleteButton.className = "items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2 mr-2";
-    deleteButton.innerHTML = `<i class="fas fa-trash"></i><span>삭제</span>`;
-
-    return deleteButton;
+    return createIconButton({
+        iconClass: 'fas fa-trash',
+        label: '삭제',
+        action: 'delete',
+    });
 }
 
 function createCloseButton() {
-    const closeButton = document.createElement('button');
-    closeButton.className = "items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2";
-    closeButton.innerHTML = `<i class="fas fa-times"></i><span>닫기</span>`;
-
-    return closeButton;
+    return createIconButton({
+        iconClass: 'fas fa-times',
+        label: '닫기',
+        action: 'close',
+        marginRight: false,
+    });
 }
 
 function createSaveButton() {
-    const saveButton = document.createElement('button');
-    saveButton.className = "items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2";
-    saveButton.innerHTML = `<i class="fas fa-save"></i><span>저장</span>`;
-
-    return saveButton;
+    return createIconButton({
+        iconClass: 'fas fa-save',
+        label: '저장',
+        action: 'save',
+        marginRight: false,
+    });
 }
 
 function createResetSearchButton() {
-    const resetSearchButton = document.createElement('button');
-    resetSearchButton.className = "items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2";
-    resetSearchButton.innerHTML = `<i class="fas fa-undo"></i><span>검색 초기화</span>`;
-
-    return resetSearchButton;
+    return createIconButton({
+        iconClass: 'fas fa-undo',
+        label: '검색 초기화',
+        action: 'reset-search',
+        marginRight: false,
+    });
 }
 
 
@@ -211,6 +235,22 @@ const createTanslations = {
     },
 };
 
+function getTranslation(lang = 'ko') {
+    const normalizedLanguage = (lang || 'ko').toLowerCase();
+
+    return createTanslations[normalizedLanguage] || createTanslations.ko;
+}
+
+function setButtonDisabled(buttonElement, isDisabled = true) {
+    if (!buttonElement) {
+        return;
+    }
+
+    buttonElement.disabled = Boolean(isDisabled);
+    buttonElement.style.opacity = isDisabled ? '0.5' : '1';
+    buttonElement.style.cursor = isDisabled ? 'not-allowed' : 'pointer';
+}
+
 
 class createBadgeRenderer {
     constructor(props) {
@@ -323,5 +363,8 @@ export {
     createTanslations,
     createBadgeRenderer,
     createSaveRenderer,
-    RowNumRenderer
+    RowNumRenderer,
+    createIconButton,
+    getTranslation,
+    setButtonDisabled,
 };
