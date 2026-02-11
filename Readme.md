@@ -1,4 +1,60 @@
-# NewHomePage 리팩토링 가이드
+# Front-End Vanilla Script 예제 입니다.
+
+## Login 화면
+![alt text](./DOCS/image.png)
+
+## tui Grid 사용 화면
+![alt text](./DOCS/image-1.png)
+
+## 다국어 지원 화면
+![alt text](./DOCS/image-2.png)
+
+## 전체 메뉴 보기 화면
+![alt text](./DOCS/image-3.png)
+
+## 좌측 LNB 메뉴 클릭 화면
+![alt text](./DOCS/image-4.png)
+
+## 캘린더와 모달 팝업
+![alt text](./DOCS/image-5.png)
+
+## Canvas 기반의 Drag and Drop 조직도
+![alt text](./DOCS/image-6.png)
+
+## 통집계, 로그 보기
+![alt text](./DOCS/image-7.png)
+![alt text](./DOCS/image-8.png)
+
+## 종이박스 3D 도안 예시
+![alt text](image-9.png)
+
+## 컨설팅 메모 화면 예시
+![alt text](./DOCS/image-10.png)
+
+## 간트 차트 화면 예시
+![alt text](./DOCS/image-11.png)
+
+## 행정정보 기반 두 지역 간의 위치 예시
+![alt text](./DOCS/image-12.png)
+
+## 부서별 권한 관리
+![alt text](./DOCS/image-13.png)
+
+## Drag and Drop 기반 설문지 문항 조합
+![alt text](./DOCS/image-14.png)
+
+## 설문 결과 분포
+![alt text](./DOCS/image-15.png)
+
+## Web Editor and 2개의 Grid간 데이타 이동
+![alt text](./DOCS/image-16.png)
+
+## 사물함 관리
+![alt text](./DOCS/image-17.png)
+
+## 근태, 입출 이력
+![alt text](./DOCS/image-18.png)
+
 
 이 문서는 프로젝트를 **전체 구조 관점에서 정리(리팩토링)** 하고, 현재 사용 중인 **기술 스택**과 **운영 방식**을 한 번에 파악할 수 있도록 작성되었습니다.
 
