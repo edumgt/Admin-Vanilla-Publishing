@@ -1,3 +1,5 @@
+const API_BASE = window.APP_API_BASE || 'http://localhost:8000';
+
 document.addEventListener('DOMContentLoaded', () => {
     const currentDateTime = new Date();
 
@@ -141,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!reservations) {
             //reservations = await fetchData('assets/mock/reservations.json');
-            reservations = await fetchData('/api/reservations');
+            reservations = await fetchData(`${API_BASE}/api/reservations`);
             if (reservations) {
 
                 saveToStorage('reservations', reservations);

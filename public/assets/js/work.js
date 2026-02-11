@@ -4,6 +4,8 @@ import {
     createCloseButton
 } from './common.js';
 
+const API_BASE = window.APP_API_BASE || 'http://localhost:8000';
+
 const hotel = {
     floors: 10,
     roomsPerFloor: 20,
@@ -14,7 +16,7 @@ const hotel = {
 document.addEventListener('DOMContentLoaded', async () => {
     try {
         //const response = await fetch('assets/mock/hotel.json');
-        const response = await fetch('/api/bookings');
+        const response = await fetch(`${API_BASE}/api/bookings`);
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);

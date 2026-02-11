@@ -1,156 +1,111 @@
-# Front-End Vanilla Script 예제 입니다.
+# Admin Vanilla Publishing
 
-## Login 화면
-![alt text](./DOCS/image.png)
+정적 HTML/Vanilla JS 화면과 Python(FastAPI)+PostgreSQL 백엔드를 함께 사용하는 샘플 프로젝트입니다.
 
-## tui Grid 사용 화면
-![alt text](./DOCS/image-1.png)
-
-## 다국어 지원 화면
-![alt text](./DOCS/image-2.png)
-
-## 전체 메뉴 보기 화면
-![alt text](./DOCS/image-3.png)
-
-## 좌측 LNB 메뉴 클릭 화면
-![alt text](./DOCS/image-4.png)
-
-## 캘린더와 모달 팝업
-![alt text](./DOCS/image-5.png)
-
-## Canvas 기반의 Drag and Drop 조직도
-![alt text](./DOCS/image-6.png)
-
-## 통집계, 로그 보기
-![alt text](./DOCS/image-7.png)
-![alt text](./DOCS/image-8.png)
-
-## 종이박스 3D 도안 예시
-![alt text](image-9.png)
-
-## 컨설팅 메모 화면 예시
-![alt text](./DOCS/image-10.png)
-
-## 간트 차트 화면 예시
-![alt text](./DOCS/image-11.png)
-
-## 행정정보 기반 두 지역 간의 위치 예시
-![alt text](./DOCS/image-12.png)
-
-## 부서별 권한 관리
-![alt text](./DOCS/image-13.png)
-
-## Drag and Drop 기반 설문지 문항 조합
-![alt text](./DOCS/image-14.png)
-
-## 설문 결과 분포
-![alt text](./DOCS/image-15.png)
-
-## Web Editor and 2개의 Grid간 데이타 이동
-![alt text](./DOCS/image-16.png)
-
-## 사물함 관리
-![alt text](./DOCS/image-17.png)
-
-## 근태, 입출 이력
-![alt text](./DOCS/image-18.png)
-
-
-이 문서는 프로젝트를 **전체 구조 관점에서 정리(리팩토링)** 하고, 현재 사용 중인 **기술 스택**과 **운영 방식**을 한 번에 파악할 수 있도록 작성되었습니다.
-
-## 1) 프로젝트 개요
-
-- Express 기반 API 서버와 정적 HTML/JS UI를 함께 제공하는 하이브리드 구조입니다.
-- DB는 목적별로 MSSQL(`dbConfig.js`)과 MySQL(`wms-api.js`)을 분리해서 사용합니다.
-- 프런트엔드는 `public/` 정적 리소스 + `src/index.jsx` 진입 로직(Vite 빌드)으로 동작합니다.
-
----
-
-## 2) 리팩토링 요약
-
-### ✅ 적용된 정리 내용
-
-1. **초기 라우팅 로직 분리**
-   - `src/index.jsx`에 있던 로그인/즐겨찾기 경로 분기 로직을 `src/utils/routeResolver.js`로 분리했습니다.
-   - `favorite-1st`가 문자열/JSON 모두 가능하도록 안정성을 개선했습니다.
-
-2. **MSSQL 설정 구조 개선**
-   - `dbConfig.js`를 환경변수 중심으로 재구성했습니다.
-   - 숫자형 설정(pool 옵션)을 안전하게 파싱하도록 개선했습니다.
-
-3. **MySQL 설정 하드코딩 완화**
-   - `wms-api.js`에서 DB 연결 정보를 환경변수 우선으로 변경했습니다.
-   - 포트 설정을 명시하고, 연결 로그 흐름을 정리했습니다.
-
----
-
-## 3) 기술 스택 (관련 기술 정리)
+## 1. 기술 스택 분석
 
 ### Frontend
-- HTML5 / CSS3 / Vanilla JavaScript
-- React 18 (`src/index.jsx` 진입 처리)
-- Vite 6 (프런트 번들링)
-- UI/시각화 라이브러리
-  - Toast UI Calendar / Editor
-  - FullCalendar
+- **Vanilla JavaScript + HTML/CSS** 기반 멀티 페이지 구성 (`public/*.html`).
+- **Tailwind CSS(번들 파일)** 및 커스텀 CSS 사용.
+- 주요 UI 라이브러리(정적 번들 포함):
   - TUI Grid
-  - Chart.js
-  - ApexCharts
-  - Handsontable
-  - TinyMCE
+  - TUI Pagination
+  - FullCalendar (calendar3)
+  - AG Grid
 
 ### Backend
-- 인증: `jsonwebtoken` (JWT)
-- 파일 업로드: `multer`
-- API 문서: `swagger-jsdoc`, `swagger-ui-express`
+- **Python 3 + FastAPI** (`backend_fastapi/app/main.py`).
+- **SQLAlchemy 2.x ORM** (`backend_fastapi/app/models.py`, `database.py`).
+- **PostgreSQL** 연결 (`DATABASE_URL`, `psycopg2-binary`).
+- `uvicorn`으로 API 서버 실행.
+
+### Infra/실행
+- `docker compose`로 PostgreSQL 컨테이너 실행 (`backend_fastapi/docker-compose.yml`).
+- `run_backend.sh`로 백엔드 + 프론트 정적 서버 동시 실행.
 
 ---
 
-## 4) 디렉터리 구조 (핵심)
+## 2. Python만으로 실행되는 모듈 체크
 
-```text
-.
-├─ public/                  # 정적 페이지/리소스
-│  ├─ assets/               # 공통 JS/CSS/Mock/이미지
-│  ├─ calendar/             # 캘린더 샘플 페이지
-│  └─ *.html                # 주요 화면
+아래는 Node/Express 없이 **Python 실행만으로 동작 가능한 모듈**입니다.
 
-```
+1. **FastAPI 백엔드 모듈**
+   - 경로: `backend_fastapi/app/*`
+   - 실행: `uvicorn app.main:app --reload --host 0.0.0.0 --port 8000`
+
+2. **정적 프론트 서빙(파이썬 기본 모듈)**
+   - 경로: `public/*`
+   - 실행: `python3 -m http.server 5173 --directory public`
+
+3. **통합 실행 스크립트(파이썬 런타임 의존)**
+   - 파일: `run_backend.sh`
+   - 내부적으로 Python venv 구성, 의존성 설치, FastAPI 실행, `http.server` 실행.
 
 ---
 
-## 5) 실행 방법
+## 3. HTML 화면 기준 PostgreSQL 테이블/데이터 매핑
+
+이번 반영에서 아래 화면과 API를 직접 연결했습니다.
+
+### A) `public/work.html` (객실/예약 화면)
+- FE API: `GET /api/bookings`
+- DB 테이블: `hotel_bookings`
+  - `room_id`, `guest_name`, `check_in_date`, `check_out_date`, `arrival_time`, `departure_time`, `cost`
+- 서버 시작 시 샘플 데이터 자동 시드.
+
+### B) `public/consultation.html` (병원 예약 화면)
+- FE API: `GET /api/reservations`
+- DB 테이블: `medical_reservations`
+  - `name`, `department_id`, `date`, `time`
+- 서버 시작 시 샘플 데이터 자동 시드.
+
+> 기존 `todos` 테이블 및 `/api/todos` API는 그대로 유지됩니다.
 
 ---
-```
-export DATABASE_URL="postgresql://newhomepage:newhomepage@localhost:5432/newhomepage"
+
+## 4. FE-Backend 연동 개선 내용
+
+- `public/assets/js/work.js`
+  - 상대경로(`/api/bookings`) 대신 `API_BASE` 기반 호출로 변경.
+- `public/assets/js/hospital.js`
+  - 상대경로(`/api/reservations`) 대신 `API_BASE` 기반 호출로 변경.
+- 기본값: `http://localhost:8000`
+  - 필요 시 `window.APP_API_BASE`로 오버라이드 가능.
+
+이제 프론트를 `:5173`에서 띄워도 백엔드 `:8000`과 직접 통신할 수 있습니다.
+
+---
+
+## 5. 실행 방법
+
+### 5.1 빠른 실행
+```bash
 ./run_backend.sh
 ```
+- PostgreSQL 컨테이너 실행
+- FastAPI 실행 (`:8000`)
+- 정적 프론트 실행 (`:5173`)
 
-### 로컬 개발
+### 5.2 수동 실행
 ```bash
-npm install
-npm run dev
-```
----
-```
+# 1) DB 실행
+cd backend_fastapi
+docker compose up -d db
+
+# 2) 백엔드 실행
+cd ../backend_fastapi
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install -U pip
+pip install -r requirements.txt
+export DATABASE_URL='postgresql+psycopg2://newhomepage:newhomepage@localhost:5432/newhomepage'
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 
-# FastAPI/Starlette 기반이면 보통 아래 같이 설치
-python -m pip install fastapi uvicorn[standard]
-# (프로젝트에 requirements.txt가 있으면 그걸로)
-# python -m pip install -r requirements.txt
+# 3) 프론트 실행(별도 터미널)
+cd ..
+python3 -m http.server 5173 --directory public
 ```
 
----
-
-## 8) FastAPI + PostgreSQL 백엔드(신규)
-
-- FE 연동용 Python 백엔드를 `backend_fastapi/` 경로에 추가했습니다.
-- 주요 파일
-  - `backend_fastapi/app/main.py`
-  - `backend_fastapi/app/database.py`
-  - `backend_fastapi/docker-compose.yml`
-- 자세한 실행 방법은 `backend_fastapi/README.md`를 참고하세요.
+### 5.3 확인 URL
+- Health: `http://localhost:8000/health`
+- Work 화면: `http://localhost:5173/work.html`
+- Consultation 화면: `http://localhost:5173/consultation.html`
