@@ -138,6 +138,12 @@
 
 ## 5) 실행 방법
 
+---
+```
+export DATABASE_URL="postgresql://newhomepage:newhomepage@localhost:5432/newhomepage"
+./run_backend.sh
+```
+
 ### 로컬 개발
 ```bash
 npm install
