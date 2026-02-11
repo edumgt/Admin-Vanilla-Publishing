@@ -100,20 +100,9 @@
   - TinyMCE
 
 ### Backend
-- Node.js
-- Express 4
 - 인증: `jsonwebtoken` (JWT)
 - 파일 업로드: `multer`
 - API 문서: `swagger-jsdoc`, `swagger-ui-express`
-
-### Database
-- MSSQL (`mssql`)
-- MySQL/MariaDB (`mysql2`)
-
-### DevOps / Infra
-- Docker (`Dockerfile`, `Dockerfile_nginx`)
-- Nginx (`nginx.conf`)
-- DevContainer (`.devcontainer/devcontainer.json`)
 
 ---
 
@@ -125,13 +114,7 @@
 │  ├─ assets/               # 공통 JS/CSS/Mock/이미지
 │  ├─ calendar/             # 캘린더 샘플 페이지
 │  └─ *.html                # 주요 화면
-├─ src/
-│  ├─ index.jsx             # 진입점 (라우팅 리디렉션)
-│  └─ utils/routeResolver.js
-├─ server.js                # Express 메인 서버
-├─ wms-api.js               # MySQL 기반 API 라우터
-├─ dbConfig.js              # MSSQL 연결 설정
-└─ swagger.json             # Swagger 스키마
+
 ```
 
 ---
@@ -161,48 +144,7 @@ python -m pip install fastapi uvicorn[standard]
 # python -m pip install -r requirements.txt
 ```
 
-
-### 프런트 빌드
-```bash
-npm run build
-```
-
-### 서버 실행
-```bash
-npm start
-```
-
 ---
-
-## 6) 환경변수 권장 목록
-
-### MSSQL
-- `DB_USER`
-- `DB_PASSWORD`
-- `DB_HOST`
-- `DB_NAME`
-- `DB_ENCRYPT` (`true`/`false`)
-- `DB_TRUST_CERT` (`true`/`false`)
-- `DB_POOL_MAX`
-- `DB_POOL_MIN`
-- `DB_IDLE_TIMEOUT_MS`
-
-### MySQL
-- `MYSQL_HOST`
-- `MYSQL_PORT`
-- `MYSQL_USER`
-- `MYSQL_PASSWORD`
-- `MYSQL_DATABASE`
-
----
-
-## 7) 다음 리팩토링 제안
-
-- `server.js`의 DB 핸들러를 도메인별 라우터/서비스로 분리
-- 공통 응답 포맷(`success`, `message`, `data`) 유틸 통합
-- `public/assets/js` 파일을 화면 단위 모듈로 재정리
-- 테스트 기반 추가(Jest + supertest)로 API 안정성 강화
-
 
 ## 8) FastAPI + PostgreSQL 백엔드(신규)
 

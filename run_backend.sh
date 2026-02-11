@@ -78,7 +78,9 @@ echo "[INFO] Starting FastAPI backend on http://0.0.0.0:${BACKEND_PORT}"
 BACKEND_PID=$!
 
 echo "[INFO] Starting Frontend static server on http://0.0.0.0:${FRONTEND_PORT}"
-python3 -m http.server "${FRONTEND_PORT}" --directory "${ROOT_DIR}" &
+python3 -m http.server "${FRONTEND_PORT}" --directory "${ROOT_DIR}/public" &
+
+
 FRONTEND_PID=$!
 
 wait -n "${BACKEND_PID}" "${FRONTEND_PID}"

@@ -17,7 +17,7 @@ Node/Express 기반 백엔드 실행 경로는 제거하고 Python 실행 경로
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r backend/requirements.txt
-export DATABASE_URL='postgresql://postgres:postgres@localhost:5432/kegtest'
+export DATABASE_URL='postgresql://postgres:postgres@localhost:5432/newhomepage'
 uvicorn backend.main:app --host 0.0.0.0 --port 3000 --reload
 ```
 
