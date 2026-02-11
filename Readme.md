@@ -143,6 +143,18 @@
 npm install
 npm run dev
 ```
+---
+```
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -U pip
+
+# FastAPI/Starlette 기반이면 보통 아래 같이 설치
+python -m pip install fastapi uvicorn[standard]
+# (프로젝트에 requirements.txt가 있으면 그걸로)
+# python -m pip install -r requirements.txt
+```
+
 
 ### 프런트 빌드
 ```bash
