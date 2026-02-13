@@ -2,6 +2,27 @@
 
 정적 HTML/Vanilla JS 화면과 Python(FastAPI)+PostgreSQL 백엔드를 함께 사용하는 샘플 프로젝트입니다.
 
+## 주요 화면
+![](./DOCS/image-1.png)
+![](./DOCS/image-2.png)
+![](./DOCS/image-3.png)
+![](./DOCS/image-4.png)
+![](./DOCS/image-5.png)
+![](./DOCS/image-6.png)
+![](./DOCS/image-7.png)
+![](./DOCS/image-8.png)
+![](./DOCS/image-9.png)
+![](./DOCS/image-10.png)
+![](./DOCS/image-11.png)
+![](./DOCS/image-12.png)
+![](./DOCS/image-13.png)
+![](./DOCS/image-14.png)
+![](./DOCS/image-15.png)
+![](./DOCS/image-16.png)
+![](./DOCS/image-17.png)
+![](./DOCS/image-18.png)
+
+
 ## 1. 기술 스택 분석
 
 ### Frontend
