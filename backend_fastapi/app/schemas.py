@@ -39,3 +39,13 @@ class MedicalReservationRead(BaseModel):
     departmentId: int
     date: date
     time: time
+
+
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+
+
+class LoginResponse(BaseModel):
+    token: str
+    username: str

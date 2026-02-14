@@ -29,6 +29,7 @@ uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 - `POST /api/todos`
 - `GET /api/bookings` : `work.html` 객실 예약 데이터
 - `GET /api/reservations` : `consultation.html` 병원 예약 데이터
+- `POST /login` : `login.html` 로그인 요청(`admin/manager/guest`, 비밀번호 `1111`)
 
 ## 4) FE 연동 포인트
 
