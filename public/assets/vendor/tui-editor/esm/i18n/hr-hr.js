@@ -9,7 +9,7 @@ import Editor from '@toast-ui/editor';
 
 /**
  * @fileoverview I18N for Croatian
- * @author Hrvoje A. <hrvoj3e@gmail.com>
+ * @author Hrvoje A. <hrvoj3e@test.co.kr>
  */
 Editor.setLanguage(['hr', 'hr-HR'], {
     Markdown: 'Markdown',

@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", async function () {
            <div class="card-body pt-0">
                <form method="GET" onsubmit="return false">
                    ${generateFormField("Full Name", "fullName", "text", "Dollar Gill")}
-                   ${generateFormField("Email Address", "emailAddress", "text", "gilldollar@gmail.com")}
+                   ${generateFormField("Email Address", "emailAddress", "text", "gilldollar@test.co.kr")}
                    ${generateFormField("Login ID", "loginID", "text", "gilldollar")}
                    ${generateFormField("Phone Number", "phoneNumber", "text", "Enter Phone Number")}
                    <div class="mt-6">

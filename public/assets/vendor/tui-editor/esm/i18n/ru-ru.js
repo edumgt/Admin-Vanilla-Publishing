@@ -9,7 +9,7 @@ import Editor from '@toast-ui/editor';
 
 /**
  * @fileoverview I18N for Russian
- * @author Stepan Samko <stpnsamko@gmail.com>
+ * @author Stepan Samko <stpnsamko@test.co.kr>
  * @author Veaceslav Grimalschi <grimalschi@yandex.ru>
  */
 Editor.setLanguage(['ru', 'ru-RU'], {

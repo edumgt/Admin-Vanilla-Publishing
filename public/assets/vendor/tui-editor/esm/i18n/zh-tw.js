@@ -9,7 +9,7 @@ import Editor from '@toast-ui/editor';
 
 /**
  * @fileoverview I18N for Traditional Chinese
- * @author Tzu-Ray Su <raysu3329@gmail.com>
+ * @author Tzu-Ray Su <raysu3329@test.co.kr>
  */
 Editor.setLanguage('zh-TW', {
     Markdown: 'Markdown',

@@ -101,7 +101,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _editorCore__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_editorCore__WEBPACK_IMPORTED_MODULE_0__);
 /**
  * @fileoverview I18N for Russian
- * @author Stepan Samko <stpnsamko@gmail.com>
+ * @author Stepan Samko <stpnsamko@test.co.kr>
  * @author Veaceslav Grimalschi <grimalschi@yandex.ru>
  */
 

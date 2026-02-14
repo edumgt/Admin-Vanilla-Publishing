@@ -101,7 +101,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _editorCore__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_editorCore__WEBPACK_IMPORTED_MODULE_0__);
 /**
  * @fileoverview I18N for Croatian
- * @author Hrvoje A. <hrvoj3e@gmail.com>
+ * @author Hrvoje A. <hrvoj3e@test.co.kr>
  */
 
 _editorCore__WEBPACK_IMPORTED_MODULE_0___default().setLanguage(['hr', 'hr-HR'], {

@@ -9,7 +9,7 @@ import Editor from '@toast-ui/editor';
 
 /**
  * @fileoverview I18N for Português
- * @author Nícolas Huber <nicolasluishuber@gmail.com>
+ * @author Nícolas Huber <nicolasluishuber@test.co.kr>
  */
 Editor.setLanguage(['pt', 'pt-BR'], {
     Markdown: 'Markdown',

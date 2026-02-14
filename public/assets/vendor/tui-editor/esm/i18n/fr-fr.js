@@ -9,7 +9,7 @@ import Editor from '@toast-ui/editor';
 
 /**
  * @fileoverview I18N for French
- * @author Stanislas Michalak <stanislas.michalak@gmail.com>
+ * @author Stanislas Michalak <stanislas.michalak@test.co.kr>
  */
 Editor.setLanguage(['fr', 'fr-FR'], {
     Markdown: 'Markdown',

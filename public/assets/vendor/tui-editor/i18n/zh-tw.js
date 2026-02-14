@@ -101,7 +101,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _editorCore__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_editorCore__WEBPACK_IMPORTED_MODULE_0__);
 /**
  * @fileoverview I18N for Traditional Chinese
- * @author Tzu-Ray Su <raysu3329@gmail.com>
+ * @author Tzu-Ray Su <raysu3329@test.co.kr>
  */
 
 _editorCore__WEBPACK_IMPORTED_MODULE_0___default().setLanguage('zh-TW', {

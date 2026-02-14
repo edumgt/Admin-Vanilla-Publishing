@@ -101,7 +101,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _editorCore__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_editorCore__WEBPACK_IMPORTED_MODULE_0__);
 /**
  * @fileoverview I18N for French
- * @author Stanislas Michalak <stanislas.michalak@gmail.com>
+ * @author Stanislas Michalak <stanislas.michalak@test.co.kr>
  */
 
 _editorCore__WEBPACK_IMPORTED_MODULE_0___default().setLanguage(['fr', 'fr-FR'], {

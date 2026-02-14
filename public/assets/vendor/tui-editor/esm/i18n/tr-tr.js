@@ -9,7 +9,7 @@ import Editor from '@toast-ui/editor';
 
 /**
  * @fileoverview I18N for Turkish
- * @author Mesut Gölcük <mesutgolcuk@gmail.com>
+ * @author Mesut Gölcük <mesutgolcuk@test.co.kr>
  */
 Editor.setLanguage(['tr', 'tr-TR'], {
     Markdown: 'Markdown',

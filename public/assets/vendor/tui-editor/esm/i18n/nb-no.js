@@ -9,7 +9,7 @@ import Editor from '@toast-ui/editor';
 
 /**
  * @fileoverview I18N for Norwegian
- * @author Anton Reytarovskiy <reitarovskii.toh@gmail.com>
+ * @author Anton Reytarovskiy <reitarovskii.toh@test.co.kr>
  */
 Editor.setLanguage(['nb', 'nb-NO'], {
     Markdown: 'Funksjonaliteter',

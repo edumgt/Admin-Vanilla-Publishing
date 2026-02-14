@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 
 // DeepPartial implementation taken from the utility-types NPM package, which is
-// Copyright (c) 2016 Piotr Witek <piotrek.witek@gmail.com> (http://piotrwitek.github.io)
+// Copyright (c) 2016 Piotr Witek <piotrek.witek@test.co.kr> (http://piotrwitek.github.io)
 // and used under the terms of the MIT license
 export type DeepPartial<T> = T extends Function
   ? T

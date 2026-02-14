@@ -31979,7 +31979,7 @@
    *
    * https://github.com/imranghory/treemap-squared/
    *
-   * Copyright (c) 2012 Imran Ghory (imranghory@gmail.com)
+   * Copyright (c) 2012 Imran Ghory (imranghory@test.co.kr)
    * Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license.
    *
    *
