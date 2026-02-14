@@ -1,3 +1,5 @@
+const API_BASE = window.APP_API_BASE || 'http://localhost:8000';
+
 const tabs = document.querySelectorAll('button[id$="-tab"]');
 const forms = document.querySelectorAll('.tab-content');
 tabs.forEach(tab => {
@@ -38,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = Object.fromEntries(formData.entries());
 
         try {
-            const response = await fetch('/login', {
+            const response = await fetch(`${API_BASE}/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

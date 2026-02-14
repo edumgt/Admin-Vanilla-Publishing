@@ -1,13 +1,13 @@
 from collections import defaultdict
 from datetime import date, time
 
-from fastapi import Depends, FastAPI
+from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
 from .database import Base, engine, get_db
 from .models import HotelBooking, MedicalReservation, Todo
-from .schemas import MedicalReservationRead, TodoCreate, TodoRead
+from .schemas import LoginRequest, LoginResponse, MedicalReservationRead, TodoCreate, TodoRead
 
 app = FastAPI(title="NewHomePage FastAPI Backend", version="1.1.0")
 
@@ -92,6 +92,22 @@ def on_startup() -> None:
 @app.get("/health")
 def health_check() -> dict[str, str]:
     return {"status": "ok"}
+
+
+DEMO_USERS = {
+    "admin": "1111",
+    "manager": "1111",
+    "guest": "1111",
+}
+
+
+@app.post("/login", response_model=LoginResponse)
+def login(payload: LoginRequest) -> LoginResponse:
+    expected_password = DEMO_USERS.get(payload.username)
+    if expected_password is None or expected_password != payload.password:
+        raise HTTPException(status_code=401, detail="Invalid username or password")
+
+    return LoginResponse(token=f"demo-token-{payload.username}", username=payload.username)
 
 
 @app.get("/api/todos", response_model=list[TodoRead])
