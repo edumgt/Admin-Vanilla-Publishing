@@ -1,3 +1,45 @@
-/node_modules
-/dist
+# Node/Frontend
+node_modules/
+dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Python virtual environments
 .venv/
+venv/
+env/
+backend/.venv/
+backend_fastapi/.venv/
+
+# Python cache/build artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.python-version
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+build/
+*.egg-info/
+
+# Runtime/log files
+*.log
+*.pid
+
+# Local environment files
+.env
+.env.*
+!**/.env.example
+
+# IDE/OS artifacts
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
