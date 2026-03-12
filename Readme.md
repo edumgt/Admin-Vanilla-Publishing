@@ -181,3 +181,38 @@ docker run --rm --network host -v "$PWD":/work -w /work \
 ### `public/burumable.html`
 
 ![블루마블 3D 화면](./DOCS/burumable-3d.png)
+
+## 검증 요약 (자동 분석)
+
+- 대상 저장소: `Admin-Vanilla-Publishing`
+- 주요 실행 스크립트: `./run_backend.sh` (루트) — 존재 및 FastAPI + DB 기동 로직 포함
+- Playwright 캡처 스크립트: `scripts/capture-screens.js` — 존재 (출력: `DOCS/paas-setup-aws.png`, `DOCS/paas-setup-onprem-k8s.png`, `DOCS/burumable-3d.png`)
+- AWS 아키텍처 SVG: `public/assets/img/architecture/aws-serverless-architecture.svg` (AWS 아이콘 리소스는 `public/assets/img/aws-icons/`에 있음)
+
+### todo.md 기준 상태 요약
+- P0 (즉시) 항목: 완료됨 (API 매핑, 프론트 하드코딩 제거, README 정합성 정리) — 문서/스크립트로 반영되어 있음
+- P1 (단기) 항목: 대부분 반영됨(예: CORS/인증 기본 구성, DB readiness, run script 분리 옵션 존재) — 추가 검토/환경 변수 점검 권장
+- P2 (중기) 항목: 미완료
+  - Alembic 초기 도입: 미구현
+  - 통합 테스트 및 CI: 미구성
+  - 관측성(구조화 로깅, 헬스 분리): 부분 구현(헬스 엔드포인트는 존재)이나 보강 필요
+
+현재 상태로는 `./run_backend.sh`를 실행하면 로컬에서 FastAPI + PostgreSQL(도커) 구성으로 앱을 기동할 수 있으며, Playwright 스크립트로 주요 화면 캡처가 가능합니다. 다만 이 환경에서 직접 실행하거나 캡처를 수행하지는 않았습니다.
+
+### 로컬에서 캡처 실행 (권장)
+1. 로컬에서 앱 실행
+
+   # 개발 모드 (reload 포함)
+   APP_ENV=development ./run_backend.sh
+
+2. 별도의 터미널에서 Playwright 컨테이너로 캡처 실행
+
+   docker run --rm --network host -v "$PWD":/work -w /work \
+     mcr.microsoft.com/playwright:v1.58.2-jammy \
+     sh -lc "mkdir -p /tmp/pw && cd /tmp/pw && npm init -y >/dev/null 2>&1 && npm install playwright-core@1.58.2 >/dev/null 2>&1 && PLAYWRIGHT_BROWSERS_PATH=/ms-playwright NODE_PATH=/tmp/pw/node_modules node /work/scripts/capture-screens.js"
+
+3. 생성된 스크린샷은 `DOCS/` 디렉터리에 저장됩니다.
+
+---
+
+(자동 분석 결과를 Readme에 추가했습니다.)
