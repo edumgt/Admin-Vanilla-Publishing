@@ -4,7 +4,8 @@ set -euo pipefail
 REGION="${AWS_REGION:-ap-northeast-2}"
 STACK_NAME="${STACK_NAME:-admin-vanilla-platform}"
 PROJECT_NAME="${PROJECT_NAME:-admin-vanilla}"
-FRONTEND_BUCKET="${FRONTEND_BUCKET:-${PROJECT_NAME}-frontend-prod}"
+STAGE_NAME="${STAGE_NAME:-prod}"
+FRONTEND_BUCKET="${FRONTEND_BUCKET:-${PROJECT_NAME}-frontend-${STAGE_NAME}}"
 ALLOWED_ORIGIN="${ALLOWED_ORIGIN:-https://app.example.com}"
 DATABASE_URL="${DATABASE_URL:-sqlite:////tmp/admin-vanilla.db}"
 
@@ -28,7 +29,7 @@ sam deploy \
   --template-file .aws-sam/build/template.yaml \
   --parameter-overrides \
     "ProjectName=${PROJECT_NAME}" \
-    "StageName=prod" \
+    "StageName=${STAGE_NAME}" \
     "AllowedOrigin=${ALLOWED_ORIGIN}" \
     "FrontendBucketName=${FRONTEND_BUCKET}" \
     "DatabaseUrl=${DATABASE_URL}"

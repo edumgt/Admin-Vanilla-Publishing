@@ -12,9 +12,24 @@
 - `base/backend-deployment.yaml`
 - `base/frontend-deployment.yaml`
 - `base/ingress.yaml`
+- `overlays/dev/kustomization.yaml`
 
 ## 적용 예시
 
 ```bash
 kubectl apply -k infra/k8s/base
 ```
+
+개발환경 overlay:
+
+```bash
+kubectl apply -k infra/k8s/overlays/dev
+```
+
+`overlays/dev` 는 다음을 분리합니다.
+
+- namespace: `admin-vanilla-dev`
+- ingress host: `dev.app.example.com`, `dev-api.example.com`
+- replica: backend/frontend `1`
+- `APP_ENV=development`
+- PostgreSQL PVC: `5Gi`

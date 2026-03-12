@@ -99,6 +99,307 @@ CloudFront + S3 로 정적 파일을 전달하고, API Gateway + Lambda 로 Fast
 
 ![On Prem Kubernetes Architecture](./public/assets/img/architecture/onprem-kubernetes-architecture.svg)
 
+## AWS 환경 분석
+
+리포지토리의 실제 코드와 스크립트를 기준으로 보면 AWS 배포 시 역할 분담은 아래처럼 해석됩니다.
+
+| 저장소 자산 | AWS 대상 리소스 | 실제 역할 |
+| --- | --- | --- |
+| `public/` | S3 + CloudFront | HTML, CSS, JS, 이미지 등 정적 프론트 산출물 |
+| `backend_fastapi/app/` | Lambda | FastAPI 앱 본체. `Mangum` 으로 Lambda 핸들러에 연결 |
+| `infra/aws/template.yaml` | SAM / CloudFormation | `HttpApi`, `Lambda`, `S3`, `CloudFront`, `OAC`, Bucket Policy 정의 |
+| `infra/aws/Makefile` | SAM Build Step | `backend_fastapi/app`, `public`, `infra`, `lambda_handler.py` 를 Lambda 아티팩트로 조립 |
+| `scripts/aws/01~03-*.sh` | Bootstrap / Deploy / Sync | 아티팩트 버킷 생성, 스택 배포, 프론트 동기화, invalidation 실행 |
+| `infra/aws/steering/*` + `scripts/aws/11~12-*.sh` | Optional EKS Steering Plane | 운영 보조용 EKS 클러스터와 읽기 전용 add-on 부트스트랩 |
+
+운영 체크포인트:
+
+- `infra/aws/template.yaml` 의 `DatabaseUrl` 기본값은 `sqlite:////tmp/admin-vanilla.db` 입니다. Lambda 재기동이나 scale-out 상황에서는 영속 저장소가 아니므로 운영용 DB로 교체해야 합니다.
+- `backend_fastapi/app/demo_store.py` 의 일정, 용어, 재고 일부 데이터는 메모리 기반 mock 저장소입니다. cold start 이후 상태가 초기화될 수 있습니다.
+- `public/assets/js` 안에는 여전히 상대 경로 `fetch('/api/...')` 호출이 남아 있습니다. 정적 프론트와 API 도메인을 분리하면 `APP_API_BASE` 주입 또는 CloudFront behavior(`/api/*` -> API Gateway) 구성이 필요합니다.
+- optional steering plane 은 사용자 요청을 직접 처리하는 본 서비스 경로가 아니라, 별도 EKS 운영 보조 plane 으로 분리되어 있습니다.
+
+## 환경 분리 전략
+
+리포지토리 기준 권장 환경 분리는 아래와 같습니다.
+
+| 환경 | 주 용도 | 배포 방식 | 진입점 | 주요 스크립트 |
+| --- | --- | --- | --- | --- |
+| `local` | 개인 개발, 기능 확인 | 로컬 Python + Docker PostgreSQL | `http://localhost:8000` | `./scripts/cicd/ci.sh local`, `./scripts/cicd/deploy.sh local` |
+| `dev` | 팀 개발 통합, 기능 리뷰 | Kubernetes overlay | `dev.app.example.com`, `dev-api.example.com` | `./scripts/cicd/ci.sh dev`, `./scripts/cicd/deploy.sh dev` |
+| `stage` | 배포 검증, 운영 전 리허설 | AWS Serverless | `stage.app.example.com` | `./scripts/cicd/ci.sh stage`, `./scripts/cicd/deploy.sh stage` |
+| `prod` | 실제 서비스 | AWS Serverless + optional steering EKS | `app.example.com` | `./scripts/cicd/ci.sh prod`, `./scripts/cicd/deploy.sh prod` |
+
+환경별 설정 파일:
+
+- `local`: [scripts/cicd/env/local.sh](./scripts/cicd/env/local.sh)
+- `dev`: [scripts/cicd/env/dev.sh](./scripts/cicd/env/dev.sh)
+- `stage`: [scripts/cicd/env/stage.sh](./scripts/cicd/env/stage.sh)
+- `prod`: [scripts/cicd/env/prod.sh](./scripts/cicd/env/prod.sh)
+
+## local / dev / stage / prod 구성 구분
+
+### 1. Local
+
+- 목적: 프론트와 FastAPI를 빠르게 수정하고 API 동작을 바로 확인
+- 런타임: `./run_backend.sh` 로 Uvicorn 실행, PostgreSQL 은 `backend_fastapi/docker-compose.yml` 사용
+- 특징: 가장 빠른 피드백 루프, 클라우드 의존성 없음
+
+### 2. Dev Kubernetes
+
+- 목적: 팀 단위 통합 개발, ingress 와 service 분리 검증
+- 런타임: Kubernetes base 위에 dev overlay 적용
+- 주요 파일:
+  - [infra/k8s/base/kustomization.yaml](./infra/k8s/base/kustomization.yaml)
+  - [infra/k8s/overlays/dev/kustomization.yaml](./infra/k8s/overlays/dev/kustomization.yaml)
+  - [infra/k8s/overlays/dev/patch-ingress.yaml](./infra/k8s/overlays/dev/patch-ingress.yaml)
+- dev overlay 기준값:
+  - namespace: `admin-vanilla-dev`
+  - backend/frontend replica: `1`
+  - ingress host: `dev.app.example.com`, `dev-api.example.com`
+  - config: `APP_ENV=development`, dev secret placeholder, PostgreSQL PVC `5Gi`
+
+### 3. Stage Serverless
+
+- 목적: 운영 직전 배포 검증, CloudFront/S3/API Gateway/Lambda 경로 점검
+- 런타임: `S3 + CloudFront + API Gateway + Lambda`
+- 기본 설정: [scripts/cicd/env/stage.sh](./scripts/cicd/env/stage.sh)
+- stage 기본값:
+  - `STAGE_NAME=stage`
+  - `STACK_NAME=admin-vanilla-stage-platform`
+  - `FRONTEND_BUCKET=admin-vanilla-frontend-stage`
+  - `ENABLE_STEERING_EKS=false`
+
+### 4. Prod Serverless
+
+- 목적: 실제 서비스 운영
+- 런타임: `S3 + CloudFront + API Gateway + Lambda + optional steering EKS`
+- 기본 설정: [scripts/cicd/env/prod.sh](./scripts/cicd/env/prod.sh)
+- prod 기본값:
+  - `STAGE_NAME=prod`
+  - `STACK_NAME=admin-vanilla-prod-platform`
+  - `FRONTEND_BUCKET=admin-vanilla-frontend-prod`
+  - `ENABLE_STEERING_EKS=true`
+
+## K8s / EKS / API Gateway / Lambda 역할 구분
+
+| 구성 요소 | 적용 환경 | 역할 |
+| --- | --- | --- |
+| On-prem/Dev `Kubernetes` | `dev` | frontend/backend/postgres 를 하나의 개발용 클러스터에서 통합 검증 |
+| `EKS steering cluster` | `stage`, `prod` optional | 운영 관찰/보조 plane. 사용자 트래픽 직접 처리 경로는 아님 |
+| `API Gateway` | `stage`, `prod` | `/api`, `/db`, `/auth`, `/upload`, `/health`, `/infra` 요청의 public entrypoint |
+| `Lambda` | `stage`, `prod` | `backend_fastapi/app` 의 FastAPI 런타임을 `Mangum` 으로 실행 |
+
+## CI/CD Shell 구성
+
+추가된 shell entrypoint:
+
+- 공통 로더: [scripts/cicd/lib/common.sh](./scripts/cicd/lib/common.sh)
+- CI 검증: [scripts/cicd/ci.sh](./scripts/cicd/ci.sh)
+- 환경별 배포: [scripts/cicd/deploy.sh](./scripts/cicd/deploy.sh)
+- 전체 파이프라인: [scripts/cicd/pipeline.sh](./scripts/cicd/pipeline.sh)
+
+동작 기준:
+
+- `ci.sh local`
+  - Python 소스 compile 확인
+  - backend/local docker compose 설정 검증
+- `ci.sh dev`
+  - `kubectl kustomize infra/k8s/overlays/dev` 검증
+- `ci.sh stage|prod`
+  - `sam build --template-file infra/aws/template.yaml`
+- `deploy.sh local`
+  - `run_backend.sh` 로 로컬 실행
+- `deploy.sh dev`
+  - `kubectl apply -k infra/k8s/overlays/dev`
+  - backend/frontend rollout status 확인
+- `deploy.sh stage|prod`
+  - `scripts/aws/01` foundation bootstrap
+  - `scripts/aws/02` SAM deploy
+  - `scripts/aws/03` frontend sync + invalidation
+  - prod 또는 활성화 시 steering EKS bootstrap
+
+실행 예시:
+
+```bash
+# local
+./scripts/cicd/ci.sh local
+./scripts/cicd/deploy.sh local
+
+# dev k8s
+./scripts/cicd/ci.sh dev
+./scripts/cicd/deploy.sh dev
+
+# stage aws
+./scripts/cicd/pipeline.sh stage
+
+# prod aws
+./scripts/cicd/pipeline.sh prod
+```
+
+## AWS 콘솔 레퍼런스 이미지
+
+2026-03-12 기준으로 AWS 공식 문서, AWS 블로그, AWS 샘플 워크숍에서 현재 구성과 유사한 콘솔 이미지를 찾아 `DOCS/aws-console/` 아래에 저장했습니다. 실제 AWS 콘솔 UI 는 시점에 따라 달라질 수 있으므로, 아래 이미지는 README 보조 자료로 사용하면 됩니다.
+
+<p align="center">
+  <img src="./DOCS/aws-console/aws-console-s3-buckets.png" width="48%" alt="AWS S3 console reference" />
+  <img src="./DOCS/aws-console/aws-console-api-gateway-invoke-url.png" width="48%" alt="AWS API Gateway console reference" />
+</p>
+<p align="center">
+  <img src="./DOCS/aws-console/aws-console-lambda-python-editor.png" width="48%" alt="AWS Lambda console reference" />
+  <img src="./DOCS/aws-console/aws-console-cloudfront-monitoring.png" width="48%" alt="AWS CloudFront console reference" />
+</p>
+<p align="center">
+  <img src="./DOCS/aws-console/aws-console-eks-overview.jpg" width="72%" alt="AWS EKS console reference" />
+</p>
+
+참고 출처:
+
+- S3: [AWS Quick Starts - S3 create bucket image](https://docs.aws.amazon.com/images/quickstarts/latest/s3backup/images/s3-create-bucket.png)
+- API Gateway: [AWS Developer Guide - Get started with API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/getting-started.html)
+- Lambda: [AWS Lambda Developer Guide - Create your first Lambda function](https://docs.aws.amazon.com/lambda/latest/dg/getting-started.html)
+- CloudFront: [AWS Blog image - CloudFront monitoring console](https://d2908q01vomqb2.cloudfront.net/5b384ce32d8cdef02bc3a139d4cac0a22bb029e8/2024/05/01/Screenshot-3.png)
+- EKS: [EKS Workshop - View EKS console](https://www.eksworkshop.com/docs/observability/resource-view/)
+
+## Mermaid 다이어그램
+
+### AWS 서버리스 배포 플로우
+
+`scripts/aws/01-bootstrap-serverless-foundation.sh` -> `02-deploy-serverless-stack.sh` -> `03-sync-frontend.sh` 순서를 기준으로 정리한 흐름입니다.
+
+```mermaid
+flowchart TD
+    A[Operator] --> B[01 bootstrap foundation]
+    B --> C[SAM artifacts bucket]
+    B --> D[Frontend S3 bucket]
+    C --> E[02 deploy serverless stack]
+    D --> E
+    E --> F[sam build]
+    F --> G[CloudFormation stack]
+    G --> H[HTTP API]
+    G --> I[Lambda runtime]
+    G --> J[CloudFront with OAC]
+    G --> K[Bucket policy]
+    G --> L[Stack outputs]
+    L --> M[03 sync frontend]
+    M --> N[public directory to S3]
+    N --> O[CloudFront invalidation]
+    O --> P[Service ready]
+    P --> Q[Optional steering cluster]
+    Q --> R[11 create steering cluster]
+    R --> S[12 bootstrap steering addons]
+```
+
+### 환경별 CI/CD 플로우
+
+```mermaid
+flowchart TD
+    A[Developer push or manual run] --> B{Target environment}
+    B --> C[local]
+    B --> D[dev]
+    B --> E[stage]
+    B --> F[prod]
+    C --> C1[ci.sh local]
+    C1 --> C2[deploy.sh local]
+    C2 --> C3[run_backend.sh]
+    D --> D1[ci.sh dev]
+    D1 --> D2[kubectl kustomize overlay]
+    D2 --> D3[deploy.sh dev]
+    D3 --> D4[kubectl apply dev overlay]
+    E --> E1[ci.sh stage]
+    E1 --> E2[sam build]
+    E2 --> E3[deploy.sh stage]
+    E3 --> E4[bootstrap deploy sync]
+    F --> F1[ci.sh prod]
+    F1 --> F2[sam build]
+    F2 --> F3[deploy.sh prod]
+    F3 --> F4[bootstrap deploy sync]
+    F4 --> F5[optional steering EKS]
+```
+
+### AWS 런타임 요청 시퀀스
+
+정적 프론트는 S3 + CloudFront, API 는 API Gateway + Lambda 로 분리되는 현재 스캐폴드의 런타임 기준입니다.
+
+```mermaid
+sequenceDiagram
+    actor User as End user
+    participant CF as CloudFront
+    participant S3 as S3 frontend bucket
+    participant JS as Browser JS
+    participant APIGW as API Gateway
+    participant Lambda as Lambda
+    participant App as FastAPI via Mangum
+    participant DB as SQLite tmp or external DB
+
+    User->>CF: GET /system.html
+    CF->>S3: Read static asset
+    S3-->>CF: HTML CSS JS
+    CF-->>User: Page response
+    User->>JS: Click menu or screen action
+    JS->>APIGW: GET /api/menu
+    APIGW->>Lambda: Invoke request
+    Lambda->>App: ASGI translate
+    App->>DB: Query or update
+    DB-->>App: Result
+    App-->>Lambda: JSON response
+    Lambda-->>APIGW: 200 OK
+    APIGW-->>JS: API payload
+    JS-->>User: Render updated screen
+```
+
+주의:
+
+- 현재 여러 화면이 same-origin 상대 경로를 사용하므로, AWS 운영에서는 `window.APP_API_BASE` 주입 또는 CloudFront path routing 을 함께 설계해야 합니다.
+
+### 업무 추가 플로우
+
+`public/calendar.html` + `public/assets/js/calendar.js` + `backend_fastapi/app/main.py` 기준으로 업무 일정을 추가하는 흐름입니다.
+
+```mermaid
+flowchart LR
+    A[User opens calendar modal] --> B[Enter date range time description]
+    B --> C{From date <= To date}
+    C -- No --> D[Fix input]
+    D --> B
+    C -- Yes --> E[Generate eventId]
+    E --> F[Loop each selected date]
+    F --> G[Append task to tasks and newTasks]
+    G --> H[saveTasks]
+    H --> I[POST addDate]
+    I --> J[Receive dateId]
+    J --> K[POST addEvent]
+    K --> L[DemoStore calendar_events update]
+    L --> M[Re-render month view]
+```
+
+### 업무 추가 시퀀스 다이어그램
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant UI as calendar.js
+    participant API as FastAPI
+    participant Store as DemoStore
+
+    User->>UI: Click save in calendar modal
+    loop each date in selected range
+        UI->>API: POST /api/addDate {date}
+        API->>Store: add_date(date)
+        Store-->>API: dateId
+        API-->>UI: dateId
+        UI->>API: POST /api/addEvent {date_id, time, description, event_id}
+        API->>Store: add_event(dateId, time, description, event_id)
+        Store-->>API: eventId
+        API-->>UI: eventId
+    end
+    UI->>API: GET /api/calendar
+    API->>Store: list_calendar()
+    Store-->>API: tasks by date
+    API-->>UI: calendar payload
+    UI-->>User: Updated month calendar
+```
+
 ## DOCS 화면 갤러리
 
 아래 이미지는 모두 `DOCS/` 원본을 README 에 그대로 붙인 것입니다. 화면 성격이 비슷한 것끼리 묶어서 설명을 추가했습니다.

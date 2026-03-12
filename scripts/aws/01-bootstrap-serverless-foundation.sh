@@ -3,8 +3,9 @@ set -euo pipefail
 
 REGION="${AWS_REGION:-ap-northeast-2}"
 PROJECT_NAME="${PROJECT_NAME:-admin-vanilla}"
+STAGE_NAME="${STAGE_NAME:-prod}"
 DEPLOY_BUCKET="${DEPLOY_BUCKET:-${PROJECT_NAME}-sam-artifacts-${REGION}}"
-FRONTEND_BUCKET="${FRONTEND_BUCKET:-${PROJECT_NAME}-frontend-prod}"
+FRONTEND_BUCKET="${FRONTEND_BUCKET:-${PROJECT_NAME}-frontend-${STAGE_NAME}}"
 
 require() {
   command -v "$1" >/dev/null 2>&1 || {

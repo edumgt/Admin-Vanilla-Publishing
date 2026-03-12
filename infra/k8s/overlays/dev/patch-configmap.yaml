@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: admin-vanilla-config
+data:
+  APP_ENV: development
+  CORS_ALLOW_ORIGINS: https://dev.app.example.com
