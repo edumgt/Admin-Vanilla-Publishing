@@ -5,6 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>부루마블 미니 게임</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .dice-stage {
+      perspective: 900px;
+    }
+
+    .die {
+      width: clamp(62px, 10vw, 78px);
+      aspect-ratio: 1;
+      border-radius: 18px;
+      background: linear-gradient(145deg, #f8fafc, #dce4f2);
+      border: 2px solid #cbd5e1;
+      box-shadow: 0 12px 24px rgba(2, 6, 23, 0.4), inset 0 2px 0 rgba(255, 255, 255, 0.75);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      align-items: center;
+      justify-items: center;
+      transform-style: preserve-3d;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 9999px;
+      background: radial-gradient(circle at 30% 30%, #0f172a, #020617 70%);
+      opacity: 0;
+      transform: scale(0.75);
+      transition: opacity 120ms ease, transform 120ms ease;
+    }
+
+    .dot.on {
+      opacity: 1;
+      transform: scale(1);
+    }
+  </style>
 </head>
 <body class="min-h-screen bg-slate-950 bg-[radial-gradient(circle_at_top,_#1e293b_0%,_#020617_70%)] text-slate-100 font-['Pretendard','Noto_Sans_KR',sans-serif] p-5 flex items-center justify-center">
   <main class="w-full max-w-5xl rounded-3xl border border-slate-700/70 bg-slate-900/80 backdrop-blur p-5 md:p-8 grid gap-5 justify-items-center shadow-2xl">
@@ -17,10 +52,18 @@
       <canvas id="board" width="680" height="680" aria-label="부루마블 보드" class="w-full aspect-square rounded-xl border border-slate-700 bg-slate-950"></canvas>
     </section>
 
+    <section class="dice-stage w-full max-w-[720px] rounded-2xl border border-slate-700/80 bg-slate-900/90 p-5 md:p-6 flex flex-col items-center gap-4">
+      <p class="text-slate-300 text-sm md:text-base">화면 중앙 주사위 롤링</p>
+      <div class="flex items-center justify-center gap-5" id="diceWrap" aria-live="polite">
+        <div class="die" id="die1" aria-label="첫 번째 주사위"></div>
+        <div class="die" id="die2" aria-label="두 번째 주사위"></div>
+      </div>
+    </section>
+
     <section class="w-full max-w-[720px] rounded-2xl border border-slate-700 bg-slate-900 p-4 md:p-5 flex flex-wrap gap-3 md:gap-4 items-center justify-between">
       <div class="flex flex-wrap items-center gap-5 text-sm md:text-base">
         <span class="text-slate-300">현재 칸: <strong id="position" class="text-sky-300">0</strong></span>
-        <span class="text-slate-300">주사위: <strong id="dice" class="text-sky-300">-</strong></span>
+        <span class="text-slate-300">주사위 합: <strong id="dice" class="text-sky-300">-</strong></span>
       </div>
       <button id="rollBtn" type="button" class="rounded-xl bg-sky-400 hover:bg-sky-300 text-slate-900 font-bold px-5 py-2.5 transition disabled:opacity-50 disabled:cursor-not-allowed">주사위 굴리기</button>
     </section>
@@ -32,6 +75,7 @@
     const rollBtn = document.getElementById('rollBtn');
     const diceEl = document.getElementById('dice');
     const positionEl = document.getElementById('position');
+    const dieEls = [document.getElementById('die1'), document.getElementById('die2')];
 
     const boardSize = canvas.width;
     const tilesPerSide = 6;
@@ -44,6 +88,30 @@
     };
 
     const path = [];
+    const faceMap = {
+      1: [4],
+      2: [0, 8],
+      3: [0, 4, 8],
+      4: [0, 2, 6, 8],
+      5: [0, 2, 4, 6, 8],
+      6: [0, 2, 3, 5, 6, 8]
+    };
+
+    function createDieDots(die) {
+      die.innerHTML = '';
+      for (let i = 0; i < 9; i++) {
+        const dot = document.createElement('span');
+        dot.className = 'dot';
+        die.appendChild(dot);
+      }
+    }
+
+    function setDieFace(die, value) {
+      const dots = [...die.children];
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('on', faceMap[value].includes(index));
+      });
+    }
 
     function buildPath() {
       path.length = 0;
@@ -125,17 +193,30 @@
       return new Promise((resolve) => setTimeout(resolve, ms));
     }
 
-    async function animateDice() {
-      let value = 1;
-      const loops = 10;
+    async function animateDiceThrow() {
+      let first = 1;
+      let second = 1;
 
-      for (let i = 0; i < loops; i++) {
-        value = Math.floor(Math.random() * 6) + 1;
-        diceEl.textContent = String(value);
-        await sleep(90 + i * 8);
+      for (let i = 0; i < 14; i++) {
+        first = Math.floor(Math.random() * 6) + 1;
+        second = Math.floor(Math.random() * 6) + 1;
+
+        setDieFace(dieEls[0], first);
+        setDieFace(dieEls[1], second);
+
+        dieEls[0].style.transform = `translateY(${Math.sin(i) * 6}px) rotateX(${i * 35}deg) rotateY(${i * 24}deg)`;
+        dieEls[1].style.transform = `translateY(${Math.cos(i) * 6}px) rotateX(${i * 30}deg) rotateY(${-i * 28}deg)`;
+
+        await sleep(65 + i * 10);
       }
 
-      return Math.floor(Math.random() * 6) + 1;
+      first = Math.floor(Math.random() * 6) + 1;
+      second = Math.floor(Math.random() * 6) + 1;
+      setDieFace(dieEls[0], first);
+      setDieFace(dieEls[1], second);
+      dieEls[0].style.transform = 'rotateX(8deg) rotateY(-6deg)';
+      dieEls[1].style.transform = 'rotateX(-10deg) rotateY(8deg)';
+      return [first, second];
     }
 
     async function movePiece(steps) {
@@ -152,14 +233,20 @@
 
     async function rollDice() {
       rollBtn.disabled = true;
-      const finalValue = await animateDice();
-      diceEl.textContent = String(finalValue);
-      await movePiece(finalValue);
+      const [first, second] = await animateDiceThrow();
+      const total = first + second;
+      diceEl.textContent = `${first} + ${second} = ${total}`;
+      await movePiece(total);
       rollBtn.disabled = false;
     }
 
     function init() {
       buildPath();
+      dieEls.forEach((die) => createDieDots(die));
+      setDieFace(dieEls[0], 1);
+      setDieFace(dieEls[1], 1);
+      dieEls[0].style.transform = 'rotateX(8deg) rotateY(-6deg)';
+      dieEls[1].style.transform = 'rotateX(-10deg) rotateY(8deg)';
       const start = tileCenter(piece.index);
       piece.x = start.x;
       piece.y = start.y;
