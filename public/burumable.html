@@ -6,17 +6,41 @@
   <title>부루마블 미니 게임</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    .board-stage {
+      position: relative;
+    }
+
     .dice-stage {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
       perspective: 900px;
     }
 
+    .dice-cluster {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 14px 18px;
+      border-radius: 16px;
+      background: rgba(15, 23, 42, 0.68);
+      border: 1px solid rgba(148, 163, 184, 0.42);
+      box-shadow: 0 18px 45px rgba(2, 6, 23, 0.55);
+      backdrop-filter: blur(5px);
+    }
+
     .die {
-      width: clamp(62px, 10vw, 78px);
+      width: clamp(62px, 9vw, 78px);
       aspect-ratio: 1;
       border-radius: 18px;
       background: linear-gradient(145deg, #f8fafc, #dce4f2);
       border: 2px solid #cbd5e1;
-      box-shadow: 0 12px 24px rgba(2, 6, 23, 0.4), inset 0 2px 0 rgba(255, 255, 255, 0.75);
+      box-shadow: 0 14px 24px rgba(2, 6, 23, 0.45), inset 0 2px 0 rgba(255, 255, 255, 0.75);
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       grid-template-rows: repeat(3, 1fr);
@@ -45,24 +69,23 @@
   <main class="w-full max-w-5xl rounded-3xl border border-slate-700/70 bg-slate-900/80 backdrop-blur p-5 md:p-8 grid gap-5 justify-items-center shadow-2xl">
     <header class="text-center space-y-2">
       <p class="text-xs uppercase tracking-[0.25em] text-sky-300/80">Canvas Mini Game</p>
-      <h1 class="text-2xl md:text-3xl font-bold tracking-tight">Blue Marble Move Demo</h1>
+      <h1 class="text-2xl md:text-3xl font-bold tracking-tight">Blue Marble 3D Board Demo</h1>
     </header>
 
-    <section class="w-full max-w-[720px] rounded-2xl border border-slate-700 p-3 bg-slate-950/70 shadow-inner">
+    <section class="board-stage w-full max-w-[720px] rounded-2xl border border-slate-700 p-3 bg-slate-950/70 shadow-inner">
       <canvas id="board" width="680" height="680" aria-label="부루마블 보드" class="w-full aspect-square rounded-xl border border-slate-700 bg-slate-950"></canvas>
-    </section>
-
-    <section class="dice-stage w-full max-w-[720px] rounded-2xl border border-slate-700/80 bg-slate-900/90 p-5 md:p-6 flex flex-col items-center gap-4">
-      <p class="text-slate-300 text-sm md:text-base">화면 중앙 주사위 롤링</p>
-      <div class="flex items-center justify-center gap-5" id="diceWrap" aria-live="polite">
-        <div class="die" id="die1" aria-label="첫 번째 주사위"></div>
-        <div class="die" id="die2" aria-label="두 번째 주사위"></div>
+      <div class="dice-stage" aria-live="polite">
+        <div class="dice-cluster" id="diceWrap">
+          <div class="die" id="die1" aria-label="첫 번째 주사위"></div>
+          <div class="die" id="die2" aria-label="두 번째 주사위"></div>
+        </div>
       </div>
     </section>
 
     <section class="w-full max-w-[720px] rounded-2xl border border-slate-700 bg-slate-900 p-4 md:p-5 flex flex-wrap gap-3 md:gap-4 items-center justify-between">
       <div class="flex flex-wrap items-center gap-5 text-sm md:text-base">
         <span class="text-slate-300">현재 칸: <strong id="position" class="text-sky-300">0</strong></span>
+        <span class="text-slate-300">도착 도시: <strong id="city" class="text-emerald-300">출발</strong></span>
         <span class="text-slate-300">주사위 합: <strong id="dice" class="text-sky-300">-</strong></span>
       </div>
       <button id="rollBtn" type="button" class="rounded-xl bg-sky-400 hover:bg-sky-300 text-slate-900 font-bold px-5 py-2.5 transition disabled:opacity-50 disabled:cursor-not-allowed">주사위 굴리기</button>
@@ -75,6 +98,7 @@
     const rollBtn = document.getElementById('rollBtn');
     const diceEl = document.getElementById('dice');
     const positionEl = document.getElementById('position');
+    const cityEl = document.getElementById('city');
     const dieEls = [document.getElementById('die1'), document.getElementById('die2')];
 
     const boardSize = canvas.width;
@@ -88,6 +112,29 @@
     };
 
     const path = [];
+    const cities = [
+      { name: '출발', color: '#f8fafc' },
+      { name: '타이베이', color: '#f59e0b' },
+      { name: '베이징', color: '#f59e0b' },
+      { name: '도쿄', color: '#f59e0b' },
+      { name: '시드니', color: '#22d3ee' },
+      { name: '하와이', color: '#22d3ee' },
+      { name: '샌프란시스코', color: '#22d3ee' },
+      { name: '로스앤젤레스', color: '#4ade80' },
+      { name: '시카고', color: '#4ade80' },
+      { name: '뉴욕', color: '#4ade80' },
+      { name: '런던', color: '#a78bfa' },
+      { name: '파리', color: '#a78bfa' },
+      { name: '로마', color: '#a78bfa' },
+      { name: '베를린', color: '#fb7185' },
+      { name: '모스크바', color: '#fb7185' },
+      { name: '카이로', color: '#fb7185' },
+      { name: '상파울루', color: '#38bdf8' },
+      { name: '멕시코시티', color: '#38bdf8' },
+      { name: '서울', color: '#38bdf8' },
+      { name: '부산', color: '#38bdf8' }
+    ];
+
     const faceMap = {
       1: [4],
       2: [0, 8],
@@ -131,47 +178,84 @@
       };
     }
 
+    function drawTilePanel(x, y, isVertical, city, bevelDark) {
+      ctx.fillStyle = '#e2e8f0';
+      ctx.fillRect(x, y, tileSize, tileSize);
+
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(x, y, tileSize, tileSize);
+
+      if (isVertical) {
+        ctx.fillStyle = city.color;
+        ctx.fillRect(x, y, tileSize * 0.23, tileSize);
+      } else {
+        ctx.fillStyle = city.color;
+        ctx.fillRect(x, y, tileSize, tileSize * 0.23);
+      }
+
+      const grad = ctx.createLinearGradient(x, y, x + tileSize, y + tileSize);
+      grad.addColorStop(0, 'rgba(255,255,255,0.55)');
+      grad.addColorStop(1, bevelDark);
+      ctx.fillStyle = grad;
+      ctx.fillRect(x + 1, y + 1, tileSize - 2, tileSize - 2);
+    }
+
     function drawBoard() {
       ctx.clearRect(0, 0, boardSize, boardSize);
 
-      ctx.fillStyle = '#0f172a';
+      const bgGrad = ctx.createLinearGradient(0, 0, boardSize, boardSize);
+      bgGrad.addColorStop(0, '#0f172a');
+      bgGrad.addColorStop(1, '#020617');
+      ctx.fillStyle = bgGrad;
       ctx.fillRect(0, 0, boardSize, boardSize);
 
-      for (let r = 0; r < tilesPerSide; r++) {
-        for (let c = 0; c < tilesPerSide; c++) {
-          const isPerimeter = r === 0 || c === 0 || r === tilesPerSide - 1 || c === tilesPerSide - 1;
+      for (let idx = 0; idx < path.length; idx++) {
+        const { r, c } = path[idx];
+        const x = c * tileSize;
+        const y = r * tileSize;
+        const city = cities[idx];
+        const isVertical = c === 0 || c === tilesPerSide - 1;
 
-          if (!isPerimeter) {
-            ctx.fillStyle = '#111827';
-            ctx.fillRect(c * tileSize, r * tileSize, tileSize, tileSize);
-            continue;
-          }
+        drawTilePanel(x, y, isVertical, city, idx % 2 ? 'rgba(15,23,42,0.24)' : 'rgba(15,23,42,0.1)');
 
-          const idx = path.findIndex((p) => p.r === r && p.c === c);
-          ctx.fillStyle = idx % 2 === 0 ? '#1e293b' : '#273449';
-          ctx.fillRect(c * tileSize, r * tileSize, tileSize, tileSize);
+        ctx.fillStyle = '#0f172a';
+        ctx.font = 'bold 12px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(city.name, x + tileSize / 2, y + tileSize * 0.6);
 
-          ctx.strokeStyle = '#334155';
-          ctx.lineWidth = 2;
-          ctx.strokeRect(c * tileSize, r * tileSize, tileSize, tileSize);
-
-          ctx.fillStyle = '#94a3b8';
-          ctx.font = '14px sans-serif';
-          ctx.textAlign = 'center';
-          ctx.fillText(String(idx), c * tileSize + tileSize / 2, r * tileSize + 20);
-        }
+        ctx.fillStyle = '#334155';
+        ctx.font = '11px sans-serif';
+        ctx.fillText(String(idx), x + tileSize / 2, y + tileSize * 0.82);
       }
 
-      ctx.fillStyle = '#0b1222';
-      ctx.fillRect(tileSize, tileSize, tileSize * (tilesPerSide - 2), tileSize * (tilesPerSide - 2));
-      ctx.strokeStyle = '#334155';
-      ctx.strokeRect(tileSize, tileSize, tileSize * (tilesPerSide - 2), tileSize * (tilesPerSide - 2));
+      const innerX = tileSize;
+      const innerY = tileSize;
+      const innerSize = tileSize * (tilesPerSide - 2);
 
-      ctx.fillStyle = '#7dd3fc';
-      ctx.font = 'bold 24px sans-serif';
+      const centerGrad = ctx.createRadialGradient(
+        boardSize / 2,
+        boardSize / 2,
+        tileSize * 0.35,
+        boardSize / 2,
+        boardSize / 2,
+        innerSize * 0.65
+      );
+      centerGrad.addColorStop(0, '#0b3f69');
+      centerGrad.addColorStop(1, '#020617');
+      ctx.fillStyle = centerGrad;
+      ctx.fillRect(innerX, innerY, innerSize, innerSize);
+
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 3;
+      ctx.strokeRect(innerX + 5, innerY + 5, innerSize - 10, innerSize - 10);
+
+      ctx.fillStyle = '#dbeafe';
+      ctx.font = 'bold 32px sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('BLUE MARBLE', boardSize / 2, boardSize / 2 - 12);
-      ctx.fillText('MOVE DEMO', boardSize / 2, boardSize / 2 + 20);
+      ctx.fillText('BLUE MARBLE', boardSize / 2, boardSize / 2 - 24);
+      ctx.font = 'bold 18px sans-serif';
+      ctx.fillText('3D STYLE BOARD', boardSize / 2, boardSize / 2 + 8);
     }
 
     function drawPiece() {
@@ -182,6 +266,11 @@
       ctx.lineWidth = 3;
       ctx.strokeStyle = '#fdba74';
       ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(piece.x - 5, piece.y - 5, tileSize * 0.05, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,255,255,0.7)';
+      ctx.fill();
     }
 
     function render() {
@@ -226,6 +315,7 @@
         piece.x = center.x;
         piece.y = center.y;
         positionEl.textContent = String(piece.index);
+        cityEl.textContent = cities[piece.index].name;
         render();
         await sleep(220);
       }
@@ -251,6 +341,7 @@
       piece.x = start.x;
       piece.y = start.y;
       positionEl.textContent = String(piece.index);
+      cityEl.textContent = cities[piece.index].name;
       render();
     }
 
