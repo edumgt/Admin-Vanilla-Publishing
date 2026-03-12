@@ -4,118 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>부루마블 미니 게임</title>
-  <style>
-    :root {
-      --bg: #0f172a;
-      --panel: #111827;
-      --line: #334155;
-      --tile: #1e293b;
-      --text: #e2e8f0;
-      --accent: #38bdf8;
-      --piece: #f97316;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle at top, #1e293b 0%, #020617 70%);
-      color: var(--text);
-      font-family: "Pretendard", "Noto Sans KR", Arial, sans-serif;
-      padding: 20px;
-    }
-
-    .game-wrap {
-      width: min(960px, 100%);
-      background: rgba(15, 23, 42, 0.92);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 20px;
-      display: grid;
-      gap: 16px;
-      justify-items: center;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 24px;
-      letter-spacing: -0.02em;
-    }
-
-    canvas {
-      width: min(680px, 100%);
-      aspect-ratio: 1 / 1;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      background: #0b1222;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-    }
-
-    .control-panel {
-      width: min(680px, 100%);
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 12px 14px;
-    }
-
-    .status {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-      font-size: 15px;
-    }
-
-    .badge {
-      color: #7dd3fc;
-      font-weight: 600;
-    }
-
-    button {
-      border: 0;
-      background: var(--accent);
-      color: #082f49;
-      padding: 10px 16px;
-      border-radius: 10px;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform 0.15s ease, filter 0.15s ease;
-    }
-
-    button:hover:not(:disabled) {
-      transform: translateY(-1px);
-      filter: brightness(1.05);
-    }
-
-    button:disabled {
-      cursor: not-allowed;
-      opacity: 0.55;
-    }
-  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <section class="game-wrap">
-    <h1>캔버스 부루마블 이동 데모</h1>
-    <canvas id="board" width="680" height="680" aria-label="부루마블 보드"></canvas>
+<body class="min-h-screen bg-slate-950 bg-[radial-gradient(circle_at_top,_#1e293b_0%,_#020617_70%)] text-slate-100 font-['Pretendard','Noto_Sans_KR',sans-serif] p-5 flex items-center justify-center">
+  <main class="w-full max-w-5xl rounded-3xl border border-slate-700/70 bg-slate-900/80 backdrop-blur p-5 md:p-8 grid gap-5 justify-items-center shadow-2xl">
+    <header class="text-center space-y-2">
+      <p class="text-xs uppercase tracking-[0.25em] text-sky-300/80">Canvas Mini Game</p>
+      <h1 class="text-2xl md:text-3xl font-bold tracking-tight">Blue Marble Move Demo</h1>
+    </header>
 
-    <div class="control-panel">
-      <div class="status">
-        <span>현재 칸: <strong class="badge" id="position">0</strong></span>
-        <span>주사위: <strong class="badge" id="dice">-</strong></span>
+    <section class="w-full max-w-[720px] rounded-2xl border border-slate-700 p-3 bg-slate-950/70 shadow-inner">
+      <canvas id="board" width="680" height="680" aria-label="부루마블 보드" class="w-full aspect-square rounded-xl border border-slate-700 bg-slate-950"></canvas>
+    </section>
+
+    <section class="w-full max-w-[720px] rounded-2xl border border-slate-700 bg-slate-900 p-4 md:p-5 flex flex-wrap gap-3 md:gap-4 items-center justify-between">
+      <div class="flex flex-wrap items-center gap-5 text-sm md:text-base">
+        <span class="text-slate-300">현재 칸: <strong id="position" class="text-sky-300">0</strong></span>
+        <span class="text-slate-300">주사위: <strong id="dice" class="text-sky-300">-</strong></span>
       </div>
-      <button id="rollBtn" type="button">주사위 굴리기</button>
-    </div>
-  </section>
+      <button id="rollBtn" type="button" class="rounded-xl bg-sky-400 hover:bg-sky-300 text-slate-900 font-bold px-5 py-2.5 transition disabled:opacity-50 disabled:cursor-not-allowed">주사위 굴리기</button>
+    </section>
+  </main>
 
   <script>
     const canvas = document.getElementById('board');
