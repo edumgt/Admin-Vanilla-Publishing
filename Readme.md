@@ -24,8 +24,8 @@
 
 ## 신규 추가 화면 (Playwright 캡처)
 
-### 1) Tailwind 기반 블루마블 화면 (`burumable.html`)
-![블루마블 Tailwind 화면](browser:/tmp/codex_browser_invocations/58d1d43207dd06ec/artifacts/DOCS/burumable-tailwind.png)
+### 1) 3D 블루마블 화면 (`burumable.html`)
+![블루마블 3D 화면](./DOCS/burumable-3d.png)
 
 ### 2) 누락된 HTML 실행 화면 - `city.html`
 ![city 실행 화면](browser:/tmp/codex_browser_invocations/58d1d43207dd06ec/artifacts/DOCS/city-execution.png)
