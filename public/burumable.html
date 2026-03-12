@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>부루마블 미니 게임</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: #111827;
+      --line: #334155;
+      --tile: #1e293b;
+      --text: #e2e8f0;
+      --accent: #38bdf8;
+      --piece: #f97316;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #1e293b 0%, #020617 70%);
+      color: var(--text);
+      font-family: "Pretendard", "Noto Sans KR", Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .game-wrap {
+      width: min(960px, 100%);
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 20px;
+      display: grid;
+      gap: 16px;
+      justify-items: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      letter-spacing: -0.02em;
+    }
+
+    canvas {
+      width: min(680px, 100%);
+      aspect-ratio: 1 / 1;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #0b1222;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .control-panel {
+      width: min(680px, 100%);
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+
+    .status {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      font-size: 15px;
+    }
+
+    .badge {
+      color: #7dd3fc;
+      font-weight: 600;
+    }
+
+    button {
+      border: 0;
+      background: var(--accent);
+      color: #082f49;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+
+    button:hover:not(:disabled) {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.55;
+    }
+  </style>
+</head>
+<body>
+  <section class="game-wrap">
+    <h1>캔버스 부루마블 이동 데모</h1>
+    <canvas id="board" width="680" height="680" aria-label="부루마블 보드"></canvas>
+
+    <div class="control-panel">
+      <div class="status">
+        <span>현재 칸: <strong class="badge" id="position">0</strong></span>
+        <span>주사위: <strong class="badge" id="dice">-</strong></span>
+      </div>
+      <button id="rollBtn" type="button">주사위 굴리기</button>
+    </div>
+  </section>
+
+  <script>
+    const canvas = document.getElementById('board');
+    const ctx = canvas.getContext('2d');
+    const rollBtn = document.getElementById('rollBtn');
+    const diceEl = document.getElementById('dice');
+    const positionEl = document.getElementById('position');
+
+    const boardSize = canvas.width;
+    const tilesPerSide = 6;
+    const tileSize = boardSize / tilesPerSide;
+
+    const piece = {
+      index: 0,
+      x: 0,
+      y: 0
+    };
+
+    const path = [];
+
+    function buildPath() {
+      path.length = 0;
+      const n = tilesPerSide;
+
+      for (let c = n - 1; c >= 0; c--) path.push({ r: n - 1, c });
+      for (let r = n - 2; r >= 0; r--) path.push({ r, c: 0 });
+      for (let c = 1; c < n; c++) path.push({ r: 0, c });
+      for (let r = 1; r < n - 1; r++) path.push({ r, c: n - 1 });
+    }
+
+    function tileCenter(index) {
+      const { r, c } = path[index];
+      return {
+        x: c * tileSize + tileSize / 2,
+        y: r * tileSize + tileSize / 2
+      };
+    }
+
+    function drawBoard() {
+      ctx.clearRect(0, 0, boardSize, boardSize);
+
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(0, 0, boardSize, boardSize);
+
+      for (let r = 0; r < tilesPerSide; r++) {
+        for (let c = 0; c < tilesPerSide; c++) {
+          const isPerimeter = r === 0 || c === 0 || r === tilesPerSide - 1 || c === tilesPerSide - 1;
+
+          if (!isPerimeter) {
+            ctx.fillStyle = '#111827';
+            ctx.fillRect(c * tileSize, r * tileSize, tileSize, tileSize);
+            continue;
+          }
+
+          const idx = path.findIndex((p) => p.r === r && p.c === c);
+          ctx.fillStyle = idx % 2 === 0 ? '#1e293b' : '#273449';
+          ctx.fillRect(c * tileSize, r * tileSize, tileSize, tileSize);
+
+          ctx.strokeStyle = '#334155';
+          ctx.lineWidth = 2;
+          ctx.strokeRect(c * tileSize, r * tileSize, tileSize, tileSize);
+
+          ctx.fillStyle = '#94a3b8';
+          ctx.font = '14px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText(String(idx), c * tileSize + tileSize / 2, r * tileSize + 20);
+        }
+      }
+
+      ctx.fillStyle = '#0b1222';
+      ctx.fillRect(tileSize, tileSize, tileSize * (tilesPerSide - 2), tileSize * (tilesPerSide - 2));
+      ctx.strokeStyle = '#334155';
+      ctx.strokeRect(tileSize, tileSize, tileSize * (tilesPerSide - 2), tileSize * (tilesPerSide - 2));
+
+      ctx.fillStyle = '#7dd3fc';
+      ctx.font = 'bold 24px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('BLUE MARBLE', boardSize / 2, boardSize / 2 - 12);
+      ctx.fillText('MOVE DEMO', boardSize / 2, boardSize / 2 + 20);
+    }
+
+    function drawPiece() {
+      ctx.beginPath();
+      ctx.arc(piece.x, piece.y, tileSize * 0.17, 0, Math.PI * 2);
+      ctx.fillStyle = '#f97316';
+      ctx.fill();
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = '#fdba74';
+      ctx.stroke();
+    }
+
+    function render() {
+      drawBoard();
+      drawPiece();
+    }
+
+    function sleep(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    }
+
+    async function animateDice() {
+      let value = 1;
+      const loops = 10;
+
+      for (let i = 0; i < loops; i++) {
+        value = Math.floor(Math.random() * 6) + 1;
+        diceEl.textContent = String(value);
+        await sleep(90 + i * 8);
+      }
+
+      return Math.floor(Math.random() * 6) + 1;
+    }
+
+    async function movePiece(steps) {
+      for (let i = 0; i < steps; i++) {
+        piece.index = (piece.index + 1) % path.length;
+        const center = tileCenter(piece.index);
+        piece.x = center.x;
+        piece.y = center.y;
+        positionEl.textContent = String(piece.index);
+        render();
+        await sleep(220);
+      }
+    }
+
+    async function rollDice() {
+      rollBtn.disabled = true;
+      const finalValue = await animateDice();
+      diceEl.textContent = String(finalValue);
+      await movePiece(finalValue);
+      rollBtn.disabled = false;
+    }
+
+    function init() {
+      buildPath();
+      const start = tileCenter(piece.index);
+      piece.x = start.x;
+      piece.y = start.y;
+      positionEl.textContent = String(piece.index);
+      render();
+    }
+
+    rollBtn.addEventListener('click', rollDice);
+    init();
+  </script>
+</body>
+</html>
