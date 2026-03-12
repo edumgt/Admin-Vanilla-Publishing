@@ -1,153 +1,173 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 860" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc" style="font-family:'Segoe UI',Arial,sans-serif">
   <title id="title">AWS Cloud Serverless Architecture</title>
-  <desc id="desc">Admin Vanilla Publishing AWS architecture with CloudFront, S3, API Gateway, Lambda, optional RDS and optional steering EKS cluster.</desc>
+  <desc id="desc">Admin Vanilla Publishing delivery path using CloudFront, S3, API Gateway, Lambda, a data store, and an optional EKS steering plane.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#f8fbff"/>
-      <stop offset="100%" stop-color="#e7f1fb"/>
+      <stop offset="0%" stop-color="#f7fbff"/>
+      <stop offset="100%" stop-color="#e6eff8"/>
     </linearGradient>
     <linearGradient id="awsCard" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#fff9ef"/>
-      <stop offset="100%" stop-color="#ffe7bf"/>
+      <stop offset="0%" stop-color="#fff7eb"/>
+      <stop offset="100%" stop-color="#ffe4b3"/>
     </linearGradient>
-    <linearGradient id="sideCard" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#eff7ff"/>
-      <stop offset="100%" stop-color="#d6e9fb"/>
+    <linearGradient id="panelCard" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#eef6ff"/>
+      <stop offset="100%" stop-color="#dbe9fb"/>
     </linearGradient>
     <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
       <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#17324f" flood-opacity="0.16"/>
     </filter>
-    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
-      <path d="M0 0 10 5 0 10z" fill="#537190"/>
+    <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 8 4 0 8z" fill="#58789b"/>
     </marker>
-    <symbol id="i-apigw" viewBox="0 0 96 96">
-      <rect x="8" y="8" width="80" height="80" rx="22" fill="#FF9900"/>
-      <path d="M28 34h40v8H28zm0 20h40v8H28z" fill="#fff"/>
-      <path d="M34 30h8v36h-8zm20 0h8v36h-8z" fill="#fff"/>
+
+    <symbol id="icon-user" viewBox="0 0 96 96">
+      <circle cx="48" cy="48" r="40" fill="#17324f"/>
+      <path d="M26 58c6-10 14-15 22-15s16 5 22 15" fill="none" stroke="#e8f0fb" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="48" cy="36" r="12" fill="#e8f0fb"/>
+      <rect x="24" y="54" width="18" height="14" rx="5" fill="#0f62fe"/>
+      <path d="M18 60h12" stroke="#0f62fe" stroke-width="5" stroke-linecap="round"/>
     </symbol>
-    <symbol id="i-lambda" viewBox="0 0 96 96">
-      <rect x="8" y="8" width="80" height="80" rx="22" fill="#FF9900"/>
-      <path d="M29 26h12l11 22 13-22h11L58 52l16 18H61L49 56 40 70H28l15-20z" fill="#fff"/>
-    </symbol>
-    <symbol id="i-s3" viewBox="0 0 96 96">
-      <rect x="8" y="8" width="80" height="80" rx="22" fill="#FF9900"/>
-      <ellipse cx="48" cy="30" rx="22" ry="10" fill="#fff"/>
-      <path d="M26 30v24c0 6 10 11 22 11s22-5 22-11V30" fill="#fff"/>
-      <path d="M26 44c0 6 10 11 22 11s22-5 22-11" fill="none" stroke="#FF9900" stroke-width="4"/>
-    </symbol>
-    <symbol id="i-cloudfront" viewBox="0 0 96 96">
-      <rect x="8" y="8" width="80" height="80" rx="22" fill="#FF9900"/>
+    <symbol id="icon-cloudfront" viewBox="0 0 96 96">
+      <rect x="8" y="8" width="80" height="80" rx="22" fill="#ff9900"/>
       <circle cx="48" cy="48" r="20" fill="none" stroke="#fff" stroke-width="5"/>
-      <path d="M30 48h36M48 30a28 28 0 0 1 0 36m0-36a28 28 0 0 0 0 36M35 36c5 4 21 4 26 0M35 60c5-4 21-4 26 0" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+      <path d="M30 48h36M48 30a28 28 0 0 1 0 36m0-36a28 28 0 0 0 0 36" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/>
+      <path d="M34 37c5 4 23 4 28 0M34 59c5-4 23-4 28 0" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
     </symbol>
-    <symbol id="i-rds" viewBox="0 0 96 96">
-      <rect x="8" y="8" width="80" height="80" rx="22" fill="#FF9900"/>
+    <symbol id="icon-s3" viewBox="0 0 96 96">
+      <rect x="8" y="8" width="80" height="80" rx="22" fill="#ff9900"/>
       <ellipse cx="48" cy="28" rx="20" ry="9" fill="#fff"/>
-      <path d="M28 28v16c0 5 9 9 20 9s20-4 20-9V28" fill="#fff"/>
-      <path d="M28 44v16c0 5 9 9 20 9s20-4 20-9V44" fill="#fff" opacity="0.88"/>
+      <path d="M28 28v18c0 5 9 9 20 9s20-4 20-9V28" fill="#fff"/>
+      <path d="M28 46v16c0 5 9 9 20 9s20-4 20-9V46" fill="#fff" opacity="0.9"/>
     </symbol>
-    <symbol id="i-eks" viewBox="0 0 96 96">
-      <rect x="8" y="8" width="80" height="80" rx="22" fill="#FF9900"/>
+    <symbol id="icon-apigw" viewBox="0 0 96 96">
+      <rect x="8" y="8" width="80" height="80" rx="22" fill="#ff9900"/>
+      <path d="M28 32h40M28 48h40M28 64h40" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/>
+      <path d="M40 24v48M56 24v48" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="icon-lambda" viewBox="0 0 96 96">
+      <rect x="8" y="8" width="80" height="80" rx="22" fill="#ff9900"/>
+      <path d="M30 26h12l10 20 13-20h11L57 52l17 18H61L50 58 41 70H29l16-21z" fill="#fff"/>
+    </symbol>
+    <symbol id="icon-db" viewBox="0 0 96 96">
+      <rect x="8" y="8" width="80" height="80" rx="22" fill="#17324f"/>
+      <ellipse cx="48" cy="26" rx="20" ry="9" fill="#fff"/>
+      <path d="M28 26v18c0 5 9 9 20 9s20-4 20-9V26" fill="#fff"/>
+      <path d="M28 44v18c0 5 9 9 20 9s20-4 20-9V44" fill="#fff" opacity="0.85"/>
+    </symbol>
+    <symbol id="icon-eks" viewBox="0 0 96 96">
+      <rect x="8" y="8" width="80" height="80" rx="22" fill="#ff9900"/>
       <path d="M48 22 66 32v20L48 62 30 52V32z" fill="none" stroke="#fff" stroke-width="5" stroke-linejoin="round"/>
       <circle cx="48" cy="42" r="6" fill="#fff"/>
-      <circle cx="36" cy="36" r="4" fill="#fff" opacity="0.9"/>
-      <circle cx="60" cy="36" r="4" fill="#fff" opacity="0.9"/>
-      <circle cx="36" cy="48" r="4" fill="#fff" opacity="0.9"/>
-      <circle cx="60" cy="48" r="4" fill="#fff" opacity="0.9"/>
+      <circle cx="36" cy="36" r="4" fill="#fff"/>
+      <circle cx="60" cy="36" r="4" fill="#fff"/>
+      <circle cx="36" cy="48" r="4" fill="#fff"/>
+      <circle cx="60" cy="48" r="4" fill="#fff"/>
+    </symbol>
+    <symbol id="icon-docs" viewBox="0 0 96 96">
+      <rect x="14" y="10" width="54" height="72" rx="10" fill="#ffffff"/>
+      <path d="M54 10h18v18" fill="#dbeafe"/>
+      <path d="M54 10v18h18" fill="#bfdbfe"/>
+      <path d="M26 36h28M26 48h32M26 60h26" stroke="#5f748a" stroke-width="5" stroke-linecap="round"/>
+      <rect x="8" y="8" width="80" height="80" rx="22" fill="none" stroke="#0f62fe" stroke-width="6"/>
     </symbol>
   </defs>
 
-  <rect width="1400" height="860" rx="36" fill="url(#bg)"/>
-  <g opacity="0.42">
-    <path d="M0 116h1400M0 236h1400M0 356h1400M0 476h1400M0 596h1400M0 716h1400" stroke="#d2e3f4"/>
-    <path d="M160 0v860M360 0v860M560 0v860M760 0v860M960 0v860M1160 0v860" stroke="#d2e3f4"/>
+  <rect width="1600" height="980" rx="40" fill="url(#bg)"/>
+  <g opacity="0.34">
+    <path d="M0 120h1600M0 260h1600M0 400h1600M0 540h1600M0 680h1600M0 820h1600" stroke="#c8d9eb"/>
+    <path d="M180 0v980M380 0v980M580 0v980M780 0v980M980 0v980M1180 0v980M1380 0v980" stroke="#c8d9eb"/>
   </g>
 
-  <text x="72" y="84" fill="#14263b" font-size="38" font-weight="700">AWS Cloud / Serverless + Steering</text>
-  <text x="72" y="122" fill="#5f748a" font-size="18">Backend = API Gateway + Lambda, Frontend = S3 + CloudFront, optional steering cluster = EKS</text>
+  <text x="86" y="82" fill="#17324f" font-size="46" font-weight="700">AWS Cloud / Serverless + Steering</text>
+  <text x="86" y="122" fill="#587089" font-size="22">Static delivery uses CloudFront + S3. API traffic flows through API Gateway into a Lambda-hosted FastAPI runtime.</text>
+
+  <rect x="86" y="156" width="170" height="34" rx="17" fill="#17324f"/>
+  <text x="118" y="179" fill="#ffffff" font-size="16" font-weight="700">Request Path</text>
 
   <g filter="url(#shadow)">
-    <rect x="74" y="176" width="220" height="124" rx="28" fill="#ffffff"/>
-    <circle cx="138" cy="238" r="36" fill="#15314b"/>
-    <path d="M122 220h32a8 8 0 0 1 8 8v20a8 8 0 0 1-8 8h-32a8 8 0 0 1-8-8v-20a8 8 0 0 1 8-8z" fill="#e6f0fb"/>
-    <path d="M128 264c4-8 10-12 22-12s18 4 22 12" fill="none" stroke="#e6f0fb" stroke-width="4" stroke-linecap="round"/>
-    <circle cx="144" cy="236" r="8" fill="#0f62fe"/>
-    <text x="184" y="224" fill="#14263b" font-size="26" font-weight="700">업무 사용자</text>
-    <text x="184" y="253" fill="#5f748a" font-size="17">Browser / Edge Access</text>
-    <text x="184" y="278" fill="#5f748a" font-size="17">PaaS Setup / Blue Marble</text>
-  </g>
-
-  <g filter="url(#shadow)">
-    <rect x="370" y="156" width="312" height="148" rx="30" fill="url(#awsCard)"/>
-    <use href="#i-cloudfront" x="400" y="184" width="80" height="80"/>
-    <text x="498" y="216" fill="#14263b" font-size="28" font-weight="700">Amazon CloudFront</text>
-    <text x="498" y="248" fill="#5f748a" font-size="18">Global cache / TLS termination / static delivery</text>
-    <text x="498" y="276" fill="#5f748a" font-size="18">Primary frontend entry for users</text>
+    <rect x="86" y="216" width="248" height="150" rx="28" fill="#ffffff"/>
+    <use href="#icon-user" x="112" y="242" width="72" height="72"/>
+    <text x="196" y="272" fill="#17324f" font-size="27" font-weight="700">Business Users</text>
+    <text x="200" y="304" fill="#5f748a" font-size="18">Browser access from office or VPN</text>
+    <text x="200" y="330" fill="#5f748a" font-size="18">Uses config and demo screens</text>
   </g>
 
   <g filter="url(#shadow)">
-    <rect x="758" y="156" width="300" height="148" rx="30" fill="url(#awsCard)"/>
-    <use href="#i-s3" x="788" y="184" width="80" height="80"/>
-    <text x="886" y="216" fill="#14263b" font-size="28" font-weight="700">Amazon S3</text>
-    <text x="886" y="248" fill="#5f748a" font-size="18">Static frontend hosting origin</text>
-    <text x="886" y="276" fill="#5f748a" font-size="18">`public/` sync target</text>
+    <rect x="394" y="176" width="354" height="164" rx="30" fill="url(#awsCard)"/>
+    <use href="#icon-cloudfront" x="422" y="212" width="76" height="76"/>
+    <text x="520" y="246" fill="#17324f" font-size="29" font-weight="700">Amazon CloudFront</text>
+    <text x="522" y="282" fill="#5f748a" font-size="19">Single public edge entry for the web app</text>
+    <text x="522" y="310" fill="#5f748a" font-size="19">Caches static files and forwards API routes</text>
   </g>
 
   <g filter="url(#shadow)">
-    <rect x="370" y="356" width="312" height="148" rx="30" fill="url(#awsCard)"/>
-    <use href="#i-apigw" x="400" y="384" width="80" height="80"/>
-    <text x="498" y="416" fill="#14263b" font-size="28" font-weight="700">API Gateway</text>
-    <text x="498" y="448" fill="#5f748a" font-size="18">`/api`, `/auth`, `/db`, `/upload`, `/health`</text>
-    <text x="498" y="476" fill="#5f748a" font-size="18">Public API endpoint</text>
+    <rect x="804" y="176" width="330" height="164" rx="30" fill="url(#awsCard)"/>
+    <use href="#icon-s3" x="832" y="212" width="76" height="76"/>
+    <text x="930" y="246" fill="#17324f" font-size="29" font-weight="700">Amazon S3</text>
+    <text x="932" y="282" fill="#5f748a" font-size="19">Static origin for files synced from public/</text>
+    <text x="932" y="310" fill="#5f748a" font-size="19">Frontend bundle, images, and docs assets</text>
   </g>
 
   <g filter="url(#shadow)">
-    <rect x="758" y="356" width="300" height="148" rx="30" fill="url(#awsCard)"/>
-    <use href="#i-lambda" x="788" y="384" width="80" height="80"/>
-    <text x="886" y="416" fill="#14263b" font-size="28" font-weight="700">AWS Lambda</text>
-    <text x="886" y="448" fill="#5f748a" font-size="18">Mangum-wrapped FastAPI runtime</text>
-    <text x="886" y="476" fill="#5f748a" font-size="18">Uses `infra/aws/template.yaml`</text>
+    <rect x="394" y="404" width="354" height="164" rx="30" fill="url(#awsCard)"/>
+    <use href="#icon-apigw" x="422" y="440" width="76" height="76"/>
+    <text x="520" y="474" fill="#17324f" font-size="29" font-weight="700">API Gateway</text>
+    <text x="522" y="510" fill="#5f748a" font-size="19">Public HTTPS API surface for auth and app APIs</text>
+    <text x="522" y="538" fill="#5f748a" font-size="19">Covers /api, /auth, /db, /upload, /health</text>
   </g>
 
   <g filter="url(#shadow)">
-    <rect x="1110" y="356" width="220" height="148" rx="30" fill="url(#sideCard)"/>
-    <use href="#i-rds" x="1134" y="386" width="72" height="72"/>
-    <text x="1222" y="416" fill="#14263b" font-size="24" font-weight="700">Data Store</text>
-    <text x="1222" y="446" fill="#5f748a" font-size="16">Aurora / RDS</text>
-    <text x="1222" y="470" fill="#5f748a" font-size="16">or external DB</text>
+    <rect x="804" y="404" width="330" height="164" rx="30" fill="url(#awsCard)"/>
+    <use href="#icon-lambda" x="832" y="440" width="76" height="76"/>
+    <text x="930" y="474" fill="#17324f" font-size="29" font-weight="700">AWS Lambda</text>
+    <text x="932" y="510" fill="#5f748a" font-size="19">Mangum-wrapped FastAPI application runtime</text>
+    <text x="932" y="538" fill="#5f748a" font-size="19">Defined by infra/aws/template.yaml</text>
   </g>
 
   <g filter="url(#shadow)">
-    <rect x="74" y="574" width="1252" height="210" rx="34" fill="url(#sideCard)"/>
-    <text x="112" y="624" fill="#14263b" font-size="30" font-weight="700">Steering / Ops Cluster (Optional)</text>
-    <text x="112" y="656" fill="#5f748a" font-size="18">eksctl + kubectl + aws cli 로 운영용 steering plane 을 별도 구성하고, 이 저장소의 관리 설정을 분리할 수 있습니다.</text>
-
-    <rect x="112" y="690" width="170" height="52" rx="18" fill="#13293d"/>
-    <text x="148" y="724" fill="#ffffff" font-size="18" font-weight="700">aws cli</text>
-    <rect x="302" y="690" width="170" height="52" rx="18" fill="#0f62fe"/>
-    <text x="350" y="724" fill="#ffffff" font-size="18" font-weight="700">eksctl</text>
-    <rect x="492" y="690" width="170" height="52" rx="18" fill="#1f8a70"/>
-    <text x="540" y="724" fill="#ffffff" font-size="18" font-weight="700">kubectl</text>
-
-    <rect x="720" y="652" width="250" height="108" rx="26" fill="#ffffff"/>
-    <use href="#i-eks" x="742" y="676" width="66" height="66"/>
-    <text x="826" y="696" fill="#14263b" font-size="24" font-weight="700">Amazon EKS</text>
-    <text x="826" y="724" fill="#5f748a" font-size="16">Optional steering cluster</text>
-    <text x="826" y="746" fill="#5f748a" font-size="16">Ops / monitoring / policies</text>
-
-    <rect x="1022" y="652" width="272" height="108" rx="26" fill="#ffffff"/>
-    <text x="1048" y="692" fill="#14263b" font-size="24" font-weight="700">Repo Artifacts</text>
-    <text x="1048" y="720" fill="#5f748a" font-size="16">setup profile / shell scripts / screenshots</text>
-    <text x="1048" y="744" fill="#5f748a" font-size="16">README step orchestration</text>
+    <rect x="1190" y="404" width="280" height="164" rx="30" fill="url(#panelCard)"/>
+    <use href="#icon-db" x="1218" y="440" width="76" height="76"/>
+    <text x="1316" y="474" fill="#17324f" font-size="28" font-weight="700">Data Store</text>
+    <text x="1318" y="510" fill="#5f748a" font-size="18">Aurora or RDS when persistent storage is needed</text>
+    <text x="1318" y="536" fill="#5f748a" font-size="18">Can also point to an external database</text>
   </g>
 
-  <path d="M294 238H370" fill="none" stroke="#537190" stroke-width="6" marker-end="url(#arrow)"/>
-  <path d="M526 304v34" fill="none" stroke="#537190" stroke-width="6" marker-end="url(#arrow)"/>
-  <path d="M682 230h76" fill="none" stroke="#537190" stroke-width="6" marker-end="url(#arrow)"/>
-  <path d="M682 430h76" fill="none" stroke="#537190" stroke-width="6" marker-end="url(#arrow)"/>
-  <path d="M1058 430h52" fill="none" stroke="#537190" stroke-width="6" marker-end="url(#arrow)"/>
-  <path d="M214 574V320h0" fill="none" stroke="#6c8aa8" stroke-width="4" stroke-dasharray="12 12"/>
-  <path d="M583 716h137" fill="none" stroke="#537190" stroke-width="6" marker-end="url(#arrow)"/>
-  <path d="M970 706h52" fill="none" stroke="#537190" stroke-width="6" marker-end="url(#arrow)"/>
-  <path d="M840 652V522" fill="none" stroke="#6c8aa8" stroke-width="4" stroke-dasharray="12 12" marker-end="url(#arrow)"/>
+  <rect x="86" y="622" width="214" height="34" rx="17" fill="#0f62fe"/>
+  <text x="116" y="645" fill="#ffffff" font-size="16" font-weight="700">Optional Provisioning Plane</text>
+
+  <g filter="url(#shadow)">
+    <rect x="86" y="682" width="1384" height="224" rx="34" fill="url(#panelCard)"/>
+    <text x="126" y="734" fill="#17324f" font-size="34" font-weight="700">Steering and Operations Layer</text>
+    <text x="126" y="770" fill="#5f748a" font-size="20">The optional EKS plane is separate from the request path and is provisioned with the scripts under scripts/aws/ and infra/aws/steering.</text>
+
+    <rect x="126" y="804" width="214" height="62" rx="20" fill="#17324f"/>
+    <text x="184" y="843" fill="#ffffff" font-size="22" font-weight="700">aws cli</text>
+
+    <rect x="364" y="804" width="214" height="62" rx="20" fill="#0f62fe"/>
+    <text x="436" y="843" fill="#ffffff" font-size="22" font-weight="700">eksctl</text>
+
+    <rect x="602" y="804" width="214" height="62" rx="20" fill="#1f8a70"/>
+    <text x="664" y="843" fill="#ffffff" font-size="22" font-weight="700">kubectl</text>
+
+    <rect x="860" y="784" width="276" height="102" rx="26" fill="#ffffff"/>
+    <use href="#icon-eks" x="884" y="802" width="62" height="62"/>
+    <text x="962" y="822" fill="#17324f" font-size="26" font-weight="700">Amazon EKS</text>
+    <text x="964" y="850" fill="#5f748a" font-size="17">Steering cluster for ops policies and add-ons</text>
+
+    <rect x="1172" y="784" width="258" height="102" rx="26" fill="#ffffff"/>
+    <use href="#icon-docs" x="1194" y="804" width="58" height="58"/>
+    <text x="1268" y="822" fill="#17324f" font-size="26" font-weight="700">Repo Assets</text>
+    <text x="1270" y="850" fill="#5f748a" font-size="17">profiles, manifests, shell scripts, screenshots</text>
+  </g>
+
+  <path d="M334 291H394" fill="none" stroke="#58789b" stroke-width="6" marker-end="url(#arrow)"/>
+  <path d="M748 258H804" fill="none" stroke="#58789b" stroke-width="6" marker-end="url(#arrow)"/>
+  <path d="M572 340v64" fill="none" stroke="#58789b" stroke-width="6" marker-end="url(#arrow)"/>
+  <path d="M748 486H804" fill="none" stroke="#58789b" stroke-width="6" marker-end="url(#arrow)"/>
+  <path d="M1134 486h56" fill="none" stroke="#58789b" stroke-width="6" marker-end="url(#arrow)"/>
+
+  <path d="M816 835h44" fill="none" stroke="#58789b" stroke-width="6" marker-end="url(#arrow)"/>
+  <path d="M1136 835h36" fill="none" stroke="#58789b" stroke-width="6" marker-end="url(#arrow)"/>
+  <path d="M968 784V612" fill="none" stroke="#7a95b5" stroke-width="4" stroke-dasharray="12 12"/>
 </svg>
