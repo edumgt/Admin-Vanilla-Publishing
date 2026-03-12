@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-vanilla-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: admin-vanilla-frontend
+  template:
+    metadata:
+      labels:
+        app: admin-vanilla-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: ghcr.io/example/admin-vanilla-frontend:latest
+          ports:
+            - containerPort: 80
+              name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: admin-vanilla-frontend
+spec:
+  selector:
+    app: admin-vanilla-frontend
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

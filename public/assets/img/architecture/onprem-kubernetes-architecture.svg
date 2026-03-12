@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 860" role="img" aria-labelledby="title desc">
+  <title id="title">On Prem Kubernetes Architecture</title>
+  <desc id="desc">Admin Vanilla Publishing on prem Kubernetes architecture with ingress, frontend deployment, backend deployment and PostgreSQL StatefulSet.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f7fbff"/>
+      <stop offset="100%" stop-color="#e6effb"/>
+    </linearGradient>
+    <linearGradient id="k8sCard" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#eef5ff"/>
+      <stop offset="100%" stop-color="#dce9ff"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="16" flood-color="#17324f" flood-opacity="0.16"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+      <path d="M0 0 10 5 0 10z" fill="#537190"/>
+    </marker>
+  </defs>
+  <rect width="1400" height="860" rx="36" fill="url(#bg)"/>
+  <text x="72" y="82" fill="#14263b" font-size="38" font-weight="700">On Prem / Kubernetes</text>
+  <text x="72" y="118" fill="#5f748a" font-size="18">Ingress, frontend/backend deployments, PostgreSQL StatefulSet, Kustomize base manifests</text>
+
+  <g filter="url(#shadow)">
+    <rect x="82" y="182" width="232" height="130" rx="28" fill="#ffffff"/>
+    <text x="116" y="222" fill="#14263b" font-size="28" font-weight="700">업무 사용자</text>
+    <text x="116" y="256" fill="#5f748a" font-size="18">Browser / Intranet</text>
+    <text x="116" y="284" fill="#5f748a" font-size="18">Host based access</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="394" y="160" width="314" height="150" rx="30" fill="url(#k8sCard)"/>
+    <circle cx="456" cy="234" r="36" fill="#2563eb"/>
+    <path d="M456 202l25 14v28l-25 14-25-14v-28z" fill="none" stroke="#ffffff" stroke-width="5" stroke-linejoin="round"/>
+    <text x="520" y="220" fill="#14263b" font-size="28" font-weight="700">Ingress Controller</text>
+    <text x="520" y="252" fill="#5f748a" font-size="18">`app.example.com` / `api.example.com`</text>
+    <text x="520" y="280" fill="#5f748a" font-size="18">TLS / routing / upload proxy size</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="792" y="142" width="520" height="490" rx="34" fill="#ffffff"/>
+    <text x="826" y="190" fill="#14263b" font-size="30" font-weight="700">Cluster Namespace: admin-vanilla</text>
+    <rect x="826" y="224" width="210" height="142" rx="26" fill="url(#k8sCard)"/>
+    <text x="854" y="266" fill="#14263b" font-size="24" font-weight="700">Frontend Deployment</text>
+    <text x="854" y="296" fill="#5f748a" font-size="16">Nginx static pods</text>
+    <text x="854" y="320" fill="#5f748a" font-size="16">Service: admin-vanilla-frontend</text>
+    <rect x="1072" y="224" width="210" height="142" rx="26" fill="url(#k8sCard)"/>
+    <text x="1100" y="266" fill="#14263b" font-size="24" font-weight="700">Backend Deployment</text>
+    <text x="1100" y="296" fill="#5f748a" font-size="16">FastAPI pods</text>
+    <text x="1100" y="320" fill="#5f748a" font-size="16">readiness / liveness probes</text>
+    <rect x="950" y="420" width="210" height="142" rx="26" fill="#eef6f0"/>
+    <text x="980" y="462" fill="#14263b" font-size="24" font-weight="700">PostgreSQL</text>
+    <text x="980" y="492" fill="#5f748a" font-size="16">StatefulSet + PVC</text>
+    <text x="980" y="516" fill="#5f748a" font-size="16">Secret driven credentials</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="160" y="420" width="500" height="230" rx="34" fill="#ffffff"/>
+    <text x="196" y="468" fill="#14263b" font-size="30" font-weight="700">Bootstrap Files</text>
+    <text x="196" y="500" fill="#5f748a" font-size="18">`kustomization.yaml`, `configmap.yaml`, `secret.example.yaml`, `backend-deployment.yaml` 기준</text>
+    <rect x="196" y="536" width="190" height="80" rx="20" fill="#edf4ff"/>
+    <text x="218" y="584" fill="#14263b" font-size="21" font-weight="700">kubectl apply -k</text>
+    <rect x="408" y="536" width="216" height="80" rx="20" fill="#edf4ff"/>
+    <text x="432" y="584" fill="#14263b" font-size="21" font-weight="700">ConfigMap / Secret</text>
+  </g>
+
+  <path d="M314 246h80" fill="none" stroke="#537190" stroke-width="6" marker-end="url(#arrow)"/>
+  <path d="M708 236h84" fill="none" stroke="#537190" stroke-width="6" marker-end="url(#arrow)"/>
+  <path d="M1056 366v54" fill="none" stroke="#537190" stroke-width="6" marker-end="url(#arrow)"/>
+  <path d="M516 420V310" fill="none" stroke="#6c8aa8" stroke-width="4" stroke-dasharray="12 12" marker-end="url(#arrow)"/>
+  <path d="M1036 390l-82 30" fill="none" stroke="#537190" stroke-width="5" marker-end="url(#arrow)"/>
+  <path d="M1160 390l0 30" fill="none" stroke="#537190" stroke-width="5" marker-end="url(#arrow)"/>
+</svg>

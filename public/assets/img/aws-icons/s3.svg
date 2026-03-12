@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title">
+  <title>Amazon S3</title>
+  <rect x="8" y="8" width="80" height="80" rx="22" fill="#FF9900"/>
+  <ellipse cx="48" cy="30" rx="22" ry="10" fill="#fff"/>
+  <path d="M26 30v24c0 6 10 11 22 11s22-5 22-11V30" fill="#fff"/>
+  <path d="M26 44c0 6 10 11 22 11s22-5 22-11" fill="none" stroke="#FF9900" stroke-width="4"/>
+</svg>

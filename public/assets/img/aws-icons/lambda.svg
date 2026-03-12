@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title">
+  <title>AWS Lambda</title>
+  <rect x="8" y="8" width="80" height="80" rx="22" fill="#FF9900"/>
+  <path d="M29 26h12l11 22 13-22h11L58 52l16 18H61L49 56 40 70H28l15-20z" fill="#fff"/>
+</svg>

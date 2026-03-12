@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: admin-vanilla-steering-config
+  namespace: admin-vanilla-steering
+data:
+  repo: Admin-Vanilla-Publishing
+  primary_architecture: serverless
+  steering_cluster_role: ops-readonly
+  dashboards: "playbooks, deployment-status, screenshots"

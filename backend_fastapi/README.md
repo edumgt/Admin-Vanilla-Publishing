@@ -1,42 +1,59 @@
-# FastAPI + PostgreSQL Backend
+# backend_fastapi
 
-기존 정적 FE(`public/*.html`)와 연동하기 위한 Python 백엔드입니다.
+현재 저장소의 기준 백엔드입니다.
 
-## 1) 실행
+## 역할
+
+- `public/` 정적 파일 서빙
+- 로그인/JWT 발급
+- 블루마블을 포함한 HTML 화면용 데모 API 제공
+- PostgreSQL 기반 `todos`, `hotel_bookings`, `medical_reservations` 테이블 관리
+
+## 실행
+
+루트에서 실행:
+
+```bash
+./run_backend.sh
+```
+
+또는 수동 실행:
 
 ```bash
 cd backend_fastapi
-python3 -m venv .venv
-source .venv/bin/activate
+python3 -m venv ../.venv
+source ../.venv/bin/activate
 pip install -r requirements.txt
 export DATABASE_URL='postgresql+psycopg2://newhomepage:newhomepage@localhost:5432/newhomepage'
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-## 2) 테이블 자동 생성/시드
-
-서버 시작 시 아래 테이블이 자동 생성됩니다.
-- `todos`
-- `hotel_bookings`
-- `medical_reservations`
-
-`hotel_bookings`, `medical_reservations`는 최초 1회 샘플 데이터가 자동 입력됩니다.
-
-## 3) API
+## 핵심 엔드포인트
 
 - `GET /health`
-- `GET /api/todos`
-- `POST /api/todos`
-- `GET /api/bookings` : `work.html` 객실 예약 데이터
-- `GET /api/reservations` : `consultation.html` 병원 예약 데이터
-- `POST /login` : `login.html` 로그인 요청(`admin/manager/guest`, 비밀번호 `1111`)
+- `GET /health/live`
+- `GET /health/ready`
+- `POST /login`
+- `POST /auth/refresh`
+- `GET /api/bookings`
+- `GET /api/reservations`
+- `GET /api/menu`
+- `GET /api/members`
+- `GET /api/data`
+- `GET /db/inbound`
+- `GET /db/outbound`
 
-## 4) FE 연동 포인트
+화면별 전체 매핑은 [docs/api-mapping.md](/home/Admin-Vanilla-Publishing/docs/api-mapping.md) 를 참고하세요.
 
-프론트 스크립트는 기본적으로 `http://localhost:8000`을 API 베이스로 사용합니다.
+## 설정
 
-```js
-const API_BASE = window.APP_API_BASE || 'http://localhost:8000';
-```
+샘플 환경 변수는 [backend_fastapi/.env.example](/home/Admin-Vanilla-Publishing/backend_fastapi/.env.example) 에 있습니다.
 
-필요 시 HTML에서 `window.APP_API_BASE`를 먼저 세팅해서 다른 API 주소를 사용할 수 있습니다.
+주요 항목:
+
+- `APP_ENV`
+- `DATABASE_URL`
+- `CORS_ALLOW_ORIGINS`
+- `JWT_SECRET_KEY`
+- `DEMO_AUTH_ENABLED`
+- `DEMO_USERS_JSON`

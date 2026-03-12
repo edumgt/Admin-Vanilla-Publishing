@@ -3,24 +3,133 @@
 
 <head>
     <link href="assets/css/trello.css" rel="stylesheet">
+    <link href="assets/css/paas-setup.css" rel="stylesheet">
 </head>
 
 <body>
     <div id="cmmContainer"></div>
 
     <nav class="breadcrumb"></nav>
-    
+
     <div id="content">
-        
-        <div id="log-container"></div>
+        <div id="setup-app" class="setup-shell">
+            <section class="setup-hero">
+                <div>
+                    <p class="setup-kicker">Enterprise PaaS Bootstrap</p>
+                    <h1>환경 선택부터 배포 설정 파일까지 한 화면에서 구성</h1>
+                    <p class="setup-copy">
+                        AWS Cloud와 On Prem을 선택하면 배포 토폴로지, 추가 설치 항목,
+                        초기 설정 JSON, 실행 명령과 스캐폴드 파일을 바로 확인할 수 있습니다.
+                    </p>
+                </div>
+                <div class="setup-hero-status" id="setup-summary-card"></div>
+            </section>
+
+            <section class="setup-workspace">
+                <aside class="setup-sidebar">
+                    <div class="setup-panel">
+                        <div class="section-heading">
+                            <span>1</span>
+                            <div>
+                                <h2>배포 환경</h2>
+                                <p>클라우드 또는 온프레미스를 선택합니다.</p>
+                            </div>
+                        </div>
+                        <div class="choice-grid" id="environment-switch"></div>
+                        <div class="sub-choice-grid" id="onprem-switch"></div>
+                    </div>
+
+                    <div class="setup-panel">
+                        <div class="section-heading">
+                            <span>2</span>
+                            <div>
+                                <h2>초기 설정</h2>
+                                <p>선택한 환경에 맞는 기본값을 조정합니다.</p>
+                            </div>
+                        </div>
+                        <form id="setup-form" class="setup-form"></form>
+                        <div class="setup-actions">
+                            <button type="button" id="save-setup">선택 저장</button>
+                            <button type="button" id="download-setup">설정 JSON 다운로드</button>
+                            <button type="button" id="reset-setup">초기화</button>
+                        </div>
+                        <p id="setup-status" class="setup-status"></p>
+                    </div>
+                </aside>
+
+                <main class="setup-main">
+                    <section class="setup-panel">
+                        <div class="panel-header">
+                            <div>
+                                <p class="panel-kicker">Architecture</p>
+                                <h2 id="architecture-title"></h2>
+                            </div>
+                            <span class="environment-chip" id="environment-chip"></span>
+                        </div>
+                        <div class="architecture-layout">
+                            <div class="architecture-visual" id="architecture-visual"></div>
+                            <div class="architecture-grid" id="architecture-grid"></div>
+                        </div>
+                    </section>
+
+                    <section class="setup-panel">
+                        <div class="panel-header">
+                            <div>
+                                <p class="panel-kicker">Bootstrap Flow</p>
+                                <h2>환경 셋업 순서</h2>
+                            </div>
+                        </div>
+                        <div class="timeline-grid" id="timeline-grid"></div>
+                    </section>
+
+                    <section class="setup-panel dual-panel">
+                        <div>
+                            <div class="panel-header">
+                                <div>
+                                    <p class="panel-kicker">Add-ons</p>
+                                    <h2>추가 설치 항목</h2>
+                                </div>
+                            </div>
+                            <div class="install-grid" id="install-grid"></div>
+                        </div>
+                        <div>
+                            <div class="panel-header">
+                                <div>
+                                    <p class="panel-kicker">Artifacts</p>
+                                    <h2>생성된 초기 설정 파일</h2>
+                                </div>
+                            </div>
+                            <div class="artifact-list" id="artifact-list"></div>
+                        </div>
+                    </section>
+
+                    <section class="setup-panel dual-panel">
+                        <div>
+                            <div class="panel-header">
+                                <div>
+                                    <p class="panel-kicker">Commands</p>
+                                    <h2>권장 실행 명령</h2>
+                                </div>
+                            </div>
+                            <div class="command-list" id="command-list"></div>
+                        </div>
+                        <div>
+                            <div class="panel-header">
+                                <div>
+                                    <p class="panel-kicker">Preview</p>
+                                    <h2>초기 설정 JSON 미리보기</h2>
+                                </div>
+                            </div>
+                            <pre class="json-preview" id="json-preview"></pre>
+                        </div>
+                    </section>
+                </main>
+            </section>
+        </div>
     </div>
 
-    
     <script type="module" src="assets/js/logomodule.js"></script>
-    
-    <script type="module" src="assets/js/chart.js"></script>
-    <script type="module" src="assets/js/cpulog.js"></script>
-    
+    <script type="module" src="assets/js/paas-setup.js"></script>
 </body>
 
 </html>

@@ -1,143 +1,183 @@
 # Admin Vanilla Publishing
 
-정적 HTML/Vanilla JS 화면과 Python(FastAPI)+PostgreSQL 백엔드를 함께 사용하는 샘플 프로젝트입니다.
+정적 HTML/Vanilla JS 화면과 `backend_fastapi` 기반 FastAPI 서버를 함께 사용하는 데모 저장소입니다.
 
-## 주요 화면
-![](./DOCS/image-1.png)
-![](./DOCS/image-2.png)
-![](./DOCS/image-3.png)
-![](./DOCS/image-4.png)
-![](./DOCS/image-5.png)
-![](./DOCS/image-6.png)
-![](./DOCS/image-7.png)
-![](./DOCS/image-8.png)
-![](./DOCS/image-9.png)
-![](./DOCS/image-10.png)
-![](./DOCS/image-11.png)
-![](./DOCS/image-12.png)
-![](./DOCS/image-13.png)
-![](./DOCS/image-14.png)
-![](./DOCS/image-15.png)
-![](./DOCS/image-16.png)
-![](./DOCS/image-17.png)
-![](./DOCS/image-18.png)
+## 현재 기준
 
-## 신규 추가 화면 (Playwright 캡처)
+- 단일 실행 기준 백엔드: `backend_fastapi`
+- 기본 접속 주소: `http://localhost:8000`
+- 정적 화면과 API를 같은 오리진에서 제공합니다.
+- legacy 참고 구현은 `backend/` 에 남아 있지만 신규 수정 기준은 아닙니다.
 
-### 1) 3D 블루마블 화면 (`burumable.html`)
-![블루마블 3D 화면](./DOCS/burumable-3d.png)
+## 빠른 실행
 
-### 2) 누락된 HTML 실행 화면 - `city.html`
-![city 실행 화면](browser:/tmp/codex_browser_invocations/58d1d43207dd06ec/artifacts/DOCS/city-execution.png)
-
-### 3) 누락된 HTML 실행 화면 - `timeline.html`
-![timeline 실행 화면](browser:/tmp/codex_browser_invocations/58d1d43207dd06ec/artifacts/DOCS/timeline-execution.png)
-
-
-## 1. 기술 스택 분석
-
-### Frontend
-- **Vanilla JavaScript + HTML/CSS** 기반 멀티 페이지 구성 (`public/*.html`).
-- **Tailwind CSS(번들 파일)** 및 커스텀 CSS 사용.
-- 주요 UI 라이브러리(정적 번들 포함):
-  - TUI Grid
-  - TUI Pagination
-  - FullCalendar (calendar3)
-  - AG Grid
-
-### Backend
-- **Python 3 + FastAPI** (`backend_fastapi/app/main.py`).
-- **SQLAlchemy 2.x ORM** (`backend_fastapi/app/models.py`, `database.py`).
-- **PostgreSQL** 연결 (`DATABASE_URL`, `psycopg2-binary`).
-- `uvicorn`으로 API 서버 실행.
-
-### Infra/실행
-- `docker compose`로 PostgreSQL 컨테이너 실행 (`backend_fastapi/docker-compose.yml`).
-- `run_backend.sh`로 백엔드 + 프론트 정적 서버 동시 실행.
-
----
-
-## 2. Python만으로 실행되는 모듈 체크
-
-아래는 Node/Express 없이 **Python 실행만으로 동작 가능한 모듈**입니다.
-
-1. **FastAPI 백엔드 모듈**
-   - 경로: `backend_fastapi/app/*`
-   - 실행: `uvicorn app.main:app --reload --host 0.0.0.0 --port 8000`
-
-2. **정적 프론트 서빙(파이썬 기본 모듈)**
-   - 경로: `public/*`
-   - 실행: `python3 -m http.server 5173 --directory public`
-
-3. **통합 실행 스크립트(파이썬 런타임 의존)**
-   - 파일: `run_backend.sh`
-   - 내부적으로 Python venv 구성, 의존성 설치, FastAPI 실행, `http.server` 실행.
-
----
-
-## 3. HTML 화면 기준 PostgreSQL 테이블/데이터 매핑
-
-이번 반영에서 아래 화면과 API를 직접 연결했습니다.
-
-### A) `public/work.html` (객실/예약 화면)
-- FE API: `GET /api/bookings`
-- DB 테이블: `hotel_bookings`
-  - `room_id`, `guest_name`, `check_in_date`, `check_out_date`, `arrival_time`, `departure_time`, `cost`
-- 서버 시작 시 샘플 데이터 자동 시드.
-
-### B) `public/consultation.html` (병원 예약 화면)
-- FE API: `GET /api/reservations`
-- DB 테이블: `medical_reservations`
-  - `name`, `department_id`, `date`, `time`
-- 서버 시작 시 샘플 데이터 자동 시드.
-
-> 기존 `todos` 테이블 및 `/api/todos` API는 그대로 유지됩니다.
-
----
-
-## 4. FE-Backend 연동 개선 내용
-
-- `public/assets/js/work.js`
-  - 상대경로(`/api/bookings`) 대신 `API_BASE` 기반 호출로 변경.
-- `public/assets/js/hospital.js`
-  - 상대경로(`/api/reservations`) 대신 `API_BASE` 기반 호출로 변경.
-- 기본값: `http://localhost:8000`
-  - 필요 시 `window.APP_API_BASE`로 오버라이드 가능.
-
-이제 프론트를 `:5173`에서 띄워도 백엔드 `:8000`과 직접 통신할 수 있습니다.
-
----
-
-## 5. 실행 방법
-
-### 5.1 빠른 실행
 ```bash
 ./run_backend.sh
 ```
-- PostgreSQL 컨테이너 실행
-- FastAPI 실행 (`:8000`)
-- 정적 프론트 실행 (`:5173`)
 
-### 5.2 수동 실행
+실행 후 확인:
+
+- 메인 화면: `http://localhost:8000/`
+- 블루마블 데모: `http://localhost:8000/burumable.html`
+- 헬스체크: `http://localhost:8000/health`
+- 준비상태 체크: `http://localhost:8000/health/ready`
+
+## 실행 구조
+
+1. `backend_fastapi/docker-compose.yml` 로 PostgreSQL 실행
+2. 루트 `.venv` 에 FastAPI 의존성 설치
+3. DB 준비 완료 후 FastAPI 실행
+4. FastAPI가 `public/` 정적 파일까지 직접 서빙
+
+개발 모드와 운영 모드 분리:
+
 ```bash
-# 1) DB 실행
-cd backend_fastapi
-docker compose up -d db
+# 개발 모드(default, reload on)
+APP_ENV=development ./run_backend.sh
 
-# 2) 백엔드 실행
-cd ../backend_fastapi
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-export DATABASE_URL='postgresql+psycopg2://newhomepage:newhomepage@localhost:5432/newhomepage'
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-
-# 3) 프론트 실행(별도 터미널)
-cd ..
-python3 -m http.server 5173 --directory public
+# 운영 모드(reload off)
+APP_ENV=production ./run_backend.sh
 ```
 
-### 5.3 확인 URL
-- Health: `http://localhost:8000/health`
-- Work 화면: `http://localhost:5173/work.html`
-- Consultation 화면: `http://localhost:5173/consultation.html`
+## 주요 환경 변수
+
+- `DATABASE_URL`
+- `APP_ENV`
+- `CORS_ALLOW_ORIGINS`
+- `JWT_SECRET_KEY`
+- `ACCESS_TOKEN_TTL_MINUTES`
+- `REFRESH_TOKEN_TTL_MINUTES`
+- `DEMO_AUTH_ENABLED`
+- `DEMO_USERS_JSON`
+
+샘플 값은 [backend_fastapi/.env.example](/home/Admin-Vanilla-Publishing/backend_fastapi/.env.example) 에 있습니다.
+
+## API/화면 매핑
+
+화면별 호출 API와 구현 여부는 [docs/api-mapping.md](/home/Admin-Vanilla-Publishing/docs/api-mapping.md) 에 정리했습니다.
+
+## PaaS 설치 콘솔
+
+- 설치 화면: `http://localhost:8000/config.html`
+- 1차 선택: `AWS Cloud` 또는 `On Prem`
+- 2차 선택: `On Prem`일 때 `Docker Compose` 또는 `Kubernetes`
+- 현재 선택값은 브라우저에 저장되며, 화면에서 바로 초기 설정 JSON 다운로드가 가능합니다.
+
+배포 스캐폴드 위치:
+
+- 공통 프로파일: [infra/setup.profile.example.json](/home/Admin-Vanilla-Publishing/infra/setup.profile.example.json)
+- AWS 서버리스: [infra/aws/README.md](/home/Admin-Vanilla-Publishing/infra/aws/README.md)
+- Docker 온프레미스: [infra/docker/README.md](/home/Admin-Vanilla-Publishing/infra/docker/README.md)
+- Kubernetes 온프레미스: [infra/k8s/README.md](/home/Admin-Vanilla-Publishing/infra/k8s/README.md)
+
+실행 중에는 `/infra/...` 경로로 브라우저에서 설정 파일을 직접 열 수 있습니다.
+
+## 아키텍처 SVG
+
+### AWS Cloud / Serverless + Steering
+
+![AWS Cloud Architecture](./public/assets/img/architecture/aws-serverless-architecture.svg)
+
+### On Prem / Docker Compose
+
+![On Prem Docker Architecture](./public/assets/img/architecture/onprem-docker-architecture.svg)
+
+### On Prem / Kubernetes
+
+![On Prem Kubernetes Architecture](./public/assets/img/architecture/onprem-kubernetes-architecture.svg)
+
+아키텍처 SVG에서 사용하는 AWS 아이콘 자산:
+
+- [API Gateway SVG](/home/Admin-Vanilla-Publishing/public/assets/img/aws-icons/api-gateway.svg)
+- [Lambda SVG](/home/Admin-Vanilla-Publishing/public/assets/img/aws-icons/lambda.svg)
+- [S3 SVG](/home/Admin-Vanilla-Publishing/public/assets/img/aws-icons/s3.svg)
+- [CloudFront SVG](/home/Admin-Vanilla-Publishing/public/assets/img/aws-icons/cloudfront.svg)
+- [RDS SVG](/home/Admin-Vanilla-Publishing/public/assets/img/aws-icons/rds.svg)
+- [EKS SVG](/home/Admin-Vanilla-Publishing/public/assets/img/aws-icons/eks.svg)
+
+## AWS Cloud 순차 실행
+
+### 1. Foundation Bootstrap
+
+AWS CLI 로 배포용 S3 버킷과 프론트 버킷을 준비합니다.
+
+```bash
+chmod +x scripts/aws/01-bootstrap-serverless-foundation.sh
+./scripts/aws/01-bootstrap-serverless-foundation.sh
+```
+
+스크립트: [01-bootstrap-serverless-foundation.sh](/home/Admin-Vanilla-Publishing/scripts/aws/01-bootstrap-serverless-foundation.sh)
+
+### 2. Serverless Stack Deploy
+
+SAM + AWS CLI 로 Lambda, API Gateway, S3, CloudFront 스택을 배포합니다.
+
+```bash
+chmod +x scripts/aws/02-deploy-serverless-stack.sh
+./scripts/aws/02-deploy-serverless-stack.sh
+```
+
+스크립트: [02-deploy-serverless-stack.sh](/home/Admin-Vanilla-Publishing/scripts/aws/02-deploy-serverless-stack.sh)
+
+### 3. Frontend Sync
+
+정적 프론트를 S3로 동기화하고 CloudFront invalidation 을 실행합니다.
+
+```bash
+chmod +x scripts/aws/03-sync-frontend.sh
+./scripts/aws/03-sync-frontend.sh
+```
+
+스크립트: [03-sync-frontend.sh](/home/Admin-Vanilla-Publishing/scripts/aws/03-sync-frontend.sh)
+
+### 4. Steering Cluster 생성
+
+운영용 steering plane 이 필요하면 `aws cli + eksctl + kubectl` 조합으로 EKS 클러스터를 별도로 만듭니다.
+
+```bash
+chmod +x scripts/aws/11-create-steering-cluster.sh
+./scripts/aws/11-create-steering-cluster.sh
+```
+
+스크립트: [11-create-steering-cluster.sh](/home/Admin-Vanilla-Publishing/scripts/aws/11-create-steering-cluster.sh)
+
+### 5. Steering Add-ons 적용
+
+steering namespace, configmap, read-only service account 를 적용합니다.
+
+```bash
+chmod +x scripts/aws/12-bootstrap-steering-addons.sh
+./scripts/aws/12-bootstrap-steering-addons.sh
+```
+
+스크립트: [12-bootstrap-steering-addons.sh](/home/Admin-Vanilla-Publishing/scripts/aws/12-bootstrap-steering-addons.sh)
+
+관련 manifest:
+
+- [namespace.yaml](/home/Admin-Vanilla-Publishing/infra/aws/steering/namespace.yaml)
+- [configmap.yaml](/home/Admin-Vanilla-Publishing/infra/aws/steering/configmap.yaml)
+- [steering-rbac.yaml](/home/Admin-Vanilla-Publishing/infra/aws/steering/steering-rbac.yaml)
+
+## 중요 화면 캡처
+
+Playwright 컨테이너 기반 캡처 스크립트: [capture-screens.js](/home/Admin-Vanilla-Publishing/scripts/capture-screens.js)
+
+```bash
+docker run --rm --network host -v "$PWD":/work -w /work \
+  mcr.microsoft.com/playwright:v1.58.2-jammy \
+  sh -lc "mkdir -p /tmp/pw && cd /tmp/pw && npm init -y >/dev/null 2>&1 && npm install playwright-core@1.58.2 >/dev/null 2>&1 && PLAYWRIGHT_BROWSERS_PATH=/ms-playwright NODE_PATH=/tmp/pw/node_modules node /work/scripts/capture-screens.js"
+```
+
+### PaaS Setup / AWS Cloud
+
+![PaaS Setup AWS](./DOCS/paas-setup-aws.png)
+
+### PaaS Setup / On Prem Kubernetes
+
+![PaaS Setup On Prem Kubernetes](./DOCS/paas-setup-onprem-k8s.png)
+
+## 3D 블루마블 화면
+
+### `public/burumable.html`
+
+![블루마블 3D 화면](./DOCS/burumable-3d.png)

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title">
+  <title>Amazon RDS PostgreSQL</title>
+  <rect x="8" y="8" width="80" height="80" rx="22" fill="#FF9900"/>
+  <ellipse cx="48" cy="28" rx="20" ry="9" fill="#fff"/>
+  <path d="M28 28v16c0 5 9 9 20 9s20-4 20-9V28" fill="#fff"/>
+  <path d="M28 44v16c0 5 9 9 20 9s20-4 20-9V44" fill="#fff" opacity="0.88"/>
+</svg>

@@ -1,0 +1,30 @@
+[
+  {
+    "ParameterKey": "ProjectName",
+    "ParameterValue": "admin-vanilla"
+  },
+  {
+    "ParameterKey": "StageName",
+    "ParameterValue": "prod"
+  },
+  {
+    "ParameterKey": "AllowedOrigin",
+    "ParameterValue": "https://app.example.com"
+  },
+  {
+    "ParameterKey": "FrontendBucketName",
+    "ParameterValue": "admin-vanilla-frontend-prod"
+  },
+  {
+    "ParameterKey": "DatabaseUrl",
+    "ParameterValue": "sqlite:////tmp/admin-vanilla.db"
+  },
+  {
+    "ParameterKey": "LambdaMemorySize",
+    "ParameterValue": "1024"
+  },
+  {
+    "ParameterKey": "LambdaTimeout",
+    "ParameterValue": "30"
+  }
+]

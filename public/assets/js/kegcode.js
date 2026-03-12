@@ -1,3 +1,5 @@
+import { buildApiUrl } from './common.js';
+
 async function fetchJson(url) {
   try {
     const response = await fetch(url);
@@ -17,7 +19,7 @@ async function fetchJson(url) {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const groupList = await fetchJson("http://127.0.0.1:8080/api/codegroup");
+  const groupList = await fetchJson(buildApiUrl("/api/codegroup"));
 
   if (groupList) {
     localStorage.setItem("codegroupData", JSON.stringify(groupList));
@@ -53,7 +55,7 @@ function setupMasterGrid(data) {
     paginationPageSize: 10,
     onRowClicked: async event => {
       const groupcode = event.data.groupcode;
-      const detailList = await fetchJson(`http://127.0.0.1:8080/api/code?groupcode=${groupcode}`);
+      const detailList = await fetchJson(buildApiUrl(`/api/code?groupcode=${encodeURIComponent(groupcode)}`));
       if (detailList) updateDetailGrid(detailList);
     },
     onCellEditingStopped: params => {

@@ -1,4 +1,16 @@
 const COMMON_BUTTON_BASE_CLASS = "items-center px-3 py-1 text-white rounded bg-gray-700 hover:bg-gray-600 space-x-2";
+const DEFAULT_API_ORIGIN = window.location.origin && window.location.origin !== "null"
+    ? window.location.origin
+    : "http://localhost:8000";
+const API_BASE = window.APP_API_BASE || DEFAULT_API_ORIGIN;
+window.APP_API_BASE = API_BASE;
+
+function buildApiUrl(path = "") {
+    if (!path) {
+        return API_BASE;
+    }
+    return new URL(path, API_BASE).toString();
+}
 
 function createIconButton({
     iconClass,
@@ -88,7 +100,7 @@ const createTanslations = {
             orgtree: "Permission Management",
             document: "Document Management",
             wms: "WMS",
-            config: "System log",
+            config: "PaaS Setup",
             network: "Consultant",
 
             locker: "Locker",
@@ -143,7 +155,7 @@ const createTanslations = {
             orgtree: "권한관리",
             document: "문서분석",
             wms: "WMS",
-            config: "시스템 로그",
+            config: "환경 셋업",
 
             locker: "사물함",
 
@@ -199,7 +211,7 @@ const createTanslations = {
             orgtree: "権限管理",
             document: "文書管理",
             wms: "WMS",
-            config: "システムログ",
+            config: "環境セットアップ",
             network: "コンサルティングの指定",
 
             locker: "사물함",
@@ -354,6 +366,8 @@ class createSaveRenderer {
 
 
 export {
+    API_BASE,
+    buildApiUrl,
     createAddButton,
     createDelButton,
     createCloseButton,

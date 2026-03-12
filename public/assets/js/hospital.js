@@ -1,4 +1,4 @@
-const API_BASE = window.APP_API_BASE || 'http://localhost:8000';
+import { buildApiUrl } from './common.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     const currentDateTime = new Date();
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!reservations) {
             //reservations = await fetchData('assets/mock/reservations.json');
-            reservations = await fetchData(`${API_BASE}/api/reservations`);
+            reservations = await fetchData(buildApiUrl('/api/reservations'));
             if (reservations) {
 
                 saveToStorage('reservations', reservations);
@@ -293,18 +293,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatBotSend = document.getElementById('chat-bot-send');
     chatBot.classList.remove('hidden');
 
-    // GitHub Copilot 연동 로직
     async function callCopilotAPI(question) {
-        const response = await fetch('https://api.github.com/copilot-api', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer YOUR_GITHUB_COPILOT_TOKEN' // GitHub Copilot API 토큰을 여기에 입력하세요
-            },
-            body: JSON.stringify({ question })
-        });
-        const data = await response.json();
-        return data.answer;
+        const normalizedQuestion = question.toLowerCase();
+        if (normalizedQuestion.includes('열') || normalizedQuestion.includes('감기')) {
+            return '내과';
+        }
+        if (normalizedQuestion.includes('피부') || normalizedQuestion.includes('알레르기')) {
+            return '피부과';
+        }
+        if (normalizedQuestion.includes('이') || normalizedQuestion.includes('치아')) {
+            return '치과';
+        }
+        if (normalizedQuestion.includes('눈') || normalizedQuestion.includes('시력')) {
+            return '안과';
+        }
+        return '가정의학과';
     }
 
     // 채팅 봇 메시지 추가 함수
