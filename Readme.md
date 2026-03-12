@@ -22,6 +22,17 @@
 ![](./DOCS/image-17.png)
 ![](./DOCS/image-18.png)
 
+## 신규 추가 화면 (Playwright 캡처)
+
+### 1) Tailwind 기반 블루마블 화면 (`burumable.html`)
+![블루마블 Tailwind 화면](browser:/tmp/codex_browser_invocations/58d1d43207dd06ec/artifacts/DOCS/burumable-tailwind.png)
+
+### 2) 누락된 HTML 실행 화면 - `city.html`
+![city 실행 화면](browser:/tmp/codex_browser_invocations/58d1d43207dd06ec/artifacts/DOCS/city-execution.png)
+
+### 3) 누락된 HTML 실행 화면 - `timeline.html`
+![timeline 실행 화면](browser:/tmp/codex_browser_invocations/58d1d43207dd06ec/artifacts/DOCS/timeline-execution.png)
+
 
 ## 1. 기술 스택 분석
 
