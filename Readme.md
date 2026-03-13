@@ -2,11 +2,35 @@
 
 정적 HTML/Vanilla JS 화면과 `backend_fastapi` 기반 FastAPI 서버를 한 저장소에서 함께 운영하는 데모 리포입니다. 현재 수정 기준 백엔드는 `backend_fastapi/` 이고, `backend/` 는 legacy 참고 구현입니다.
 
+## 빠른 시작
+
+```bash
+./run_backend.sh
+```
+
+실행 후 확인:
+
+- 메인 화면: `http://localhost:8000/`
+- PaaS 설치 콘솔: `http://localhost:8000/config.html`
+- 동영상 AI 판별 화면: `http://localhost:8000/box.html`
+- 헬스체크: `http://localhost:8000/health`
+- 준비상태 체크: `http://localhost:8000/health/ready`
+
+개발/운영 모드:
+
+```bash
+# 개발 모드(default, reload on)
+APP_ENV=development ./run_backend.sh
+
+# 운영 모드(reload off)
+APP_ENV=production ./run_backend.sh
+```
+
 ## 동영상 AI 판별 모듈
 
 `public/box.html`에 업로드형 동영상 AI 생성 판별 모듈을 추가했습니다.
 
-- 업로드 즉시 브라우저에서 MP4 메타데이터와 샘플 프레임을 분석합니다.
+- 브라우저에서 MP4 메타데이터와 샘플 프레임을 분석합니다.
 - 분석 신호:
   - 미세 질감 균일성
   - 하이라이트 / 네온 반사
@@ -43,48 +67,6 @@ docker compose -f docker-compose.playwright.yml down
 위 Playwright 스크립트는 실제 `1.mp4`를 `box.html`에 업로드하고 결과가 렌더링되는지 검증한 뒤, 아래 이미지를 생성합니다.
 
 ![](./DOCS/box-ai-playwright.png)
-
-## 주요 화면
-![](./DOCS/image-1.png)
-![](./DOCS/image-2.png)
-![](./DOCS/image-3.png)
-![](./DOCS/image-4.png)
-![](./DOCS/image-5.png)
-![](./DOCS/image-6.png)
-![](./DOCS/image-7.png)
-![](./DOCS/image-8.png)
-![](./DOCS/image-9.png)
-![](./DOCS/image-10.png)
-![](./DOCS/image-11.png)
-![](./DOCS/image-12.png)
-![](./DOCS/image-13.png)
-![](./DOCS/image-14.png)
-![](./DOCS/image-15.png)
-![](./DOCS/image-16.png)
-![](./DOCS/image-17.png)
-![](./DOCS/image-18.png)
-
-```bash
-./run_backend.sh
-```
-
-실행 후 확인:
-
-- 메인 화면: `http://localhost:8000/`
-- PaaS 설치 콘솔: `http://localhost:8000/config.html`
-- 블루마블 데모: `http://localhost:8000/burumable.html`
-- 헬스체크: `http://localhost:8000/health`
-- 준비상태 체크: `http://localhost:8000/health/ready`
-
-개발/운영 모드:
-
-```bash
-# 개발 모드(default, reload on)
-APP_ENV=development ./run_backend.sh
-
-# 운영 모드(reload off)
-APP_ENV=production ./run_backend.sh
-```
 
 ## 저장소 아키텍처
 
