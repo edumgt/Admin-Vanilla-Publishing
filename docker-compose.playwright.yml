@@ -1,0 +1,20 @@
+services:
+  static:
+    image: python:3.12-slim
+    working_dir: /work
+    volumes:
+      - .:/work
+    command: ["python3", "-m", "http.server", "4173", "--directory", "/work/public"]
+
+  playwright:
+    build:
+      context: .
+      dockerfile: docker/playwright-python/Dockerfile
+    working_dir: /work
+    environment:
+      PLAYWRIGHT_BASE_URL: http://static:4173
+      PYTHONUNBUFFERED: "1"
+    volumes:
+      - .:/work
+    depends_on:
+      - static

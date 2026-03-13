@@ -1,6 +1,48 @@
-# Admin Vanilla Publishing
+# AI 기반 관리자 모드 SaaS, PaaS 
 
 정적 HTML/Vanilla JS 화면과 Python(FastAPI)+PostgreSQL 백엔드를 함께 사용하는 샘플 프로젝트입니다.
+
+## 동영상 AI 판별 모듈
+
+`public/box.html`에 업로드형 동영상 AI 생성 판별 모듈을 추가했습니다.
+
+- 업로드 즉시 브라우저에서 MP4 메타데이터와 샘플 프레임을 분석합니다.
+- 분석 신호:
+  - 미세 질감 균일성
+  - 하이라이트 / 네온 반사
+  - 프레임 변화의 매끈함
+  - 윤곽선 정돈도
+  - 쇼트폼 길이 패턴
+  - 세로형 구도
+  - 길이 대비 비트레이트
+- 결과 화면:
+  - AI 생성 가능성
+  - 판정 신뢰도
+  - 프레임별 AI 가능성 차트
+  - 세부 지표 카드
+  - 주요 판정 근거 요약
+
+### 테스트
+
+단위 테스트:
+
+```bash
+node --test tests/video-ai-core.test.mjs
+```
+
+Playwright 컨테이너 테스트 + 스크린샷:
+
+```bash
+docker compose -f docker-compose.playwright.yml up -d static
+docker compose -f docker-compose.playwright.yml run --rm playwright python tests/playwright/box_capture_test.py
+docker compose -f docker-compose.playwright.yml down
+```
+
+테스트 스크립트는 컨테이너 내 MP4(H.264) 디코딩 호환성을 위해 Playwright Firefox 브라우저를 사용합니다.
+
+위 Playwright 스크립트는 실제 `1.mp4`를 `box.html`에 업로드하고 결과가 렌더링되는지 검증한 뒤, 아래 이미지를 생성합니다.
+
+![](./DOCS/box-ai-playwright.png)
 
 ## 주요 화면
 ![](./DOCS/image-1.png)

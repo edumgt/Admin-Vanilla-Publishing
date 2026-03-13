@@ -3,162 +3,188 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Mpeg</title>
-
-  <!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <!-- 기본 CSS -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video AI Forensics</title>
+  <link href="assets/vendor/tailwind/css/tailwind.min.css" rel="stylesheet">
   <link href="assets/css/default.css" rel="stylesheet">
-  
+  <link href="assets/css/box-video-ai.css" rel="stylesheet">
 </head>
 
-<body class="bg-gray-50 w-full h-full">
-  <!-- 공통 상단/좌측 메뉴 -->
+<body class="box-page-body">
   <div id="cmmContainer"></div>
   <div id="tnbContainer"></div>
   <div id="lnbContainer"></div>
 
-  <!-- 메인 콘텐츠 -->
-  <div id="content" class="ml-[110px] pt-24 px-10">
-    <nav class="breadcrumb">동영상 분석</nav>
+  <main id="content" class="ml-[110px] pt-24 px-4 pb-12 lg:px-10">
+    <nav class="breadcrumb">동영상 분석 / AI 생성 판별</nav>
 
-    <!-- 파일 업로드 -->
-    <div id="uploadBox"
-      class="border-2 border-dashed border-gray-400 rounded-lg p-10 text-center text-gray-500 cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition mt-6">
-      🎬 Drag & Drop 또는 클릭하여 영상 업로드
-      <input type="file" id="fileInput" accept="video/mp4" hidden />
-    </div>
-
-    <!-- 분석 영역 -->
-    <div class="flex gap-6 mt-8">
-      <!-- 좌측: 동영상 -->
-      <div class="flex-[1.2] max-w-[600px]">
-        <div class="w-full aspect-video bg-gray-200 border border-gray-300 rounded-lg shadow relative overflow-hidden">
-          <video id="videoPlayer"
-            class="w-full h-full object-contain bg-black"
-            controls>
-            브라우저가 video 태그를 지원하지 않습니다.
-          </video>
-          <!-- placeholder -->
-          <div id="videoPlaceholder"
-            class="absolute inset-0 flex items-center justify-center text-gray-500 text-sm bg-gray-200">
-            아직 업로드된 영상이 없습니다
-          </div>
-        </div>
+    <section class="hero-panel mt-6">
+      <div>
+        <p class="hero-eyebrow">Visual Forensics Module</p>
+        <h1 class="hero-title">업로드한 MP4가 AI 생성 영상인지 프레임 단위로 추정합니다</h1>
+        <p class="hero-copy">
+          브라우저에서 바로 메타데이터, 미세 질감, 채도, 하이라이트, 프레임 간 변화량을 샘플링해
+          생성형 영상 패턴을 점수화합니다.
+        </p>
       </div>
 
-      <!-- 우측: 분석 결과 + 차트 -->
-      <div class="flex-[2] flex flex-col justify-start w-full">
-        <div id="result" class="text-lg mb-4">
-          판별 결과: <span id="verdict" class="font-semibold text-gray-800">-</span><br />
-          신뢰도 점수: <span id="confidence" class="font-bold text-blue-600">-</span>
-        </div>
-
-        <div id="chart-container" class="w-full h-[420px] bg-white rounded-lg shadow p-8">
-          <div class="flex justify-between items-center mb-2">
-            <span class="font-semibold text-gray-700">프레임별 Confidence Score</span>
-            <button id="toggleChartBtn"
-              class="px-3 py-1 text-sm rounded bg-blue-500 text-white hover:bg-blue-600 transition">
-              Bar 차트로 보기
-            </button>
-          </div>
-          <canvas id="frameChart"></canvas>
-        </div>
+      <div class="hero-chip-grid">
+        <article class="hero-chip">
+          <span>분석 신호</span>
+          <strong>7종</strong>
+        </article>
+        <article class="hero-chip">
+          <span>프레임 샘플링</span>
+          <strong>최대 8개</strong>
+        </article>
+        <article class="hero-chip">
+          <span>지원 포맷</span>
+          <strong>MP4</strong>
+        </article>
       </div>
-    </div>
-  </div>
+    </section>
 
-  <!-- 공통 JS -->
+    <section class="upload-panel mt-6">
+      <label for="fileInput" id="uploadBox" class="upload-dropzone">
+        <input type="file" id="fileInput" accept="video/mp4,video/*" hidden>
+        <span class="upload-kicker">UPLOAD VIDEO</span>
+        <strong>Drag & Drop 또는 클릭해서 동영상을 올리세요</strong>
+        <span>로컬에서만 분석하며, 업로드한 파일은 서버로 전송하지 않습니다.</span>
+      </label>
+    </section>
+
+    <section class="content-grid mt-6">
+      <div class="stack-column">
+        <article class="surface-card preview-card">
+          <div class="section-header">
+            <div>
+              <p class="section-kicker">Preview</p>
+              <h2>업로드 영상</h2>
+            </div>
+            <span id="analysisStatus" class="section-note" aria-live="polite">분석 대기 중</span>
+          </div>
+
+          <div class="preview-frame">
+            <video id="videoPlayer" class="preview-video" controls playsinline>
+              브라우저가 video 태그를 지원하지 않습니다.
+            </video>
+            <div id="videoPlaceholder" class="preview-placeholder">
+              아직 업로드된 영상이 없습니다
+            </div>
+          </div>
+
+          <div class="meta-list">
+            <div class="meta-row">
+              <span>파일명</span>
+              <strong id="fileName">-</strong>
+            </div>
+            <div class="meta-row">
+              <span>길이</span>
+              <strong id="metaDuration">-</strong>
+            </div>
+            <div class="meta-row">
+              <span>해상도</span>
+              <strong id="metaResolution">-</strong>
+            </div>
+            <div class="meta-row">
+              <span>비트레이트</span>
+              <strong id="metaBitrate">-</strong>
+            </div>
+            <div class="meta-row">
+              <span>샘플 프레임</span>
+              <strong id="metaSamples">-</strong>
+            </div>
+          </div>
+        </article>
+
+        <article class="surface-card">
+          <div class="section-header">
+            <div>
+              <p class="section-kicker">Why</p>
+              <h2>주요 판정 근거</h2>
+            </div>
+          </div>
+          <ul id="highlightList" class="highlight-list">
+            <li class="highlight-item is-empty">영상 업로드 후 주요 판정 근거가 표시됩니다.</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="stack-column">
+        <article id="resultCard" class="surface-card result-card" data-tone="idle">
+          <div class="section-header">
+            <div>
+              <p class="section-kicker">Verdict</p>
+              <h2>AI 생성 여부 추정 결과</h2>
+            </div>
+            <span id="verdictBadge" class="status-badge status-idle">대기</span>
+          </div>
+
+          <div class="result-headline">
+            <strong id="verdict" class="result-title">분석 전</strong>
+            <p id="resultSummary" class="result-copy">
+              영상을 업로드하면 AI 생성 가능성과 판정 근거를 함께 표시합니다.
+            </p>
+          </div>
+
+          <div class="metric-grid">
+            <article class="metric-box">
+              <span>AI 생성 가능성</span>
+              <strong id="aiProbability">-</strong>
+            </article>
+            <article class="metric-box">
+              <span>판정 신뢰도</span>
+              <strong id="confidence">-</strong>
+            </article>
+            <article class="metric-box">
+              <span>평균 프레임 점수</span>
+              <strong id="frameAverage">-</strong>
+            </article>
+            <article class="metric-box">
+              <span>평균 밝기 변화</span>
+              <strong id="temporalDelta">-</strong>
+            </article>
+          </div>
+        </article>
+
+        <article class="surface-card">
+          <div class="section-header">
+            <div>
+              <p class="section-kicker">Indicators</p>
+              <h2>세부 지표</h2>
+            </div>
+          </div>
+          <div id="indicatorList" class="indicator-grid">
+            <article class="indicator-tile indicator-empty">
+              <strong>분석 대기 중</strong>
+              <p>업로드 후 미세 질감, 하이라이트, 시간축 안정성 등 세부 신호가 채워집니다.</p>
+            </article>
+          </div>
+        </article>
+
+        <article class="surface-card">
+          <div class="section-header">
+            <div>
+              <p class="section-kicker">Frames</p>
+              <h2>프레임별 AI 가능성 점수</h2>
+            </div>
+            <button id="toggleChartBtn" class="chart-toggle" type="button">Bar 차트로 보기</button>
+          </div>
+
+          <div class="chart-shell">
+            <canvas id="frameChart"></canvas>
+            <div id="chartEmptyState" class="chart-empty">
+              업로드 후 프레임 샘플별 점수가 표시됩니다.
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/vendor/chart.js/dist/chart.umd.js"></script>
   <script type="module" src="assets/js/logomodule.js"></script>
-
-  <script>
-    const fileInput = document.getElementById("fileInput");
-    const uploadBox = document.getElementById("uploadBox");
-    const videoPlayer = document.getElementById("videoPlayer");
-    const videoPlaceholder = document.getElementById("videoPlaceholder");
-    const verdictEl = document.getElementById("verdict");
-    const confidenceEl = document.getElementById("confidence");
-    const ctx = document.getElementById("frameChart").getContext("2d");
-    const toggleChartBtn = document.getElementById("toggleChartBtn");
-
-    let currentType = "line";
-
-    // Chart 초기화
-    let frameChart = new Chart(ctx, {
-      type: currentType,
-      data: {
-        labels: [],
-        datasets: [{
-          label: "Frame Confidence Score",
-          data: [],
-          borderColor: "#3B82F6",
-          backgroundColor: "rgba(59,130,246,0.4)",
-          borderWidth: 2,
-          pointRadius: 4,
-          pointBackgroundColor: "#2563EB",
-          tension: 0.35
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: { legend: { position: "top" } },
-        scales: {
-          y: { min: 0, max: 1, ticks: { stepSize: 0.1 } }
-        }
-      }
-    });
-
-    // 차트 타입 토글
-    toggleChartBtn.addEventListener("click", () => {
-      currentType = currentType === "line" ? "bar" : "line";
-      const chartData = JSON.parse(JSON.stringify(frameChart.data));
-      const chartOptions = JSON.parse(JSON.stringify(frameChart.options));
-      frameChart.destroy();
-      frameChart = new Chart(ctx, { type: currentType, data: chartData, options: chartOptions });
-      toggleChartBtn.textContent =
-        currentType === "line" ? "Bar 차트로 보기" : "Line 차트로 보기";
-    });
-
-    // 업로드 이벤트
-    uploadBox.addEventListener("click", () => fileInput.click());
-    uploadBox.addEventListener("dragover", (e) => {
-      e.preventDefault();
-      uploadBox.classList.add("bg-blue-50", "border-blue-500");
-    });
-    uploadBox.addEventListener("dragleave", () => {
-      uploadBox.classList.remove("bg-blue-50", "border-blue-500");
-    });
-    uploadBox.addEventListener("drop", (e) => {
-      e.preventDefault();
-      uploadBox.classList.remove("bg-blue-50", "border-blue-500");
-      handleFile(e.dataTransfer.files[0]);
-    });
-    fileInput.addEventListener("change", (e) => handleFile(e.target.files[0]));
-
-    // 파일 핸들러
-    function handleFile(file) {
-      if (!file) return;
-
-      // 동영상 미리보기
-      const videoURL = URL.createObjectURL(file);
-      videoPlayer.src = videoURL;
-      videoPlaceholder.classList.add("hidden");
-
-      // Mock 결과
-      const randomConfidence = Math.random();
-      verdictEl.textContent = randomConfidence > 0.5 ? "Fake" : "Real";
-      confidenceEl.textContent = (randomConfidence * 100).toFixed(2) + "%";
-
-      const scores = Array.from({ length: 30 }, () => Math.random());
-      const labels = scores.map((_, i) => `Frame ${i + 1}`);
-      frameChart.data.labels = labels;
-      frameChart.data.datasets[0].data = scores;
-      frameChart.update();
-    }
-  </script>
+  <script type="module" src="assets/js/box-video-page.js"></script>
 </body>
+
 </html>
