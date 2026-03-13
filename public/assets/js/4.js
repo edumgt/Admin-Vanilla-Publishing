@@ -1,4 +1,6 @@
 
+import { buildApiUrl } from './common.js';
+
 
 const grid = new tui.Grid({
     el: document.getElementById('myGrid'),
@@ -47,7 +49,7 @@ btnConnect.addEventListener('click', async () => {
     };
 
     try {
-        const response = await fetch('/db/dynamicConnect', {
+        const response = await fetch(buildApiUrl('/db/dynamicConnect'), {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload),
@@ -67,7 +69,7 @@ btnQuery.addEventListener('click', async () => {
     const payload = { query: queryInput.value };
 
     try {
-        const response = await fetch('/db/query', {
+        const response = await fetch(buildApiUrl('/db/query'), {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload),

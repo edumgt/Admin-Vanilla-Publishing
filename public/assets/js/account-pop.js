@@ -1,3 +1,9 @@
+const DEFAULT_API_ORIGIN = window.location.origin && window.location.origin !== 'null'
+  ? window.location.origin
+  : 'http://localhost:8000';
+const API_BASE = window.APP_API_BASE || DEFAULT_API_ORIGIN;
+window.APP_API_BASE = API_BASE;
+
 document.addEventListener("DOMContentLoaded", async function () {
    const navLinks = document.querySelectorAll(".nav-item a");
    const contentDiv = document.getElementById("content2");
@@ -18,7 +24,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
    // Fetch members data
    try {
-      const response = await fetch("/api/members");
+      const response = await fetch(`${API_BASE}/api/members`);
 
       membersData = await response.json();
    } catch (error) {

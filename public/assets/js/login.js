@@ -1,4 +1,8 @@
-const API_BASE = window.APP_API_BASE || 'http://localhost:8000';
+const DEFAULT_API_ORIGIN = window.location.origin && window.location.origin !== 'null'
+    ? window.location.origin
+    : 'http://localhost:8000';
+const API_BASE = window.APP_API_BASE || DEFAULT_API_ORIGIN;
+window.APP_API_BASE = API_BASE;
 
 const tabs = document.querySelectorAll('button[id$="-tab"]');
 const forms = document.querySelectorAll('.tab-content');
@@ -51,7 +55,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (response.ok) {
                 const result = await response.json();
                 // 토큰을 로컬 스토리지에 저장
-                localStorage.setItem('token', result.token);
+                localStorage.setItem('token', result.accessToken || result.token);
+                if (result.refreshToken) {
+                    localStorage.setItem('refreshToken', result.refreshToken);
+                }
                 // index.html로 리다이렉트
                 window.location.href = firstPage;
             } else {

@@ -1,5 +1,4 @@
-import { createAddButton, createDelButton } from './common.js';
-const apiurl = "";
+import { buildApiUrl, createAddButton, createDelButton } from './common.js';
 function showLoading(section) {
   section.innerHTML = `<div class="text-center text-lg font-semibold mt-4">데이터를 불러오는 중...</div>`;
 }
@@ -192,7 +191,7 @@ function createGrid(sectionId, data, updateUrl) {
       [change.columnName]: change.value
     }));
     const url = sectionId.includes('inbound') ? '/db/inbound/update' : '/db/outbound/update';
-    updateData(apiurl + url, updatedRows);
+    updateData(buildApiUrl(url), updatedRows);
   });
 
   const addButton = createAddButton();
@@ -200,7 +199,7 @@ function createGrid(sectionId, data, updateUrl) {
     const newRow = generateDefaultRow();
     grid.prependRow(newRow);
     const url = sectionId.includes('inbound') ? '/db/inbound/add' : '/db/outbound/add';
-    addData(apiurl + url, newRow);
+    addData(buildApiUrl(url), newRow);
   });
 
   const deleteButton = createDelButton();
@@ -209,7 +208,7 @@ function createGrid(sectionId, data, updateUrl) {
     if (checkedRows.length === 0) return showToast('delete-not', 'warning', lang);
     grid.removeCheckedRows();
     const url = sectionId.includes('inbound') ? '/db/inbound/delete' : '/db/outbound/delete';
-    deleteData(apiurl + url, checkedRows);
+    deleteData(buildApiUrl(url), checkedRows);
   });
 
   section.appendChild(addButton);
@@ -218,12 +217,12 @@ function createGrid(sectionId, data, updateUrl) {
 
 function populateInbound(section, data) {
   if (!data) return section.innerHTML = `<div class="text-center text-lg font-semibold">데이터를 불러오는데 실패했습니다.</div>`;
-  createGrid(section.id, data, 'http://127.0.0.1:8080/api/inbound');
+  createGrid(section.id, data, buildApiUrl('/db/inbound'));
 }
 
 function populateOutbound(section, data) {
   if (!data) return section.innerHTML = `<div class="text-center text-lg font-semibold">데이터를 불러오는데 실패했습니다.</div>`;
-  createGrid(section.id, data, '/db/outbound');
+  createGrid(section.id, data, buildApiUrl('/db/outbound'));
 }
 
 function populateDashboard(section, inboundData, outboundData) {
@@ -286,24 +285,24 @@ const sections = {};
 
 setupTabs(tabs, root, sections, async (tabId, section) => {
   if (tabId === 'tab-inbound') {
-    const data = await fetchJson(apiurl + 'http://127.0.0.1:8080/api/inbound');
+    const data = await fetchJson(buildApiUrl('/db/inbound'));
     hideLoading(section);
     populateInbound(section, data);
   } else if (tabId === 'tab-outbound') {
-    const data = await fetchJson(apiurl + '/db/outbound');
+    const data = await fetchJson(buildApiUrl('/db/outbound'));
     hideLoading(section);
     populateOutbound(section, data);
   } else if (tabId === 'tab-dashboard') {
-    const inboundData = await fetchJson(apiurl + 'http://127.0.0.1:8080/api/inbound');
-    const outboundData = await fetchJson(apiurl + '/db/outbound');
+    const inboundData = await fetchJson(buildApiUrl('/db/inbound'));
+    const outboundData = await fetchJson(buildApiUrl('/db/outbound'));
     hideLoading(section);
     populateDashboard(section, inboundData, outboundData);
   }
 });
 
 (async () => {
-  const inboundData = await fetchJson(apiurl + 'http://127.0.0.1:8080/api/inbound');
-  const outboundData = await fetchJson(apiurl + '/db/outbound');
+  const inboundData = await fetchJson(buildApiUrl('/db/inbound'));
+  const outboundData = await fetchJson(buildApiUrl('/db/outbound'));
   populateInbound(sections['tab-inbound'], inboundData);
   populateOutbound(sections['tab-outbound'], outboundData);
   populateDashboard(sections['tab-dashboard'], inboundData, outboundData);

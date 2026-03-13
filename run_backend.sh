@@ -5,8 +5,8 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 FASTAPI_DIR="${ROOT_DIR}/backend_fastapi"
 VENV_DIR="${ROOT_DIR}/.venv"
 REQ_FILE="${FASTAPI_DIR}/requirements.txt"
-FRONTEND_PORT="${FRONTEND_PORT:-5173}"
 BACKEND_PORT="${BACKEND_PORT:-8000}"
+APP_ENV="${APP_ENV:-development}"
 COMPOSE_FILE="${FASTAPI_DIR}/docker-compose.yml"
 
 if ! command -v python3 >/dev/null 2>&1; then
@@ -58,29 +58,40 @@ if [[ -z "${DATABASE_URL:-}" ]]; then
   echo "[INFO] DATABASE_URL not set. Using default: ${DATABASE_URL}"
 fi
 
-cleanup() {
-  local code=$?
-  if [[ -n "${BACKEND_PID:-}" ]] && kill -0 "${BACKEND_PID}" >/dev/null 2>&1; then
-    kill "${BACKEND_PID}" >/dev/null 2>&1 || true
-  fi
-  if [[ -n "${FRONTEND_PID:-}" ]] && kill -0 "${FRONTEND_PID}" >/dev/null 2>&1; then
-    kill "${FRONTEND_PID}" >/dev/null 2>&1 || true
-  fi
-  exit "${code}"
-}
-trap cleanup EXIT INT TERM
+echo "[INFO] Waiting for PostgreSQL readiness"
+python3 - <<'PY'
+import os
+import time
 
-echo "[INFO] Starting FastAPI backend on http://0.0.0.0:${BACKEND_PORT}"
-(
-  cd "${FASTAPI_DIR}"
-  uvicorn app.main:app --host 0.0.0.0 --port "${BACKEND_PORT}" --reload
-) &
-BACKEND_PID=$!
+from sqlalchemy import create_engine, text
 
-echo "[INFO] Starting Frontend static server on http://0.0.0.0:${FRONTEND_PORT}"
-python3 -m http.server "${FRONTEND_PORT}" --directory "${ROOT_DIR}/public" &
+database_url = os.environ["DATABASE_URL"]
+deadline = time.time() + 60
+last_error = None
 
+while time.time() < deadline:
+    try:
+        engine = create_engine(database_url, pool_pre_ping=True)
+        with engine.connect() as connection:
+            connection.execute(text("SELECT 1"))
+        print("[INFO] PostgreSQL is ready")
+        break
+    except Exception as exc:  # pragma: no cover - shell bootstrap
+        last_error = exc
+        time.sleep(2)
+else:
+    raise SystemExit(f"[ERROR] Database readiness check failed: {last_error}")
+PY
 
-FRONTEND_PID=$!
+UVICORN_ARGS=(app.main:app --host 0.0.0.0 --port "${BACKEND_PORT}")
+if [[ "${APP_ENV}" == "development" ]]; then
+  UVICORN_ARGS+=(--reload)
+fi
 
-wait -n "${BACKEND_PID}" "${FRONTEND_PID}"
+echo "[INFO] Starting unified API + static frontend on http://0.0.0.0:${BACKEND_PORT}"
+echo "[INFO] APP_ENV=${APP_ENV}"
+echo "[INFO] Main page: http://localhost:${BACKEND_PORT}/"
+echo "[INFO] Blue Marble: http://localhost:${BACKEND_PORT}/burumable.html"
+
+cd "${FASTAPI_DIR}"
+exec uvicorn "${UVICORN_ARGS[@]}"

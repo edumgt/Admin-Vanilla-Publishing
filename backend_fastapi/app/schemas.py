@@ -48,4 +48,12 @@ class LoginRequest(BaseModel):
 
 class LoginResponse(BaseModel):
     token: str
+    accessToken: str
+    refreshToken: str
+    expiresAt: datetime
+    refreshExpiresAt: datetime
     username: str
+
+
+class RefreshTokenRequest(BaseModel):
+    refreshToken: str

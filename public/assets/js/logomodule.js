@@ -1,4 +1,4 @@
-import { createTanslations } from './common.js';
+import { buildApiUrl, createTanslations } from './common.js';
 const translations = createTanslations;
 
 export const cmmContainer = document.getElementById('cmmContainer');
@@ -248,6 +248,7 @@ const iconMapping = {
     "강의일정": "fa-chalkboard-teacher",
     "행정구역정보": "fa-map-marked-alt",
     "시스템로그": "fa-clipboard-list",
+    "환경셋업": "fa-cloud-upload-alt",
 
     "컨설팅지정": "fa-network-wired",
     "서베이": "fa-poll",
@@ -264,7 +265,7 @@ const iconMapping = {
 const storedData = localStorage.getItem('menuConfigurations');
 let menuConfigurations = storedData ? JSON.parse(storedData) : {};
 
-fetch('/api/menu')
+fetch(buildApiUrl('/api/menu'))
     .then(res => res.json())
     .then(data => {
         localStorage.setItem('menuConfigurations', JSON.stringify(data));
@@ -324,8 +325,8 @@ const defaultMenuItems = [
     },
     {
         id: "5",
-        text: '시스템로그',
-        icon: 'fa-clipboard-list',
+        text: '환경셋업',
+        icon: 'fa-cloud-upload-alt',
         href: 'config.html',
         children: [
             { id: "13", text: '컨설팅지정', href: 'network.html', icon: 'fa-network-wired' },
@@ -1426,4 +1427,3 @@ function createAllMenuModal(menuItems) {
     modal.appendChild(content);
     document.body.appendChild(modal);
 }
-

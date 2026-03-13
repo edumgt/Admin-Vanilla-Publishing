@@ -1,0 +1,34 @@
+{
+  "profileName": "admin-vanilla-prod",
+  "environmentType": "aws-cloud",
+  "onPremMode": "docker-compose",
+  "frontend": {
+    "appDomain": "app.example.com",
+    "allowedOrigin": "https://app.example.com"
+  },
+  "backend": {
+    "apiDomain": "api.example.com",
+    "apiBaseUrl": "https://api.example.com"
+  },
+  "aws": {
+    "region": "ap-northeast-2",
+    "stackName": "admin-vanilla-platform",
+    "frontendBucketName": "admin-vanilla-frontend-prod",
+    "lambdaMemoryMb": 1024,
+    "lambdaTimeoutSeconds": 30
+  },
+  "onPrem": {
+    "docker": {
+      "projectName": "admin-vanilla",
+      "frontendPort": 8080,
+      "backendPort": 8000,
+      "postgresPort": 5432
+    },
+    "kubernetes": {
+      "namespace": "admin-vanilla",
+      "ingressHost": "app.example.com",
+      "apiIngressHost": "api.example.com",
+      "replicas": 2
+    }
+  }
+}

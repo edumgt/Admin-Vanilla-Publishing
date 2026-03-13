@@ -1,0 +1,36 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: admin-vanilla-dev
+resources:
+  - ../../base
+patches:
+  - path: patch-namespace.yaml
+    target:
+      kind: Namespace
+      name: admin-vanilla
+  - path: patch-configmap.yaml
+    target:
+      kind: ConfigMap
+      name: admin-vanilla-config
+  - path: patch-secret.yaml
+    target:
+      kind: Secret
+      name: admin-vanilla-secret
+  - path: patch-ingress.yaml
+    target:
+      kind: Ingress
+      name: admin-vanilla-ingress
+  - path: patch-postgres.yaml
+    target:
+      kind: StatefulSet
+      name: postgres
+images:
+  - name: ghcr.io/example/admin-vanilla-backend
+    newTag: dev
+  - name: ghcr.io/example/admin-vanilla-frontend
+    newTag: dev
+replicas:
+  - name: admin-vanilla-backend
+    count: 1
+  - name: admin-vanilla-frontend
+    count: 1

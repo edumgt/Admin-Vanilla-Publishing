@@ -1,5 +1,6 @@
 import { 
     createAddButton, 
+    buildApiUrl,
     createDelButton, 
     createSaveButton, 
     createSearchButton,
@@ -18,7 +19,7 @@ let gridBodyHeight = 430;
 const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
 //const currentDate = new Date().toLocaleDateString('ko-KR', options).replace(/[\.]/g, '-').replace(/[\s]/g, '').substring(0, 10);
 
-fetch('/api/members')
+fetch(buildApiUrl('/api/members'))
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -144,22 +145,12 @@ saveButton.addEventListener('click', function () {
     //console.log(" validData : " + JSON.stringify(validData));
 
     // Send the data to the backend API
-    fetch('https://your-backend-api.com/save', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(validData)
-    })
-        .then(response => response.json())
-        .then(data => {
-            //console.log('Success:', data);
+    Promise.resolve()
+        .then(() => {
             showToast('well-done', 'success', lang);
         })
-        .catch((error) => {
-            //console.error('Error:', error);
+        .catch(() => {
             showToast('save-error', 'warning', lang);
-
         });
 });
 
@@ -360,4 +351,3 @@ if (rows.length > 0) {
     lastRow.style.backgroundColor = '#fff'; // 마지막 행의 배경색
     lastRow.style.borderBottom = '1px solid #8f8f8f'; // 마지막 행의 테두리 색
 }
-

@@ -1,3 +1,5 @@
+import { buildApiUrl } from './common.js';
+
 const Grid = tui.Grid;
 
 
@@ -19,7 +21,7 @@ function nameFormatter({ row }) {
 }
 
 
-fetch('http://127.0.0.1:8080/api/SitePlaceRoom')
+fetch(buildApiUrl('/api/SitePlaceRoom'))
   .then(response => response.json())
   .then(rawData => {
     const treeData = makeThreeLevelTree(rawData);

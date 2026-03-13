@@ -1,5 +1,6 @@
 import {
     createSaveButton,
+    buildApiUrl,
 } from './common.js';
 
 const saveButton = createSaveButton();
@@ -25,7 +26,7 @@ function fetchConsultations() {
 
 async function fetchConsultants() {
     try {
-        const response = await fetch('/api/members');
+        const response = await fetch(buildApiUrl('/api/members'));
 
         if (!response.ok) {
             throw new Error('Failed to fetch employees');
@@ -333,7 +334,7 @@ document.getElementById('searchInput').addEventListener('input', async () => {
 
     try {
         //const response = await fetch('assets/mock/reservations.json'); // JSON 경로 확인 필요
-        const response = await fetch('/api/reservations'); // JSON 경로 확인 필요
+        const response = await fetch(buildApiUrl('/api/reservations')); // JSON 경로 확인 필요
 
         const data = await response.json();
 
