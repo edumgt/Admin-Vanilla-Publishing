@@ -1,5 +1,5 @@
 # AI 기반 관리자 모드 SaaS, PaaS 
-
+ 
 정적 HTML/Vanilla JS 화면과 `backend_fastapi` 기반 FastAPI 서버를 한 저장소에서 함께 운영하는 데모 리포입니다. 현재 수정 기준 백엔드는 `backend_fastapi/` 이고, `backend/` 는 legacy 참고 구현입니다.
 
 ## 빠른 시작
