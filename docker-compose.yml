@@ -1,0 +1,36 @@
+services:
+  backend:
+    build:
+      context: ./backend_fastapi
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER:-newhomepage}:${POSTGRES_PASSWORD:-newhomepage}@postgres:5432/${POSTGRES_DB:-newhomepage}
+      APP_ENV: ${APP_ENV:-production}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-replace-with-long-secret}
+      CORS_ALLOW_ORIGINS: ${CORS_ALLOW_ORIGINS:-http://localhost:8080}
+      DEMO_AUTH_ENABLED: ${DEMO_AUTH_ENABLED:-true}
+      DEMO_USERS_JSON: ${DEMO_USERS_JSON:-{"admin":"admin1234","manager":"manager1234","guest":"guest1234"}}
+    volumes:
+      - ./public:/app/public
+    networks:
+      - shared-net
+      - internal
+
+  frontend:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    ports:
+      - "${FRONTEND_PORT:-8080}:80"
+    volumes:
+      - ./public:/usr/share/nginx/html:ro
+      - ./infra/docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - backend
+    networks:
+      - internal
+
+networks:
+  shared-net:
+    external: true
+  internal:
+    driver: bridge
