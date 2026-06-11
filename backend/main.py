@@ -1,6 +1,8 @@
 import json
 import os
 import random
+import urllib.request
+import xml.etree.ElementTree as ET
 from datetime import date, datetime, timedelta
 from typing import Any
 
@@ -825,6 +827,183 @@ def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)) 
 @app.get("/protected")
 async def protected(user: dict[str, Any] = Depends(verify_token)) -> dict[str, Any]:
     return {"message": "This is a protected route", "user": user}
+
+
+@app.get("/api/ceo-news")
+async def ceo_news(ticker: str = Query("NVDA"), company: str = Query("NVIDIA")) -> dict[str, Any]:
+    """Fetch latest news for a company via Yahoo Finance RSS. Falls back to mock data."""
+    articles: list[dict[str, Any]] = []
+    try:
+        url = f"https://finance.yahoo.com/rss/headline?s={ticker.upper()}"
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=6) as resp:
+            raw = resp.read().decode("utf-8", errors="replace")
+        root = ET.fromstring(raw)
+        ns = {"media": "http://search.yahoo.com/mrss/"}
+        items = root.findall(".//item")
+        for item in items[:20]:
+            title   = (item.findtext("title") or "").strip()
+            link    = (item.findtext("link") or "").strip()
+            pub     = (item.findtext("pubDate") or "").strip()
+            summary = (item.findtext("description") or "").strip()
+            # strip HTML tags simply
+            import re
+            summary = re.sub(r"<[^>]+>", "", summary)
+            # parse date
+            try:
+                dt = datetime.strptime(pub[:25], "%a, %d %b %Y %H:%M:%S")
+            except Exception:
+                dt = datetime.now()
+            articles.append({
+                "title":   title,
+                "link":    link,
+                "date":    dt.strftime("%Y-%m-%d"),
+                "time":    dt.strftime("%H:%M"),
+                "summary": summary[:200],
+                "source":  "Yahoo Finance",
+            })
+    except Exception:
+        pass
+
+    # ── fallback / supplement mock data ──────────────────────────────────────
+    MOCK: dict[str, list[dict[str, Any]]] = {
+        "NVDA": [
+            {"title": "Jensen Huang visits Japan, meets SoftBank CEO Masayoshi Son", "date": "2025-06-03", "time": "09:00", "summary": "NVIDIA CEO Jensen Huang traveled to Tokyo for strategic AI partnership talks with SoftBank's Masayoshi Son. The meeting focused on AI infrastructure deployment across Japan.", "source": "Reuters", "link": "#", "country": "일본"},
+            {"title": "Jensen Huang keynote at COMPUTEX 2025 in Taipei", "date": "2025-05-20", "time": "14:00", "summary": "NVIDIA CEO Jensen Huang delivered the opening keynote at COMPUTEX 2025 in Taipei, unveiling the Blackwell Ultra GPU and new NIM microservices platform for enterprise AI.", "source": "TechCrunch", "link": "#", "country": "대만"},
+            {"title": "NVIDIA CEO meets with Saudi Crown Prince to discuss AI investment", "date": "2025-05-12", "time": "10:30", "summary": "Jensen Huang visited Riyadh and met with Saudi Crown Prince Mohammed bin Salman. The two discussed a $500M AI infrastructure deal for NEOM smart city project.", "source": "Bloomberg", "link": "#", "country": "사우디아라비아"},
+            {"title": "Huang attends White House AI summit with tech leaders", "date": "2025-04-28", "time": "11:00", "summary": "NVIDIA CEO Jensen Huang joined other leading technology executives at the White House for an AI policy summit hosted by President Biden's administration.", "source": "WSJ", "link": "#", "country": "미국"},
+            {"title": "Jensen Huang visits South Korea, meets Samsung and SK Hynix executives", "date": "2025-04-10", "time": "09:30", "summary": "NVIDIA CEO traveled to Seoul to discuss HBM memory supply agreements with Samsung Electronics and SK Hynix. Reports indicate NVIDIA plans to double HBM3E orders.", "source": "Korea Herald", "link": "#", "country": "한국"},
+            {"title": "NVIDIA GTC 2025: Jensen Huang's 'one more thing' moment — Rubin GPU unveiled", "date": "2025-03-18", "time": "13:00", "summary": "At GTC 2025 in San Jose, Jensen Huang announced the Rubin architecture successor to Blackwell, targeting 2026 deployment. The keynote drew 15,000 in-person attendees.", "source": "The Verge", "link": "#", "country": "미국"},
+            {"title": "Huang meets EU officials in Brussels to discuss AI chip export policy", "date": "2025-03-05", "time": "10:00", "summary": "Jensen Huang visited Brussels for meetings with European Commission officials regarding AI chip export regulations and NVIDIA's EU data center investment plans.", "source": "FT", "link": "#", "country": "벨기에"},
+            {"title": "NVIDIA Q4 FY2025 earnings call: Huang bullish on next trillion-dollar AI opportunity", "date": "2025-02-26", "time": "17:00", "summary": "NVIDIA reported record Q4 revenue of $39.3B (+78% YoY). CEO Jensen Huang emphasized the 'infinite' demand for Blackwell GPUs and announced $10B share buyback.", "source": "CNBC", "link": "#", "country": "미국"},
+            {"title": "Jensen Huang visits India, meets PM Modi and Mukesh Ambani", "date": "2025-01-22", "time": "11:00", "summary": "NVIDIA CEO traveled to Mumbai and New Delhi, meeting with Indian Prime Minister Modi and Reliance Industries chairman Mukesh Ambani to discuss AI infrastructure investments in India.", "source": "Economic Times", "link": "#", "country": "인도"},
+            {"title": "Huang's CES 2025 keynote: Project DIGITS personal AI supercomputer revealed", "date": "2025-01-06", "time": "09:00", "summary": "Jensen Huang delivered CES 2025's most anticipated keynote, revealing Project DIGITS — a personal AI supercomputer priced at $3,000, powered by GB10 Grace Blackwell Superchip.", "source": "CNET", "link": "#", "country": "미국"},
+        ],
+        "MSFT": [
+            {"title": "Satya Nadella visits India, announces $3B AI investment in Azure", "date": "2025-06-05", "time": "10:00", "summary": "Microsoft CEO Satya Nadella announced a $3 billion investment in India's AI infrastructure, including new Azure data centers in Pune and Hyderabad.", "source": "Bloomberg", "link": "#", "country": "인도"},
+            {"title": "Nadella keynotes Microsoft Build 2025, unveils Copilot+ enterprise suite", "date": "2025-05-19", "time": "09:00", "summary": "Satya Nadella opened Microsoft Build 2025 in Seattle, announcing Copilot+ enterprise AI suite integrating Azure OpenAI with Microsoft 365 and Dynamics.", "source": "TechCrunch", "link": "#", "country": "미국"},
+            {"title": "Microsoft CEO meets European regulators in Brussels over AI Act compliance", "date": "2025-04-14", "time": "14:00", "summary": "Satya Nadella traveled to Brussels for meetings with EU officials to discuss Microsoft's compliance roadmap with the EU AI Act, particularly for Copilot and Azure OpenAI.", "source": "Reuters", "link": "#", "country": "벨기에"},
+            {"title": "Nadella visits Japan, announces Microsoft-SoftBank AI partnership expansion", "date": "2025-03-11", "time": "10:30", "summary": "Satya Nadella met with SoftBank CEO Masayoshi Son in Tokyo, expanding their AI partnership to include joint development of AI agents for enterprise automation.", "source": "Nikkei", "link": "#", "country": "일본"},
+            {"title": "Microsoft FQ2 FY2025 earnings: Nadella highlights 85% Azure AI growth", "date": "2025-01-29", "time": "17:30", "summary": "Microsoft CEO reported record quarterly results with Azure growing 31% YoY. Nadella emphasized that Azure AI is now the 'leading platform for enterprise AI workloads.'", "source": "CNBC", "link": "#", "country": "미국"},
+            {"title": "Nadella visits UAE, signs $1.5B AI deal with G42 expansion", "date": "2025-01-15", "time": "11:00", "summary": "Microsoft CEO Satya Nadella visited Abu Dhabi for meetings with UAE AI Minister Omar Al Olama and G42 CEO Peng Xiao, expanding their AI joint venture to $1.5 billion.", "source": "FT", "link": "#", "country": "UAE"},
+        ],
+        "GOOGL": [
+            {"title": "Sundar Pichai at Google I/O 2025: Gemini 2.0 Ultra and AI Overviews go global", "date": "2025-05-14", "time": "10:00", "summary": "Google CEO Sundar Pichai unveiled Gemini 2.0 Ultra at Google I/O 2025, announcing AI Overviews expansion to 100+ countries and Project Astra autonomous AI agent.", "source": "The Verge", "link": "#", "country": "미국"},
+            {"title": "Pichai visits Seoul, meets Korean AI startup leaders and Samsung executives", "date": "2025-04-22", "time": "10:00", "summary": "Google CEO Sundar Pichai traveled to Seoul for Google's first Korea AI Summit, meeting with Samsung Electronics CEO and local AI startup founders.", "source": "Korea JoongAng Daily", "link": "#", "country": "한국"},
+            {"title": "Sundar Pichai testifies before US Senate on AI regulation", "date": "2025-03-25", "time": "10:00", "summary": "Google CEO Sundar Pichai appeared before the US Senate Commerce Committee, arguing for risk-based AI regulation and opposing blanket restrictions on AI development.", "source": "WSJ", "link": "#", "country": "미국"},
+            {"title": "Pichai meets with French President Macron in Paris for AI investment summit", "date": "2025-02-11", "time": "14:00", "summary": "Sundar Pichai attended France's AI Action Summit in Paris, where Google pledged €1 billion in additional European AI infrastructure investments.", "source": "Reuters", "link": "#", "country": "프랑스"},
+        ],
+        "META": [
+            {"title": "Zuckerberg announces Meta's AGI lab in Menlo Park, AI hiring spree", "date": "2025-06-01", "time": "09:00", "summary": "Meta CEO Mark Zuckerberg announced the formation of a dedicated AGI research division, planning to hire hundreds of top AI researchers from DeepMind, OpenAI, and academia.", "source": "Bloomberg", "link": "#", "country": "미국"},
+            {"title": "Zuckerberg visits Tokyo, announces Ray-Ban AI glasses partnership with Nidec", "date": "2025-05-08", "time": "10:00", "summary": "Meta CEO Mark Zuckerberg traveled to Tokyo for Meta's first Japan AI Summit, announcing a hardware partnership with Nidec for AI-powered wearables manufacturing.", "source": "Nikkei", "link": "#", "country": "일본"},
+            {"title": "Mark Zuckerberg meets Indian PM Modi, pledges $2B India AI investment", "date": "2025-04-17", "time": "11:00", "summary": "Meta CEO Mark Zuckerberg met Indian Prime Minister Narendra Modi in New Delhi. Meta announced $2 billion in India-focused AI investments including data centers and Llama fine-tuning hubs.", "source": "Economic Times", "link": "#", "country": "인도"},
+            {"title": "Zuckerberg at LlamaCon 2025: Llama 4 open-source release for developers", "date": "2025-04-29", "time": "14:00", "summary": "Meta CEO Mark Zuckerberg headlined LlamaCon 2025, releasing Llama 4 Scout and Llama 4 Maverick as open-source models, with 400B-parameter Llama 4 Behemoth in research preview.", "source": "TechCrunch", "link": "#", "country": "미국"},
+        ],
+        "TSM": [
+            {"title": "TSMC CEO Wei visits Washington, meets US Commerce Secretary on export controls", "date": "2025-05-29", "time": "10:00", "summary": "TSMC CEO C.C. Wei met with US Commerce Secretary in Washington to discuss semiconductor export controls and the progress of TSMC's Arizona fab construction.", "source": "Reuters", "link": "#", "country": "미국"},
+            {"title": "C.C. Wei speaks at TSMC North America Technology Symposium in San Jose", "date": "2025-05-07", "time": "09:00", "summary": "TSMC CEO Wei unveiled the company's N2P and A16 process nodes at the annual North America Technology Symposium, announcing 2nm volume production ahead of schedule.", "source": "AnandTech", "link": "#", "country": "미국"},
+            {"title": "TSMC CEO meets Japanese PM Kishida for Kumamoto fab expansion announcement", "date": "2025-04-03", "time": "11:00", "summary": "TSMC CEO C.C. Wei visited Tokyo for meetings with Japanese Prime Minister Kishida, announcing a third Kumamoto fab with ¥5 trillion total investment in Japan.", "source": "Nikkei", "link": "#", "country": "일본"},
+            {"title": "TSMC Q1 2025 earnings: Wei raises AI chip demand forecast for full year", "date": "2025-04-17", "time": "15:00", "summary": "TSMC CEO C.C. Wei reported Q1 2025 revenue of NT$839B (+41% YoY), raising full-year revenue growth guidance to 25-30% driven by AI accelerator demand.", "source": "Bloomberg", "link": "#", "country": "대만"},
+        ],
+        "AMZN": [
+            {"title": "Andy Jassy at AWS re:Invent 2025: Nova Premier model, 1M context window", "date": "2025-12-02", "time": "09:00", "summary": "Amazon CEO Andy Jassy kicked off AWS re:Invent 2025 announcing Claude-powered Amazon Nova Premier model with 1M token context and Trainium3 chip for 40% cost reduction.", "source": "CNBC", "link": "#", "country": "미국"},
+            {"title": "Jassy visits India, announces $15B AWS India expansion plan", "date": "2025-05-06", "time": "10:30", "summary": "Amazon CEO Andy Jassy visited Mumbai and Bengaluru, announcing a $15 billion AWS India investment plan including three new data center regions by 2030.", "source": "Economic Times", "link": "#", "country": "인도"},
+            {"title": "Jassy meets with EU antitrust officials in Brussels regarding Amazon AI market position", "date": "2025-03-19", "time": "14:00", "summary": "Amazon CEO Andy Jassy traveled to Brussels for discussions with EU antitrust regulators regarding Amazon's AI market position, particularly in cloud AI services.", "source": "FT", "link": "#", "country": "벨기에"},
+        ],
+        "AAPL": [
+            {"title": "Tim Cook visits Sichuan, Apple supplier expansion discussions with Chinese officials", "date": "2025-04-01", "time": "09:00", "summary": "Apple CEO Tim Cook visited Chengdu and met with Sichuan provincial officials, discussing Apple's long-term manufacturing presence in China despite ongoing supply chain diversification.", "source": "Bloomberg", "link": "#", "country": "중국"},
+            {"title": "Cook keynotes WWDC 2025: Apple Intelligence 2.0 with Claude integration", "date": "2025-06-09", "time": "10:00", "summary": "Apple CEO Tim Cook opened WWDC 2025 announcing Apple Intelligence 2.0 with enhanced Siri, Claude and Gemini third-party model support, and on-device image generation.", "source": "The Verge", "link": "#", "country": "미국"},
+            {"title": "Tim Cook visits India, meets PM Modi for Apple India manufacturing expansion", "date": "2025-04-20", "time": "11:00", "summary": "Apple CEO Tim Cook met Indian Prime Minister Modi, discussing Apple's plans to manufacture 25% of all iPhones in India by 2027 through Foxconn and Tata Electronics.", "source": "Reuters", "link": "#", "country": "인도"},
+        ],
+        "AMD": [
+            {"title": "Lisa Su at Computex 2025: MI350X GPU targets NVIDIA H200 market share", "date": "2025-05-21", "time": "14:00", "summary": "AMD CEO Lisa Su unveiled MI350X GPU at Computex 2025, claiming 35% better performance-per-dollar versus NVIDIA H200 for LLM inference workloads.", "source": "Tom's Hardware", "link": "#", "country": "대만"},
+            {"title": "Su visits Japan, announces AMD-SoftBank AI deployment partnership", "date": "2025-04-09", "time": "10:00", "summary": "AMD CEO Lisa Su traveled to Tokyo for partnership announcements with SoftBank, which will deploy AMD Instinct MI300X GPUs across its Japanese AI data centers.", "source": "Nikkei", "link": "#", "country": "일본"},
+        ],
+        "INTC": [
+            {"title": "Lip-Bu Tan's first 100 days: Intel restructuring roadmap unveiled", "date": "2025-06-07", "time": "10:00", "summary": "New Intel CEO Lip-Bu Tan outlined his 100-day transformation plan: streamlining to 4 business units, doubling down on 18A process, and refocusing Gaudi AI accelerator strategy.", "source": "WSJ", "link": "#", "country": "미국"},
+            {"title": "Tan visits TSMC in Taiwan for advanced packaging technology discussions", "date": "2025-05-15", "time": "10:00", "summary": "Intel CEO Lip-Bu Tan traveled to TSMC headquarters in Hsinchu, Taiwan to discuss advanced packaging technology collaboration for Intel's Gaudi 4 AI accelerator.", "source": "DigiTimes", "link": "#", "country": "대만"},
+        ],
+        "QCOM": [
+            {"title": "Cristiano Amon at Snapdragon Summit 2025: X Elite Gen 2 beats M4 in AI benchmarks", "date": "2025-10-21", "time": "09:00", "summary": "Qualcomm CEO Cristiano Amon revealed Snapdragon X Elite Gen 2 at the annual Snapdragon Summit in Maui, claiming 40% NPU performance improvement over Apple M4.", "source": "Ars Technica", "link": "#", "country": "미국"},
+            {"title": "Amon visits automotive expo in Munich, announces Snapdragon Ride Flex for BMW", "date": "2025-09-08", "time": "10:00", "summary": "Qualcomm CEO Cristiano Amon attended IAA Mobility 2025 in Munich, announcing a partnership with BMW to power its next-generation autonomous driving platform with Snapdragon Ride Flex.", "source": "Reuters", "link": "#", "country": "독일"},
+        ],
+        "005930.KS": [
+            {"title": "삼성전자 전영현 부회장, 실적 부진에 대한 대국민 사과", "date": "2024-11-14", "time": "10:00", "summary": "삼성전자 DS부문장 전영현 부회장이 3분기 반도체 실적 부진과 파운드리 경쟁력 약화에 대해 공식 사과문을 발표하고 혁신 방안을 제시했습니다.", "source": "한국경제", "link": "#", "country": "한국"},
+            {"title": "전영현 부회장, 미국 출장으로 NVIDIA·AMD와 HBM4 공급 협의", "date": "2025-05-20", "time": "09:00", "summary": "삼성전자 DS부문장 전영현 부회장이 산호세와 산타클라라를 방문해 NVIDIA 젠슨 황 CEO, AMD 리사 수 CEO와 HBM4 메모리 공급 파트너십 강화 방안을 논의했습니다.", "source": "한국경제", "link": "#", "country": "미국"},
+            {"title": "삼성전자, 2nm GAA 파운드리 수율 개선 발표 — 전영현 주도 TF 성과", "date": "2025-04-30", "time": "14:00", "summary": "삼성전자 전영현 부회장 주도의 파운드리 혁신 TF가 2nm GAA 공정 수율을 60% 이상으로 끌어올렸다고 발표. TSMC 대비 경쟁력 회복에 청신호.", "source": "전자신문", "link": "#", "country": "한국"},
+        ],
+        "OPENAI": [
+            {"title": "Sam Altman visits Middle East: $40B investment discussion with Saudi PIF", "date": "2025-05-13", "time": "10:00", "summary": "OpenAI CEO Sam Altman visited Saudi Arabia's Public Investment Fund, discussing a $40 billion investment round that would value OpenAI at $300B+, with SoftBank as co-investor.", "source": "Bloomberg", "link": "#", "country": "사우디아라비아"},
+            {"title": "Altman keynotes OpenAI DevDay 2025: GPT-4o successor and Realtime API v2", "date": "2025-04-14", "time": "10:00", "summary": "OpenAI CEO Sam Altman unveiled the next-generation model at DevDay 2025 in San Francisco, featuring multimodal reasoning and a new Realtime API for voice and video applications.", "source": "TechCrunch", "link": "#", "country": "미국"},
+            {"title": "Altman meets with EU AI Office in Brussels for GPT safety audit", "date": "2025-03-04", "time": "14:00", "summary": "OpenAI CEO Sam Altman traveled to Brussels for meetings with the EU AI Office for a voluntary safety audit of GPT-4o models under the EU AI Act framework.", "source": "Reuters", "link": "#", "country": "벨기에"},
+            {"title": "Altman visits India with Elon Musk for AI infrastructure summit", "date": "2025-02-18", "time": "11:00", "summary": "OpenAI CEO Sam Altman visited India for the AI Action Summit in New Delhi, announcing OpenAI's first Asia-Pacific data center partnership with Tata Consultancy Services.", "source": "Economic Times", "link": "#", "country": "인도"},
+        ],
+        "ANTHROPIC": [
+            {"title": "Dario Amodei publishes 'Machines of Loving Grace' sequel: AI governance essay", "date": "2025-06-02", "time": "09:00", "summary": "Anthropic CEO Dario Amodei published a major essay on AI governance, arguing for a 'safety-first' regulatory framework and calling for international AI safety treaties.", "source": "Anthropic Blog", "link": "#", "country": "미국"},
+            {"title": "Amodei testifies before US Senate AI Committee on Claude safety architecture", "date": "2025-05-06", "time": "10:00", "summary": "Anthropic CEO Dario Amodei testified before the Senate Commerce Committee, presenting Anthropic's Constitutional AI approach and responsible scaling policy framework.", "source": "Reuters", "link": "#", "country": "미국"},
+            {"title": "Anthropic CEO visits South Korea, discusses Samsung AI partnership for Claude", "date": "2025-04-15", "time": "10:30", "summary": "Dario Amodei traveled to Seoul for meetings with Samsung Electronics and SK Telecom executives, exploring integration of Claude models into Samsung Galaxy AI features.", "source": "Korea Herald", "link": "#", "country": "한국"},
+            {"title": "Amodei and Daniela attend EU AI Safety Summit in Paris", "date": "2025-02-10", "time": "14:00", "summary": "Anthropic CEO Dario Amodei and President Daniela Amodei attended France's AI Safety Summit in Paris, co-authoring a joint statement with UK and US AI labs on responsible development.", "source": "FT", "link": "#", "country": "프랑스"},
+        ],
+    }
+    ticker_key = ticker.upper()
+    # special case mappings
+    _map = {"005930": "005930.KS", "OPENAI": "OPENAI", "ANTHROPIC": "ANTHROPIC"}
+    ticker_key = _map.get(ticker_key, ticker_key)
+
+    mocks = MOCK.get(ticker_key, [])
+    if not articles:
+        articles = mocks
+    else:
+        # merge: prepend mock items not already present in RSS
+        rss_titles = {a["title"].lower()[:40] for a in articles}
+        for m in mocks:
+            if m["title"].lower()[:40] not in rss_titles:
+                articles.append(m)
+
+    # enrich: detect country & activity tag from title/summary if missing
+    COUNTRY_KEYWORDS = {
+        "Japan": "일본", "Tokyo": "일본", "Osaka": "일본",
+        "India": "인도", "Mumbai": "인도", "Delhi": "인도", "Bengaluru": "인도",
+        "Korea": "한국", "Seoul": "한국",
+        "Taiwan": "대만", "Taipei": "대만", "Hsinchu": "대만",
+        "China": "중국", "Beijing": "중국", "Shanghai": "중국", "Chengdu": "중국",
+        "Saudi": "사우디아라비아", "Riyadh": "사우디아라비아",
+        "UAE": "UAE", "Abu Dhabi": "UAE", "Dubai": "UAE",
+        "UK": "영국", "London": "영국", "Britain": "영국",
+        "Germany": "독일", "Berlin": "독일", "Munich": "독일",
+        "France": "프랑스", "Paris": "프랑스",
+        "Brussels": "벨기에", "EU": "벨기에",
+        "Washington": "미국", "San Francisco": "미국", "Seattle": "미국",
+        "New York": "미국", "Silicon Valley": "미국",
+    }
+    ACTIVITY_KEYWORDS = {
+        "earnings": "실적발표", "revenue": "실적발표", "quarterly": "실적발표",
+        "keynote": "기조연설", "summit": "서밋", "conference": "컨퍼런스",
+        "testif": "의회증언", "Senate": "의회증언", "Congress": "의회증언",
+        "invest": "투자발표", "partnership": "파트너십", "deal": "파트너십",
+        "visit": "방문", "meet": "미팅", "talks": "미팅",
+        "unveil": "신제품발표", "launch": "신제품발표", "announce": "신제품발표",
+        "publish": "기고", "essay": "기고", "letter": "기고",
+    }
+    for art in articles:
+        if "country" not in art or not art["country"]:
+            text = (art.get("title", "") + " " + art.get("summary", ""))
+            for kw, cn in COUNTRY_KEYWORDS.items():
+                if kw.lower() in text.lower():
+                    art["country"] = cn
+                    break
+            else:
+                art["country"] = "미국"
+        if "activity" not in art or not art["activity"] if "activity" in art else True:
+            text = (art.get("title", "") + " " + art.get("summary", ""))
+            art["activity"] = "기타"
+            for kw, tag in ACTIVITY_KEYWORDS.items():
+                if kw.lower() in text.lower():
+                    art["activity"] = tag
+                    break
+
+    articles.sort(key=lambda x: x.get("date", ""), reverse=True)
+    return {"ticker": ticker, "company": company, "count": len(articles), "articles": articles}
 
 
 @app.get("/")

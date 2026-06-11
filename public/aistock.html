@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI·반도체 기업 정보</title>
+    <link href="assets/css/default.css" rel="stylesheet">
+    <style>
+        /* ── 필터 탭 ── */
+        .sector-tab {
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid #cbd5e0;
+            background: #fff;
+            color: #4a5568;
+            transition: all .15s;
+        }
+        .sector-tab.active, .sector-tab:hover {
+            background: #0058a3;
+            color: #fff;
+            border-color: #0058a3;
+        }
+
+        /* ── 기업 카드 ── */
+        .company-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 1px 4px rgba(0,0,0,.10);
+            padding: 18px 20px 14px;
+            cursor: pointer;
+            transition: box-shadow .2s, transform .2s;
+            border: 1.5px solid transparent;
+        }
+        .company-card:hover {
+            box-shadow: 0 4px 18px rgba(0,88,163,.18);
+            transform: translateY(-2px);
+            border-color: #0058a3;
+        }
+        .company-card.selected {
+            border-color: #0058a3;
+            box-shadow: 0 4px 18px rgba(0,88,163,.18);
+        }
+        .company-logo {
+            width: 44px; height: 44px;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        .change-up   { color: #10b981; }
+        .change-down { color: #e53e3e; }
+        .badge-sector {
+            font-size: 0.68rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        .badge-ai   { background: #ebf4ff; color: #0058a3; }
+        .badge-semi { background: #f0fff4; color: #276749; }
+        .badge-cloud{ background: #faf5ff; color: #6b46c1; }
+
+        /* ── 이벤트 타임라인 ── */
+        .event-row {
+            display: flex; align-items: flex-start; gap: 14px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .event-row:last-child { border-bottom: none; }
+        .event-date-badge {
+            min-width: 64px;
+            text-align: center;
+            background: #f7faff;
+            border: 1px solid #c3dafe;
+            border-radius: 8px;
+            padding: 4px 6px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #2b6cb0;
+            line-height: 1.3;
+        }
+        .event-type-badge {
+            font-size: 0.68rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+        .type-earnings  { background: #fff5f5; color: #c53030; }
+        .type-product   { background: #ebfbee; color: #276749; }
+        .type-conf      { background: #ebf4ff; color: #2c5282; }
+        .type-agm       { background: #fef9c3; color: #92400e; }
+        .type-dividend  { background: #f3e8ff; color: #6b21a8; }
+
+        /* ── 상세 패널 ── */
+        #detail-panel {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 1px 4px rgba(0,0,0,.10);
+        }
+        .revenue-bar-wrap { background: #edf2f7; border-radius: 8px; height: 10px; overflow: hidden; }
+        .revenue-bar      { height: 100%; border-radius: 8px; background: linear-gradient(90deg,#0058a3,#63b3ed); }
+        .kpi-chip {
+            background: #f7fafc; border: 1px solid #e2e8f0;
+            border-radius: 8px; padding: 8px 14px;
+            font-size: 0.78rem;
+        }
+
+        /* ── 검색박스 ── */
+        #company-search {
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            padding: 6px 12px 6px 34px;
+            font-size: 0.82rem;
+            width: 200px;
+            outline: none;
+        }
+        #company-search:focus { border-color: #0058a3; }
+        .search-wrap { position: relative; }
+        .search-wrap i { position:absolute; left:10px; top:50%; transform:translateY(-50%); color:#a0aec0; }
+
+        /* ── 차트 캔버스 ── */
+        #revenue-chart { max-height: 240px; }
+        #market-chart  { max-height: 200px; }
+    </style>
+</head>
+<body>
+    <div id="cmmContainer"></div>
+    <nav class="breadcrumb">AI·반도체 기업 정보</nav>
+
+    <div id="content">
+        <!-- 상단 KPI 요약 -->
+        <div id="kpi-row" class="grid grid-cols-2 gap-3 mb-4" style="grid-template-columns: repeat(4,1fr)"></div>
+
+        <!-- CEO 다이어리 바로가기 -->
+        <div class="mb-4">
+            <a href="ceo-diary.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white" style="background:#0058a3;">
+                <i class="fas fa-user-tie"></i> CEO 다이어리 — 리더 활동·방문국 뉴스 보기 <i class="fas fa-arrow-right ml-1"></i>
+            </a>
+        </div>
+
+        <!-- 필터 & 검색 -->
+        <div class="flex flex-wrap items-center gap-2 mb-4">
+            <div class="search-wrap">
+                <i class="fas fa-search"></i>
+                <input type="text" id="company-search" placeholder="기업 검색...">
+            </div>
+            <div class="flex flex-wrap gap-2" id="sector-tabs"></div>
+        </div>
+
+        <!-- 메인 레이아웃: 기업 그리드 + 상세 패널 -->
+        <div class="flex gap-4" style="align-items:flex-start;">
+            <!-- 기업 카드 그리드 -->
+            <div id="company-grid" class="grid gap-3 flex-1"
+                 style="grid-template-columns:repeat(auto-fill,minmax(230px,1fr));"></div>
+
+            <!-- 상세 정보 패널 -->
+            <div id="detail-panel" class="p-5 hidden" style="width:360px;flex-shrink:0;">
+                <div id="detail-content"></div>
+            </div>
+        </div>
+
+        <!-- 하단: 이벤트 & 차트 -->
+        <div class="flex gap-4 mt-5" style="align-items:flex-start;">
+            <!-- 주요 일정 -->
+            <div class="bg-white rounded-xl shadow p-5 flex-1">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-base font-semibold">주요 일정 (2025–2026)</h3>
+                    <div class="flex gap-1" id="event-filter-row"></div>
+                </div>
+                <div id="event-list"></div>
+            </div>
+
+            <!-- 매출 비교 차트 -->
+            <div class="bg-white rounded-xl shadow p-5" style="width:420px;flex-shrink:0;">
+                <h3 class="text-base font-semibold mb-3">연간 매출 비교 (억 달러, FY2024)</h3>
+                <canvas id="revenue-chart"></canvas>
+            </div>
+        </div>
+
+        <!-- 시가총액 파이 차트 -->
+        <div class="bg-white rounded-xl shadow p-5 mt-4" style="max-width:460px;">
+            <h3 class="text-base font-semibold mb-3">시가총액 비중 (2025.06 기준)</h3>
+            <canvas id="market-chart"></canvas>
+        </div>
+    </div>
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script type="module" src="assets/js/logomodule.js"></script>
+    <script type="module" src="assets/js/aistock.js"></script>
+</body>
+</html>

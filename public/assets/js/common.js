@@ -87,163 +87,98 @@ const createTanslations = {
     en: {
         menu: "Menu",
         tabs: {
-            system: "System",
-            organization: "Organization",
-            task: "Task",
-            schedule: "Schedule",
-            statistics: "Statistics",
-            settings: "Settings",
+            system:       "AI Market",
+            organization: "Schedule",
+            task:         "Financials",
+            schedule:     "Investment Info",
+            statistics:   "Data Mgmt",
+            settings:     "Settings",
         },
         offCanvas: {
-            system: "Code Management",
-            glos: "Dict. Management",
-            orgtree: "Permission Management",
-            document: "Document Management",
-            wms: "WMS",
-            config: "PaaS Setup",
-            network: "Consultant",
-
-            locker: "Locker",
-
-            survey: "Survey",
-            work: "Reservation Management",
-            meeting: "Meeting Room Management",
-            hospital: "Hospital Reservation",
-            lectures: "Lecture Schedule",
-            city: "District Information",
-
-
-
-            stati: "Member Statistics",
-            flow: "Sales Statistics",
-            chain: "Chain Operation",
-
-            calendar: "Work Schedule",
-            trello: "Project Schedule",
-            timeline: "Production Schedule",
-            orgni: "Organization Structure",
-            attend: "Attendance Management",
-            total: "Incentive",
-
+            aistock:   "AI Company Info",
+            ceodirary: "CEO Diary",
+            calendar:  "Earnings Calendar",
+            timeline:  "Event Timeline",
+            trello:    "Research Tasks",
+            flow:      "Financial Analysis",
+            stati:     "Market Statistics",
+            chain:     "Sector / Supply Chain",
+            glos:      "Investment Glossary",
+            document:  "News Doc Analysis",
+            system:    "Ticker Code Mgmt",
+            orgtree:   "Permission Mgmt",
         },
-
         buttons: {
             search: "Search",
-            reset: "Reset Search",
-            new: "New",
+            reset:  "Reset Search",
+            new:    "New",
             delete: "Delete",
-            save: "Save",
+            save:   "Save",
         },
-
     },
     ko: {
         menu: "메뉴",
         tabs: {
-            system: "시스템관리",
-            organization: "조직관리",
-            task: "업무관리",
-            schedule: "일정관리",
-            statistics: "통계",
-            settings: "설정관리",
+            system:       "AI·시장분석",
+            organization: "일정·이벤트",
+            task:         "재무·통계",
+            schedule:     "투자정보",
+            statistics:   "데이터관리",
+            settings:     "설정관리",
         },
         offCanvas: {
-
-
-
-            system: "코드관리",
-            glos: "용어관리",
-            orgtree: "권한관리",
-            document: "문서분석",
-            wms: "WMS",
-            config: "환경 셋업",
-
-            locker: "사물함",
-
-            network: "컨설팅 지정",
-            survey: "서베이",
-            work: "예약관리",
-            meeting: "회의실관리",
-            hospital: "병원예약",
-
-            lectures: "강의일정",
-            city: "행정구역정보",
-
-
-
-            stati: "회원통계",
-            flow: "매출통계",
-            chain: "체인운영",
-
-            calendar: "업무일정",
-            trello: "프로젝트일정",
-            timeline: "생산일정",
-            orgni: "조직도구성",
-            attend: "근태관리",
-
-            total: "인센티브",
-
-
-
+            aistock:   "AI기업정보",
+            ceodirary: "CEO 다이어리",
+            calendar:  "실적·이벤트 일정",
+            timeline:  "이벤트 타임라인",
+            trello:    "리서치 태스크",
+            flow:      "매출·재무분석",
+            stati:     "시장통계",
+            chain:     "섹터·공급망",
+            glos:      "투자 용어사전",
+            document:  "뉴스 문서분석",
+            system:    "종목 코드 관리",
+            orgtree:   "권한관리",
         },
-
         buttons: {
             search: "검색",
-            reset: "검색 초기화",
-            new: "신규",
+            reset:  "검색 초기화",
+            new:    "신규",
             delete: "삭제",
-            save: "저장",
+            save:   "저장",
         },
-
     },
     ja: {
         menu: "メニュー",
         tabs: {
-            system: "システム管理",
-            organization: "組織管理",
-            task: "業務管理",
-            schedule: "スケジュール管理",
-            statistics: "統計",
-            settings: "設定管理",
+            system:       "AI·市場分析",
+            organization: "スケジュール",
+            task:         "財務·統計",
+            schedule:     "投資情報",
+            statistics:   "データ管理",
+            settings:     "設定管理",
         },
         offCanvas: {
-            system: "コード管理",
-            glos: "Dict. 管理",
-            orgtree: "権限管理",
-            document: "文書管理",
-            wms: "WMS",
-            config: "環境セットアップ",
-            network: "コンサルティングの指定",
-
-            locker: "사물함",
-
-            survey: "サーベイ",
-            work: "予約管理",
-            meeting: "会議室管理",
-            hospital: "病院予約",
-            lectures: "講義日程",
-            city: "行政区情報",
-
-
-            stati: "会員統計",
-            flow: "売上統計",
-            chain: "チェーン運営",
-
-            calendar: "業務日程",
-            trello: "プロジェクト日程",
-            timeline: "生産日程",
-            orgni: "組織構成",
-            attend: "勤怠管理",
-            total: "インセンティブ"
+            aistock:   "AI企業情報",
+            ceodirary: "CEOダイアリー",
+            calendar:  "決算カレンダー",
+            timeline:  "イベントタイムライン",
+            trello:    "リサーチタスク",
+            flow:      "財務分析",
+            stati:     "市場統計",
+            chain:     "セクター·サプライチェーン",
+            glos:      "投資用語集",
+            document:  "ニュース文書分析",
+            system:    "銘柄コード管理",
+            orgtree:   "権限管理",
         },
-
         buttons: {
             search: "検索",
-            reset: "検索をリセット",
-            new: "新規",
+            reset:  "検索をリセット",
+            new:    "新規",
             delete: "削除",
-            save: "保存",
+            save:   "保存",
         },
-
     },
 };
 

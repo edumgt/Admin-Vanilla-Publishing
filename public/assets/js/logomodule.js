@@ -230,35 +230,24 @@ function renderOffCanvasMenu(menuItems) {
 
 
 const iconMapping = {
-
-    "조직도구성": "fa-sitemap",
-    "근태관리": "fa-user-clock",
-    "인센티브": "fa-gift",
-    "업무일정": "fa-calendar-alt",
-    "프로젝트일정": "fa-tasks",
-
-    "생산일정": "fa-industry",
-    "회원통계": "fa-user",
-    "매출통계": "fa-chart-line",
-    "체인운영": "fa-store-alt",
-    "예약관리": "fa-calendar-plus",
-
-    "회의실관리": "fa-door-open",
-    "병원예약": "fa-hospital",
-    "강의일정": "fa-chalkboard-teacher",
-    "행정구역정보": "fa-map-marked-alt",
-    "시스템로그": "fa-clipboard-list",
-    "환경셋업": "fa-cloud-upload-alt",
-
-    "컨설팅지정": "fa-network-wired",
-    "서베이": "fa-poll",
-    "코드관리": "fa-server",
-    "권한관리": "fa-user-shield",
-    "문서분석": "fa-file-alt",
-
-    "WMS": "fa-cubes",
-    "용어관리": "fa-book",
-    "사물함": "fa-archive",
+    "AI·시장분석":   "fa-microchip",
+    "AI기업정보":    "fa-robot",
+    "CEO 다이어리":  "fa-user-tie",
+    "일정·이벤트":   "fa-calendar-alt",
+    "실적·이벤트 일정": "fa-calendar-check",
+    "이벤트 타임라인":  "fa-stream",
+    "리서치 태스크":    "fa-tasks",
+    "재무·통계":     "fa-chart-line",
+    "매출·재무분석":    "fa-chart-bar",
+    "시장통계":         "fa-chart-area",
+    "섹터·공급망":      "fa-link",
+    "투자정보":      "fa-book-open",
+    "투자 용어사전":    "fa-book",
+    "뉴스 문서분석":    "fa-file-alt",
+    "데이터관리":    "fa-database",
+    "종목 코드 관리":   "fa-server",
+    "권한관리":         "fa-user-shield",
+    "설정관리":      "fa-cogs",
 };
 
 
@@ -278,73 +267,55 @@ fetch(buildApiUrl('/api/menu'))
 
 const defaultMenuItems = [
     {
-        id: "2",
-        text: '업무일정',
+        id: "101",
+        text: 'AI·시장분석',
+        icon: 'fa-microchip',
+        href: 'aistock.html',
+        children: [
+            { id: "1011", text: 'AI기업정보',   href: 'aistock.html',   icon: 'fa-robot'    },
+            { id: "1012", text: 'CEO 다이어리', href: 'ceo-diary.html', icon: 'fa-user-tie' }
+        ]
+    },
+    {
+        id: "102",
+        text: '일정·이벤트',
         icon: 'fa-calendar-alt',
         href: 'calendar.html',
         children: [
-            { id: "21", text: '프로젝트일정', href: 'trello.html', icon: 'fa-tasks' },
-            { id: "19", text: '생산일정', href: 'timeline.html', icon: 'fa-industry' }
+            { id: "1021", text: '실적·이벤트 일정', href: 'calendar.html', icon: 'fa-calendar-check' },
+            { id: "1022", text: '이벤트 타임라인',  href: 'timeline.html', icon: 'fa-stream'         },
+            { id: "1023", text: '리서치 태스크',     href: 'trello.html',   icon: 'fa-tasks'          }
         ]
     },
     {
-        id: "14",
-        text: '조직도구성',
-        icon: 'fa-sitemap',
-        href: 'orgni.html',
+        id: "103",
+        text: '재무·통계',
+        icon: 'fa-chart-line',
+        href: 'flow.html',
         children: [
-            { id: "1", text: '근태관리', href: 'attend.html', icon: 'fa-user-clock' },
-            { id: "20", text: '인센티브', href: 'total.html', icon: 'fa-gift' },
-            { id: "24", text: 'KEG-Code', href: 'kegcode.html', icon: 'fa-gift' },
-            { id: "25", text: 'KEG-Editor', href: 'kegeditor.html', icon: 'fa-gift' },
-            { id: "26", text: 'KEG-Editor2', href: 'kegeditor2.html', icon: 'fa-gift' },
-            { id: "28", text: 'KEG-Tree', href: 'orgsel.html', icon: 'fa-gift' }
+            { id: "1031", text: '매출·재무분석', href: 'flow.html',  icon: 'fa-chart-bar'  },
+            { id: "1032", text: '시장통계',      href: 'stati.html', icon: 'fa-chart-area' },
+            { id: "1033", text: '섹터·공급망',   href: 'chain.html', icon: 'fa-link'       }
         ]
     },
     {
-        id: "16",
-        text: '회원통계',
-        icon: 'fa-user',
-        href: 'stati.html',
+        id: "104",
+        text: '투자정보',
+        icon: 'fa-book-open',
+        href: 'glos.html',
         children: [
-            { id: "7", text: '매출통계', href: 'flow.html', icon: 'fa-chart-line' },
-            { id: "3", text: '체인운영', href: 'chain.html', icon: 'fa-store-alt' }
+            { id: "1041", text: '투자 용어사전', href: 'glos.html',     icon: 'fa-book'     },
+            { id: "1042", text: '뉴스 문서분석', href: 'document.html', icon: 'fa-file-alt' }
         ]
     },
     {
-        id: "23",
-        text: '예약관리',
-        icon: 'fa-calendar-plus',
-        href: 'work.html',
-        children: [
-            { id: "12", text: '회의실관리', href: 'meeting.html', icon: 'fa-door-open' },
-            { id: "9", text: '병원예약', href: 'hospital.html', icon: 'fa-hospital' },
-            { id: "11", text: '강의일정', href: 'lectures.html', icon: 'fa-chalkboard-teacher' },
-            { id: "4", text: '행정구역정보', href: 'city.html', icon: 'fa-map-marked-alt' }
-        ]
-    },
-    {
-        id: "5",
-        text: '환경셋업',
-        icon: 'fa-cloud-upload-alt',
-        href: 'config.html',
-        children: [
-            { id: "13", text: '컨설팅지정', href: 'network.html', icon: 'fa-network-wired' },
-            { id: "17", text: '서베이', href: 'survey.html', icon: 'fa-poll' },
-            { id: "10", text: '사물함', href: 'locker.html', icon: 'fa-archive' }
-        ]
-    },
-    {
-        id: "18",
-        text: '코드관리',
-        icon: 'fa-server',
+        id: "105",
+        text: '데이터관리',
+        icon: 'fa-database',
         href: 'system.html',
         children: [
-            { id: "8", text: '용어관리', href: 'glos.html', icon: 'fa-book' },
-            { id: "15", text: '권한관리', href: 'orgtree.html', icon: 'fa-user-shield' },
-            { id: "6", text: '문서분석', href: 'document.html', icon: 'fa-file-alt' },
-            { id: "22", text: 'WMS', href: 'wms.html', icon: 'fa-cubes' },
-            { id: "27", text: '동영상분석', href: 'box.html', icon: 'fa-cubes' }
+            { id: "1051", text: '종목 코드 관리', href: 'system.html',  icon: 'fa-server'      },
+            { id: "1052", text: '권한관리',        href: 'orgtree.html', icon: 'fa-user-shield' }
         ]
     }
 ];
@@ -468,12 +439,12 @@ function renderFloatingNav(containerId) {
 renderFloatingNav('appContainer');
 
 const tabsData = [
-    { href: "system.html", icon: "fas fa-cogs", label: "시스템관리" },
-    { href: "orgni.html", icon: "fas fa-users", label: "조직관리" },
-    { href: "work.html", icon: "fas fa-briefcase", label: "업무관리" },
-    { href: "calendar.html", icon: "fas fa-calendar-alt", label: "일정관리" },
-    { href: "stati.html", icon: "fas fa-chart-bar", label: "통계" },
-    { href: "config.html", icon: "fas fa-tools", label: "설정관리" },
+    { href: "aistock.html",  icon: "fas fa-microchip",    label: "AI·시장분석" },
+    { href: "calendar.html", icon: "fas fa-calendar-alt", label: "일정·이벤트" },
+    { href: "flow.html",     icon: "fas fa-chart-line",   label: "재무·통계"   },
+    { href: "glos.html",     icon: "fas fa-book-open",    label: "투자정보"    },
+    { href: "system.html",   icon: "fas fa-database",     label: "데이터관리"  },
+    { href: "orgtree.html",  icon: "fas fa-shield-alt",   label: "설정관리"    },
 ];
 
 function renderTabs(containerId) {
@@ -615,92 +586,28 @@ window.offCanvasItems = offCanvasItems;
 const menuLinks = document.querySelectorAll(".gnb-item");
 const menuLinks2 = document.querySelectorAll(".menu-item");
 
-const orgniPages = ["orgni.html", "attend.html", "total.html", "kegcode.html", "kegeditor.html", "kegeditor2.html"];
-if (orgniPages.includes(currentPage)) {
-    menuLinks2.forEach((link) => {
-        if (link.getAttribute("href") === currentPage) {
-            menuLinks.forEach((menuLink) => {
-                if (menuLink.getAttribute("href") === "orgni.html") {
-                    menuLink.classList.add("active");
-                } else {
-                    menuLink.classList.remove("active");
-                }
-            });
-        }
-    });
-}
-
-const systemPages = ["system.html", "glos.html", "orgtree.html", "document.html", "wms.html"];
-if (systemPages.includes(currentPage)) {
-    menuLinks2.forEach((link) => {
-        if (link.getAttribute("href") === currentPage) {
-            menuLinks.forEach((menuLink) => {
-                if (menuLink.getAttribute("href") === "system.html") {
-                    menuLink.classList.add("active");
-                } else {
-                    menuLink.classList.remove("active");
-                }
-            });
-        }
-    });
-}
-
-const workPages = ["work.html", "hospital.html", "meeting.html", "lectures.html", "city.html"];
-if (workPages.includes(currentPage)) {
-    menuLinks2.forEach((link) => {
-        if (link.getAttribute("href") === currentPage) {
-            menuLinks.forEach((menuLink) => {
-                if (menuLink.getAttribute("href") === "work.html") {
-                    menuLink.classList.add("active");
-                } else {
-                    menuLink.classList.remove("active");
-                }
-            });
-        }
-    });
-}
-
-const calendarPages = ["calendar.html", "trello.html", "timeline.html"];
-if (calendarPages.includes(currentPage)) {
-    menuLinks2.forEach((link) => {
-        if (link.getAttribute("href") === currentPage) {
-            menuLinks.forEach((menuLink) => {
-                if (menuLink.getAttribute("href") === "calendar.html") {
-                    menuLink.classList.add("active");
-                } else {
-                    menuLink.classList.remove("active");
-                }
-            });
-        }
-    });
-}
-
-const statiPages = ["stati.html", "flow.html", "chain.html"];
-if (statiPages.includes(currentPage)) {
-    menuLinks2.forEach((link) => {
-        if (link.getAttribute("href") === currentPage) {
-            menuLinks.forEach((menuLink) => {
-                if (menuLink.getAttribute("href") === "stati.html") {
-                    menuLink.classList.add("active");
-                } else {
-                    menuLink.classList.remove("active");
-                }
-            });
-        }
-    });
-}
-
-const configPages = ["config.html", "network.html", "survey.html", "locker.html"];
-if (configPages.includes(currentPage)) {
-    menuLinks2.forEach((link) => {
-        if (link.getAttribute("href") === currentPage) {
-            menuLinks.forEach((menuLink) => {
-                if (menuLink.getAttribute("href") === "config.html") {
-                    menuLink.classList.add("active");
-                } else {
-                    menuLink.classList.remove("active");
-                }
-            });
+// ── 페이지 → GNB 탭 활성화 매핑 ──────────────────────────────────────────
+const PAGE_TAB_MAP = {
+    "aistock.html":   "aistock.html",
+    "ceo-diary.html": "aistock.html",
+    "calendar.html":  "calendar.html",
+    "timeline.html":  "calendar.html",
+    "trello.html":    "calendar.html",
+    "flow.html":      "flow.html",
+    "stati.html":     "flow.html",
+    "chain.html":     "flow.html",
+    "glos.html":      "glos.html",
+    "document.html":  "glos.html",
+    "system.html":    "system.html",
+    "orgtree.html":   "system.html",
+};
+const activeTab = PAGE_TAB_MAP[currentPage];
+if (activeTab) {
+    menuLinks.forEach(link => {
+        if (link.getAttribute("href") === activeTab) {
+            link.classList.add("active");
+        } else {
+            link.classList.remove("active");
         }
     });
 }
@@ -734,8 +641,8 @@ memberMenu.innerHTML = `<div class="bg-white shadow-lg p-3 rounded-md border">
                               </div>
                            </div>
                            <div class="">
-                              <h6 class="fs-4 mb-0">송주희</h6>
-                              <small class="text-muted">관리자</small>
+                              <h6 class="fs-4 mb-0">관리자</h6>
+                              <small class="text-muted">주식 KMS</small>
                            </div>
                         </div>
                      </a>
@@ -746,72 +653,37 @@ memberMenu.innerHTML = `<div class="bg-white shadow-lg p-3 rounded-md border">
                            <span>Profile</span>
                         </div>
                      </a>
-                     <a href="#" class="dropdown-item">
+                     <div class="dropdown-divider"></div>
+                     <a href="aistock.html" class="dropdown-item">
                         <div class="d-flex align-items-center gap-3">
-                           <i class="fas fa-cog fs-5"></i>
-                           <span>Settings</span>
+                           <i class="fas fa-microchip fs-5"></i>
+                           <span>AI기업정보</span>
                         </div>
                      </a>
-
-                     <div class="dropdown-divider"></div>
-                    
-                        <a href="1.html" class="dropdown-item modal-link">
-                            <div class="d-flex align-items-center gap-3">
-                            <i class="fas fa-cog fs-5"></i>
-                            <span>시간표</span>
-                            </div>
-                        </a>
-
-                        <a href="/calendar3/index.html" class="dropdown-item modal-link">
-                            <div class="d-flex align-items-center gap-3">
-                            <i class="fas fa-cog fs-5"></i>
-                            <span>일정표1</span>
-                            </div>
-                        </a>
-
-                        <a href="/calendar/00.html" class="dropdown-item modal-link">
-                            <div class="d-flex align-items-center gap-3">
-                            <i class="fas fa-cog fs-5"></i>
-                            <span>일정표2</span>
-                            </div>
-                        </a>
-
-                        <a href="2.html" class="dropdown-item modal-link">
-                            <div class="d-flex align-items-center gap-3">
-                            <i class="fas fa-cog fs-5"></i>
-                            <span>수강신청</span>
-                            </div>
-                        </a>
-
-                        <a href="3.html" class="dropdown-item  modal-link">
-                            <div class="d-flex align-items-center gap-3">
-                            <i class="fas fa-cog fs-5"></i>
-                            <span>용어사전</span>
-                            </div>
-                        </a>
-
-                        <a href="4.html" class="dropdown-item modal-link">
-                            <div class="d-flex align-items-center gap-3">
-                            <i class="fas fa-cog fs-5"></i>
-                            <span>DB Test</span>
-                            </div>
-                        </a>
-
-                        <a href="5.html" class="dropdown-item modal-link">
-                            <div class="d-flex align-items-center gap-3">
-                            <i class="fas fa-cog fs-5"></i>
-                            <span>API Test</span>
-                            </div>
-                        </a>
-
-                        <a href="/api-docs" class="dropdown-item modal-link">
-                            <div class="d-flex align-items-center gap-3">
-                            <i class="fas fa-cog fs-5"></i>
-                            <span>Front End Swagger</span>
-                            </div>
-                        </a>
-              
-
+                     <a href="ceo-diary.html" class="dropdown-item">
+                        <div class="d-flex align-items-center gap-3">
+                           <i class="fas fa-user-tie fs-5"></i>
+                           <span>CEO 다이어리</span>
+                        </div>
+                     </a>
+                     <a href="calendar.html" class="dropdown-item">
+                        <div class="d-flex align-items-center gap-3">
+                           <i class="fas fa-calendar-check fs-5"></i>
+                           <span>실적·이벤트 일정</span>
+                        </div>
+                     </a>
+                     <a href="glos.html" class="dropdown-item">
+                        <div class="d-flex align-items-center gap-3">
+                           <i class="fas fa-book-open fs-5"></i>
+                           <span>투자 용어사전</span>
+                        </div>
+                     </a>
+                     <a href="/api-docs" class="dropdown-item">
+                        <div class="d-flex align-items-center gap-3">
+                           <i class="fas fa-code fs-5"></i>
+                           <span>API Docs</span>
+                        </div>
+                     </a>
                      <div class="dropdown-divider"></div>
                      <a href="#" class="dropdown-item" id="logoutButton">
                         <div class="d-flex align-items-center gap-3">
@@ -987,6 +859,32 @@ createTooltip(fav1, "현재 페이지를 로그인 후 바로가기로 저장합
 const fav2 = document.getElementById("fav2");
 createTooltip(fav2, "현재 페이지를 바로가기 목록에 저장합니다.");
 
+// ── 공통: 페이지별 브레드크럼·사이드바 텍스트 업데이트 ──────────────────────
+function applyPageLabels(offCanvasLabels) {
+    // 페이지 → [브레드크럼key, 사이드바key[]]
+    const PAGE_LABELS = {
+        "aistock.html":   ["aistock",   ["aistock",  "ceodirary"]],
+        "ceo-diary.html": ["ceodirary", ["aistock",  "ceodirary"]],
+        "calendar.html":  ["calendar",  ["calendar", "timeline", "trello"]],
+        "timeline.html":  ["timeline",  ["calendar", "timeline", "trello"]],
+        "trello.html":    ["trello",    ["calendar", "timeline", "trello"]],
+        "flow.html":      ["flow",      ["flow",     "stati",    "chain"]],
+        "stati.html":     ["stati",     ["flow",     "stati",    "chain"]],
+        "chain.html":     ["chain",     ["flow",     "stati",    "chain"]],
+        "glos.html":      ["glos",      ["glos",     "document"]],
+        "document.html":  ["document",  ["glos",     "document"]],
+        "system.html":    ["system",    ["system",   "orgtree"]],
+        "orgtree.html":   ["orgtree",   ["system",   "orgtree"]],
+    };
+    const entry = PAGE_LABELS[currentPage];
+    if (!entry) return;
+    const [bcKey, sideKeys] = entry;
+    if (breadcrumb && offCanvasLabels[bcKey]) breadcrumb.textContent = offCanvasLabels[bcKey];
+    sideKeys.forEach((key, i) => {
+        if (offCanvasItems[i] && offCanvasLabels[key]) offCanvasItems[i].textContent = offCanvasLabels[key];
+    });
+}
+
 languageSwitcher.addEventListener("click", function (event) {
 
     let lang = event.target.getAttribute("data-lang");
@@ -1002,147 +900,7 @@ languageSwitcher.addEventListener("click", function (event) {
     tabs[5].textContent = tabLabels.settings;
 
     let offCanvasLabels = translations[lang].offCanvas;
-    if (currentPage.includes("calendar")) {
-        breadcrumb.textContent = offCanvasLabels.calendar;
-        offCanvasItems[0].textContent = offCanvasLabels.calendar;
-        offCanvasItems[1].textContent = offCanvasLabels.trello;
-        offCanvasItems[2].textContent = offCanvasLabels.timeline;
-    } else if (currentPage.includes("trello")) {
-        breadcrumb.textContent = offCanvasLabels.trello;
-        offCanvasItems[0].textContent = offCanvasLabels.calendar;
-        offCanvasItems[1].textContent = offCanvasLabels.trello;
-        offCanvasItems[2].textContent = offCanvasLabels.timeline;
-    } else if (currentPage.includes("timeline")) {
-        breadcrumb.textContent = offCanvasLabels.timeline;
-        offCanvasItems[0].textContent = offCanvasLabels.calendar;
-        offCanvasItems[1].textContent = offCanvasLabels.trello;
-        offCanvasItems[2].textContent = offCanvasLabels.timeline;
-    } else if (currentPage.includes("orgni")) {
-        breadcrumb.textContent = offCanvasLabels.orgni;
-        offCanvasItems[0].textContent = offCanvasLabels.orgni;
-        offCanvasItems[1].textContent = offCanvasLabels.attend;
-        offCanvasItems[2].textContent = offCanvasLabels.total;
-    } else if (currentPage.includes("attend")) {
-        breadcrumb.textContent = offCanvasLabels.attend;
-        offCanvasItems[0].textContent = offCanvasLabels.orgni;
-        offCanvasItems[1].textContent = offCanvasLabels.attend;
-        offCanvasItems[2].textContent = offCanvasLabels.total;
-    } else if (currentPage.includes("total")) {
-        breadcrumb.textContent = offCanvasLabels.total;
-        offCanvasItems[0].textContent = offCanvasLabels.orgni;
-        offCanvasItems[1].textContent = offCanvasLabels.attend;
-        offCanvasItems[2].textContent = offCanvasLabels.total;
-    } else if (currentPage.includes("system")) {
-        breadcrumb.textContent = offCanvasLabels.system;
-        offCanvasItems[0].textContent = offCanvasLabels.system;
-        offCanvasItems[1].textContent = offCanvasLabels.glos;
-        offCanvasItems[2].textContent = offCanvasLabels.orgtree;
-        offCanvasItems[3].textContent = offCanvasLabels.document;
-        offCanvasItems[4].textContent = offCanvasLabels.wms;
-    } else if (currentPage.includes("glos")) {
-        breadcrumb.textContent = offCanvasLabels.glos;
-        offCanvasItems[0].textContent = offCanvasLabels.system;
-        offCanvasItems[1].textContent = offCanvasLabels.glos;
-        offCanvasItems[2].textContent = offCanvasLabels.orgtree;
-        offCanvasItems[3].textContent = offCanvasLabels.document;
-        offCanvasItems[4].textContent = offCanvasLabels.wms;
-    } else if (currentPage.includes("orgtree")) {
-        breadcrumb.textContent = offCanvasLabels.orgtree;
-        offCanvasItems[0].textContent = offCanvasLabels.system;
-        offCanvasItems[1].textContent = offCanvasLabels.glos;
-        offCanvasItems[2].textContent = offCanvasLabels.orgtree;
-        offCanvasItems[3].textContent = offCanvasLabels.document;
-        offCanvasItems[4].textContent = offCanvasLabels.wms;
-    } else if (currentPage.includes("document")) {
-        breadcrumb.textContent = offCanvasLabels.document;
-        offCanvasItems[0].textContent = offCanvasLabels.system;
-        offCanvasItems[1].textContent = offCanvasLabels.glos;
-        offCanvasItems[2].textContent = offCanvasLabels.orgtree;
-        offCanvasItems[3].textContent = offCanvasLabels.document;
-        offCanvasItems[4].textContent = offCanvasLabels.wms;
-    } else if (currentPage.includes("wms")) {
-        breadcrumb.textContent = offCanvasLabels.wms;
-        offCanvasItems[0].textContent = offCanvasLabels.system;
-        offCanvasItems[1].textContent = offCanvasLabels.glos;
-        offCanvasItems[2].textContent = offCanvasLabels.orgtree;
-        offCanvasItems[3].textContent = offCanvasLabels.document;
-        offCanvasItems[4].textContent = offCanvasLabels.wms;
-    } else if (currentPage.includes("network")) {
-        breadcrumb.textContent = offCanvasLabels.network;
-        offCanvasItems[0].textContent = offCanvasLabels.config;
-        offCanvasItems[1].textContent = offCanvasLabels.network;
-        offCanvasItems[2].textContent = offCanvasLabels.survey;
-        offCanvasItems[3].textContent = offCanvasLabels.locker;
-    } else if (currentPage.includes("survey")) {
-        breadcrumb.textContent = offCanvasLabels.survey;
-        offCanvasItems[0].textContent = offCanvasLabels.config;
-        offCanvasItems[1].textContent = offCanvasLabels.network;
-        offCanvasItems[2].textContent = offCanvasLabels.survey;
-        offCanvasItems[3].textContent = offCanvasLabels.locker;
-    } else if (currentPage.includes("config")) {
-        breadcrumb.textContent = offCanvasLabels.config;
-        offCanvasItems[0].textContent = offCanvasLabels.config;
-        offCanvasItems[1].textContent = offCanvasLabels.network;
-        offCanvasItems[2].textContent = offCanvasLabels.survey;
-        offCanvasItems[3].textContent = offCanvasLabels.locker;
-    } else if (currentPage.includes("locker")) {
-        breadcrumb.textContent = offCanvasLabels.locker;
-        offCanvasItems[0].textContent = offCanvasLabels.config;
-        offCanvasItems[1].textContent = offCanvasLabels.network;
-        offCanvasItems[2].textContent = offCanvasLabels.survey;
-        offCanvasItems[3].textContent = offCanvasLabels.locker;
-    } else if (currentPage.includes("work")) {
-        breadcrumb.textContent = offCanvasLabels.work;
-        offCanvasItems[0].textContent = offCanvasLabels.work;
-        offCanvasItems[1].textContent = offCanvasLabels.meeting;
-        offCanvasItems[2].textContent = offCanvasLabels.hospital;
-        offCanvasItems[3].textContent = offCanvasLabels.lectures;
-        offCanvasItems[4].textContent = offCanvasLabels.city;
-    } else if (currentPage.includes("meeting")) {
-        breadcrumb.textContent = offCanvasLabels.meeting;
-        offCanvasItems[0].textContent = offCanvasLabels.work;
-        offCanvasItems[1].textContent = offCanvasLabels.meeting;
-        offCanvasItems[2].textContent = offCanvasLabels.hospital;
-        offCanvasItems[3].textContent = offCanvasLabels.lectures;
-        offCanvasItems[4].textContent = offCanvasLabels.city;
-    } else if (currentPage.includes("hospital")) {
-        breadcrumb.textContent = offCanvasLabels.hospital;
-        offCanvasItems[0].textContent = offCanvasLabels.work;
-        offCanvasItems[1].textContent = offCanvasLabels.meeting;
-        offCanvasItems[2].textContent = offCanvasLabels.hospital;
-        offCanvasItems[3].textContent = offCanvasLabels.lectures;
-        offCanvasItems[4].textContent = offCanvasLabels.city;
-    } else if (currentPage.includes("lectures")) {
-        breadcrumb.textContent = offCanvasLabels.lectures;
-        offCanvasItems[0].textContent = offCanvasLabels.work;
-        offCanvasItems[1].textContent = offCanvasLabels.meeting;
-        offCanvasItems[2].textContent = offCanvasLabels.hospital;
-        offCanvasItems[3].textContent = offCanvasLabels.lectures;
-        offCanvasItems[4].textContent = offCanvasLabels.city;
-    } else if (currentPage.includes("city")) {
-        breadcrumb.textContent = offCanvasLabels.city;
-        offCanvasItems[0].textContent = offCanvasLabels.work;
-        offCanvasItems[1].textContent = offCanvasLabels.meeting;
-        offCanvasItems[2].textContent = offCanvasLabels.hospital;
-        offCanvasItems[3].textContent = offCanvasLabels.lectures;
-        offCanvasItems[4].textContent = offCanvasLabels.city;
-    } else if (currentPage.includes("stati")) {
-        breadcrumb.textContent = offCanvasLabels.stati;
-        offCanvasItems[0].textContent = offCanvasLabels.stati;
-        offCanvasItems[1].textContent = offCanvasLabels.flow;
-        offCanvasItems[2].textContent = offCanvasLabels.chain;
-    } else if (currentPage.includes("flow")) {
-        breadcrumb.textContent = offCanvasLabels.flow;
-        offCanvasItems[0].textContent = offCanvasLabels.stati;
-        offCanvasItems[1].textContent = offCanvasLabels.flow;
-        offCanvasItems[2].textContent = offCanvasLabels.chain;
-    } else if (currentPage.includes("chain")) {
-        breadcrumb.textContent = offCanvasLabels.chain;
-        offCanvasItems[0].textContent = offCanvasLabels.stati;
-        offCanvasItems[1].textContent = offCanvasLabels.flow;
-        offCanvasItems[2].textContent = offCanvasLabels.chain;
-    }
-
+    applyPageLabels(offCanvasLabels);
 
 });
 
@@ -1158,146 +916,8 @@ document.addEventListener('DOMContentLoaded', () => {
     tabs[5].textContent = tabLabels.settings;
 
     let offCanvasLabels = translations[lang].offCanvas;
-    if (currentPage.includes("calendar")) {
-        breadcrumb.textContent = offCanvasLabels.calendar;
-        offCanvasItems[0].textContent = offCanvasLabels.calendar;
-        offCanvasItems[1].textContent = offCanvasLabels.trello;
-        offCanvasItems[2].textContent = offCanvasLabels.timeline;
-    } else if (currentPage.includes("trello")) {
-        breadcrumb.textContent = offCanvasLabels.trello;
-        offCanvasItems[0].textContent = offCanvasLabels.calendar;
-        offCanvasItems[1].textContent = offCanvasLabels.trello;
-        offCanvasItems[2].textContent = offCanvasLabels.timeline;
-    } else if (currentPage.includes("timeline")) {
-        breadcrumb.textContent = offCanvasLabels.timeline;
-        offCanvasItems[0].textContent = offCanvasLabels.calendar;
-        offCanvasItems[1].textContent = offCanvasLabels.trello;
-        offCanvasItems[2].textContent = offCanvasLabels.timeline;
-    } else if (currentPage.includes("orgni")) {
-        breadcrumb.textContent = offCanvasLabels.orgni;
-        offCanvasItems[0].textContent = offCanvasLabels.orgni;
-        offCanvasItems[1].textContent = offCanvasLabels.attend;
-        offCanvasItems[2].textContent = offCanvasLabels.total;
-    } else if (currentPage.includes("attend")) {
-        breadcrumb.textContent = offCanvasLabels.attend;
-        offCanvasItems[0].textContent = offCanvasLabels.orgni;
-        offCanvasItems[1].textContent = offCanvasLabels.attend;
-        offCanvasItems[2].textContent = offCanvasLabels.total;
-    } else if (currentPage.includes("total")) {
-        breadcrumb.textContent = offCanvasLabels.total;
-        offCanvasItems[0].textContent = offCanvasLabels.orgni;
-        offCanvasItems[1].textContent = offCanvasLabels.attend;
-        offCanvasItems[2].textContent = offCanvasLabels.total;
-    } else if (currentPage.includes("system")) {
-        breadcrumb.textContent = offCanvasLabels.system;
-        offCanvasItems[0].textContent = offCanvasLabels.system;
-        offCanvasItems[1].textContent = offCanvasLabels.glos;
-        offCanvasItems[2].textContent = offCanvasLabels.orgtree;
-        offCanvasItems[3].textContent = offCanvasLabels.document;
-        offCanvasItems[4].textContent = offCanvasLabels.wms;
-    } else if (currentPage.includes("glos")) {
-        breadcrumb.textContent = offCanvasLabels.glos;
-        offCanvasItems[0].textContent = offCanvasLabels.system;
-        offCanvasItems[1].textContent = offCanvasLabels.glos;
-        offCanvasItems[2].textContent = offCanvasLabels.orgtree;
-        offCanvasItems[3].textContent = offCanvasLabels.document;
-        offCanvasItems[4].textContent = offCanvasLabels.wms;
-    } else if (currentPage.includes("orgtree")) {
-        breadcrumb.textContent = offCanvasLabels.orgtree;
-        offCanvasItems[0].textContent = offCanvasLabels.system;
-        offCanvasItems[1].textContent = offCanvasLabels.glos;
-        offCanvasItems[2].textContent = offCanvasLabels.orgtree;
-        offCanvasItems[3].textContent = offCanvasLabels.document;
-        offCanvasItems[4].textContent = offCanvasLabels.wms;
-    } else if (currentPage.includes("document")) {
-        breadcrumb.textContent = offCanvasLabels.document;
-        offCanvasItems[0].textContent = offCanvasLabels.system;
-        offCanvasItems[1].textContent = offCanvasLabels.glos;
-        offCanvasItems[2].textContent = offCanvasLabels.orgtree;
-        offCanvasItems[3].textContent = offCanvasLabels.document;
-        offCanvasItems[4].textContent = offCanvasLabels.wms;
-    } else if (currentPage.includes("wms")) {
-        breadcrumb.textContent = offCanvasLabels.wms;
-        offCanvasItems[0].textContent = offCanvasLabels.system;
-        offCanvasItems[1].textContent = offCanvasLabels.glos;
-        offCanvasItems[2].textContent = offCanvasLabels.orgtree;
-        offCanvasItems[3].textContent = offCanvasLabels.document;
-        offCanvasItems[4].textContent = offCanvasLabels.wms;
-    } else if (currentPage.includes("network")) {
-        breadcrumb.textContent = offCanvasLabels.network;
-        offCanvasItems[0].textContent = offCanvasLabels.config;
-        offCanvasItems[1].textContent = offCanvasLabels.network;
-        offCanvasItems[2].textContent = offCanvasLabels.survey;
-        offCanvasItems[3].textContent = offCanvasLabels.locker;
-    } else if (currentPage.includes("survey")) {
-        breadcrumb.textContent = offCanvasLabels.survey;
-        offCanvasItems[0].textContent = offCanvasLabels.config;
-        offCanvasItems[1].textContent = offCanvasLabels.network;
-        offCanvasItems[2].textContent = offCanvasLabels.survey;
-        offCanvasItems[3].textContent = offCanvasLabels.locker;
-    } else if (currentPage.includes("config")) {
-        breadcrumb.textContent = offCanvasLabels.config;
-        offCanvasItems[0].textContent = offCanvasLabels.config;
-        offCanvasItems[1].textContent = offCanvasLabels.network;
-        offCanvasItems[2].textContent = offCanvasLabels.survey;
-        offCanvasItems[3].textContent = offCanvasLabels.locker;
-    } else if (currentPage.includes("locker")) {
-        breadcrumb.textContent = offCanvasLabels.locker;
-        offCanvasItems[0].textContent = offCanvasLabels.config;
-        offCanvasItems[1].textContent = offCanvasLabels.network;
-        offCanvasItems[2].textContent = offCanvasLabels.survey;
-        offCanvasItems[3].textContent = offCanvasLabels.locker;
-    } else if (currentPage.includes("work")) {
-        breadcrumb.textContent = offCanvasLabels.work;
-        offCanvasItems[0].textContent = offCanvasLabels.work;
-        offCanvasItems[1].textContent = offCanvasLabels.meeting;
-        offCanvasItems[2].textContent = offCanvasLabels.hospital;
-        offCanvasItems[3].textContent = offCanvasLabels.lectures;
-        offCanvasItems[4].textContent = offCanvasLabels.city;
-    } else if (currentPage.includes("meeting")) {
-        breadcrumb.textContent = offCanvasLabels.meeting;
-        offCanvasItems[0].textContent = offCanvasLabels.work;
-        offCanvasItems[1].textContent = offCanvasLabels.meeting;
-        offCanvasItems[2].textContent = offCanvasLabels.hospital;
-        offCanvasItems[3].textContent = offCanvasLabels.lectures;
-        offCanvasItems[4].textContent = offCanvasLabels.city;
-    } else if (currentPage.includes("hospital")) {
-        breadcrumb.textContent = offCanvasLabels.hospital;
-        offCanvasItems[0].textContent = offCanvasLabels.work;
-        offCanvasItems[1].textContent = offCanvasLabels.meeting;
-        offCanvasItems[2].textContent = offCanvasLabels.hospital;
-        offCanvasItems[3].textContent = offCanvasLabels.lectures;
-        offCanvasItems[4].textContent = offCanvasLabels.city;
-    } else if (currentPage.includes("lectures")) {
-        breadcrumb.textContent = offCanvasLabels.lectures;
-        offCanvasItems[0].textContent = offCanvasLabels.work;
-        offCanvasItems[1].textContent = offCanvasLabels.meeting;
-        offCanvasItems[2].textContent = offCanvasLabels.hospital;
-        offCanvasItems[3].textContent = offCanvasLabels.lectures;
-        offCanvasItems[4].textContent = offCanvasLabels.city;
-    } else if (currentPage.includes("city")) {
-        breadcrumb.textContent = offCanvasLabels.city;
-        offCanvasItems[0].textContent = offCanvasLabels.work;
-        offCanvasItems[1].textContent = offCanvasLabels.meeting;
-        offCanvasItems[2].textContent = offCanvasLabels.hospital;
-        offCanvasItems[3].textContent = offCanvasLabels.lectures;
-        offCanvasItems[4].textContent = offCanvasLabels.city;
-    } else if (currentPage.includes("stati")) {
-        breadcrumb.textContent = offCanvasLabels.stati;
-        offCanvasItems[0].textContent = offCanvasLabels.stati;
-        offCanvasItems[1].textContent = offCanvasLabels.flow;
-        offCanvasItems[2].textContent = offCanvasLabels.chain;
-    } else if (currentPage.includes("flow")) {
-        breadcrumb.textContent = offCanvasLabels.flow;
-        offCanvasItems[0].textContent = offCanvasLabels.stati;
-        offCanvasItems[1].textContent = offCanvasLabels.flow;
-        offCanvasItems[2].textContent = offCanvasLabels.chain;
-    } else if (currentPage.includes("chain")) {
-        breadcrumb.textContent = offCanvasLabels.chain;
-        offCanvasItems[0].textContent = offCanvasLabels.stati;
-        offCanvasItems[1].textContent = offCanvasLabels.flow;
-        offCanvasItems[2].textContent = offCanvasLabels.chain;
-    }
+    applyPageLabels(offCanvasLabels);
+
 });
 
 //////////////////////////////////////
